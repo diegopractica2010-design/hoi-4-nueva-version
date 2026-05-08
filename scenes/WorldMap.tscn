@@ -48,6 +48,7 @@ btn_close = NodePath("InfoPanel/BtnClose")
 [node name="ProvinceContainers" type="Node2D" parent="." unique_id=725074633]
 
 [node name="InfoPanel" type="Panel" parent="." unique_id=878940038]
+visible = false
 offset_left = 40.0
 offset_top = 40.0
 offset_right = 380.0
