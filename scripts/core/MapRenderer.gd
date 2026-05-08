@@ -20,20 +20,36 @@ var current_hover: Node2D = null
 # ==================== CAMERA CONTROLS ====================
 var camera: Camera2D
 
-# Tunable settings (adjust these in the Inspector or here)
-@export var pan_speed: float = 800.0          # WASD / Arrow key panning speed
-@export var edge_scroll_speed: float = 900.0   # Mouse edge scrolling speed
-@export var edge_margin: float = 50.0          # How close to screen edge to trigger scroll
-@export var zoom_speed: float = 0.12           # Zoom amount per mouse wheel tick
+@export var pan_speed: float = 800.0
+@export var edge_scroll_speed: float = 900.0
+@export var edge_margin: float = 50.0
+@export var zoom_speed: float = 0.12
 @export var min_zoom: float = 0.2
 @export var max_zoom: float = 5.0
 
 func _ready():
+	# Make sure info panel starts closed
+	if info_panel:
+		info_panel.visible = false
+	
 	if btn_close:
 		btn_close.pressed.connect(hide_info_panel)
 	
 	_setup_camera()
-	print("MapRenderer _ready() completed")
+	print("MapRenderer _ready() completed - Camera should be working now")
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Also allow closing info panel with Escape
+	if event.is_action_pressed("ui_cancel"):   # Escape key
+		if info_panel and info_panel.visible:
+			hide_info_panel()
+			return
+	
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_zoom_toward_mouse(1.0 + zoom_speed)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_zoom_toward_mouse(1.0 - zoom_speed)
 
 func _setup_camera():
 	camera = get_node_or_null("Camera2D")
@@ -41,32 +57,19 @@ func _setup_camera():
 		camera = Camera2D.new()
 		camera.name = "Camera2D"
 		add_child(camera)
-		print("Created new Camera2D")
 	
 	camera.enabled = true
 	camera.make_current()
 	camera.zoom = Vector2(0.85, 0.85)
-	print("✅ Camera2D ready and current. Starting zoom: ", camera.zoom)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			_zoom_toward_mouse(1.0 + zoom_speed)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			_zoom_toward_mouse(1.0 - zoom_speed)
+	print("✅ Camera2D created and activated")
 
 func _process(delta: float) -> void:
-	if not camera:
-		return
-	
+	if not camera: return
 	_handle_keyboard_pan(delta)
 	_handle_edge_scroll(delta)
 
-# ==================== IMPROVED ZOOM TOWARD MOUSE ====================
 func _zoom_toward_mouse(zoom_change: float) -> void:
-	if not camera:
-		print("No camera for zoom")
-		return
+	if not camera: return
 	
 	var mouse_screen = get_viewport().get_mouse_position()
 	var old_zoom = camera.zoom
@@ -75,52 +78,39 @@ func _zoom_toward_mouse(zoom_change: float) -> void:
 	new_zoom.x = clamp(new_zoom.x, min_zoom, max_zoom)
 	new_zoom.y = clamp(new_zoom.y, min_zoom, max_zoom)
 	
-	if new_zoom == old_zoom:
-		return
+	if new_zoom == old_zoom: return
 	
-	# Get world position under mouse BEFORE changing zoom
 	var world_before = camera.get_canvas_transform().affine_inverse() * mouse_screen
-	
 	camera.zoom = new_zoom
-	
-	# Get world position under mouse AFTER zoom
 	var world_after = camera.get_canvas_transform().affine_inverse() * mouse_screen
-	
-	# Move camera so the world point stays under the mouse
 	camera.global_position += world_before - world_after
-	print("Zoomed to: ", camera.zoom)
 
-# ==================== KEYBOARD PAN (WASD + Arrows) ====================
 func _handle_keyboard_pan(delta: float) -> void:
 	var dir = Vector2.ZERO
-	
-	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):    dir.y -= 1
-	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):  dir.y += 1
-	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):  dir.x -= 1
+	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP): dir.y -= 1
+	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN): dir.y += 1
+	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT): dir.x -= 1
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT): dir.x += 1
 	
 	if dir != Vector2.ZERO:
 		dir = dir.normalized()
 		camera.global_position += dir * pan_speed * delta
 
-# ==================== EDGE SCROLLING ====================
 func _handle_edge_scroll(delta: float) -> void:
 	var mouse = get_viewport().get_mouse_position()
 	var size = get_viewport().get_visible_rect().size
-	
 	var dir = Vector2.ZERO
 	
-	if mouse.x < edge_margin:              dir.x -= 1
-	elif mouse.x > size.x - edge_margin:   dir.x += 1
-	
-	if mouse.y < edge_margin:              dir.y -= 1
-	elif mouse.y > size.y - edge_margin:   dir.y += 1
+	if mouse.x < edge_margin: dir.x -= 1
+	elif mouse.x > size.x - edge_margin: dir.x += 1
+	if mouse.y < edge_margin: dir.y -= 1
+	elif mouse.y > size.y - edge_margin: dir.y += 1
 	
 	if dir != Vector2.ZERO:
 		dir = dir.normalized()
 		camera.global_position += dir * edge_scroll_speed * delta
 
-# ==================== EXISTING MAP RENDERING (unchanged) ====================
+# ==================== MAP RENDERING & INFO PANEL (rest unchanged) ====================
 
 func render_provinces(loader: ScenarioLoader):
 	for child in container.get_children():
@@ -128,12 +118,11 @@ func render_provinces(loader: ScenarioLoader):
 	province_nodes.clear()
 
 	var provinces = loader.provinces.values()
-	print("Rendering polished map with ", provinces.size(), " provinces")
+	print("Rendering map with ", provinces.size(), " provinces")
 
 	for province in provinces:
 		var prov_node = Node2D.new()
 		prov_node.name = "Prov_" + str(province.id)
-		
 		var column = (province.id - 1) % 13
 		var row = (province.id - 1) / 13
 		prov_node.position = Vector2(column * 118, row * 82)
@@ -151,7 +140,6 @@ func render_provinces(loader: ScenarioLoader):
 		bg.gui_input.connect(_on_province_clicked.bind(province))
 		bg.mouse_entered.connect(_on_mouse_entered.bind(prov_node))
 		bg.mouse_exited.connect(_on_mouse_exited.bind(prov_node))
-		
 		prov_node.add_child(bg)
 
 		if "capital" in province.special_features:
