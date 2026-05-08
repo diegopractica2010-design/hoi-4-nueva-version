@@ -17,9 +17,119 @@ extends Node2D
 var province_nodes: Dictionary = {}
 var current_hover: Node2D = null
 
+# ==================== CAMERA CONTROLS ====================
+var camera: Camera2D
+
+# Tunable settings (adjust these to taste)
+@export var pan_speed: float = 800.0          # Keyboard WASD panning speed (pixels/sec)
+@export var edge_scroll_speed: float = 900.0   # Edge scrolling speed (slightly faster)
+@export var edge_margin: float = 50.0          # Pixels from screen edge to start scrolling
+@export var zoom_speed: float = 0.12           # How much to zoom per mouse wheel tick
+@export var min_zoom: float = 0.2
+@export var max_zoom: float = 5.0
+
+var is_panning: bool = false
+
+var last_mouse_pos: Vector2 = Vector2.ZERO
+
 func _ready():
 	if btn_close:
 		btn_close.pressed.connect(hide_info_panel)
+	
+	_setup_camera()
+
+func _setup_camera():
+	# Create a Camera2D if one doesn't already exist
+	camera = get_node_or_null("Camera2D")
+	if not camera:
+		camera = Camera2D.new()
+		camera.name = "Camera2D"
+		add_child(camera)
+	
+	camera.enabled = true
+	camera.make_current()
+	camera.zoom = Vector2(0.8, 0.8)  # Reasonable starting zoom
+	print("✅ Camera2D initialized for map navigation")
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Mouse wheel zoom (with zoom-to-mouse)
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+			_zoom_toward_mouse(1.0 + zoom_speed)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+			_zoom_toward_mouse(1.0 - zoom_speed)
+
+func _process(delta: float) -> void:
+	if not camera:
+		return
+	
+	_handle_keyboard_pan(delta)
+	_handle_edge_scroll(delta)
+
+# ==================== ZOOM TOWARD MOUSE ====================
+func _zoom_toward_mouse(zoom_factor: float) -> void:
+	if not camera:
+		return
+	
+	var mouse_pos = get_global_mouse_position()
+	var old_zoom = camera.zoom
+	var new_zoom = old_zoom * zoom_factor
+	
+	# Clamp zoom
+	new_zoom.x = clamp(new_zoom.x, min_zoom, max_zoom)
+	new_zoom.y = clamp(new_zoom.y, min_zoom, max_zoom)
+	
+	if new_zoom == old_zoom:
+		return
+	
+	# Zoom toward mouse position
+	var mouse_offset = mouse_pos - camera.global_position
+	camera.zoom = new_zoom
+	camera.global_position = mouse_pos - mouse_offset / zoom_factor
+
+# ==================== KEYBOARD PAN (WASD) ====================
+func _handle_keyboard_pan(delta: float) -> void:
+	var direction = Vector2.ZERO
+	
+	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):
+		direction.y -= 1
+	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
+		direction.y += 1
+	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
+		direction.x -= 1
+	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
+		direction.x += 1
+	
+	if direction != Vector2.ZERO:
+		direction = direction.normalized()
+		camera.global_position += direction * pan_speed * delta
+
+# ==================== EDGE SCROLLING ====================
+func _handle_edge_scroll(delta: float) -> void:
+	var mouse_pos = get_viewport().get_mouse_position()
+	var viewport_size = get_viewport().get_visible_rect().size
+	
+	var direction = Vector2.ZERO
+	
+	# Left edge
+	if mouse_pos.x < edge_margin:
+		direction.x -= 1
+	# Right edge
+	elif mouse_pos.x > viewport_size.x - edge_margin:
+		direction.x += 1
+	
+	# Top edge
+	if mouse_pos.y < edge_margin:
+		direction.y -= 1
+	# Bottom edge
+	elif mouse_pos.y > viewport_size.y - edge_margin:
+		direction.y += 1
+	
+	if direction != Vector2.ZERO:
+		direction = direction.normalized()
+		camera.global_position += direction * edge_scroll_speed * delta
+
+# ==================== EXISTING RENDERING CODE (unchanged) ====================
 
 func render_provinces(loader: ScenarioLoader):
 	for child in container.get_children():
@@ -58,11 +168,11 @@ func render_provinces(loader: ScenarioLoader):
 		if "capital" in province.special_features:
 			var star = Label.new()
 			star.text = "⭐"
-			star.add_theme_font_size_override("font_size", 28)   # ← smaller
+			star.add_theme_font_size_override("font_size", 28)
 			star.position = Vector2(6, 2)
 			prov_node.add_child(star)
 
-		# Other icons (moved up 2 pixels)
+		# Other icons
 		var icon_x = 8
 		var count = 0
 		for feature in province.special_features:
@@ -71,7 +181,7 @@ func render_provinces(loader: ScenarioLoader):
 			var icon = Label.new()
 			icon.text = get_feature_icon(feature)
 			icon.add_theme_font_size_override("font_size", 24)
-			icon.position = Vector2(icon_x, 40)   # ← moved up 2px
+			icon.position = Vector2(icon_x, 40)
 			prov_node.add_child(icon)
 			icon_x += 26
 			count += 1
@@ -149,7 +259,7 @@ func get_feature_icon(feature: String) -> String:
 		"coal_plant": return "🏭"
 		"gas_plant": return "🔥"
 		"oil_rig": return "⛽"
-		"major_factory": return "🏗️"
+		"major_factory": return "🛠️"
 		"nuclear_plant": return "☢️"
 		"fusion_plant": return "⚡"
 		"mission_control": return "📡"
