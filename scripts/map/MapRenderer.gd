@@ -37,7 +37,7 @@ extends Node2D
 #endregion
 #endregion
 
-#region Camera Controls (NEW)
+#region Camera Controls
 @export var pan_speed: float = 900.0
 @export var edge_scroll_speed: float = 1100.0
 @export var edge_margin: float = 50.0
@@ -90,14 +90,18 @@ func _ready():
 	print("MapRenderer _ready() completed")
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	# Scroll wheel zoom (toward mouse)
+func _input(event: InputEvent) -> void:
+	# Scroll wheel zoom - handled here for reliability
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			_zoom_toward_mouse(1.0 + zoom_speed)
+			accept_event()
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_zoom_toward_mouse(1.0 - zoom_speed)
+			accept_event()
 
+
+func _unhandled_input(event: InputEvent) -> void:
 	# Middle mouse drag start
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
