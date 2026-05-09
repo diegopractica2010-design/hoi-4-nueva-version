@@ -95,10 +95,10 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			_zoom_toward_mouse(1.0 + zoom_speed)
-			accept_event()
+			event.accept_event()
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_zoom_toward_mouse(1.0 - zoom_speed)
-			accept_event()
+			event.accept_event()
 
 
 func _unhandled_input(event: InputEvent) -> void:
