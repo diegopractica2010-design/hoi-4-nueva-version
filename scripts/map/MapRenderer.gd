@@ -1,5 +1,5 @@
 # scripts/map/MapRenderer.gd
-# class_name MapRenderer
+class_name MapRenderer
 extends Node2D
 
 #region Exports
@@ -68,7 +68,15 @@ func _ready():
 	if container == null:
 		container = get_node_or_null("ProvinceContainers") as Node2D
 
+	var cam := get_node_or_null("MapCamera") as Camera2D
+	if cam:
+		cam.make_current()
+		print("✅ Camera2D created and activated")
+	else:
+		push_warning("MapRenderer: MapCamera node missing — viewport may not follow Camera2D.")
+
 	set_process(true)
+	print("MapRenderer _ready() completed - Camera should be working now")
 
 
 func _on_close_pressed() -> void:

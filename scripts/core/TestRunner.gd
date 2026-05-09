@@ -2,7 +2,7 @@
 extends Node
 
 @onready var loader: ScenarioLoader = $ScenarioLoader
-@onready var map_renderer = $WorldMap
+@onready var map_renderer: MapRenderer = $WorldMap
 @onready var camera_controller: CameraController = $WorldMap/CameraInput
 
 
