@@ -24,13 +24,11 @@ extends Node2D
 
 #region Hover name
 @export var show_hover_province_name: bool = true
-## When false, the hover name stays anchored near the cached centroid.
 @export var hover_name_follow_mouse: bool = false
 #endregion
 
 #region Feature markers
 @export var feature_icon_ring_radius: float = 28.0
-## Labels/icons on provinces stay hidden until container scale exceeds this (axis assumed uniform).
 @export var province_detail_min_zoom: float = 0.8
 #endregion
 
@@ -39,13 +37,26 @@ extends Node2D
 #endregion
 #endregion
 
+#region Camera Controls (NEW)
+@export var pan_speed: float = 900.0
+@export var edge_scroll_speed: float = 1100.0
+@export var edge_margin: float = 50.0
+@export var zoom_speed: float = 0.1
+@export var min_zoom: float = 0.15
+@export var max_zoom: float = 8.0
+@export var middle_mouse_pan_speed: float = 1.0
+
+var _is_middle_dragging := false
+var _middle_drag_start := Vector2.ZERO
+var _last_mouse_pos := Vector2.ZERO
+#endregion
+
 var provinces: Dictionary = {}
 var geometry: Dictionary = {}
-var countries: Dictionary = {}           # tag -> Country (must have .color)
+var countries: Dictionary = {}
 var adjacency: AdjacencySystem
 
 var province_nodes: Dictionary = {}
-## Province id -> centroid in province-node local space (matches polygon coordinates).
 var province_centroids: Dictionary = {}
 var _province_name_labels: Dictionary = {}
 var current_hover: Node2D = null
@@ -71,26 +82,99 @@ func _ready():
 	var cam := get_node_or_null("MapCamera") as Camera2D
 	if cam:
 		cam.make_current()
-		print("✅ Camera2D created and activated")
+		print("✅ Camera2D activated")
 	else:
-		push_warning("MapRenderer: MapCamera node missing — viewport may not follow Camera2D.")
+		push_warning("MapRenderer: MapCamera node missing!")
 
 	set_process(true)
-	print("MapRenderer _ready() completed - Camera should be working now")
+	print("MapRenderer _ready() completed")
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Scroll wheel zoom (toward mouse)
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_zoom_toward_mouse(1.0 + zoom_speed)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_zoom_toward_mouse(1.0 - zoom_speed)
+
+	# Middle mouse drag start
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_MIDDLE:
+			if event.pressed:
+				_is_middle_dragging = true
+				_middle_drag_start = get_viewport().get_mouse_position()
+				_last_mouse_pos = _middle_drag_start
+			else:
+				_is_middle_dragging = false
+
+
+func _process(delta: float) -> void:
+	_refresh_province_detail_visibility()
+
+	if hover_label and hover_label.visible and current_hover and hover_name_follow_mouse:
+		hover_label.position = get_local_mouse_position() + Vector2(14, -18)
+
+	_handle_camera_input(delta)
+
+
+func _handle_camera_input(delta: float) -> void:
+	var cam := get_viewport().get_camera_2d()
+	if not cam:
+		return
+
+	var move_dir := Vector2.ZERO
+
+	# WASD / Arrow keys
+	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):    move_dir.y -= 1
+	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):  move_dir.y += 1
+	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):  move_dir.x -= 1
+	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT): move_dir.x += 1
+
+	# Edge scrolling
+	var mouse_pos := get_viewport().get_mouse_position()
+	var viewport_size := get_viewport().get_visible_rect().size
+
+	if mouse_pos.x < edge_margin:              move_dir.x -= 1
+	elif mouse_pos.x > viewport_size.x - edge_margin: move_dir.x += 1
+	if mouse_pos.y < edge_margin:              move_dir.y -= 1
+	elif mouse_pos.y > viewport_size.y - edge_margin: move_dir.y += 1
+
+	# Middle mouse drag
+	if _is_middle_dragging:
+		var current_mouse := get_viewport().get_mouse_position()
+		var drag_delta := current_mouse - _last_mouse_pos
+		cam.global_position -= drag_delta * middle_mouse_pan_speed / cam.zoom.x
+		_last_mouse_pos = current_mouse
+
+	if move_dir != Vector2.ZERO:
+		move_dir = move_dir.normalized()
+		cam.global_position += move_dir * pan_speed * delta / cam.zoom.x
+
+
+func _zoom_toward_mouse(zoom_change: float) -> void:
+	var cam := get_viewport().get_camera_2d()
+	if not cam:
+		return
+
+	var mouse_screen := get_viewport().get_mouse_position()
+	var old_zoom := cam.zoom
+
+	var new_zoom := old_zoom * zoom_change
+	new_zoom.x = clamp(new_zoom.x, min_zoom, max_zoom)
+	new_zoom.y = clamp(new_zoom.y, min_zoom, max_zoom)
+
+	if new_zoom == old_zoom:
+		return
+
+	var world_before := cam.get_canvas_transform().affine_inverse() * mouse_screen
+	cam.zoom = new_zoom
+	var world_after := cam.get_canvas_transform().affine_inverse() * mouse_screen
+	cam.global_position += world_before - world_after
 
 
 func _on_close_pressed() -> void:
 	hide_info_panel()
-
-
-func _process(_delta: float) -> void:
-	_refresh_province_detail_visibility()
-
-	if hover_label == null or not hover_label.visible or current_hover == null:
-		return
-	if not hover_name_follow_mouse:
-		return
-	hover_label.position = get_local_mouse_position() + Vector2(14, -18)
 
 
 func _refresh_province_detail_visibility() -> void:
@@ -250,7 +334,6 @@ func _feature_icon_offsets_radial(count: int, radius: float) -> Array[Vector2]:
 	var pts: Array[Vector2] = []
 	if count <= 0:
 		return pts
-	## Spread icons along a downward-facing arc so they ring the centroid below the capital star.
 	var mid_angle := PI * 0.5
 	var span := clampf(PI * (0.42 + 0.11 * float(count - 1)), PI * 0.38, PI * 1.12)
 	for i in count:
@@ -336,7 +419,7 @@ func _on_province_input(_viewport: Node, event: InputEvent, _shape_idx: int, pro
 func _clear_selection() -> void:
 	if _selection_highlight != null and is_instance_valid(_selection_highlight):
 		_selection_highlight.queue_free()
-	_selection_highlight = null
+		_selection_highlight = null
 	selected_province_id = -1
 
 
