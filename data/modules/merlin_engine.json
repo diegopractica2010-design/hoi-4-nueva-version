@@ -1,0 +1,15 @@
+{
+  "id": "merlin_engine",
+  "name": "Rolls-Royce Merlin Engine",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 8,
+  "speed_bonus": 12,
+  "cost": {
+    "steel": 10,
+    "aluminum": 6
+  },
+  "production_time": 45,
+  "description": "Highly regarded aircraft engine. Excellent power-to-weight and reliability."
+}
