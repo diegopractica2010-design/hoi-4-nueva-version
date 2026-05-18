@@ -1,0 +1,14 @@
+{
+  "id": "50_cal_browning",
+  "name": "M2 .50 Cal Browning MG",
+  "category": "SecondaryWeapon",
+  "tier": 2,
+  "soft_attack": 18,
+  "hard_attack": 12,
+  "piercing": 35,
+  "air_attack": 15,
+  "cost": { "steel": 6 },
+  "production_time": 18,
+  "special_flags": ["good_vs_soft", "anti_air_capable"],
+  "description": "Heavy machine gun. Excellent against infantry, light vehicles, and aircraft."
+}
