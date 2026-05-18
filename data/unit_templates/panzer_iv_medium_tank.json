@@ -1,0 +1,28 @@
+{
+  "id": "panzer_iv_medium_tank",
+  "name": "Panzer IV Medium Tank",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 5,
+  "base_training_level": 25,
+  "max_experience_level": 100,
+  "base_stats": {
+    "speed": 35,
+    "reliability": 72,
+    "fuel_consumption": 13,
+    "supply_need": 17,
+    "armor": 50,
+    "top_armor": 28,
+    "hardness": 80
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "SecondaryWeapon": { "max": 2 },
+    "Engine": { "max": 1 },
+    "Armor": { "max": 1 }
+  },
+  "unlock_tech": ["german_medium_tanks"],
+  "is_vehicle": true,
+  "description": "Workhorse German medium tank. Highly upgradable throughout the war."
+}
