@@ -1,0 +1,12 @@
+{
+  "id": "37mm_gun",
+  "name": "37mm Gun",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 25,
+  "hard_attack": 22,
+  "piercing": 45,
+  "cost": { "steel": 8 },
+  "production_time": 25,
+  "description": "Early war light anti-tank and tank gun. Adequate early on but quickly outclassed."
+}
