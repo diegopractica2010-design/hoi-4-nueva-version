@@ -1,0 +1,25 @@
+{
+  "id": "spitfire_fighter",
+  "name": "Supermarine Spitfire",
+  "base_type": "Air",
+  "size_category": "Fighter",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_stats": {
+    "speed": 360,
+    "reliability": 78,
+    "fuel_consumption": 38,
+    "supply_need": 7,
+    "armor": 18,
+    "hardness": 15
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "Engine": { "max": 1 }
+  },
+  "unlock_tech": ["british_fighters"],
+  "is_vehicle": true,
+  "description": "Excellent British fighter. Highly maneuverable with good climb rate."
+}
