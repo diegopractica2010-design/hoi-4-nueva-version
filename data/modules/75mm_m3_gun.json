@@ -1,0 +1,17 @@
+{
+  "id": "75mm_m3_gun",
+  "name": "75mm M3 Gun",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 48,
+  "hard_attack": 32,
+  "piercing": 68,
+  "air_attack": 6,
+  "cost": {
+    "steel": 14,
+    "rubber": 1
+  },
+  "production_time": 50,
+  "special_flags": ["good_vs_soft", "decent_ap"],
+  "description": "Balanced dual-purpose gun. Solid HE performance with decent armor piercing."
+}
