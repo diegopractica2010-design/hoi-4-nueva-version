@@ -1,0 +1,27 @@
+{
+  "id": "t34_medium_tank",
+  "name": "T-34 Medium Tank",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 4,
+  "base_training_level": 22,
+  "max_experience_level": 100,
+  "base_stats": {
+    "speed": 45,
+    "reliability": 70,
+    "fuel_consumption": 14,
+    "supply_need": 16,
+    "armor": 55,
+    "top_armor": 30,
+    "hardness": 78
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "SecondaryWeapon": { "max": 2 },
+    "Engine": { "max": 1 }
+  },
+  "unlock_tech": ["soviet_medium_tanks"],
+  "is_vehicle": true,
+  "description": "Iconic Soviet medium tank. Excellent mobility and sloped armor for its time."
+}
