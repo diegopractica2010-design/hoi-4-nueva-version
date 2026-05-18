@@ -1,0 +1,11 @@
+{
+  "id": "self_sealing_fuel_tanks",
+  "name": "Self-Sealing Fuel Tanks",
+  "category": "ExtraFuel",
+  "tier": 2,
+  "reliability_bonus": 15,
+  "special_flags": ["damage_resistant"],
+  "cost": { "rubber": 8, "steel": 4 },
+  "production_time": 22,
+  "description": "Greatly reduces chance of fire from fuel tank damage. Major survivability upgrade for aircraft."
+}
