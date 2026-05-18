@@ -1,0 +1,15 @@
+{
+  "id": "continental_r975_engine",
+  "name": "Continental R975 Engine",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 6,
+  "speed_bonus": 5,
+  "cost": {
+    "steel": 8,
+    "rubber": 3
+  },
+  "production_time": 30,
+  "description": "Reliable radial engine used in many WWII tanks and aircraft. Good balance of power and reliability."
+}
