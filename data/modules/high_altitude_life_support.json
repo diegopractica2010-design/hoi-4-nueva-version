@@ -1,0 +1,15 @@
+{
+  "id": "high_altitude_life_support",
+  "name": "High Altitude Life Support System",
+  "category": "LifeSupport",
+  "tier": 4,
+  "special_flags": ["high_altitude_operations", "pressurized"],
+  "reliability_bonus": 5,
+  "cost": {
+    "aluminum": 10,
+    "electronics": 8,
+    "rare_earths": 3
+  },
+  "production_time": 55,
+  "description": "Advanced life support for high-altitude or early space operations. Enables operations at extreme altitudes."
+}
