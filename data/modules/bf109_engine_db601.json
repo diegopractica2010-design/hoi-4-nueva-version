@@ -1,0 +1,11 @@
+{
+  "id": "bf109_engine_db601",
+  "name": "Daimler-Benz DB 601 Engine",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 6,
+  "speed_bonus": 10,
+  "cost": { "steel": 9, "aluminum": 5 },
+  "production_time": 38,
+  "description": "Powerful inverted V12 engine used in the Bf 109. Good high-altitude performance."
+}
