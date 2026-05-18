@@ -1,0 +1,15 @@
+{
+  "id": "recon_drone_pod",
+  "name": "Recon Drone Pod",
+  "category": "DroneAttachment",
+  "tier": 3,
+  "soft_attack": 8,
+  "air_attack": 4,
+  "special_flags": ["recon_bonus", "scouting"],
+  "cost": {
+    "aluminum": 6,
+    "electronics": 4
+  },
+  "production_time": 25,
+  "description": "Small reconnaissance drones that can be mounted on vehicles or aircraft. Provides scouting and light harassment."
+}
