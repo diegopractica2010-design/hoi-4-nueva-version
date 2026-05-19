@@ -35,6 +35,10 @@ var _focus_presets: Dictionary = {}
 var _rules: Dictionary = {}
 ## National resource pool used to pay refinement / shakedown project costs.
 var national_stockpile: Dictionary = {}
+## unit_id -> { equipment_template_id: count } currently assigned to the formation.
+var _unit_equipment_stock: Dictionary = {}
+
+var _equipment_shortage_tracker := EquipmentShortageTracker.new()
 
 
 func _ready() -> void:
@@ -306,6 +310,66 @@ func pay_cost(cost: Dictionary) -> bool:
 	for resource in cost:
 		national_stockpile[resource] = float(national_stockpile.get(resource, 0.0)) - float(cost[resource])
 	return true
+
+
+# === Equipment shortages (formation readiness / organization) ===
+
+
+func set_unit_equipment_stock(unit_id: String, stock: Dictionary) -> void:
+	_unit_equipment_stock[unit_id] = {}
+	for equipment in stock:
+		_unit_equipment_stock[unit_id][str(equipment)] = int(stock[equipment])
+
+
+func get_unit_equipment_stock(unit_id: String) -> Dictionary:
+	var raw: Variant = _unit_equipment_stock.get(unit_id, {})
+	if typeof(raw) != TYPE_DICTIONARY:
+		return {}
+	return (raw as Dictionary).duplicate(true)
+
+
+func clear_unit_equipment_stock(unit_id: String) -> void:
+	_unit_equipment_stock.erase(unit_id)
+
+
+func get_division_required_equipment(division_template_id: String) -> Dictionary:
+	var supply := get_node_or_null("/root/SupplyManager")
+	if supply == null:
+		return {}
+	var loader: DivisionTemplateLoader = supply.division_templates
+	var div: DivisionTemplate = loader.get_division(division_template_id) if loader != null else null
+	if div == null:
+		return {}
+	return div.get_required_equipment()
+
+
+func get_unit_shortages(unit_id: String, required_equipment: Dictionary) -> Dictionary:
+	var current_stock := get_unit_equipment_stock(unit_id)
+	return _equipment_shortage_tracker.calculate_shortages(required_equipment, current_stock)
+
+
+func get_unit_readiness_penalty(unit_id: String, required_equipment: Dictionary) -> float:
+	var shortages := get_unit_shortages(unit_id, required_equipment)
+	return _equipment_shortage_tracker.get_readiness_from_shortages(shortages, required_equipment)
+
+
+func get_shortage_report(unit_id: String, required_equipment: Dictionary) -> Dictionary:
+	var shortages := get_unit_shortages(unit_id, required_equipment)
+	return {
+		"unit_id": unit_id,
+		"missing_equipment": shortages,
+		"readiness_multiplier": get_unit_readiness_penalty(unit_id, required_equipment),
+	}
+
+
+## Combat / evaluation hook: scale base readiness by equipment fill level.
+func apply_equipment_shortage_modifiers(
+	unit_id: String,
+	base_readiness: float,
+	required_equipment: Dictionary,
+) -> float:
+	var penalty := get_unit_readiness_penalty(unit_id, required_equipment)
+	return base_readiness * penalty
 
 
 func get_line_resource_cost_for_days(line_id: String, days: float) -> Dictionary:

@@ -104,9 +104,23 @@
 
 ---
 
-## 6. Next Development Priorities (Current Order)
+## 6. Equipment Shortages & Unit Readiness
 
-1. **Equipment Shortage & Unit Readiness** (Option 4) ← Next
+### Current Implementation
+- **`EquipmentShortageTracker`**: `calculate_shortages`, readiness multiplier (max ~70% penalty, floor 0.3), organization multiplier.
+- **`DivisionTemplate.required_equipment`** / **`UnitTemplate.required_equipment`**; divisions fall back to `equipment[]` counts when explicit dict is empty.
+- **`ProductionManager`**: per-unit stock (`set_unit_equipment_stock`), `get_unit_shortages`, `get_shortage_report`, `apply_equipment_shortage_modifiers` (combat hook).
+- Example formation: `us_infantry_division_1943` in `data/formations/division_templates.json`.
+
+### Future
+- Connect unit stock to production completions and national equipment pools.
+- Surface `get_shortage_report` on the Production Assignment UI.
+
+---
+
+## 7. Next Development Priorities (Current Order)
+
+1. ~~**Equipment Shortage & Unit Readiness** (Option 4)~~ (foundation done)
 2. Scenario loading + automatic factory spawning from 1918/1936 data
 3. Connect resource consumption to actual provincial stockpiles / Supply system
 4. ~~Enforce shipyard port location rules~~ (done)
@@ -116,7 +130,7 @@
 
 ---
 
-## 7. Open Design Questions
+## 8. Open Design Questions
 
 - ~~Should we allow building **new shipyards** in port provinces, or only converting existing factories?~~ **Both are supported** (build via `create_shipyard_for_province`, convert via `convert_factory_to_shipyard`).
 - How harsh should resource shortages become on **reliability** of finished units? (Current floor ~72%; tune in `production_cost_rules.json` → `resource_shortage`.)

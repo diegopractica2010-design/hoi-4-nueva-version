@@ -26,3 +26,7 @@ func load_all() -> void:
 		var div := DivisionTemplate.from_dict(entry)
 		if not div.id.is_empty():
 			divisions[div.id] = div
+
+
+func get_division(division_id: String) -> DivisionTemplate:
+	return divisions.get(division_id)

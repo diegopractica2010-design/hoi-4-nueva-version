@@ -13,6 +13,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_refinement(design_data) and ok
 	ok = _test_refinement_tradeoffs(design_data) and ok
 	ok = _test_production_manager() and ok
+	ok = _test_equipment_shortages() and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -236,6 +237,42 @@ static func _test_armed_merchant_template(design_data: DesignDataLoader) -> bool
 			armed.armed_weapon_slots,
 		)
 	return passed
+
+
+static func _test_equipment_shortages() -> bool:
+	var tracker := EquipmentShortageTracker.new()
+	var required := {"rifle": 100, "m4_sherman_medium": 10}
+	var stock := {"rifle": 80, "m4_sherman_medium": 10}
+	var shortages := tracker.calculate_shortages(required, stock)
+	if shortages.get("rifle", 0) != 20 or shortages.has("m4_sherman_medium"):
+		print("  [FAIL] equipment shortage calculation: ", shortages)
+		return false
+
+	var readiness := tracker.get_readiness_from_shortages(shortages, required)
+	if readiness <= 0.3 or readiness >= 1.0:
+		print("  [FAIL] readiness penalty out of range: ", readiness)
+		return false
+
+	var pm := _get_production_manager()
+	if pm == null:
+		print("  [PASS] equipment shortages (tracker only; no autoload)")
+		return true
+
+	pm.clear_unit_equipment_stock("test_div_1")
+	pm.set_unit_equipment_stock("test_div_1", stock)
+	var report: Dictionary = pm.get_shortage_report("test_div_1", required)
+	if int(report.get("missing_equipment", {}).get("rifle", 0)) != 20:
+		print("  [FAIL] ProductionManager shortage report: ", report)
+		return false
+
+	var modified := pm.apply_equipment_shortage_modifiers("test_div_1", 1.0, required)
+	if absf(modified - readiness) > 0.001:
+		print("  [FAIL] apply_equipment_shortage_modifiers: ", modified, " vs ", readiness)
+		return false
+
+	pm.clear_unit_equipment_stock("test_div_1")
+	print("  [PASS] equipment shortages and readiness penalties")
+	return true
 
 
 static func _test_refinement_tradeoffs(design_data: DesignDataLoader) -> bool:

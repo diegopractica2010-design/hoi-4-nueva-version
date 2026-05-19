@@ -23,6 +23,22 @@
       ]
     },
     {
+      "id": "us_infantry_division_1943",
+      "name": "US Infantry Division (1943)",
+      "manpower": 14253,
+      "support_supply_per_day": 78,
+      "required_equipment": {
+        "rifle": 12000,
+        "artillery_towed": 36,
+        "gmc_6x6_cargo_truck": 800,
+        "m4_sherman_medium": 50
+      },
+      "equipment": [
+        {"template_id": "m4_sherman_medium", "count": 50},
+        {"template_id": "gmc_6x6_cargo_truck", "count": 800}
+      ]
+    },
+    {
       "id": "sov_motor_rifle_modern",
       "name": "Motor Rifle Brigade (Modern)",
       "manpower": 4500,

@@ -23,6 +23,8 @@ extends Resource
 @export var production_era: String = ""
 @export var production_complexity: float = 1.0
 @export var daily_resource_cost: Dictionary = {}
+## Equipment template id -> count required to field this design at full strength.
+@export var required_equipment: Dictionary = {}
 
 
 func get_module_ids() -> Array[String]:
@@ -83,7 +85,12 @@ static func from_dict(data: Dictionary) -> UnitTemplate:
 	tpl.production_era = str(data.get("era", data.get("production_era", "")))
 	tpl.production_complexity = float(data.get("production_complexity", data.get("complexity", 1.0)))
 	tpl.daily_resource_cost = _dict_from_variant(data.get("daily_resource_cost", {}))
+	tpl.required_equipment = _dict_from_variant(data.get("required_equipment", {}))
 	return tpl
+
+
+func get_required_equipment() -> Dictionary:
+	return required_equipment.duplicate(true)
 
 
 func get_daily_resource_cost_dict() -> Dictionary:
