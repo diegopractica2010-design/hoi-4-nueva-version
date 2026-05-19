@@ -15,6 +15,7 @@ const MAX_SLOTS_PER_PROVINCE := 99
 @export var is_annexed: bool = false
 
 @export var assigned_lines: Array[String] = []
+@export var current_production_design: String = ""
 
 var current_efficiency: float = 1.0
 
@@ -25,15 +26,15 @@ static var _rules_loaded: bool = false
 
 
 static func make_id(province_id: int, slot: int) -> int:
-	return province_id * ID_SLOT_SCALE + slot
+	return province_id * 100 + slot
 
 
 static func province_from_id(factory_id: int) -> int:
-	return factory_id / ID_SLOT_SCALE if factory_id > 0 else 0
+	return factory_id / 100
 
 
 static func slot_from_id(factory_id: int) -> int:
-	return factory_id % ID_SLOT_SCALE if factory_id > 0 else 0
+	return factory_id % 100
 
 
 func apply_damage(amount: float) -> void:
@@ -64,6 +65,15 @@ func advance_repair(days: float, supply_connected: bool, rules: Dictionary = {})
 		if current_damage < float(repair_rules.get("min_repair_threshold_for_production", 30.0)):
 			current_damage = 0.0
 	_recalculate_efficiency()
+
+
+func get_daily_output_estimate() -> float:
+	## Rough daily throughput proxy until per-line rates are aggregated here.
+	return current_efficiency * maxf(float(assigned_lines.size()), 1.0)
+
+
+func sync_production_design(design_id: String) -> void:
+	current_production_design = design_id
 
 
 func _recalculate_efficiency() -> void:

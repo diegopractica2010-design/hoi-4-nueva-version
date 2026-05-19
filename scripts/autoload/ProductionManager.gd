@@ -391,14 +391,32 @@ func get_line_efficiency(line_id: String) -> float:
 
 
 func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
+	if factory_manager == null:
+		return false
+
+	var factory := factory_manager.get_factory(factory_id)
+	if factory == null:
+		push_warning("FactoryManager: Factory %d not found" % factory_id)
+		return false
+
 	var line := get_line(line_id)
 	if line == null:
+		push_warning("ProductionManager: line '%s' not found" % line_id)
 		return false
-	if factory_id == 0:
-		return false
+
 	line.factory_id = factory_id
-	if factory_manager:
-		return factory_manager.assign_production_line_to_factory(factory_id, line_id)
+	if not line.design_id.is_empty():
+		factory.sync_production_design(line.design_id)
+	elif not line.current_template_id.is_empty():
+		factory.sync_production_design(line.current_template_id)
+
+	if not factory_manager.assign_production_line_to_factory(factory_id, line_id):
+		return false
+
+	print(
+		"Assigned line '%s' to factory %d (Province %d, Slot %d)"
+		% [line_id, factory_id, Factory.province_from_id(factory_id), Factory.slot_from_id(factory_id)]
+	)
 	return true
 
 
@@ -406,3 +424,21 @@ func get_factory_efficiency(factory_id: int) -> float:
 	if factory_manager:
 		return factory_manager.get_factory_efficiency(factory_id)
 	return 1.0
+
+
+func get_factories_producing(design_id: String) -> Array[Factory]:
+	var result: Array[Factory] = []
+	if factory_manager == null or design_id.is_empty():
+		return result
+	for fid in factory_manager.factories:
+		var f: Factory = factory_manager.factories[fid]
+		if f != null and f.current_production_design == design_id:
+			result.append(f)
+	return result
+
+
+func get_total_output_for_design(design_id: String) -> float:
+	var total := 0.0
+	for f in get_factories_producing(design_id):
+		total += f.get_daily_output_estimate()
+	return total
