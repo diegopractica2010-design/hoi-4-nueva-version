@@ -17,6 +17,10 @@ signal refinement_completed(project_id: String, template_id: String, reliability
 var line_id: String = ""
 @export var factory_id: int = 0  # Encoded ID (e.g. 4201)
 @export var design_id: String = ""  # What this line is producing
+@export var progress: float = 0.0  # 0.0 to required_progress
+@export var completed_count: int = 0  # Items finished on this line (item-progression track)
+
+var required_progress: float = 100.0  # Scales from design data via refresh_required_progress()
 var current_template_id: String = ""
 var design_states: Dictionary = {}
 var retooling_days_remaining: float = 0.0
@@ -35,6 +39,25 @@ func _init(design_data: DesignDataLoader, p_line_id: String = "") -> void:
 	_design_data = design_data
 	line_id = p_line_id
 	_rules = design_data.production_rules if design_data else {}
+
+
+func reset_progress() -> void:
+	progress = 0.0
+
+
+func add_progress(amount: float) -> void:
+	if amount <= 0.0:
+		return
+	progress += amount
+
+
+func refresh_required_progress() -> void:
+	var days := get_days_per_unit()
+	if days >= 9999.0:
+		required_progress = 100.0
+	else:
+		# ~10 progress/day → one unit per template base_production_days
+		required_progress = maxf(days * 10.0, 1.0)
 
 
 func set_modifier_resolver(resolver: Callable) -> void:
@@ -86,6 +109,8 @@ func set_template(template_id: String) -> Dictionary:
 	_sync_factory_production_design()
 	custom_module_loadout.clear()
 	_ensure_design_state(template_id)
+	refresh_required_progress()
+	reset_progress()
 	result["success"] = true
 	return result
 

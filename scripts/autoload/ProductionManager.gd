@@ -11,13 +11,17 @@ signal modifier_registered(modifier_id: String, source: String)
 signal modifier_removed(modifier_id: String)
 signal day_advanced(report: Dictionary)
 signal family_experience_changed(family_id: String, total_units: int)
+signal production_completed(line_id: String, design_id: String, count: int)
+signal production_progress_updated(line_id: String, progress: float)
 
 const GLOBAL_MODIFIERS_PATH := "res://data/production/global_modifiers.json"
 const STANCE_TAG := "stance"
 
 var production_stance: String = "balanced"
 
+## Active production lines: line_id -> ProductionLine
 var _lines: Dictionary = {}
+const ITEM_PROGRESS_BASE_RATE := 10.0
 var _active_modifiers: Dictionary = {}
 var _family_units_produced: Dictionary = {}
 var _stance_presets: Dictionary = {}
@@ -413,6 +417,8 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 	if not factory_manager.assign_production_line_to_factory(factory_id, line_id):
 		return false
 
+	line.refresh_required_progress()
+
 	print(
 		"Assigned line '%s' to factory %d (Province %d, Slot %d)"
 		% [line_id, factory_id, Factory.province_from_id(factory_id), Factory.slot_from_id(factory_id)]
@@ -460,6 +466,8 @@ func reassign_factory(factory_id: int, new_design_id: String) -> bool:
 		var line := get_line(line_id)
 		if line != null:
 			line.design_id = new_design_id
+			if line.current_template_id == new_design_id:
+				line.refresh_required_progress()
 
 	print("Factory %d reassigned from '%s' → '%s'" % [factory_id, old_design, new_design_id])
 	return true
@@ -488,4 +496,56 @@ func get_design_production_info(design_id: String) -> Dictionary:
 		"concentration_bonus": get_concentration_bonus(design_id),
 		"effective_daily_output": get_effective_daily_output(design_id),
 		"factories": factories.map(func(f: Factory) -> int: return f.factory_id),
+	}
+
+
+func daily_production_tick() -> void:
+	advance_production(1.0)
+
+
+func advance_production(days: float) -> void:
+	if days <= 0.0:
+		return
+
+	for line_id in _lines:
+		var line: ProductionLine = _lines[line_id]
+		if line.factory_id == 0 or line.design_id.is_empty():
+			continue
+
+		if factory_manager == null:
+			continue
+		var factory := factory_manager.get_factory(line.factory_id)
+		if factory == null:
+			continue
+
+		var eff := line.get_factory_efficiency()
+		var conc_bonus := get_concentration_bonus(line.design_id)
+		var daily_progress := ITEM_PROGRESS_BASE_RATE * eff * conc_bonus * days
+		line.add_progress(daily_progress)
+		production_progress_updated.emit(line_id, line.progress)
+
+		while line.progress >= line.required_progress and line.required_progress > 0.0:
+			_complete_item(line, line_id)
+
+
+func _complete_item(line: ProductionLine, line_id: String) -> void:
+	line.completed_count += 1
+	line.progress -= line.required_progress
+	production_completed.emit(line_id, line.design_id, 1)
+	print("Production complete: %s (Total: %d)" % [line.design_id, line.completed_count])
+
+
+func get_line_progress_info(line_id: String) -> Dictionary:
+	var line := get_line(line_id)
+	if line == null:
+		return {}
+	var required := line.required_progress
+	return {
+		"line_id": line_id,
+		"design_id": line.design_id,
+		"factory_id": line.factory_id,
+		"progress": line.progress,
+		"required_progress": required,
+		"percent_complete": line.progress / required if required > 0.0 else 0.0,
+		"completed_count": line.completed_count,
 	}
