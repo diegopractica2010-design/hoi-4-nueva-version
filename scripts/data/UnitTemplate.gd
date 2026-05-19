@@ -82,14 +82,28 @@ static func from_dict(data: Dictionary) -> UnitTemplate:
 	return tpl
 
 
-func get_production_point_cost() -> float:
-	return ProductionCostCalculator.resolve_cost(self)
+func get_production_point_cost(
+	design_data: DesignDataLoader = null,
+	loadout_override: Dictionary = {},
+) -> float:
+	return ProductionCostCalculator.resolve_cost(self, design_data, loadout_override)
+
+
+func get_production_cost_breakdown(
+	design_data: DesignDataLoader = null,
+	loadout_override: Dictionary = {},
+) -> Dictionary:
+	return ProductionCostCalculator.resolve_cost_breakdown(self, design_data, loadout_override)
 
 
 func get_inferred_production_category() -> String:
 	if not production_category.is_empty():
 		return production_category
 	return ProductionCostCalculator.infer_category(self)
+
+
+func get_inferred_production_era() -> String:
+	return ProductionCostCalculator.infer_era(self)
 
 
 static func _dict_from_variant(raw: Variant) -> Dictionary:

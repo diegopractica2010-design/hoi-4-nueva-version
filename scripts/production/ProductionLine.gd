@@ -57,7 +57,9 @@ func refresh_design_production_cost() -> void:
 	if template == null:
 		design_production_cost = 100.0
 	else:
-		design_production_cost = template.get_production_point_cost()
+		design_production_cost = ProductionCostCalculator.resolve_cost(
+			template, _design_data, get_effective_loadout()
+		)
 	required_progress = design_production_cost
 
 
@@ -184,14 +186,17 @@ func _effective_module_ids() -> Array[String]:
 
 func set_slot_module(slot_name: String, module_id: String) -> void:
 	custom_module_loadout[slot_name] = module_id
+	refresh_design_production_cost()
 
 
 func clear_slot_module(slot_name: String) -> void:
 	custom_module_loadout[slot_name] = ""
+	refresh_design_production_cost()
 
 
 func clear_custom_loadout() -> void:
 	custom_module_loadout.clear()
+	refresh_design_production_cost()
 
 
 func get_reliability_profile() -> ReliabilityProfile:

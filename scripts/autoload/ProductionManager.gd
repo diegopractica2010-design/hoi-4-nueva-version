@@ -492,13 +492,21 @@ func get_effective_daily_output(design_id: String) -> float:
 func get_design_production_info(design_id: String) -> Dictionary:
 	var factories := get_factories_producing(design_id)
 	var template := GameData.design_data.get_template(design_id) if GameData.design_data else null
-	var unit_cost := template.get_production_point_cost() if template else 0.0
-	var category := template.get_inferred_production_category() if template else ""
+	var breakdown: Dictionary = (
+		template.get_production_cost_breakdown(GameData.design_data)
+		if template != null
+		else {}
+	)
+	var unit_cost := float(breakdown.get("total", 0.0))
+	var category := str(breakdown.get("category", ""))
+	var era := str(breakdown.get("era", ""))
 	var daily_pp := _get_base_daily_points() * get_concentration_bonus(design_id)
 	return {
 		"design_id": design_id,
 		"production_cost": unit_cost,
 		"production_category": category,
+		"production_era": era,
+		"cost_breakdown": breakdown,
 		"factory_count": factories.size(),
 		"base_daily_points": get_total_output_for_design(design_id),
 		"concentration_bonus": get_concentration_bonus(design_id),
@@ -552,6 +560,12 @@ func get_line_progress_info(line_id: String) -> Dictionary:
 	var line := get_line(line_id)
 	if line == null:
 		return {}
+	var template := line.get_current_template()
+	var cost_breakdown: Dictionary = (
+		template.get_production_cost_breakdown(GameData.design_data, line.get_effective_loadout())
+		if template != null
+		else {}
+	)
 	return {
 		"line_id": line_id,
 		"design_id": line.design_id,
@@ -561,6 +575,7 @@ func get_line_progress_info(line_id: String) -> Dictionary:
 		"required_progress": line.design_production_cost,
 		"percent_complete": line.get_progress_percent(),
 		"completed_count": line.completed_count,
+		"cost_breakdown": cost_breakdown,
 		"estimated_days_remaining": ProductionCostCalculator.estimate_build_days(
 			maxf(line.design_production_cost - line.progress, 0.0),
 			_get_base_daily_points() * line.get_factory_efficiency() * get_concentration_bonus(line.design_id),

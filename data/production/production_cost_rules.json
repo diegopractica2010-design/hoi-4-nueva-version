@@ -1,22 +1,67 @@
 {
   "base_daily_points": 12.0,
-  "category_costs": {
-    "infantry_equipment": { "base_cost": 12, "reference_days": 30 },
-    "light_vehicle": { "base_cost": 55, "reference_days": 40 },
-    "medium_tank": { "base_cost": 110, "reference_days": 75 },
-    "heavy_tank": { "base_cost": 215, "reference_days": 120 },
-    "fighter": { "base_cost": 75, "reference_days": 55 },
-    "bomber": { "base_cost": 275, "reference_days": 120 },
-    "destroyer": { "base_cost": 230, "reference_days": 110 },
-    "cruiser": { "base_cost": 500, "reference_days": 200 },
-    "battleship": { "base_cost": 1600, "reference_days": 300 },
-    "carrier": { "base_cost": 2000, "reference_days": 280 },
-    "submarine": { "base_cost": 280, "reference_days": 140 },
-    "rocket": { "base_cost": 450, "reference_days": 180 },
-    "space": { "base_cost": 350, "reference_days": 120 },
-    "default": { "base_cost": 100, "reference_days": 60 }
+  "base_costs": {
+    "infantry_equipment": 12,
+    "light_tank": 55,
+    "light_vehicle": 55,
+    "medium_tank": 110,
+    "heavy_tank": 180,
+    "fighter": 75,
+    "bomber": 180,
+    "destroyer": 230,
+    "cruiser": 480,
+    "battleship": 1600,
+    "carrier": 2000,
+    "submarine": 280,
+    "rocket": 450,
+    "space": 350,
+    "default": 100
+  },
+  "category_reference_days": {
+    "infantry_equipment": 30,
+    "light_tank": 40,
+    "medium_tank": 75,
+    "heavy_tank": 120,
+    "fighter": 55,
+    "bomber": 120,
+    "destroyer": 110,
+    "cruiser": 200,
+    "battleship": 300,
+    "carrier": 280,
+    "submarine": 140,
+    "rocket": 180,
+    "space": 120,
+    "default": 60
+  },
+  "era_multipliers": {
+    "ww1": 0.7,
+    "interwar": 0.85,
+    "ww2": 1.0,
+    "early_cold_war": 1.25,
+    "late_cold_war": 1.5,
+    "modern": 1.8,
+    "future": 2.2
+  },
+  "module_costs": {
+    "gun": 8,
+    "engine": 15,
+    "armor_plate": 12,
+    "fire_control": 25,
+    "radar": 30,
+    "advanced_electronics": 45,
+    "missile_system": 60,
+    "stealth_coating": 80,
+    "default": 6
+  },
+  "module_tier_scaling": {
+    "per_tier_bonus": 0.12
+  },
+  "complexity_penalty": {
+    "free_modules": 4,
+    "per_module_after": 0.08
   },
   "days_scale_exponent": 0.85,
   "min_days_factor": 0.5,
-  "max_days_factor": 3.5
+  "max_days_factor": 3.5,
+  "use_days_fine_tune": true
 }
