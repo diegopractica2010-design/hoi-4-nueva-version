@@ -1,0 +1,25 @@
+{
+  "id": "bf109_fighter",
+  "name": "Bf 109 Fighter",
+  "base_type": "Air",
+  "size_category": "Fighter",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 26,
+  "max_experience_level": 100,
+  "base_stats": {
+    "speed": 350,
+    "reliability": 72,
+    "fuel_consumption": 42,
+    "supply_need": 6,
+    "armor": 12,
+    "hardness": 12
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "Engine": { "max": 1 }
+  },
+  "unlock_tech": ["german_fighters_early"],
+  "is_vehicle": true,
+  "description": "Primary German fighter throughout the war. Fast and well-armed but limited range in early variants."
+}
