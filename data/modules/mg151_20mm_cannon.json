@@ -1,0 +1,14 @@
+{
+  "id": "mg151_20mm_cannon",
+  "name": "MG 151/20 20mm Cannon",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 22,
+  "hard_attack": 15,
+  "piercing": 28,
+  "air_attack": 28,
+  "cost": { "steel": 7 },
+  "production_time": 28,
+  "special_flags": ["good_aircraft_gun"],
+  "description": "Standard German aircraft cannon. Good balance of rate of fire and hitting power against aircraft."
+}
