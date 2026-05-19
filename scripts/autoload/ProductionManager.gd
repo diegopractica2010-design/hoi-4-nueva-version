@@ -390,17 +390,19 @@ func get_line_efficiency(line_id: String) -> float:
 	return line.get_factory_efficiency()
 
 
-func assign_line_to_factory(line_id: String, factory_id: String) -> bool:
+func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 	var line := get_line(line_id)
 	if line == null:
+		return false
+	if factory_id == 0:
 		return false
 	line.factory_id = factory_id
 	if factory_manager:
 		return factory_manager.assign_production_line_to_factory(factory_id, line_id)
-	return not factory_id.is_empty()
+	return true
 
 
-func get_factory_efficiency(factory_id: String) -> float:
+func get_factory_efficiency(factory_id: int) -> float:
 	if factory_manager:
 		return factory_manager.get_factory_efficiency(factory_id)
 	return 1.0

@@ -15,7 +15,7 @@ signal refinement_started(project_id: String, template_id: String)
 signal refinement_completed(project_id: String, template_id: String, reliability_gain: float)
 
 var line_id: String = ""
-var factory_id: String = ""  # Factory registry id (empty = no factory assignment)
+var factory_id: int = 0  # Province-scoped factory id (0 = no factory assignment)
 var design_id: String = ""  # Design/template being produced (mirrors current_template_id when set)
 var current_template_id: String = ""
 var design_states: Dictionary = {}
@@ -405,7 +405,7 @@ func _scaled_cost(raw: Variant, scale: float) -> Dictionary:
 
 
 func get_factory_efficiency() -> float:
-	if factory_id.is_empty():
+	if factory_id == 0:
 		return 1.0
 	var root := Engine.get_main_loop()
 	if root == null:

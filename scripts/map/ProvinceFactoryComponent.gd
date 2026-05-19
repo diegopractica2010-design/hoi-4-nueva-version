@@ -3,7 +3,7 @@
 ##
 ## Example (map/scenario loader, province_id is int):
 ##   var comp = FactoryManager.get_or_create_province_component(province_node, 42)
-##   var f = FactoryManager.create_factory_for_province(42, "GER")
+##   var f = FactoryManager.create_factory_for_province(42, "GER")  # factory_id e.g. 4201
 ##   comp.add_factory(f)
 class_name ProvinceFactoryComponent
 extends Node

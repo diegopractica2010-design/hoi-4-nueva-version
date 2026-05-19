@@ -2,7 +2,11 @@
 class_name Factory
 extends Resource
 
-@export var factory_id: String = ""
+## Province-scoped id: `province_id * ID_SLOT_SCALE + slot` (slot 1–99 per province). 0 = unset.
+const ID_SLOT_SCALE := 100
+const MAX_SLOTS_PER_PROVINCE := 99
+
+@export var factory_id: int = 0
 @export var province_id: int = 0  # Matches Province.id (map province key)
 @export var owner_tag: String = ""
 @export var is_seized: bool = false
@@ -18,6 +22,18 @@ const RULES_PATH := "res://data/production/factory_rules.json"
 
 static var _rules_cache: Dictionary = {}
 static var _rules_loaded: bool = false
+
+
+static func make_id(province_id: int, slot: int) -> int:
+	return province_id * ID_SLOT_SCALE + slot
+
+
+static func province_from_id(factory_id: int) -> int:
+	return factory_id / ID_SLOT_SCALE if factory_id > 0 else 0
+
+
+static func slot_from_id(factory_id: int) -> int:
+	return factory_id % ID_SLOT_SCALE if factory_id > 0 else 0
 
 
 func apply_damage(amount: float) -> void:

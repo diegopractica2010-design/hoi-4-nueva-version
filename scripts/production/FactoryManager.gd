@@ -2,14 +2,14 @@
 class_name FactoryManager
 extends Node
 
-signal factory_captured(factory_id: String, old_owner: String, new_owner: String)
-signal factory_repaired(factory_id: String)
-signal factory_damaged(factory_id: String, damage_amount: float)
+signal factory_captured(factory_id: int, old_owner: String, new_owner: String)
+signal factory_repaired(factory_id: int)
+signal factory_damaged(factory_id: int, damage_amount: float)
 
 @export var factory_rules_path: String = "res://data/production/factory_rules.json"
 
-var factories: Dictionary = {}  # factory_id -> Factory
-var province_to_factories: Dictionary = {}  # province_id (int) -> Array[String] factory_ids
+var factories: Dictionary = {}  # factory_id (int) -> Factory
+var province_to_factories: Dictionary = {}  # province_id (int) -> Array[int] factory_ids
 
 var rules: Dictionary = {}
 
@@ -34,7 +34,7 @@ func _load_rules() -> void:
 
 
 func register_factory(factory: Factory) -> void:
-	if factory == null or factory.factory_id.is_empty():
+	if factory == null or factory.factory_id == 0:
 		return
 	factories[factory.factory_id] = factory
 	var pid := factory.province_id
@@ -43,6 +43,10 @@ func register_factory(factory: Factory) -> void:
 	var ids: Array = province_to_factories[pid]
 	if factory.factory_id not in ids:
 		ids.append(factory.factory_id)
+
+
+func get_factory(factory_id: int) -> Factory:
+	return factories.get(factory_id)
 
 
 func get_factories_in_province(province_id: int) -> Array[Factory]:
@@ -56,7 +60,7 @@ func get_factories_in_province(province_id: int) -> Array[Factory]:
 	return result
 
 
-func apply_damage_to_factory(factory_id: String, damage: float) -> void:
+func apply_damage_to_factory(factory_id: int, damage: float) -> void:
 	var f: Factory = factories.get(factory_id)
 	if f == null:
 		return
@@ -92,14 +96,14 @@ func advance_repair_for_province(province_id: int, days: float, supply_connected
 			factory_repaired.emit(fid)
 
 
-func get_factory_efficiency(factory_id: String) -> float:
+func get_factory_efficiency(factory_id: int) -> float:
 	var f: Factory = factories.get(factory_id)
 	if f != null:
 		return f.current_efficiency
 	return 1.0
 
 
-func assign_production_line_to_factory(factory_id: String, line_id: String) -> bool:
+func assign_production_line_to_factory(factory_id: int, line_id: String) -> bool:
 	var f: Factory = factories.get(factory_id)
 	if f == null:
 		return false
@@ -109,9 +113,21 @@ func assign_production_line_to_factory(factory_id: String, line_id: String) -> b
 	return false
 
 
-func create_factory_for_province(province_id: int, owner_tag: String, factory_id: String = "") -> Factory:
+func create_factory_for_province(province_id: int, owner_tag: String, factory_id: int = 0) -> Factory:
+	var fid := factory_id
+	if fid == 0:
+		fid = _allocate_factory_id(province_id)
+	elif Factory.province_from_id(fid) != province_id:
+		push_warning(
+			"FactoryManager: factory_id %d does not match province_id %d; allocating new id"
+			% [fid, province_id],
+		)
+		fid = _allocate_factory_id(province_id)
+	if fid == 0:
+		return null
+
 	var new_factory := Factory.new()
-	new_factory.factory_id = factory_id if factory_id != "" else "factory_%d_%d" % [province_id, Time.get_unix_time_from_system()]
+	new_factory.factory_id = fid
 	new_factory.province_id = province_id
 	new_factory.owner_tag = owner_tag
 	new_factory.current_damage = 0.0
@@ -134,5 +150,19 @@ func register_factories_for_province(province_id: int, owner_tag: String, count:
 	var created: Array[Factory] = []
 	for i in count:
 		var f := create_factory_for_province(province_id, owner_tag)
-		created.append(f)
+		if f != null:
+			created.append(f)
 	return created
+
+
+func _allocate_factory_id(province_id: int) -> int:
+	var used: Dictionary = {}
+	if province_to_factories.has(province_id):
+		for fid in province_to_factories[province_id]:
+			used[fid] = true
+	for slot in range(1, Factory.MAX_SLOTS_PER_PROVINCE + 1):
+		var candidate := Factory.make_id(province_id, slot)
+		if not used.has(candidate) and not factories.has(candidate):
+			return candidate
+	push_warning("FactoryManager: no free factory slot in province %d" % province_id)
+	return 0
