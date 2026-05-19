@@ -63,5 +63,11 @@
     "trophy_aps_usa",
     "m829a4_apfsds"
   ],
-  "production_cost": 441.3
+  "production_cost": 441.3,
+  "daily_resource_cost": {
+    "steel": 9.31,
+    "aluminum": 2.48,
+    "fuel": 1.45,
+    "rubber": 0.62
+  }
 }

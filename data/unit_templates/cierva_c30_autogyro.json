@@ -42,5 +42,11 @@
     "wasp_r1340_carrier_scout",
     "cierva_autogyro_c30"
   ],
-  "production_cost": 74.0
+  "production_cost": 74.0,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

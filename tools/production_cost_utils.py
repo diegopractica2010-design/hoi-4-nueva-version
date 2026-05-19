@@ -207,6 +207,30 @@ def calculate_complexity_penalty(module_count: int, rules: dict) -> float:
     return extra * per_extra
 
 
+def calculate_daily_resource_cost(template: dict, rules: dict | None = None) -> dict:
+    if rules is None:
+        rules = load_production_rules()
+
+    embedded = template.get("daily_resource_cost", {})
+    if isinstance(embedded, dict) and embedded:
+        return dict(embedded)
+
+    category = _normalize_category(infer_category(template))
+    table = rules.get("resource_costs_per_day", {})
+    base = table.get(category, table.get("default", {}))
+    if not isinstance(base, dict):
+        return {}
+
+    era = infer_era(template)
+    era_mult = float(rules.get("era_multipliers", {}).get(era, 1.0))
+    modules = extract_modules(template)
+    module_factor = 1.0 + max(len(modules) - 2, 0) * 0.05
+    complexity = float(template.get("production_complexity", template.get("complexity", 1.0)))
+    scale = era_mult * module_factor * max(complexity, 0.1)
+
+    return {k: round(float(v) * scale, 2) for k, v in base.items()}
+
+
 def calculate_production_cost(template: dict, rules: dict | None = None) -> float:
     if rules is None:
         rules = load_production_rules()
@@ -238,11 +262,16 @@ def enrich_template(template: dict, rules: dict | None = None) -> dict:
         rules = load_production_rules()
 
     # Strip cached derived fields so inference always runs fresh.
-    tpl = {k: v for k, v in template.items() if k not in ("production_category", "era", "modules", "production_cost")}
+    tpl = {
+        k: v
+        for k, v in template.items()
+        if k not in ("production_category", "era", "modules", "production_cost", "daily_resource_cost")
+    }
     tpl["production_category"] = infer_category(tpl)
     tpl["era"] = infer_era(tpl)
     tpl["modules"] = extract_modules(tpl)
     tpl["production_cost"] = calculate_production_cost(tpl, rules)
+    tpl["daily_resource_cost"] = calculate_daily_resource_cost(tpl, rules)
     return tpl
 
 

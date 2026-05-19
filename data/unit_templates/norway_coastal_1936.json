@@ -56,5 +56,11 @@
     "uk_12inch_mk10",
     "carrier_boiler_yarrow"
   ],
-  "production_cost": 205.7
+  "production_cost": 205.7,
+  "daily_resource_cost": {
+    "steel": 6.8,
+    "aluminum": 1.7,
+    "fuel": 2.55,
+    "electronics": 0.68
+  }
 }

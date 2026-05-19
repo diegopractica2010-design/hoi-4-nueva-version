@@ -62,5 +62,11 @@
     "naval_fire_control_mk37",
     "scr_522_radio"
   ],
-  "production_cost": 1399.9
+  "production_cost": 1399.9,
+  "daily_resource_cost": {
+    "steel": 37.8,
+    "aluminum": 6.72,
+    "fuel": 10.08,
+    "electronics": 2.1
+  }
 }

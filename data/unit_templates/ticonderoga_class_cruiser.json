@@ -61,5 +61,11 @@
     "naval_belt_armor_scheme",
     "aegis_spy1_radar"
   ],
-  "production_cost": 741.2
+  "production_cost": 741.2,
+  "daily_resource_cost": {
+    "steel": 25.88,
+    "aluminum": 6.47,
+    "fuel": 8.62,
+    "electronics": 2.16
+  }
 }

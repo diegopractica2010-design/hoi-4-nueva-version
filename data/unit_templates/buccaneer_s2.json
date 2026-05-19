@@ -47,5 +47,11 @@
     "rolls_royce_mk104_buccaneer",
     "carrier_operations_kit"
   ],
-  "production_cost": 247.5
+  "production_cost": 247.5,
+  "daily_resource_cost": {
+    "steel": 3.94,
+    "aluminum": 5.25,
+    "fuel": 3.28,
+    "electronics": 1.31
+  }
 }

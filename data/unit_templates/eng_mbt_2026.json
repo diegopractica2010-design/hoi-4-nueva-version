@@ -61,5 +61,11 @@
     "challenger2_dorchester_mk2",
     "du_apfsds_gen4"
   ],
-  "production_cost": 387.0
+  "production_cost": 387.0,
+  "daily_resource_cost": {
+    "steel": 8.91,
+    "aluminum": 2.38,
+    "fuel": 1.39,
+    "rubber": 0.59
+  }
 }

@@ -45,5 +45,11 @@
     "f22a_package",
     "an_apg77_radar"
   ],
-  "production_cost": 171.0
+  "production_cost": 171.0,
+  "daily_resource_cost": {
+    "steel": 1.26,
+    "aluminum": 3.68,
+    "fuel": 1.05,
+    "electronics": 0.63
+  }
 }

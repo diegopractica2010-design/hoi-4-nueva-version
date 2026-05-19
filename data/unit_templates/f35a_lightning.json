@@ -45,5 +45,11 @@
     "pratt_f135_engine",
     "aesa_radar_gen1"
   ],
-  "production_cost": 157.5
+  "production_cost": 157.5,
+  "daily_resource_cost": {
+    "steel": 1.57,
+    "aluminum": 4.59,
+    "fuel": 1.31,
+    "electronics": 0.79
+  }
 }

@@ -62,5 +62,11 @@
     "pressure_hull_light",
     "wireless_set_no19"
   ],
-  "production_cost": 363.8
+  "production_cost": 363.8,
+  "daily_resource_cost": {
+    "steel": 5.04,
+    "aluminum": 1.26,
+    "fuel": 1.68,
+    "electronics": 1.01
+  }
 }

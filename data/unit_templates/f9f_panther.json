@@ -50,5 +50,11 @@
     "j48_turbojet_f9f",
     "carrier_operations_kit"
   ],
-  "production_cost": 116.2
+  "production_cost": 116.2,
+  "daily_resource_cost": {
+    "steel": 1.57,
+    "aluminum": 4.59,
+    "fuel": 1.31,
+    "electronics": 0.79
+  }
 }

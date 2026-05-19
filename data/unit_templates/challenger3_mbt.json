@@ -51,5 +51,11 @@
     "challenger3_armor",
     "hunter_killer_fcs"
   ],
-  "production_cost": 238.0
+  "production_cost": 238.0,
+  "daily_resource_cost": {
+    "steel": 4.95,
+    "aluminum": 1.32,
+    "fuel": 0.77,
+    "rubber": 0.33
+  }
 }

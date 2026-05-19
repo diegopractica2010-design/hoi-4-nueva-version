@@ -46,5 +46,11 @@
     "ddgx_combat_system",
     "aegis_bmd_package"
   ],
-  "production_cost": 372.0
+  "production_cost": 372.0,
+  "daily_resource_cost": {
+    "steel": 12.6,
+    "aluminum": 3.15,
+    "fuel": 4.73,
+    "electronics": 1.26
+  }
 }

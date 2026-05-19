@@ -48,5 +48,11 @@
     "merlin_xx_engine",
     "wireless_set_no19"
   ],
-  "production_cost": 207.0
+  "production_cost": 207.0,
+  "daily_resource_cost": {
+    "steel": 3.15,
+    "aluminum": 4.2,
+    "fuel": 2.62,
+    "electronics": 1.05
+  }
 }

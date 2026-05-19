@@ -50,5 +50,11 @@
     "yak141_freestyle_proto",
     "carrier_operations_kit"
   ],
-  "production_cost": 147.0
+  "production_cost": 147.0,
+  "daily_resource_cost": {
+    "steel": 1.26,
+    "aluminum": 3.68,
+    "fuel": 1.05,
+    "electronics": 0.63
+  }
 }

@@ -42,5 +42,11 @@
     "romanian_r2_tank_gun",
     "spa_diesel_v8_engine"
   ],
-  "production_cost": 66.3
+  "production_cost": 66.3,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 0.26,
+    "fuel": 0.17,
+    "rubber": 0.09
+  }
 }

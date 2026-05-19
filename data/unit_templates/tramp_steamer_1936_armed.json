@@ -53,5 +53,11 @@
     "liberty_ship_engine",
     "deck_gun_merchant_4inch"
   ],
-  "production_cost": 220.2
+  "production_cost": 220.2,
+  "daily_resource_cost": {
+    "steel": 7.14,
+    "aluminum": 1.78,
+    "fuel": 2.68,
+    "electronics": 0.71
+  }
 }

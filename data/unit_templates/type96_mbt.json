@@ -46,5 +46,11 @@
     "12150l_diesel",
     "type85_iim_armor"
   ],
-  "production_cost": 136.0
+  "production_cost": 136.0,
+  "daily_resource_cost": {
+    "steel": 2.62,
+    "aluminum": 0.84,
+    "fuel": 0.42,
+    "rubber": 0.21
+  }
 }

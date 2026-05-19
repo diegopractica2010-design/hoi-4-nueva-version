@@ -48,5 +48,11 @@
     "qf_6pdr_gun",
     "bedford_twin_six_engine"
   ],
-  "production_cost": 113.0
+  "production_cost": 113.0,
+  "daily_resource_cost": {
+    "steel": 2.12,
+    "aluminum": 0.68,
+    "fuel": 0.34,
+    "rubber": 0.17
+  }
 }

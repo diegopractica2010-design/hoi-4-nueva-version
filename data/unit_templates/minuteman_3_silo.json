@@ -57,5 +57,11 @@
     "minuteman_3_icbm",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 324.6
+  "production_cost": 324.6,
+  "daily_resource_cost": {
+    "steel": 2.48,
+    "aluminum": 0.62,
+    "fuel": 0.41,
+    "rubber": 0.21
+  }
 }

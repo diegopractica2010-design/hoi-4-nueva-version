@@ -51,5 +51,11 @@
     "sakae_radial_engine",
     "carrier_operations_kit"
   ],
-  "production_cost": 2037.0
+  "production_cost": 2037.0,
+  "daily_resource_cost": {
+    "steel": 41.8,
+    "aluminum": 11.0,
+    "fuel": 15.4,
+    "electronics": 3.3
+  }
 }

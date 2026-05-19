@@ -52,5 +52,11 @@
     "hotchkiss_8mm_mount",
     "renault_4cyl_ft_engine"
   ],
-  "production_cost": 58.8
+  "production_cost": 58.8,
+  "daily_resource_cost": {
+    "steel": 0.88,
+    "aluminum": 0.22,
+    "fuel": 0.15,
+    "rubber": 0.07
+  }
 }

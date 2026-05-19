@@ -45,5 +45,11 @@
     "shuttle_orbiter_package",
     "shuttle_orbiter_package"
   ],
-  "production_cost": 829.4
+  "production_cost": 829.4,
+  "daily_resource_cost": {
+    "steel": 6.93,
+    "aluminum": 11.55,
+    "electronics": 9.24,
+    "fuel": 4.62
+  }
 }

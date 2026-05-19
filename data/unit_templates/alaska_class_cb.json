@@ -60,5 +60,11 @@
     "naval_belt_armor_scheme",
     "naval_fire_control_mk37"
   ],
-  "production_cost": 375.8
+  "production_cost": 375.8,
+  "daily_resource_cost": {
+    "steel": 9.2,
+    "aluminum": 2.3,
+    "fuel": 3.45,
+    "electronics": 0.92
+  }
 }

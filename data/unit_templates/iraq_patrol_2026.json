@@ -58,5 +58,11 @@
     "exocet_sm39",
     "coast_guard_patrol_minor"
   ],
-  "production_cost": 446.4
+  "production_cost": 446.4,
+  "daily_resource_cost": {
+    "steel": 15.12,
+    "aluminum": 3.78,
+    "fuel": 5.67,
+    "electronics": 1.51
+  }
 }

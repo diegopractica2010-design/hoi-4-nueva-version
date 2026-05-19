@@ -53,5 +53,11 @@
     "mgcs_armor_package",
     "ai_targeting_suite"
   ],
-  "production_cost": 466.4
+  "production_cost": 466.4,
+  "daily_resource_cost": {
+    "steel": 10.89,
+    "aluminum": 2.9,
+    "fuel": 1.69,
+    "rubber": 0.73
+  }
 }

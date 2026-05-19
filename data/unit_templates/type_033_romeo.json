@@ -55,5 +55,11 @@
     "man_m6v40_uboat_diesel",
     "pressure_hull_fleet"
   ],
-  "production_cost": 440.0
+  "production_cost": 440.0,
+  "daily_resource_cost": {
+    "steel": 7.88,
+    "aluminum": 1.97,
+    "fuel": 2.62,
+    "electronics": 1.57
+  }
 }

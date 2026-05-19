@@ -59,5 +59,11 @@
     "man_m6v40_uboat_diesel",
     "type21_hydrodynamic_hull"
   ],
-  "production_cost": 412.0
+  "production_cost": 412.0,
+  "daily_resource_cost": {
+    "steel": 6.6,
+    "aluminum": 1.65,
+    "fuel": 2.2,
+    "electronics": 1.32
+  }
 }

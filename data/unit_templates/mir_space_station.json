@@ -45,5 +45,11 @@
     "soyuz_spacecraft_bus",
     "glonass_payload"
   ],
-  "production_cost": 809.6
+  "production_cost": 809.6,
+  "daily_resource_cost": {
+    "steel": 6.93,
+    "aluminum": 11.55,
+    "electronics": 9.24,
+    "fuel": 4.62
+  }
 }

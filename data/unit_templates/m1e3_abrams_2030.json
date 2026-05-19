@@ -57,5 +57,11 @@
     "ai_targeting_suite",
     "xm1147_amp_round"
   ],
-  "production_cost": 503.7
+  "production_cost": 503.7,
+  "daily_resource_cost": {
+    "steel": 11.38,
+    "aluminum": 3.04,
+    "fuel": 1.77,
+    "rubber": 0.76
+  }
 }

@@ -61,5 +61,11 @@
     "naval_belt_armor_scheme",
     "an_sps6_air_search"
   ],
-  "production_cost": 784.4
+  "production_cost": 784.4,
+  "daily_resource_cost": {
+    "steel": 25.88,
+    "aluminum": 6.47,
+    "fuel": 8.62,
+    "electronics": 2.16
+  }
 }

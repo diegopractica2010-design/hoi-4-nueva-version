@@ -52,5 +52,11 @@
     "ge_f414_super_hornet",
     "carrier_operations_kit"
   ],
-  "production_cost": 275.4
+  "production_cost": 275.4,
+  "daily_resource_cost": {
+    "steel": 2.38,
+    "aluminum": 6.93,
+    "fuel": 1.98,
+    "electronics": 1.19
+  }
 }

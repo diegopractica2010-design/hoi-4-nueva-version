@@ -48,5 +48,11 @@
     "mh60s_knighthawk_suite",
     "ge_f404_hornet"
   ],
-  "production_cost": 167.4
+  "production_cost": 167.4,
+  "daily_resource_cost": {
+    "steel": 2.27,
+    "aluminum": 6.62,
+    "fuel": 1.89,
+    "electronics": 1.13
+  }
 }

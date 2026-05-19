@@ -55,5 +55,11 @@
     "japanese_riveted_armor",
     "type3_ku_radio"
   ],
-  "production_cost": 151.0
+  "production_cost": 151.0,
+  "daily_resource_cost": {
+    "steel": 2.75,
+    "aluminum": 0.88,
+    "fuel": 0.44,
+    "rubber": 0.22
+  }
 }

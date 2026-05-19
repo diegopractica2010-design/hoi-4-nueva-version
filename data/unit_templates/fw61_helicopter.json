@@ -43,5 +43,11 @@
     "fw61_twin_intermeshing_rotor",
     "fw61_control_system"
   ],
-  "production_cost": 74.0
+  "production_cost": 74.0,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

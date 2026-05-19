@@ -47,5 +47,11 @@
     "autonomous_naval_helo_2030",
     "ge_f404_hornet"
   ],
-  "production_cost": 191.4
+  "production_cost": 191.4,
+  "daily_resource_cost": {
+    "steel": 2.64,
+    "aluminum": 7.7,
+    "fuel": 2.2,
+    "electronics": 1.32
+  }
 }

@@ -52,5 +52,11 @@
     "continental_r975_engine",
     "sherman_armor_plate"
   ],
-  "production_cost": 145.0
+  "production_cost": 145.0,
+  "daily_resource_cost": {
+    "steel": 2.62,
+    "aluminum": 0.84,
+    "fuel": 0.42,
+    "rubber": 0.21
+  }
 }

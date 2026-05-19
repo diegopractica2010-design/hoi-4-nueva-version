@@ -46,5 +46,11 @@
     "malyutka_at3_sagger",
     "v12_5_engine"
   ],
-  "production_cost": 123.0
+  "production_cost": 123.0,
+  "daily_resource_cost": {
+    "steel": 1.89,
+    "aluminum": 0.47,
+    "fuel": 0.32,
+    "rubber": 0.16
+  }
 }

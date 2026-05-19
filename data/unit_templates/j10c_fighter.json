@@ -45,5 +45,11 @@
     "j10c_package",
     "aesa_radar_gen1"
   ],
-  "production_cost": 145.3
+  "production_cost": 145.3,
+  "daily_resource_cost": {
+    "steel": 1.07,
+    "aluminum": 3.12,
+    "fuel": 0.89,
+    "electronics": 0.54
+  }
 }

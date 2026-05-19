@@ -46,5 +46,11 @@
     "long_march9_superheavy",
     "lunar_gateway_hab"
   ],
-  "production_cost": 915.2
+  "production_cost": 915.2,
+  "daily_resource_cost": {
+    "steel": 6.93,
+    "aluminum": 11.55,
+    "electronics": 9.24,
+    "fuel": 4.62
+  }
 }

@@ -47,5 +47,11 @@
     "sa_18_37mm_tank_gun",
     "renault_4cyl_ft_engine"
   ],
-  "production_cost": 66.3
+  "production_cost": 66.3,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 0.26,
+    "fuel": 0.17,
+    "rubber": 0.09
+  }
 }

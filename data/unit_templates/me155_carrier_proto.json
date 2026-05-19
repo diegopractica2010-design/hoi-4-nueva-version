@@ -50,5 +50,11 @@
     "me155_carrier_proto",
     "bf109t_carrier_package"
   ],
-  "production_cost": 2018.0
+  "production_cost": 2018.0,
+  "daily_resource_cost": {
+    "steel": 39.9,
+    "aluminum": 10.5,
+    "fuel": 14.7,
+    "electronics": 3.15
+  }
 }

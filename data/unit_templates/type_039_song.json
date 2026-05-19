@@ -58,5 +58,11 @@
     "man_m6v40_uboat_diesel",
     "passive_sonar_ww2"
   ],
-  "production_cost": 784.8
+  "production_cost": 784.8,
+  "daily_resource_cost": {
+    "steel": 11.88,
+    "aluminum": 2.97,
+    "fuel": 3.96,
+    "electronics": 2.38
+  }
 }

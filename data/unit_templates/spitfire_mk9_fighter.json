@@ -55,5 +55,11 @@
     "wireless_set_no19",
     "mk14_gyro_sight"
   ],
-  "production_cost": 125.3
+  "production_cost": 125.3,
+  "daily_resource_cost": {
+    "steel": 1.38,
+    "aluminum": 4.02,
+    "fuel": 1.15,
+    "electronics": 0.69
+  }
 }

@@ -40,5 +40,11 @@
     "meteor_missile",
     "eurofighter_typhoon"
   ],
-  "production_cost": 141.0
+  "production_cost": 141.0,
+  "daily_resource_cost": {
+    "steel": 1.2,
+    "aluminum": 3.5,
+    "fuel": 1.0,
+    "electronics": 0.6
+  }
 }

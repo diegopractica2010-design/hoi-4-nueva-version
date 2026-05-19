@@ -55,5 +55,11 @@
     "rolls_royce_meteor",
     "wireless_set_no19"
   ],
-  "production_cost": 136.0
+  "production_cost": 136.0,
+  "daily_resource_cost": {
+    "steel": 2.75,
+    "aluminum": 0.88,
+    "fuel": 0.44,
+    "rubber": 0.22
+  }
 }

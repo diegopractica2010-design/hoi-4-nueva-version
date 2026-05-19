@@ -348,6 +348,42 @@ static func _normalize_category(category: String) -> String:
 	return cat
 
 
+static func resolve_daily_resource_cost(template: UnitTemplate) -> Dictionary:
+	if template == null:
+		return {}
+	_load_rules()
+	if not template.daily_resource_cost.is_empty():
+		return template.daily_resource_cost.duplicate(true)
+	return resolve_daily_resource_cost_from_dict(_template_to_dict(template))
+
+
+static func resolve_daily_resource_cost_from_dict(template: Dictionary) -> Dictionary:
+	if template.is_empty():
+		return {}
+	var embedded: Variant = template.get("daily_resource_cost", {})
+	if typeof(embedded) == TYPE_DICTIONARY and not (embedded as Dictionary).is_empty():
+		return (embedded as Dictionary).duplicate(true)
+
+	_load_rules()
+	var category := _normalize_category(_infer_category_from_dict(template))
+	var table: Dictionary = _rules.get("resource_costs_per_day", {})
+	var base: Variant = table.get(category, table.get("default", {}))
+	if typeof(base) != TYPE_DICTIONARY:
+		return {}
+
+	var era := _infer_era_from_dict(template)
+	var era_mult := float(_rules.get("era_multipliers", {}).get(era, 1.0))
+	var module_ids := _extract_module_ids_from_dict(template)
+	var module_factor := 1.0 + maxf(float(module_ids.size() - 2), 0.0) * 0.05
+	var complexity := maxf(float(template.get("production_complexity", 1.0)), 0.1)
+	var scale := era_mult * module_factor * complexity
+
+	var out: Dictionary = {}
+	for resource in base:
+		out[resource] = snappedf(float(base[resource]) * scale, 0.01)
+	return out
+
+
 static func _load_rules() -> void:
 	if _loaded:
 		return

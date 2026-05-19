@@ -46,5 +46,11 @@
     "spike_lr2_atgm",
     "puma_ifv_package"
   ],
-  "production_cost": 130.0
+  "production_cost": 130.0,
+  "daily_resource_cost": {
+    "steel": 2.62,
+    "aluminum": 0.84,
+    "fuel": 0.42,
+    "rubber": 0.21
+  }
 }

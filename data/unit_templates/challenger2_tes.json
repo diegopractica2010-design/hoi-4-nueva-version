@@ -56,5 +56,11 @@
     "du_apfsds_gen4",
     "thermal_imager_an_vsg3"
   ],
-  "production_cost": 238.7
+  "production_cost": 238.7,
+  "daily_resource_cost": {
+    "steel": 5.17,
+    "aluminum": 1.38,
+    "fuel": 0.8,
+    "rubber": 0.34
+  }
 }

@@ -60,5 +60,11 @@
     "naval_belt_armor_scheme",
     "type055_destroyer_vls"
   ],
-  "production_cost": 1020.6
+  "production_cost": 1020.6,
+  "daily_resource_cost": {
+    "steel": 37.26,
+    "aluminum": 9.31,
+    "fuel": 12.42,
+    "electronics": 3.1
+  }
 }

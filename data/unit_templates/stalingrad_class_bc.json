@@ -59,5 +59,11 @@
     "mk15_torpedo_tube",
     "naval_fire_control_mk37"
   ],
-  "production_cost": 659.0
+  "production_cost": 659.0,
+  "daily_resource_cost": {
+    "steel": 16.56,
+    "aluminum": 4.14,
+    "fuel": 6.21,
+    "electronics": 1.66
+  }
 }

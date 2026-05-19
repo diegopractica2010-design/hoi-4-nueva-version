@@ -51,5 +51,11 @@
     "iss_destiny_lab",
     "gps_block1_payload"
   ],
-  "production_cost": 822.8
+  "production_cost": 822.8,
+  "daily_resource_cost": {
+    "steel": 7.26,
+    "aluminum": 12.1,
+    "electronics": 9.68,
+    "fuel": 4.84
+  }
 }

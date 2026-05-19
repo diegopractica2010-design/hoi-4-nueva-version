@@ -54,5 +54,11 @@
     "rd33mk_mig29k",
     "mig29k_india_avionics"
   ],
-  "production_cost": 178.2
+  "production_cost": 178.2,
+  "daily_resource_cost": {
+    "steel": 2.38,
+    "aluminum": 6.93,
+    "fuel": 1.98,
+    "electronics": 1.19
+  }
 }

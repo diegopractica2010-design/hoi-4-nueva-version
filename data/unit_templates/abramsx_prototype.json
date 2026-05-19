@@ -52,5 +52,11 @@
     "m1a2_sep_v4_armor",
     "ai_targeting_suite"
   ],
-  "production_cost": 212.0
+  "production_cost": 212.0,
+  "daily_resource_cost": {
+    "steel": 4.95,
+    "aluminum": 1.32,
+    "fuel": 0.77,
+    "rubber": 0.33
+  }
 }

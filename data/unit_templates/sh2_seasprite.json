@@ -49,5 +49,11 @@
     "sh2_seasprite_asw",
     "ge_f110_proto"
   ],
-  "production_cost": 213.8
+  "production_cost": 213.8,
+  "daily_resource_cost": {
+    "steel": 1.57,
+    "aluminum": 4.59,
+    "fuel": 1.31,
+    "electronics": 0.79
+  }
 }

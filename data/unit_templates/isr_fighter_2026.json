@@ -51,5 +51,11 @@
     "pratt_f135_engine",
     "f35i_adir_package"
   ],
-  "production_cost": 280.8
+  "production_cost": 280.8,
+  "daily_resource_cost": {
+    "steel": 2.27,
+    "aluminum": 6.62,
+    "fuel": 1.89,
+    "electronics": 1.13
+  }
 }

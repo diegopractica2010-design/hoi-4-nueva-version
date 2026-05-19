@@ -50,5 +50,11 @@
     "lewis_gun_mount",
     "wright_r1820_cyclone"
   ],
-  "production_cost": 107.1
+  "production_cost": 107.1,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

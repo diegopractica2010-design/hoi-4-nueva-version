@@ -58,5 +58,11 @@
     "spearfish_torpedo_uk",
     "towed_array_sonar"
   ],
-  "production_cost": 477.5
+  "production_cost": 477.5,
+  "daily_resource_cost": {
+    "steel": 8.25,
+    "aluminum": 2.06,
+    "fuel": 2.75,
+    "electronics": 1.65
+  }
 }

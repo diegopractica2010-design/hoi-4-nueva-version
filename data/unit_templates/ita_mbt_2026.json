@@ -58,5 +58,11 @@
     "mtu_mb873_engine",
     "scenario_export_mbt_2026"
   ],
-  "production_cost": 376.2
+  "production_cost": 376.2,
+  "daily_resource_cost": {
+    "steel": 8.51,
+    "aluminum": 2.27,
+    "fuel": 1.32,
+    "rubber": 0.57
+  }
 }

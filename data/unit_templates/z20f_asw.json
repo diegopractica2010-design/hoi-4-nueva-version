@@ -48,5 +48,11 @@
     "z20f_asw_suite",
     "ws10_proto_turbofan"
   ],
-  "production_cost": 307.8
+  "production_cost": 307.8,
+  "daily_resource_cost": {
+    "steel": 2.27,
+    "aluminum": 6.62,
+    "fuel": 1.89,
+    "electronics": 1.13
+  }
 }

@@ -45,5 +45,11 @@
     "j20a_operational",
     "aesa_radar_gen2"
   ],
-  "production_cost": 213.8
+  "production_cost": 213.8,
+  "daily_resource_cost": {
+    "steel": 1.57,
+    "aluminum": 4.59,
+    "fuel": 1.31,
+    "electronics": 0.79
+  }
 }

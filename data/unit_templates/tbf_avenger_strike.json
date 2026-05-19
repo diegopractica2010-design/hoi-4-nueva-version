@@ -51,5 +51,11 @@
     "wasp_r1340_carrier_scout",
     "carrier_operations_kit"
   ],
-  "production_cost": 312.0
+  "production_cost": 312.0,
+  "daily_resource_cost": {
+    "steel": 3.3,
+    "aluminum": 4.4,
+    "fuel": 2.75,
+    "electronics": 1.1
+  }
 }

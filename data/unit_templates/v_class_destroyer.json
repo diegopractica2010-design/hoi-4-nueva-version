@@ -58,5 +58,11 @@
     "carrier_boiler_yarrow",
     "naval_fire_control_mk37"
   ],
-  "production_cost": 228.9
+  "production_cost": 228.9,
+  "daily_resource_cost": {
+    "steel": 6.16,
+    "aluminum": 1.54,
+    "fuel": 2.31,
+    "electronics": 0.62
+  }
 }

@@ -46,5 +46,11 @@
     "m2_bradley_tow",
     "avds_1790_engine"
   ],
-  "production_cost": 69.7
+  "production_cost": 69.7,
+  "daily_resource_cost": {
+    "steel": 1.07,
+    "aluminum": 0.27,
+    "fuel": 0.18,
+    "rubber": 0.09
+  }
 }

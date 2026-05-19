@@ -48,5 +48,11 @@
     "ka52k_katran_naval",
     "al31f_engine"
   ],
-  "production_cost": 183.6
+  "production_cost": 183.6,
+  "daily_resource_cost": {
+    "steel": 2.27,
+    "aluminum": 6.62,
+    "fuel": 1.89,
+    "electronics": 1.13
+  }
 }

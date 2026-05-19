@@ -49,5 +49,11 @@
     "ka25_hormone_asw",
     "klimov_m105_engine"
   ],
-  "production_cost": 126.0
+  "production_cost": 126.0,
+  "daily_resource_cost": {
+    "steel": 0.88,
+    "aluminum": 2.57,
+    "fuel": 0.73,
+    "electronics": 0.44
+  }
 }

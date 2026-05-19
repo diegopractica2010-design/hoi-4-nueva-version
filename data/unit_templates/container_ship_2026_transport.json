@@ -48,5 +48,11 @@
     "merchant_full_cargo_hold",
     "modern_container_ship_engine"
   ],
-  "production_cost": 451.8
+  "production_cost": 451.8,
+  "daily_resource_cost": {
+    "steel": 14.4,
+    "aluminum": 3.6,
+    "fuel": 5.4,
+    "electronics": 1.44
+  }
 }

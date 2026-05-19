@@ -58,5 +58,11 @@
     "geared_steam_turbine_60k",
     "naval_fire_control_mk37"
   ],
-  "production_cost": 338.0
+  "production_cost": 338.0,
+  "daily_resource_cost": {
+    "steel": 8.8,
+    "aluminum": 2.2,
+    "fuel": 3.3,
+    "electronics": 0.88
+  }
 }

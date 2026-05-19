@@ -61,5 +61,11 @@
     "snorkel_fitting",
     "type21_hydrodynamic_hull"
   ],
-  "production_cost": 393.1
+  "production_cost": 393.1,
+  "daily_resource_cost": {
+    "steel": 6.9,
+    "aluminum": 1.72,
+    "fuel": 2.3,
+    "electronics": 1.38
+  }
 }

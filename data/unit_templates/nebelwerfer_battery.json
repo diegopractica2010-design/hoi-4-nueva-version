@@ -56,5 +56,11 @@
     "nebelwerfer_150mm",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 112.3
+  "production_cost": 112.3,
+  "daily_resource_cost": {
+    "steel": 1.38,
+    "aluminum": 0.34,
+    "fuel": 0.23,
+    "rubber": 0.11
+  }
 }

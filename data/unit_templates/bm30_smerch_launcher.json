@@ -56,5 +56,11 @@
     "bm30_smerch_300mm",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 202.2
+  "production_cost": 202.2,
+  "daily_resource_cost": {
+    "steel": 2.48,
+    "aluminum": 0.62,
+    "fuel": 0.41,
+    "rubber": 0.21
+  }
 }

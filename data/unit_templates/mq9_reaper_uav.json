@@ -40,5 +40,11 @@
     "ah64_hellfire",
     "mq9_reaper_package"
   ],
-  "production_cost": 74.0
+  "production_cost": 74.0,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

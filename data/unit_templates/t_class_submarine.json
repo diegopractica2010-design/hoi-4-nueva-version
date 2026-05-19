@@ -59,5 +59,11 @@
     "passive_sonar_ww2",
     "pressure_hull_fleet"
   ],
-  "production_cost": 477.4
+  "production_cost": 477.4,
+  "daily_resource_cost": {
+    "steel": 6.9,
+    "aluminum": 1.72,
+    "fuel": 2.3,
+    "electronics": 1.38
+  }
 }

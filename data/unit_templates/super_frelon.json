@@ -48,5 +48,11 @@
     "super_frelon_asw",
     "turbomeca_makila"
   ],
-  "production_cost": 119.7
+  "production_cost": 119.7,
+  "daily_resource_cost": {
+    "steel": 0.88,
+    "aluminum": 2.57,
+    "fuel": 0.73,
+    "electronics": 0.44
+  }
 }

@@ -58,5 +58,11 @@
     "stirling_aip_engine",
     "passive_sonar_ww2"
   ],
-  "production_cost": 801.0
+  "production_cost": 801.0,
+  "daily_resource_cost": {
+    "steel": 11.88,
+    "aluminum": 2.97,
+    "fuel": 3.96,
+    "electronics": 2.38
+  }
 }

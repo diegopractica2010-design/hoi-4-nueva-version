@@ -47,5 +47,11 @@
     "av1790_engine",
     "m48_patton_armor"
   ],
-  "production_cost": 268.8
+  "production_cost": 268.8,
+  "daily_resource_cost": {
+    "steel": 5.91,
+    "aluminum": 1.57,
+    "fuel": 0.92,
+    "rubber": 0.39
+  }
 }

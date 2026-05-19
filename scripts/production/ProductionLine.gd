@@ -20,6 +20,7 @@ var line_id: String = ""
 @export var progress: float = 0.0  # Accumulated Production Points toward current design
 @export var completed_count: int = 0  # Items finished on this line (item-progression track)
 @export var design_production_cost: float = 100.0  # PP required for one unit (from template data)
+@export var daily_resource_cost: Dictionary = {}  # Resources consumed per production day
 
 var required_progress: float = 100.0  # Alias for design_production_cost (legacy)
 var current_template_id: String = ""
@@ -56,10 +57,12 @@ func refresh_design_production_cost() -> void:
 	var template := get_current_template()
 	if template == null:
 		design_production_cost = 100.0
+		daily_resource_cost = {}
 	else:
 		design_production_cost = ProductionCostCalculator.resolve_cost(
 			template, _design_data, get_effective_loadout()
 		)
+		daily_resource_cost = template.get_daily_resource_cost_dict()
 	required_progress = design_production_cost
 
 

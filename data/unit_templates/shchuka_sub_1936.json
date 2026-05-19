@@ -55,5 +55,11 @@
     "g7a_torpedo_sub",
     "holland_diesel_electric"
   ],
-  "production_cost": 345.1
+  "production_cost": 345.1,
+  "daily_resource_cost": {
+    "steel": 5.35,
+    "aluminum": 1.34,
+    "fuel": 1.78,
+    "electronics": 1.07
+  }
 }

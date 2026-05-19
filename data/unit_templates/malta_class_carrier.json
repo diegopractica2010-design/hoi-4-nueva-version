@@ -59,5 +59,11 @@
     "type281_surface_radar",
     "carrier_aa_20mm_oerlikon"
   ],
-  "production_cost": 4022.1
+  "production_cost": 4022.1,
+  "daily_resource_cost": {
+    "steel": 78.66,
+    "aluminum": 20.7,
+    "fuel": 28.98,
+    "electronics": 6.21
+  }
 }

@@ -50,5 +50,11 @@
     "f8f_bearcat_engine",
     "carrier_operations_kit"
   ],
-  "production_cost": 104.0
+  "production_cost": 104.0,
+  "daily_resource_cost": {
+    "steel": 1.26,
+    "aluminum": 3.68,
+    "fuel": 1.05,
+    "electronics": 0.63
+  }
 }

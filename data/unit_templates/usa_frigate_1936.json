@@ -61,5 +61,11 @@
     "us_parsons_turbine",
     "naval_fire_control_mk37"
   ],
-  "production_cost": 287.3
+  "production_cost": 287.3,
+  "daily_resource_cost": {
+    "steel": 7.48,
+    "aluminum": 1.87,
+    "fuel": 2.81,
+    "electronics": 0.75
+  }
 }

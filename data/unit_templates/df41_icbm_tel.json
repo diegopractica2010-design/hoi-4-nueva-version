@@ -58,5 +58,12 @@
     "df41_icbm",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 1092.5
+  "production_cost": 1092.5,
+  "daily_resource_cost": {
+    "steel": 4.14,
+    "aluminum": 2.07,
+    "fuel": 3.1,
+    "electronics": 5.17,
+    "explosives": 6.21
+  }
 }

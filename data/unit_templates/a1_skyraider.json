@@ -46,5 +46,11 @@
     "pratt_whitney_r2800",
     "carrier_operations_kit"
   ],
-  "production_cost": 247.5
+  "production_cost": 247.5,
+  "daily_resource_cost": {
+    "steel": 3.94,
+    "aluminum": 5.25,
+    "fuel": 3.28,
+    "electronics": 1.31
+  }
 }

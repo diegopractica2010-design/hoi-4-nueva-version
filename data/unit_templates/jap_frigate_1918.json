@@ -59,5 +59,11 @@
     "ww1_18inch_torpedo",
     "ijn_kampon_turbine"
   ],
-  "production_cost": 392.7
+  "production_cost": 392.7,
+  "daily_resource_cost": {
+    "steel": 13.23,
+    "aluminum": 3.31,
+    "fuel": 4.41,
+    "electronics": 1.1
+  }
 }

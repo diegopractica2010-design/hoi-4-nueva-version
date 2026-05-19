@@ -52,5 +52,11 @@
     "liberty_l12_engine",
     "truck_rocket_mount"
   ],
-  "production_cost": 354.9
+  "production_cost": 354.9,
+  "daily_resource_cost": {
+    "steel": 13.23,
+    "aluminum": 3.31,
+    "fuel": 4.41,
+    "electronics": 1.1
+  }
 }

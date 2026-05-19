@@ -60,5 +60,11 @@
     "sea_viper_sam",
     "sea_viper_sam"
   ],
-  "production_cost": 837.9
+  "production_cost": 837.9,
+  "daily_resource_cost": {
+    "steel": 16.56,
+    "aluminum": 4.14,
+    "fuel": 6.21,
+    "electronics": 1.66
+  }
 }

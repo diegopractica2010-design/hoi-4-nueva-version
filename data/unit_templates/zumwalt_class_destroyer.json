@@ -63,5 +63,11 @@
     "zumwalt_stealth_hull",
     "aegis_bmd_package"
   ],
-  "production_cost": 732.9
+  "production_cost": 732.9,
+  "daily_resource_cost": {
+    "steel": 17.28,
+    "aluminum": 4.32,
+    "fuel": 6.48,
+    "electronics": 1.73
+  }
 }

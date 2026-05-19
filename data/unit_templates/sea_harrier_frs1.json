@@ -50,5 +50,11 @@
     "pegasus_harrier_engine",
     "sea_harrier_frs_package"
   ],
-  "production_cost": 176.2
+  "production_cost": 176.2,
+  "daily_resource_cost": {
+    "steel": 1.57,
+    "aluminum": 4.59,
+    "fuel": 1.31,
+    "electronics": 0.79
+  }
 }

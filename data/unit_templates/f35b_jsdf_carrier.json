@@ -51,5 +51,11 @@
     "pratt_f135_engine",
     "f35b_stovl_package"
   ],
-  "production_cost": 3745.8
+  "production_cost": 3745.8,
+  "daily_resource_cost": {
+    "steel": 71.82,
+    "aluminum": 18.9,
+    "fuel": 26.46,
+    "electronics": 5.67
+  }
 }

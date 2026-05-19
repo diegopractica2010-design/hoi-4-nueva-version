@@ -60,5 +60,11 @@
     "naval_belt_armor_scheme",
     "g7a_torpedo_sub"
   ],
-  "production_cost": 274.6
+  "production_cost": 274.6,
+  "daily_resource_cost": {
+    "steel": 7.48,
+    "aluminum": 1.87,
+    "fuel": 2.81,
+    "electronics": 0.75
+  }
 }

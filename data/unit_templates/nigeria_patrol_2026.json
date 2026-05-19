@@ -56,5 +56,11 @@
     "coast_guard_patrol_minor",
     "coast_guard_patrol_minor"
   ],
-  "production_cost": 435.6
+  "production_cost": 435.6,
+  "daily_resource_cost": {
+    "steel": 14.4,
+    "aluminum": 3.6,
+    "fuel": 5.4,
+    "electronics": 1.44
+  }
 }

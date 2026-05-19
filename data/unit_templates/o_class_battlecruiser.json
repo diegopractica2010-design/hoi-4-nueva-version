@@ -57,5 +57,11 @@
     "german_wagner_turbine",
     "naval_belt_armor_scheme"
   ],
-  "production_cost": 859.5
+  "production_cost": 859.5,
+  "daily_resource_cost": {
+    "steel": 29.7,
+    "aluminum": 7.43,
+    "fuel": 9.9,
+    "electronics": 2.48
+  }
 }

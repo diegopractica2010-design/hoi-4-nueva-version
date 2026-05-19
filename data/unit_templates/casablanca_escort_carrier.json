@@ -57,5 +57,11 @@
     "carrier_aa_20mm_oerlikon",
     "mk24_fido_torpedo"
   ],
-  "production_cost": 2286.4
+  "production_cost": 2286.4,
+  "daily_resource_cost": {
+    "steel": 43.7,
+    "aluminum": 11.5,
+    "fuel": 16.1,
+    "electronics": 3.45
+  }
 }

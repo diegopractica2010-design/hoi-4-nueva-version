@@ -56,5 +56,11 @@
     "bm13_katyusha_rack",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 122.0
+  "production_cost": 122.0,
+  "daily_resource_cost": {
+    "steel": 1.38,
+    "aluminum": 0.34,
+    "fuel": 0.23,
+    "rubber": 0.11
+  }
 }

@@ -61,5 +61,11 @@
     "ijn_kampon_turbine",
     "naval_radar_type22"
   ],
-  "production_cost": 243.9
+  "production_cost": 243.9,
+  "daily_resource_cost": {
+    "steel": 7.48,
+    "aluminum": 1.87,
+    "fuel": 2.81,
+    "electronics": 0.75
+  }
 }

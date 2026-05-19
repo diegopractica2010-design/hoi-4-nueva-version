@@ -55,5 +55,11 @@
     "carrier_wooden_flight_deck",
     "carrier_aa_20mm_oerlikon"
   ],
-  "production_cost": 1720.4
+  "production_cost": 1720.4,
+  "daily_resource_cost": {
+    "steel": 35.53,
+    "aluminum": 9.35,
+    "fuel": 13.09,
+    "electronics": 2.81
+  }
 }

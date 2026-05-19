@@ -40,5 +40,11 @@
     "red_top_missile",
     "pegasus_harrier_engine"
   ],
-  "production_cost": 225.0
+  "production_cost": 225.0,
+  "daily_resource_cost": {
+    "steel": 1.8,
+    "aluminum": 5.25,
+    "fuel": 1.5,
+    "electronics": 0.9
+  }
 }

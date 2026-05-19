@@ -46,5 +46,11 @@
     "mg08_machine_gun",
     "daimler_knight_engine"
   ],
-  "production_cost": 147.7
+  "production_cost": 147.7,
+  "daily_resource_cost": {
+    "steel": 3.31,
+    "aluminum": 0.88,
+    "fuel": 0.51,
+    "rubber": 0.22
+  }
 }

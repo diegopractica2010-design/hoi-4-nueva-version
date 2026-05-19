@@ -60,5 +60,11 @@
     "m1a2c_sep_v3_armor",
     "hunter_killer_fcs"
   ],
-  "production_cost": 432.0
+  "production_cost": 432.0,
+  "daily_resource_cost": {
+    "steel": 8.91,
+    "aluminum": 2.38,
+    "fuel": 1.39,
+    "rubber": 0.59
+  }
 }

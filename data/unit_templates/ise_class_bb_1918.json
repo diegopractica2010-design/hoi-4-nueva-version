@@ -60,5 +60,11 @@
     "ijn_kampon_turbine",
     "naval_deck_armor_scheme"
   ],
-  "production_cost": 1185.1
+  "production_cost": 1185.1,
+  "daily_resource_cost": {
+    "steel": 34.65,
+    "aluminum": 6.16,
+    "fuel": 9.24,
+    "electronics": 1.93
+  }
 }

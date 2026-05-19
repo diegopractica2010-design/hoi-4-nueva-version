@@ -57,5 +57,11 @@
     "type281_surface_radar",
     "sea_dart_sam"
   ],
-  "production_cost": 2853.9
+  "production_cost": 2853.9,
+  "daily_resource_cost": {
+    "steel": 54.62,
+    "aluminum": 14.38,
+    "fuel": 20.12,
+    "electronics": 4.31
+  }
 }

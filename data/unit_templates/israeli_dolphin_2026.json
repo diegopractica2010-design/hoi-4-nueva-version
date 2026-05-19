@@ -56,5 +56,11 @@
     "fuel_cell_aip_212",
     "passive_sonar_ww2"
   ],
-  "production_cost": 687.6
+  "production_cost": 687.6,
+  "daily_resource_cost": {
+    "steel": 11.88,
+    "aluminum": 2.97,
+    "fuel": 3.96,
+    "electronics": 2.38
+  }
 }

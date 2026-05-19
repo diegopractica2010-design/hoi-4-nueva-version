@@ -41,5 +41,11 @@
     "m1897_75mm_field_gun",
     "m1897_towed_carriage"
   ],
-  "production_cost": 48.3
+  "production_cost": 48.3,
+  "daily_resource_cost": {
+    "steel": 0.84,
+    "aluminum": 0.21,
+    "fuel": 0.14,
+    "rubber": 0.07
+  }
 }

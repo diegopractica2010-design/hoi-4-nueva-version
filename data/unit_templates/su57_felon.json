@@ -45,5 +45,11 @@
     "su57_package",
     "aesa_radar_gen1"
   ],
-  "production_cost": 146.2
+  "production_cost": 146.2,
+  "daily_resource_cost": {
+    "steel": 1.57,
+    "aluminum": 4.59,
+    "fuel": 1.31,
+    "electronics": 0.79
+  }
 }

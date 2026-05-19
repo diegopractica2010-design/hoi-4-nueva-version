@@ -60,5 +60,11 @@
     "nansen_frigate",
     "aegis_bmd_package"
   ],
-  "production_cost": 457.2
+  "production_cost": 457.2,
+  "daily_resource_cost": {
+    "steel": 15.84,
+    "aluminum": 3.96,
+    "fuel": 5.94,
+    "electronics": 1.58
+  }
 }

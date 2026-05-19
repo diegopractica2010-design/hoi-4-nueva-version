@@ -53,5 +53,11 @@
     "carrier_boiler_yarrow",
     "carrier_wooden_flight_deck"
   ],
-  "production_cost": 173.6
+  "production_cost": 173.6,
+  "daily_resource_cost": {
+    "steel": 5.88,
+    "aluminum": 1.47,
+    "fuel": 2.21,
+    "electronics": 0.59
+  }
 }

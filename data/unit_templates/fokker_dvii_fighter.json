@@ -40,5 +40,11 @@
     "spandau_lmg_08",
     "mercedes_diii_engine"
   ],
-  "production_cost": 67.2
+  "production_cost": 67.2,
+  "daily_resource_cost": {
+    "steel": 0.84,
+    "aluminum": 2.45,
+    "fuel": 0.7,
+    "electronics": 0.42
+  }
 }

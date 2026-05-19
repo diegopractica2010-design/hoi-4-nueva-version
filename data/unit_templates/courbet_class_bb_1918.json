@@ -60,5 +60,11 @@
     "naval_belt_armor_scheme",
     "wireless_set_no19"
   ],
-  "production_cost": 1141.0
+  "production_cost": 1141.0,
+  "daily_resource_cost": {
+    "steel": 34.65,
+    "aluminum": 6.16,
+    "fuel": 9.24,
+    "electronics": 1.93
+  }
 }

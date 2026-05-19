@@ -55,5 +55,11 @@
     "german_wagner_turbine",
     "naval_deck_armor_scheme"
   ],
-  "production_cost": 772.5
+  "production_cost": 772.5,
+  "daily_resource_cost": {
+    "steel": 28.35,
+    "aluminum": 7.09,
+    "fuel": 9.45,
+    "electronics": 2.36
+  }
 }

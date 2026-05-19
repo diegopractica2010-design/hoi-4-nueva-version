@@ -51,5 +51,11 @@
     "t62_cast_armor",
     "ballistic_computer_gpch"
   ],
-  "production_cost": 282.0
+  "production_cost": 282.0,
+  "daily_resource_cost": {
+    "steel": 4.12,
+    "aluminum": 1.32,
+    "fuel": 0.66,
+    "rubber": 0.33
+  }
 }

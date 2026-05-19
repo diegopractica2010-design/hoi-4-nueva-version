@@ -59,5 +59,11 @@
     "an_sps6_air_search",
     "carrier_aa_20mm_oerlikon"
   ],
-  "production_cost": 3975.5
+  "production_cost": 3975.5,
+  "daily_resource_cost": {
+    "steel": 78.66,
+    "aluminum": 20.7,
+    "fuel": 28.98,
+    "electronics": 6.21
+  }
 }

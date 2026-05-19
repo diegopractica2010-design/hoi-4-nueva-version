@@ -56,5 +56,11 @@
     "m270_mlrs",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 152.6
+  "production_cost": 152.6,
+  "daily_resource_cost": {
+    "steel": 1.72,
+    "aluminum": 0.43,
+    "fuel": 0.29,
+    "rubber": 0.14
+  }
 }

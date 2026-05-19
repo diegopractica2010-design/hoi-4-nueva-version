@@ -45,5 +45,11 @@
     "jumo_004_jet_engine",
     "fug_16_zyf_radio"
   ],
-  "production_cost": 102.0
+  "production_cost": 102.0,
+  "daily_resource_cost": {
+    "steel": 1.26,
+    "aluminum": 3.68,
+    "fuel": 1.05,
+    "electronics": 0.63
+  }
 }

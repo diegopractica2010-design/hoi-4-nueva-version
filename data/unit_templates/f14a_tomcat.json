@@ -52,5 +52,11 @@
     "tf30_f14_engine",
     "carrier_operations_kit"
   ],
-  "production_cost": 264.6
+  "production_cost": 264.6,
+  "daily_resource_cost": {
+    "steel": 2.38,
+    "aluminum": 6.93,
+    "fuel": 1.98,
+    "electronics": 1.19
+  }
 }

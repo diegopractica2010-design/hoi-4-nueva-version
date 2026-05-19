@@ -60,5 +60,11 @@
     "an_sps6_air_search",
     "mim23_hawk_sam"
   ],
-  "production_cost": 1001.2
+  "production_cost": 1001.2,
+  "daily_resource_cost": {
+    "steel": 31.05,
+    "aluminum": 7.76,
+    "fuel": 10.35,
+    "electronics": 2.59
+  }
 }

@@ -57,5 +57,11 @@
     "aesa_radar_gen1",
     "iris_t_slm"
   ],
-  "production_cost": 3072.0
+  "production_cost": 3072.0,
+  "daily_resource_cost": {
+    "steel": 62.7,
+    "aluminum": 16.5,
+    "fuel": 23.1,
+    "electronics": 4.95
+  }
 }

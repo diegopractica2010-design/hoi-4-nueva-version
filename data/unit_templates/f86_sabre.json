@@ -41,5 +41,11 @@
     "m2_browning_gun_pod",
     "rolls_royce_nene"
   ],
-  "production_cost": 111.2
+  "production_cost": 111.2,
+  "daily_resource_cost": {
+    "steel": 1.5,
+    "aluminum": 4.38,
+    "fuel": 1.25,
+    "electronics": 0.75
+  }
 }

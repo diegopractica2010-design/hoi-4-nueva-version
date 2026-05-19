@@ -63,5 +63,11 @@
     "naval_belt_armor_scheme",
     "fug_16_zyf_radio"
   ],
-  "production_cost": 1284.4
+  "production_cost": 1284.4,
+  "daily_resource_cost": {
+    "steel": 36.22,
+    "aluminum": 6.44,
+    "fuel": 9.66,
+    "electronics": 2.01
+  }
 }

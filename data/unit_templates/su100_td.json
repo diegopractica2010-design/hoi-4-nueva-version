@@ -41,5 +41,11 @@
     "d10t_100mm_gun",
     "v2_diesel_engine"
   ],
-  "production_cost": 133.0
+  "production_cost": 133.0,
+  "daily_resource_cost": {
+    "steel": 2.5,
+    "aluminum": 0.8,
+    "fuel": 0.4,
+    "rubber": 0.2
+  }
 }

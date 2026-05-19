@@ -47,5 +47,11 @@
     "flraa_maritime_proto",
     "osprey_mv22_package"
   ],
-  "production_cost": 191.4
+  "production_cost": 191.4,
+  "daily_resource_cost": {
+    "steel": 2.64,
+    "aluminum": 7.7,
+    "fuel": 2.2,
+    "electronics": 1.32
+  }
 }

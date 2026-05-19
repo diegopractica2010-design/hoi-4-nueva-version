@@ -34,5 +34,11 @@
   "production_category": "bomber",
   "era": "interwar",
   "modules": [],
-  "production_cost": 153.0
+  "production_cost": 153.0,
+  "daily_resource_cost": {
+    "steel": 2.55,
+    "aluminum": 3.4,
+    "fuel": 2.12,
+    "electronics": 0.85
+  }
 }

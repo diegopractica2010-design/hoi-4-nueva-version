@@ -51,5 +51,11 @@
     "halifax_asw_helo",
     "ge_f404_hornet"
   ],
-  "production_cost": 1036.8
+  "production_cost": 1036.8,
+  "daily_resource_cost": {
+    "steel": 34.02,
+    "aluminum": 8.51,
+    "fuel": 11.34,
+    "electronics": 2.83
+  }
 }

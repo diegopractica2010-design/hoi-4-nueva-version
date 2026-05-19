@@ -62,5 +62,11 @@
     "constellation_ffg_package",
     "aegis_bmd_package"
   ],
-  "production_cost": 552.1
+  "production_cost": 552.1,
+  "daily_resource_cost": {
+    "steel": 16.56,
+    "aluminum": 4.14,
+    "fuel": 6.21,
+    "electronics": 1.66
+  }
 }

@@ -60,5 +60,25 @@
     "free_modules": 4,
     "per_module_after": 0.08,
     "per_module_after_4": 0.08
+  },
+  "resource_costs_per_day": {
+    "infantry_equipment": { "steel": 0.4, "rubber": 0.2 },
+    "light_tank": { "steel": 1.2, "aluminum": 0.3, "fuel": 0.2, "rubber": 0.1 },
+    "medium_tank": { "steel": 2.5, "aluminum": 0.8, "fuel": 0.4, "rubber": 0.2 },
+    "heavy_tank": { "steel": 4.5, "aluminum": 1.2, "fuel": 0.7, "rubber": 0.3 },
+    "fighter": { "steel": 1.2, "aluminum": 3.5, "fuel": 1.0, "electronics": 0.6 },
+    "bomber": { "steel": 3.0, "aluminum": 4.0, "fuel": 2.5, "electronics": 1.0 },
+    "destroyer": { "steel": 8.0, "aluminum": 2.0, "fuel": 3.0, "electronics": 0.8 },
+    "cruiser": { "steel": 18.0, "aluminum": 4.5, "fuel": 6.0, "electronics": 1.5 },
+    "battleship": { "steel": 45.0, "aluminum": 8.0, "fuel": 12.0, "electronics": 2.5 },
+    "carrier": { "steel": 38.0, "aluminum": 10.0, "fuel": 14.0, "electronics": 3.0 },
+    "submarine": { "steel": 6.0, "aluminum": 1.5, "fuel": 2.0, "electronics": 1.2 },
+    "rocket": { "steel": 2.0, "aluminum": 1.0, "fuel": 1.5, "electronics": 2.5, "explosives": 3.0 },
+    "space": { "steel": 3.0, "aluminum": 5.0, "electronics": 4.0, "fuel": 2.0 },
+    "default": { "steel": 1.0, "aluminum": 0.5, "fuel": 0.3 }
+  },
+  "resource_shortage": {
+    "min_output_multiplier": 0.0,
+    "partial_efficiency_floor": 0.25
   }
 }

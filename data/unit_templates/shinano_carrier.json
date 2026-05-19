@@ -55,5 +55,11 @@
     "carrier_armored_flight_deck",
     "carrier_aa_bofors_40mm"
   ],
-  "production_cost": 2039.0
+  "production_cost": 2039.0,
+  "daily_resource_cost": {
+    "steel": 41.8,
+    "aluminum": 11.0,
+    "fuel": 15.4,
+    "electronics": 3.3
+  }
 }

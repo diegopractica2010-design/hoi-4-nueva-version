@@ -62,5 +62,11 @@
     "gmlrs_rocket_pod",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 248.5
+  "production_cost": 248.5,
+  "daily_resource_cost": {
+    "steel": 2.59,
+    "aluminum": 0.65,
+    "fuel": 0.43,
+    "rubber": 0.22
+  }
 }

@@ -46,5 +46,11 @@
     "ho3s_dragonfly_suite",
     "wasp_r1340_carrier_scout"
   ],
-  "production_cost": 60.9
+  "production_cost": 60.9,
+  "daily_resource_cost": {
+    "steel": 0.84,
+    "aluminum": 2.45,
+    "fuel": 0.7,
+    "electronics": 0.42
+  }
 }

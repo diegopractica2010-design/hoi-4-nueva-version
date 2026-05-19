@@ -46,5 +46,11 @@
     "gcas_tempest_engine",
     "cca_loyal_wingman"
   ],
-  "production_cost": 343.2
+  "production_cost": 343.2,
+  "daily_resource_cost": {
+    "steel": 2.77,
+    "aluminum": 8.09,
+    "fuel": 2.31,
+    "electronics": 1.39
+  }
 }

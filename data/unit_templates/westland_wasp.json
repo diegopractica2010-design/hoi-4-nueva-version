@@ -49,5 +49,11 @@
     "westland_wasp_asw",
     "rolls_royce_nene"
   ],
-  "production_cost": 119.7
+  "production_cost": 119.7,
+  "daily_resource_cost": {
+    "steel": 0.88,
+    "aluminum": 2.57,
+    "fuel": 0.73,
+    "electronics": 0.44
+  }
 }

@@ -59,5 +59,11 @@
     "type055_destroyer_vls",
     "geared_steam_turbine_60k"
   ],
-  "production_cost": 395.6
+  "production_cost": 395.6,
+  "daily_resource_cost": {
+    "steel": 11.5,
+    "aluminum": 2.88,
+    "fuel": 4.31,
+    "electronics": 1.15
+  }
 }

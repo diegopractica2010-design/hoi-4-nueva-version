@@ -50,5 +50,11 @@
     "hispano_mk2_cannon",
     "merlin_xx_engine"
   ],
-  "production_cost": 83.3
+  "production_cost": 83.3,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

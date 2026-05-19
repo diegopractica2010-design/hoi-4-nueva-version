@@ -48,5 +48,11 @@
     "aegis_spy1_radar",
     "aegis_bmd_package"
   ],
-  "production_cost": 3675.6
+  "production_cost": 3675.6,
+  "daily_resource_cost": {
+    "steel": 71.82,
+    "aluminum": 18.9,
+    "fuel": 26.46,
+    "electronics": 5.67
+  }
 }

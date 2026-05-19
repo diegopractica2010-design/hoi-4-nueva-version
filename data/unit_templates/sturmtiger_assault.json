@@ -41,5 +41,11 @@
     "sturmtiger_380mm_mortar",
     "maybach_hl230_engine"
   ],
-  "production_cost": 201.0
+  "production_cost": 201.0,
+  "daily_resource_cost": {
+    "steel": 4.5,
+    "aluminum": 1.2,
+    "fuel": 0.7,
+    "rubber": 0.3
+  }
 }

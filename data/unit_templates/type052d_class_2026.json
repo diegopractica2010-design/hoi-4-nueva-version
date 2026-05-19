@@ -60,5 +60,11 @@
     "type055_destroyer_vls",
     "hq9b_sam"
   ],
-  "production_cost": 554.4
+  "production_cost": 554.4,
+  "daily_resource_cost": {
+    "steel": 15.84,
+    "aluminum": 3.96,
+    "fuel": 5.94,
+    "electronics": 1.58
+  }
 }

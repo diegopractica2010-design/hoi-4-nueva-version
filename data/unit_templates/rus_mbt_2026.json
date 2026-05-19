@@ -58,5 +58,11 @@
     "v46_6m_diesel",
     "t90m_armor_package"
   ],
-  "production_cost": 370.8
+  "production_cost": 370.8,
+  "daily_resource_cost": {
+    "steel": 8.51,
+    "aluminum": 2.27,
+    "fuel": 1.32,
+    "rubber": 0.57
+  }
 }

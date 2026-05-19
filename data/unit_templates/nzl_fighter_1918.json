@@ -46,5 +46,11 @@
     "vickers_machine_gun",
     "rolls_royce_eagle_engine"
   ],
-  "production_cost": 68.6
+  "production_cost": 68.6,
+  "daily_resource_cost": {
+    "steel": 0.84,
+    "aluminum": 2.45,
+    "fuel": 0.7,
+    "electronics": 0.42
+  }
 }

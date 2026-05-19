@@ -57,5 +57,11 @@
     "geared_steam_turbine_60k",
     "pressure_hull_light"
   ],
-  "production_cost": 252.7
+  "production_cost": 252.7,
+  "daily_resource_cost": {
+    "steel": 4.41,
+    "aluminum": 1.1,
+    "fuel": 1.47,
+    "electronics": 0.88
+  }
 }

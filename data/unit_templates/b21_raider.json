@@ -45,5 +45,11 @@
     "b21_raider_package",
     "stealth_coating_proto"
   ],
-  "production_cost": 408.0
+  "production_cost": 408.0,
+  "daily_resource_cost": {
+    "steel": 4.73,
+    "aluminum": 6.3,
+    "fuel": 3.94,
+    "electronics": 1.58
+  }
 }

@@ -46,5 +46,11 @@
     "avds_1790_engine",
     "magach7_era"
   ],
-  "production_cost": 118.1
+  "production_cost": 118.1,
+  "daily_resource_cost": {
+    "steel": 2.23,
+    "aluminum": 0.71,
+    "fuel": 0.36,
+    "rubber": 0.18
+  }
 }

@@ -60,5 +60,11 @@
     "hybrid_steel_hull_virginia",
     "vls_missile_compartment"
   ],
-  "production_cost": 754.3
+  "production_cost": 754.3,
+  "daily_resource_cost": {
+    "steel": 12.42,
+    "aluminum": 3.1,
+    "fuel": 4.14,
+    "electronics": 2.48
+  }
 }

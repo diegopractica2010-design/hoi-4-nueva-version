@@ -59,5 +59,11 @@
     "naval_fire_control_mk37",
     "carrier_aa_20mm_oerlikon"
   ],
-  "production_cost": 466.6
+  "production_cost": 466.6,
+  "daily_resource_cost": {
+    "steel": 13.8,
+    "aluminum": 3.45,
+    "fuel": 5.17,
+    "electronics": 1.38
+  }
 }

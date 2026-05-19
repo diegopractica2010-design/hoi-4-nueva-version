@@ -48,5 +48,11 @@
     "mh60r_asw_helo_suite",
     "exocet_block2"
   ],
-  "production_cost": 489.6
+  "production_cost": 489.6,
+  "daily_resource_cost": {
+    "steel": 15.12,
+    "aluminum": 3.78,
+    "fuel": 5.67,
+    "electronics": 1.51
+  }
 }

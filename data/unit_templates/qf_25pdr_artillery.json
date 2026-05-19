@@ -40,5 +40,11 @@
     "qf_25pdr_gun",
     "m1897_towed_carriage"
   ],
-  "production_cost": 58.6
+  "production_cost": 58.6,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 0.26,
+    "fuel": 0.17,
+    "rubber": 0.09
+  }
 }

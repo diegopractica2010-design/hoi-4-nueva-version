@@ -42,5 +42,11 @@
     "de_bothezat_rotor_system",
     "de_bothezat_rotor_system"
   ],
-  "production_cost": 87.0
+  "production_cost": 87.0,
+  "daily_resource_cost": {
+    "steel": 1.2,
+    "aluminum": 3.5,
+    "fuel": 1.0,
+    "electronics": 0.6
+  }
 }

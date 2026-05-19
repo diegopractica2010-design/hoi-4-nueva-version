@@ -59,5 +59,11 @@
     "sea_viper_sam",
     "geared_steam_turbine_60k"
   ],
-  "production_cost": 523.3
+  "production_cost": 523.3,
+  "daily_resource_cost": {
+    "steel": 13.8,
+    "aluminum": 3.45,
+    "fuel": 5.17,
+    "electronics": 1.38
+  }
 }

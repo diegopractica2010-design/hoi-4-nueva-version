@@ -62,5 +62,11 @@
     "high_altitude_life_support",
     "scr_522_radio"
   ],
-  "production_cost": 250.6
+  "production_cost": 250.6,
+  "daily_resource_cost": {
+    "steel": 3.6,
+    "aluminum": 4.8,
+    "fuel": 3.0,
+    "electronics": 1.2
+  }
 }

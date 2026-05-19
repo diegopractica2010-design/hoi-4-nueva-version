@@ -55,5 +55,11 @@
     "carrier_armored_flight_deck",
     "sg_surface_radar"
   ],
-  "production_cost": 249.0
+  "production_cost": 249.0,
+  "daily_resource_cost": {
+    "steel": 7.48,
+    "aluminum": 1.87,
+    "fuel": 2.81,
+    "electronics": 0.75
+  }
 }

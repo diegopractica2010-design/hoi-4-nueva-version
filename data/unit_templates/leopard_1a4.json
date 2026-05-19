@@ -52,5 +52,11 @@
     "leopard1_armor",
     "laser_rangefinder_tank"
   ],
-  "production_cost": 223.5
+  "production_cost": 223.5,
+  "daily_resource_cost": {
+    "steel": 4.12,
+    "aluminum": 1.32,
+    "fuel": 0.66,
+    "rubber": 0.33
+  }
 }

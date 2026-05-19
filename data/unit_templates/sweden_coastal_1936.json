@@ -58,5 +58,11 @@
     "carrier_air_wing_bunker",
     "carrier_boiler_yarrow"
   ],
-  "production_cost": 210.8
+  "production_cost": 210.8,
+  "daily_resource_cost": {
+    "steel": 7.14,
+    "aluminum": 1.78,
+    "fuel": 2.68,
+    "electronics": 0.71
+  }
 }

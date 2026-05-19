@@ -40,5 +40,11 @@
     "aden_30mm_revolver",
     "rolls_royce_nene"
   ],
-  "production_cost": 108.8
+  "production_cost": 108.8,
+  "daily_resource_cost": {
+    "steel": 1.5,
+    "aluminum": 4.38,
+    "fuel": 1.25,
+    "electronics": 0.75
+  }
 }

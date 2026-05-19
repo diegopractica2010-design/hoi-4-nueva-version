@@ -62,5 +62,11 @@
     "pressure_hull_fleet",
     "fug_16_zyf_radio"
   ],
-  "production_cost": 519.7
+  "production_cost": 519.7,
+  "daily_resource_cost": {
+    "steel": 7.2,
+    "aluminum": 1.8,
+    "fuel": 2.4,
+    "electronics": 1.44
+  }
 }

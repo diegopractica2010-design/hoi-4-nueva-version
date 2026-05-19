@@ -51,5 +51,11 @@
     "amx30_armor",
     "laser_rangefinder_tank"
   ],
-  "production_cost": 213.0
+  "production_cost": 213.0,
+  "daily_resource_cost": {
+    "steel": 4.12,
+    "aluminum": 1.32,
+    "fuel": 0.66,
+    "rubber": 0.33
+  }
 }

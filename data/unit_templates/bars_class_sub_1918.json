@@ -55,5 +55,11 @@
     "whitehead_18in_torpedo",
     "holland_diesel_electric"
   ],
-  "production_cost": 284.2
+  "production_cost": 284.2,
+  "daily_resource_cost": {
+    "steel": 4.41,
+    "aluminum": 1.1,
+    "fuel": 1.47,
+    "electronics": 0.88
+  }
 }

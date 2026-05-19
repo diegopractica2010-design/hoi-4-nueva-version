@@ -52,5 +52,11 @@
     "tejas_naval_proto_package",
     "carrier_operations_kit"
   ],
-  "production_cost": 264.6
+  "production_cost": 264.6,
+  "daily_resource_cost": {
+    "steel": 2.27,
+    "aluminum": 6.62,
+    "fuel": 1.89,
+    "electronics": 1.13
+  }
 }

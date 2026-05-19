@@ -51,5 +51,11 @@
     "merchant_full_cargo_hold",
     "ww1_merchant_steamer"
   ],
-  "production_cost": 169.4
+  "production_cost": 169.4,
+  "daily_resource_cost": {
+    "steel": 5.6,
+    "aluminum": 1.4,
+    "fuel": 2.1,
+    "electronics": 0.56
+  }
 }

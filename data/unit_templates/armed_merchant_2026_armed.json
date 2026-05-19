@@ -57,5 +57,11 @@
     "merchant_ascm_launcher",
     "nasams_launcher"
   ],
-  "production_cost": 570.6
+  "production_cost": 570.6,
+  "daily_resource_cost": {
+    "steel": 15.84,
+    "aluminum": 3.96,
+    "fuel": 5.94,
+    "electronics": 1.58
+  }
 }

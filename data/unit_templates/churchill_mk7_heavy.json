@@ -57,5 +57,11 @@
     "churchill_cast_armor",
     "wireless_set_no19"
   ],
-  "production_cost": 243.0
+  "production_cost": 243.0,
+  "daily_resource_cost": {
+    "steel": 5.17,
+    "aluminum": 1.38,
+    "fuel": 0.8,
+    "rubber": 0.34
+  }
 }

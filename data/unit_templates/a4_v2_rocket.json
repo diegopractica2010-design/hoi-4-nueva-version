@@ -46,5 +46,12 @@
     "v2_guidance_package",
     "aggregat4_stage"
   ],
-  "production_cost": 1049.4
+  "production_cost": 1049.4,
+  "daily_resource_cost": {
+    "steel": 4.62,
+    "aluminum": 2.31,
+    "fuel": 3.47,
+    "electronics": 5.78,
+    "explosives": 6.93
+  }
 }

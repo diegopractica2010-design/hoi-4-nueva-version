@@ -60,5 +60,11 @@
     "type281_surface_radar",
     "carrier_aa_bofors_40mm"
   ],
-  "production_cost": 365.0
+  "production_cost": 365.0,
+  "daily_resource_cost": {
+    "steel": 9.2,
+    "aluminum": 2.3,
+    "fuel": 3.45,
+    "electronics": 0.92
+  }
 }

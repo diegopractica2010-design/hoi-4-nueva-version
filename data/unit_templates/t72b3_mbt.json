@@ -46,5 +46,11 @@
     "v46_6m_diesel",
     "t72b3_armor_package"
   ],
-  "production_cost": 115.6
+  "production_cost": 115.6,
+  "daily_resource_cost": {
+    "steel": 2.23,
+    "aluminum": 0.71,
+    "fuel": 0.36,
+    "rubber": 0.18
+  }
 }

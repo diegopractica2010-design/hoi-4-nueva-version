@@ -59,5 +59,11 @@
     "geared_steam_turbine_60k",
     "mk15_torpedo_tube"
   ],
-  "production_cost": 266.1
+  "production_cost": 266.1,
+  "daily_resource_cost": {
+    "steel": 7.14,
+    "aluminum": 1.78,
+    "fuel": 2.68,
+    "electronics": 0.71
+  }
 }

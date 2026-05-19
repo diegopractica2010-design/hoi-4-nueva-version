@@ -40,5 +40,12 @@
     "merlin1d_engine",
     "falcon_heavy_core"
   ],
-  "production_cost": 1036.2
+  "production_cost": 1036.2,
+  "daily_resource_cost": {
+    "steel": 4.4,
+    "aluminum": 2.2,
+    "fuel": 3.3,
+    "electronics": 5.5,
+    "explosives": 6.6
+  }
 }

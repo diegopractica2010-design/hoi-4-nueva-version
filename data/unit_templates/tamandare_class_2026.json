@@ -62,5 +62,11 @@
     "tamandare_class_brazil",
     "mim23_hawk_sam"
   ],
-  "production_cost": 610.4
+  "production_cost": 610.4,
+  "daily_resource_cost": {
+    "steel": 16.56,
+    "aluminum": 4.14,
+    "fuel": 6.21,
+    "electronics": 1.66
+  }
 }

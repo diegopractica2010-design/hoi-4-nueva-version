@@ -57,5 +57,11 @@
     "iron_dome_interceptor",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 219.7
+  "production_cost": 219.7,
+  "daily_resource_cost": {
+    "steel": 2.48,
+    "aluminum": 0.62,
+    "fuel": 0.41,
+    "rubber": 0.21
+  }
 }

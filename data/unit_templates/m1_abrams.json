@@ -56,5 +56,11 @@
     "thermal_imager_an_vsg3",
     "m829_apfsds"
   ],
-  "production_cost": 245.2
+  "production_cost": 245.2,
+  "daily_resource_cost": {
+    "steel": 5.17,
+    "aluminum": 1.38,
+    "fuel": 0.8,
+    "rubber": 0.34
+  }
 }

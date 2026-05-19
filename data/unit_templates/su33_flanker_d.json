@@ -52,5 +52,11 @@
     "al31fp_su33",
     "carrier_operations_kit"
   ],
-  "production_cost": 175.9
+  "production_cost": 175.9,
+  "daily_resource_cost": {
+    "steel": 1.12,
+    "aluminum": 3.27,
+    "fuel": 0.94,
+    "electronics": 0.56
+  }
 }

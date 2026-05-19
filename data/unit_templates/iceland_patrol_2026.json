@@ -56,5 +56,11 @@
     "coast_guard_patrol_minor",
     "aesa_radar_gen1"
   ],
-  "production_cost": 478.8
+  "production_cost": 478.8,
+  "daily_resource_cost": {
+    "steel": 14.4,
+    "aluminum": 3.6,
+    "fuel": 5.4,
+    "electronics": 1.44
+  }
 }

@@ -61,5 +61,11 @@
     "fug_16_zyf_radio",
     "naval_fire_control_mk37"
   ],
-  "production_cost": 1999.8
+  "production_cost": 1999.8,
+  "daily_resource_cost": {
+    "steel": 54.0,
+    "aluminum": 9.6,
+    "fuel": 14.4,
+    "electronics": 3.0
+  }
 }

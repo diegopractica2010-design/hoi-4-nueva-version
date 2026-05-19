@@ -62,5 +62,11 @@
     "aegis_bmd_package",
     "geared_steam_turbine_60k"
   ],
-  "production_cost": 569.6
+  "production_cost": 569.6,
+  "daily_resource_cost": {
+    "steel": 16.56,
+    "aluminum": 4.14,
+    "fuel": 6.21,
+    "electronics": 1.66
+  }
 }

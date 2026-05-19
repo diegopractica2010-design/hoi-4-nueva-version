@@ -60,5 +60,11 @@
     "leopard2a7_package",
     "hunter_killer_fcs"
   ],
-  "production_cost": 421.2
+  "production_cost": 421.2,
+  "daily_resource_cost": {
+    "steel": 8.91,
+    "aluminum": 2.38,
+    "fuel": 1.39,
+    "rubber": 0.59
+  }
 }

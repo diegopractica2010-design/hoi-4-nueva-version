@@ -51,5 +51,11 @@
     "merchant_full_cargo_hold",
     "liberty_ship_engine"
   ],
-  "production_cost": 213.3
+  "production_cost": 213.3,
+  "daily_resource_cost": {
+    "steel": 6.8,
+    "aluminum": 1.7,
+    "fuel": 2.55,
+    "electronics": 0.68
+  }
 }

@@ -49,5 +49,11 @@
     "tumansky_r27_yak38",
     "carrier_operations_kit"
   ],
-  "production_cost": 125.0
+  "production_cost": 125.0,
+  "daily_resource_cost": {
+    "steel": 1.07,
+    "aluminum": 3.12,
+    "fuel": 0.89,
+    "electronics": 0.54
+  }
 }

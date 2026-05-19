@@ -42,5 +42,11 @@
     "amx13_75mm_fl10",
     "renault_v6_engine"
   ],
-  "production_cost": 95.0
+  "production_cost": 95.0,
+  "daily_resource_cost": {
+    "steel": 1.5,
+    "aluminum": 0.38,
+    "fuel": 0.25,
+    "rubber": 0.12
+  }
 }

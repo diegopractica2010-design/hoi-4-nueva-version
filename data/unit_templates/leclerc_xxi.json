@@ -56,5 +56,11 @@
     "network_centric_warfare",
     "du_apfsds_gen4"
   ],
-  "production_cost": 169.6
+  "production_cost": 169.6,
+  "daily_resource_cost": {
+    "steel": 2.88,
+    "aluminum": 0.92,
+    "fuel": 0.46,
+    "rubber": 0.23
+  }
 }

@@ -53,5 +53,11 @@
     "scr_522_radio",
     "us_mark_iii_sight"
   ],
-  "production_cost": 101.0
+  "production_cost": 101.0,
+  "daily_resource_cost": {
+    "steel": 1.32,
+    "aluminum": 3.85,
+    "fuel": 1.1,
+    "electronics": 0.66
+  }
 }

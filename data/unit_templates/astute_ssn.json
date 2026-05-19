@@ -58,5 +58,11 @@
     "optronic_mast",
     "hybrid_steel_hull_virginia"
   ],
-  "production_cost": 644.4
+  "production_cost": 644.4,
+  "daily_resource_cost": {
+    "steel": 11.88,
+    "aluminum": 2.97,
+    "fuel": 3.96,
+    "electronics": 2.38
+  }
 }

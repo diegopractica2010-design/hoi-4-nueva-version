@@ -58,5 +58,11 @@
     "iris_t_slm",
     "fuel_cell_aip_212"
   ],
-  "production_cost": 611.6
+  "production_cost": 611.6,
+  "daily_resource_cost": {
+    "steel": 19.36,
+    "aluminum": 4.84,
+    "fuel": 7.26,
+    "electronics": 1.94
+  }
 }

@@ -56,5 +56,11 @@
     "shtora_soft_kill",
     "3bm42_mango_apfsds"
   ],
-  "production_cost": 159.8
+  "production_cost": 159.8,
+  "daily_resource_cost": {
+    "steel": 2.88,
+    "aluminum": 0.92,
+    "fuel": 0.46,
+    "rubber": 0.23
+  }
 }

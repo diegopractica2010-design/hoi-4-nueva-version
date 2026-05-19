@@ -53,5 +53,11 @@
     "v2_diesel_engine",
     "christie_suspension_bt"
   ],
-  "production_cost": 71.4
+  "production_cost": 71.4,
+  "daily_resource_cost": {
+    "steel": 1.07,
+    "aluminum": 0.27,
+    "fuel": 0.18,
+    "rubber": 0.09
+  }
 }

@@ -41,5 +41,12 @@
     "merlin1d_engine",
     "falcon9_stage_package"
   ],
-  "production_cost": 1036.2
+  "production_cost": 1036.2,
+  "daily_resource_cost": {
+    "steel": 4.4,
+    "aluminum": 2.2,
+    "fuel": 3.3,
+    "electronics": 5.5,
+    "explosives": 6.6
+  }
 }

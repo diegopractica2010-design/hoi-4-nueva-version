@@ -43,5 +43,11 @@
     "x47b_ucav_carrier",
     "ge_f404_hornet"
   ],
-  "production_cost": 2012.0
+  "production_cost": 2012.0,
+  "daily_resource_cost": {
+    "steel": 38.0,
+    "aluminum": 10.0,
+    "fuel": 14.0,
+    "electronics": 3.0
+  }
 }

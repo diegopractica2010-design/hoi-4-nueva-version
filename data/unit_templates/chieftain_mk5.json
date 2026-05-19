@@ -56,5 +56,11 @@
     "laser_rangefinder_tank",
     "hesh_fs_ammo"
   ],
-  "production_cost": 367.7
+  "production_cost": 367.7,
+  "daily_resource_cost": {
+    "steel": 7.76,
+    "aluminum": 2.07,
+    "fuel": 1.21,
+    "rubber": 0.52
+  }
 }

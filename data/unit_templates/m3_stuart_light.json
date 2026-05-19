@@ -47,5 +47,11 @@
     "75mm_m3_gun",
     "continental_r975_engine"
   ],
-  "production_cost": 78.0
+  "production_cost": 78.0,
+  "daily_resource_cost": {
+    "steel": 1.2,
+    "aluminum": 0.3,
+    "fuel": 0.2,
+    "rubber": 0.1
+  }
 }

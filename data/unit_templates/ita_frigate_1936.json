@@ -59,5 +59,11 @@
     "type93_long_lance",
     "ijn_kampon_turbine"
   ],
-  "production_cost": 218.4
+  "production_cost": 218.4,
+  "daily_resource_cost": {
+    "steel": 7.14,
+    "aluminum": 1.78,
+    "fuel": 2.68,
+    "electronics": 0.71
+  }
 }

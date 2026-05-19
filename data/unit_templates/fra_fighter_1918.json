@@ -48,5 +48,11 @@
     "hotchkiss_8mm_mount",
     "hispano_suiza_8a_engine"
   ],
-  "production_cost": 72.8
+  "production_cost": 72.8,
+  "daily_resource_cost": {
+    "steel": 0.88,
+    "aluminum": 2.57,
+    "fuel": 0.73,
+    "electronics": 0.44
+  }
 }

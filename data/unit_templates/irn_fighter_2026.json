@@ -50,5 +50,11 @@
     "aim54_phoenix",
     "tf30_f14_engine"
   ],
-  "production_cost": 172.8
+  "production_cost": 172.8,
+  "daily_resource_cost": {
+    "steel": 2.16,
+    "aluminum": 6.3,
+    "fuel": 1.8,
+    "electronics": 1.08
+  }
 }

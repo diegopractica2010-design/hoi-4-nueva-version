@@ -49,5 +49,11 @@
     "mh60s_knighthawk_suite",
     "aim120_amraam"
   ],
-  "production_cost": 3729.6
+  "production_cost": 3729.6,
+  "daily_resource_cost": {
+    "steel": 71.82,
+    "aluminum": 18.9,
+    "fuel": 26.46,
+    "electronics": 5.67
+  }
 }

@@ -40,5 +40,11 @@
     "pl2_air_air_missile",
     "wp7_turbojet_j7"
   ],
-  "production_cost": 119.8
+  "production_cost": 119.8,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

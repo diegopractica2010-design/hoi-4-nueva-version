@@ -57,5 +57,11 @@
     "us_parsons_turbine",
     "an_tps1_radar"
   ],
-  "production_cost": 468.5
+  "production_cost": 468.5,
+  "daily_resource_cost": {
+    "steel": 11.5,
+    "aluminum": 2.88,
+    "fuel": 4.31,
+    "electronics": 1.15
+  }
 }

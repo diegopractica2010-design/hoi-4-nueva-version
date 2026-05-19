@@ -45,5 +45,11 @@
     "su57_serial_package",
     "okhotnik_ucav"
   ],
-  "production_cost": 93.0
+  "production_cost": 93.0,
+  "daily_resource_cost": {
+    "steel": 1.26,
+    "aluminum": 3.68,
+    "fuel": 1.05,
+    "electronics": 0.63
+  }
 }

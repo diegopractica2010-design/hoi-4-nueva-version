@@ -51,5 +51,11 @@
     "tf34_intruder_engine",
     "scr_520_airborne_radar"
   ],
-  "production_cost": 296.2
+  "production_cost": 296.2,
+  "daily_resource_cost": {
+    "steel": 4.12,
+    "aluminum": 5.5,
+    "fuel": 3.44,
+    "electronics": 1.38
+  }
 }

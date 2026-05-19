@@ -40,5 +40,11 @@
     "r60_atoll_missile",
     "tumansky_r13_mig21"
   ],
-  "production_cost": 211.5
+  "production_cost": 211.5,
+  "daily_resource_cost": {
+    "steel": 1.8,
+    "aluminum": 5.25,
+    "fuel": 1.5,
+    "electronics": 0.9
+  }
 }

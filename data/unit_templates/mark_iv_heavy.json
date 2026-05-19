@@ -46,5 +46,11 @@
     "vickers_machine_gun",
     "daimler_knight_engine"
   ],
-  "production_cost": 146.3
+  "production_cost": 146.3,
+  "daily_resource_cost": {
+    "steel": 3.31,
+    "aluminum": 0.88,
+    "fuel": 0.51,
+    "rubber": 0.22
+  }
 }

@@ -49,5 +49,11 @@
     "super_frelon_asw",
     "mica_air_missile"
   ],
-  "production_cost": 407.5
+  "production_cost": 407.5,
+  "daily_resource_cost": {
+    "steel": 10.5,
+    "aluminum": 2.62,
+    "fuel": 3.94,
+    "electronics": 1.05
+  }
 }

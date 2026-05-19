@@ -42,5 +42,11 @@
     "weir_w5_proto_engine",
     "cierva_autogyro_c30"
   ],
-  "production_cost": 81.6
+  "production_cost": 81.6,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

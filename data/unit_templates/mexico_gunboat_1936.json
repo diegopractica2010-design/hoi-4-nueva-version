@@ -54,5 +54,11 @@
   "modules": [
     "interwar_coastal_patrol"
   ],
-  "production_cost": 200.6
+  "production_cost": 200.6,
+  "daily_resource_cost": {
+    "steel": 6.8,
+    "aluminum": 1.7,
+    "fuel": 2.55,
+    "electronics": 0.68
+  }
 }

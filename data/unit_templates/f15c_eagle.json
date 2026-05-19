@@ -45,5 +45,11 @@
     "aim9_sidewinder",
     "pratt_f100_f15"
   ],
-  "production_cost": 158.1
+  "production_cost": 158.1,
+  "daily_resource_cost": {
+    "steel": 1.07,
+    "aluminum": 3.12,
+    "fuel": 0.89,
+    "electronics": 0.54
+  }
 }

@@ -58,5 +58,11 @@
     "v46_6m_diesel",
     "t72b_kontakt5"
   ],
-  "production_cost": 360.0
+  "production_cost": 360.0,
+  "daily_resource_cost": {
+    "steel": 8.51,
+    "aluminum": 2.27,
+    "fuel": 1.32,
+    "rubber": 0.57
+  }
 }

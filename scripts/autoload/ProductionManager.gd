@@ -13,6 +13,7 @@ signal day_advanced(report: Dictionary)
 signal family_experience_changed(family_id: String, total_units: int)
 signal production_completed(line_id: String, design_id: String, count: int)
 signal production_progress_updated(line_id: String, progress: float)
+signal production_resource_shortage(line_id: String, missing: Dictionary)
 
 const GLOBAL_MODIFIERS_PATH := "res://data/production/global_modifiers.json"
 const STANCE_TAG := "stance"
@@ -302,6 +303,93 @@ func pay_cost(cost: Dictionary) -> bool:
 	for resource in cost:
 		national_stockpile[resource] = float(national_stockpile.get(resource, 0.0)) - float(cost[resource])
 	return true
+
+
+func get_line_resource_cost_for_days(line_id: String, days: float) -> Dictionary:
+	var line := get_line(line_id)
+	if line == null or line.daily_resource_cost.is_empty():
+		return {}
+	var scaled: Dictionary = {}
+	for resource in line.daily_resource_cost:
+		scaled[resource] = float(line.daily_resource_cost[resource]) * days
+	return scaled
+
+
+func evaluate_line_resources(line_id: String, days: float) -> Dictionary:
+	var line := get_line(line_id)
+	if line == null or line.daily_resource_cost.is_empty():
+		return {"output_multiplier": 1.0, "afforded": true, "fill_ratio": 1.0, "cost_paid": {}}
+
+	var needed := get_line_resource_cost_for_days(line_id, days)
+	if needed.is_empty():
+		return {"output_multiplier": 1.0, "afforded": true, "fill_ratio": 1.0, "cost_paid": {}}
+
+	var min_ratio := 1.0
+	for resource in needed:
+		var required := float(needed[resource])
+		if required <= 0.0:
+			continue
+		var have := float(national_stockpile.get(resource, 0.0))
+		min_ratio = minf(min_ratio, have / required)
+
+	var shortage_rules: Dictionary = ProductionCostCalculator.get_rules().get("resource_shortage", {})
+	var partial_floor := float(shortage_rules.get("partial_efficiency_floor", 0.25))
+
+	if min_ratio >= 1.0:
+		pay_cost(needed)
+		return {
+			"output_multiplier": 1.0,
+			"afforded": true,
+			"fill_ratio": 1.0,
+			"cost_paid": needed.duplicate(true),
+		}
+
+	if min_ratio <= 0.0:
+		production_resource_shortage.emit(line_id, needed)
+		return {
+			"output_multiplier": 0.0,
+			"afforded": false,
+			"fill_ratio": 0.0,
+			"cost_paid": {},
+		}
+
+	var paid: Dictionary = {}
+	for resource in needed:
+		var amount := float(needed[resource]) * min_ratio
+		paid[resource] = amount
+		national_stockpile[resource] = float(national_stockpile.get(resource, 0.0)) - amount
+
+	var output_mult := lerpf(partial_floor, 1.0, min_ratio)
+	return {
+		"output_multiplier": output_mult,
+		"afforded": true,
+		"fill_ratio": min_ratio,
+		"cost_paid": paid,
+	}
+
+
+func try_consume_resources_for_line(line_id: String, days: float) -> bool:
+	return float(evaluate_line_resources(line_id, days).get("output_multiplier", 0.0)) > 0.0
+
+
+func consume_resources_for_line(line_id: String, days: float) -> float:
+	return float(evaluate_line_resources(line_id, days).get("output_multiplier", 1.0))
+
+
+func preview_resource_fill_ratio(line_id: String, days: float) -> float:
+	var line := get_line(line_id)
+	if line == null or line.daily_resource_cost.is_empty():
+		return 1.0
+	var needed := get_line_resource_cost_for_days(line_id, days)
+	if needed.is_empty():
+		return 1.0
+	var min_ratio := 1.0
+	for resource in needed:
+		var required := float(needed[resource])
+		if required <= 0.0:
+			continue
+		min_ratio = minf(min_ratio, float(national_stockpile.get(resource, 0.0)) / required)
+	return clampf(min_ratio, 0.0, 1.0)
 
 
 func get_line_reliability_profile(line_id: String) -> ReliabilityProfile:
@@ -662,6 +750,7 @@ func get_design_production_info(design_id: String) -> Dictionary:
 	}
 
 
+## Game loop entry point: one day of national production (supply hooks can chain here later).
 func daily_production_tick() -> void:
 	advance_production(1.0)
 
@@ -686,10 +775,20 @@ func advance_production(days: float) -> void:
 
 		var base_efficiency := factory.current_efficiency
 		var current_eff := factory.get_current_efficiency() if factory.is_retooling else 1.0
+		var resource_mult := consume_resources_for_line(line_id, days)
+		if resource_mult <= 0.0:
+			continue
+
 		var concentration := get_concentration_bonus(line.design_id)
 		var slot_rush := get_concentrated_production_multiplier(line.factory_id, line.design_id)
 		var daily_points := (
-			_get_base_daily_points() * base_efficiency * current_eff * concentration * slot_rush * days
+			_get_base_daily_points()
+			* base_efficiency
+			* current_eff
+			* resource_mult
+			* concentration
+			* slot_rush
+			* days
 		)
 		line.add_progress(daily_points)
 		production_progress_updated.emit(line_id, line.progress)
@@ -725,6 +824,8 @@ func get_line_progress_info(line_id: String) -> Dictionary:
 		"factory_lines_used": factory.assigned_lines.size() if factory else 0,
 		"lines_on_same_design": get_lines_on_design_in_factory(line.factory_id, line.design_id),
 		"slot_rush_multiplier": get_concentrated_production_multiplier(line.factory_id, line.design_id),
+		"daily_resource_cost": line.daily_resource_cost.duplicate(true),
+		"resource_fill_ratio": preview_resource_fill_ratio(line_id, 1.0),
 		"progress": line.progress,
 		"design_production_cost": line.design_production_cost,
 		"required_progress": line.design_production_cost,

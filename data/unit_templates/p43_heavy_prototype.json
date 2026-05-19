@@ -46,5 +46,11 @@
     "spa_diesel_v8_engine",
     "italian_riveted_armor"
   ],
-  "production_cost": 213.0
+  "production_cost": 213.0,
+  "daily_resource_cost": {
+    "steel": 4.73,
+    "aluminum": 1.26,
+    "fuel": 0.73,
+    "rubber": 0.32
+  }
 }

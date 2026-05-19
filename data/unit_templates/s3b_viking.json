@@ -47,5 +47,11 @@
     "ge_f404_hornet",
     "s3b_viking_asw_suite"
   ],
-  "production_cost": 307.8
+  "production_cost": 307.8,
+  "daily_resource_cost": {
+    "steel": 2.27,
+    "aluminum": 6.62,
+    "fuel": 1.89,
+    "electronics": 1.13
+  }
 }

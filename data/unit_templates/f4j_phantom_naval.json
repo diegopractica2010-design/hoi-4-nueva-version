@@ -51,5 +51,11 @@
     "pratt_j79_phantom",
     "carrier_operations_kit"
   ],
-  "production_cost": 172.5
+  "production_cost": 172.5,
+  "daily_resource_cost": {
+    "steel": 1.65,
+    "aluminum": 4.81,
+    "fuel": 1.38,
+    "electronics": 0.82
+  }
 }

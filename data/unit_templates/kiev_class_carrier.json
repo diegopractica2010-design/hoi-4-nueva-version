@@ -49,5 +49,11 @@
     "ka27_helix_asw_suite",
     "r73_archer_missile"
   ],
-  "production_cost": 2620.0
+  "production_cost": 2620.0,
+  "daily_resource_cost": {
+    "steel": 49.88,
+    "aluminum": 13.12,
+    "fuel": 18.38,
+    "electronics": 3.94
+  }
 }

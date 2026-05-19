@@ -37,5 +37,11 @@
   "modules": [
     "kay_gyroglider_proto"
   ],
-  "production_cost": 56.7
+  "production_cost": 56.7,
+  "daily_resource_cost": {
+    "steel": 0.84,
+    "aluminum": 2.45,
+    "fuel": 0.7,
+    "electronics": 0.42
+  }
 }

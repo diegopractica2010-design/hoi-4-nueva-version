@@ -57,5 +57,11 @@
     "naval_radar_type22",
     "carrier_aa_20mm_oerlikon"
   ],
-  "production_cost": 2228.0
+  "production_cost": 2228.0,
+  "daily_resource_cost": {
+    "steel": 43.7,
+    "aluminum": 11.5,
+    "fuel": 16.1,
+    "electronics": 3.45
+  }
 }

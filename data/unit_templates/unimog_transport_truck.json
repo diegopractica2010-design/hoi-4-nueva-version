@@ -52,5 +52,11 @@
     "maybach_hl120_trm",
     "truck_rocket_mount"
   ],
-  "production_cost": 51.1
+  "production_cost": 51.1,
+  "daily_resource_cost": {
+    "steel": 0.88,
+    "aluminum": 0.22,
+    "fuel": 0.15,
+    "rubber": 0.07
+  }
 }

@@ -62,5 +62,11 @@
     "s400_triumf",
     "geared_steam_turbine_60k"
   ],
-  "production_cost": 522.9
+  "production_cost": 522.9,
+  "daily_resource_cost": {
+    "steel": 16.56,
+    "aluminum": 4.14,
+    "fuel": 6.21,
+    "electronics": 1.66
+  }
 }

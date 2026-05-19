@@ -59,5 +59,11 @@
     "ww1_18inch_torpedo",
     "carrier_boiler_yarrow"
   ],
-  "production_cost": 211.4
+  "production_cost": 211.4,
+  "daily_resource_cost": {
+    "steel": 5.88,
+    "aluminum": 1.47,
+    "fuel": 2.21,
+    "electronics": 0.59
+  }
 }

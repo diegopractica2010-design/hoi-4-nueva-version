@@ -61,5 +61,11 @@
     "passive_sonar_ww2",
     "anechoic_tiles"
   ],
-  "production_cost": 419.0
+  "production_cost": 419.0,
+  "daily_resource_cost": {
+    "steel": 6.9,
+    "aluminum": 1.72,
+    "fuel": 2.3,
+    "electronics": 1.38
+  }
 }

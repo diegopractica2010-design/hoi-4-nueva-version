@@ -59,5 +59,11 @@
     "naval_fire_control_mk37",
     "wireless_set_no19"
   ],
-  "production_cost": 1797.1
+  "production_cost": 1797.1,
+  "daily_resource_cost": {
+    "steel": 51.75,
+    "aluminum": 9.2,
+    "fuel": 13.8,
+    "electronics": 2.88
+  }
 }

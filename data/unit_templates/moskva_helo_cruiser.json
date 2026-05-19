@@ -49,5 +49,11 @@
     "ka25_hormone_asw",
     "hq2_sam"
   ],
-  "production_cost": 720.0
+  "production_cost": 720.0,
+  "daily_resource_cost": {
+    "steel": 23.62,
+    "aluminum": 5.91,
+    "fuel": 7.88,
+    "electronics": 1.97
+  }
 }

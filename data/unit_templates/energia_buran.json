@@ -41,5 +41,11 @@
     "energia_booster",
     "buran_orbiter"
   ],
-  "production_cost": 796.4
+  "production_cost": 796.4,
+  "daily_resource_cost": {
+    "steel": 6.6,
+    "aluminum": 11.0,
+    "electronics": 8.8,
+    "fuel": 4.4
+  }
 }

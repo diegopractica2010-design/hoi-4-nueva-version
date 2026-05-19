@@ -58,5 +58,11 @@
     "carrier_boiler_yarrow",
     "naval_belt_armor_scheme"
   ],
-  "production_cost": 215.9
+  "production_cost": 215.9,
+  "daily_resource_cost": {
+    "steel": 7.14,
+    "aluminum": 1.78,
+    "fuel": 2.68,
+    "electronics": 0.71
+  }
 }

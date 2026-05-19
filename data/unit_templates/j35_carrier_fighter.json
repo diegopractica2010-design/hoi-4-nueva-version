@@ -50,5 +50,11 @@
     "j35_carrier_fighter",
     "carrier_operations_kit"
   ],
-  "production_cost": 2072.0
+  "production_cost": 2072.0,
+  "daily_resource_cost": {
+    "steel": 39.9,
+    "aluminum": 10.5,
+    "fuel": 14.7,
+    "electronics": 3.15
+  }
 }

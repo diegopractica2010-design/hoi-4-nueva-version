@@ -61,5 +61,11 @@
     "hybrid_steel_hull_virginia",
     "lockheed_martin_orca_uuv"
   ],
-  "production_cost": 589.7
+  "production_cost": 589.7,
+  "daily_resource_cost": {
+    "steel": 10.35,
+    "aluminum": 2.59,
+    "fuel": 3.45,
+    "electronics": 2.07
+  }
 }

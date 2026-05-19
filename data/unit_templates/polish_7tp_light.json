@@ -42,5 +42,11 @@
     "bofors_37mm_at",
     "spa_diesel_v8_engine"
   ],
-  "production_cost": 64.6
+  "production_cost": 64.6,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 0.26,
+    "fuel": 0.17,
+    "rubber": 0.09
+  }
 }

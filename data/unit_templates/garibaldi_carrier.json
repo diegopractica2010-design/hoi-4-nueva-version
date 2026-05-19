@@ -47,5 +47,11 @@
     "ab212_asw_italy",
     "aim9_sidewinder"
   ],
-  "production_cost": 2601.2
+  "production_cost": 2601.2,
+  "daily_resource_cost": {
+    "steel": 49.88,
+    "aluminum": 13.12,
+    "fuel": 18.38,
+    "electronics": 3.94
+  }
 }

@@ -47,5 +47,11 @@
     "meteor_mk4_engine",
     "centurion_glacis_armor"
   ],
-  "production_cost": 181.2
+  "production_cost": 181.2,
+  "daily_resource_cost": {
+    "steel": 3.28,
+    "aluminum": 1.05,
+    "fuel": 0.53,
+    "rubber": 0.26
+  }
 }

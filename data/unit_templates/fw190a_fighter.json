@@ -50,5 +50,11 @@
     "bmw_801_radial_engine",
     "fug_16_zyf_radio"
   ],
-  "production_cost": 112.0
+  "production_cost": 112.0,
+  "daily_resource_cost": {
+    "steel": 1.32,
+    "aluminum": 3.85,
+    "fuel": 1.1,
+    "electronics": 0.66
+  }
 }

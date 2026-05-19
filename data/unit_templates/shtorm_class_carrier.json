@@ -59,5 +59,11 @@
     "aesa_radar_gen1",
     "s400_triumf"
   ],
-  "production_cost": 4004.6
+  "production_cost": 4004.6,
+  "daily_resource_cost": {
+    "steel": 78.66,
+    "aluminum": 20.7,
+    "fuel": 28.98,
+    "electronics": 6.21
+  }
 }

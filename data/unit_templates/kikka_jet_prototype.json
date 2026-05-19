@@ -40,5 +40,11 @@
     "type99_mk2_cannon",
     "ne20_jet_engine"
   ],
-  "production_cost": 98.0
+  "production_cost": 98.0,
+  "daily_resource_cost": {
+    "steel": 1.2,
+    "aluminum": 3.5,
+    "fuel": 1.0,
+    "electronics": 0.6
+  }
 }

@@ -58,5 +58,11 @@
     "us_parsons_turbine",
     "naval_belt_armor_scheme"
   ],
-  "production_cost": 223.5
+  "production_cost": 223.5,
+  "daily_resource_cost": {
+    "steel": 7.14,
+    "aluminum": 1.78,
+    "fuel": 2.68,
+    "electronics": 0.71
+  }
 }

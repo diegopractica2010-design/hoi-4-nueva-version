@@ -22,6 +22,7 @@ extends Resource
 @export var production_category: String = ""
 @export var production_era: String = ""
 @export var production_complexity: float = 1.0
+@export var daily_resource_cost: Dictionary = {}
 
 
 func get_module_ids() -> Array[String]:
@@ -81,7 +82,14 @@ static func from_dict(data: Dictionary) -> UnitTemplate:
 	tpl.production_category = str(data.get("production_category", data.get("category", "")))
 	tpl.production_era = str(data.get("era", data.get("production_era", "")))
 	tpl.production_complexity = float(data.get("production_complexity", data.get("complexity", 1.0)))
+	tpl.daily_resource_cost = _dict_from_variant(data.get("daily_resource_cost", {}))
 	return tpl
+
+
+func get_daily_resource_cost_dict() -> Dictionary:
+	if not daily_resource_cost.is_empty():
+		return daily_resource_cost.duplicate(true)
+	return ProductionCostCalculator.resolve_daily_resource_cost(self)
 
 
 func get_production_point_cost(

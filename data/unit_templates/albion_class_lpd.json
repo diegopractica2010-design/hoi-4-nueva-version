@@ -48,5 +48,11 @@
     "aw101_merlin_uk",
     "aim9_sidewinder"
   ],
-  "production_cost": 516.6
+  "production_cost": 516.6,
+  "daily_resource_cost": {
+    "steel": 15.12,
+    "aluminum": 3.78,
+    "fuel": 5.67,
+    "electronics": 1.51
+  }
 }

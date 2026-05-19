@@ -59,5 +59,11 @@
     "mk15_torpedo_tube",
     "carrier_boiler_yarrow"
   ],
-  "production_cost": 256.7
+  "production_cost": 256.7,
+  "daily_resource_cost": {
+    "steel": 7.14,
+    "aluminum": 1.78,
+    "fuel": 2.68,
+    "electronics": 0.71
+  }
 }

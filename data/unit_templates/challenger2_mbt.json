@@ -56,5 +56,11 @@
     "hunter_killer_fcs",
     "du_apfsds_gen3"
   ],
-  "production_cost": 265.7
+  "production_cost": 265.7,
+  "daily_resource_cost": {
+    "steel": 5.17,
+    "aluminum": 1.38,
+    "fuel": 0.8,
+    "rubber": 0.34
+  }
 }

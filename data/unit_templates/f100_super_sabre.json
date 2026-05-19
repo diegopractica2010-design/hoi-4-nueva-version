@@ -41,5 +41,11 @@
     "m61_vulcan_pod",
     "pratt_whitney_j57"
   ],
-  "production_cost": 108.8
+  "production_cost": 108.8,
+  "daily_resource_cost": {
+    "steel": 1.5,
+    "aluminum": 4.38,
+    "fuel": 1.25,
+    "electronics": 0.75
+  }
 }

@@ -52,5 +52,11 @@
     "ge_f404_hornet",
     "carrier_operations_kit"
   ],
-  "production_cost": 345.6
+  "production_cost": 345.6,
+  "daily_resource_cost": {
+    "steel": 2.38,
+    "aluminum": 6.93,
+    "fuel": 1.98,
+    "electronics": 1.19
+  }
 }

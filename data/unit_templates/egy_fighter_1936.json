@@ -49,5 +49,11 @@
     "lewis_gun_mount",
     "liberty_l12_engine"
   ],
-  "production_cost": 114.8
+  "production_cost": 114.8,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

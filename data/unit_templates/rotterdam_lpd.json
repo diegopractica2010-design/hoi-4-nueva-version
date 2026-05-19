@@ -47,5 +47,11 @@
     "nh90_nato_naval_helo",
     "aim120_amraam"
   ],
-  "production_cost": 543.6
+  "production_cost": 543.6,
+  "daily_resource_cost": {
+    "steel": 15.12,
+    "aluminum": 3.78,
+    "fuel": 5.67,
+    "electronics": 1.51
+  }
 }

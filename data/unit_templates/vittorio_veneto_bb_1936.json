@@ -58,5 +58,11 @@
     "geared_steam_turbine_60k",
     "naval_belt_armor_scheme"
   ],
-  "production_cost": 1388.0
+  "production_cost": 1388.0,
+  "daily_resource_cost": {
+    "steel": 40.16,
+    "aluminum": 7.14,
+    "fuel": 10.71,
+    "electronics": 2.23
+  }
 }

@@ -51,5 +51,11 @@
     "f47_ngad_package",
     "ngad_carrier_proto_2030"
   ],
-  "production_cost": 4439.6
+  "production_cost": 4439.6,
+  "daily_resource_cost": {
+    "steel": 87.78,
+    "aluminum": 23.1,
+    "fuel": 32.34,
+    "electronics": 6.93
+  }
 }

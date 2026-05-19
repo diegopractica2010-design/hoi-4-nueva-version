@@ -40,5 +40,12 @@
     "new_glenn_stage",
     "blue_moon_lander"
   ],
-  "production_cost": 501.0
+  "production_cost": 501.0,
+  "daily_resource_cost": {
+    "steel": 2.0,
+    "aluminum": 1.0,
+    "fuel": 1.5,
+    "electronics": 2.5,
+    "explosives": 3.0
+  }
 }

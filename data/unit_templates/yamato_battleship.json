@@ -61,5 +61,11 @@
     "type3_ku_radio",
     "naval_radar_type22"
   ],
-  "production_cost": 1943.0
+  "production_cost": 1943.0,
+  "daily_resource_cost": {
+    "steel": 54.0,
+    "aluminum": 9.6,
+    "fuel": 14.4,
+    "electronics": 3.0
+  }
 }

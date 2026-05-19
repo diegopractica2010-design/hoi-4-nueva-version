@@ -38,5 +38,11 @@
   "production_category": "medium_tank",
   "era": "interwar",
   "modules": [],
-  "production_cost": 93.5
+  "production_cost": 93.5,
+  "daily_resource_cost": {
+    "steel": 2.12,
+    "aluminum": 0.68,
+    "fuel": 0.34,
+    "rubber": 0.17
+  }
 }

@@ -58,5 +58,11 @@
     "ws10b_engine",
     "type99a_armor"
   ],
-  "production_cost": 387.0
+  "production_cost": 387.0,
+  "daily_resource_cost": {
+    "steel": 8.51,
+    "aluminum": 2.27,
+    "fuel": 1.32,
+    "rubber": 0.57
+  }
 }

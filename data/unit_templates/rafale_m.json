@@ -52,5 +52,11 @@
     "rafale_package",
     "rafale_m_carrier_package"
   ],
-  "production_cost": 175.9
+  "production_cost": 175.9,
+  "daily_resource_cost": {
+    "steel": 1.12,
+    "aluminum": 3.27,
+    "fuel": 0.94,
+    "electronics": 0.56
+  }
 }

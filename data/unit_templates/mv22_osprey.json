@@ -44,5 +44,11 @@
   "modules": [
     "osprey_mv22_package"
   ],
-  "production_cost": 145.8
+  "production_cost": 145.8,
+  "daily_resource_cost": {
+    "steel": 2.16,
+    "aluminum": 6.3,
+    "fuel": 1.8,
+    "electronics": 1.08
+  }
 }

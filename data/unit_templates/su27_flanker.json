@@ -40,5 +40,11 @@
     "r27_alamo_missile",
     "al31f_engine"
   ],
-  "production_cost": 127.5
+  "production_cost": 127.5,
+  "daily_resource_cost": {
+    "steel": 1.02,
+    "aluminum": 2.98,
+    "fuel": 0.85,
+    "electronics": 0.51
+  }
 }

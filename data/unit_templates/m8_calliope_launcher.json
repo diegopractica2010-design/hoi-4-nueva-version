@@ -56,5 +56,11 @@
     "m8_calliope_rocket",
     "mlrs_reload_trailer"
   ],
-  "production_cost": 581.0
+  "production_cost": 581.0,
+  "daily_resource_cost": {
+    "steel": 20.7,
+    "aluminum": 5.17,
+    "fuel": 6.9,
+    "electronics": 1.72
+  }
 }

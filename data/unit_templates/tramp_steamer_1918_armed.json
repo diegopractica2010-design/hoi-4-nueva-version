@@ -53,5 +53,11 @@
     "ww1_merchant_steamer",
     "deck_gun_merchant_4inch"
   ],
-  "production_cost": 175.0
+  "production_cost": 175.0,
+  "daily_resource_cost": {
+    "steel": 5.88,
+    "aluminum": 1.47,
+    "fuel": 2.21,
+    "electronics": 0.59
+  }
 }

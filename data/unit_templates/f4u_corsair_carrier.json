@@ -50,5 +50,11 @@
     "pratt_r2800_corsair",
     "carrier_operations_kit"
   ],
-  "production_cost": 2020.0
+  "production_cost": 2020.0,
+  "daily_resource_cost": {
+    "steel": 39.9,
+    "aluminum": 10.5,
+    "fuel": 14.7,
+    "electronics": 3.15
+  }
 }

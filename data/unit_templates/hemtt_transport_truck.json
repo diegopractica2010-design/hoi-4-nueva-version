@@ -53,5 +53,11 @@
     "caterpillar_c7_engine",
     "truck_rocket_mount"
   ],
-  "production_cost": 57.4
+  "production_cost": 57.4,
+  "daily_resource_cost": {
+    "steel": 0.88,
+    "aluminum": 0.22,
+    "fuel": 0.15,
+    "rubber": 0.07
+  }
 }

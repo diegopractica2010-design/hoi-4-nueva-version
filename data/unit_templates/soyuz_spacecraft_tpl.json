@@ -40,5 +40,11 @@
     "r7_soyuz_engine",
     "soyuz_spacecraft_bus"
   ],
-  "production_cost": 816.2
+  "production_cost": 816.2,
+  "daily_resource_cost": {
+    "steel": 6.6,
+    "aluminum": 11.0,
+    "electronics": 8.8,
+    "fuel": 4.4
+  }
 }

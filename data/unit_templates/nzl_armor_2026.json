@@ -55,5 +55,11 @@
     "bedford_twin_six_engine",
     "scenario_export_mbt_2026"
   ],
-  "production_cost": 147.6
+  "production_cost": 147.6,
+  "daily_resource_cost": {
+    "steel": 2.27,
+    "aluminum": 0.57,
+    "fuel": 0.38,
+    "rubber": 0.19
+  }
 }

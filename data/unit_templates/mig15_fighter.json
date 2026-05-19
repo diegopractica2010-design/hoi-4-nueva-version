@@ -41,5 +41,11 @@
     "nr23_cannon",
     "vk1_jet_engine"
   ],
-  "production_cost": 122.5
+  "production_cost": 122.5,
+  "daily_resource_cost": {
+    "steel": 1.5,
+    "aluminum": 4.38,
+    "fuel": 1.25,
+    "electronics": 0.75
+  }
 }

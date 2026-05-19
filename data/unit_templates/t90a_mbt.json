@@ -51,5 +51,11 @@
     "t90a_armor_package",
     "3bm59_apfsds"
   ],
-  "production_cost": 142.0
+  "production_cost": 142.0,
+  "daily_resource_cost": {
+    "steel": 2.75,
+    "aluminum": 0.88,
+    "fuel": 0.44,
+    "rubber": 0.22
+  }
 }

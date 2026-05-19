@@ -55,5 +55,11 @@
     "lockheed_martin_orca_uuv",
     "fuel_cell_aip_212"
   ],
-  "production_cost": 292.0
+  "production_cost": 292.0,
+  "daily_resource_cost": {
+    "steel": 6.0,
+    "aluminum": 1.5,
+    "fuel": 2.0,
+    "electronics": 1.2
+  }
 }

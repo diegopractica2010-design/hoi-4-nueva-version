@@ -40,5 +40,11 @@
     "defa550_30mm",
     "atar9c_turbojet"
   ],
-  "production_cost": 130.5
+  "production_cost": 130.5,
+  "daily_resource_cost": {
+    "steel": 1.8,
+    "aluminum": 5.25,
+    "fuel": 1.5,
+    "electronics": 0.9
+  }
 }

@@ -50,5 +50,11 @@
     "aim120c_amraam",
     "ge_f404_hornet"
   ],
-  "production_cost": 253.8
+  "production_cost": 253.8,
+  "daily_resource_cost": {
+    "steel": 2.16,
+    "aluminum": 6.3,
+    "fuel": 1.8,
+    "electronics": 1.08
+  }
 }
