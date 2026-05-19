@@ -192,6 +192,8 @@ func load_base_provinces():
 		p.is_sea = bool(p_data.get("is_sea", false))
 		if not p.is_sea and (p.terrain.to_lower() == "sea" or p.terrain.to_lower() == "ocean"):
 			p.is_sea = true
+		if p_data.has("has_port"):
+			p.has_port = bool(p_data["has_port"])
 		var raw_res = p_data.get("natural_resources", p_data.get("resources", {}))
 		p.resources = raw_res.duplicate(true) if typeof(raw_res) == TYPE_DICTIONARY else {}
 		p.owner_tag = str(p_data.get("owner_tag", ""))
@@ -207,6 +209,7 @@ func load_base_provinces():
 		_apply_geometry_to_province(p)
 		_apply_layer_data_to_province(p)
 		base_provinces[p.id] = p
+	_infer_port_access_for_all(base_provinces)
 	print("✅ Base provinces loaded: ", base_provinces.size(), " provinces")
 
 func load_scenario(scenario_name: String) -> bool:
@@ -253,6 +256,8 @@ func load_scenario(scenario_name: String) -> bool:
 					p.terrain = str(p_data["terrain"])
 				if p_data.has("is_sea"):
 					p.is_sea = bool(p_data["is_sea"])
+				if p_data.has("has_port"):
+					p.has_port = bool(p_data["has_port"])
 				if p_data.has("natural_resources") or p_data.has("resources"):
 					var rr = p_data.get("natural_resources", p_data.get("resources", {}))
 					p.resources = rr.duplicate(true) if typeof(rr) == TYPE_DICTIONARY else {}
@@ -274,6 +279,7 @@ func load_scenario(scenario_name: String) -> bool:
 	_load_countries_from_scenario(data)
 
 	_rebuild_adjacency_system()
+	_infer_port_access_for_all(provinces)
 	print("✅ Scenario loaded | Provinces: ", provinces.size(), " | Countries: ", countries.size())
 	scenario_loaded.emit()
 	return true
@@ -393,6 +399,22 @@ func build_geometry_dict_for_map() -> Dictionary:
 	return out
 
 
+func _infer_port_access_for_all(province_map: Dictionary) -> void:
+	for id in province_map:
+		var p: Province = province_map[id]
+		if p == null or p.is_sea:
+			p.has_port = false
+			continue
+		if p.has_port or p.resolve_has_port():
+			p.has_port = true
+			continue
+		for neighbor_id in p.adjacencies:
+			var neighbor: Province = province_map.get(neighbor_id)
+			if neighbor != null and neighbor.is_sea:
+				p.has_port = true
+				break
+
+
 func _rebuild_adjacency_system() -> void:
 	adjacency_system = AdjacencySystem.new()
 	adjacency_system.load_adjacency()
@@ -423,6 +445,7 @@ func _duplicate_province_from_base(base_p: Province) -> Province:
 	p.name = base_p.name
 	p.terrain = base_p.terrain
 	p.is_sea = base_p.is_sea
+	p.has_port = base_p.has_port
 	p.coordinates = base_p.coordinates
 	p.adjacencies = base_p.adjacencies.duplicate()
 	p.owner_tag = base_p.owner_tag

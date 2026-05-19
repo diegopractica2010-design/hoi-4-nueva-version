@@ -12,10 +12,27 @@ var factories: Dictionary = {}  # factory_id (int) -> Factory
 var province_to_factories: Dictionary = {}  # province_id (int) -> Array[int] factory_ids
 
 var rules: Dictionary = {}
+var _province_lookup: Callable = Callable()
 
 
 func _ready() -> void:
 	_load_rules()
+
+
+func set_province_lookup(callable: Callable) -> void:
+	_province_lookup = callable
+
+
+func get_province(province_id: int) -> Province:
+	if _province_lookup.is_valid():
+		var result: Variant = _province_lookup.call(province_id)
+		return result as Province
+	return null
+
+
+func province_has_port(province_id: int) -> bool:
+	var province := get_province(province_id)
+	return ProductionNavalRules.province_allows_shipyard(province)
 
 
 func _load_rules() -> void:
@@ -169,7 +186,32 @@ func create_factory_for_province(
 
 
 func create_shipyard_for_province(province_id: int, owner_tag: String, levels: int = 4) -> Factory:
+	if not province_has_port(province_id):
+		push_warning(
+			"FactoryManager: cannot build shipyard in province %d (no port / coastal access)"
+			% province_id
+		)
+		return null
 	return create_factory_for_province(province_id, owner_tag, 0, "shipyard", levels)
+
+
+func convert_factory_to_shipyard(factory_id: int, levels: int = 4) -> bool:
+	var factory := get_factory(factory_id)
+	if factory == null:
+		return false
+	if not province_has_port(factory.province_id):
+		push_warning(
+			"FactoryManager: cannot convert factory %d to shipyard (province %d has no port)"
+			% [factory_id, factory.province_id]
+		)
+		return false
+	if factory.factory_type == "shipyard":
+		return true
+	factory.factory_type = "shipyard"
+	factory.max_production_lines = (
+		levels if levels > 0 else get_default_max_lines_for_type("shipyard")
+	)
+	return true
 
 
 func get_or_create_province_component(province_node: Node, province_id: int) -> ProvinceFactoryComponent:

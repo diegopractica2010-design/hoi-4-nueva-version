@@ -161,6 +161,9 @@ func set_line_template(line_id: String, template_id: String) -> Dictionary:
 	if line == null:
 		return {"success": false, "error": "unknown_line"}
 
+	if not _naval_production_allowed(line, template_id):
+		return {"success": false, "error": "naval_requires_shipyard_port"}
+
 	_refresh_line_modifiers(line)
 	var result := line.set_template(template_id)
 	if not bool(result.get("success", false)):
@@ -315,61 +318,148 @@ func get_line_resource_cost_for_days(line_id: String, days: float) -> Dictionary
 	return scaled
 
 
-func evaluate_line_resources(line_id: String, days: float) -> Dictionary:
+func get_design_resource_preview(design_id: String) -> Dictionary:
+	var daily_cost: Dictionary = {}
+	if GameData.design_data != null:
+		var template := GameData.design_data.get_template(design_id)
+		if template != null:
+			daily_cost = ProductionCostCalculator.resolve_daily_resource_cost(template)
+	return {
+		"design_id": design_id,
+		"daily_cost": daily_cost,
+	}
+
+
+func has_enough_resources_for_line(line_id: String, days: float) -> bool:
+	return preview_resource_fill_ratio(line_id, days) >= 1.0
+
+
+func apply_resource_shortage(line_id: String, shortage_level: float, reliability_level: float = -1.0) -> void:
 	var line := get_line(line_id)
-	if line == null or line.daily_resource_cost.is_empty():
-		return {"output_multiplier": 1.0, "afforded": true, "fill_ratio": 1.0, "cost_paid": {}}
+	if line == null:
+		return
+	line.resource_shortage_penalty = clampf(shortage_level, 0.4, 1.0)
+	if reliability_level >= 0.0:
+		line.shortage_reliability_multiplier = clampf(reliability_level, 0.5, 1.0)
 
-	var needed := get_line_resource_cost_for_days(line_id, days)
+
+func _shortage_rules() -> Dictionary:
+	var rules: Variant = ProductionCostCalculator.get_rules().get("resource_shortage", {})
+	return rules if typeof(rules) == TYPE_DICTIONARY else {}
+
+
+func _critical_resource_set() -> Dictionary:
+	var raw: Variant = _shortage_rules().get("critical_resources", [])
+	var set: Dictionary = {}
+	if typeof(raw) == TYPE_ARRAY:
+		for item in raw:
+			set[str(item).to_lower()] = true
+	return set
+
+
+func _weighted_fill_ratio(needed: Dictionary) -> float:
 	if needed.is_empty():
-		return {"output_multiplier": 1.0, "afforded": true, "fill_ratio": 1.0, "cost_paid": {}}
+		return 1.0
 
-	var min_ratio := 1.0
+	var critical := _critical_resource_set()
+	var speed_weight := float(_shortage_rules().get("critical_speed_weight", 1.45))
+	var effective := 1.0
+
 	for resource in needed:
 		var required := float(needed[resource])
 		if required <= 0.0:
 			continue
 		var have := float(national_stockpile.get(resource, 0.0))
-		min_ratio = minf(min_ratio, have / required)
+		var ratio := clampf(have / required, 0.0, 1.0)
+		if critical.has(str(resource).to_lower()):
+			ratio = pow(ratio, 1.0 / maxf(speed_weight, 1.0))
+		effective = minf(effective, ratio)
 
-	var shortage_rules: Dictionary = ProductionCostCalculator.get_rules().get("resource_shortage", {})
-	var partial_floor := float(shortage_rules.get("partial_efficiency_floor", 0.25))
+	return effective
 
-	if min_ratio >= 1.0:
+
+func _shortage_multipliers(fill_ratio: float) -> Dictionary:
+	var rules := _shortage_rules()
+	var min_output := float(rules.get("min_output_multiplier", 0.55))
+	var min_reliability := float(rules.get("min_reliability_multiplier", 0.72))
+	var ratio := clampf(fill_ratio, 0.0, 1.0)
+	var speed := lerpf(min_output, 1.0, ratio)
+	var reliability := lerpf(min_reliability, 1.0, ratio)
+
+	var critical := _critical_resource_set()
+	if not critical.is_empty():
+		var crit_weight := float(rules.get("critical_reliability_weight", 1.25))
+		var crit_floor := lerpf(min_reliability, min_reliability * 0.9, 1.0 - ratio)
+		if ratio < 1.0:
+			reliability = minf(reliability, lerpf(crit_floor, 1.0, pow(ratio, 1.0 / maxf(crit_weight, 1.0))))
+
+	return {
+		"speed": clampf(speed, min_output, 1.0),
+		"reliability": clampf(reliability, min_reliability, 1.0),
+	}
+
+
+func _missing_resources(needed: Dictionary, fill_ratio: float) -> Dictionary:
+	var missing: Dictionary = {}
+	for resource in needed:
+		var required := float(needed[resource])
+		var have := float(national_stockpile.get(resource, 0.0))
+		var shortfall := required * (1.0 - fill_ratio) - maxf(0.0, have - required * fill_ratio)
+		if shortfall > 0.001:
+			missing[resource] = shortfall
+	return missing
+
+
+func evaluate_line_resources(line_id: String, days: float) -> Dictionary:
+	var line := get_line(line_id)
+	if line == null:
+		return {"output_multiplier": 1.0, "afforded": true, "fill_ratio": 1.0, "cost_paid": {}}
+	if line.daily_resource_cost.is_empty():
+		apply_resource_shortage(line_id, 1.0, 1.0)
+		return {"output_multiplier": 1.0, "afforded": true, "fill_ratio": 1.0, "cost_paid": {}}
+
+	var needed := get_line_resource_cost_for_days(line_id, days)
+	if needed.is_empty():
+		apply_resource_shortage(line_id, 1.0, 1.0)
+		return {"output_multiplier": 1.0, "afforded": true, "fill_ratio": 1.0, "cost_paid": {}}
+
+	var fill_ratio := _weighted_fill_ratio(needed)
+	var mults := _shortage_multipliers(fill_ratio)
+
+	if fill_ratio >= 1.0:
 		pay_cost(needed)
+		apply_resource_shortage(line_id, 1.0, 1.0)
 		return {
 			"output_multiplier": 1.0,
 			"afforded": true,
 			"fill_ratio": 1.0,
 			"cost_paid": needed.duplicate(true),
-		}
-
-	if min_ratio <= 0.0:
-		production_resource_shortage.emit(line_id, needed)
-		return {
-			"output_multiplier": 0.0,
-			"afforded": false,
-			"fill_ratio": 0.0,
-			"cost_paid": {},
+			"shortage_penalty": 1.0,
+			"reliability_multiplier": 1.0,
 		}
 
 	var paid: Dictionary = {}
 	for resource in needed:
-		var amount := float(needed[resource]) * min_ratio
-		paid[resource] = amount
-		national_stockpile[resource] = float(national_stockpile.get(resource, 0.0)) - amount
+		var amount := float(needed[resource]) * fill_ratio
+		if amount > 0.0:
+			paid[resource] = amount
+			national_stockpile[resource] = float(national_stockpile.get(resource, 0.0)) - amount
 
-	var output_mult := lerpf(partial_floor, 1.0, min_ratio)
+	apply_resource_shortage(line_id, float(mults["speed"]), float(mults["reliability"]))
+	production_resource_shortage.emit(line_id, _missing_resources(needed, fill_ratio))
+
 	return {
-		"output_multiplier": output_mult,
-		"afforded": true,
-		"fill_ratio": min_ratio,
+		"output_multiplier": float(mults["speed"]),
+		"afforded": fill_ratio > 0.0,
+		"fill_ratio": fill_ratio,
 		"cost_paid": paid,
+		"shortage_penalty": line.resource_shortage_penalty,
+		"reliability_multiplier": line.shortage_reliability_multiplier,
 	}
 
 
 func try_consume_resources_for_line(line_id: String, days: float) -> bool:
-	return float(evaluate_line_resources(line_id, days).get("output_multiplier", 0.0)) > 0.0
+	return float(evaluate_line_resources(line_id, days).get("fill_ratio", 0.0)) > 0.0
 
 
 func consume_resources_for_line(line_id: String, days: float) -> float:
@@ -383,13 +473,7 @@ func preview_resource_fill_ratio(line_id: String, days: float) -> float:
 	var needed := get_line_resource_cost_for_days(line_id, days)
 	if needed.is_empty():
 		return 1.0
-	var min_ratio := 1.0
-	for resource in needed:
-		var required := float(needed[resource])
-		if required <= 0.0:
-			continue
-		min_ratio = minf(min_ratio, float(national_stockpile.get(resource, 0.0)) / required)
-	return clampf(min_ratio, 0.0, 1.0)
+	return clampf(_weighted_fill_ratio(needed), 0.0, 1.0)
 
 
 func get_line_reliability_profile(line_id: String) -> ReliabilityProfile:
@@ -544,6 +628,23 @@ func _load_json_dict(path: String) -> Dictionary:
 	return json.data
 
 
+func _naval_production_allowed(line: ProductionLine, design_id: String) -> bool:
+	if line == null or design_id.is_empty():
+		return true
+	if not ProductionNavalRules.is_naval_design(design_id):
+		return true
+	if line.factory_id == 0:
+		return true
+	if factory_manager == null:
+		return false
+	var factory := factory_manager.get_factory(line.factory_id)
+	if factory == null:
+		return false
+	if not ProductionNavalRules.factory_can_build_naval(factory):
+		return false
+	return factory_manager.province_has_port(factory.province_id)
+
+
 func _clear_modifiers_with_tag(tag: String) -> void:
 	var to_remove: Array[String] = []
 	for modifier_id in _active_modifiers:
@@ -624,6 +725,12 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 	if not factory_manager.assign_production_line_to_factory(factory_id, line_id):
 		return false
 
+	if not line.design_id.is_empty() and not _naval_production_allowed(line, line.design_id):
+		line.factory_id = 0
+		factory.assigned_lines.erase(line_id)
+		push_warning("ProductionManager: naval design '%s' requires a port shipyard" % line.design_id)
+		return false
+
 	line.refresh_required_progress()
 
 	print(
@@ -669,6 +776,20 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 	var old_design := factory.current_production_design
 	if old_design == new_design_id:
 		return true
+
+	if ProductionNavalRules.is_naval_design(new_design_id):
+		if not ProductionNavalRules.factory_can_build_naval(factory):
+			push_warning(
+				"ProductionManager: factory %d cannot build naval design '%s' (requires shipyard at port)"
+				% [factory_id, new_design_id]
+			)
+			return false
+		if factory_manager != null and not factory_manager.province_has_port(factory.province_id):
+			push_warning(
+				"ProductionManager: factory %d is not in a port province"
+				% factory_id
+			)
+			return false
 
 	var old_group := _retool_group_for_design(old_design)
 	var new_group := _retool_group_for_design(new_design_id, new_category)
@@ -747,6 +868,7 @@ func get_design_production_info(design_id: String) -> Dictionary:
 			unit_cost, daily_pp
 		) if unit_cost > 0.0 and daily_pp > 0.0 else 0.0,
 		"factories": factories.map(func(f: Factory) -> int: return f.factory_id),
+		"daily_resource_cost": get_design_resource_preview(design_id),
 	}
 
 
@@ -773,19 +895,19 @@ func advance_production(days: float) -> void:
 		if factory.is_retooling:
 			factory.advance_retooling(days)
 
-		var base_efficiency := factory.current_efficiency
-		var current_eff := factory.get_current_efficiency() if factory.is_retooling else 1.0
-		var resource_mult := consume_resources_for_line(line_id, days)
-		if resource_mult <= 0.0:
-			continue
+		evaluate_line_resources(line_id, days)
+
+		var base_efficiency := line.get_factory_efficiency()
+		var retool_eff := factory.get_current_efficiency() if factory.is_retooling else 1.0
+		var shortage_eff := line.resource_shortage_penalty
 
 		var concentration := get_concentration_bonus(line.design_id)
 		var slot_rush := get_concentrated_production_multiplier(line.factory_id, line.design_id)
 		var daily_points := (
 			_get_base_daily_points()
 			* base_efficiency
-			* current_eff
-			* resource_mult
+			* retool_eff
+			* shortage_eff
 			* concentration
 			* slot_rush
 			* days
@@ -801,8 +923,11 @@ func advance_production(days: float) -> void:
 func _complete_item(line: ProductionLine, line_id: String) -> void:
 	line.completed_count += 1
 	line.progress -= line.design_production_cost
+	var reli_note := ""
+	if line.shortage_reliability_multiplier < 0.999:
+		reli_note = " | shortage reliability x%.2f" % line.shortage_reliability_multiplier
 	production_completed.emit(line_id, line.design_id, 1)
-	print("Production complete: %s (Total: %d)" % [line.design_id, line.completed_count])
+	print("Production complete: %s (Total: %d)%s" % [line.design_id, line.completed_count, reli_note])
 
 
 func get_line_progress_info(line_id: String) -> Dictionary:
@@ -824,8 +949,10 @@ func get_line_progress_info(line_id: String) -> Dictionary:
 		"factory_lines_used": factory.assigned_lines.size() if factory else 0,
 		"lines_on_same_design": get_lines_on_design_in_factory(line.factory_id, line.design_id),
 		"slot_rush_multiplier": get_concentrated_production_multiplier(line.factory_id, line.design_id),
-		"daily_resource_cost": line.daily_resource_cost.duplicate(true),
+		"daily_resource_cost": line.get_daily_resource_cost(),
 		"resource_fill_ratio": preview_resource_fill_ratio(line_id, 1.0),
+		"shortage_penalty": line.resource_shortage_penalty,
+		"shortage_reliability_multiplier": line.shortage_reliability_multiplier,
 		"progress": line.progress,
 		"design_production_cost": line.design_production_cost,
 		"required_progress": line.design_production_cost,

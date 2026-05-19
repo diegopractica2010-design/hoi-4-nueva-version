@@ -16,6 +16,8 @@ func _ready() -> void:
 		print("Failed to load scenario.")
 		return
 
+	_wire_factory_province_lookup()
+
 	print("Scenario loaded. Initializing map renderer...")
 	var map_data := loader.get_map_data()
 	map_renderer.initialize(
@@ -41,6 +43,15 @@ func _ready() -> void:
 			sm.record_attrition("us_infantry_div_ww2", 120, {"m4_sherman_medium": 2.0})
 			sm.advance_supply_day(1.0)
 		print("Supply network ready (toggle overlay with L)")
+
+
+func _wire_factory_province_lookup() -> void:
+	var fm := get_node_or_null("/root/FactoryManager") as FactoryManager
+	if fm == null or loader == null:
+		return
+	fm.set_province_lookup(func(province_id: int) -> Province:
+		return loader.provinces.get(province_id) as Province
+	)
 
 
 func _run_production_line_tests() -> void:

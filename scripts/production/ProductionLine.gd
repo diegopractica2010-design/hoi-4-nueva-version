@@ -21,6 +21,8 @@ var line_id: String = ""
 @export var completed_count: int = 0  # Items finished on this line (item-progression track)
 @export var design_production_cost: float = 100.0  # PP required for one unit (from template data)
 @export var daily_resource_cost: Dictionary = {}  # Resources consumed per production day
+@export var resource_shortage_penalty: float = 1.0  # Speed multiplier during shortages (0.4–1.0)
+var shortage_reliability_multiplier: float = 1.0  # Applied to units completed under shortage
 
 var required_progress: float = 100.0  # Alias for design_production_cost (legacy)
 var current_template_id: String = ""
@@ -484,3 +486,7 @@ func _factory_manager() -> FactoryManager:
 	if tree == null:
 		return null
 	return tree.root.get_node_or_null("/root/FactoryManager") as FactoryManager
+
+
+func get_daily_resource_cost() -> Dictionary:
+	return daily_resource_cost.duplicate(true)

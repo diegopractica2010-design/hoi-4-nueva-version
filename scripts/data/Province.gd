@@ -7,6 +7,8 @@ extends Resource
 @export var name: String = ""
 @export var terrain: String = "plains"
 @export var is_sea: bool = false
+## Coastal / port access — required for shipyards and naval production.
+@export var has_port: bool = false
 ## Map-local position (e.g. label anchor or province centroid in province space).
 @export var coordinates: Vector2 = Vector2.ZERO
 ## Neighboring province IDs (same convention as province_adjacency.json).
@@ -45,6 +47,21 @@ func get_movement_cost() -> float:
 	if is_sea:
 		return terrain_mult * infra_factor
 	return terrain_mult * infra_factor * dev_factor
+
+
+func resolve_has_port() -> bool:
+	if is_sea:
+		return false
+	if has_port:
+		return true
+	if has_feature("port") or has_feature("harbor") or has_feature("naval_base"):
+		return true
+	if "port" in tags or "coastal" in tags or "harbor" in tags:
+		return true
+	var terrain_key := str(terrain).to_lower()
+	if terrain_key in ["coastal", "coast", "harbor", "port"]:
+		return true
+	return false
 
 
 func has_feature(feature: String) -> bool:

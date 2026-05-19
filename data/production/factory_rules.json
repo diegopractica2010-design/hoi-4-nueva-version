@@ -32,5 +32,10 @@
   "slot_concentration": {
     "bonus_per_extra_line": 0.12,
     "max_multiplier": 1.6
+  },
+  "shipyard": {
+    "requires_port": true,
+    "convert_days": 90,
+    "build_cost": { "steel": 500, "aluminum": 120, "electronics": 40 }
   }
 }

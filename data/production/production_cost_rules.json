@@ -78,7 +78,11 @@
     "default": { "steel": 1.0, "aluminum": 0.5, "fuel": 0.3 }
   },
   "resource_shortage": {
-    "min_output_multiplier": 0.0,
-    "partial_efficiency_floor": 0.25
+    "min_output_multiplier": 0.55,
+    "partial_efficiency_floor": 0.55,
+    "min_reliability_multiplier": 0.72,
+    "critical_resources": ["electronics", "rubber", "explosives", "rare_earth", "advanced_electronics"],
+    "critical_speed_weight": 1.45,
+    "critical_reliability_weight": 1.25
   }
 }
