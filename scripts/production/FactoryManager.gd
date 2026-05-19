@@ -99,8 +99,17 @@ func advance_repair_for_province(province_id: int, days: float, supply_connected
 func get_factory_efficiency(factory_id: int) -> float:
 	var f: Factory = factories.get(factory_id)
 	if f != null:
-		return f.current_efficiency
+		return f.get_production_efficiency()
 	return 1.0
+
+
+func advance_retooling_for_province(province_id: int, days: float) -> void:
+	if not province_to_factories.has(province_id):
+		return
+	for fid in province_to_factories[province_id]:
+		var f: Factory = factories.get(fid)
+		if f != null:
+			f.advance_retooling(days)
 
 
 func assign_production_line_to_factory(factory_id: int, line_id: String) -> bool:

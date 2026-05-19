@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "default_floor": 0.20,
+  "base_retool_days": 90,
+  "recovery_days": 45,
+  "retained_efficiency": {
+    "base": 0.15,
+    "similarity_scale": 0.80
+  },
+  "similarity": {
+    "tank_afv": {
+      "tank_afv": 0.95,
+      "vehicle_truck": 0.75,
+      "airplane": 0.45,
+      "ship": 0.25,
+      "rocket_missile": 0.40,
+      "infantry_equipment": 0.15,
+      "artillery": 0.55
+    },
+    "vehicle_truck": {
+      "tank_afv": 0.75,
+      "vehicle_truck": 0.95,
+      "airplane": 0.35,
+      "ship": 0.20,
+      "rocket_missile": 0.30,
+      "infantry_equipment": 0.25,
+      "artillery": 0.50
+    },
+    "airplane": {
+      "tank_afv": 0.45,
+      "vehicle_truck": 0.35,
+      "airplane": 0.95,
+      "ship": 0.30,
+      "rocket_missile": 0.55,
+      "infantry_equipment": 0.10,
+      "artillery": 0.25
+    },
+    "ship": {
+      "tank_afv": 0.25,
+      "vehicle_truck": 0.20,
+      "airplane": 0.30,
+      "ship": 0.95,
+      "rocket_missile": 0.35,
+      "infantry_equipment": 0.05,
+      "artillery": 0.20
+    },
+    "rocket_missile": {
+      "tank_afv": 0.40,
+      "vehicle_truck": 0.30,
+      "airplane": 0.55,
+      "ship": 0.35,
+      "rocket_missile": 0.95,
+      "infantry_equipment": 0.10,
+      "artillery": 0.35
+    },
+    "infantry_equipment": {
+      "tank_afv": 0.15,
+      "vehicle_truck": 0.25,
+      "airplane": 0.10,
+      "ship": 0.05,
+      "rocket_missile": 0.10,
+      "infantry_equipment": 0.95,
+      "artillery": 0.40
+    },
+    "artillery": {
+      "tank_afv": 0.55,
+      "vehicle_truck": 0.50,
+      "airplane": 0.25,
+      "ship": 0.20,
+      "rocket_missile": 0.35,
+      "infantry_equipment": 0.40,
+      "artillery": 0.95
+    }
+  }
+}

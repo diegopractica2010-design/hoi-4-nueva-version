@@ -17,7 +17,15 @@ const MAX_SLOTS_PER_PROVINCE := 99
 @export var assigned_lines: Array[String] = []
 @export var current_production_design: String = ""
 
+@export var is_retooling: bool = false
+@export var retooling_progress: float = 0.0
+@export var retooling_required: float = 0.0
+@export var retooling_recovery_progress: float = 0.0
+@export var retooling_recovery_required: float = 0.0
+@export var previous_design: String = ""
+
 var current_efficiency: float = 1.0
+var base_retained_efficiency: float = 1.0
 
 const RULES_PATH := "res://data/production/factory_rules.json"
 
@@ -69,7 +77,65 @@ func advance_repair(days: float, supply_connected: bool, rules: Dictionary = {})
 
 func get_daily_output_estimate() -> float:
 	## Production Points per day contributed by this factory (before concentration).
-	return ProductionCostCalculator.get_base_daily_points() * current_efficiency
+	return ProductionCostCalculator.get_base_daily_points() * get_production_efficiency()
+
+
+func get_production_efficiency() -> float:
+	return current_efficiency * get_current_efficiency()
+
+
+func start_retooling(
+	old_design: String,
+	new_design: String,
+	retool_days: float,
+	recovery_days: float,
+	retained_efficiency: float,
+) -> void:
+	if old_design == new_design:
+		return
+
+	previous_design = old_design
+	current_production_design = new_design
+	retooling_required = maxf(retool_days, 0.0)
+	retooling_progress = 0.0
+	retooling_recovery_required = maxf(recovery_days, 0.0)
+	retooling_recovery_progress = 0.0
+	base_retained_efficiency = clampf(retained_efficiency, 0.0, 1.0)
+	is_retooling = true
+
+
+func get_current_efficiency() -> float:
+	if not is_retooling:
+		return 1.0
+
+	if retooling_progress < retooling_required:
+		return base_retained_efficiency
+
+	if retooling_recovery_required <= 0.0:
+		return 1.0
+
+	var recovery_percent := retooling_recovery_progress / retooling_recovery_required
+	return lerpf(base_retained_efficiency, 1.0, clampf(recovery_percent, 0.0, 1.0))
+
+
+func advance_retooling(days: float) -> void:
+	if not is_retooling or days <= 0.0:
+		return
+
+	if retooling_progress < retooling_required:
+		retooling_progress += days
+	elif retooling_recovery_progress < retooling_recovery_required:
+		retooling_recovery_progress = minf(
+			retooling_recovery_progress + days,
+			retooling_recovery_required,
+		)
+
+	if retooling_progress >= retooling_required and retooling_recovery_progress >= retooling_recovery_required:
+		is_retooling = false
+		retooling_progress = 0.0
+		retooling_recovery_progress = 0.0
+		retooling_required = 0.0
+		retooling_recovery_required = 0.0
 
 
 func sync_production_design(design_id: String) -> void:

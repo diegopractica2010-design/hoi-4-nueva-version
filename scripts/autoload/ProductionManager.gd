@@ -452,7 +452,7 @@ func get_total_output_for_design(design_id: String) -> float:
 	return total
 
 
-func reassign_factory(factory_id: int, new_design_id: String) -> bool:
+func reassign_factory(factory_id: int, new_design_id: String, new_category: String = "") -> bool:
 	if factory_manager == null:
 		return false
 
@@ -462,16 +462,46 @@ func reassign_factory(factory_id: int, new_design_id: String) -> bool:
 		return false
 
 	var old_design := factory.current_production_design
-	factory.sync_production_design(new_design_id)
+	if old_design == new_design_id:
+		return true
+
+	var old_group := RetoolingSimilarityTable.category_group_for_design(old_design)
+	var new_group := (
+		RetoolingSimilarityTable.map_production_category_to_group(new_category)
+		if not new_category.is_empty()
+		else RetoolingSimilarityTable.category_group_for_design(new_design_id)
+	)
+	var plan := RetoolingSimilarityTable.compute_retool_plan(old_group, new_group)
 
 	for line_id in factory.assigned_lines:
 		var line := get_line(line_id)
-		if line != null:
-			line.design_id = new_design_id
-			if line.current_template_id == new_design_id:
-				line.refresh_required_progress()
+		if line == null:
+			continue
+		line.reset_progress()
+		line.design_id = new_design_id
+		if GameData.design_data != null and GameData.design_data.get_template(new_design_id) != null:
+			line.set_template(new_design_id)
+		else:
+			line.refresh_design_production_cost()
 
-	print("Factory %d reassigned from '%s' → '%s'" % [factory_id, old_design, new_design_id])
+	factory.start_retooling(
+		old_design,
+		new_design_id,
+		float(plan.get("retool_days", 90.0)),
+		float(plan.get("recovery_days", 45.0)),
+		float(plan.get("retained_efficiency", 0.2)),
+	)
+
+	print(
+		"Factory %d retooling '%s' → '%s' (similarity %.0f%%, retained %.0f%%)"
+		% [
+			factory_id,
+			old_design,
+			new_design_id,
+			float(plan.get("similarity", 0.0)) * 100.0,
+			float(plan.get("retained_efficiency", 0.0)) * 100.0,
+		]
+	)
 	return true
 
 
@@ -536,6 +566,8 @@ func advance_production(days: float) -> void:
 		var factory := factory_manager.get_factory(line.factory_id)
 		if factory == null:
 			continue
+
+		factory.advance_retooling(days)
 
 		var base_daily_points := _get_base_daily_points()
 		var efficiency := line.get_factory_efficiency()
