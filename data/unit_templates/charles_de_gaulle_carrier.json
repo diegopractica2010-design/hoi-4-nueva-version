@@ -40,5 +40,13 @@
     "french_carriers_2026"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "carrier",
+  "era": "modern",
+  "modules": [
+    "charles_de_gaulle_core",
+    "aesa_radar_gen1",
+    "aster30_sam"
+  ],
+  "production_cost": 3772.8
 }

@@ -49,5 +49,15 @@
     "twenty_thirties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "late_cold_war",
+  "modules": [
+    "uk_4_5inch_mk6",
+    "mk41_vls_destroyer",
+    "type83_destroyer_planned",
+    "sea_viper_sam",
+    "geared_steam_turbine_60k"
+  ],
+  "production_cost": 523.3
 }

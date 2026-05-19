@@ -47,5 +47,15 @@
     "planned"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "future",
+  "modules": [
+    "m256_l55a1_gun",
+    "abramsx_hybrid_package",
+    "m1e3_abrams_package",
+    "ai_targeting_suite",
+    "xm1147_amp_round"
+  ],
+  "production_cost": 503.7
 }

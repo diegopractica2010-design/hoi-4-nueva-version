@@ -50,5 +50,13 @@
     "swedish_naval_1936"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "interwar",
+  "modules": [
+    "uk_6inch_bl_mk12",
+    "carrier_air_wing_bunker",
+    "carrier_boiler_yarrow"
+  ],
+  "production_cost": 210.8
 }

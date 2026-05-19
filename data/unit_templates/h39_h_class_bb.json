@@ -49,5 +49,15 @@
     "ww2_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "battleship",
+  "era": "modern",
+  "modules": [
+    "h39_h_class_bb_design",
+    "german_wagner_turbine",
+    "naval_belt_armor_scheme",
+    "g7a_torpedo",
+    "naval_fire_control_mk37"
+  ],
+  "production_cost": 3339.8
 }

@@ -39,5 +39,13 @@
     "german_paper_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "carrier",
+  "era": "ww2",
+  "modules": [
+    "mk13_aerial_torpedo",
+    "fi167_carrier_scout",
+    "bf109t_carrier_package"
+  ],
+  "production_cost": 2072.0
 }

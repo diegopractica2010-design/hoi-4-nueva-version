@@ -36,5 +36,12 @@
     "prototype"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "interwar",
+  "modules": [
+    "fw61_twin_intermeshing_rotor",
+    "fw61_control_system"
+  ],
+  "production_cost": 74.0
 }

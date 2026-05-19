@@ -34,5 +34,12 @@
     "ww1_artillery"
   ],
   "can_mount_drones": false,
-  "is_vehicle": false
+  "is_vehicle": false,
+  "production_category": "light_tank",
+  "era": "ww1",
+  "modules": [
+    "m1897_75mm_field_gun",
+    "m1897_towed_carriage"
+  ],
+  "production_cost": 48.3
 }

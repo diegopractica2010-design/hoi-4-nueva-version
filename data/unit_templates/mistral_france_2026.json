@@ -40,5 +40,13 @@
     "french_amphibious_2026"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "mistral_class_lhd_france",
+    "panther_naval_france",
+    "aster30_sam"
+  ],
+  "production_cost": 543.6
 }

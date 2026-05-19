@@ -42,5 +42,13 @@
     "japanese_paper_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww2",
+  "modules": [
+    "type99_mk2_cannon",
+    "a7m_reppu_proto_engine",
+    "carrier_operations_kit"
+  ],
+  "production_cost": 104.0
 }

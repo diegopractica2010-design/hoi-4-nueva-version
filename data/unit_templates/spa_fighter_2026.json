@@ -42,5 +42,12 @@
     "spain"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "aim120d_amraam",
+    "eurofighter_typhoon"
+  ],
+  "production_cost": 253.8
 }

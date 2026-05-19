@@ -38,5 +38,13 @@
     "japanese_paper_tanks"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "type5_75mm_l70_gun",
+    "mitsubishi_al_engine",
+    "type5_chi_ri_armor"
+  ],
+  "production_cost": 145.0
 }

@@ -38,5 +38,13 @@
     "planned"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "space",
+  "era": "future",
+  "modules": [
+    "long_march2_engine",
+    "long_march9_superheavy",
+    "lunar_gateway_hab"
+  ],
+  "production_cost": 915.2
 }

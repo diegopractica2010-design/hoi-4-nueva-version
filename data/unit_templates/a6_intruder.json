@@ -42,5 +42,14 @@
     "cold_war_naval_air"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "bomber",
+  "era": "early_cold_war",
+  "modules": [
+    "agm65_maverick",
+    "us_1000lb_bomb_load",
+    "tf34_intruder_engine",
+    "scr_520_airborne_radar"
+  ],
+  "production_cost": 296.2
 }

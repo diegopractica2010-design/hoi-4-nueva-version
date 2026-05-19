@@ -50,5 +50,13 @@
     "corvette"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "hamina_missile_boat",
+    "aesa_radar_gen1",
+    "iris_t_slm"
+  ],
+  "production_cost": 586.8
 }

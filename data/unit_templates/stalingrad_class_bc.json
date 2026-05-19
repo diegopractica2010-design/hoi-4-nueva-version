@@ -49,5 +49,15 @@
     "cold_war_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "stalingrad_bc_design",
+    "vm_reactor_soviet",
+    "naval_belt_armor_scheme",
+    "mk15_torpedo_tube",
+    "naval_fire_control_mk37"
+  ],
+  "production_cost": 659.0
 }

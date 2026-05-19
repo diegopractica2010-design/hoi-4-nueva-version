@@ -51,5 +51,16 @@
     "ww2_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "battleship",
+  "era": "ww2",
+  "modules": [
+    "uk_14inch_mk7",
+    "mk15_torpedo_tube",
+    "carrier_boiler_yarrow",
+    "naval_belt_armor_scheme",
+    "naval_fire_control_mk37",
+    "scr_522_radio"
+  ],
+  "production_cost": 1989.4
 }

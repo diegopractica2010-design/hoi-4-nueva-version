@@ -39,5 +39,13 @@
     "tank_destroyers"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "ww2",
+  "modules": [
+    "kwk_44_128mm_gun",
+    "maybach_hl230_engine",
+    "krupp_tiger_armor"
+  ],
+  "production_cost": 215.0
 }

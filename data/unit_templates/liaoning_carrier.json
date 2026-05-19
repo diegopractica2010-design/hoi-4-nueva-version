@@ -40,5 +40,13 @@
     "chinese_carriers_2026"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "carrier",
+  "era": "modern",
+  "modules": [
+    "liaoning_carrier_core",
+    "type055_destroyer_vls",
+    "hq9b_sam"
+  ],
+  "production_cost": 3729.6
 }

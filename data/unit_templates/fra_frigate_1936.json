@@ -52,5 +52,14 @@
     "frigate"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "interwar",
+  "modules": [
+    "uk_4_7inch_qf",
+    "type93_long_lance",
+    "carrier_boiler_yarrow",
+    "naval_fire_control_mk37"
+  ],
+  "production_cost": 232.0
 }

@@ -49,5 +49,15 @@
     "interwar_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "cruiser",
+  "era": "modern",
+  "modules": [
+    "carrier_air_wing_bunker",
+    "carrier_boiler_yarrow",
+    "naval_belt_armor_scheme",
+    "naval_fire_control_mk37",
+    "carrier_aa_20mm_oerlikon"
+  ],
+  "production_cost": 1040.0
 }

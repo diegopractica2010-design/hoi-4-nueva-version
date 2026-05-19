@@ -33,5 +33,12 @@
     "french_fighters_eighties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "super530d_missile",
+    "mirage2000_package"
+  ],
+  "production_cost": 253.8
 }

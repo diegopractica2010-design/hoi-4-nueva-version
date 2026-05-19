@@ -52,5 +52,16 @@
     "paper_strike"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "submarine",
+  "era": "ww2",
+  "modules": [
+    "i400_submarine_tube",
+    "type95_sub_torpedo",
+    "carrier_boiler_yarrow",
+    "passive_sonar_ww2",
+    "pressure_hull_fleet",
+    "vls_missile_compartment"
+  ],
+  "production_cost": 519.7
 }

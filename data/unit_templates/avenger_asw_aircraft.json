@@ -42,5 +42,14 @@
     "asw_aviation"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "bomber",
+  "era": "ww2",
+  "modules": [
+    "mk24_fido_torpedo",
+    "depth_charge_mk9",
+    "wasp_r1340_carrier_scout",
+    "scr_520_airborne_radar"
+  ],
+  "production_cost": 282.0
 }

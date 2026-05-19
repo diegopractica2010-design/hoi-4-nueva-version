@@ -31,5 +31,11 @@
     "prototype"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww1",
+  "modules": [
+    "kay_gyroglider_proto"
+  ],
+  "production_cost": 56.7
 }

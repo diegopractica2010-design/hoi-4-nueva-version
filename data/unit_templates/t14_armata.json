@@ -43,5 +43,14 @@
     "next_gen"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "early_cold_war",
+  "modules": [
+    "2a82_125mm_gun",
+    "v46_6m_diesel",
+    "t14_armata_package",
+    "afghanit_aps"
+  ],
+  "production_cost": 257.5
 }

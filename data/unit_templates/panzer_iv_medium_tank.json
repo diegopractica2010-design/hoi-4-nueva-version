@@ -17,12 +17,26 @@
     "hardness": 80
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "SecondaryWeapon": { "max": 2 },
-    "Engine": { "max": 1 },
-    "Armor": { "max": 1 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
   },
-  "unlock_tech": ["german_medium_tanks"],
+  "unlock_tech": [
+    "german_medium_tanks"
+  ],
   "is_vehicle": true,
-  "description": "Workhorse German medium tank. Highly upgradable throughout the war."
+  "description": "Workhorse German medium tank. Highly upgradable throughout the war.",
+  "production_category": "medium_tank",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 93.5
 }

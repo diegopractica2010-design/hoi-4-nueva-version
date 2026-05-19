@@ -39,5 +39,13 @@
     "cold_war_tanks"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "early_cold_war",
+  "modules": [
+    "m58_120mm_gun",
+    "av1790_engine",
+    "m48_patton_armor"
+  ],
+  "production_cost": 268.8
 }

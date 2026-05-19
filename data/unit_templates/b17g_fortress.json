@@ -19,12 +19,24 @@
     "hardness": 38
   },
   "slots": {
-    "MainWeapon": {"max": 1},
-    "SecondaryWeapon": {"max": 2},
-    "Engine": {"max": 1},
-    "Sensors": {"max": 1},
-    "LifeSupport": {"max": 1},
-    "Communications": {"max": 1}
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "LifeSupport": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
   },
   "module_loadout": {
     "MainWeapon": "us_4000lb_bomb_load",
@@ -34,7 +46,21 @@
     "LifeSupport": "high_altitude_life_support",
     "Communications": "scr_522_radio"
   },
-  "unlock_tech": ["us_heavy_bombers", "strategic_bombing"],
+  "unlock_tech": [
+    "us_heavy_bombers",
+    "strategic_bombing"
+  ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "bomber",
+  "era": "ww2",
+  "modules": [
+    "us_4000lb_bomb_load",
+    "browning_m2_defensive_battery",
+    "wright_r1820_cyclone",
+    "norden_bombsight",
+    "high_altitude_life_support",
+    "scr_522_radio"
+  ],
+  "production_cost": 250.6
 }

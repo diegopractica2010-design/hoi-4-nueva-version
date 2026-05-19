@@ -42,5 +42,12 @@
     "nigeria"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "aim9_sidewinder",
+    "ge_f404_hornet"
+  ],
+  "production_cost": 226.8
 }

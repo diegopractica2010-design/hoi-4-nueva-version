@@ -48,5 +48,12 @@
     "twenty_twenties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "submarine",
+  "era": "ww2",
+  "modules": [
+    "lockheed_martin_orca_uuv",
+    "fuel_cell_aip_212"
+  ],
+  "production_cost": 292.0
 }

@@ -38,5 +38,13 @@
     "soviet_ifv_sixties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "light_tank",
+  "era": "late_cold_war",
+  "modules": [
+    "bmp1_73mm_grom",
+    "malyutka_at3_sagger",
+    "v12_5_engine"
+  ],
+  "production_cost": 123.0
 }

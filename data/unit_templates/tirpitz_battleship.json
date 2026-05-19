@@ -51,5 +51,16 @@
     "atlantic_raider"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "battleship",
+  "era": "ww2",
+  "modules": [
+    "ger_15inch_skc34",
+    "g7a_torpedo",
+    "german_wagner_turbine",
+    "naval_belt_armor_scheme",
+    "naval_fire_control_mk37",
+    "scr_522_radio"
+  ],
+  "production_cost": 1999.8
 }

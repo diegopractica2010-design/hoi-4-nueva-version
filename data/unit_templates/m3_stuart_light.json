@@ -19,16 +19,33 @@
     "hardness": 75
   },
   "slots": {
-    "MainWeapon": {"max": 1},
-    "SecondaryWeapon": {"max": 2},
-    "Engine": {"max": 1},
-    "DroneAttachment": {"max": 2}
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "DroneAttachment": {
+      "max": 2
+    }
   },
   "module_loadout": {
     "MainWeapon": "75mm_m3_gun",
     "Engine": "continental_r975_engine"
   },
-  "unlock_tech": ["light_tanks"],
+  "unlock_tech": [
+    "light_tanks"
+  ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "light_tank",
+  "era": "ww2",
+  "modules": [
+    "75mm_m3_gun",
+    "continental_r975_engine"
+  ],
+  "production_cost": 78.0
 }

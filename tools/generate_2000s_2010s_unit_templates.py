@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from template_export import write_unit_template
 import json
 from pathlib import Path
 
@@ -497,9 +498,7 @@ def main() -> None:
         if tpl["id"] in existing:
             skipped += 1
             continue
-        with path.open("w", encoding="utf-8") as f:
-            json.dump(tpl, f, indent=2, ensure_ascii=False)
-            f.write("\n")
+        write_unit_template(path, tpl)
         created += 1
         print(f"  + {path.name}")
     total = len(list(TEMPLATES_DIR.glob("*.json")))

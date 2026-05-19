@@ -51,5 +51,14 @@
     "frigate"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "uk_4_5inch_mk6",
+    "mk41_vls_destroyer",
+    "type26_frigate_package",
+    "sea_viper_sam"
+  ],
+  "production_cost": 554.4
 }

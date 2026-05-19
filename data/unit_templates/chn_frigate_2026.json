@@ -52,5 +52,15 @@
     "frigate"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "us_5inch_54_mk42",
+    "type055_destroyer_vls",
+    "type055_destroyer_vls",
+    "hq9b_sam",
+    "geared_steam_turbine_60k"
+  ],
+  "production_cost": 627.9
 }

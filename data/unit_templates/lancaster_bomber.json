@@ -40,5 +40,13 @@
     "uk_heavy_bombers"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "bomber",
+  "era": "ww2",
+  "modules": [
+    "uk_4000lb_bomb_load",
+    "merlin_xx_engine",
+    "wireless_set_no19"
+  ],
+  "production_cost": 207.0
 }

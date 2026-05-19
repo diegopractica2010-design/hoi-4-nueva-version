@@ -42,5 +42,12 @@
     "greenland"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "lewis_gun_mount",
+    "wright_r1820_cyclone"
+  ],
+  "production_cost": 226.8
 }

@@ -37,5 +37,13 @@
     "lunar_exploration"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "space",
+  "era": "future",
+  "modules": [
+    "long_march5_heavy",
+    "change_lunar_lander",
+    "change_lunar_lander"
+  ],
+  "production_cost": 809.6
 }

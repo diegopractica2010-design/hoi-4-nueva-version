@@ -39,5 +39,12 @@
     "assault_helicopter"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "ch53k_king_stallion",
+    "ch53k_king_stallion"
+  ],
+  "production_cost": 156.6
 }

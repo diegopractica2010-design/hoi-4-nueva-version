@@ -47,5 +47,15 @@
     "soviet_armored_ww2"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "85mm_d5t_gun",
+    "coaxial_mg_mount",
+    "v2_diesel_engine",
+    "t34_sloped_armor",
+    "radio_71tk1"
+  ],
+  "production_cost": 169.6
 }

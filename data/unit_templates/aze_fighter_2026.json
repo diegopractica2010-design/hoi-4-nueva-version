@@ -42,5 +42,12 @@
     "azerbaijan"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "r77_1_adder",
+    "rd33_mig29_engine"
+  ],
+  "production_cost": 172.8
 }

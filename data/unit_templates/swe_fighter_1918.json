@@ -39,5 +39,12 @@
     "sweden"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww1",
+  "modules": [
+    "lewis_gun_mount",
+    "liberty_l12_engine"
+  ],
+  "production_cost": 94.5
 }

@@ -47,5 +47,15 @@
     "german_armored_ww2"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "kwk_42_75mm_gun",
+    "coaxial_mg_mount",
+    "man_maybach_600_engine",
+    "schurzen_armor_skirts",
+    "fug_16_zyf_radio"
+  ],
+  "production_cost": 169.6
 }

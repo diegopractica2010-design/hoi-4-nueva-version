@@ -49,5 +49,14 @@
     "twenty_tens"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "submarine",
+  "era": "modern",
+  "modules": [
+    "bulava_slbm",
+    "vm_reactor_soviet",
+    "mk48_torpedo",
+    "pressure_hull_fleet"
+  ],
+  "production_cost": 644.4
 }

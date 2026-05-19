@@ -42,5 +42,13 @@
     "vikramaditya_export"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "interwar",
+  "modules": [
+    "r77_1_adder",
+    "rd33mk_mig29k",
+    "carrier_operations_kit"
+  ],
+  "production_cost": 79.0
 }

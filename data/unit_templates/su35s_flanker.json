@@ -33,5 +33,12 @@
     "russian_fighters_two_thousands"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww2",
+  "modules": [
+    "r77_1_adder",
+    "su35_package"
+  ],
+  "production_cost": 87.0
 }

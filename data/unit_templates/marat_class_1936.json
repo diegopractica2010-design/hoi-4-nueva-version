@@ -50,5 +50,13 @@
     "soviet_naval_1936"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "interwar",
+  "modules": [
+    "marat_class_bb_soviet",
+    "carrier_boiler_yarrow",
+    "naval_belt_armor_scheme"
+  ],
+  "production_cost": 215.9
 }

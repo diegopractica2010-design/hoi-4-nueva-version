@@ -38,5 +38,13 @@
     "ground_attack"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww2",
+  "modules": [
+    "hvar_rocket",
+    "pratt_r2800_corsair",
+    "scr_520_airborne_radar"
+  ],
+  "production_cost": 117.0
 }

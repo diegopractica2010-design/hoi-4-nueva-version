@@ -44,5 +44,14 @@
     "planned"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "future",
+  "modules": [
+    "mgcs_main_gun",
+    "abramsx_hybrid_package",
+    "mgcs_armor_package",
+    "ai_targeting_suite"
+  ],
+  "production_cost": 466.4
 }

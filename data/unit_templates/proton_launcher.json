@@ -33,5 +33,12 @@
     "soviet_heavy_lift"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "space",
+  "era": "future",
+  "modules": [
+    "proton_rocket_stage",
+    "proton_m_upgrade"
+  ],
+  "production_cost": 796.4
 }

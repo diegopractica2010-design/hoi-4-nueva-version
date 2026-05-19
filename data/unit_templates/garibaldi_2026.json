@@ -40,5 +40,13 @@
     "italian_amphibious_2026"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "garibaldi_light_carrier",
+    "nh90_nato_naval_helo",
+    "aster30_sam"
+  ],
+  "production_cost": 543.6
 }

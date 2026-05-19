@@ -47,5 +47,15 @@
     "german_paper_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "carrier",
+  "era": "ww2",
+  "modules": [
+    "carrier_island_superstructure",
+    "geared_steam_turbine_60k",
+    "carrier_air_wing_bunker",
+    "wurzburg_ground_radar",
+    "flakvierling_38_quad"
+  ],
+  "production_cost": 2228.0
 }

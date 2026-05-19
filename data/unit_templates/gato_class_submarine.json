@@ -50,5 +50,15 @@
     "pacific_war"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "submarine",
+  "era": "ww2",
+  "modules": [
+    "submarine_torpedo_tube",
+    "mk14_torpedo_us",
+    "fairbanks_morse_38d8",
+    "passive_sonar_ww2",
+    "pressure_hull_fleet"
+  ],
+  "production_cost": 477.4
 }

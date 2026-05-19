@@ -33,5 +33,12 @@
     "commercial_heavy_lift"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "rocket",
+  "era": "ww2",
+  "modules": [
+    "new_glenn_stage",
+    "blue_moon_lander"
+  ],
+  "production_cost": 501.0
 }

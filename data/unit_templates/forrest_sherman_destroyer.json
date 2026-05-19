@@ -47,5 +47,15 @@
     "cold_war_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "early_cold_war",
+  "modules": [
+    "us_5inch_54_mk42",
+    "mk35_torpedo",
+    "us_3inch_70_mk26",
+    "us_parsons_turbine",
+    "an_tps1_radar"
+  ],
+  "production_cost": 468.5
 }

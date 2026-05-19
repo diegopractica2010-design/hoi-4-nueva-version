@@ -35,5 +35,12 @@
     "prototype"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww2",
+  "modules": [
+    "de_bothezat_rotor_system",
+    "de_bothezat_rotor_system"
+  ],
+  "production_cost": 87.0
 }

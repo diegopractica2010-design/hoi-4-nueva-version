@@ -37,5 +37,13 @@
     "russian_fighters_twenty_twenties"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww2",
+  "modules": [
+    "r77_1_adder",
+    "su57_serial_package",
+    "okhotnik_ucav"
+  ],
+  "production_cost": 93.0
 }

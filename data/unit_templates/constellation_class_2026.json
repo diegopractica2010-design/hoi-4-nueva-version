@@ -52,5 +52,15 @@
     "frigate"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "us_5inch_54_mk42",
+    "mk41_vls_destroyer",
+    "aegis_spy1_radar",
+    "constellation_ffg_package",
+    "aegis_bmd_package"
+  ],
+  "production_cost": 552.1
 }

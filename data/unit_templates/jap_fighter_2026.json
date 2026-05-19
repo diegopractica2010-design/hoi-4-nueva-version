@@ -43,5 +43,13 @@
     "japan"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "aim120d_amraam",
+    "pratt_f135_engine",
+    "f35_block4_package"
+  ],
+  "production_cost": 280.8
 }

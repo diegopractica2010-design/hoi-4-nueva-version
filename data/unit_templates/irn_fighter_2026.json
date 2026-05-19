@@ -43,5 +43,12 @@
     "persia"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "aim54_phoenix",
+    "tf30_f14_engine"
+  ],
+  "production_cost": 172.8
 }

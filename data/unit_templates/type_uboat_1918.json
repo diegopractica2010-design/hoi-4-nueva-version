@@ -48,5 +48,14 @@
     "submarine"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "submarine",
+  "era": "ww1",
+  "modules": [
+    "submarine_torpedo_tube",
+    "g7a_torpedo_sub",
+    "holland_diesel_electric",
+    "pressure_hull_light"
+  ],
+  "production_cost": 288.4
 }

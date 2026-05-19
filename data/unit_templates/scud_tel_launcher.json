@@ -46,5 +46,15 @@
     "soviet_missiles"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "light_tank",
+  "era": "early_cold_war",
+  "modules": [
+    "v2_diesel_engine",
+    "truck_rocket_mount",
+    "hunter_killer_fcs",
+    "scud_b_srbm",
+    "mlrs_reload_trailer"
+  ],
+  "production_cost": 152.6
 }

@@ -33,5 +33,12 @@
     "french_fighters_sixties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "late_cold_war",
+  "modules": [
+    "defa550_30mm",
+    "atar9c_turbojet"
+  ],
+  "production_cost": 130.5
 }

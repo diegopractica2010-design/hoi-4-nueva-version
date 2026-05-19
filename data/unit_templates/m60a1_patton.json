@@ -47,5 +47,15 @@
     "nato_armor"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "m68a1_105mm_gun",
+    "avds_1790_engine",
+    "m60a1_patton_armor",
+    "laser_rangefinder_tank",
+    "m735_apfsds_ammo"
+  ],
+  "production_cost": 169.6
 }

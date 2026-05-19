@@ -38,5 +38,13 @@
     "early_satellites"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "space",
+  "era": "future",
+  "modules": [
+    "redstone_engine",
+    "jupiter_irbm_stage",
+    "explorer1_science_payload"
+  ],
+  "production_cost": 829.4
 }

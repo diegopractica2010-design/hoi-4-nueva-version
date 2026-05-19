@@ -42,5 +42,12 @@
     "china"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "pl15e_missile",
+    "j20a_operational"
+  ],
+  "production_cost": 253.8
 }

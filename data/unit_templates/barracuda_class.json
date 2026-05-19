@@ -49,5 +49,14 @@
     "twenty_tens"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "submarine",
+  "era": "modern",
+  "modules": [
+    "exocet_sm39",
+    "pump_jet_propulsor",
+    "optronic_mast",
+    "hybrid_steel_hull_virginia"
+  ],
+  "production_cost": 547.2
 }

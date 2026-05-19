@@ -16,10 +16,20 @@
     "hardness": 15
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "Engine": { "max": 1 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
   },
-  "unlock_tech": ["british_fighters"],
+  "unlock_tech": [
+    "british_fighters"
+  ],
   "is_vehicle": true,
-  "description": "Excellent British fighter. Highly maneuverable with good climb rate."
+  "description": "Excellent British fighter. Highly maneuverable with good climb rate.",
+  "production_category": "fighter",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 63.8
 }

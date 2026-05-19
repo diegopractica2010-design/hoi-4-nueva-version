@@ -43,5 +43,13 @@
     "france"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "mica_ng_missile",
+    "rafale_package",
+    "rafale_f4_package"
+  ],
+  "production_cost": 264.6
 }

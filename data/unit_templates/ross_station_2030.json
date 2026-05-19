@@ -34,5 +34,12 @@
     "planned"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "space",
+  "era": "future",
+  "modules": [
+    "russian_oren_space_station",
+    "soyuz_spacecraft_bus"
+  ],
+  "production_cost": 796.4
 }

@@ -51,5 +51,14 @@
     "germany"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "modern",
+  "modules": [
+    "rh120_l55_gun",
+    "mtu_mb873_engine",
+    "leopard2a7_package",
+    "hunter_killer_fcs"
+  ],
+  "production_cost": 421.2
 }

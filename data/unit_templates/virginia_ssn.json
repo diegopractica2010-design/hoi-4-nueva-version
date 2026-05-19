@@ -51,5 +51,16 @@
     "twenty_tens"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "submarine",
+  "era": "modern",
+  "modules": [
+    "submarine_torpedo_tube",
+    "tomahawk_cruise_missile",
+    "ge_s9g_reactor",
+    "optronic_mast",
+    "hybrid_steel_hull_virginia",
+    "vls_missile_compartment"
+  ],
+  "production_cost": 998.1
 }

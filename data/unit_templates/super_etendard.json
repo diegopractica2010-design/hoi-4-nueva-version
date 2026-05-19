@@ -39,5 +39,13 @@
     "exocet_strike"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "interwar",
+  "modules": [
+    "super_etendard_strike",
+    "snecma_atar_etendard",
+    "carrier_operations_kit"
+  ],
+  "production_cost": 112.2
 }

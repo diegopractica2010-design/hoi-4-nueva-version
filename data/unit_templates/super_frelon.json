@@ -40,5 +40,13 @@
     "asw_helicopter"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww1",
+  "modules": [
+    "mk46_lightweight_torpedo",
+    "super_frelon_asw",
+    "turbomeca_makila"
+  ],
+  "production_cost": 119.7
 }

@@ -16,11 +16,23 @@
     "hardness": 8
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "Engine": { "max": 1 },
-    "Bombsight": { "max": 1 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Bombsight": {
+      "max": 1
+    }
   },
-  "unlock_tech": ["german_dive_bombers"],
+  "unlock_tech": [
+    "german_dive_bombers"
+  ],
   "is_vehicle": true,
-  "description": "Iconic German dive bomber. Extremely accurate in dive bombing but vulnerable to fighters."
+  "description": "Iconic German dive bomber. Extremely accurate in dive bombing but vulnerable to fighters.",
+  "production_category": "bomber",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 153.0
 }

@@ -17,11 +17,23 @@
     "hardness": 78
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "SecondaryWeapon": { "max": 2 },
-    "Engine": { "max": 1 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
   },
-  "unlock_tech": ["soviet_medium_tanks"],
+  "unlock_tech": [
+    "soviet_medium_tanks"
+  ],
   "is_vehicle": true,
-  "description": "Iconic Soviet medium tank. Excellent mobility and sloped armor for its time."
+  "description": "Iconic Soviet medium tank. Excellent mobility and sloped armor for its time.",
+  "production_category": "medium_tank",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 93.5
 }

@@ -46,5 +46,15 @@
     "german_missiles"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "light_tank",
+  "era": "ww2",
+  "modules": [
+    "maybach_hl120_trm",
+    "truck_rocket_mount",
+    "hunter_killer_fcs",
+    "nebelwerfer_150mm",
+    "mlrs_reload_trailer"
+  ],
+  "production_cost": 112.3
 }

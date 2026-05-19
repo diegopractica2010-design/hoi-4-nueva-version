@@ -48,5 +48,11 @@
     "egyptian_naval_1936"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "interwar",
+  "modules": [
+    "interwar_coastal_patrol"
+  ],
+  "production_cost": 200.6
 }

@@ -33,5 +33,12 @@
     "field_artillery"
   ],
   "can_mount_drones": false,
-  "is_vehicle": false
+  "is_vehicle": false,
+  "production_category": "light_tank",
+  "era": "interwar",
+  "modules": [
+    "qf_25pdr_gun",
+    "m1897_towed_carriage"
+  ],
+  "production_cost": 58.6
 }

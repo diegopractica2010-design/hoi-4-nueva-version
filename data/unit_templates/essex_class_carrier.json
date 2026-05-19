@@ -47,5 +47,15 @@
     "fleet_carriers"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "carrier",
+  "era": "ww2",
+  "modules": [
+    "carrier_wooden_flight_deck",
+    "carrier_boiler_yarrow",
+    "carrier_air_wing_bunker",
+    "sk_surface_radar",
+    "carrier_aa_bofors_40mm"
+  ],
+  "production_cost": 2218.3
 }

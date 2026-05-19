@@ -39,5 +39,13 @@
     "late_war_carrier"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "bomber",
+  "era": "ww2",
+  "modules": [
+    "b6n_jill_torpedo_load",
+    "sakae_radial_engine",
+    "carrier_operations_kit"
+  ],
+  "production_cost": 261.0
 }

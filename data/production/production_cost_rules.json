@@ -58,10 +58,7 @@
   },
   "complexity_penalty": {
     "free_modules": 4,
-    "per_module_after": 0.08
-  },
-  "days_scale_exponent": 0.85,
-  "min_days_factor": 0.5,
-  "max_days_factor": 3.5,
-  "use_days_fine_tune": true
+    "per_module_after": 0.08,
+    "per_module_after_4": 0.08
+  }
 }

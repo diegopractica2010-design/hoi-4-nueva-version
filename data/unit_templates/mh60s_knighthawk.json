@@ -40,5 +40,13 @@
     "multi_mission"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "ah64_hellfire",
+    "mh60s_knighthawk_suite",
+    "ge_f404_hornet"
+  ],
+  "production_cost": 167.4
 }

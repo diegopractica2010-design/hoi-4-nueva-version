@@ -43,5 +43,14 @@
     "nato_armor"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "ww2",
+  "modules": [
+    "rh120_l44_gun",
+    "mtu_mb873_engine",
+    "leopard2a4_armor",
+    "dm33_apfsds"
+  ],
+  "production_cost": 221.0
 }

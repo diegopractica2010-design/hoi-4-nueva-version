@@ -52,5 +52,14 @@
     "frigate"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "ww1",
+  "modules": [
+    "ger_10_5cm_tb",
+    "ww1_18inch_torpedo",
+    "german_wagner_turbine",
+    "naval_fire_control_mk37"
+  ],
+  "production_cost": 235.2
 }

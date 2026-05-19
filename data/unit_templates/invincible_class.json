@@ -41,5 +41,13 @@
     "stovl_carrier"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "early_cold_war",
+  "modules": [
+    "invincible_class_core",
+    "sea_king_mk1_asw",
+    "sea_dart_sam"
+  ],
+  "production_cost": 407.5
 }

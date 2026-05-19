@@ -47,5 +47,15 @@
     "tmd"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "light_tank",
+  "era": "modern",
+  "modules": [
+    "agt1500_turbine",
+    "wheeled_mlrs_chassis",
+    "hunter_killer_fcs",
+    "mim104e_patriot_pac3",
+    "mlrs_reload_trailer"
+  ],
+  "production_cost": 219.7
 }

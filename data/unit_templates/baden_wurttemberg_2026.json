@@ -52,5 +52,15 @@
     "frigate"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "ger_15cm_tb",
+    "iris_t_slm",
+    "fremm_frigate_suite",
+    "baden_wurttemberg_f125",
+    "iris_t_slm"
+  ],
+  "production_cost": 505.4
 }

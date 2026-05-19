@@ -42,5 +42,14 @@
     "international_cooperation"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "space",
+  "era": "future",
+  "modules": [
+    "iss_zvezda_module",
+    "soyuz_spacecraft_bus",
+    "iss_destiny_lab",
+    "gps_block1_payload"
+  ],
+  "production_cost": 822.8
 }

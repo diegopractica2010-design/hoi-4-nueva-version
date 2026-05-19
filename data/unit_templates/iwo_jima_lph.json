@@ -41,5 +41,13 @@
     "lph"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "early_cold_war",
+  "modules": [
+    "iwo_jima_lph_core",
+    "sh3_sea_king_asw",
+    "aim9_sidewinder"
+  ],
+  "production_cost": 388.8
 }

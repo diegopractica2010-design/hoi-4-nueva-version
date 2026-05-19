@@ -48,5 +48,13 @@
     "autonomous_undersea"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "submarine",
+  "era": "future",
+  "modules": [
+    "crewless_submarine_2030",
+    "kalibr_vls_sub",
+    "fuel_cell_aip_212"
+  ],
+  "production_cost": 741.4
 }

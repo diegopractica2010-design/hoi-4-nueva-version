@@ -38,5 +38,13 @@
     "chinese_carriers_twenty_twenties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "carrier",
+  "era": "modern",
+  "modules": [
+    "fujian_emals_carrier",
+    "type055_destroyer_vls",
+    "hq9b_sam"
+  ],
+  "production_cost": 3729.6
 }

@@ -11,6 +11,7 @@ Modeling conventions (see also generate_transport_cargo_naval.py):
 
 from __future__ import annotations
 
+from template_export import write_unit_template
 import json
 from pathlib import Path
 
@@ -333,9 +334,7 @@ def main() -> None:
         tpl = launcher_tpl(spec)
         if tpl["id"] in existing_t:
             continue
-        with (TEMPLATES_DIR / f"{tpl['id']}.json").open("w", encoding="utf-8") as f:
-            json.dump(tpl, f, indent=2, ensure_ascii=False)
-            f.write("\n")
+        write_unit_template(TEMPLATES_DIR / f"{tpl['id']}.json", tpl)
         tc += 1
     mods = {p.stem for p in MODULES_DIR.glob("*.json")}
     errs = []

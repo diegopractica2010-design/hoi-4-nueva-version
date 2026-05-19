@@ -40,5 +40,13 @@
     "attack_helicopter"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "kh31_asm",
+    "ka52k_katran_naval",
+    "al31f_engine"
+  ],
+  "production_cost": 183.6
 }

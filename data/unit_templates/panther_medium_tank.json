@@ -17,12 +17,26 @@
     "hardness": 85
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "SecondaryWeapon": { "max": 2 },
-    "Engine": { "max": 1 },
-    "Armor": { "max": 1 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
   },
-  "unlock_tech": ["german_medium_tanks_late"],
+  "unlock_tech": [
+    "german_medium_tanks_late"
+  ],
   "is_vehicle": true,
-  "description": "Advanced German medium tank with excellent sloped armor and powerful gun. One of the best tanks of the war."
+  "description": "Advanced German medium tank with excellent sloped armor and powerful gun. One of the best tanks of the war.",
+  "production_category": "medium_tank",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 93.5
 }

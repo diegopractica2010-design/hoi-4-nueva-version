@@ -41,5 +41,13 @@
     "helicopter"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "hyuga_class_ddh",
+    "sh60b_seahawk_asw",
+    "type055_destroyer_vls"
+  ],
+  "production_cost": 489.6
 }

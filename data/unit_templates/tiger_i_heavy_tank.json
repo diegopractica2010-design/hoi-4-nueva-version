@@ -17,12 +17,26 @@
     "hardness": 92
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "SecondaryWeapon": { "max": 2 },
-    "Engine": { "max": 1 },
-    "Armor": { "max": 1 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
   },
-  "unlock_tech": ["german_heavy_tanks_1942"],
+  "unlock_tech": [
+    "german_heavy_tanks_1942"
+  ],
   "is_vehicle": true,
-  "description": "Formidable German heavy tank. Exceptional armor and firepower but complex and resource intensive."
+  "description": "Formidable German heavy tank. Exceptional armor and firepower but complex and resource intensive.",
+  "production_category": "heavy_tank",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 153.0
 }

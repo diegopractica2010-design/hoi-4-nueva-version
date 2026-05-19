@@ -51,5 +51,14 @@
     "saudi_arabia"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "modern",
+  "modules": [
+    "m256a1_120mm_gun",
+    "agt1500_turbine",
+    "m1a2c_sep_v3_armor",
+    "hunter_killer_fcs"
+  ],
+  "production_cost": 432.0
 }

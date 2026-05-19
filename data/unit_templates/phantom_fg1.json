@@ -43,5 +43,14 @@
     "uk_carrier_jet"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "early_cold_war",
+  "modules": [
+    "skyflash_missile",
+    "aim9_sidewinder",
+    "rolls_royce_spey_phantom",
+    "carrier_operations_kit"
+  ],
+  "production_cost": 240.0
 }

@@ -38,5 +38,13 @@
     "planned"
   ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "future",
+  "modules": [
+    "meteor_missile",
+    "gcas_tempest_engine",
+    "cca_loyal_wingman"
+  ],
+  "production_cost": 343.2
 }

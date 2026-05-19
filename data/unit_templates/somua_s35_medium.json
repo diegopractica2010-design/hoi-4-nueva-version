@@ -47,5 +47,15 @@
     "french_armored_ww2"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "47mm_sa37_gun",
+    "coaxial_mg_mount",
+    "renault_v6_engine",
+    "french_cast_armor",
+    "er538_radio"
+  ],
+  "production_cost": 169.6
 }

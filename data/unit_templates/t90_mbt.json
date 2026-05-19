@@ -46,5 +46,15 @@
     "russian_mbt_nineties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "2a46m5_125mm_gun",
+    "v46_6m_diesel",
+    "t90_armor_package",
+    "shtora_soft_kill",
+    "3bm42_mango_apfsds"
+  ],
+  "production_cost": 159.8
 }

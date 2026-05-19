@@ -11,6 +11,9 @@ for script in tools/generate_*.py; do
 	python3 "${script}"
 done
 
+echo "==> tools/enrich_all_template_costs.py"
+python3 tools/enrich_all_template_costs.py
+
 module_count="$(find data/modules -maxdepth 1 -name '*.json' | wc -l)"
 template_count="$(find data/unit_templates -maxdepth 1 -name '*.json' | wc -l)"
 echo "=== Done: ${module_count} modules, ${template_count} unit templates ==="

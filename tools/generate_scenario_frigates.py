@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from template_export import write_unit_template
 import json
 from pathlib import Path
 
@@ -161,9 +162,7 @@ def main() -> None:
                 errs.append(f"{tpl['id']}: {mid}")
         if tpl["id"] in existing:
             continue
-        with (TEMPLATES_DIR / f"{tpl['id']}.json").open("w", encoding="utf-8") as f:
-            json.dump(tpl, f, indent=2, ensure_ascii=False)
-            f.write("\n")
+        write_unit_template(TEMPLATES_DIR / f"{tpl['id']}.json", tpl)
         tc += 1
     print(f"Scenario frigates: {tc} templates. Missing module refs: {len(errs)}")
     for e in errs[:20]:

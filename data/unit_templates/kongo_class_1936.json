@@ -51,5 +51,13 @@
     "battlecruiser"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "interwar",
+  "modules": [
+    "ijn_14inch_type94",
+    "ijn_kampon_turbine",
+    "naval_belt_armor_scheme"
+  ],
+  "production_cost": 223.5
 }

@@ -42,5 +42,14 @@
     "soviet_mbt_sixties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "late_cold_war",
+  "modules": [
+    "u5ts_115mm_smoothbore",
+    "v12_5_engine",
+    "t62_cast_armor",
+    "ballistic_computer_gpch"
+  ],
+  "production_cost": 282.0
 }

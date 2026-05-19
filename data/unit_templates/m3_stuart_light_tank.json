@@ -17,13 +17,27 @@
     "hardness": 70
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "SecondaryWeapon": { "max": 2 },
-    "Engine": { "max": 1 },
-    "DroneAttachment": { "max": 1 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "DroneAttachment": {
+      "max": 1
+    }
   },
-  "unlock_tech": ["light_tanks_1930s"],
+  "unlock_tech": [
+    "light_tanks_1930s"
+  ],
   "can_mount_drones": false,
   "is_vehicle": true,
-  "description": "Fast and reliable light tank. Excellent for reconnaissance and flanking in early war."
+  "description": "Fast and reliable light tank. Excellent for reconnaissance and flanking in early war.",
+  "production_category": "light_tank",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 46.8
 }

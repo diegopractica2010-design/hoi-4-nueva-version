@@ -48,5 +48,14 @@
     "merchant_naval_2026"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "merchant_armed_cargo_hold",
+    "modern_container_ship_engine",
+    "merchant_ascm_launcher",
+    "nasams_launcher"
+  ],
+  "production_cost": 570.6
 }

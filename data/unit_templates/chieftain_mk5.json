@@ -46,5 +46,15 @@
     "uk_mbt_sixties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "late_cold_war",
+  "modules": [
+    "l11a5_120mm_rifled",
+    "l60_engine_chieftain",
+    "chieftain_armor",
+    "laser_rangefinder_tank",
+    "hesh_fs_ammo"
+  ],
+  "production_cost": 367.7
 }

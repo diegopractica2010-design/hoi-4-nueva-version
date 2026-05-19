@@ -48,5 +48,15 @@
     "battleship_revival"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "battleship",
+  "era": "modern",
+  "modules": [
+    "trump_class_16inch_modern",
+    "trump_class_vls_farm",
+    "trump_class_hull",
+    "ddgx_combat_system",
+    "hel_mdi_laser"
+  ],
+  "production_cost": 3168.7
 }

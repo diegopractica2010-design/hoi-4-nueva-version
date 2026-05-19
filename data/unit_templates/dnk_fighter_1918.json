@@ -39,5 +39,12 @@
     "denmark"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww1",
+  "modules": [
+    "vickers_machine_gun",
+    "rolls_royce_eagle_engine"
+  ],
+  "production_cost": 68.6
 }

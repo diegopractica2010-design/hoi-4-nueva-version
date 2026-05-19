@@ -19,18 +19,38 @@
     "hardness": 82
   },
   "slots": {
-    "MainWeapon": {"max": 1},
-    "SecondaryWeapon": {"max": 2},
-    "Engine": {"max": 1},
-    "Armor": {"max": 1},
-    "DroneAttachment": {"max": 1}
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "DroneAttachment": {
+      "max": 1
+    }
   },
   "module_loadout": {
     "MainWeapon": "105mm_howitzer",
     "Engine": "continental_r975_engine",
     "Armor": "sherman_armor_plate"
   },
-  "unlock_tech": ["medium_tanks"],
+  "unlock_tech": [
+    "medium_tanks"
+  ],
   "can_mount_drones": true,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "105mm_howitzer",
+    "continental_r975_engine",
+    "sherman_armor_plate"
+  ],
+  "production_cost": 145.0
 }

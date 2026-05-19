@@ -50,5 +50,13 @@
     "patrol"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "destroyer",
+  "era": "modern",
+  "modules": [
+    "coast_guard_patrol_minor",
+    "exocet_sm39",
+    "coast_guard_patrol_minor"
+  ],
+  "production_cost": 446.4
 }

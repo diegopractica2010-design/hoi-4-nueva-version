@@ -39,5 +39,13 @@
     "harrier_carrier"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "carrier",
+  "era": "early_cold_war",
+  "modules": [
+    "garibaldi_light_carrier",
+    "ab212_asw_italy",
+    "aim9_sidewinder"
+  ],
+  "production_cost": 2601.2
 }

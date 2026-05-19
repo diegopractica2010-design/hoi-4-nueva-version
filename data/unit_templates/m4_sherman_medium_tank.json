@@ -17,14 +17,30 @@
     "hardness": 82
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "SecondaryWeapon": { "max": 2 },
-    "Engine": { "max": 1 },
-    "Armor": { "max": 1 },
-    "DroneAttachment": { "max": 2 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "DroneAttachment": {
+      "max": 2
+    }
   },
-  "unlock_tech": ["medium_tanks_1942"],
+  "unlock_tech": [
+    "medium_tanks_1942"
+  ],
   "can_mount_drones": true,
   "is_vehicle": true,
-  "description": "Workhorse medium tank. Good balance of firepower, protection, and mobility. Widely produced."
+  "description": "Workhorse medium tank. Good balance of firepower, protection, and mobility. Widely produced.",
+  "production_category": "medium_tank",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 93.5
 }

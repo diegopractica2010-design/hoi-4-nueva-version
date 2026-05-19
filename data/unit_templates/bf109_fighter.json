@@ -16,10 +16,20 @@
     "hardness": 12
   },
   "slots": {
-    "MainWeapon": { "max": 1 },
-    "Engine": { "max": 1 }
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
   },
-  "unlock_tech": ["german_fighters_early"],
+  "unlock_tech": [
+    "german_fighters_early"
+  ],
   "is_vehicle": true,
-  "description": "Primary German fighter throughout the war. Fast and well-armed but limited range in early variants."
+  "description": "Primary German fighter throughout the war. Fast and well-armed but limited range in early variants.",
+  "production_category": "fighter",
+  "era": "interwar",
+  "modules": [],
+  "production_cost": 63.8
 }

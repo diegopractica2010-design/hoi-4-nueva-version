@@ -34,5 +34,12 @@
     "cold_war_air"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "early_cold_war",
+  "modules": [
+    "m61_vulcan_pod",
+    "pratt_whitney_j57"
+  ],
+  "production_cost": 108.8
 }

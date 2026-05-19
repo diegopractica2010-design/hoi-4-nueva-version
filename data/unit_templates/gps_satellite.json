@@ -33,5 +33,12 @@
     "navigation_satellites"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "space",
+  "era": "future",
+  "modules": [
+    "gps_block1_payload",
+    "vanguard_second_stage"
+  ],
+  "production_cost": 796.4
 }

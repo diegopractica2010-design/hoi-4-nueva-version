@@ -37,5 +37,13 @@
     "us_bombers_twenty_twenties"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "bomber",
+  "era": "late_cold_war",
+  "modules": [
+    "agm158_jassm",
+    "b21_raider_package",
+    "stealth_coating_proto"
+  ],
+  "production_cost": 408.0
 }

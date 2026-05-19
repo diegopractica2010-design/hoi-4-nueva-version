@@ -42,5 +42,14 @@
     "russian_mbt_two_thousands"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "2a46m4_125mm_gun",
+    "v46_6m_diesel",
+    "t90a_armor_package",
+    "3bm59_apfsds"
+  ],
+  "production_cost": 142.0
 }

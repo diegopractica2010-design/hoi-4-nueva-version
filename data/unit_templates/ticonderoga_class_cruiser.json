@@ -51,5 +51,15 @@
     "cold_war_naval"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "cruiser",
+  "era": "early_cold_war",
+  "modules": [
+    "us_5inch_54_mk42",
+    "mk41_vls_destroyer",
+    "us_parsons_turbine",
+    "naval_belt_armor_scheme",
+    "aegis_spy1_radar"
+  ],
+  "production_cost": 741.2
 }

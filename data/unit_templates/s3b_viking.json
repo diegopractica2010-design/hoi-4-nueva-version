@@ -39,5 +39,13 @@
     "carrier_asw"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "modern",
+  "modules": [
+    "mk48_torpedo",
+    "ge_f404_hornet",
+    "s3b_viking_asw_suite"
+  ],
+  "production_cost": 307.8
 }

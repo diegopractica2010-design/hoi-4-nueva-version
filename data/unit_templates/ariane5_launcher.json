@@ -33,5 +33,12 @@
     "esa_launchers"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "space",
+  "era": "future",
+  "modules": [
+    "ariane1_first_stage",
+    "ariane5_core_stage"
+  ],
+  "production_cost": 796.4
 }

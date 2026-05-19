@@ -38,5 +38,13 @@
     "ww1_tanks"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "heavy_tank",
+  "era": "ww1",
+  "modules": [
+    "kwk_57mm_a7v_gun",
+    "mg08_machine_gun",
+    "daimler_knight_engine"
+  ],
+  "production_cost": 147.7
 }

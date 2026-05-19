@@ -34,5 +34,12 @@
     "korean_war"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "early_cold_war",
+  "modules": [
+    "nr23_cannon",
+    "vk1_jet_engine"
+  ],
+  "production_cost": 122.5
 }

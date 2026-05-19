@@ -36,5 +36,12 @@
     "prototype"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "interwar",
+  "modules": [
+    "vs300_sikorsky_single_rotor",
+    "vs300_tail_rotor_anti_torque"
+  ],
+  "production_cost": 74.0
 }

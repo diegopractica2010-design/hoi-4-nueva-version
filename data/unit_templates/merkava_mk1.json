@@ -42,5 +42,14 @@
     "israeli_mbt_seventies"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "medium_tank",
+  "era": "ww2",
+  "modules": [
+    "merkava_mk1_105mm",
+    "merkava_avds_engine",
+    "merkava_mk1_armor",
+    "mg3_infantry_gun"
+  ],
+  "production_cost": 151.0
 }

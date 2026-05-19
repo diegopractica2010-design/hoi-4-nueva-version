@@ -45,5 +45,15 @@
     "uk_fighters"
   ],
   "can_mount_drones": false,
-  "is_vehicle": true
+  "is_vehicle": true,
+  "production_category": "fighter",
+  "era": "ww2",
+  "modules": [
+    "hispano_mk2_cannon",
+    "browning_303_battery",
+    "merlin_xx_engine",
+    "wireless_set_no19",
+    "mk14_gyro_sight"
+  ],
+  "production_cost": 125.3
 }
