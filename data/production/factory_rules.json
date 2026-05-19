@@ -1,0 +1,26 @@
+{
+  "repair": {
+    "base_repair_per_day": 5.0,
+    "annexed_multiplier": 2.5,
+    "occupied_multiplier": 1.0,
+    "requires_supply_connection": true,
+    "min_repair_threshold_for_production": 30.0
+  },
+  "seizure": {
+    "allow_occupier_use": true,
+    "original_owner_loses_permanently_until_recaptured": true
+  },
+  "efficiency": {
+    "base_efficiency": 1.0,
+    "max_efficiency": 1.5,
+    "min_efficiency": 0.3,
+    "damage_penalty_per_percent": 0.008,
+    "tech_efficiency_bonus_per_level": 0.03,
+    "focus_efficiency_bonus": 0.15
+  },
+  "inputs": {
+    "default_fuel_per_day": 10,
+    "default_energy_per_day": 15,
+    "shortage_efficiency_penalty": 0.4
+  }
+}
