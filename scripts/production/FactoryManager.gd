@@ -111,9 +111,7 @@ func assign_production_line_to_factory(factory_id: String, line_id: String) -> b
 
 func create_factory_for_province(province_id: int, owner_tag: String, factory_id: String = "") -> Factory:
 	var new_factory := Factory.new()
-	new_factory.factory_id = (
-		factory_id if not factory_id.is_empty() else "factory_%d_%d" % [province_id, Time.get_unix_time_from_system()]
-	)
+	new_factory.factory_id = factory_id if factory_id != "" else "factory_%d_%d" % [province_id, Time.get_unix_time_from_system()]
 	new_factory.province_id = province_id
 	new_factory.owner_tag = owner_tag
 	new_factory.current_damage = 0.0

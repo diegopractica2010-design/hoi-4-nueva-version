@@ -2,22 +2,22 @@
 class_name Factory
 extends Resource
 
+@export var factory_id: String = ""
+@export var province_id: int = 0  # Matches Province.id (map province key)
+@export var owner_tag: String = ""
+@export var is_seized: bool = false
+@export var current_damage: float = 0.0
+@export var repair_progress: float = 0.0
+@export var is_annexed: bool = false
+
+@export var assigned_lines: Array[String] = []
+
+var current_efficiency: float = 1.0
+
 const RULES_PATH := "res://data/production/factory_rules.json"
 
 static var _rules_cache: Dictionary = {}
 static var _rules_loaded: bool = false
-
-@export var factory_id: String = ""
-@export var province_id: int = 0
-@export var owner_tag: String = ""
-@export var is_seized: bool = false
-@export var current_damage: float = 0.0  ## 0 = perfect, 100 = destroyed
-@export var repair_progress: float = 0.0
-@export var is_annexed: bool = false
-
-@export var assigned_lines: Array[String] = []  ## Production line IDs
-
-var current_efficiency: float = 1.0
 
 
 func apply_damage(amount: float) -> void:
@@ -47,12 +47,11 @@ func advance_repair(days: float, supply_connected: bool, rules: Dictionary = {})
 		repair_progress = 0.0
 		if current_damage < float(repair_rules.get("min_repair_threshold_for_production", 30.0)):
 			current_damage = 0.0
-	_recalculate_efficiency(rules)
+	_recalculate_efficiency()
 
 
-func _recalculate_efficiency(rules: Dictionary = {}) -> void:
-	if rules.is_empty():
-		rules = _get_rules()
+func _recalculate_efficiency() -> void:
+	var rules := _get_rules()
 	var eff_rules: Dictionary = rules.get("efficiency", {})
 	var base := float(eff_rules.get("base_efficiency", 1.0))
 	var damage_penalty := current_damage * float(eff_rules.get("damage_penalty_per_percent", 0.008))
