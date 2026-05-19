@@ -442,3 +442,50 @@ func get_total_output_for_design(design_id: String) -> float:
 	for f in get_factories_producing(design_id):
 		total += f.get_daily_output_estimate()
 	return total
+
+
+func reassign_factory(factory_id: int, new_design_id: String) -> bool:
+	if factory_manager == null:
+		return false
+
+	var factory := factory_manager.get_factory(factory_id)
+	if factory == null:
+		push_warning("Cannot reassign - factory %d not found" % factory_id)
+		return false
+
+	var old_design := factory.current_production_design
+	factory.sync_production_design(new_design_id)
+
+	for line_id in factory.assigned_lines:
+		var line := get_line(line_id)
+		if line != null:
+			line.design_id = new_design_id
+
+	print("Factory %d reassigned from '%s' → '%s'" % [factory_id, old_design, new_design_id])
+	return true
+
+
+func get_concentration_bonus(design_id: String) -> float:
+	var count := get_factories_producing(design_id).size()
+	if count <= 1:
+		return 1.0
+	# +4% per additional factory, capped at +25%
+	var bonus := 1.0 + (count - 1) * 0.04
+	return minf(bonus, 1.25)
+
+
+func get_effective_daily_output(design_id: String) -> float:
+	var base := get_total_output_for_design(design_id)
+	return base * get_concentration_bonus(design_id)
+
+
+func get_design_production_info(design_id: String) -> Dictionary:
+	var factories := get_factories_producing(design_id)
+	return {
+		"design_id": design_id,
+		"factory_count": factories.size(),
+		"base_daily_output": get_total_output_for_design(design_id),
+		"concentration_bonus": get_concentration_bonus(design_id),
+		"effective_daily_output": get_effective_daily_output(design_id),
+		"factories": factories.map(func(f: Factory) -> int: return f.factory_id),
+	}
