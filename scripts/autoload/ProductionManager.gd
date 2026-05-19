@@ -16,14 +16,16 @@ signal production_progress_updated(line_id: String, progress: float)
 
 const GLOBAL_MODIFIERS_PATH := "res://data/production/global_modifiers.json"
 const STANCE_TAG := "stance"
+const RETOOLING_RULES_PATH := "res://data/production/retooling_similarity.json"
 
 var production_stance: String = "balanced"
 
 ## Active production lines: line_id -> ProductionLine
 var _lines: Dictionary = {}
 
-func _get_base_daily_points() -> float:
-	return ProductionCostCalculator.get_base_daily_points()
+# === Retooling system ===
+var retooling_rules: Dictionary = {}
+
 var _active_modifiers: Dictionary = {}
 var _family_units_produced: Dictionary = {}
 var _stance_presets: Dictionary = {}
@@ -37,6 +39,81 @@ var national_stockpile: Dictionary = {}
 func _ready() -> void:
 	_rules = GameData.design_data.production_rules
 	_load_modifier_presets()
+	_load_retooling_rules()
+
+
+func _get_base_daily_points() -> float:
+	return ProductionCostCalculator.get_base_daily_points()
+
+
+func _load_retooling_rules() -> void:
+	retooling_rules = {}
+	if not ResourceLoader.exists(RETOOLING_RULES_PATH):
+		push_warning("retooling_similarity.json not found — using defaults")
+		return
+	var file := FileAccess.open(RETOOLING_RULES_PATH, FileAccess.READ)
+	if file == null:
+		push_warning("Failed to load retooling_similarity.json")
+		return
+	var text := file.get_as_text()
+	var parsed: Variant = JSON.parse_string(text)
+	if typeof(parsed) == TYPE_DICTIONARY:
+		retooling_rules = parsed
+	else:
+		push_warning("Invalid retooling_similarity.json")
+
+
+func get_category_similarity(old_category: String, new_category: String) -> float:
+	if retooling_rules.is_empty():
+		return 0.20
+
+	var sim_table: Dictionary = retooling_rules.get("similarity", {})
+	if sim_table.has(old_category):
+		var row: Variant = sim_table[old_category]
+		if typeof(row) == TYPE_DICTIONARY and (row as Dictionary).has(new_category):
+			return float((row as Dictionary)[new_category])
+	return float(retooling_rules.get("default_floor", 0.20))
+
+
+func get_retooling_params(
+	old_category: String,
+	new_category: String,
+	tech_modifier: float = 1.0,
+	focus_modifier: float = 1.0,
+) -> Dictionary:
+	var similarity := get_category_similarity(old_category, new_category)
+
+	var base_retool := float(retooling_rules.get("base_retool_days", 90.0))
+	var base_recovery := float(retooling_rules.get("recovery_days", 45.0))
+	var floor_efficiency := float(retooling_rules.get("default_floor", 0.20))
+	var retained_rules: Dictionary = retooling_rules.get("retained_efficiency", {})
+	var retained_base := float(retained_rules.get("base", 0.15))
+	var retained_scale := float(retained_rules.get("similarity_scale", 0.80))
+
+	var retained := maxf(floor_efficiency, retained_base + similarity * retained_scale)
+	retained *= tech_modifier * focus_modifier
+	retained = clampf(retained, floor_efficiency, 0.95)
+
+	var tech_div := maxf(tech_modifier, 0.1)
+	var focus_div := maxf(focus_modifier, 0.1)
+	var retool_days := base_retool * (1.0 - similarity * 0.65) / tech_div
+	retool_days = maxf(25.0, retool_days)
+
+	var recovery_days := base_recovery * (1.0 - similarity * 0.4) / focus_div
+	recovery_days = maxf(10.0, recovery_days)
+
+	return {
+		"similarity": similarity,
+		"retained_efficiency": retained,
+		"retool_days": retool_days,
+		"recovery_days": recovery_days,
+	}
+
+
+func _retool_group_for_design(design_id: String, category_override: String = "") -> String:
+	if not category_override.is_empty():
+		return RetoolingSimilarityTable.map_production_category_to_group(category_override)
+	return RetoolingSimilarityTable.category_group_for_design(design_id)
 
 
 func create_line(line_id: String) -> ProductionLine:
@@ -465,13 +542,9 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 	if old_design == new_design_id:
 		return true
 
-	var old_group := RetoolingSimilarityTable.category_group_for_design(old_design)
-	var new_group := (
-		RetoolingSimilarityTable.map_production_category_to_group(new_category)
-		if not new_category.is_empty()
-		else RetoolingSimilarityTable.category_group_for_design(new_design_id)
-	)
-	var plan := RetoolingSimilarityTable.compute_retool_plan(old_group, new_group)
+	var old_group := _retool_group_for_design(old_design)
+	var new_group := _retool_group_for_design(new_design_id, new_category)
+	var params := get_retooling_params(old_group, new_group)
 
 	for line_id in factory.assigned_lines:
 		var line := get_line(line_id)
@@ -487,19 +560,20 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 	factory.start_retooling(
 		old_design,
 		new_design_id,
-		float(plan.get("retool_days", 90.0)),
-		float(plan.get("recovery_days", 45.0)),
-		float(plan.get("retained_efficiency", 0.2)),
+		float(params.get("retool_days", 90.0)),
+		float(params.get("recovery_days", 45.0)),
+		float(params.get("retained_efficiency", 0.2)),
 	)
 
 	print(
-		"Factory %d retooling '%s' → '%s' (similarity %.0f%%, retained %.0f%%)"
+		"Retooling Factory %d: %s → %s | Retained: %.0f%% | Retool: %.0f days | Recovery: %.0f days"
 		% [
 			factory_id,
 			old_design,
 			new_design_id,
-			float(plan.get("similarity", 0.0)) * 100.0,
-			float(plan.get("retained_efficiency", 0.0)) * 100.0,
+			float(params.get("retained_efficiency", 0.0)) * 100.0,
+			float(params.get("retool_days", 0.0)),
+			float(params.get("recovery_days", 0.0)),
 		]
 	)
 	return true
@@ -567,12 +641,13 @@ func advance_production(days: float) -> void:
 		if factory == null:
 			continue
 
-		factory.advance_retooling(days)
+		if factory.is_retooling:
+			factory.advance_retooling(days)
 
-		var base_daily_points := _get_base_daily_points()
-		var efficiency := line.get_factory_efficiency()
+		var base_efficiency := factory.current_efficiency
+		var current_eff := factory.get_current_efficiency() if factory.is_retooling else 1.0
 		var concentration := get_concentration_bonus(line.design_id)
-		var daily_points := base_daily_points * efficiency * concentration * days
+		var daily_points := _get_base_daily_points() * base_efficiency * current_eff * concentration * days
 		line.add_progress(daily_points)
 		production_progress_updated.emit(line_id, line.progress)
 
