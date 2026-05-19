@@ -107,3 +107,34 @@ func assign_production_line_to_factory(factory_id: String, line_id: String) -> b
 		f.assigned_lines.append(line_id)
 		return true
 	return false
+
+
+func create_factory_for_province(province_id: int, owner_tag: String, factory_id: String = "") -> Factory:
+	var new_factory := Factory.new()
+	new_factory.factory_id = (
+		factory_id if not factory_id.is_empty() else "factory_%d_%d" % [province_id, Time.get_unix_time_from_system()]
+	)
+	new_factory.province_id = province_id
+	new_factory.owner_tag = owner_tag
+	new_factory.current_damage = 0.0
+	new_factory.is_seized = false
+	register_factory(new_factory)
+	return new_factory
+
+
+func get_or_create_province_component(province_node: Node, province_id: int) -> ProvinceFactoryComponent:
+	var comp: ProvinceFactoryComponent = province_node.get_node_or_null("ProvinceFactoryComponent") as ProvinceFactoryComponent
+	if comp == null:
+		comp = ProvinceFactoryComponent.new()
+		comp.name = "ProvinceFactoryComponent"
+		comp.province_id = province_id
+		province_node.add_child(comp)
+	return comp
+
+
+func register_factories_for_province(province_id: int, owner_tag: String, count: int = 1) -> Array[Factory]:
+	var created: Array[Factory] = []
+	for i in count:
+		var f := create_factory_for_province(province_id, owner_tag)
+		created.append(f)
+	return created
