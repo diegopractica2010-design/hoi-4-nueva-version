@@ -1,0 +1,28 @@
+{
+  "id": "tiger_i_heavy_tank",
+  "name": "Tiger I Heavy Tank",
+  "base_type": "Armored",
+  "size_category": "Heavy",
+  "visual_archetype": "heavy_tank",
+  "crew_required": 5,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 65,
+    "fuel_consumption": 22,
+    "supply_need": 28,
+    "armor": 95,
+    "top_armor": 45,
+    "hardness": 92
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "SecondaryWeapon": { "max": 2 },
+    "Engine": { "max": 1 },
+    "Armor": { "max": 1 }
+  },
+  "unlock_tech": ["german_heavy_tanks_1942"],
+  "is_vehicle": true,
+  "description": "Formidable German heavy tank. Exceptional armor and firepower but complex and resource intensive."
+}
