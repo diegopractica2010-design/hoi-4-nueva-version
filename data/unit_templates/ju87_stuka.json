@@ -1,0 +1,26 @@
+{
+  "id": "ju87_stuka",
+  "name": "Ju 87 Stuka Dive Bomber",
+  "base_type": "Air",
+  "size_category": "Bomber",
+  "visual_archetype": "bomber",
+  "crew_required": 2,
+  "base_training_level": 22,
+  "max_experience_level": 100,
+  "base_stats": {
+    "speed": 240,
+    "reliability": 68,
+    "fuel_consumption": 35,
+    "supply_need": 9,
+    "armor": 8,
+    "hardness": 8
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "Engine": { "max": 1 },
+    "Bombsight": { "max": 1 }
+  },
+  "unlock_tech": ["german_dive_bombers"],
+  "is_vehicle": true,
+  "description": "Iconic German dive bomber. Extremely accurate in dive bombing but vulnerable to fighters."
+}
