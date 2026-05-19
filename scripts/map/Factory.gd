@@ -68,8 +68,8 @@ func advance_repair(days: float, supply_connected: bool, rules: Dictionary = {})
 
 
 func get_daily_output_estimate() -> float:
-	## Rough daily throughput proxy until per-line rates are aggregated here.
-	return current_efficiency * maxf(float(assigned_lines.size()), 1.0)
+	## Production Points per day contributed by this factory (before concentration).
+	return ProductionCostCalculator.get_base_daily_points() * current_efficiency
 
 
 func sync_production_design(design_id: String) -> void:

@@ -17,6 +17,10 @@ extends Resource
 @export var can_mount_drones: bool = false
 @export var is_vehicle: bool = true
 @export var base_production_days: float = 60.0
+## Production Points to complete one unit (0 = auto from category + build days).
+@export var production_cost: float = 0.0
+@export var production_category: String = ""
+@export var production_complexity: float = 1.0
 
 
 func get_module_ids() -> Array[String]:
@@ -72,7 +76,20 @@ static func from_dict(data: Dictionary) -> UnitTemplate:
 	tpl.can_mount_drones = bool(data.get("can_mount_drones", false))
 	tpl.is_vehicle = bool(data.get("is_vehicle", true))
 	tpl.base_production_days = float(data.get("base_production_days", data.get("production_days", 60)))
+	tpl.production_cost = float(data.get("production_cost", 0.0))
+	tpl.production_category = str(data.get("production_category", data.get("category", "")))
+	tpl.production_complexity = float(data.get("production_complexity", data.get("complexity", 1.0)))
 	return tpl
+
+
+func get_production_point_cost() -> float:
+	return ProductionCostCalculator.resolve_cost(self)
+
+
+func get_inferred_production_category() -> String:
+	if not production_category.is_empty():
+		return production_category
+	return ProductionCostCalculator.infer_category(self)
 
 
 static func _dict_from_variant(raw: Variant) -> Dictionary:

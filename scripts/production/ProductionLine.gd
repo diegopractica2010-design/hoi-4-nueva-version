@@ -17,10 +17,11 @@ signal refinement_completed(project_id: String, template_id: String, reliability
 var line_id: String = ""
 @export var factory_id: int = 0  # Encoded ID (e.g. 4201)
 @export var design_id: String = ""  # What this line is producing
-@export var progress: float = 0.0  # 0.0 to required_progress
+@export var progress: float = 0.0  # Accumulated Production Points toward current design
 @export var completed_count: int = 0  # Items finished on this line (item-progression track)
+@export var design_production_cost: float = 100.0  # PP required for one unit (from template data)
 
-var required_progress: float = 100.0  # Scales from design data via refresh_required_progress()
+var required_progress: float = 100.0  # Alias for design_production_cost (legacy)
 var current_template_id: String = ""
 var design_states: Dictionary = {}
 var retooling_days_remaining: float = 0.0
@@ -51,13 +52,23 @@ func add_progress(amount: float) -> void:
 	progress += amount
 
 
-func refresh_required_progress() -> void:
-	var days := get_days_per_unit()
-	if days >= 9999.0:
-		required_progress = 100.0
+func refresh_design_production_cost() -> void:
+	var template := get_current_template()
+	if template == null:
+		design_production_cost = 100.0
 	else:
-		# ~10 progress/day → one unit per template base_production_days
-		required_progress = maxf(days * 10.0, 1.0)
+		design_production_cost = template.get_production_point_cost()
+	required_progress = design_production_cost
+
+
+func refresh_required_progress() -> void:
+	refresh_design_production_cost()
+
+
+func get_progress_percent() -> float:
+	if design_production_cost <= 0.0:
+		return 0.0
+	return clampf(progress / design_production_cost, 0.0, 1.0)
 
 
 func set_modifier_resolver(resolver: Callable) -> void:

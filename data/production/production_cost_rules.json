@@ -1,0 +1,22 @@
+{
+  "base_daily_points": 12.0,
+  "category_costs": {
+    "infantry_equipment": { "base_cost": 12, "reference_days": 30 },
+    "light_vehicle": { "base_cost": 55, "reference_days": 40 },
+    "medium_tank": { "base_cost": 110, "reference_days": 75 },
+    "heavy_tank": { "base_cost": 215, "reference_days": 120 },
+    "fighter": { "base_cost": 75, "reference_days": 55 },
+    "bomber": { "base_cost": 275, "reference_days": 120 },
+    "destroyer": { "base_cost": 230, "reference_days": 110 },
+    "cruiser": { "base_cost": 500, "reference_days": 200 },
+    "battleship": { "base_cost": 1600, "reference_days": 300 },
+    "carrier": { "base_cost": 2000, "reference_days": 280 },
+    "submarine": { "base_cost": 280, "reference_days": 140 },
+    "rocket": { "base_cost": 450, "reference_days": 180 },
+    "space": { "base_cost": 350, "reference_days": 120 },
+    "default": { "base_cost": 100, "reference_days": 60 }
+  },
+  "days_scale_exponent": 0.85,
+  "min_days_factor": 0.5,
+  "max_days_factor": 3.5
+}

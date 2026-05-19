@@ -21,7 +21,9 @@ var production_stance: String = "balanced"
 
 ## Active production lines: line_id -> ProductionLine
 var _lines: Dictionary = {}
-const ITEM_PROGRESS_BASE_RATE := 10.0
+
+func _get_base_daily_points() -> float:
+	return ProductionCostCalculator.get_base_daily_points()
 var _active_modifiers: Dictionary = {}
 var _family_units_produced: Dictionary = {}
 var _stance_presets: Dictionary = {}
@@ -489,12 +491,21 @@ func get_effective_daily_output(design_id: String) -> float:
 
 func get_design_production_info(design_id: String) -> Dictionary:
 	var factories := get_factories_producing(design_id)
+	var template := GameData.design_data.get_template(design_id) if GameData.design_data else null
+	var unit_cost := template.get_production_point_cost() if template else 0.0
+	var category := template.get_inferred_production_category() if template else ""
+	var daily_pp := _get_base_daily_points() * get_concentration_bonus(design_id)
 	return {
 		"design_id": design_id,
+		"production_cost": unit_cost,
+		"production_category": category,
 		"factory_count": factories.size(),
-		"base_daily_output": get_total_output_for_design(design_id),
+		"base_daily_points": get_total_output_for_design(design_id),
 		"concentration_bonus": get_concentration_bonus(design_id),
-		"effective_daily_output": get_effective_daily_output(design_id),
+		"effective_daily_points": get_effective_daily_output(design_id),
+		"estimated_days_per_unit": ProductionCostCalculator.estimate_build_days(
+			unit_cost, daily_pp
+		) if unit_cost > 0.0 and daily_pp > 0.0 else 0.0,
 		"factories": factories.map(func(f: Factory) -> int: return f.factory_id),
 	}
 
@@ -518,19 +529,21 @@ func advance_production(days: float) -> void:
 		if factory == null:
 			continue
 
-		var eff := line.get_factory_efficiency()
-		var conc_bonus := get_concentration_bonus(line.design_id)
-		var daily_progress := ITEM_PROGRESS_BASE_RATE * eff * conc_bonus * days
-		line.add_progress(daily_progress)
+		var base_daily_points := _get_base_daily_points()
+		var efficiency := line.get_factory_efficiency()
+		var concentration := get_concentration_bonus(line.design_id)
+		var daily_points := base_daily_points * efficiency * concentration * days
+		line.add_progress(daily_points)
 		production_progress_updated.emit(line_id, line.progress)
 
-		while line.progress >= line.required_progress and line.required_progress > 0.0:
+		var cost := line.design_production_cost
+		while cost > 0.0 and line.progress >= cost:
 			_complete_item(line, line_id)
 
 
 func _complete_item(line: ProductionLine, line_id: String) -> void:
 	line.completed_count += 1
-	line.progress -= line.required_progress
+	line.progress -= line.design_production_cost
 	production_completed.emit(line_id, line.design_id, 1)
 	print("Production complete: %s (Total: %d)" % [line.design_id, line.completed_count])
 
@@ -539,13 +552,17 @@ func get_line_progress_info(line_id: String) -> Dictionary:
 	var line := get_line(line_id)
 	if line == null:
 		return {}
-	var required := line.required_progress
 	return {
 		"line_id": line_id,
 		"design_id": line.design_id,
 		"factory_id": line.factory_id,
 		"progress": line.progress,
-		"required_progress": required,
-		"percent_complete": line.progress / required if required > 0.0 else 0.0,
+		"design_production_cost": line.design_production_cost,
+		"required_progress": line.design_production_cost,
+		"percent_complete": line.get_progress_percent(),
 		"completed_count": line.completed_count,
+		"estimated_days_remaining": ProductionCostCalculator.estimate_build_days(
+			maxf(line.design_production_cost - line.progress, 0.0),
+			_get_base_daily_points() * line.get_factory_efficiency() * get_concentration_bonus(line.design_id),
+		),
 	}
