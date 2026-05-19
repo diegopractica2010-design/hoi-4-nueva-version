@@ -1,0 +1,13 @@
+{
+  "id": "75mm_kwk40_gun",
+  "name": "75mm KwK 40 Gun",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 42,
+  "hard_attack": 48,
+  "piercing": 78,
+  "cost": { "steel": 16, "tungsten": 2 },
+  "production_time": 55,
+  "special_flags": ["good_ap", "balanced"],
+  "description": "Excellent German tank gun used on late Panzer IV and early Panther. Strong balance of HE and AP performance."
+}
