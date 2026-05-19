@@ -1,4 +1,16 @@
-"""Shared production point cost calculation for template generators."""
+"""Shared production point cost calculation for template generators.
+
+Generator integration (preferred):
+    from template_export import write_unit_template
+    write_unit_template(path, template_dict)
+
+Or inline before writing JSON:
+    from production_cost_utils import enrich_template, calculate_production_cost
+    template = enrich_template(template)
+    template["production_cost"] = calculate_production_cost(template)
+
+Use enrich_all_template_costs.py only to refresh existing files in bulk.
+"""
 
 from __future__ import annotations
 

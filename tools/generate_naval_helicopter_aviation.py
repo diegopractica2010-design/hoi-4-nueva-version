@@ -6,6 +6,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from template_export import write_unit_template
+
 ROOT = Path(__file__).resolve().parents[1]
 MODULES_DIR = ROOT / "data" / "modules"
 TEMPLATES_DIR = ROOT / "data" / "unit_templates"
@@ -571,7 +573,7 @@ def main() -> None:
         if tpl["id"] in existing_tpls:
             ts += 1
             continue
-        write_json(TEMPLATES_DIR / f"{tpl['id']}.json", tpl)
+        write_unit_template(TEMPLATES_DIR / f"{tpl['id']}.json", tpl)
         tc += 1
         print(f"  + template {tpl['id']}.json")
 
