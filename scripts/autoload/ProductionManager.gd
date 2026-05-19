@@ -1,5 +1,7 @@
 extends Node
 
+@onready var factory_manager: FactoryManager = get_node_or_null("/root/FactoryManager")
+
 ## National production coordinator: multiple lines, design families, focus/doctrine modifiers.
 
 signal line_registered(line_id: String)
@@ -379,3 +381,15 @@ func _clear_modifiers_with_tag(tag: String) -> void:
 			to_remove.append(modifier_id)
 	for modifier_id in to_remove:
 		unregister_modifier(modifier_id)
+
+
+func assign_line_to_factory(line_id: String, factory_id: String) -> bool:
+	if factory_manager:
+		return factory_manager.assign_production_line_to_factory(factory_id, line_id)
+	return false
+
+
+func get_factory_efficiency(factory_id: String) -> float:
+	if factory_manager:
+		return factory_manager.get_factory_efficiency(factory_id)
+	return 1.0
