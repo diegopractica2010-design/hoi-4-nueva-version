@@ -1,0 +1,11 @@
+{
+  "id": "schurzen_spaced_armor",
+  "name": "Schürzen Spaced Armor",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 15,
+  "special_flags": ["vs_heat", "side_protection"],
+  "cost": { "steel": 12 },
+  "production_time": 20,
+  "description": "German side skirts/spaced armor. Provides extra protection against shaped charge weapons and infantry anti-tank weapons."
+}
