@@ -1,0 +1,22 @@
+{
+  "id": "tumansky_r13_mig21",
+  "name": "Tumansky R-13-300",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 3,
+  "speed_bonus": 30,
+  "cost": {
+    "steel": 14,
+    "aluminum": 22,
+    "titanium": 3
+  },
+  "production_time": 72,
+  "special_flags": [
+    "ussr",
+    "jet_powerplant",
+    "sixties",
+    "mig21"
+  ],
+  "description": "MiG-21F-13 engine. Most-produced supersonic fighter powerplant of the Cold War."
+}

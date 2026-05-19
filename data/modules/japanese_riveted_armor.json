@@ -1,0 +1,17 @@
+{
+  "id": "japanese_riveted_armor",
+  "name": "Japanese Riveted Armor",
+  "category": "Armor",
+  "tier": 1,
+  "armor_bonus": 22,
+  "top_armor_bonus": 10,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 18
+  },
+  "production_time": 35,
+  "special_flags": [
+    "weak_vs_ap"
+  ],
+  "description": "Typical riveted plates on Chi-Ha and Ke-Ni. Vulnerable to Allied medium guns."
+}

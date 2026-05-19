@@ -1,0 +1,47 @@
+{
+  "id": "ngad_carrier_fighter_2030",
+  "name": "NGAD Carrier Fighter (Proto)",
+  "design_family": "us_carrier_air_planned",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 140,
+  "base_stats": {
+    "speed": 108,
+    "reliability": 84,
+    "fuel_consumption": 28,
+    "supply_need": 22,
+    "armor": 20,
+    "hardness": 32
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "aim260_jatm",
+    "Engine": "f47_ngad_package",
+    "Sensors": "ngad_carrier_proto_2030"
+  },
+  "unlock_tech": [
+    "us_carrier_aviation",
+    "cold_war_naval_air",
+    "sixth_gen_carrier",
+    "twenty_thirties_planned"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

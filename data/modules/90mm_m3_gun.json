@@ -1,0 +1,20 @@
+{
+  "id": "90mm_m3_gun",
+  "name": "90mm M3 Gun",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 58,
+  "hard_attack": 55,
+  "piercing": 105,
+  "air_attack": 6,
+  "cost": {
+    "steel": 24,
+    "explosives": 3
+  },
+  "production_time": 75,
+  "special_flags": [
+    "excellent_ap",
+    "late_war"
+  ],
+  "description": "M36 Jackson and M26 Pershing main gun. Primary U.S. late-war tank killer."
+}

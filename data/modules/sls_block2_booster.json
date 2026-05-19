@@ -1,0 +1,24 @@
+{
+  "id": "sls_block2_booster",
+  "name": "SLS Block 2",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "fuel_efficiency": -8,
+  "speed_bonus": 36,
+  "cost": {
+    "steel": 60,
+    "aluminum": 35,
+    "explosives": 90
+  },
+  "production_time": 180,
+  "special_flags": [
+    "nasa",
+    "usa",
+    "space",
+    "twenty_twenties",
+    "artemis",
+    "super_heavy"
+  ],
+  "description": "Space Launch System for Artemis lunar missions. Shuttle-derived hardware."
+}

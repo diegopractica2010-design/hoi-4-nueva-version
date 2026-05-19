@@ -1,0 +1,20 @@
+{
+  "id": "columbus_lab_module",
+  "name": "Columbus Lab Module",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 35,
+    "aluminum": 30,
+    "electronics": 45
+  },
+  "production_time": 160,
+  "special_flags": [
+    "esa",
+    "space",
+    "two_thousands",
+    "iss"
+  ],
+  "description": "ESA ISS laboratory module. Microgravity science for European astronauts."
+}

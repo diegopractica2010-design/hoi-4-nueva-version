@@ -1,0 +1,14 @@
+{
+  "id": "french_cast_armor",
+  "name": "French Cast Armor",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 32,
+  "top_armor_bonus": 14,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 26
+  },
+  "production_time": 50,
+  "description": "Char B1 and S35 cast sections. Good protection for 1940; heavy."
+}

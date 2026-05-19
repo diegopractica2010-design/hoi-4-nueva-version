@@ -1,0 +1,21 @@
+{
+  "id": "kwk_43_88mm_gun",
+  "name": "8.8 cm KwK 43 L/71",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 56,
+  "hard_attack": 68,
+  "piercing": 135,
+  "air_attack": 4,
+  "cost": {
+    "steel": 32,
+    "explosives": 5,
+    "chromium": 4
+  },
+  "production_time": 95,
+  "special_flags": [
+    "excellent_ap",
+    "long_range"
+  ],
+  "description": "Tiger II and late Jagdpanther gun. Superb penetration at all ranges."
+}

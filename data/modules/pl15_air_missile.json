@@ -1,0 +1,23 @@
+{
+  "id": "pl15_air_missile",
+  "name": "PL-15",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 14,
+  "hard_attack": 12,
+  "air_attack": 95,
+  "anti_air": 90,
+  "cost": {
+    "steel": 7,
+    "electronics": 48,
+    "explosives": 12
+  },
+  "production_time": 78,
+  "special_flags": [
+    "china",
+    "air_to_air",
+    "twenty_tens",
+    "long_range"
+  ],
+  "description": "Very-long-range AAM threatening AWACS and tankers. J-20 primary BVR weapon."
+}

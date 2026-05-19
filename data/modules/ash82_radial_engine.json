@@ -1,0 +1,15 @@
+{
+  "id": "ash82_radial_engine",
+  "name": "Shvetsov ASh-82",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 4,
+  "speed_bonus": 13,
+  "cost": {
+    "steel": 11,
+    "aluminum": 12
+  },
+  "production_time": 50,
+  "description": "1,700 hp radial for La-5/7. Excellent low-altitude fighter engine."
+}

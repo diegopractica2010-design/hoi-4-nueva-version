@@ -1,0 +1,42 @@
+{
+  "id": "magach_6",
+  "name": "Magach 6",
+  "design_family": "israeli_armored_sixties",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 4,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 88,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 74,
+    "fuel_consumption": 14,
+    "supply_need": 17,
+    "armor": 48,
+    "top_armor": 26,
+    "hardness": 88
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "m68a1_105mm_gun",
+    "Engine": "avds_1790_engine",
+    "Armor": "magach_m60_upgrade"
+  },
+  "unlock_tech": [
+    "israeli_mbt_sixties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

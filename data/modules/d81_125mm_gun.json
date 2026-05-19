@@ -1,0 +1,23 @@
+{
+  "id": "d81_125mm_gun",
+  "name": "2A46 125 mm",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 70,
+  "hard_attack": 68,
+  "piercing": 152,
+  "air_attack": 5,
+  "cost": {
+    "steel": 34,
+    "chromium": 6,
+    "tungsten": 4
+  },
+  "production_time": 98,
+  "special_flags": [
+    "ussr",
+    "seventies",
+    "smoothbore",
+    "t72"
+  ],
+  "description": "T-72 and T-64A main armament. Fires APFSDS and AT-8 Songster; NATO's primary threat."
+}

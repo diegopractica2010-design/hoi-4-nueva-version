@@ -1,0 +1,19 @@
+{
+  "id": "independence_lcs_sgp",
+  "name": "Independence LCS (Export)",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 8,
+    "electronics": 32,
+    "aluminum": 14
+  },
+  "production_time": 72,
+  "special_flags": [
+    "singapore",
+    "lcs",
+    "twenty_twenties"
+  ],
+  "description": "Littoral combat ship style multi-role vessel for Singapore."
+}

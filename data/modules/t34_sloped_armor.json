@@ -1,0 +1,17 @@
+{
+  "id": "t34_sloped_armor",
+  "name": "T-34 Sloped Armor",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 38,
+  "top_armor_bonus": 16,
+  "reliability_penalty": -2,
+  "cost": {
+    "steel": 28
+  },
+  "production_time": 48,
+  "special_flags": [
+    "sloped_armor"
+  ],
+  "description": "45 mm sloped plates at 60°. Excellent effective protection for weight."
+}

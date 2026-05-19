@@ -1,0 +1,21 @@
+{
+  "id": "x47b_ucav_carrier",
+  "name": "X-47B UCAV Carrier Suite",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 12,
+    "electronics": 62,
+    "aluminum": 20
+  },
+  "production_time": 120,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "uav",
+    "prototype",
+    "twenty_tens"
+  ],
+  "description": "Autonomous carrier landing and refueling demonstrator. Precursor to MQ-25 and UCLASS."
+}

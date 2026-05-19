@@ -1,0 +1,21 @@
+{
+  "id": "queen_elizabeth_cv_core",
+  "name": "Queen Elizabeth CV Core",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 115,
+    "electronics": 42,
+    "aluminum": 32
+  },
+  "production_time": 230,
+  "special_flags": [
+    "uk",
+    "carrier",
+    "stovl",
+    "f35b",
+    "twenty_twenties"
+  ],
+  "description": "Twin-island STOVL supercarrier. F-35B Lightning II air wing."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "mq9_reaper_package",
+  "name": "MQ-9 Reaper Package",
+  "category": "DroneAttachment",
+  "tier": 6,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 8,
+    "electronics": 45,
+    "aluminum": 12
+  },
+  "production_time": 75,
+  "special_flags": [
+    "usa",
+    "two_thousands",
+    "uav",
+    "armed_drone"
+  ],
+  "description": "Armed reconnaissance UAV with Hellfire and GBU-12. Defines 2000s counter-insurgency."
+}

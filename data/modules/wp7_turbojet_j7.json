@@ -1,0 +1,21 @@
+{
+  "id": "wp7_turbojet_j7",
+  "name": "WP-7 Turbojet",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 5,
+  "fuel_efficiency": 2,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 14,
+    "aluminum": 20
+  },
+  "production_time": 70,
+  "special_flags": [
+    "china",
+    "jet_powerplant",
+    "seventies",
+    "j7"
+  ],
+  "description": "MiG-21F-13 copy engine for J-7 fighter. China's first widespread supersonic fighter."
+}

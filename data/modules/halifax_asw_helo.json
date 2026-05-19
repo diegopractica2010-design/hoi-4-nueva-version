@@ -1,0 +1,20 @@
+{
+  "id": "halifax_asw_helo",
+  "name": "CH-148 Cyclone ASW",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 8,
+    "electronics": 36,
+    "aluminum": 12
+  },
+  "production_time": 72,
+  "special_flags": [
+    "canada",
+    "asw",
+    "helicopter",
+    "twenty_twenties"
+  ],
+  "description": "Canadian naval helicopter for Halifax-class frigates."
+}

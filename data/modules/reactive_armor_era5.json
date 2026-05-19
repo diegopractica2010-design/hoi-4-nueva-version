@@ -1,0 +1,22 @@
+{
+  "id": "reactive_armor_era5",
+  "name": "Third-Gen ERA Package",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 28,
+  "top_armor_bonus": 18,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 10,
+    "explosives": 16,
+    "electronics": 4
+  },
+  "production_time": 50,
+  "special_flags": [
+    "nato",
+    "warsaw_pact",
+    "eighties",
+    "era"
+  ],
+  "description": "Widespread ERA kits on T-72, M60, and export tanks. Defines late Cold War protection."
+}

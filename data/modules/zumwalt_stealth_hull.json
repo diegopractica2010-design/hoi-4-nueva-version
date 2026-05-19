@@ -1,0 +1,22 @@
+{
+  "id": "zumwalt_stealth_hull",
+  "name": "Zumwalt Stealth Hull",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 38,
+  "top_armor_bonus": 32,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 45,
+    "titanium": 12,
+    "electronics": 25
+  },
+  "production_time": 110,
+  "special_flags": [
+    "usa",
+    "destroyer",
+    "stealth",
+    "twenty_tens"
+  ],
+  "description": "Tumblehome destroyer hull with reduced radar cross-section and advanced gun system."
+}

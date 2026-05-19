@@ -1,0 +1,15 @@
+{
+  "id": "75mm_sa44_gun",
+  "name": "75 mm SA 44",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 44,
+  "hard_attack": 32,
+  "piercing": 64,
+  "air_attack": 4,
+  "cost": {
+    "steel": 13
+  },
+  "production_time": 48,
+  "description": "AMX-13 prototype lineage / late Char upgrades. Balanced medium gun."
+}

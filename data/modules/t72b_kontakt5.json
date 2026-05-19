@@ -1,0 +1,23 @@
+{
+  "id": "t72b_kontakt5",
+  "name": "Kontakt-5 ERA",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 32,
+  "top_armor_bonus": 22,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 12,
+    "explosives": 18,
+    "electronics": 6
+  },
+  "production_time": 58,
+  "special_flags": [
+    "ussr",
+    "era",
+    "eighties",
+    "kontakt5",
+    "anti_apfsds"
+  ],
+  "description": "ERA effective against APFSDS, not only HEAT. Mounted on T-72B and T-80U."
+}

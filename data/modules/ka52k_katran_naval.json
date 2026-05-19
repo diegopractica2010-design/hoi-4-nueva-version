@@ -1,0 +1,22 @@
+{
+  "id": "ka52k_katran_naval",
+  "name": "Ka-52K Katran",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 12,
+    "electronics": 45,
+    "aluminum": 18,
+    "explosives": 10
+  },
+  "production_time": 90,
+  "special_flags": [
+    "russia",
+    "attack",
+    "helicopter",
+    "naval",
+    "twenty_tens"
+  ],
+  "description": "Navalized Ka-52 for Russian LHD programs and carrier escort strike."
+}

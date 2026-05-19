@@ -1,0 +1,21 @@
+{
+  "id": "leclerc_hispano_engine",
+  "name": "SEMT V8X Hyperbar",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 10,
+  "speed_bonus": 18,
+  "cost": {
+    "steel": 20,
+    "aluminum": 8
+  },
+  "production_time": 88,
+  "special_flags": [
+    "france",
+    "nineties",
+    "diesel",
+    "leclerc"
+  ],
+  "description": "1500 hp diesel for Leclerc. Exceptional power-to-weight for European MBT."
+}

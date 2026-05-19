@@ -1,0 +1,21 @@
+{
+  "id": "sh60b_seahawk_asw",
+  "name": "SH-60B Seahawk ASW",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 9,
+    "electronics": 35,
+    "aluminum": 14
+  },
+  "production_time": 72,
+  "special_flags": [
+    "usa",
+    "asw",
+    "helicopter",
+    "eighties",
+    "lamps_mk3"
+  ],
+  "description": "LAMPS Mk III Seahawk. Standard U.S. frigate and cruiser ASW helicopter 1980s–2000s."
+}

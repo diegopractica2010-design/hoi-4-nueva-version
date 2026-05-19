@@ -1,0 +1,23 @@
+{
+  "id": "stirling_aip_engine",
+  "name": "Stirling AIP Engine",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 14,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 14,
+    "aluminum": 10,
+    "electronics": 12
+  },
+  "production_time": 90,
+  "special_flags": [
+    "sweden",
+    "japan",
+    "aip",
+    "submarine",
+    "diesel_electric"
+  ],
+  "description": "Air-independent propulsion on Gotland and Soryu classes. Weeks submerged without snorkeling."
+}

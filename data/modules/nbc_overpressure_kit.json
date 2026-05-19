@@ -1,0 +1,20 @@
+{
+  "id": "nbc_overpressure_kit",
+  "name": "NBC Overpressure Kit",
+  "category": "NBC_Protection",
+  "tier": 4,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 6,
+    "rubber": 8,
+    "chemicals": 6
+  },
+  "production_time": 35,
+  "special_flags": [
+    "nato",
+    "warsaw_pact",
+    "sixties",
+    "nbc"
+  ],
+  "description": "Collective protection for MBTs and IFVs. Standard on 1970s designs after chemical warfare fears."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "centurion_glacis_armor",
+  "name": "Centurion Glacis Armor",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 42,
+  "top_armor_bonus": 20,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 32,
+    "chromium": 3
+  },
+  "production_time": 62,
+  "special_flags": [
+    "uk",
+    "cold_war",
+    "sloped_armor"
+  ],
+  "description": "Well-sloped Centurion hull. Upgraded with ERA in later decades."
+}

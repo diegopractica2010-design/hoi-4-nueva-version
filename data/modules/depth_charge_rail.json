@@ -1,0 +1,21 @@
+{
+  "id": "depth_charge_rail",
+  "name": "Depth Charge Rail",
+  "category": "SecondaryWeapon",
+  "tier": 2,
+  "soft_attack": 8,
+  "hard_attack": 45,
+  "piercing": 15,
+  "anti_ship": 28,
+  "cost": {
+    "steel": 4,
+    "explosives": 10
+  },
+  "production_time": 25,
+  "special_flags": [
+    "naval",
+    "asw",
+    "anti_submarine"
+  ],
+  "description": "Destroyer stern racks and K-guns for anti-submarine warfare."
+}

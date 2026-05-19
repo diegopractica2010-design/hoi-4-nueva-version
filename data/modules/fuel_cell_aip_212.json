@@ -1,0 +1,22 @@
+{
+  "id": "fuel_cell_aip_212",
+  "name": "Fuel Cell AIP (Type 212)",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 16,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 16,
+    "electronics": 25,
+    "aluminum": 12
+  },
+  "production_time": 100,
+  "special_flags": [
+    "germany",
+    "aip",
+    "submarine",
+    "fuel_cell"
+  ],
+  "description": "Hydrogen fuel cells on German Type 212A. Very quiet patrol capability."
+}

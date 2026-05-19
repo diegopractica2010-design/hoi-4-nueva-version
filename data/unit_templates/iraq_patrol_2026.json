@@ -1,0 +1,54 @@
+{
+  "id": "iraq_patrol_2026",
+  "name": "Fatah-class Patrol",
+  "design_family": "iraqi_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 25,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 60,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 78,
+    "fuel_consumption": 40,
+    "supply_need": 50,
+    "armor": 25,
+    "deck_armor": 16,
+    "hardness": 52
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "coast_guard_patrol_minor",
+    "SecondaryWeapon": "exocet_sm39",
+    "Sensors": "coast_guard_patrol_minor"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "iraqi_naval_2026",
+    "patrol"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

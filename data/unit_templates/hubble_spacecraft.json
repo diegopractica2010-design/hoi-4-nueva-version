@@ -1,0 +1,37 @@
+{
+  "id": "hubble_spacecraft",
+  "name": "Hubble Space Telescope",
+  "design_family": "us_space_eighties",
+  "base_type": "Space",
+  "size_category": "Light",
+  "visual_archetype": "satellite",
+  "crew_required": 0,
+  "base_training_level": 35,
+  "max_experience_level": 100,
+  "base_production_days": 150,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 88,
+    "fuel_consumption": 15,
+    "supply_need": 20,
+    "payload_capacity": 0,
+    "hardness": 5
+  },
+  "slots": {
+    "Sensors": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Sensors": "hubble_space_telescope",
+    "Communications": "gps_block1_payload"
+  },
+  "unlock_tech": [
+    "space_telescopes"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

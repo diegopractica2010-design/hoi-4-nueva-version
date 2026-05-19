@@ -1,0 +1,21 @@
+{
+  "id": "breguet_dorand_gyro_laboratory",
+  "name": "Breguet-Dorand Gyro Lab",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": -8,
+  "fuel_efficiency": -6,
+  "speed_bonus": 3,
+  "cost": {
+    "steel": 12,
+    "aluminum": 6
+  },
+  "production_time": 80,
+  "special_flags": [
+    "france",
+    "prototype",
+    "pre_war",
+    "experimental"
+  ],
+  "description": "French experimental gyroplane 1930s. Bridged autogyro and helicopter development."
+}

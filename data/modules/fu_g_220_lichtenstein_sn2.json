@@ -1,0 +1,21 @@
+{
+  "id": "fu_g_220_lichtenstein_sn2",
+  "name": "FuG 220 Lichtenstein SN-2",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 22,
+    "aluminum": 6
+  },
+  "production_time": 60,
+  "special_flags": [
+    "radar",
+    "airborne",
+    "night_fighter",
+    "germany",
+    "late_war"
+  ],
+  "description": "Improved German night-fighter radar with reduced vulnerability to Window jamming."
+}

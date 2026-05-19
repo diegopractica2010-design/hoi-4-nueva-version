@@ -1,0 +1,23 @@
+{
+  "id": "kh31_asm",
+  "name": "Kh-31 Anti-Radiation",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 45,
+  "hard_attack": 50,
+  "piercing": 35,
+  "air_attack": 10,
+  "cost": {
+    "steel": 8,
+    "electronics": 32,
+    "explosives": 22
+  },
+  "production_time": 75,
+  "special_flags": [
+    "russia",
+    "anti_radiation",
+    "nineties",
+    "sead"
+  ],
+  "description": "Supersonic anti-radiation missile. SEAD weapon for Su-24 and export Flankers."
+}

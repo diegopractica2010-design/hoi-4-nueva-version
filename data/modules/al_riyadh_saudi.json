@@ -1,0 +1,19 @@
+{
+  "id": "al_riyadh_saudi",
+  "name": "Al Riyadh-class",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 11,
+    "electronics": 32,
+    "aluminum": 9
+  },
+  "production_time": 80,
+  "special_flags": [
+    "saudi_arabia",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Saudi La Fayette-derived frigate with French combat systems."
+}

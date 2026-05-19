@@ -1,0 +1,19 @@
+{
+  "id": "truck_rocket_mount",
+  "name": "Truck Rocket Mount",
+  "category": "Suspension",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "speed_bonus": 4,
+  "cost": {
+    "steel": 8,
+    "rubber": 4
+  },
+  "production_time": 30,
+  "special_flags": [
+    "rocket_artillery",
+    "mountable_on_transport",
+    "truck"
+  ],
+  "description": "Generic stake-bed truck frame for BM-13/BM-21 class rocket racks."
+}

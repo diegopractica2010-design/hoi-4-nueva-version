@@ -1,0 +1,23 @@
+{
+  "id": "python3_missile",
+  "name": "Python 3",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 8,
+  "hard_attack": 6,
+  "air_attack": 72,
+  "anti_air": 68,
+  "cost": {
+    "steel": 5,
+    "electronics": 24,
+    "explosives": 7
+  },
+  "production_time": 58,
+  "special_flags": [
+    "israel",
+    "air_to_air",
+    "seventies",
+    "all_aspect"
+  ],
+  "description": "Advanced Israeli IR AAM entering development late 1970s. Export success followed."
+}

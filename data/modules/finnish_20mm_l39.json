@@ -1,0 +1,19 @@
+{
+  "id": "finnish_20mm_l39",
+  "name": "20 mm L-39 Lahti",
+  "category": "SecondaryWeapon",
+  "tier": 1,
+  "soft_attack": 12,
+  "hard_attack": 18,
+  "piercing": 42,
+  "air_attack": 4,
+  "cost": {
+    "steel": 5
+  },
+  "production_time": 22,
+  "special_flags": [
+    "finland",
+    "winter_war"
+  ],
+  "description": "Finnish anti-tank rifle effective vs early Soviet light armor."
+}

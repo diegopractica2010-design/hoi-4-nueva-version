@@ -1,0 +1,23 @@
+{
+  "id": "leopard2a8_package",
+  "name": "Leopard 2A8",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 82,
+  "top_armor_bonus": 58,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 55,
+    "ceramics": 35,
+    "titanium": 16,
+    "electronics": 18
+  },
+  "production_time": 145,
+  "special_flags": [
+    "germany",
+    "twenty_twenties",
+    "leopard2",
+    "trophy"
+  ],
+  "description": "Leopard 2A8 with Trophy APS and improved armor for European deterrence."
+}

@@ -1,0 +1,55 @@
+{
+  "id": "navigatori_destroyer_1936",
+  "name": "Navigatori-class DD",
+  "design_family": "italian_naval_1936",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 240,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 118,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 65,
+    "fuel_consumption": 28,
+    "supply_need": 35,
+    "armor": 16,
+    "deck_armor": 10,
+    "hardness": 42
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ger_15cm_tb",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "geared_steam_turbine_60k"
+  },
+  "unlock_tech": [
+    "naval_1936",
+    "interwar_naval",
+    "pre_ww2_naval",
+    "italian_naval_1936",
+    "destroyer"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

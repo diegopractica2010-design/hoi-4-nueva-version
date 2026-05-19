@@ -1,0 +1,20 @@
+{
+  "id": "admiral_kuznetsov_core",
+  "name": "Admiral Kuznetsov Core",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 100,
+    "electronics": 28,
+    "aluminum": 25
+  },
+  "production_time": 220,
+  "special_flags": [
+    "russia",
+    "carrier",
+    "ski_jump",
+    "twenty_twenties"
+  ],
+  "description": "Russian heavy aviation cruiser. Su-33 and MiG-29KR operations; chronic maintenance issues."
+}

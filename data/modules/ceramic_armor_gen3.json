@@ -1,0 +1,21 @@
+{
+  "id": "ceramic_armor_gen3",
+  "name": "Ceramic Armor (Gen 3)",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 20,
+  "top_armor_bonus": 14,
+  "reliability_penalty": -2,
+  "cost": {
+    "ceramics": 28,
+    "steel": 12,
+    "kevlar": 8
+  },
+  "production_time": 55,
+  "special_flags": [
+    "nato",
+    "twenty_tens",
+    "add_on_armor"
+  ],
+  "description": "Third-generation ceramic tile packages for IFV and MBT urban upgrades."
+}

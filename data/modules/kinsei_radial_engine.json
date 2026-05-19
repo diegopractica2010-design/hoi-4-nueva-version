@@ -1,0 +1,15 @@
+{
+  "id": "kinsei_radial_engine",
+  "name": "Kinsei 51 Radial",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 4,
+  "speed_bonus": 12,
+  "cost": {
+    "steel": 10,
+    "aluminum": 11
+  },
+  "production_time": 48,
+  "description": "1,560 hp on Ki-61 and D3A. More power for heavier airframes."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "snorkel_fitting",
+  "name": "Snorkel Fitting",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 8,
+    "electronics": 6,
+    "rubber": 4
+  },
+  "production_time": 40,
+  "special_flags": [
+    "germany",
+    "ww2",
+    "late_war",
+    "submarine",
+    "stealth"
+  ],
+  "description": "Schnorchel allowing diesel charging at periscope depth. Extended U-boat patrols."
+}

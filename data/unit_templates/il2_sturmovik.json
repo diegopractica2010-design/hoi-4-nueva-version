@@ -1,0 +1,41 @@
+{
+  "id": "il2_sturmovik",
+  "name": "Il-2M Sturmovik",
+  "design_family": "soviet_air_ww2",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "bomber",
+  "crew_required": 2,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 52,
+  "base_stats": {
+    "speed": 68,
+    "reliability": 74,
+    "fuel_consumption": 11,
+    "supply_need": 10,
+    "armor": 28,
+    "hardness": 35
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "shvak_20mm_cannon",
+    "SecondaryWeapon": "berezin_ub_gun",
+    "Engine": "ash82_radial_engine"
+  },
+  "unlock_tech": [
+    "soviet_cas"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

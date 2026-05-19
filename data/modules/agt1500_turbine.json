@@ -1,0 +1,22 @@
+{
+  "id": "agt1500_turbine",
+  "name": "AGT-1500 Gas Turbine",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "fuel_efficiency": -4,
+  "speed_bonus": 16,
+  "cost": {
+    "steel": 22,
+    "aluminum": 28,
+    "titanium": 14
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "eighties",
+    "gas_turbine",
+    "m1_abrams"
+  ],
+  "description": "M1 Abrams powerplant. Exceptional acceleration; high fuel consumption accepted for mobility."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "aim9_sidewinder",
+  "name": "AIM-9 Sidewinder",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 6,
+  "hard_attack": 4,
+  "air_attack": 58,
+  "anti_air": 55,
+  "cost": {
+    "steel": 4,
+    "electronics": 18,
+    "explosives": 6
+  },
+  "production_time": 48,
+  "special_flags": [
+    "usa",
+    "air_to_air",
+    "ir_guided",
+    "sixties"
+  ],
+  "description": "Infrared dogfight missile. High off-boresight kills when rules of engagement permit."
+}

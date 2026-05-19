@@ -1,0 +1,20 @@
+{
+  "id": "chieftain_armor",
+  "name": "Chieftain Armor",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 52,
+  "top_armor_bonus": 30,
+  "reliability_penalty": -8,
+  "cost": {
+    "steel": 42,
+    "chromium": 5
+  },
+  "production_time": 75,
+  "special_flags": [
+    "uk",
+    "sixties",
+    "mbt"
+  ],
+  "description": "Heavy frontal armor on Chieftain. Excellent protection; plagued by L60 engine reliability."
+}

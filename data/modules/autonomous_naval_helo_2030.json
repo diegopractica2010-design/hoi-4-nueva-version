@@ -1,0 +1,21 @@
+{
+  "id": "autonomous_naval_helo_2030",
+  "name": "Autonomous Naval Helo (Proto)",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 6,
+    "electronics": 62,
+    "aluminum": 12
+  },
+  "production_time": 100,
+  "special_flags": [
+    "usa",
+    "uav",
+    "prototype",
+    "twenty_thirties",
+    "asw"
+  ],
+  "description": "Unmanned ASW and ISR helicopter for distributed lethality on LHD and frigates."
+}

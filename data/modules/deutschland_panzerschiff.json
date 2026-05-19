@@ -1,0 +1,23 @@
+{
+  "id": "deutschland_panzerschiff",
+  "name": "Deutschland 28cm",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 32,
+  "hard_attack": 36,
+  "piercing": 34,
+  "anti_ship": 68,
+  "cost": {
+    "steel": 28,
+    "chromium": 6,
+    "explosives": 10
+  },
+  "production_time": 85,
+  "special_flags": [
+    "germany",
+    "panzerschiff",
+    "interwar",
+    "treaty"
+  ],
+  "description": "Pocket battleship armament. Commerce raiding doctrine under Versailles limits."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "caterpillar_c7_engine",
+  "name": "Caterpillar C7",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 7,
+  "fuel_efficiency": 4,
+  "speed_bonus": 4,
+  "cost": {
+    "steel": 10,
+    "rubber": 3
+  },
+  "production_time": 42,
+  "special_flags": [
+    "usa",
+    "truck",
+    "wheeled"
+  ],
+  "description": "Common tactical truck engine for HIMARS, LAV, and support vehicles."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "sh2g_super_seasprite",
+  "name": "SH-2G Super Seasprite",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 8,
+    "electronics": 28,
+    "aluminum": 10
+  },
+  "production_time": 62,
+  "special_flags": [
+    "new_zealand",
+    "australia",
+    "poland",
+    "helicopter",
+    "naval"
+  ],
+  "description": "Upgraded Seasprite for Anzac frigates and NZ naval aviation."
+}

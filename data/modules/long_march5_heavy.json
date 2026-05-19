@@ -1,0 +1,22 @@
+{
+  "id": "long_march5_heavy",
+  "name": "Long March 5",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 4,
+  "speed_bonus": 36,
+  "cost": {
+    "steel": 45,
+    "aluminum": 30,
+    "explosives": 80
+  },
+  "production_time": 145,
+  "special_flags": [
+    "china",
+    "space",
+    "twenty_twenties",
+    "heavy_lift"
+  ],
+  "description": "CZ-5 heavy launcher for space station modules and Mars missions."
+}

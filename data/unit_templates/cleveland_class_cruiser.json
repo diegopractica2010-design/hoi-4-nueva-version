@@ -1,0 +1,55 @@
+{
+  "id": "cleveland_class_cruiser",
+  "name": "Cleveland-class",
+  "design_family": "us_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "cruiser",
+  "crew_required": 1200,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 190,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 76,
+    "fuel_consumption": 58,
+    "supply_need": 75,
+    "armor": 35,
+    "deck_armor": 16,
+    "hardness": 65
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "us_6inch_47_gun",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "us_parsons_turbine",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "us_cruisers",
+    "light_cruiser",
+    "ww2_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

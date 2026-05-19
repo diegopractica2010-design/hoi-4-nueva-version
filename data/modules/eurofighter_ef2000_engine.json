@@ -1,0 +1,22 @@
+{
+  "id": "eurofighter_ef2000_engine",
+  "name": "EJ200 Turbofan",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 12,
+  "speed_bonus": 36,
+  "cost": {
+    "steel": 18,
+    "aluminum": 34,
+    "titanium": 14
+  },
+  "production_time": 105,
+  "special_flags": [
+    "uk",
+    "germany_joint",
+    "nineties",
+    "eurofighter"
+  ],
+  "description": "Eurofighter Typhoon engine. First flight 1994; supercruise capability."
+}

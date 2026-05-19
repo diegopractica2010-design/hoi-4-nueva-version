@@ -1,0 +1,21 @@
+{
+  "id": "mtu_mb873_engine",
+  "name": "MTU MB 873 Ka-501",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 16,
+  "fuel_efficiency": 10,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 22,
+    "aluminum": 8
+  },
+  "production_time": 82,
+  "special_flags": [
+    "germany",
+    "eighties",
+    "leopard2",
+    "diesel"
+  ],
+  "description": "1500 hp diesel for Leopard 2. Renowned reliability and NATO interoperability."
+}

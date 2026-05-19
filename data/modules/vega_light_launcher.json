@@ -1,0 +1,23 @@
+{
+  "id": "vega_light_launcher",
+  "name": "Vega Light Launcher",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 6,
+  "speed_bonus": 26,
+  "cost": {
+    "steel": 12,
+    "aluminum": 10,
+    "explosives": 25
+  },
+  "production_time": 75,
+  "special_flags": [
+    "esa",
+    "italy",
+    "space",
+    "two_thousands",
+    "small_sat"
+  ],
+  "description": "Small satellite launcher for European institutional payloads."
+}

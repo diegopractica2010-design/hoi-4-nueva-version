@@ -1,0 +1,21 @@
+{
+  "id": "vampir_infantry_package",
+  "name": "Vampir IR Package",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 5,
+    "electronics": 16,
+    "optics": 12,
+    "rare_earths": 4
+  },
+  "production_time": 55,
+  "special_flags": [
+    "infrared",
+    "night_fighting",
+    "germany",
+    "combined_arms"
+  ],
+  "description": "German man-portable IR sight and StG 44 integration. Rare but effective in 1945 trials."
+}

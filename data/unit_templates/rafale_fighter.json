@@ -1,0 +1,37 @@
+{
+  "id": "rafale_fighter",
+  "name": "Rafale",
+  "design_family": "french_air_two_thousands",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 95,
+  "base_stats": {
+    "speed": 106,
+    "reliability": 80,
+    "fuel_consumption": 16,
+    "supply_need": 14,
+    "armor": 10,
+    "hardness": 26
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "mica_ng_missile",
+    "Engine": "rafale_package"
+  },
+  "unlock_tech": [
+    "french_fighters_two_thousands"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

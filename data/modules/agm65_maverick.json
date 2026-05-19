@@ -1,0 +1,23 @@
+{
+  "id": "agm65_maverick",
+  "name": "AGM-65 Maverick",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 55,
+  "hard_attack": 58,
+  "piercing": 75,
+  "air_attack": 6,
+  "cost": {
+    "steel": 8,
+    "electronics": 28,
+    "explosives": 18
+  },
+  "production_time": 70,
+  "special_flags": [
+    "usa",
+    "air_to_ground",
+    "guided",
+    "seventies"
+  ],
+  "description": "TV-guided tactical air-to-surface missile. Devastating precision strike from A-7 and F-4."
+}

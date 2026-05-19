@@ -1,0 +1,35 @@
+{
+  "id": "coanda_rotorcraft_proto",
+  "name": "Coandă Rotorcraft (Proto)",
+  "design_family": "experimental_rotary_pre_war",
+  "base_type": "Air",
+  "size_category": "Light",
+  "visual_archetype": "helicopter",
+  "crew_required": 1,
+  "base_training_level": 12,
+  "max_experience_level": 70,
+  "base_production_days": 100,
+  "base_stats": {
+    "speed": 35,
+    "reliability": 30,
+    "fuel_consumption": 14,
+    "supply_need": 10,
+    "armor": 4,
+    "hardness": 8
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "henri_coanda_rotor_blower"
+  },
+  "unlock_tech": [
+    "rotary_wing_experiments",
+    "prototype",
+    "pre_war_aviation"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

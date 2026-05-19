@@ -1,0 +1,52 @@
+{
+  "id": "indian_vishal_carrier",
+  "name": "INS Vishal (Planned)",
+  "design_family": "indian_naval_planned",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 2000,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 280,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 60,
+    "fuel_consumption": 70,
+    "supply_need": 90,
+    "armor": 40,
+    "deck_armor": 22,
+    "hardness": 65
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "ins_vikrant_carrier_core",
+    "Engine": "westinghouse_a4w_carrier_reactor",
+    "Sensors": "aesa_radar_gen1",
+    "AntiAir": "barak8_sam"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "indian_naval_planned",
+    "twenty_thirties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

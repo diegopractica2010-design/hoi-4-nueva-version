@@ -1,0 +1,20 @@
+{
+  "id": "carrier_operations_kit",
+  "name": "Carrier Operations Kit",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 6,
+    "aluminum": 8,
+    "electronics": 4
+  },
+  "production_time": 30,
+  "special_flags": [
+    "carrier_capable",
+    "arrestor_hook",
+    "folding_wings",
+    "catapult"
+  ],
+  "description": "Arrestor hook, folding wings, and catapult bridle fittings. Required for carrier deck operations."
+}

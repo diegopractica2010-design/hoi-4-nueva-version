@@ -1,0 +1,23 @@
+{
+  "id": "ge_s9g_reactor",
+  "name": "GE S9G Reactor",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 16,
+  "fuel_efficiency": 22,
+  "speed_bonus": 20,
+  "cost": {
+    "steel": 28,
+    "uranium": 40,
+    "electronics": 38,
+    "titanium": 12
+  },
+  "production_time": 155,
+  "special_flags": [
+    "usa",
+    "nuclear",
+    "virginia",
+    "twenty_tens"
+  ],
+  "description": "Virginia-class reactor. Life-of-ship core with high power density."
+}

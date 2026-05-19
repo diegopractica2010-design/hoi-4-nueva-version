@@ -1,0 +1,21 @@
+{
+  "id": "new_glenn_stage",
+  "name": "New Glenn Stage",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 35,
+    "aluminum": 28,
+    "electronics": 35
+  },
+  "production_time": 130,
+  "special_flags": [
+    "blue_origin",
+    "usa",
+    "space",
+    "twenty_twenties",
+    "reusable"
+  ],
+  "description": "Blue Origin heavy reusable launcher competing with Falcon 9 class."
+}

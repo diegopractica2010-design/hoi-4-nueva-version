@@ -1,0 +1,21 @@
+{
+  "id": "lynx_has3_asw",
+  "name": "Lynx HAS.3 ASW",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 8,
+    "electronics": 30,
+    "aluminum": 10
+  },
+  "production_time": 65,
+  "special_flags": [
+    "uk",
+    "asw",
+    "helicopter",
+    "eighties",
+    "frigate"
+  ],
+  "description": "Royal Navy Lynx with Sea Skua. Falklands and Gulf War frigate operations."
+}

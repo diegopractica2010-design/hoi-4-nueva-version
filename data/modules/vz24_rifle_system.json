@@ -1,0 +1,20 @@
+{
+  "id": "vz24_rifle_system",
+  "name": "vz. 24 Rifle System",
+  "category": "SecondaryWeapon",
+  "tier": 1,
+  "soft_attack": 16,
+  "hard_attack": 2,
+  "piercing": 4,
+  "air_attack": 0,
+  "cost": {
+    "steel": 2
+  },
+  "production_time": 9,
+  "special_flags": [
+    "czech",
+    "romania",
+    "china"
+  ],
+  "description": "Czech Mauser export rifle. Equips many minor armies in 1936 scenarios."
+}

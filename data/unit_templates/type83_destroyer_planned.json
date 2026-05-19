@@ -1,0 +1,53 @@
+{
+  "id": "type83_destroyer_planned",
+  "name": "Type 83 (Planned)",
+  "design_family": "uk_naval_planned",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "destroyer",
+  "crew_required": 200,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 200,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 60,
+    "fuel_consumption": 70,
+    "supply_need": 90,
+    "armor": 40,
+    "deck_armor": 22,
+    "hardness": 65
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_4_5inch_mk6",
+    "SecondaryWeapon": "mk41_vls_destroyer",
+    "Sensors": "type83_destroyer_planned",
+    "AntiAir": "sea_viper_sam",
+    "Engine": "geared_steam_turbine_60k"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "uk_naval_planned",
+    "twenty_thirties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

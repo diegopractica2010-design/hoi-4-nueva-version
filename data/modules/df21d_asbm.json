@@ -1,0 +1,24 @@
+{
+  "id": "df21d_asbm",
+  "name": "DF-21D ASBM",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 130,
+  "hard_attack": 80,
+  "piercing": 70,
+  "anti_ship": 120,
+  "air_attack": 10,
+  "cost": {
+    "steel": 35,
+    "electronics": 65,
+    "explosives": 60
+  },
+  "production_time": 140,
+  "special_flags": [
+    "china",
+    "twenty_tens",
+    "anti_ship",
+    "ballistic"
+  ],
+  "description": "Anti-ship ballistic missile. Carrier-killer doctrine centerpiece."
+}

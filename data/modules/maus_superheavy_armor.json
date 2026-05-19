@@ -1,0 +1,21 @@
+{
+  "id": "maus_superheavy_armor",
+  "name": "Maus Superheavy Armor",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 72,
+  "top_armor_bonus": 38,
+  "reliability_penalty": -15,
+  "cost": {
+    "steel": 90,
+    "chromium": 12,
+    "tungsten": 6
+  },
+  "production_time": 140,
+  "special_flags": [
+    "superheavy",
+    "prototype",
+    "germany"
+  ],
+  "description": "Up to 220 mm frontal on Panzer VIII Maus. Two prototypes built; impenetrable but immobile."
+}

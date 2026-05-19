@@ -1,0 +1,19 @@
+{
+  "id": "mlrs_reload_trailer",
+  "name": "MLRS Reload Trailer",
+  "category": "Cargo",
+  "tier": 4,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 12,
+    "rubber": 4,
+    "explosives": 8
+  },
+  "production_time": 40,
+  "special_flags": [
+    "rocket_artillery",
+    "reload",
+    "mountable_on_transport"
+  ],
+  "description": "Ammunition reload trailer for MLRS/HIMARS and SAM TEL resupply."
+}

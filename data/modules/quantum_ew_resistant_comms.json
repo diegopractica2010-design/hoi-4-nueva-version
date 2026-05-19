@@ -1,0 +1,19 @@
+{
+  "id": "quantum_ew_resistant_comms",
+  "name": "Quantum-Resistant Comms",
+  "category": "Communications",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 3,
+    "electronics": 55
+  },
+  "production_time": 85,
+  "special_flags": [
+    "nato",
+    "twenty_thirties",
+    "planned",
+    "cyber"
+  ],
+  "description": "Post-quantum cryptography for tactical networks in 2030s peer conflict."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "rolls_royce_meteor",
+  "name": "Rolls-Royce Meteor",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 3,
+  "speed_bonus": 7,
+  "cost": {
+    "steel": 16,
+    "aluminum": 8
+  },
+  "production_time": 50,
+  "description": "Merlin-derived 600 hp V-12 for Cromwell and Comet. Reliable for a British tank engine."
+}

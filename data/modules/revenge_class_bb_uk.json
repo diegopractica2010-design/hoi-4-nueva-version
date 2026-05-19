@@ -1,0 +1,23 @@
+{
+  "id": "revenge_class_bb_uk",
+  "name": "Revenge 15\" Mk I",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 40,
+  "hard_attack": 45,
+  "piercing": 44,
+  "anti_ship": 80,
+  "cost": {
+    "steel": 32,
+    "chromium": 7,
+    "explosives": 13
+  },
+  "production_time": 90,
+  "special_flags": [
+    "uk",
+    "battleship",
+    "ww1",
+    "grand_fleet"
+  ],
+  "description": "Revenge/Royal Sovereign class. Workhorse Grand Fleet battleships 1918."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "ah64_hellfire",
+  "name": "AGM-114 Hellfire",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 42,
+  "hard_attack": 68,
+  "piercing": 140,
+  "air_attack": 5,
+  "cost": {
+    "steel": 6,
+    "electronics": 28,
+    "explosives": 16
+  },
+  "production_time": 65,
+  "special_flags": [
+    "usa",
+    "atgm",
+    "helicopter",
+    "eighties",
+    "laser_guided"
+  ],
+  "description": "AH-64 Apache primary anti-tank weapon. Laser-guided; devastating in Gulf War."
+}

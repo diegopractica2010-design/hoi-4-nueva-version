@@ -1,0 +1,55 @@
+{
+  "id": "moudge_class_2026",
+  "name": "Moudge-class",
+  "design_family": "iranian_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "destroyer",
+  "crew_required": 140,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 140,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 80,
+    "fuel_consumption": 65,
+    "supply_need": 80,
+    "armor": 38,
+    "deck_armor": 24,
+    "hardness": 68
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ger_15cm_tb",
+    "SecondaryWeapon": "exocet_sm39",
+    "Sensors": "moudge_iran_frigate",
+    "AntiAir": "tor_sam"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "iranian_naval_2026",
+    "frigate"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

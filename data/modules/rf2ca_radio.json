@@ -1,0 +1,14 @@
+{
+  "id": "rf2ca_radio",
+  "name": "RF 2CA Radio",
+  "category": "Communications",
+  "tier": 1,
+  "reliability_bonus": 0,
+  "cost": {
+    "steel": 2,
+    "electronics": 3,
+    "copper": 2
+  },
+  "production_time": 22,
+  "description": "Basic Italian armored vehicle radio. Limited range and reliability."
+}

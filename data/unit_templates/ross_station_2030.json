@@ -1,0 +1,38 @@
+{
+  "id": "ross_station_2030",
+  "name": "ROSS (Planned)",
+  "design_family": "russian_space_twenty_thirties",
+  "base_type": "Space",
+  "size_category": "Heavy",
+  "visual_archetype": "space_station",
+  "crew_required": 3,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 195,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 80,
+    "fuel_consumption": 42,
+    "supply_need": 58,
+    "payload_capacity": 10,
+    "hardness": 20
+  },
+  "slots": {
+    "Cargo": {
+      "max": 2
+    },
+    "LifeSupport": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "russian_oren_space_station",
+    "LifeSupport": "soyuz_spacecraft_bus"
+  },
+  "unlock_tech": [
+    "russian_space_station",
+    "planned"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

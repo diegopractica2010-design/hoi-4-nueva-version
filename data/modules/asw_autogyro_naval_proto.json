@@ -1,0 +1,21 @@
+{
+  "id": "asw_autogyro_naval_proto",
+  "name": "Naval Autogyro ASW Proto",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 6,
+    "electronics": 8,
+    "aluminum": 6
+  },
+  "production_time": 48,
+  "special_flags": [
+    "uk",
+    "naval",
+    "prototype",
+    "pre_war",
+    "asw"
+  ],
+  "description": "Royal Navy trials of autogyros for convoy spotting before true naval helicopters."
+}

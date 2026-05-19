@@ -1,0 +1,19 @@
+{
+  "id": "hunter_killer_fcs",
+  "name": "Hunter-Killer FCS",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 5,
+    "electronics": 40,
+    "optics": 16
+  },
+  "production_time": 72,
+  "special_flags": [
+    "nato",
+    "fcs",
+    "nineties"
+  ],
+  "description": "Independent commander thermal sight with digital fire control. Engage two targets rapidly."
+}

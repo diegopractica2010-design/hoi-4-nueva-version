@@ -1,0 +1,19 @@
+{
+  "id": "us_1000lb_bomb_load",
+  "name": "1,000 lb Bomb Load",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 72,
+  "hard_attack": 16,
+  "piercing": 10,
+  "air_attack": 10,
+  "cost": {
+    "steel": 4,
+    "explosives": 28
+  },
+  "production_time": 40,
+  "special_flags": [
+    "tactical_bombing"
+  ],
+  "description": "Medium bomber / fighter-bomber load (B-25, A-36, P-47 ground attack)."
+}

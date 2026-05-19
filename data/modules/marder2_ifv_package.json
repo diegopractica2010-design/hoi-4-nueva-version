@@ -1,0 +1,21 @@
+{
+  "id": "marder2_ifv_package",
+  "name": "Marder 2 Package",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 32,
+  "top_armor_bonus": 18,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 28,
+    "aluminum": 8,
+    "ceramics": 4
+  },
+  "production_time": 70,
+  "special_flags": [
+    "germany",
+    "nineties",
+    "ifv"
+  ],
+  "description": "Up-armored Marder 1A3 IFV. Carries MILAN and 20 mm Rh-202."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "m829a3_apfsds",
+  "name": "M829A3 APFSDS",
+  "category": "Cargo",
+  "tier": 8,
+  "soft_attack": 12,
+  "hard_attack": 32,
+  "piercing": 52,
+  "cost": {
+    "uranium": 24,
+    "tungsten": 8,
+    "steel": 2
+  },
+  "production_time": 55,
+  "special_flags": [
+    "usa",
+    "ammunition",
+    "apfsds",
+    "twenty_tens"
+  ],
+  "description": "Advanced DU penetrator optimized vs Relikt and late ERA. Peak U.S. KE performance."
+}

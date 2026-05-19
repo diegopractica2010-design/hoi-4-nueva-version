@@ -1,0 +1,20 @@
+{
+  "id": "harbin_z9c_asw",
+  "name": "Harbin Z-9C ASW",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 8,
+    "electronics": 28,
+    "aluminum": 10
+  },
+  "production_time": 62,
+  "special_flags": [
+    "china",
+    "asw",
+    "helicopter",
+    "nineties"
+  ],
+  "description": "License Dauphin derivative for PLAN frigate and LHD ASW."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "naval_fire_control_mk37",
+  "name": "Mk 37 GFCS",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 16,
+    "optics": 10
+  },
+  "production_time": 65,
+  "special_flags": [
+    "naval",
+    "fire_control",
+    "usa"
+  ],
+  "description": "U.S. naval gunfire control radar and director. Major accuracy boost for surface combat."
+}

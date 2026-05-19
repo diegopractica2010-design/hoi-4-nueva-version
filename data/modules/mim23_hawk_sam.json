@@ -1,0 +1,23 @@
+{
+  "id": "mim23_hawk_sam",
+  "name": "MIM-23 Hawk",
+  "category": "AntiAir",
+  "tier": 5,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 75,
+  "anti_air": 78,
+  "cost": {
+    "steel": 20,
+    "electronics": 35,
+    "explosives": 12
+  },
+  "production_time": 85,
+  "special_flags": [
+    "usa",
+    "sam",
+    "sixties",
+    "nato"
+  ],
+  "description": "Medium-range SAM protecting NATO divisions. Engaged Arab aircraft in 1973."
+}

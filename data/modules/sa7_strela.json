@@ -1,0 +1,22 @@
+{
+  "id": "sa7_strela",
+  "name": "9K32 Strela-2 (SA-7)",
+  "category": "AntiAir",
+  "tier": 4,
+  "soft_attack": 6,
+  "hard_attack": 4,
+  "air_attack": 48,
+  "anti_air": 50,
+  "cost": {
+    "steel": 2,
+    "electronics": 8,
+    "explosives": 4
+  },
+  "production_time": 30,
+  "special_flags": [
+    "ussr",
+    "manpads",
+    "sixties"
+  ],
+  "description": "Infantry IR SAM. Forced low-level tactics worldwide; simple and prolific."
+}

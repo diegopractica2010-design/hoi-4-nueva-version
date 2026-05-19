@@ -1,0 +1,23 @@
+{
+  "id": "merkava_mk4_barak",
+  "name": "Merkava Mk 4 Barak",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 78,
+  "top_armor_bonus": 48,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 50,
+    "ceramics": 28,
+    "kevlar": 16,
+    "electronics": 18
+  },
+  "production_time": 120,
+  "special_flags": [
+    "israel",
+    "twenty_twenties",
+    "merkava",
+    "trophy"
+  ],
+  "description": "Merkava Mk 4M with Trophy APS and Barak FCS. Gaza operations 2020s."
+}

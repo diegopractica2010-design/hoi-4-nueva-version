@@ -1,0 +1,52 @@
+{
+  "id": "midway_class_carrier",
+  "name": "Midway-class",
+  "design_family": "us_naval_cold_war",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "carrier",
+  "crew_required": 4100,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 75,
+    "fuel_consumption": 90,
+    "supply_need": 110,
+    "armor": 30,
+    "deck_armor": 22,
+    "hardness": 62
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "midway_class_flight_deck",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "carrier_armored_flight_deck",
+    "Sensors": "an_sps6_air_search",
+    "AntiAir": "carrier_aa_bofors_40mm"
+  },
+  "unlock_tech": [
+    "us_carriers",
+    "cold_war_naval",
+    "supercarrier"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

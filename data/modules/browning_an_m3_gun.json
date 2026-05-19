@@ -1,0 +1,21 @@
+{
+  "id": "browning_an_m3_gun",
+  "name": "AN/M3 .50 cal (High ROF)",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 26,
+  "hard_attack": 12,
+  "piercing": 22,
+  "air_attack": 44,
+  "cost": {
+    "steel": 6,
+    "aluminum": 2
+  },
+  "production_time": 32,
+  "special_flags": [
+    "aircraft_gun",
+    "usa",
+    "late_war"
+  ],
+  "description": "Higher rate-of-fire M3 for P-51K and late B-17 mounts."
+}

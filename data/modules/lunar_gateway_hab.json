@@ -1,0 +1,23 @@
+{
+  "id": "lunar_gateway_hab",
+  "name": "Lunar Surface Hab (Proto)",
+  "category": "LifeSupport",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 40,
+    "aluminum": 35,
+    "electronics": 45,
+    "chemicals": 20
+  },
+  "production_time": 180,
+  "special_flags": [
+    "nasa",
+    "esa",
+    "space",
+    "twenty_thirties",
+    "lunar",
+    "planned"
+  ],
+  "description": "Artemis base camp habitation module concept for sustained lunar presence."
+}

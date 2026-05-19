@@ -1,0 +1,46 @@
+{
+  "id": "merkava_mk3",
+  "name": "Merkava Mk III",
+  "design_family": "israeli_armored_nineties",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 4,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 105,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 82,
+    "fuel_consumption": 14,
+    "supply_need": 18,
+    "armor": 62,
+    "top_armor": 38,
+    "hardness": 92
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "imi_120mm_gun",
+    "Engine": "merkava_avds_engine",
+    "Armor": "merkava_mk3_armor",
+    "SecondaryWeapon": "spike_atgm"
+  },
+  "unlock_tech": [
+    "israeli_mbt_nineties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

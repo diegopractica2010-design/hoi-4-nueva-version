@@ -1,0 +1,46 @@
+{
+  "id": "amx30_mbt",
+  "name": "AMX-30",
+  "design_family": "french_armored_sixties",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 4,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 90,
+  "base_stats": {
+    "speed": 38,
+    "reliability": 70,
+    "fuel_consumption": 12,
+    "supply_need": 16,
+    "armor": 38,
+    "top_armor": 18,
+    "hardness": 84
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "cn105f1_105mm_gun",
+    "Engine": "hs110_diesel_amx30",
+    "Armor": "amx30_armor",
+    "Sensors": "laser_rangefinder_tank"
+  },
+  "unlock_tech": [
+    "french_mbt_sixties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

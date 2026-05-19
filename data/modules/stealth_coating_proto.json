@@ -1,0 +1,22 @@
+{
+  "id": "stealth_coating_proto",
+  "name": "RAM Coating (Prototype)",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 5,
+  "top_armor_bonus": 3,
+  "reliability_penalty": -2,
+  "cost": {
+    "chemicals": 18,
+    "electronics": 12,
+    "rubber": 6
+  },
+  "production_time": 60,
+  "special_flags": [
+    "usa",
+    "nineties",
+    "stealth",
+    "aircraft"
+  ],
+  "description": "Radar-absorbent material trials on F-117 and B-2. Reduces detection range."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "rafale_package",
+  "name": "Rafale Package",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 12,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 18,
+    "aluminum": 36,
+    "titanium": 14
+  },
+  "production_time": 105,
+  "special_flags": [
+    "france",
+    "two_thousands",
+    "rafale",
+    "omnirole"
+  ],
+  "description": "Rafale multi-role fighter. Libya, Mali, and Syria combat proven."
+}

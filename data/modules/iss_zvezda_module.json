@@ -1,0 +1,22 @@
+{
+  "id": "iss_zvezda_module",
+  "name": "ISS Zvezda Module",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 42,
+    "aluminum": 35,
+    "electronics": 38
+  },
+  "production_time": 155,
+  "special_flags": [
+    "russia",
+    "nasa",
+    "space",
+    "nineties",
+    "iss",
+    "international"
+  ],
+  "description": "Russian service module; ISS backbone for propulsion and living space."
+}

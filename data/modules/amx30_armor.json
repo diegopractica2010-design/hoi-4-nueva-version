@@ -1,0 +1,20 @@
+{
+  "id": "amx30_armor",
+  "name": "AMX-30 Armor",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 38,
+  "top_armor_bonus": 18,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 28,
+    "chromium": 3
+  },
+  "production_time": 58,
+  "special_flags": [
+    "france",
+    "sixties",
+    "mbt"
+  ],
+  "description": "AMX-30 emphasis on mobility over armor. Acceptable vs Warsaw Pact HEAT at range."
+}

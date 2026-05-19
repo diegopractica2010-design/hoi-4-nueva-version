@@ -1,0 +1,55 @@
+{
+  "id": "nelson_class_battleship",
+  "name": "Nelson-class",
+  "design_family": "uk_naval_interwar",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 1400,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 70,
+    "fuel_consumption": 100,
+    "supply_need": 130,
+    "armor": 58,
+    "deck_armor": 32,
+    "hardness": 88
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "us_16inch_45_gun",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "carrier_boiler_yarrow",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37",
+    "Communications": "scr_522_radio"
+  },
+  "unlock_tech": [
+    "uk_battleships",
+    "treaty_battleship"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

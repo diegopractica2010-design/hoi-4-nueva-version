@@ -1,0 +1,23 @@
+{
+  "id": "xm1_chobham_composite",
+  "name": "Chobham Composite Package",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 62,
+  "top_armor_bonus": 45,
+  "reliability_penalty": -8,
+  "cost": {
+    "steel": 45,
+    "ceramics": 20,
+    "titanium": 8,
+    "kevlar": 6
+  },
+  "production_time": 110,
+  "special_flags": [
+    "usa",
+    "uk_joint",
+    "seventies",
+    "composite_armor"
+  ],
+  "description": "British-developed composite armor adopted for XM1 trials. Revolutionary vs KE penetrators."
+}

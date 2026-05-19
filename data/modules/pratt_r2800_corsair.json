@@ -1,0 +1,20 @@
+{
+  "id": "pratt_r2800_corsair",
+  "name": "Pratt R-2800 (Corsair)",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 11,
+  "fuel_efficiency": 4,
+  "speed_bonus": 13,
+  "cost": {
+    "steel": 12,
+    "aluminum": 14
+  },
+  "production_time": 54,
+  "special_flags": [
+    "fighter_powerplant",
+    "usa",
+    "carrier_capable"
+  ],
+  "description": "F4U Corsair and carrier-capable variants. Rugged naval fighter engine."
+}

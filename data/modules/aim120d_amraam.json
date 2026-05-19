@@ -1,0 +1,23 @@
+{
+  "id": "aim120d_amraam",
+  "name": "AIM-120D AMRAAM",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 14,
+  "hard_attack": 12,
+  "air_attack": 92,
+  "anti_air": 88,
+  "cost": {
+    "steel": 6,
+    "electronics": 48,
+    "explosives": 10
+  },
+  "production_time": 82,
+  "special_flags": [
+    "usa",
+    "air_to_air",
+    "two_thousands",
+    "bvr"
+  ],
+  "description": "Improved range and GPS/INS guidance. Standard U.S. BVR missile of 2010s."
+}

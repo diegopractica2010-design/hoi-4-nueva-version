@@ -1,0 +1,22 @@
+{
+  "id": "f22a_package",
+  "name": "F-22A Raptor Package",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 18,
+  "fuel_efficiency": 16,
+  "speed_bonus": 40,
+  "cost": {
+    "steel": 22,
+    "aluminum": 42,
+    "titanium": 28
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "two_thousands",
+    "stealth",
+    "supercruise"
+  ],
+  "description": "F-22 operational configuration. First fifth-generation fighter in U.S. service (2005)."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "ford_gaa_v8_engine",
+  "name": "Ford GAA V-8",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 4,
+  "speed_bonus": 6,
+  "cost": {
+    "steel": 12,
+    "aluminum": 6
+  },
+  "production_time": 40,
+  "description": "500 hp gasoline V-8 for Sherman variants. Reliable and mass-produced."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "norden_bombsight",
+  "name": "Norden M-Series Bombsight",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 4,
+    "electronics": 14,
+    "optics": 8
+  },
+  "production_time": 60,
+  "special_flags": ["precision_bombing", "high_altitude"],
+  "description": "Top-secret American bombsight for daylight precision bombing. Greatly improves accuracy from high altitude when weather and flak permit."
+}

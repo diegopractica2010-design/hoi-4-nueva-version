@@ -1,0 +1,23 @@
+{
+  "id": "bramo_323_drache_engine",
+  "name": "BMW Bramo 323 (Fa 223)",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "fuel_efficiency": -6,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 14,
+    "aluminum": 12,
+    "electronics": 6
+  },
+  "production_time": 72,
+  "special_flags": [
+    "germany",
+    "helicopter",
+    "ww2",
+    "fa223",
+    "transport"
+  ],
+  "description": "1,000 hp Bramo 323Q radial driving twin rotors via transmission. Fa 223 Drache powerplant."
+}

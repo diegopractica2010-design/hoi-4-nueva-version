@@ -1,0 +1,19 @@
+{
+  "id": "skoda_37mm_a7",
+  "name": "37 mm Škoda A7",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 30,
+  "hard_attack": 20,
+  "piercing": 48,
+  "air_attack": 3,
+  "cost": {
+    "steel": 8
+  },
+  "production_time": 36,
+  "special_flags": [
+    "interwar",
+    "czech"
+  ],
+  "description": "LT vz. 35 gun. Exported to Romania and Bulgaria; obsolete vs WWII mediums."
+}

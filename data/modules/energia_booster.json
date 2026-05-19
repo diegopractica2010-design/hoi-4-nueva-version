@@ -1,0 +1,22 @@
+{
+  "id": "energia_booster",
+  "name": "Energia Booster",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 4,
+  "fuel_efficiency": -4,
+  "speed_bonus": 40,
+  "cost": {
+    "steel": 55,
+    "aluminum": 30,
+    "explosives": 100
+  },
+  "production_time": 160,
+  "special_flags": [
+    "ussr",
+    "space",
+    "eighties",
+    "super_heavy"
+  ],
+  "description": "Soviet super-heavy launcher. Carried Buran and Polyus; canceled with USSR collapse."
+}

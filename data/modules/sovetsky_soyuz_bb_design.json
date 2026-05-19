@@ -1,0 +1,24 @@
+{
+  "id": "sovetsky_soyuz_bb_design",
+  "name": "Sovetsky Soyuz BB Design",
+  "category": "NavalGun",
+  "tier": 5,
+  "soft_attack": 48,
+  "hard_attack": 55,
+  "piercing": 52,
+  "anti_ship": 88,
+  "cost": {
+    "steel": 40,
+    "chromium": 10,
+    "explosives": 16
+  },
+  "production_time": 110,
+  "special_flags": [
+    "ussr",
+    "battleship",
+    "prototype",
+    "ww2",
+    "paper"
+  ],
+  "description": "Soviet 16-inch battleship class. Construction halted by war."
+}

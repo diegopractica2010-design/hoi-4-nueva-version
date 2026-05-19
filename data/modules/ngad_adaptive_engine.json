@@ -1,0 +1,24 @@
+{
+  "id": "ngad_adaptive_engine",
+  "name": "NGAD Adaptive Cycle Engine",
+  "category": "Engine",
+  "tier": 9,
+  "reliability_bonus": 18,
+  "fuel_efficiency": 22,
+  "speed_bonus": 44,
+  "cost": {
+    "steel": 28,
+    "aluminum": 55,
+    "titanium": 40,
+    "electronics": 30
+  },
+  "production_time": 210,
+  "special_flags": [
+    "usa",
+    "jet_powerplant",
+    "twenty_twenties",
+    "adaptive_cycle",
+    "ngad"
+  ],
+  "description": "Three-stream adaptive engine for NGAD. Optimizes range, acceleration, and thermal management."
+}

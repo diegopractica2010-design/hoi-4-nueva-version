@@ -1,0 +1,21 @@
+{
+  "id": "amx13_75mm_fl10",
+  "name": "75 mm CN 75-50",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 48,
+  "hard_attack": 40,
+  "piercing": 82,
+  "air_attack": 4,
+  "cost": {
+    "steel": 16,
+    "aluminum": 4
+  },
+  "production_time": 60,
+  "special_flags": [
+    "france",
+    "cold_war",
+    "oscillating_turret"
+  ],
+  "description": "AMX-13 oscillating turret gun. Light but effective on export market."
+}

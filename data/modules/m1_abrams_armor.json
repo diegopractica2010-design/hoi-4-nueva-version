@@ -1,0 +1,23 @@
+{
+  "id": "m1_abrams_armor",
+  "name": "M1 Abrams Armor Package",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 64,
+  "top_armor_bonus": 48,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 48,
+    "ceramics": 24,
+    "titanium": 10,
+    "kevlar": 8
+  },
+  "production_time": 115,
+  "special_flags": [
+    "usa",
+    "eighties",
+    "composite",
+    "m1_abrams"
+  ],
+  "description": "Initial M1 Chobham-based armor. Decisive advantage vs T-72 during 1991 Gulf War."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "tornado_gr4_package",
+  "name": "RB199 Turbofan",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 9,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 16,
+    "aluminum": 26,
+    "titanium": 8
+  },
+  "production_time": 85,
+  "special_flags": [
+    "uk",
+    "germany_joint",
+    "eighties",
+    "tornado"
+  ],
+  "description": "Panavia Tornado twin-engine turbofan. Low-level strike and maritime attack."
+}

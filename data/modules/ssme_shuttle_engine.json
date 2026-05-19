@@ -1,0 +1,23 @@
+{
+  "id": "ssme_shuttle_engine",
+  "name": "RS-25 (Space Shuttle SSME)",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 16,
+  "fuel_efficiency": 8,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 28,
+    "aluminum": 25,
+    "explosives": 40
+  },
+  "production_time": 130,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "seventies",
+    "reusable"
+  ],
+  "description": "Space Shuttle main engine. Reusable high-performance hydrogen engine."
+}

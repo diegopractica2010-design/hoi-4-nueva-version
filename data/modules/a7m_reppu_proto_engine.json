@@ -1,0 +1,23 @@
+{
+  "id": "a7m_reppu_proto_engine",
+  "name": "Mitsubishi MK9 (Reppū Proto)",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 2,
+  "fuel_efficiency": 2,
+  "speed_bonus": 18,
+  "cost": {
+    "steel": 12,
+    "aluminum": 14,
+    "electronics": 6
+  },
+  "production_time": 65,
+  "special_flags": [
+    "japan",
+    "carrier_capable",
+    "ww2",
+    "prototype",
+    "a7m_reppu"
+  ],
+  "description": "Planned A7M Reppū carrier fighter engine. Never reached operational squadrons."
+}

@@ -1,0 +1,46 @@
+{
+  "id": "ea6b_prowler",
+  "name": "EA-6B Prowler",
+  "design_family": "us_carrier_air_modern",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "ew_aircraft",
+  "crew_required": 4,
+  "base_training_level": 39,
+  "max_experience_level": 100,
+  "base_production_days": 88,
+  "base_stats": {
+    "speed": 102,
+    "reliability": 80,
+    "fuel_consumption": 24,
+    "supply_need": 18,
+    "armor": 16,
+    "hardness": 28
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "agm88_harm",
+    "Engine": "j52_skyhawk_engine",
+    "Sensors": "ea6b_ecm_suite"
+  },
+  "unlock_tech": [
+    "us_carrier_aviation",
+    "cold_war_naval_air",
+    "carrier_ew"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,21 @@
+{
+  "id": "sonar_gdcs",
+  "name": "GDCS Sonar Suite",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 18,
+    "copper": 5
+  },
+  "production_time": 48,
+  "special_flags": [
+    "naval",
+    "asw",
+    "sonar",
+    "usa",
+    "late_war"
+  ],
+  "description": "Late-war U.S. sonar with improved range and discrimination against snorkel U-boats."
+}

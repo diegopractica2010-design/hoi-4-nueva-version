@@ -1,0 +1,20 @@
+{
+  "id": "reactive_armor_prototype",
+  "name": "Spaced Armor (Early)",
+  "category": "Armor",
+  "tier": 3,
+  "armor_bonus": 14,
+  "top_armor_bonus": 6,
+  "reliability_penalty": -2,
+  "cost": {
+    "steel": 12,
+    "rubber": 4
+  },
+  "production_time": 35,
+  "special_flags": [
+    "spaced_armor",
+    "prototype",
+    "cold_war"
+  ],
+  "description": "Experimental spaced armor panels tested 1945–50. Precursor to modern ERA concepts."
+}

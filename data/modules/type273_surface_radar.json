@@ -1,0 +1,19 @@
+{
+  "id": "type273_surface_radar",
+  "name": "Type 273 Target-Indication",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 16
+  },
+  "production_time": 50,
+  "special_flags": [
+    "radar",
+    "naval",
+    "uk",
+    "fire_control"
+  ],
+  "description": "British destroyer/cruiser radar for surface gunnery in poor visibility."
+}

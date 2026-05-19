@@ -1,0 +1,23 @@
+{
+  "id": "vs300_sikorsky_single_rotor",
+  "name": "VS-300 Single Rotor",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 0,
+  "fuel_efficiency": -4,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 8,
+    "aluminum": 12,
+    "electronics": 8
+  },
+  "production_time": 65,
+  "special_flags": [
+    "usa",
+    "prototype",
+    "pre_war",
+    "sikorsky",
+    "vs300"
+  ],
+  "description": "Igor Sikorsky VS-300 1939. Single main rotor and tail rotor configuration."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "rafale_m_carrier_package",
+  "name": "Rafale M Carrier Package",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 14,
+    "electronics": 45,
+    "aluminum": 22,
+    "titanium": 8
+  },
+  "production_time": 110,
+  "special_flags": [
+    "france",
+    "carrier_capable",
+    "twenty_tens",
+    "rafale_m"
+  ],
+  "description": "Strengthened airframe, arrestor hook, and RBE2 AESA for Charles de Gaulle operations."
+}

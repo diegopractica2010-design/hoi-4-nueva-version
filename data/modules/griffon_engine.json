@@ -1,0 +1,15 @@
+{
+  "id": "griffon_engine",
+  "name": "Rolls-Royce Griffon",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 4,
+  "speed_bonus": 16,
+  "cost": {
+    "steel": 14,
+    "aluminum": 18
+  },
+  "production_time": 62,
+  "description": "Late-war 2,000+ hp engine for Spitfire Mk XIV and naval aircraft."
+}

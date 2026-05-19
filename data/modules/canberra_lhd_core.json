@@ -1,0 +1,19 @@
+{
+  "id": "canberra_lhd_core",
+  "name": "Canberra LHD Core",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 80,
+    "electronics": 30,
+    "aluminum": 22
+  },
+  "production_time": 170,
+  "special_flags": [
+    "australia",
+    "lhd",
+    "twenty_twenties"
+  ],
+  "description": "Spanish-designed LHD for RAN. MH-60R and MRH90; F-35B discussed but not adopted by 2026."
+}

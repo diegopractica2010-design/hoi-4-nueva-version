@@ -1,0 +1,16 @@
+{
+  "id": "type99_mk2_cannon",
+  "name": "Type 99 Mk II 20mm",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 22,
+  "hard_attack": 12,
+  "piercing": 28,
+  "air_attack": 40,
+  "cost": {
+    "steel": 6,
+    "aluminum": 2
+  },
+  "production_time": 32,
+  "description": "Zero and Ki-43 cannon. Light but effective with good agility."
+}

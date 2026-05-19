@@ -1,0 +1,19 @@
+{
+  "id": "type5_75mm_l70_gun",
+  "name": "Type 5 75 mm L/70",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 50,
+  "hard_attack": 44,
+  "piercing": 92,
+  "air_attack": 4,
+  "cost": {
+    "steel": 18
+  },
+  "production_time": 68,
+  "special_flags": [
+    "japan",
+    "late_war"
+  ],
+  "description": "Chi-Ri II and Chi-To intended gun. Would have matched Sherman 76 mm; few completed."
+}

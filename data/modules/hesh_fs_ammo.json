@@ -1,0 +1,22 @@
+{
+  "id": "hesh_fs_ammo",
+  "name": "HESH-FS Round",
+  "category": "Cargo",
+  "tier": 4,
+  "soft_attack": 18,
+  "hard_attack": 14,
+  "piercing": 8,
+  "cost": {
+    "steel": 2,
+    "explosives": 10,
+    "chemicals": 4
+  },
+  "production_time": 28,
+  "special_flags": [
+    "uk",
+    "ammunition",
+    "sixties",
+    "anti_armor"
+  ],
+  "description": "British squash-head ammunition for L11 and L7. Effective vs Soviet tanks without high velocity."
+}

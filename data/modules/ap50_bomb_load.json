@@ -1,0 +1,16 @@
+{
+  "id": "ap50_bomb_load",
+  "name": "AP 50 Bomb Load",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 55,
+  "hard_attack": 10,
+  "piercing": 6,
+  "air_attack": 8,
+  "cost": {
+    "steel": 3,
+    "explosives": 16
+  },
+  "production_time": 32,
+  "description": "Light tactical load for SM.79 and CR.42 ground attack."
+}

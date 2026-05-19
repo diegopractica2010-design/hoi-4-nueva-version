@@ -1,0 +1,50 @@
+{
+  "id": "patriot_battery_1985",
+  "name": "Patriot Battery (PAC-1)",
+  "design_family": "us_sam_cold_war",
+  "base_type": "Land",
+  "size_category": "Medium",
+  "visual_archetype": "sam_battery",
+  "crew_required": 6,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 115,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 72,
+    "fuel_consumption": 10,
+    "supply_need": 16,
+    "armor": 12,
+    "hardness": 35
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Engine": "agt1500_turbine",
+    "Suspension": "wheeled_mlrs_chassis",
+    "Sensors": "hunter_killer_fcs",
+    "AntiAir": "mim104_patriot",
+    "Cargo": "mlrs_reload_trailer"
+  },
+  "unlock_tech": [
+    "cold_war_sam",
+    "us_missiles"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

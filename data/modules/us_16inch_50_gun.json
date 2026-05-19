@@ -1,0 +1,24 @@
+{
+  "id": "us_16inch_50_gun",
+  "name": "16\"/50 Mark 7",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 90,
+  "hard_attack": 85,
+  "piercing": 138,
+  "air_attack": 4,
+  "anti_ship": 115,
+  "cost": {
+    "steel": 58,
+    "explosives": 22,
+    "chromium": 8
+  },
+  "production_time": 135,
+  "special_flags": [
+    "naval",
+    "battleship",
+    "usa",
+    "excellent_ap"
+  ],
+  "description": "Iowa class. Premier U.S. battleship gun with extreme range and penetration."
+}

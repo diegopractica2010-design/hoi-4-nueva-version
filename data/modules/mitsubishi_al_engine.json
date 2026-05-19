@@ -1,0 +1,15 @@
+{
+  "id": "mitsubishi_al_engine",
+  "name": "Mitsubishi AL Type",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 3,
+  "fuel_efficiency": 3,
+  "speed_bonus": 4,
+  "cost": {
+    "steel": 10,
+    "aluminum": 4
+  },
+  "production_time": 40,
+  "description": "Air-cooled diesel for Chi-Ha family. Modest power; suited to jungle logistics."
+}

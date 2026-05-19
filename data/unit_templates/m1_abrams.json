@@ -1,0 +1,50 @@
+{
+  "id": "m1_abrams",
+  "name": "M1 Abrams",
+  "design_family": "us_armored_eighties",
+  "base_type": "Armored",
+  "size_category": "Heavy",
+  "visual_archetype": "medium_tank",
+  "crew_required": 4,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 110,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 78,
+    "fuel_consumption": 18,
+    "supply_need": 22,
+    "armor": 64,
+    "top_armor": 48,
+    "hardness": 94
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "m256_120mm_gun",
+    "Engine": "agt1500_turbine",
+    "Armor": "m1_abrams_armor",
+    "Sensors": "thermal_imager_an_vsg3",
+    "Cargo": "m829_apfsds"
+  },
+  "unlock_tech": [
+    "us_mbt_eighties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

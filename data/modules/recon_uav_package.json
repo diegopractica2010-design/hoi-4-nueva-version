@@ -1,0 +1,20 @@
+{
+  "id": "recon_uav_package",
+  "name": "Tactical UAV Package",
+  "category": "DroneAttachment",
+  "tier": 5,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 4,
+    "electronics": 28,
+    "aluminum": 8
+  },
+  "production_time": 45,
+  "special_flags": [
+    "global",
+    "two_thousands",
+    "uav",
+    "isr"
+  ],
+  "description": "RQ-7 Shadow and similar brigade-level drones. Ubiquitous in Iraq and Afghanistan."
+}

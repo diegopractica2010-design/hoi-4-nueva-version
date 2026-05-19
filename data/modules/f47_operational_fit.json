@@ -1,0 +1,21 @@
+{
+  "id": "f47_operational_fit",
+  "name": "F-47 Operational Fit",
+  "category": "Sensors",
+  "tier": 9,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 15,
+    "electronics": 90,
+    "rare_earths": 25
+  },
+  "production_time": 200,
+  "special_flags": [
+    "usa",
+    "twenty_thirties",
+    "sixth_gen",
+    "f47",
+    "aesa"
+  ],
+  "description": "Full-rate production F-47 with integrated CCA control and multi-spectral sensors."
+}

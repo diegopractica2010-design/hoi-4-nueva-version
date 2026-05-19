@@ -1,0 +1,22 @@
+{
+  "id": "vbci_ifv_package",
+  "name": "VBCI Package",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 35,
+  "top_armor_bonus": 20,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 28,
+    "aluminum": 12,
+    "ceramics": 8
+  },
+  "production_time": 72,
+  "special_flags": [
+    "france",
+    "two_thousands",
+    "ifv",
+    "wheeled"
+  ],
+  "description": "Wheeled 25 mm IFV for French rapid reaction forces."
+}

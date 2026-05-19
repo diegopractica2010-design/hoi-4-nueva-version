@@ -1,0 +1,23 @@
+{
+  "id": "jl3_slbm_china",
+  "name": "JL-3 SLBM",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 115,
+  "hard_attack": 105,
+  "piercing": 88,
+  "cost": {
+    "steel": 22,
+    "electronics": 60,
+    "explosives": 95,
+    "uranium": 20
+  },
+  "production_time": 150,
+  "special_flags": [
+    "china",
+    "slbm",
+    "nuclear",
+    "twenty_twenties"
+  ],
+  "description": "Next-generation Chinese SLBM for Type 096 SSBN."
+}

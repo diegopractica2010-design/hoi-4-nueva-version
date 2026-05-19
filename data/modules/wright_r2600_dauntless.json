@@ -1,0 +1,21 @@
+{
+  "id": "wright_r2600_dauntless",
+  "name": "Wright R-2600 (Dauntless)",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 2,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 11,
+    "aluminum": 10
+  },
+  "production_time": 48,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "ww2",
+    "sbd_dauntless"
+  ],
+  "description": "Twin Cyclone powering SBD Dauntless and some B-25 variants."
+}

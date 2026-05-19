@@ -1,0 +1,22 @@
+{
+  "id": "crewless_submarine_2030",
+  "name": "Crewless Submarine (Proto)",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 12,
+    "electronics": 65,
+    "aluminum": 15
+  },
+  "production_time": 130,
+  "special_flags": [
+    "usa",
+    "china",
+    "russia",
+    "uuv",
+    "prototype",
+    "twenty_thirties"
+  ],
+  "description": "Large autonomous underwater vehicle with strike or ISR payload."
+}

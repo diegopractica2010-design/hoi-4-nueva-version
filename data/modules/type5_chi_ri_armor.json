@@ -1,0 +1,18 @@
+{
+  "id": "type5_chi_ri_armor",
+  "name": "Type 5 Chi-Ri Armor",
+  "category": "Armor",
+  "tier": 3,
+  "armor_bonus": 40,
+  "top_armor_bonus": 22,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 32
+  },
+  "production_time": 60,
+  "special_flags": [
+    "prototype",
+    "japan"
+  ],
+  "description": "Planned medium tank armor. Two prototypes; war ended before production."
+}

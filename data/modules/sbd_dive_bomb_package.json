@@ -1,0 +1,25 @@
+{
+  "id": "sbd_dive_bomb_package",
+  "name": "SBD Dive Bomb Package",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 68,
+  "hard_attack": 38,
+  "piercing": 35,
+  "anti_ship": 72,
+  "air_attack": 8,
+  "cost": {
+    "steel": 5,
+    "explosives": 24,
+    "optics": 6
+  },
+  "production_time": 45,
+  "special_flags": [
+    "usa",
+    "naval_aviation",
+    "ww2",
+    "dive_bomber",
+    "sbd_dauntless"
+  ],
+  "description": "1,000 lb bomb and dive brakes for SBD Dauntless. Decisive at Coral Sea and Midway."
+}

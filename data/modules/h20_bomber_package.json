@@ -1,0 +1,24 @@
+{
+  "id": "h20_bomber_package",
+  "name": "H-20 Stealth Bomber",
+  "category": "Engine",
+  "tier": 9,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 18,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 40,
+    "aluminum": 65,
+    "titanium": 35,
+    "electronics": 60
+  },
+  "production_time": 240,
+  "special_flags": [
+    "china",
+    "twenty_thirties",
+    "stealth",
+    "bomber",
+    "planned"
+  ],
+  "description": "Flying-wing stealth bomber program. Strategic strike comparable to B-21."
+}

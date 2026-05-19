@@ -1,0 +1,20 @@
+{
+  "id": "mg3_infantry_gun",
+  "name": "MG3 7.62 mm",
+  "category": "SecondaryWeapon",
+  "tier": 3,
+  "soft_attack": 28,
+  "hard_attack": 6,
+  "piercing": 18,
+  "air_attack": 8,
+  "cost": {
+    "steel": 4
+  },
+  "production_time": 22,
+  "special_flags": [
+    "germany",
+    "coaxial",
+    "sixties"
+  ],
+  "description": "Standard Bundeswehr machine gun on Leopard and Marder coaxial mounts."
+}

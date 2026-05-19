@@ -1,0 +1,19 @@
+{
+  "id": "type281_surface_radar",
+  "name": "Type 281 Surface Radar",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 6,
+    "electronics": 14
+  },
+  "production_time": 48,
+  "special_flags": [
+    "radar",
+    "naval",
+    "uk",
+    "search"
+  ],
+  "description": "Early RN long-range surface search radar on capital ships and cruisers."
+}

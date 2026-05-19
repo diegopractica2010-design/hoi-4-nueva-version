@@ -1,0 +1,22 @@
+{
+  "id": "konkursm_atgm",
+  "name": "9M113M Konkurs-M",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 36,
+  "hard_attack": 62,
+  "piercing": 128,
+  "air_attack": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 18,
+    "explosives": 12
+  },
+  "production_time": 48,
+  "special_flags": [
+    "ussr",
+    "atgm",
+    "eighties"
+  ],
+  "description": "Improved SACLOS wire-guided ATGM with tandem warhead."
+}

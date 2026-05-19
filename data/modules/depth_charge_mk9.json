@@ -1,0 +1,23 @@
+{
+  "id": "depth_charge_mk9",
+  "name": "Mk 9 Depth Charge",
+  "category": "SecondaryWeapon",
+  "tier": 3,
+  "soft_attack": 12,
+  "hard_attack": 58,
+  "piercing": 14,
+  "anti_ship": 42,
+  "cost": {
+    "steel": 4,
+    "explosives": 18
+  },
+  "production_time": 28,
+  "special_flags": [
+    "naval",
+    "asw",
+    "usa",
+    "depth_charge",
+    "deep_setting"
+  ],
+  "description": "U.S. deep-depth charge for convoy escorts. Effective against diving U-boats."
+}

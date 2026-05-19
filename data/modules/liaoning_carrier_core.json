@@ -1,0 +1,20 @@
+{
+  "id": "liaoning_carrier_core",
+  "name": "Liaoning Carrier Core",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 95,
+    "electronics": 35,
+    "aluminum": 28
+  },
+  "production_time": 210,
+  "special_flags": [
+    "china",
+    "carrier",
+    "ski_jump",
+    "twenty_twenties"
+  ],
+  "description": "Refitted Varyag. China's first operational carrier aviation platform."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "f119_f22_engine",
+  "name": "Pratt F119",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 16,
+  "fuel_efficiency": 14,
+  "speed_bonus": 38,
+  "cost": {
+    "steel": 20,
+    "aluminum": 38,
+    "titanium": 22
+  },
+  "production_time": 120,
+  "special_flags": [
+    "usa",
+    "jet_powerplant",
+    "nineties",
+    "supercruise",
+    "f22_proto"
+  ],
+  "description": "F-22 Raptor prototype engine. Thrust vectoring and supercruise capability."
+}

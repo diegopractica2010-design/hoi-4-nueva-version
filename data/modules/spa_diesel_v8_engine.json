@@ -1,0 +1,14 @@
+{
+  "id": "spa_diesel_v8_engine",
+  "name": "SPA 8T Diesel V-8",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": -2,
+  "fuel_efficiency": 5,
+  "speed_bonus": 3,
+  "cost": {
+    "steel": 11
+  },
+  "production_time": 42,
+  "description": "Underpowered diesel on M13/40–M14/41. Notorious reliability issues."
+}

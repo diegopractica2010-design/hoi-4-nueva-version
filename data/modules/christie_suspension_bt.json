@@ -1,0 +1,19 @@
+{
+  "id": "christie_suspension_bt",
+  "name": "Christie Suspension Package",
+  "category": "Suspension",
+  "tier": 2,
+  "reliability_bonus": -2,
+  "fuel_efficiency": 0,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 6,
+    "rubber": 4
+  },
+  "production_time": 28,
+  "special_flags": [
+    "interwar",
+    "fast_tank"
+  ],
+  "description": "Christie-derived suspension on BT-7 and T-34 prototypes. Enables high road speed."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "shuttle_orbiter_package",
+  "name": "Space Shuttle Orbiter",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 80,
+    "aluminum": 60,
+    "electronics": 50,
+    "ceramics": 15
+  },
+  "production_time": 200,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "seventies",
+    "reusable",
+    "crewed"
+  ],
+  "description": "Winged orbiter with payload bay. Crew and cargo to LEO 1981–2011."
+}

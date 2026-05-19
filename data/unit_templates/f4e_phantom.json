@@ -1,0 +1,41 @@
+{
+  "id": "f4e_phantom",
+  "name": "F-4E Phantom II",
+  "design_family": "us_air_vietnam",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "fighter",
+  "crew_required": 2,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 75,
+  "base_stats": {
+    "speed": 95,
+    "reliability": 76,
+    "fuel_consumption": 22,
+    "supply_need": 16,
+    "armor": 12,
+    "hardness": 25
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "aim7_sparrow",
+    "SecondaryWeapon": "aim9_sidewinder",
+    "Engine": "pratt_j79_phantom"
+  },
+  "unlock_tech": [
+    "us_fighters_sixties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

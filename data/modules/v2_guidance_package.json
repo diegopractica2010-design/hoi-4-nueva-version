@@ -1,0 +1,20 @@
+{
+  "id": "v2_guidance_package",
+  "name": "V-2 Guidance Package",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": -4,
+  "cost": {
+    "steel": 4,
+    "electronics": 6,
+    "optics": 4
+  },
+  "production_time": 45,
+  "special_flags": [
+    "germany",
+    "space",
+    "forties",
+    "inertial"
+  ],
+  "description": "Gyroscopic guidance for A4. Crude but revolutionary for 1944."
+}

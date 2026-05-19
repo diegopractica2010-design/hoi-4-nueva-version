@@ -1,0 +1,44 @@
+{
+  "id": "lynx_has3",
+  "name": "Lynx HAS.3",
+  "design_family": "uk_naval_helo_cold_war",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "helicopter",
+  "crew_required": 2,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 60,
+  "base_stats": {
+    "speed": 58,
+    "reliability": 75,
+    "fuel_consumption": 12,
+    "supply_need": 10,
+    "armor": 8,
+    "hardness": 15
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "sea_skua_asm",
+    "Sensors": "lynx_has3_asw",
+    "Engine": "rolls_royce_gemini"
+  },
+  "unlock_tech": [
+    "uk_naval_aviation",
+    "naval_helicopters",
+    "eighties",
+    "falklands"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

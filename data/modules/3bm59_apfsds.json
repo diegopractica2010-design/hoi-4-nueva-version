@@ -1,0 +1,22 @@
+{
+  "id": "3bm59_apfsds",
+  "name": "3BM59 APFSDS",
+  "category": "Cargo",
+  "tier": 7,
+  "soft_attack": 11,
+  "hard_attack": 28,
+  "piercing": 46,
+  "cost": {
+    "tungsten": 18,
+    "uranium": 6,
+    "steel": 2
+  },
+  "production_time": 50,
+  "special_flags": [
+    "russia",
+    "ammunition",
+    "apfsds",
+    "two_thousands"
+  ],
+  "description": "Late Russian long-rod penetrator. Competitive with Western DU rounds."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "ch46_sea_knight_assault",
+  "name": "CH-46 Sea Knight Assault",
+  "category": "Cargo",
+  "tier": 4,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 12,
+    "aluminum": 14,
+    "electronics": 8
+  },
+  "production_time": 58,
+  "special_flags": [
+    "usa",
+    "assault",
+    "helicopter",
+    "sixties",
+    "vietnam",
+    "lhd"
+  ],
+  "description": "Twin-rotor assault helicopter for LPH and early amphibious ships. Vietnam and Gulf War."
+}

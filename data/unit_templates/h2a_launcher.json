@@ -1,0 +1,37 @@
+{
+  "id": "h2a_launcher",
+  "name": "H-IIA",
+  "design_family": "jaxa_space",
+  "base_type": "Space",
+  "size_category": "Heavy",
+  "visual_archetype": "rocket",
+  "crew_required": 0,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 100,
+  "base_stats": {
+    "speed": 80,
+    "reliability": 90,
+    "fuel_consumption": 82,
+    "supply_need": 42,
+    "payload_capacity": 15,
+    "hardness": 10
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "h2a_launch_vehicle",
+    "Cargo": "hayabusa_probe_bus"
+  },
+  "unlock_tech": [
+    "japanese_space"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

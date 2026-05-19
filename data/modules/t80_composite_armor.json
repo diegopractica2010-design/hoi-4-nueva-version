@@ -1,0 +1,22 @@
+{
+  "id": "t80_composite_armor",
+  "name": "T-80 Composite Armor",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 58,
+  "top_armor_bonus": 35,
+  "reliability_penalty": -7,
+  "cost": {
+    "steel": 42,
+    "ceramics": 14,
+    "chromium": 6
+  },
+  "production_time": 85,
+  "special_flags": [
+    "ussr",
+    "eighties",
+    "t80",
+    "gas_turbine_tank"
+  ],
+  "description": "T-80U armor with improved composite arrays. First Soviet MBT with gas turbine."
+}

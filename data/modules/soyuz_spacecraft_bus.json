@@ -1,0 +1,22 @@
+{
+  "id": "soyuz_spacecraft_bus",
+  "name": "Soyuz Spacecraft",
+  "category": "LifeSupport",
+  "tier": 5,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 10,
+    "aluminum": 14,
+    "electronics": 22
+  },
+  "production_time": 100,
+  "special_flags": [
+    "ussr",
+    "russia",
+    "space",
+    "sixties",
+    "crewed",
+    "soyuz"
+  ],
+  "description": "Soyuz capsule and service module. Most-flown crewed spacecraft design in history."
+}

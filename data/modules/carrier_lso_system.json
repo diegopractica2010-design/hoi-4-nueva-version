@@ -1,0 +1,18 @@
+{
+  "id": "carrier_lso_system",
+  "name": "Landing Signal Officer System",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 2,
+    "electronics": 6,
+    "optics": 4
+  },
+  "production_time": 28,
+  "special_flags": [
+    "carrier",
+    "flight_ops"
+  ],
+  "description": "LSO paddles and later mirror landing aids. Reduces carrier landing losses."
+}

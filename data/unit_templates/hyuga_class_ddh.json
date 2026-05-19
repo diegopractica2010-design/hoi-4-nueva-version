@@ -1,0 +1,45 @@
+{
+  "id": "hyuga_class_ddh",
+  "name": "Hyūga-class DDH",
+  "design_family": "japanese_naval_amphibious_modern",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "carrier",
+  "crew_required": 1800,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 165,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 72,
+    "fuel_consumption": 80,
+    "supply_need": 95,
+    "armor": 40,
+    "deck_armor": 28,
+    "hardness": 58
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "hyuga_class_ddh",
+    "Sensors": "sh60b_seahawk_asw",
+    "AntiAir": "type055_destroyer_vls"
+  },
+  "unlock_tech": [
+    "chinese_naval_aviation",
+    "naval_helicopters",
+    "ddh",
+    "helicopter"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

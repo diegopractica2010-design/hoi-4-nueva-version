@@ -1,0 +1,22 @@
+{
+  "id": "al31f_engine",
+  "name": "Saturn AL-31F",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 8,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 16,
+    "aluminum": 30,
+    "titanium": 12
+  },
+  "production_time": 85,
+  "special_flags": [
+    "ussr",
+    "jet_powerplant",
+    "eighties",
+    "su27"
+  ],
+  "description": "Su-27 Flanker engine. High thrust and tolerance for extreme maneuver."
+}

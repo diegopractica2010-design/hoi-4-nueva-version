@@ -1,0 +1,23 @@
+{
+  "id": "fritz_x_guided_bomb",
+  "name": "Fritz X Guided Bomb",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 45,
+  "hard_attack": 55,
+  "piercing": 95,
+  "air_attack": 8,
+  "anti_ship": 88,
+  "cost": {
+    "steel": 8,
+    "electronics": 16,
+    "explosives": 20
+  },
+  "production_time": 65,
+  "special_flags": [
+    "guided_weapon",
+    "anti_ship",
+    "germany"
+  ],
+  "description": "Radio-guided anti-ship munition. Sank Roma; precursor to modern precision strike."
+}

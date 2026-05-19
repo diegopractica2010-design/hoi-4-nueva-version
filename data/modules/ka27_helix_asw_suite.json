@@ -1,0 +1,21 @@
+{
+  "id": "ka27_helix_asw_suite",
+  "name": "Ka-27 Helix ASW",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 10,
+    "electronics": 28,
+    "aluminum": 10
+  },
+  "production_time": 68,
+  "special_flags": [
+    "russia",
+    "india",
+    "china",
+    "asw",
+    "helicopter"
+  ],
+  "description": "Soviet-design naval helicopter on Russian and Indian carriers and destroyers."
+}

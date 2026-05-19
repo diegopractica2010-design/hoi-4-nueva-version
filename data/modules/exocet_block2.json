@@ -1,0 +1,23 @@
+{
+  "id": "exocet_block2",
+  "name": "Exocet Block 2",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 42,
+  "hard_attack": 55,
+  "piercing": 40,
+  "anti_ship": 98,
+  "air_attack": 5,
+  "cost": {
+    "steel": 8,
+    "electronics": 35,
+    "explosives": 20
+  },
+  "production_time": 80,
+  "special_flags": [
+    "france",
+    "anti_ship",
+    "nineties"
+  ],
+  "description": "Improved sea-skimming anti-ship missile with datalink retargeting."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "pl2_air_air_missile",
+  "name": "PL-2 Air-to-Air",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 6,
+  "hard_attack": 4,
+  "air_attack": 52,
+  "anti_air": 48,
+  "cost": {
+    "steel": 3,
+    "electronics": 12,
+    "explosives": 5
+  },
+  "production_time": 40,
+  "special_flags": [
+    "china",
+    "air_to_air",
+    "sixties",
+    "k13_copy"
+  ],
+  "description": "K-13/AA-2 Atoll copy for J-7. Basic IR homing missile for PLAAF."
+}

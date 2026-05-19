@@ -1,0 +1,21 @@
+{
+  "id": "kontakt1_era",
+  "name": "Kontakt-1 ERA",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 22,
+  "top_armor_bonus": 14,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 8,
+    "explosives": 12
+  },
+  "production_time": 45,
+  "special_flags": [
+    "ussr",
+    "era",
+    "seventies",
+    "reactive"
+  ],
+  "description": "First-generation explosive reactive armor blocks. Dramatically improves HEAT survivability."
+}

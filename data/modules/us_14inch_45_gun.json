@@ -1,0 +1,23 @@
+{
+  "id": "us_14inch_45_gun",
+  "name": "14\"/45 Mark 8",
+  "category": "NavalGun",
+  "tier": 1,
+  "soft_attack": 70,
+  "hard_attack": 60,
+  "piercing": 92,
+  "air_attack": 2,
+  "anti_ship": 78,
+  "cost": {
+    "steel": 38,
+    "explosives": 10
+  },
+  "production_time": 90,
+  "special_flags": [
+    "naval",
+    "ww1",
+    "dreadnought",
+    "usa"
+  ],
+  "description": "New York and Texas class. WWI-era U.S. battleship main battery."
+}

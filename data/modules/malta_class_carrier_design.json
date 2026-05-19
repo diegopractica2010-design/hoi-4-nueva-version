@@ -1,0 +1,21 @@
+{
+  "id": "malta_class_carrier_design",
+  "name": "Malta-class Carrier Design",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 95,
+    "electronics": 18,
+    "aluminum": 22
+  },
+  "production_time": 210,
+  "special_flags": [
+    "uk",
+    "carrier",
+    "prototype",
+    "ww2",
+    "paper"
+  ],
+  "description": "RN armored fleet carrier design. Cancelled for resources."
+}

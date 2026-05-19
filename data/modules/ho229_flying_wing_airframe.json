@@ -1,0 +1,21 @@
+{
+  "id": "ho229_flying_wing_airframe",
+  "name": "Ho 229 Flying Wing Package",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 8,
+  "top_armor_bonus": 4,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 6,
+    "aluminum": 24,
+    "rubber": 4
+  },
+  "production_time": 95,
+  "special_flags": [
+    "stealth_wood",
+    "prototype",
+    "germany"
+  ],
+  "description": "Composite flying-wing structure for Horten Ho 229. One prototype captured; low radar signature."
+}

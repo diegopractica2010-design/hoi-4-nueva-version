@@ -1,0 +1,26 @@
+{
+  "id": "gcas_tempest_engine",
+  "name": "GCAP Tempest Engine",
+  "category": "Engine",
+  "tier": 9,
+  "reliability_bonus": 16,
+  "fuel_efficiency": 20,
+  "speed_bonus": 42,
+  "cost": {
+    "steel": 28,
+    "aluminum": 58,
+    "titanium": 40,
+    "electronics": 50
+  },
+  "production_time": 230,
+  "special_flags": [
+    "uk",
+    "italy_joint",
+    "japan_joint",
+    "twenty_thirties",
+    "sixth_gen",
+    "planned",
+    "gcas"
+  ],
+  "description": "Global Combat Air Programme sixth-gen fighter (Tempest). UK-Italy-Japan 2035 entry."
+}

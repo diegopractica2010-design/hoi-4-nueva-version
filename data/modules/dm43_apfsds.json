@@ -1,0 +1,22 @@
+{
+  "id": "dm43_apfsds",
+  "name": "DM43 APFSDS",
+  "category": "Cargo",
+  "tier": 7,
+  "soft_attack": 10,
+  "hard_attack": 28,
+  "piercing": 44,
+  "cost": {
+    "tungsten": 16,
+    "uranium": 6,
+    "steel": 2
+  },
+  "production_time": 50,
+  "special_flags": [
+    "germany",
+    "ammunition",
+    "apfsds",
+    "nineties"
+  ],
+  "description": "Improved 120 mm round with better performance vs Kontakt-5 protected targets."
+}

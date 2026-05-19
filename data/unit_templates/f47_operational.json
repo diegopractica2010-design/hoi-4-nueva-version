@@ -1,0 +1,46 @@
+{
+  "id": "f47_operational",
+  "name": "F-47 (Operational)",
+  "design_family": "us_air_twenty_thirties",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 44,
+  "max_experience_level": 100,
+  "base_production_days": 175,
+  "base_stats": {
+    "speed": 120,
+    "reliability": 82,
+    "fuel_consumption": 22,
+    "supply_need": 26,
+    "armor": 8,
+    "hardness": 28
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "DroneAttachment": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "aim260_jatm",
+    "Engine": "f47_ngad_package",
+    "Sensors": "f47_operational_fit",
+    "DroneAttachment": "cca_loyal_wingman"
+  },
+  "unlock_tech": [
+    "us_fighters_twenty_thirties",
+    "sixth_gen"
+  ],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

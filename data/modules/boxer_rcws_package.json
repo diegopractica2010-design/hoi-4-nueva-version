@@ -1,0 +1,23 @@
+{
+  "id": "boxer_rcws_package",
+  "name": "Boxer RCWS Package",
+  "category": "SecondaryWeapon",
+  "tier": 6,
+  "soft_attack": 30,
+  "hard_attack": 18,
+  "piercing": 40,
+  "air_attack": 20,
+  "cost": {
+    "steel": 14,
+    "electronics": 25,
+    "aluminum": 12
+  },
+  "production_time": 60,
+  "special_flags": [
+    "germany",
+    "twenty_twenties",
+    "wheeled",
+    "ifv"
+  ],
+  "description": "Boxer MRAV with remote weapon station and Spike integration."
+}

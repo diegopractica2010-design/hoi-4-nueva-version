@@ -1,0 +1,23 @@
+{
+  "id": "agm158_jassm",
+  "name": "AGM-158 JASSM",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 55,
+  "hard_attack": 58,
+  "piercing": 50,
+  "air_attack": 8,
+  "cost": {
+    "steel": 10,
+    "electronics": 42,
+    "explosives": 28
+  },
+  "production_time": 88,
+  "special_flags": [
+    "usa",
+    "cruise_missile",
+    "twenty_tens",
+    "stealth"
+  ],
+  "description": "Stealthy air-launched cruise missile. Long-range precision strike vs hardened targets."
+}

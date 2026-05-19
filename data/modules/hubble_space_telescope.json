@@ -1,0 +1,23 @@
+{
+  "id": "hubble_space_telescope",
+  "name": "Hubble Space Telescope",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 8,
+    "electronics": 45,
+    "optics": 35,
+    "aluminum": 12
+  },
+  "production_time": 150,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "esa_joint",
+    "space",
+    "eighties",
+    "science"
+  ],
+  "description": "2.4 m optical telescope in LEO. Serviced by Shuttle; revolutionized astronomy."
+}

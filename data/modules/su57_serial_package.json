@@ -1,0 +1,23 @@
+{
+  "id": "su57_serial_package",
+  "name": "Su-57 Felon (Serial)",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 14,
+  "speed_bonus": 38,
+  "cost": {
+    "steel": 24,
+    "aluminum": 42,
+    "titanium": 28,
+    "electronics": 40
+  },
+  "production_time": 175,
+  "special_flags": [
+    "russia",
+    "twenty_twenties",
+    "su57",
+    "stealth"
+  ],
+  "description": "Serial Su-57 with improved engines and radar. Limited fleet; Ukraine operations."
+}

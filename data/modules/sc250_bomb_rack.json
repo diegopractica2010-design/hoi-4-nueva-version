@@ -1,0 +1,17 @@
+{
+  "id": "sc250_bomb_rack",
+  "name": "SC 250 Bomb Rack",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 88,
+  "hard_attack": 10,
+  "piercing": 6,
+  "air_attack": 12,
+  "cost": {
+    "steel": 8,
+    "explosives": 22
+  },
+  "production_time": 40,
+  "special_flags": ["excellent_vs_soft", "dive_delivery"],
+  "description": "250 kg general-purpose bomb load for Ju 87 dive bombing. Extremely effective vs infantry, entrenchments, and soft vehicles when delivered accurately."
+}

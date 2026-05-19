@@ -1,0 +1,21 @@
+{
+  "id": "ddgx_combat_system",
+  "name": "DDG(X) Combat System",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 45,
+    "electronics": 85,
+    "aluminum": 20
+  },
+  "production_time": 180,
+  "special_flags": [
+    "usa",
+    "naval",
+    "twenty_twenties",
+    "destroyer",
+    "planned"
+  ],
+  "description": "Next-generation destroyer with SPY-6 derivatives, increased power for lasers and hypersonics."
+}

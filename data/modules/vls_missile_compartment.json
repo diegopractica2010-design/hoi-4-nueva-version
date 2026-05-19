@@ -1,0 +1,21 @@
+{
+  "id": "vls_missile_compartment",
+  "name": "VLS Missile Compartment",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 30,
+    "electronics": 25,
+    "explosives": 20
+  },
+  "production_time": 100,
+  "special_flags": [
+    "usa",
+    "russia",
+    "china",
+    "vls",
+    "submarine"
+  ],
+  "description": "Vertical launch cells for Tomahawk, Kalibr, or SLBM tubes."
+}

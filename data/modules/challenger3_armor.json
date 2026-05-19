@@ -1,0 +1,22 @@
+{
+  "id": "challenger3_armor",
+  "name": "Challenger 3 Armor",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 80,
+  "top_armor_bonus": 56,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 55,
+    "ceramics": 35,
+    "titanium": 14,
+    "kevlar": 12
+  },
+  "production_time": 140,
+  "special_flags": [
+    "uk",
+    "twenty_twenties",
+    "challenger3"
+  ],
+  "description": "New turret with improved modular armor and Trophy APS option."
+}

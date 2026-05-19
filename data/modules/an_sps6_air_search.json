@@ -1,0 +1,20 @@
+{
+  "id": "an_sps6_air_search",
+  "name": "AN/SPS-6 Air Search",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 10,
+    "electronics": 24
+  },
+  "production_time": 65,
+  "special_flags": [
+    "radar",
+    "naval",
+    "usa",
+    "carrier",
+    "cold_war"
+  ],
+  "description": "1950s carrier air-search radar. Replaces SK on Essex and Midway classes."
+}

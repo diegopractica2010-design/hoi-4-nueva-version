@@ -1,0 +1,20 @@
+{
+  "id": "new_glenn_2030_operational",
+  "name": "New Glenn (Operational)",
+  "category": "Cargo",
+  "tier": 8,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 38,
+    "aluminum": 32,
+    "electronics": 40
+  },
+  "production_time": 125,
+  "special_flags": [
+    "blue_origin",
+    "usa",
+    "space",
+    "twenty_thirties"
+  ],
+  "description": "Projected operational Blue Origin heavy lift with high flight rate."
+}

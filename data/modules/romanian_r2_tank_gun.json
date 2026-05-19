@@ -1,0 +1,19 @@
+{
+  "id": "romanian_r2_tank_gun",
+  "name": "37 mm R-2 Tank Gun",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 28,
+  "hard_attack": 18,
+  "piercing": 44,
+  "air_attack": 2,
+  "cost": {
+    "steel": 7
+  },
+  "production_time": 32,
+  "special_flags": [
+    "romania",
+    "czech_license"
+  ],
+  "description": "License LT vz. 35 (R-2). Romania's primary pre-war tank armament."
+}

@@ -1,0 +1,43 @@
+{
+  "id": "centurion_mk3_medium",
+  "name": "Centurion Mk 3",
+  "design_family": "uk_armored_cold_war",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 4,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 85,
+  "base_stats": {
+    "speed": 35,
+    "reliability": 78,
+    "fuel_consumption": 10,
+    "supply_need": 14,
+    "armor": 52,
+    "top_armor": 26,
+    "hardness": 86
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "l7_105mm_rifled",
+    "Engine": "meteor_mk4_engine",
+    "Armor": "centurion_glacis_armor"
+  },
+  "unlock_tech": [
+    "uk_medium_tanks",
+    "cold_war_tanks"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

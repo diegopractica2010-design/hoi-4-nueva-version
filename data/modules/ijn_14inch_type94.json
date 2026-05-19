@@ -1,0 +1,22 @@
+{
+  "id": "ijn_14inch_type94",
+  "name": "36 cm Type 94",
+  "category": "NavalGun",
+  "tier": 2,
+  "soft_attack": 74,
+  "hard_attack": 66,
+  "piercing": 102,
+  "air_attack": 3,
+  "anti_ship": 86,
+  "cost": {
+    "steel": 42,
+    "explosives": 12
+  },
+  "production_time": 98,
+  "special_flags": [
+    "naval",
+    "battleship",
+    "japan"
+  ],
+  "description": "Ise and Nagato class 14-inch. Powerful but superseded by 18-inch on Yamato."
+}

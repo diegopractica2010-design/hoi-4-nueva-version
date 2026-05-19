@@ -1,0 +1,22 @@
+{
+  "id": "cvn_x_carrier_proto",
+  "name": "CVN(X) Carrier Proto",
+  "category": "Cargo",
+  "tier": 9,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 130,
+    "electronics": 70,
+    "aluminum": 45,
+    "uranium": 18
+  },
+  "production_time": 280,
+  "special_flags": [
+    "usa",
+    "carrier",
+    "prototype",
+    "twenty_thirties",
+    "emals"
+  ],
+  "description": "Planned U.S. carrier successor to Ford with advanced EMALS and reduced crew."
+}

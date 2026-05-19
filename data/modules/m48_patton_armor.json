@@ -1,0 +1,19 @@
+{
+  "id": "m48_patton_armor",
+  "name": "M48 Patton Armor",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 44,
+  "top_armor_bonus": 22,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 34,
+    "chromium": 4
+  },
+  "production_time": 65,
+  "special_flags": [
+    "usa",
+    "cold_war"
+  ],
+  "description": "Cast turret and glacis on M48. Solid protection; upgraded in M48A3."
+}

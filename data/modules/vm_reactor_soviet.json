@@ -1,0 +1,22 @@
+{
+  "id": "vm_reactor_soviet",
+  "name": "VM Pressurized Reactor",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 18,
+  "speed_bonus": 16,
+  "cost": {
+    "steel": 28,
+    "uranium": 38,
+    "electronics": 28
+  },
+  "production_time": 145,
+  "special_flags": [
+    "ussr",
+    "russia",
+    "nuclear",
+    "submarine"
+  ],
+  "description": "Soviet/Russian submarine reactor on November through Yasen classes."
+}

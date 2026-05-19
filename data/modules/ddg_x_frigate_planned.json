@@ -1,0 +1,20 @@
+{
+  "id": "ddg_x_frigate_planned",
+  "name": "DDG(X) Frigate Package",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "electronics": 50,
+    "aluminum": 12
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "frigate",
+    "prototype",
+    "twenty_thirties"
+  ],
+  "description": "Planned large USN surface combatant succeeding Burke and Constellation."
+}

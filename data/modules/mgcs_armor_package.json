@@ -1,0 +1,24 @@
+{
+  "id": "mgcs_armor_package",
+  "name": "MGCS Armor Package",
+  "category": "Armor",
+  "tier": 9,
+  "armor_bonus": 85,
+  "top_armor_bonus": 55,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 55,
+    "ceramics": 40,
+    "titanium": 18,
+    "electronics": 20
+  },
+  "production_time": 170,
+  "special_flags": [
+    "france",
+    "germany_joint",
+    "twenty_thirties",
+    "mgcs",
+    "planned"
+  ],
+  "description": "Modular armor and APS for Franco-German next-generation MBT."
+}

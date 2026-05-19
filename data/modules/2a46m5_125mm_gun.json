@@ -1,0 +1,23 @@
+{
+  "id": "2a46m5_125mm_gun",
+  "name": "2A46M-5 125 mm",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 74,
+  "hard_attack": 72,
+  "piercing": 165,
+  "air_attack": 5,
+  "cost": {
+    "steel": 36,
+    "chromium": 10,
+    "tungsten": 8
+  },
+  "production_time": 108,
+  "special_flags": [
+    "russia",
+    "nineties",
+    "smoothbore",
+    "t90"
+  ],
+  "description": "Latest Soviet/Russian 125 mm before 2A82. Fires 3BM42 Mango APFSDS."
+}

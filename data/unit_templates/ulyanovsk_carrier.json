@@ -1,0 +1,53 @@
+{
+  "id": "ulyanovsk_carrier",
+  "name": "Ulyanovsk (Incomplete)",
+  "design_family": "soviet_naval_paper",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 2500,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 60,
+    "fuel_consumption": 70,
+    "supply_need": 90,
+    "armor": 40,
+    "deck_armor": 22,
+    "hardness": 65
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "ulyanovsk_carrier_proto",
+    "Engine": "vm_reactor_soviet",
+    "Armor": "carrier_armored_flight_deck",
+    "Sensors": "naval_fire_control_mk37",
+    "AntiAir": "carrier_aa_20mm_oerlikon"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "soviet_naval_paper",
+    "russian_naval_paper"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

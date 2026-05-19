@@ -1,0 +1,21 @@
+{
+  "id": "fcas_ngf_germany",
+  "name": "FCAS (Germany)",
+  "category": "Sensors",
+  "tier": 9,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 15,
+    "electronics": 75,
+    "aluminum": 25
+  },
+  "production_time": 200,
+  "special_flags": [
+    "germany",
+    "france_joint",
+    "twenty_thirties",
+    "planned",
+    "fcas"
+  ],
+  "description": "German participation in FCAS/NGF with Eurodrone and networked warfare."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "bulgarian_76mm_m1902",
+  "name": "76.2 mm M1902 (Bulgarian)",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 44,
+  "hard_attack": 10,
+  "piercing": 16,
+  "air_attack": 1,
+  "cost": {
+    "steel": 7
+  },
+  "production_time": 30,
+  "special_flags": [
+    "bulgaria",
+    "ww1_surplus"
+  ],
+  "description": "Surplus Russian field guns still in Bulgarian service in WWII."
+}

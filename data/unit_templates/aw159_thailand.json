@@ -1,0 +1,46 @@
+{
+  "id": "aw159_thailand",
+  "name": "AW139 (Royal Thai Navy)",
+  "design_family": "thai_naval_helo_2026",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "helicopter",
+  "crew_required": 2,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 60,
+  "base_stats": {
+    "speed": 60,
+    "reliability": 78,
+    "fuel_consumption": 11,
+    "supply_need": 9,
+    "armor": 6,
+    "hardness": 12
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Sensors": "aw159_wildcat_asw",
+    "Engine": "wasp_r1340_carrier_scout"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "thai_naval_aviation",
+    "asw_helicopter"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,22 @@
+{
+  "id": "du_apfsds_gen4",
+  "name": "DU APFSDS (Gen 4)",
+  "category": "Cargo",
+  "tier": 8,
+  "soft_attack": 14,
+  "hard_attack": 34,
+  "piercing": 55,
+  "cost": {
+    "uranium": 26,
+    "tungsten": 6,
+    "steel": 2
+  },
+  "production_time": 58,
+  "special_flags": [
+    "nato",
+    "ammunition",
+    "twenty_tens",
+    "du_penetrator"
+  ],
+  "description": "Fourth-generation DU rods for L/44 and L/55. Peak Western KE lethality."
+}

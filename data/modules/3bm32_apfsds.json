@@ -1,0 +1,21 @@
+{
+  "id": "3bm32_apfsds",
+  "name": "3BM32 APFSDS",
+  "category": "Cargo",
+  "tier": 6,
+  "soft_attack": 8,
+  "hard_attack": 22,
+  "piercing": 36,
+  "cost": {
+    "tungsten": 14,
+    "steel": 2
+  },
+  "production_time": 42,
+  "special_flags": [
+    "ussr",
+    "ammunition",
+    "apfsds",
+    "eighties"
+  ],
+  "description": "Tungsten long-rod for Soviet 125 mm. Threat to early M1 until M829A1 fielded."
+}

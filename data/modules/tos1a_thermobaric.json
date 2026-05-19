@@ -1,0 +1,22 @@
+{
+  "id": "tos1a_thermobaric",
+  "name": "TOS-1A Buratino",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 150,
+  "hard_attack": 30,
+  "piercing": 20,
+  "cost": {
+    "steel": 22,
+    "explosives": 55,
+    "electronics": 15
+  },
+  "production_time": 100,
+  "special_flags": [
+    "russia",
+    "rocket_artillery",
+    "two_thousands",
+    "thermobaric"
+  ],
+  "description": "T-72 chassis flamethrower rocket system. Devastating urban fires."
+}

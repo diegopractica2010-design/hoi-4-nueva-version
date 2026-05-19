@@ -1,0 +1,22 @@
+{
+  "id": "type30_30mm_cannon",
+  "name": "Type 30-1 30 mm",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 32,
+  "hard_attack": 22,
+  "piercing": 40,
+  "air_attack": 48,
+  "cost": {
+    "steel": 8,
+    "aluminum": 4
+  },
+  "production_time": 45,
+  "special_flags": [
+    "china",
+    "aircraft_gun",
+    "sixties",
+    "j6"
+  ],
+  "description": "NRIET 30 mm cannon on J-6 and J-7. Soviet NR-30 lineage."
+}

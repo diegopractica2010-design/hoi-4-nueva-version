@@ -1,0 +1,23 @@
+{
+  "id": "merchant_ascm_launcher",
+  "name": "Containerized ASCM",
+  "category": "SecondaryWeapon",
+  "tier": 6,
+  "soft_attack": 35,
+  "hard_attack": 55,
+  "piercing": 40,
+  "anti_ship": 85,
+  "cost": {
+    "steel": 15,
+    "electronics": 35,
+    "explosives": 20
+  },
+  "production_time": 90,
+  "special_flags": [
+    "armed_merchant",
+    "twenty_twenties",
+    "naval",
+    "missile"
+  ],
+  "description": "Boxed anti-ship missiles on deck of converted merchant. Severely reduces cargo."
+}

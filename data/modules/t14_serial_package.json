@@ -1,0 +1,22 @@
+{
+  "id": "t14_serial_package",
+  "name": "T-14 Armata (Serial)",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 78,
+  "top_armor_bonus": 52,
+  "reliability_penalty": -9,
+  "cost": {
+    "steel": 52,
+    "ceramics": 32,
+    "electronics": 28
+  },
+  "production_time": 170,
+  "special_flags": [
+    "russia",
+    "twenty_twenties",
+    "t14",
+    "afghanit"
+  ],
+  "description": "Limited serial T-14 with unmanned turret and crew capsule. Production constraints persist."
+}

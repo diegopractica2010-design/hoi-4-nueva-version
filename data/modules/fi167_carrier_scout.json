@@ -1,0 +1,22 @@
+{
+  "id": "fi167_carrier_scout",
+  "name": "Fi 167 Carrier Scout",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 2,
+  "speed_bonus": 6,
+  "cost": {
+    "steel": 8,
+    "aluminum": 6
+  },
+  "production_time": 42,
+  "special_flags": [
+    "germany",
+    "carrier_capable",
+    "ww2",
+    "prototype",
+    "fi167"
+  ],
+  "description": "Fieseler Fi 167 torpedo/scout biplane for Graf Zeppelin. Few built; program cancelled."
+}

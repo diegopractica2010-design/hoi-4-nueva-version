@@ -1,0 +1,22 @@
+{
+  "id": "mirage2000_package",
+  "name": "Mirage 2000 Package",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 8,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 16,
+    "aluminum": 28,
+    "titanium": 8
+  },
+  "production_time": 82,
+  "special_flags": [
+    "france",
+    "jet_powerplant",
+    "eighties",
+    "mirage2000"
+  ],
+  "description": "M53-P2 turbofan for Mirage 2000. French air superiority and strike platform of 1980s."
+}

@@ -1,0 +1,53 @@
+{
+  "id": "uss_united_states_cvb",
+  "name": "USS United States (CVB)",
+  "design_family": "us_naval_paper",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 1800,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 310,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 60,
+    "fuel_consumption": 70,
+    "supply_need": 90,
+    "armor": 40,
+    "deck_armor": 22,
+    "hardness": 65
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "uss_united_states_cvb",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "carrier_armored_flight_deck",
+    "Sensors": "naval_fire_control_mk37",
+    "AntiAir": "carrier_aa_20mm_oerlikon"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "us_naval_paper",
+    "cold_war_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

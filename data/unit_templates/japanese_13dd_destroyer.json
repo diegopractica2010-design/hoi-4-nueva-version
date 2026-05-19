@@ -1,0 +1,53 @@
+{
+  "id": "japanese_13dd_destroyer",
+  "name": "13DDX (Planned)",
+  "design_family": "japanese_naval_planned",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "destroyer",
+  "crew_required": 220,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 195,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 60,
+    "fuel_consumption": 70,
+    "supply_need": 90,
+    "armor": 40,
+    "deck_armor": 22,
+    "hardness": 65
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "us_5inch_54_mk42",
+    "SecondaryWeapon": "mk41_vls_destroyer",
+    "Sensors": "aesa_radar_gen1",
+    "AntiAir": "type055_destroyer_vls",
+    "Engine": "geared_steam_turbine_60k"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "japanese_naval_planned",
+    "twenty_thirties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

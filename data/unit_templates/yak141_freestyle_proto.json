@@ -1,0 +1,46 @@
+{
+  "id": "yak141_freestyle_proto",
+  "name": "Yak-141 (Proto)",
+  "design_family": "russian_carrier_air",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 95,
+  "base_stats": {
+    "speed": 102,
+    "reliability": 55,
+    "fuel_consumption": 24,
+    "supply_need": 18,
+    "armor": 16,
+    "hardness": 28
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "r73_archer_missile",
+    "Engine": "yak141_freestyle_proto",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "russian_naval_aviation",
+    "carrier_aviation",
+    "stovl_prototype"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

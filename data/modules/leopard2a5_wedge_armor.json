@@ -1,0 +1,22 @@
+{
+  "id": "leopard2a5_wedge_armor",
+  "name": "Leopard 2A5 Wedge Armor",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 70,
+  "top_armor_bonus": 48,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 48,
+    "ceramics": 24,
+    "titanium": 10
+  },
+  "production_time": 110,
+  "special_flags": [
+    "germany",
+    "nineties",
+    "leopard2a5",
+    "spaced_armor"
+  ],
+  "description": "Arrow-head spaced armor on turret front. Response to 125 mm APFSDS threat."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "radio_71tk1",
+  "name": "71-TK-1 Radio",
+  "category": "Communications",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 2,
+    "electronics": 5,
+    "copper": 2
+  },
+  "production_time": 22,
+  "description": "Standard Soviet tank brigade radio (mid-war onward)."
+}

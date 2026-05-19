@@ -1,0 +1,15 @@
+{
+  "id": "type99_88mm_gun",
+  "name": "Type 99 88 mm",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 50,
+  "hard_attack": 46,
+  "piercing": 88,
+  "air_attack": 4,
+  "cost": {
+    "steel": 20
+  },
+  "production_time": 70,
+  "description": "Chi-Ri II prototype gun. Rare; competitive on paper but few built."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "gateway_lunar_station",
+  "name": "Gateway Station Module",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 35,
+    "aluminum": 30,
+    "electronics": 50
+  },
+  "production_time": 170,
+  "special_flags": [
+    "nasa",
+    "esa",
+    "space",
+    "twenty_thirties",
+    "lunar_orbit",
+    "planned"
+  ],
+  "description": "Artemis lunar orbit space station. International staging point for Moon landings."
+}

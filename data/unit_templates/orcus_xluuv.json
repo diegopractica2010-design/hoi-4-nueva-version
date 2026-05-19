@@ -1,0 +1,52 @@
+{
+  "id": "orcus_xluuv",
+  "name": "Orca XLUUV",
+  "design_family": "us_sub_planned",
+  "base_type": "Submarine",
+  "size_category": "Medium",
+  "visual_archetype": "submarine",
+  "crew_required": 0,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 90,
+  "base_stats": {
+    "speed": 15,
+    "reliability": 75,
+    "fuel_consumption": 8,
+    "supply_need": 5,
+    "armor": 5,
+    "hardness": 8
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Sensors": "lockheed_martin_orca_uuv",
+    "Engine": "fuel_cell_aip_212"
+  },
+  "unlock_tech": [
+    "us_submarines",
+    "uuv",
+    "autonomous",
+    "twenty_twenties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

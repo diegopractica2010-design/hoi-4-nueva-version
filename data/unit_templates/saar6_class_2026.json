@@ -1,0 +1,56 @@
+{
+  "id": "saar6_class_2026",
+  "name": "Sa'ar 6-class",
+  "design_family": "israeli_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "destroyer",
+  "crew_required": 70,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 130,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 80,
+    "fuel_consumption": 65,
+    "supply_need": 80,
+    "armor": 38,
+    "deck_armor": 24,
+    "hardness": 68
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ger_15cm_tb",
+    "SecondaryWeapon": "barak8_sam",
+    "Sensors": "aesa_radar_gen1",
+    "Armor": "saar6_corvette",
+    "AntiAir": "iron_dome_interceptor"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "israeli_naval_2026",
+    "corvette"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

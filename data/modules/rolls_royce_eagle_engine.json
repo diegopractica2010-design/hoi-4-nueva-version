@@ -1,0 +1,19 @@
+{
+  "id": "rolls_royce_eagle_engine",
+  "name": "Rolls-Royce Eagle",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 3,
+  "speed_bonus": 9,
+  "cost": {
+    "steel": 11,
+    "aluminum": 10
+  },
+  "production_time": 48,
+  "special_flags": [
+    "ww1",
+    "aircraft"
+  ],
+  "description": "360 hp V-12 on Handley Page O/400 and naval aircraft."
+}

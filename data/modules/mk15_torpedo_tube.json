@@ -1,0 +1,22 @@
+{
+  "id": "mk15_torpedo_tube",
+  "name": "Mark 15 Torpedo",
+  "category": "SecondaryWeapon",
+  "tier": 2,
+  "soft_attack": 20,
+  "hard_attack": 35,
+  "piercing": 25,
+  "anti_ship": 55,
+  "cost": {
+    "steel": 8,
+    "explosives": 12,
+    "aluminum": 4
+  },
+  "production_time": 40,
+  "special_flags": [
+    "naval",
+    "torpedo",
+    "usa"
+  ],
+  "description": "Standard U.S. destroyer/cruiser torpedo. Devastating vs capital ships if hits scored."
+}

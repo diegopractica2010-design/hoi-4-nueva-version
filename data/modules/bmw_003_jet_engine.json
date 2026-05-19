@@ -1,0 +1,19 @@
+{
+  "id": "bmw_003_jet_engine",
+  "name": "BMW 003 Turbojet",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": -4,
+  "fuel_efficiency": -3,
+  "speed_bonus": 20,
+  "cost": {
+    "steel": 14,
+    "aluminum": 20
+  },
+  "production_time": 75,
+  "special_flags": [
+    "jet_powerplant",
+    "germany"
+  ],
+  "description": "He 162 Volksjäger engine. Simpler than Jumo 004; rushed into service 1945."
+}

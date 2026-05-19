@@ -1,0 +1,21 @@
+{
+  "id": "rosetta_comet_probe",
+  "name": "Rosetta/Philae Package",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 8,
+    "electronics": 40,
+    "aluminum": 12
+  },
+  "production_time": 140,
+  "special_flags": [
+    "esa",
+    "space",
+    "two_thousands",
+    "comet",
+    "science"
+  ],
+  "description": "Comet 67P rendezvous and lander. Landmark ESA deep-space mission."
+}

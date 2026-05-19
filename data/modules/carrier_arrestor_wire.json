@@ -1,0 +1,17 @@
+{
+  "id": "carrier_arrestor_wire",
+  "name": "Arrestor Wire System",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 12,
+    "rubber": 8
+  },
+  "production_time": 40,
+  "special_flags": [
+    "carrier",
+    "arrestor_gear"
+  ],
+  "description": "Hydraulic arrestor wires and barriers. Essential for carrier landing operations."
+}

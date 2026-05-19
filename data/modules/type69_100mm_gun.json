@@ -1,0 +1,21 @@
+{
+  "id": "type69_100mm_gun",
+  "name": "Type 69 100 mm (Improved)",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 56,
+  "hard_attack": 52,
+  "piercing": 112,
+  "air_attack": 5,
+  "cost": {
+    "steel": 20,
+    "explosives": 3
+  },
+  "production_time": 72,
+  "special_flags": [
+    "china",
+    "seventies",
+    "type69"
+  ],
+  "description": "Improved Type 69 MBT gun with stabilizer and better ammunition. Saw combat in 1979."
+}

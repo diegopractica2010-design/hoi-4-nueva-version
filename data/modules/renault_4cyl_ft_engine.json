@@ -1,0 +1,18 @@
+{
+  "id": "renault_4cyl_ft_engine",
+  "name": "Renault 4-cyl FT Engine",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 6,
+  "speed_bonus": 2,
+  "cost": {
+    "steel": 5
+  },
+  "production_time": 25,
+  "special_flags": [
+    "ww1",
+    "light_tank"
+  ],
+  "description": "39 hp gasoline engine on Renault FT. Slow but simple and maintainable."
+}

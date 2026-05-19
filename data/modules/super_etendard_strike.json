@@ -1,0 +1,24 @@
+{
+  "id": "super_etendard_strike",
+  "name": "Super Étendard Strike",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 55,
+  "hard_attack": 58,
+  "piercing": 42,
+  "anti_ship": 95,
+  "air_attack": 8,
+  "cost": {
+    "steel": 8,
+    "electronics": 28,
+    "explosives": 22
+  },
+  "production_time": 72,
+  "special_flags": [
+    "france",
+    "naval_aviation",
+    "exocet",
+    "eighties"
+  ],
+  "description": "Exocet and laser-guided bomb fit on Super Étendard. Falklands and Gulf strikes."
+}

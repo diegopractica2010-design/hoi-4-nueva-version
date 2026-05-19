@@ -1,0 +1,23 @@
+{
+  "id": "napalm_improved_m74",
+  "name": "M74 Napalm Cluster",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 105,
+  "hard_attack": 10,
+  "piercing": 5,
+  "air_attack": 8,
+  "cost": {
+    "steel": 5,
+    "explosives": 24,
+    "chemicals": 22
+  },
+  "production_time": 42,
+  "special_flags": [
+    "incendiary",
+    "napalm",
+    "usa",
+    "korean_war"
+  ],
+  "description": "Improved napalm composition used in Korea. Longer burn and better dispersion."
+}

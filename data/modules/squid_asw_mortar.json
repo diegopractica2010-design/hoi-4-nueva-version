@@ -1,0 +1,24 @@
+{
+  "id": "squid_asw_mortar",
+  "name": "Squid ASW Mortar",
+  "category": "SecondaryWeapon",
+  "tier": 4,
+  "soft_attack": 22,
+  "hard_attack": 62,
+  "piercing": 10,
+  "anti_ship": 55,
+  "cost": {
+    "steel": 14,
+    "explosives": 18,
+    "electronics": 6
+  },
+  "production_time": 48,
+  "special_flags": [
+    "naval",
+    "asw",
+    "uk",
+    "ahead_thrown",
+    "cold_war"
+  ],
+  "description": "Post-war British ahead-throwing mortar with improved pattern and fusing."
+}

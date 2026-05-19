@@ -1,0 +1,24 @@
+{
+  "id": "kalibr_cruise_missile",
+  "name": "3M-14 Kalibr",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 56,
+  "hard_attack": 60,
+  "piercing": 45,
+  "anti_ship": 90,
+  "air_attack": 8,
+  "cost": {
+    "steel": 12,
+    "electronics": 45,
+    "explosives": 38
+  },
+  "production_time": 95,
+  "special_flags": [
+    "russia",
+    "cruise_missile",
+    "twenty_tens",
+    "naval"
+  ],
+  "description": "Kalibr land-attack cruise missile from ships and submarines. Syria and Ukraine strikes."
+}

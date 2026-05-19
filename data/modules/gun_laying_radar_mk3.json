@@ -1,0 +1,18 @@
+{
+  "id": "gun_laying_radar_mk3",
+  "name": "Gun Laying Radar Mk 3",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 20
+  },
+  "production_time": 52,
+  "special_flags": [
+    "radar",
+    "uk",
+    "naval"
+  ],
+  "description": "British naval fire-control radar. Improved AA effectiveness in the 1950s."
+}

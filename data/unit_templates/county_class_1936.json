@@ -1,0 +1,56 @@
+{
+  "id": "county_class_1936",
+  "name": "County-class Cruiser",
+  "design_family": "uk_naval_1936",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "cruiser",
+  "crew_required": 680,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 190,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 72,
+    "fuel_consumption": 55,
+    "supply_need": 70,
+    "armor": 34,
+    "deck_armor": 18,
+    "hardness": 62
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_4_7inch_qf",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "us_parsons_turbine",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "naval_1936",
+    "interwar_naval",
+    "pre_ww2_naval",
+    "uk_naval_1936",
+    "cruiser"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

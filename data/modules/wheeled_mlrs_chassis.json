@@ -1,0 +1,20 @@
+{
+  "id": "wheeled_mlrs_chassis",
+  "name": "Wheeled MLRS Chassis",
+  "category": "Suspension",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "speed_bonus": 6,
+  "cost": {
+    "steel": 14,
+    "rubber": 8,
+    "aluminum": 4
+  },
+  "production_time": 48,
+  "special_flags": [
+    "usa",
+    "launcher_chassis",
+    "wheeled"
+  ],
+  "description": "FMTV-derived HIMARS carrier. High mobility precision fires."
+}

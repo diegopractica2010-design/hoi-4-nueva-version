@@ -1,0 +1,22 @@
+{
+  "id": "su75_operational_2030",
+  "name": "Su-75 Operational (2030)",
+  "category": "Engine",
+  "tier": 9,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 16,
+  "speed_bonus": 38,
+  "cost": {
+    "steel": 22,
+    "aluminum": 45,
+    "titanium": 30
+  },
+  "production_time": 185,
+  "special_flags": [
+    "russia",
+    "twenty_thirties",
+    "planned",
+    "checkmate"
+  ],
+  "description": "Projected full-rate Checkmate for export allies if production scales."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "astra_mk1_missile",
+  "name": "Astra Mk I",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 78,
+  "anti_air": 74,
+  "cost": {
+    "steel": 5,
+    "electronics": 32,
+    "explosives": 8
+  },
+  "production_time": 62,
+  "special_flags": [
+    "india",
+    "air_to_air",
+    "twenty_twenties"
+  ],
+  "description": "Indian BVR AAM for Tejas and MiG-29. Indigenous alternative to R-77 imports."
+}

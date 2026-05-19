@@ -1,0 +1,20 @@
+{
+  "id": "leopard1_armor",
+  "name": "Leopard 1 Armor",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 44,
+  "top_armor_bonus": 22,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 32,
+    "chromium": 4
+  },
+  "production_time": 65,
+  "special_flags": [
+    "germany",
+    "sixties",
+    "mbt"
+  ],
+  "description": "Leopard 1 armor emphasizing mobility. Upgraded with add-on kits in 1970s."
+}

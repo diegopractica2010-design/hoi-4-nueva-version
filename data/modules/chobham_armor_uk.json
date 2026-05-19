@@ -1,0 +1,22 @@
+{
+  "id": "chobham_armor_uk",
+  "name": "Chobham Armor",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 60,
+  "top_armor_bonus": 42,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 40,
+    "ceramics": 22,
+    "titanium": 6
+  },
+  "production_time": 105,
+  "special_flags": [
+    "uk",
+    "seventies",
+    "composite",
+    "classified"
+  ],
+  "description": "British composite armor on Shir 1 / Challenger development. Shared with U.S. XM1 program."
+}

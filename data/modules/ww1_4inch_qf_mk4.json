@@ -1,0 +1,21 @@
+{
+  "id": "ww1_4inch_qf_mk4",
+  "name": "QF 4-inch Mk IV",
+  "category": "NavalGun",
+  "tier": 1,
+  "soft_attack": 28,
+  "hard_attack": 18,
+  "piercing": 32,
+  "air_attack": 6,
+  "anti_ship": 24,
+  "cost": {
+    "steel": 10
+  },
+  "production_time": 38,
+  "special_flags": [
+    "naval",
+    "ww1",
+    "destroyer"
+  ],
+  "description": "WWI British destroyer gun. Still on escorts and older ships in WWII."
+}

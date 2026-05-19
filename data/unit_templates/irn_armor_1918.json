@@ -1,0 +1,49 @@
+{
+  "id": "irn_armor_1918",
+  "name": "Crossley Armored Car",
+  "design_family": "iranian_army_1918_armor",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 2,
+  "base_training_level": 12,
+  "max_experience_level": 100,
+  "base_production_days": 45,
+  "base_stats": {
+    "speed": 18,
+    "reliability": 65,
+    "fuel_consumption": 5,
+    "supply_need": 6,
+    "armor": 18,
+    "top_armor": 10,
+    "hardness": 52
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "m1916_37mm_tank_gun",
+    "SecondaryWeapon": "hotchkiss_8mm_mount",
+    "Engine": "renault_4cyl_ft_engine"
+  },
+  "unlock_tech": [
+    "forces_1918",
+    "army_1918",
+    "air_1918",
+    "ww1_army",
+    "ww1_air",
+    "iranian_army",
+    "iran",
+    "persia"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

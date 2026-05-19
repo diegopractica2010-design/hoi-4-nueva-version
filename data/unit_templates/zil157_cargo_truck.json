@@ -1,0 +1,48 @@
+{
+  "id": "zil157_cargo_truck",
+  "name": "ZIL-157 Cargo",
+  "design_family": "generic_transport",
+  "base_type": "Land",
+  "size_category": "Light",
+  "visual_archetype": "transport",
+  "crew_required": 2,
+  "base_training_level": 14,
+  "max_experience_level": 90,
+  "base_production_days": 40,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 75,
+    "fuel_consumption": 5,
+    "supply_need": 8,
+    "armor": 6,
+    "hardness": 20,
+    "cargo_capacity": 4500
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "standard_truck_cargo_bed",
+    "Engine": "v2_diesel_engine",
+    "Suspension": "truck_rocket_mount"
+  },
+  "unlock_tech": [
+    "cold_war_transport",
+    "soviet_logistics",
+    "transport",
+    "logistics"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

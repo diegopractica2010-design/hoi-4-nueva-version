@@ -1,0 +1,20 @@
+{
+  "id": "merchant_armed_cargo_hold",
+  "name": "Merchant Armed Hold",
+  "category": "Cargo",
+  "tier": 4,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 35,
+    "rubber": 6,
+    "explosives": 10
+  },
+  "production_time": 75,
+  "special_flags": [
+    "naval",
+    "cargo_ship",
+    "cargo_reduced",
+    "armed_merchant"
+  ],
+  "description": "Reduced hold volume; space reserved for deck weapons and magazine."
+}

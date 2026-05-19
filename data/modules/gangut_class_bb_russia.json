@@ -1,0 +1,23 @@
+{
+  "id": "gangut_class_bb_russia",
+  "name": "Gangut 12\"/52",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 34,
+  "hard_attack": 38,
+  "piercing": 36,
+  "anti_ship": 68,
+  "cost": {
+    "steel": 28,
+    "chromium": 5,
+    "explosives": 11
+  },
+  "production_time": 85,
+  "special_flags": [
+    "russia",
+    "soviet",
+    "battleship",
+    "ww1"
+  ],
+  "description": "Imperial Russian dreadnought. Baltic Fleet veteran of WWI."
+}

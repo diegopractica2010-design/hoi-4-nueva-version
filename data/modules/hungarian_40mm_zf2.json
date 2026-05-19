@@ -1,0 +1,19 @@
+{
+  "id": "hungarian_40mm_zf2",
+  "name": "40 mm 40M Anti-Tank",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 26,
+  "hard_attack": 28,
+  "piercing": 58,
+  "air_attack": 2,
+  "cost": {
+    "steel": 8
+  },
+  "production_time": 36,
+  "special_flags": [
+    "hungary",
+    "license"
+  ],
+  "description": "Swedish Bofors 40 mm license built in Hungary. Adequate vs light tanks."
+}

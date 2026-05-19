@@ -1,0 +1,24 @@
+{
+  "id": "tomahawk_cruise_missile",
+  "name": "BGM-109 Tomahawk",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 55,
+  "hard_attack": 60,
+  "piercing": 45,
+  "anti_ship": 75,
+  "air_attack": 8,
+  "cost": {
+    "steel": 12,
+    "electronics": 40,
+    "explosives": 35
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "cruise_missile",
+    "eighties",
+    "land_attack"
+  ],
+  "description": "Subsonic cruise missile for land and naval strike. TLAM used extensively from 1991 onward."
+}

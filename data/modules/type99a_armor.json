@@ -1,0 +1,22 @@
+{
+  "id": "type99a_armor",
+  "name": "Type 99A Armor",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 68,
+  "top_armor_bonus": 42,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 46,
+    "ceramics": 22,
+    "explosives": 14
+  },
+  "production_time": 100,
+  "special_flags": [
+    "china",
+    "two_thousands",
+    "type99",
+    "era"
+  ],
+  "description": "Type 99A with FY-4 ERA and improved composite. PLA premier MBT of 2010s."
+}

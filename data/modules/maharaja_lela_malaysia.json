@@ -1,0 +1,19 @@
+{
+  "id": "maharaja_lela_malaysia",
+  "name": "Maharaja Lela-class",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 12,
+    "electronics": 34,
+    "aluminum": 10
+  },
+  "production_time": 85,
+  "special_flags": [
+    "malaysia",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Malaysian LCS frigate with reduced radar cross-section."
+}

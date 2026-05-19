@@ -1,0 +1,15 @@
+{
+  "id": "berezin_ub_gun",
+  "name": "Berezin UB",
+  "category": "SecondaryWeapon",
+  "tier": 2,
+  "soft_attack": 16,
+  "hard_attack": 6,
+  "piercing": 14,
+  "air_attack": 26,
+  "cost": {
+    "steel": 4
+  },
+  "production_time": 20,
+  "description": "12.7 mm heavy machine gun supplement on Il-2 and fighters."
+}

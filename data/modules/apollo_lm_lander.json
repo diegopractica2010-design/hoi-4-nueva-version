@@ -1,0 +1,21 @@
+{
+  "id": "apollo_lm_lander",
+  "name": "Apollo Lunar Module",
+  "category": "LifeSupport",
+  "tier": 5,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "aluminum": 22,
+    "electronics": 20
+  },
+  "production_time": 105,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "sixties",
+    "lunar_lander"
+  ],
+  "description": "Two-man lunar lander. Ascent stage returns crew to CSM."
+}

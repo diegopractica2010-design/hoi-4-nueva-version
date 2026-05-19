@@ -1,0 +1,21 @@
+{
+  "id": "hes_011_jet_prototype",
+  "name": "HeS 011 (Prototype)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": -10,
+  "fuel_efficiency": -2,
+  "speed_bonus": 26,
+  "cost": {
+    "steel": 18,
+    "aluminum": 28,
+    "rare_earths": 8
+  },
+  "production_time": 120,
+  "special_flags": [
+    "prototype",
+    "jet_powerplant",
+    "paper_plane"
+  ],
+  "description": "Advanced axial-flow jet for Ta 183 and late projects. Never reached front-line units."
+}

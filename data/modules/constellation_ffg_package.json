@@ -1,0 +1,22 @@
+{
+  "id": "constellation_ffg_package",
+  "name": "Constellation FFG Package",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 32,
+  "top_armor_bonus": 20,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 55,
+    "aluminum": 18,
+    "electronics": 25
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "naval",
+    "twenty_twenties",
+    "frigate"
+  ],
+  "description": "Constellation-class guided-missile frigate. ASW and escort for carrier strike groups."
+}

@@ -1,0 +1,44 @@
+{
+  "id": "charles_de_gaulle_carrier",
+  "name": "Charles de Gaulle",
+  "design_family": "french_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 2200,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 250,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 75,
+    "fuel_consumption": 95,
+    "supply_need": 120,
+    "armor": 50,
+    "deck_armor": 38,
+    "hardness": 70
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "charles_de_gaulle_core",
+    "Sensors": "aesa_radar_gen1",
+    "AntiAir": "aster30_sam"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "french_carriers_2026"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

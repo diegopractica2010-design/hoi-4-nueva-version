@@ -1,0 +1,24 @@
+{
+  "id": "type91_aerial_torpedo",
+  "name": "Type 91 Aerial Torpedo",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 32,
+  "hard_attack": 45,
+  "piercing": 22,
+  "anti_ship": 82,
+  "air_attack": 4,
+  "cost": {
+    "steel": 9,
+    "explosives": 20,
+    "electronics": 4
+  },
+  "production_time": 52,
+  "special_flags": [
+    "japan",
+    "naval_aviation",
+    "torpedo",
+    "ww2"
+  ],
+  "description": "Japanese carrier torpedo for Kate and Jill. Modified for shallow harbor drops."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "al31fp_su33",
+  "name": "AL-31FP (Su-33)",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 8,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 18,
+    "aluminum": 32,
+    "titanium": 10
+  },
+  "production_time": 95,
+  "special_flags": [
+    "russia",
+    "carrier_capable",
+    "su33",
+    "kuznetsov"
+  ],
+  "description": "Thrust-vectoring AL-31 on Su-33 Flanker-D. Admiral Kuznetsov air superiority fighter."
+}

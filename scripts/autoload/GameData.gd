@@ -1,6 +1,17 @@
 extends Node
 
-## Holds globally loaded scenario / province data. Expand as needed (e.g. wire to ScenarioLoader).
+## Global design/production data. Loaded once at startup.
+
+var design_data: DesignDataLoader = DesignDataLoader.new()
+
 
 func _ready() -> void:
-	pass
+	design_data.load_all()
+
+
+func create_production_line(line_id: String) -> ProductionLine:
+	return ProductionManager.create_line(line_id)
+
+
+func get_production_line(line_id: String) -> ProductionLine:
+	return ProductionManager.get_line(line_id)

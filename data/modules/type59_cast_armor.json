@@ -1,0 +1,18 @@
+{
+  "id": "type59_cast_armor",
+  "name": "Type 59 Armor Package",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 42,
+  "top_armor_bonus": 20,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 30
+  },
+  "production_time": 62,
+  "special_flags": [
+    "china",
+    "sixties"
+  ],
+  "description": "Domestic T-54 derivative armor. Mass-produced for PLA and export to Pakistan and Africa."
+}

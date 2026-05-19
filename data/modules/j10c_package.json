@@ -1,0 +1,22 @@
+{
+  "id": "j10c_package",
+  "name": "J-10C Package",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 12,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 16,
+    "aluminum": 32,
+    "titanium": 12
+  },
+  "production_time": 95,
+  "special_flags": [
+    "china",
+    "twenty_tens",
+    "j10",
+    "aesa"
+  ],
+  "description": "J-10C with WS-10B and AESA radar. PLAAF lightweight fighter backbone."
+}

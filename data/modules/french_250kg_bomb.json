@@ -1,0 +1,16 @@
+{
+  "id": "french_250kg_bomb",
+  "name": "250 kg Bomb Load",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 62,
+  "hard_attack": 12,
+  "piercing": 8,
+  "air_attack": 8,
+  "cost": {
+    "steel": 3,
+    "explosives": 18
+  },
+  "production_time": 36,
+  "description": "Amiot 143 and LeO 451 tactical bombing load."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "pressure_hull_light",
+  "name": "Light Pressure Hull",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 28,
+  "top_armor_bonus": 28,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 35,
+    "chromium": 2
+  },
+  "production_time": 70,
+  "special_flags": [
+    "submarine",
+    "ww1",
+    "coastal"
+  ],
+  "description": "Coastal and early WWI submarine pressure hull. Limited depth."
+}

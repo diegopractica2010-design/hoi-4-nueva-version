@@ -1,0 +1,21 @@
+{
+  "id": "ger_15cm_tb",
+  "name": "15 cm SK C/25",
+  "category": "NavalGun",
+  "tier": 2,
+  "soft_attack": 48,
+  "hard_attack": 36,
+  "piercing": 60,
+  "air_attack": 8,
+  "anti_ship": 48,
+  "cost": {
+    "steel": 18
+  },
+  "production_time": 55,
+  "special_flags": [
+    "naval",
+    "light_cruiser",
+    "germany"
+  ],
+  "description": "Königsberg-class light cruiser gun. Common on German cruisers and capital ship secondaries."
+}

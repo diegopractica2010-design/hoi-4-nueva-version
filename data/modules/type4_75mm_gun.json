@@ -1,0 +1,19 @@
+{
+  "id": "type4_75mm_gun",
+  "name": "Type 4 75 mm L/70",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 48,
+  "hard_attack": 42,
+  "piercing": 88,
+  "air_attack": 4,
+  "cost": {
+    "steel": 17
+  },
+  "production_time": 62,
+  "special_flags": [
+    "japan",
+    "late_war"
+  ],
+  "description": "Chi-To medium tank gun. Best Japanese tank AP; entered service too late."
+}

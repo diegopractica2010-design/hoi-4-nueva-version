@@ -1,0 +1,56 @@
+{
+  "id": "jap_frigate_2026",
+  "name": "JAP Frigate (2026)",
+  "design_family": "japanese_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "frigate",
+  "crew_required": 180,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 145,
+  "base_stats": {
+    "speed": 29,
+    "reliability": 80,
+    "fuel_consumption": 55,
+    "supply_need": 72,
+    "armor": 36,
+    "deck_armor": 20,
+    "hardness": 65
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "us_5inch_54_mk42",
+    "SecondaryWeapon": "harpoon_sub_launch",
+    "Sensors": "fremm_frigate_suite",
+    "AntiAir": "mim23_hawk_sam",
+    "Engine": "geared_steam_turbine_60k"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "japanese_naval_2026",
+    "frigate"
+  ],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

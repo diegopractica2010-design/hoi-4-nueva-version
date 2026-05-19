@@ -1,0 +1,20 @@
+{
+  "id": "atar_101_jet",
+  "name": "Atar 101 Turbojet",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 2,
+  "speed_bonus": 23,
+  "cost": {
+    "steel": 13,
+    "aluminum": 20
+  },
+  "production_time": 68,
+  "special_flags": [
+    "france",
+    "jet_powerplant",
+    "cold_war"
+  ],
+  "description": "Mystère and early French jet fighter engine. Foundation of French jet industry."
+}

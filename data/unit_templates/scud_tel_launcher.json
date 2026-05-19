@@ -1,0 +1,50 @@
+{
+  "id": "scud_tel_launcher",
+  "name": "Scud TEL",
+  "design_family": "soviet_ballistic_cold_war",
+  "base_type": "Land",
+  "size_category": "Medium",
+  "visual_archetype": "rocket_launcher",
+  "crew_required": 4,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 95,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 72,
+    "fuel_consumption": 10,
+    "supply_need": 16,
+    "armor": 12,
+    "hardness": 35
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "MainWeapon": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Engine": "v2_diesel_engine",
+    "Suspension": "truck_rocket_mount",
+    "Sensors": "hunter_killer_fcs",
+    "MainWeapon": "scud_b_srbm",
+    "Cargo": "mlrs_reload_trailer"
+  },
+  "unlock_tech": [
+    "cold_war_ballistic",
+    "soviet_missiles"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,20 @@
+{
+  "id": "z18f_asw_helo_suite",
+  "name": "Z-18F ASW Suite",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 9,
+    "electronics": 36,
+    "aluminum": 12
+  },
+  "production_time": 70,
+  "special_flags": [
+    "china",
+    "asw",
+    "helicopter",
+    "twenty_twenties"
+  ],
+  "description": "Chinese ASW helicopter derived from Mi-8 lineage. Operates from Type 055 and carriers."
+}

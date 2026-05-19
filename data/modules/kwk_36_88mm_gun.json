@@ -1,0 +1,17 @@
+{
+  "id": "kwk_36_88mm_gun",
+  "name": "8.8 cm KwK 36 L/56",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 54,
+  "hard_attack": 62,
+  "piercing": 122,
+  "air_attack": 4,
+  "cost": {
+    "steel": 28,
+    "explosives": 4
+  },
+  "production_time": 85,
+  "special_flags": ["excellent_ap", "long_range"],
+  "description": "Tiger I main armament. Derived from the famous Flak 88. Outstanding armor penetration at combat ranges; capable of defeating virtually any Allied tank frontally."
+}

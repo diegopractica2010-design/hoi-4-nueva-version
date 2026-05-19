@@ -1,0 +1,40 @@
+{
+  "id": "x47b_ucav_carrier",
+  "name": "X-47B (Carrier UCAV)",
+  "design_family": "us_carrier_air_planned",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "uav",
+  "crew_required": 0,
+  "base_training_level": 35,
+  "max_experience_level": 100,
+  "base_production_days": 100,
+  "base_stats": {
+    "speed": 95,
+    "reliability": 80,
+    "fuel_consumption": 22,
+    "supply_need": 18,
+    "armor": 8,
+    "hardness": 20
+  },
+  "slots": {
+    "Sensors": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Sensors": "x47b_ucav_carrier",
+    "Engine": "ge_f404_hornet"
+  },
+  "unlock_tech": [
+    "us_carrier_aviation",
+    "cold_war_naval_air",
+    "ucav_carrier",
+    "twenty_thirties_planned"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

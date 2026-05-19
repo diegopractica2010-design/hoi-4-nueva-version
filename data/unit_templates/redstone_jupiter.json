@@ -1,0 +1,42 @@
+{
+  "id": "redstone_jupiter",
+  "name": "Redstone / Jupiter-C",
+  "design_family": "us_space_fifties",
+  "base_type": "Space",
+  "size_category": "Medium",
+  "visual_archetype": "rocket",
+  "crew_required": 0,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 55,
+  "base_stats": {
+    "speed": 62,
+    "reliability": 58,
+    "fuel_consumption": 80,
+    "supply_need": 35,
+    "payload_capacity": 0.5,
+    "hardness": 8
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "redstone_engine",
+    "Cargo": "jupiter_irbm_stage",
+    "Sensors": "explorer1_science_payload"
+  },
+  "unlock_tech": [
+    "us_space_program",
+    "early_satellites"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

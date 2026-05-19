@@ -1,0 +1,20 @@
+{
+  "id": "queen_elizabeth_carrier",
+  "name": "Queen Elizabeth Carrier Package",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 120,
+    "electronics": 45,
+    "aluminum": 30
+  },
+  "production_time": 200,
+  "special_flags": [
+    "uk",
+    "twenty_tens",
+    "carrier",
+    "f35b"
+  ],
+  "description": "Queen Elizabeth-class carrier for F-35B. Restores UK carrier strike capability."
+}

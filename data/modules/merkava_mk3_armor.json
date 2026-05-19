@@ -1,0 +1,22 @@
+{
+  "id": "merkava_mk3_armor",
+  "name": "Merkava Mk III Armor",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 62,
+  "top_armor_bonus": 38,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 42,
+    "ceramics": 16,
+    "kevlar": 8
+  },
+  "production_time": 90,
+  "special_flags": [
+    "israel",
+    "eighties",
+    "merkava",
+    "front_engine"
+  ],
+  "description": "Improved Merkava with modular armor and better belly protection vs mines."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "ai_mk4_radar",
+  "name": "AI Mk IV Airborne Intercept",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 4,
+    "electronics": 20,
+    "aluminum": 6
+  },
+  "production_time": 55,
+  "special_flags": [
+    "radar",
+    "airborne",
+    "night_fighter",
+    "usa"
+  ],
+  "description": "Centimetric radar for Mosquito and P-61 night fighters. Game-changer vs Luftwaffe night raids."
+}

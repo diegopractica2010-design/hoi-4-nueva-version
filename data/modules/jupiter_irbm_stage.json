@@ -1,0 +1,19 @@
+{
+  "id": "jupiter_irbm_stage",
+  "name": "Jupiter IRBM Stage",
+  "category": "Cargo",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 16,
+    "explosives": 28,
+    "electronics": 8
+  },
+  "production_time": 72,
+  "special_flags": [
+    "usa",
+    "space",
+    "fifties"
+  ],
+  "description": "Jupiter-C and Juno I upper stages. Launched Explorer 1."
+}

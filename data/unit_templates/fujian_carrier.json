@@ -1,0 +1,42 @@
+{
+  "id": "fujian_carrier",
+  "name": "CNS Fujian",
+  "design_family": "chinese_naval_twenty_twenties",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 2600,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 78,
+    "fuel_consumption": 100,
+    "supply_need": 130,
+    "armor": 55,
+    "deck_armor": 40,
+    "hardness": 75
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "fujian_emals_carrier",
+    "Sensors": "type055_destroyer_vls",
+    "AntiAir": "hq9b_sam"
+  },
+  "unlock_tech": [
+    "chinese_carriers_twenty_twenties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

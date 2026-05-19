@@ -1,0 +1,53 @@
+{
+  "id": "europe_patrol_corvette_2030",
+  "name": "European Patrol Corvette (Proto)",
+  "design_family": "european_naval_planned",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 80,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 120,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 78,
+    "fuel_consumption": 25,
+    "supply_need": 35,
+    "armor": 18,
+    "deck_armor": 10,
+    "hardness": 45
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ger_15cm_tb",
+    "Sensors": "aesa_radar_gen1",
+    "AntiAir": "iris_t_slm",
+    "Engine": "fuel_cell_aip_212"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "european_naval_planned",
+    "twenty_thirties",
+    "multinational"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

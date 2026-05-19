@@ -1,0 +1,23 @@
+{
+  "id": "pslv_launcher",
+  "name": "PSLV Launcher",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 8,
+  "speed_bonus": 26,
+  "cost": {
+    "steel": 14,
+    "aluminum": 10,
+    "explosives": 22
+  },
+  "production_time": 75,
+  "special_flags": [
+    "isro",
+    "india",
+    "space",
+    "nineties",
+    "small_sat"
+  ],
+  "description": "Polar Satellite Launch Vehicle. Low-cost multi-satellite deployer."
+}

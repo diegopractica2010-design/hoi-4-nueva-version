@@ -1,0 +1,20 @@
+{
+  "id": "d25t_122mm_modernized",
+  "name": "122 mm D-25T (1949)",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 72,
+  "hard_attack": 68,
+  "piercing": 130,
+  "air_attack": 4,
+  "cost": {
+    "steel": 28,
+    "explosives": 5
+  },
+  "production_time": 85,
+  "special_flags": [
+    "ussr",
+    "cold_war"
+  ],
+  "description": "Improved IS-2/IS-3 ammunition and fire control. Standard into Korean War era."
+}

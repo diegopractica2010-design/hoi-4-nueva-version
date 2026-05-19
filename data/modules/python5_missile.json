@@ -1,0 +1,23 @@
+{
+  "id": "python5_missile",
+  "name": "Python-5",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 80,
+  "anti_air": 76,
+  "cost": {
+    "steel": 5,
+    "electronics": 32,
+    "explosives": 7
+  },
+  "production_time": 62,
+  "special_flags": [
+    "israel",
+    "air_to_air",
+    "two_thousands",
+    "imaging_ir"
+  ],
+  "description": "Imaging infrared dogfight missile. High off-boresight; export worldwide."
+}

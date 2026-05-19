@@ -1,0 +1,53 @@
+{
+  "id": "malta_class_carrier",
+  "name": "Malta-class (Paper)",
+  "design_family": "uk_naval_paper",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 1800,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 60,
+    "fuel_consumption": 70,
+    "supply_need": 90,
+    "armor": 40,
+    "deck_armor": 22,
+    "hardness": 65
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "malta_class_carrier_design",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "carrier_armored_flight_deck",
+    "Sensors": "type281_surface_radar",
+    "AntiAir": "carrier_aa_20mm_oerlikon"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "uk_naval_paper",
+    "ww2_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

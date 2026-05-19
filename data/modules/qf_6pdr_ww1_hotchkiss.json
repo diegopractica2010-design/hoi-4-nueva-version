@@ -1,0 +1,18 @@
+{
+  "id": "qf_6pdr_ww1_hotchkiss",
+  "name": "QF 6-pdr Hotchkiss",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 26,
+  "hard_attack": 16,
+  "piercing": 35,
+  "air_attack": 2,
+  "cost": {
+    "steel": 7
+  },
+  "production_time": 30,
+  "special_flags": [
+    "ww1"
+  ],
+  "description": "Naval/tank 6-pounder used on early British armored cars and ships."
+}

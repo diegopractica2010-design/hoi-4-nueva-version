@@ -1,0 +1,18 @@
+{
+  "id": "packard_merlin_v1650",
+  "name": "Packard Merlin V-1650",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 9,
+  "fuel_efficiency": 6,
+  "speed_bonus": 15,
+  "cost": {
+    "steel": 12,
+    "aluminum": 16
+  },
+  "production_time": 56,
+  "special_flags": [
+    "fighter_powerplant"
+  ],
+  "description": "License-built Merlin for P-51D Mustang. Excellent high-altitude fighter performance."
+}

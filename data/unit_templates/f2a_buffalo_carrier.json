@@ -1,0 +1,47 @@
+{
+  "id": "f2a_buffalo_carrier",
+  "name": "F2A Buffalo",
+  "design_family": "us_carrier_air_ww2",
+  "base_type": "Air",
+  "size_category": "Light",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 40,
+  "base_stats": {
+    "speed": 84,
+    "reliability": 60,
+    "fuel_consumption": 10,
+    "supply_need": 8,
+    "armor": 14,
+    "hardness": 24
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "f2a_buffalo_gun_battery",
+    "Engine": "wasp_r1340_carrier_scout",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "us_naval_aviation",
+    "carrier_air_wing",
+    "early_war_carrier",
+    "midway"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

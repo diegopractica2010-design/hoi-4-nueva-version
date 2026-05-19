@@ -1,0 +1,42 @@
+{
+  "id": "lt_vz_35_light",
+  "name": "LT vz. 35",
+  "design_family": "czech_armored_interwar",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 4,
+  "base_training_level": 18,
+  "max_experience_level": 90,
+  "base_production_days": 48,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 70,
+    "fuel_consumption": 6,
+    "supply_need": 8,
+    "armor": 28,
+    "top_armor": 14,
+    "hardness": 68
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "skoda_37mm_a7",
+    "Engine": "spa_diesel_v8_engine"
+  },
+  "unlock_tech": [
+    "interwar_tanks",
+    "czech_armor"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

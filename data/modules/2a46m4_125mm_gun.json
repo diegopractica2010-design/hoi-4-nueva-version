@@ -1,0 +1,23 @@
+{
+  "id": "2a46m4_125mm_gun",
+  "name": "2A46M-4 125 mm",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 76,
+  "hard_attack": 74,
+  "piercing": 172,
+  "air_attack": 5,
+  "cost": {
+    "steel": 36,
+    "chromium": 10,
+    "tungsten": 8
+  },
+  "production_time": 110,
+  "special_flags": [
+    "russia",
+    "two_thousands",
+    "smoothbore",
+    "t90"
+  ],
+  "description": "Improved 125 mm for T-90A. Fires 3BM42 and 3BM59 rounds."
+}

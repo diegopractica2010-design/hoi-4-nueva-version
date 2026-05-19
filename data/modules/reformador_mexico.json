@@ -1,0 +1,19 @@
+{
+  "id": "reformador_mexico",
+  "name": "Reformador-class",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 10,
+    "electronics": 28,
+    "aluminum": 8
+  },
+  "production_time": 75,
+  "special_flags": [
+    "mexico",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Mexican SIGMA 10514 long-range patrol frigate."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "hispano_mk2_cannon",
+  "name": "Hispano Mk II",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 25,
+  "hard_attack": 15,
+  "piercing": 33,
+  "air_attack": 45,
+  "cost": {
+    "steel": 7,
+    "aluminum": 3
+  },
+  "production_time": 36,
+  "description": "20 mm cannon on Spitfire, Typhoon, and many RAF types."
+}

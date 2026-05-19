@@ -1,0 +1,19 @@
+{
+  "id": "liberty_l12_engine",
+  "name": "Liberty L-12",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": 2,
+  "fuel_efficiency": 2,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "aluminum": 8
+  },
+  "production_time": 42,
+  "special_flags": [
+    "ww1",
+    "aircraft"
+  ],
+  "description": "400 hp V-12 on DH-4 and early U.S. bombers. Mass-produced American aviation engine."
+}

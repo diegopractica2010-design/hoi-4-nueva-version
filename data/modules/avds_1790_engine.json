@@ -1,0 +1,20 @@
+{
+  "id": "avds_1790_engine",
+  "name": "AVDS-1790 Diesel",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 6,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 18,
+    "aluminum": 6
+  },
+  "production_time": 62,
+  "special_flags": [
+    "usa",
+    "sixties",
+    "diesel_tank"
+  ],
+  "description": "M60 and M48A5 powerplant. Reliable multi-fuel diesel for global deployments."
+}

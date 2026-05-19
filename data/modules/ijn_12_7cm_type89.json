@@ -1,0 +1,21 @@
+{
+  "id": "ijn_12_7cm_type89",
+  "name": "12.7 cm Type 89",
+  "category": "NavalGun",
+  "tier": 2,
+  "soft_attack": 40,
+  "hard_attack": 27,
+  "piercing": 48,
+  "air_attack": 14,
+  "anti_ship": 36,
+  "cost": {
+    "steel": 14
+  },
+  "production_time": 48,
+  "special_flags": [
+    "naval",
+    "destroyer",
+    "japan"
+  ],
+  "description": "Imperial Japanese destroyer dual-purpose gun."
+}

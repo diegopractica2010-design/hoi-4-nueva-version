@@ -1,0 +1,44 @@
+{
+  "id": "canberra_lhd",
+  "name": "HMAS Canberra",
+  "design_family": "australian_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "carrier",
+  "crew_required": 2200,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 168,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 75,
+    "fuel_consumption": 95,
+    "supply_need": 120,
+    "armor": 50,
+    "deck_armor": 38,
+    "hardness": 70
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "canberra_lhd_core",
+    "Sensors": "mh60r_asw_helo_suite",
+    "AntiAir": "aim120d_amraam"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "australian_amphibious_2026"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

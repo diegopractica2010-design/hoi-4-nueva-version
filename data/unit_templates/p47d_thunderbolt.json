@@ -1,0 +1,44 @@
+{
+  "id": "p47d_thunderbolt",
+  "name": "P-47D Thunderbolt",
+  "design_family": "us_air_ww2",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 50,
+  "base_stats": {
+    "speed": 88,
+    "reliability": 78,
+    "fuel_consumption": 14,
+    "supply_need": 10,
+    "armor": 22,
+    "hardness": 30
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "m2_browning_gun_pod",
+    "Engine": "pratt_whitney_r2800",
+    "Communications": "scr_522_radio"
+  },
+  "unlock_tech": [
+    "us_fighters"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

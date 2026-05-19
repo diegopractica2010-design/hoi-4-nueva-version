@@ -1,0 +1,36 @@
+{
+  "id": "m4_sherman_medium",
+  "name": "M4 Sherman Medium Tank",
+  "design_family": "us_armored_ww2",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 5,
+  "base_training_level": 25,
+  "max_experience_level": 100,
+  "base_production_days": 75,
+  "base_stats": {
+    "speed": 34,
+    "reliability": 72,
+    "fuel_consumption": 9,
+    "supply_need": 14,
+    "armor": 55,
+    "top_armor": 28,
+    "hardness": 82
+  },
+  "slots": {
+    "MainWeapon": {"max": 1},
+    "SecondaryWeapon": {"max": 2},
+    "Engine": {"max": 1},
+    "Armor": {"max": 1},
+    "DroneAttachment": {"max": 1}
+  },
+  "module_loadout": {
+    "MainWeapon": "105mm_howitzer",
+    "Engine": "continental_r975_engine",
+    "Armor": "sherman_armor_plate"
+  },
+  "unlock_tech": ["medium_tanks"],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

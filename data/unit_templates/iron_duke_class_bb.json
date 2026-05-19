@@ -1,0 +1,56 @@
+{
+  "id": "iron_duke_class_bb",
+  "name": "Iron Duke-class",
+  "design_family": "uk_naval_ww1",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 1000,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 240,
+  "base_stats": {
+    "speed": 21,
+    "reliability": 68,
+    "fuel_consumption": 85,
+    "supply_need": 100,
+    "armor": 50,
+    "deck_armor": 22,
+    "hardness": 78
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_13_5inch_mk5",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "carrier_boiler_yarrow",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37",
+    "Communications": "scr_522_radio"
+  },
+  "unlock_tech": [
+    "uk_battleships",
+    "ww1_naval",
+    "dreadnought"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

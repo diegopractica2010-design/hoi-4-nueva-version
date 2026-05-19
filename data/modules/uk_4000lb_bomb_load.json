@@ -1,0 +1,20 @@
+{
+  "id": "uk_4000lb_bomb_load",
+  "name": "4,000 lb Cookie Load",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 92,
+  "hard_attack": 20,
+  "piercing": 12,
+  "air_attack": 8,
+  "cost": {
+    "steel": 5,
+    "explosives": 44
+  },
+  "production_time": 52,
+  "special_flags": [
+    "strategic_bombing",
+    "area_damage"
+  ],
+  "description": "Lancaster block-buster load. Devastating against urban and industrial targets."
+}

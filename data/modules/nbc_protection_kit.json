@@ -1,0 +1,17 @@
+{
+  "id": "nbc_protection_kit",
+  "name": "NBC Protection Kit",
+  "category": "NBC_Protection",
+  "tier": 3,
+  "reliability_bonus": -2,
+  "cost": {
+    "steel": 6,
+    "rubber": 4,
+    "chemicals": 6
+  },
+  "production_time": 30,
+  "special_flags": [
+    "chemical_warfare"
+  ],
+  "description": "Sealed fighting compartment and filtration. Rare pre-1945 but available for late scenarios."
+}

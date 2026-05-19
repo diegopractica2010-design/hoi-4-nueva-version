@@ -1,0 +1,22 @@
+{
+  "id": "challenger1_chobham",
+  "name": "Challenger 1 Chobham",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 66,
+  "top_armor_bonus": 48,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 48,
+    "ceramics": 26,
+    "titanium": 10
+  },
+  "production_time": 110,
+  "special_flags": [
+    "uk",
+    "eighties",
+    "challenger",
+    "chobham"
+  ],
+  "description": "Chobham Mk 2 on Challenger 1. Proven in Gulf War against T-55 and T-62."
+}

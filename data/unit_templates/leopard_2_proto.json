@@ -1,0 +1,46 @@
+{
+  "id": "leopard_2_proto",
+  "name": "Leopard 2 (Prototype)",
+  "design_family": "german_armored_seventies",
+  "base_type": "Armored",
+  "size_category": "Heavy",
+  "visual_archetype": "medium_tank",
+  "crew_required": 4,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 115,
+  "base_stats": {
+    "speed": 34,
+    "reliability": 85,
+    "fuel_consumption": 13,
+    "supply_need": 18,
+    "armor": 58,
+    "top_armor": 38,
+    "hardness": 94
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "rh120_120mm_smoothbore",
+    "Engine": "mtu_mb838_engine",
+    "Armor": "leopard2_armor_proto",
+    "Sensors": "thermal_sight_gen1"
+  },
+  "unlock_tech": [
+    "german_mbt_seventies"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

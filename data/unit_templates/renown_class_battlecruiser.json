@@ -1,0 +1,55 @@
+{
+  "id": "renown_class_battlecruiser",
+  "name": "Renown-class",
+  "design_family": "uk_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 1200,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 260,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 70,
+    "fuel_consumption": 90,
+    "supply_need": 110,
+    "armor": 48,
+    "deck_armor": 24,
+    "hardness": 80
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_15inch_mk1",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37",
+    "Communications": "scr_522_radio"
+  },
+  "unlock_tech": [
+    "uk_battlecruisers",
+    "ww2_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

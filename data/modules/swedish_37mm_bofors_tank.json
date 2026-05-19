@@ -1,0 +1,20 @@
+{
+  "id": "swedish_37mm_bofors_tank",
+  "name": "37 mm Bofors Strv m/37",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 32,
+  "hard_attack": 22,
+  "piercing": 52,
+  "air_attack": 3,
+  "cost": {
+    "steel": 9,
+    "aluminum": 2
+  },
+  "production_time": 38,
+  "special_flags": [
+    "sweden",
+    "neutral"
+  ],
+  "description": "Swedish light tank gun. Modern for a small nation but limited production."
+}

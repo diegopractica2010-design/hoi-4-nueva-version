@@ -1,0 +1,49 @@
+{
+  "id": "eng_armor_1918",
+  "name": "Mark IV",
+  "design_family": "uk_army_1918_armor",
+  "base_type": "Armored",
+  "size_category": "Heavy",
+  "visual_archetype": "heavy_tank",
+  "crew_required": 4,
+  "base_training_level": 12,
+  "max_experience_level": 100,
+  "base_production_days": 45,
+  "base_stats": {
+    "speed": 10,
+    "reliability": 48,
+    "fuel_consumption": 7,
+    "supply_need": 10,
+    "armor": 30,
+    "top_armor": 14,
+    "hardness": 58
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "qf_6pdr_ww1_hotchkiss",
+    "SecondaryWeapon": "vickers_machine_gun",
+    "Engine": "daimler_knight_engine"
+  },
+  "unlock_tech": [
+    "forces_1918",
+    "army_1918",
+    "air_1918",
+    "ww1_army",
+    "ww1_air",
+    "uk_army",
+    "british",
+    "united_kingdom"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

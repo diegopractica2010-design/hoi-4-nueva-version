@@ -1,0 +1,15 @@
+{
+  "id": "45mm_m1937_gun",
+  "name": "45 mm M1937",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 34,
+  "hard_attack": 24,
+  "piercing": 55,
+  "air_attack": 4,
+  "cost": {
+    "steel": 7
+  },
+  "production_time": 34,
+  "description": "BT-7 and T-26 gun. Adequate early war; quickly outranged."
+}

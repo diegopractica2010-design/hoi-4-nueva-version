@@ -1,0 +1,24 @@
+{
+  "id": "meteor_missile",
+  "name": "Meteor",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 15,
+  "hard_attack": 13,
+  "air_attack": 98,
+  "anti_air": 94,
+  "cost": {
+    "steel": 7,
+    "electronics": 52,
+    "explosives": 12
+  },
+  "production_time": 85,
+  "special_flags": [
+    "uk",
+    "germany_joint",
+    "twenty_tens",
+    "ramjet",
+    "bvr"
+  ],
+  "description": "Ramjet BVR missile. Outranges AMRAAM; Typhoon and Rafale integration."
+}

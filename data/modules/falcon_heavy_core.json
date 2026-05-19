@@ -1,0 +1,21 @@
+{
+  "id": "falcon_heavy_core",
+  "name": "Falcon Heavy Core",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 70,
+    "aluminum": 55,
+    "electronics": 45
+  },
+  "production_time": 140,
+  "special_flags": [
+    "spacex",
+    "usa",
+    "space",
+    "twenty_twenties",
+    "heavy_lift"
+  ],
+  "description": "Three Falcon 9 cores strapped together. Heavy payloads and deep-space missions."
+}

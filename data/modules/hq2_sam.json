@@ -1,0 +1,23 @@
+{
+  "id": "hq2_sam",
+  "name": "HQ-2 (SA-2 Copy)",
+  "category": "AntiAir",
+  "tier": 4,
+  "soft_attack": 14,
+  "hard_attack": 12,
+  "air_attack": 70,
+  "anti_air": 72,
+  "cost": {
+    "steel": 22,
+    "electronics": 24,
+    "explosives": 16
+  },
+  "production_time": 80,
+  "special_flags": [
+    "china",
+    "sam",
+    "sixties",
+    "strategic"
+  ],
+  "description": "Licensed SA-2 Guideline. Backbone of PRC air defense; shot down U-2 over China."
+}

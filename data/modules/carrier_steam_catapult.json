@@ -1,0 +1,20 @@
+{
+  "id": "carrier_steam_catapult",
+  "name": "Steam Catapult Mk C11",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 22,
+    "electronics": 12,
+    "copper": 6
+  },
+  "production_time": 75,
+  "special_flags": [
+    "carrier",
+    "catapult",
+    "uk",
+    "late_war"
+  ],
+  "description": "British steam catapult. Higher launch weight for Firefly and torpedo bombers."
+}

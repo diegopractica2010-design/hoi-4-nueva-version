@@ -1,0 +1,25 @@
+{
+  "id": "f47_ngad_package",
+  "name": "F-47 NGAD Package",
+  "category": "Engine",
+  "tier": 9,
+  "reliability_bonus": 16,
+  "fuel_efficiency": 18,
+  "speed_bonus": 42,
+  "cost": {
+    "steel": 26,
+    "aluminum": 50,
+    "titanium": 35,
+    "electronics": 55
+  },
+  "production_time": 200,
+  "special_flags": [
+    "usa",
+    "twenty_twenties",
+    "sixth_gen",
+    "ngad",
+    "planned",
+    "f47"
+  ],
+  "description": "Next Generation Air Dominance platform (F-47 designation 2025). Crewed sixth-gen fighter in development."
+}

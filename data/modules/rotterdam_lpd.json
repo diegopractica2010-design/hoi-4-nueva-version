@@ -1,0 +1,20 @@
+{
+  "id": "rotterdam_lpd",
+  "name": "Rotterdam-class LPD",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 62,
+    "electronics": 20,
+    "aluminum": 16
+  },
+  "production_time": 150,
+  "special_flags": [
+    "netherlands",
+    "lpd",
+    "helicopter",
+    "nineties"
+  ],
+  "description": "Dutch amphibious transport dock with NH90 NFH."
+}

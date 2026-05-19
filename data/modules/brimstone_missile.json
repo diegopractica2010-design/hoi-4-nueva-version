@@ -1,0 +1,23 @@
+{
+  "id": "brimstone_missile",
+  "name": "Brimstone",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 48,
+  "hard_attack": 65,
+  "piercing": 100,
+  "air_attack": 8,
+  "cost": {
+    "steel": 8,
+    "electronics": 38,
+    "explosives": 16
+  },
+  "production_time": 75,
+  "special_flags": [
+    "uk",
+    "twenty_tens",
+    "fire_and_forget",
+    "anti_armor"
+  ],
+  "description": "Dual-mode mmW seeker anti-armor missile. Libya and Iraq precision strikes."
+}

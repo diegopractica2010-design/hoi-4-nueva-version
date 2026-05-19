@@ -1,0 +1,21 @@
+{
+  "id": "nato_standard_fuze",
+  "name": "NATO Standard HEAT-FS",
+  "category": "Cargo",
+  "tier": 3,
+  "soft_attack": 8,
+  "hard_attack": 12,
+  "piercing": 25,
+  "cost": {
+    "steel": 2,
+    "explosives": 8,
+    "chemicals": 4
+  },
+  "production_time": 25,
+  "special_flags": [
+    "ammunition",
+    "nato",
+    "cold_war"
+  ],
+  "description": "Early shaped-charge ammunition standardization across Western armies."
+}

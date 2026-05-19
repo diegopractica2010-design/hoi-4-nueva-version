@@ -1,0 +1,20 @@
+{
+  "id": "swarm_loitering_munition",
+  "name": "Loitering Munition Swarm",
+  "category": "DroneAttachment",
+  "tier": 7,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 40,
+    "explosives": 15
+  },
+  "production_time": 55,
+  "special_flags": [
+    "global",
+    "twenty_twenties",
+    "swarm",
+    "ukraine_lessons"
+  ],
+  "description": "Switchblade-class and Shahed-style mass attack munitions reshaping battlefield economics."
+}

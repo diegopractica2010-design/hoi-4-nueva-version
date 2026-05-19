@@ -1,0 +1,20 @@
+{
+  "id": "bayraktar_tb2_package",
+  "name": "Bayraktar TB2 Package",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 4,
+    "electronics": 35,
+    "aluminum": 8
+  },
+  "production_time": 55,
+  "special_flags": [
+    "turkey",
+    "uav",
+    "naval",
+    "twenty_twenties"
+  ],
+  "description": "MALE UCAV operated from TCG Anadolu. Maritime surveillance and light strike."
+}

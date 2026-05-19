@@ -1,0 +1,47 @@
+{
+  "id": "mh60r_seahawk_india",
+  "name": "MH-60R (Indian Navy)",
+  "design_family": "indian_naval_helo_2026",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "helicopter",
+  "crew_required": 3,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 70,
+  "base_stats": {
+    "speed": 65,
+    "reliability": 85,
+    "fuel_consumption": 12,
+    "supply_need": 10,
+    "armor": 8,
+    "hardness": 15
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "mk48_torpedo",
+    "Sensors": "mh60r_asw_helo_suite",
+    "Engine": "ge_f404_hornet"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "indian_naval_aviation",
+    "asw_helicopter"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,16 @@
+{
+  "id": "anm2_20mm_cannon",
+  "name": "AN/M2 20mm Cannon",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 26,
+  "hard_attack": 16,
+  "piercing": 34,
+  "air_attack": 44,
+  "cost": {
+    "steel": 7,
+    "aluminum": 4
+  },
+  "production_time": 38,
+  "description": "Hispano-derived 20 mm for P-39 and some late-war fighters/bombers."
+}

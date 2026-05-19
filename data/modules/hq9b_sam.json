@@ -1,0 +1,23 @@
+{
+  "id": "hq9b_sam",
+  "name": "HQ-9B",
+  "category": "AntiAir",
+  "tier": 7,
+  "soft_attack": 17,
+  "hard_attack": 15,
+  "air_attack": 92,
+  "anti_air": 90,
+  "cost": {
+    "steel": 32,
+    "electronics": 70,
+    "explosives": 24
+  },
+  "production_time": 125,
+  "special_flags": [
+    "china",
+    "sam",
+    "twenty_tens",
+    "strategic"
+  ],
+  "description": "Improved HQ-9 with better ECCM and range. PLA area air defense."
+}

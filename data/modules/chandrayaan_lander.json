@@ -1,0 +1,21 @@
+{
+  "id": "chandrayaan_lander",
+  "name": "Chandrayaan Lander",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 8,
+    "electronics": 28,
+    "aluminum": 12
+  },
+  "production_time": 100,
+  "special_flags": [
+    "isro",
+    "india",
+    "space",
+    "twenty_twenties",
+    "lunar"
+  ],
+  "description": "Indian lunar south pole landing attempt. Growing indigenous deep-space capability."
+}

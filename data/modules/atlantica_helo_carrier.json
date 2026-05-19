@@ -1,0 +1,19 @@
+{
+  "id": "atlantica_helo_carrier",
+  "name": "NAe Atlântica Layout",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 60,
+    "electronics": 22,
+    "aluminum": 18
+  },
+  "production_time": 150,
+  "special_flags": [
+    "brazil",
+    "helicopter_carrier",
+    "twenty_twenties"
+  ],
+  "description": "Former HMS Ocean configured for Brazilian ASW and assault helicopters."
+}

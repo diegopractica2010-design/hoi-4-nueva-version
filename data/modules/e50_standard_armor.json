@@ -1,0 +1,20 @@
+{
+  "id": "e50_standard_armor",
+  "name": "E-50 Standard Armor Package",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 48,
+  "top_armor_bonus": 26,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 38,
+    "chromium": 5
+  },
+  "production_time": 75,
+  "special_flags": [
+    "prototype",
+    "paper_panzer",
+    "sloped_armor"
+  ],
+  "description": "Planned unified medium tank armor scheme. Part of Entwicklung series cancelled 1945."
+}

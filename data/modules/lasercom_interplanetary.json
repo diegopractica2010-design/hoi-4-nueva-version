@@ -1,0 +1,20 @@
+{
+  "id": "lasercom_interplanetary",
+  "name": "Laser Optical Comms",
+  "category": "Communications",
+  "tier": 7,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 4,
+    "electronics": 45,
+    "optics": 25
+  },
+  "production_time": 85,
+  "special_flags": [
+    "global",
+    "space",
+    "twenty_twenties",
+    "deep_space"
+  ],
+  "description": "Optical laser links for Mars and lunar missions. High bandwidth vs radio."
+}

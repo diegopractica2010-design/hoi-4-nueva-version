@@ -1,0 +1,20 @@
+{
+  "id": "hobart_auk_system",
+  "name": "Hobart Aegis System",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 9,
+  "cost": {
+    "steel": 12,
+    "electronics": 48,
+    "aluminum": 12
+  },
+  "production_time": 95,
+  "special_flags": [
+    "australia",
+    "destroyer",
+    "aegis",
+    "twenty_twenties"
+  ],
+  "description": "RAN Hobart-class Aegis destroyer based on Spanish F100 design."
+}

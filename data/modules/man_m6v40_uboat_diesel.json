@@ -1,0 +1,21 @@
+{
+  "id": "man_m6v40_uboat_diesel",
+  "name": "MAN M6V40 U-boat Diesel",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 4,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 16,
+    "aluminum": 6
+  },
+  "production_time": 65,
+  "special_flags": [
+    "germany",
+    "diesel_electric",
+    "ww2",
+    "uboat"
+  ],
+  "description": "Type VII U-boat diesel suite. Surface speed and battery charging."
+}

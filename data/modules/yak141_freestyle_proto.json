@@ -1,0 +1,24 @@
+{
+  "id": "yak141_freestyle_proto",
+  "name": "Yak-141 (Freestyle Proto)",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 0,
+  "fuel_efficiency": 2,
+  "speed_bonus": 30,
+  "cost": {
+    "steel": 18,
+    "aluminum": 34,
+    "titanium": 14,
+    "electronics": 20
+  },
+  "production_time": 105,
+  "special_flags": [
+    "russia",
+    "carrier_capable",
+    "vstol",
+    "prototype",
+    "yak141"
+  ],
+  "description": "Supersonic STOVL prototype. Influenced F-35B lift-fan development; never operational."
+}

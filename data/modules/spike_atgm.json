@@ -1,0 +1,23 @@
+{
+  "id": "spike_atgm",
+  "name": "Spike (Gill/MR)",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 38,
+  "hard_attack": 70,
+  "piercing": 145,
+  "air_attack": 4,
+  "cost": {
+    "steel": 8,
+    "electronics": 38,
+    "explosives": 14
+  },
+  "production_time": 72,
+  "special_flags": [
+    "israel",
+    "atgm",
+    "nineties",
+    "fire_and_forget"
+  ],
+  "description": "Fourth-generation EO-guided ATGM. Man-portable and vehicle mounts."
+}

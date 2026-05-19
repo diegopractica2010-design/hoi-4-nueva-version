@@ -1,0 +1,23 @@
+{
+  "id": "javelin_atgm",
+  "name": "FGM-148 Javelin",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 40,
+  "hard_attack": 72,
+  "piercing": 155,
+  "air_attack": 4,
+  "cost": {
+    "steel": 8,
+    "electronics": 38,
+    "explosives": 16
+  },
+  "production_time": 70,
+  "special_flags": [
+    "usa",
+    "atgm",
+    "nineties",
+    "fire_and_forget"
+  ],
+  "description": "Top-attack infrared guided ATGM. Man-portable; replaces Dragon in U.S. infantry."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "starship_raptor_engine",
+  "name": "Raptor (Starship)",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 12,
+  "speed_bonus": 38,
+  "cost": {
+    "steel": 12,
+    "aluminum": 18,
+    "electronics": 25,
+    "chemicals": 15
+  },
+  "production_time": 90,
+  "special_flags": [
+    "spacex",
+    "usa",
+    "space",
+    "twenty_twenties",
+    "methalox",
+    "mars"
+  ],
+  "description": "Full-flow staged combustion methalox engine. Powers Starship super-heavy system."
+}

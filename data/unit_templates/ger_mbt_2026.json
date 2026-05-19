@@ -1,0 +1,55 @@
+{
+  "id": "ger_mbt_2026",
+  "name": "Leopard 2A7V",
+  "design_family": "german_army_2026_armor",
+  "base_type": "Armored",
+  "size_category": "Heavy",
+  "visual_archetype": "heavy_tank",
+  "crew_required": 4,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 125,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 84,
+    "fuel_consumption": 18,
+    "supply_need": 24,
+    "armor": 82,
+    "top_armor": 60,
+    "hardness": 96
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "rh120_l55_gun",
+    "Engine": "mtu_mb873_engine",
+    "Armor": "leopard2a7_package",
+    "Sensors": "hunter_killer_fcs"
+  },
+  "unlock_tech": [
+    "forces_2026",
+    "army_2026",
+    "air_2026",
+    "twenty_twenties_army",
+    "twenty_twenties_air",
+    "german_army",
+    "germany"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

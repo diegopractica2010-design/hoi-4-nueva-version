@@ -1,0 +1,20 @@
+{
+  "id": "mtu_mb838_engine",
+  "name": "MTU MB 838",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 7,
+  "speed_bonus": 12,
+  "cost": {
+    "steel": 18,
+    "aluminum": 5
+  },
+  "production_time": 68,
+  "special_flags": [
+    "germany",
+    "sixties",
+    "leopard1"
+  ],
+  "description": "Leopard 1 multi-fuel diesel. Renowned reliability; export success across NATO."
+}

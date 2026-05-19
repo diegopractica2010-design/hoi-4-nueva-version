@@ -1,0 +1,47 @@
+{
+  "id": "f14a_tomcat",
+  "name": "F-14A Tomcat",
+  "design_family": "us_carrier_air_modern",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "fighter",
+  "crew_required": 2,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 85,
+  "base_stats": {
+    "speed": 104,
+    "reliability": 80,
+    "fuel_consumption": 24,
+    "supply_need": 18,
+    "armor": 16,
+    "hardness": 28
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "aim54_phoenix",
+    "SecondaryWeapon": "aim9_sidewinder",
+    "Engine": "tf30_f14_engine",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "us_carrier_aviation",
+    "cold_war_naval_air",
+    "modern_carrier_wing"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

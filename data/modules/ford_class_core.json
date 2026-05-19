@@ -1,0 +1,21 @@
+{
+  "id": "ford_class_core",
+  "name": "Gerald R. Ford Core",
+  "category": "Cargo",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 150,
+    "electronics": 65,
+    "aluminum": 45,
+    "uranium": 14
+  },
+  "production_time": 300,
+  "special_flags": [
+    "usa",
+    "carrier",
+    "emals",
+    "twenty_twenties"
+  ],
+  "description": "EMALS catapult and advanced arresting gear. Next-gen U.S. carrier air wing host."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "mark7_nuclear_gun",
+  "name": "M65 Atomic Cannon (280 mm)",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 150,
+  "hard_attack": 80,
+  "piercing": 20,
+  "air_attack": 2,
+  "cost": {
+    "steel": 80,
+    "explosives": 120,
+    "uranium": 40
+  },
+  "production_time": 200,
+  "special_flags": [
+    "nuclear",
+    "prototype",
+    "usa",
+    "cold_war"
+  ],
+  "description": "Towed atomic artillery 1953. Strategic weapon; impractical but politically significant."
+}

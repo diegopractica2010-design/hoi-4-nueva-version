@@ -1,0 +1,41 @@
+{
+  "id": "jwst_observatory",
+  "name": "James Webb Space Telescope",
+  "design_family": "international_space_twenty_twenties",
+  "base_type": "Space",
+  "size_category": "Medium",
+  "visual_archetype": "satellite",
+  "crew_required": 0,
+  "base_training_level": 42,
+  "max_experience_level": 100,
+  "base_production_days": 280,
+  "base_stats": {
+    "speed": 15,
+    "reliability": 92,
+    "fuel_consumption": 12,
+    "supply_need": 35,
+    "payload_capacity": 0,
+    "hardness": 5
+  },
+  "slots": {
+    "Sensors": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Sensors": "jwst_telescope",
+    "Communications": "lasercom_interplanetary",
+    "Engine": "ariane5_core_stage"
+  },
+  "unlock_tech": [
+    "deep_space_science"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

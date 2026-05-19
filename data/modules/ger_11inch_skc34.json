@@ -1,0 +1,22 @@
+{
+  "id": "ger_11inch_skc34",
+  "name": "28 cm SK C/34",
+  "category": "NavalGun",
+  "tier": 2,
+  "soft_attack": 68,
+  "hard_attack": 58,
+  "piercing": 92,
+  "air_attack": 3,
+  "anti_ship": 76,
+  "cost": {
+    "steel": 36,
+    "explosives": 10
+  },
+  "production_time": 88,
+  "special_flags": [
+    "naval",
+    "pocket_battleship",
+    "germany"
+  ],
+  "description": "Deutschland-class 'pocket battleship' main gun. Outranges cruisers."
+}

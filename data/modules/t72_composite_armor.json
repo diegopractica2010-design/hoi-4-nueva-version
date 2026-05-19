@@ -1,0 +1,21 @@
+{
+  "id": "t72_composite_armor",
+  "name": "T-72 Composite Armor",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 55,
+  "top_armor_bonus": 32,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 40,
+    "ceramics": 8,
+    "chromium": 5
+  },
+  "production_time": 78,
+  "special_flags": [
+    "ussr",
+    "seventies",
+    "composite"
+  ],
+  "description": "Sandwich steel-glass-textile armor on T-72 glacis. Effective vs HEAT; upgraded with ERA later."
+}

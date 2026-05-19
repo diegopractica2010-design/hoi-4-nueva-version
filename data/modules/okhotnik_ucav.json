@@ -1,0 +1,20 @@
+{
+  "id": "okhotnik_ucav",
+  "name": "S-70 Okhotnik",
+  "category": "DroneAttachment",
+  "tier": 8,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 14,
+    "electronics": 50,
+    "aluminum": 22
+  },
+  "production_time": 110,
+  "special_flags": [
+    "russia",
+    "twenty_thirties",
+    "ucav",
+    "loyal_wingman"
+  ],
+  "description": "Heavy stealth UCAV teaming with Su-57. 2030s unmanned strike complement."
+}

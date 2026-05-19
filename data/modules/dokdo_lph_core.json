@@ -1,0 +1,19 @@
+{
+  "id": "dokdo_lph_core",
+  "name": "Dokdo-class LPH Core",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 70,
+    "electronics": 28,
+    "aluminum": 20
+  },
+  "production_time": 165,
+  "special_flags": [
+    "south_korea",
+    "lph",
+    "twenty_twenties"
+  ],
+  "description": "ROK amphibious assault ship with helicopter assault group; no fixed-wing carrier."
+}

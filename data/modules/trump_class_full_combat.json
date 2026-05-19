@@ -1,0 +1,22 @@
+{
+  "id": "trump_class_full_combat",
+  "name": "Trump-class Full Combat Suite",
+  "category": "Sensors",
+  "tier": 9,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 60,
+    "electronics": 95,
+    "aluminum": 30
+  },
+  "production_time": 220,
+  "special_flags": [
+    "usa",
+    "naval",
+    "twenty_thirties",
+    "battleship",
+    "planned",
+    "trump_class"
+  ],
+  "description": "Integrated air/missile defense, railgun trials, and cooperative engagement for revived battleship concept."
+}

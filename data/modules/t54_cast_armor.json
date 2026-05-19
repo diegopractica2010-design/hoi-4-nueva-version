@@ -1,0 +1,20 @@
+{
+  "id": "t54_cast_armor",
+  "name": "T-54 Cast Armor",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 46,
+  "top_armor_bonus": 24,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 36,
+    "chromium": 4
+  },
+  "production_time": 68,
+  "special_flags": [
+    "sloped_armor",
+    "ussr",
+    "cold_war"
+  ],
+  "description": "Revolutionary sloped hull on T-54. Excellent protection-to-weight ratio."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "imi_120mm_gun",
+  "name": "IMI 120 mm",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 72,
+  "hard_attack": 70,
+  "piercing": 160,
+  "air_attack": 5,
+  "cost": {
+    "steel": 30,
+    "chromium": 6,
+    "tungsten": 5
+  },
+  "production_time": 98,
+  "special_flags": [
+    "israel",
+    "nineties",
+    "smoothbore",
+    "merkava3"
+  ],
+  "description": "Indigenous 120 mm for Merkava Mk III. Compatible with NATO ammunition standards."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "fcas_ngf_proto",
+  "name": "FCAS NGF (Prototype)",
+  "category": "Engine",
+  "tier": 9,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 18,
+  "speed_bonus": 40,
+  "cost": {
+    "steel": 28,
+    "aluminum": 55,
+    "titanium": 38,
+    "electronics": 60
+  },
+  "production_time": 220,
+  "special_flags": [
+    "france",
+    "germany_joint",
+    "twenty_thirties",
+    "sixth_gen",
+    "planned",
+    "fcas"
+  ],
+  "description": "Future Combat Air System New Generation Fighter. Franco-German-Spanish 2035+ target."
+}

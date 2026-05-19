@@ -1,0 +1,22 @@
+{
+  "id": "bmp1_73mm_grom",
+  "name": "2A28 Grom 73 mm",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 48,
+  "hard_attack": 38,
+  "piercing": 72,
+  "air_attack": 4,
+  "cost": {
+    "steel": 14,
+    "explosives": 6
+  },
+  "production_time": 55,
+  "special_flags": [
+    "ussr",
+    "sixties",
+    "ifv",
+    "bmp1"
+  ],
+  "description": "BMP-1 low-pressure gun. HEAT and 9M14 Malyutka launcher in one compact turret."
+}

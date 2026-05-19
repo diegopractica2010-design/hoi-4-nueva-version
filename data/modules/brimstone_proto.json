@@ -1,0 +1,23 @@
+{
+  "id": "brimstone_proto",
+  "name": "Brimstone (Prototype)",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 45,
+  "hard_attack": 62,
+  "piercing": 95,
+  "air_attack": 6,
+  "cost": {
+    "steel": 8,
+    "electronics": 35,
+    "explosives": 16
+  },
+  "production_time": 78,
+  "special_flags": [
+    "uk",
+    "nineties",
+    "fire_and_forget",
+    "anti_armor"
+  ],
+  "description": "Millimeter-wave guided anti-armor missile derived from AGM-114. Late-1990s development."
+}

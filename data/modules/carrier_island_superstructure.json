@@ -1,0 +1,19 @@
+{
+  "id": "carrier_island_superstructure",
+  "name": "Island Superstructure",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 12,
+  "top_armor_bonus": 8,
+  "reliability_penalty": -2,
+  "cost": {
+    "steel": 35,
+    "electronics": 6
+  },
+  "production_time": 75,
+  "special_flags": [
+    "carrier",
+    "command"
+  ],
+  "description": "Carrier island with bridge, radar mounts, and flight control positions."
+}

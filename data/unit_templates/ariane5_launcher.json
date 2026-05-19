@@ -1,0 +1,37 @@
+{
+  "id": "ariane5_launcher",
+  "name": "Ariane 5",
+  "design_family": "esa_space_nineties",
+  "base_type": "Space",
+  "size_category": "Heavy",
+  "visual_archetype": "rocket",
+  "crew_required": 0,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 120,
+  "base_stats": {
+    "speed": 82,
+    "reliability": 88,
+    "fuel_consumption": 90,
+    "supply_need": 45,
+    "payload_capacity": 20,
+    "hardness": 10
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "ariane1_first_stage",
+    "Cargo": "ariane5_core_stage"
+  },
+  "unlock_tech": [
+    "esa_launchers"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

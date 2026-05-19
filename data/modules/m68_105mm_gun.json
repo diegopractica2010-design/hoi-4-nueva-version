@@ -1,0 +1,21 @@
+{
+  "id": "m68_105mm_gun",
+  "name": "105 mm M68",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 58,
+  "hard_attack": 52,
+  "piercing": 110,
+  "air_attack": 5,
+  "cost": {
+    "steel": 22,
+    "explosives": 3
+  },
+  "production_time": 75,
+  "special_flags": [
+    "usa",
+    "cold_war",
+    "british_design"
+  ],
+  "description": "British L7 derivative for M60. Standard Western tank gun for decades."
+}

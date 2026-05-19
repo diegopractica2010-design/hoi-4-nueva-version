@@ -1,0 +1,57 @@
+{
+  "id": "wickes_class_dd_1918",
+  "name": "Wickes-class",
+  "design_family": "us_naval_1918",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 115,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 85,
+  "base_stats": {
+    "speed": 24,
+    "reliability": 60,
+    "fuel_consumption": 25,
+    "supply_need": 30,
+    "armor": 12,
+    "deck_armor": 8,
+    "hardness": 38
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ww1_4inch_qf_mk4",
+    "SecondaryWeapon": "ww1_18inch_torpedo",
+    "Engine": "us_parsons_turbine",
+    "Sensors": "naval_fire_control_mk37",
+    "Communications": "wireless_set_no19"
+  },
+  "unlock_tech": [
+    "naval_1918",
+    "ww1_naval",
+    "great_war_naval",
+    "us_naval_1918",
+    "destroyer"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

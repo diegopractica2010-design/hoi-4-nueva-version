@@ -1,0 +1,21 @@
+{
+  "id": "wright_r3350_helldiver",
+  "name": "Wright R-3350 (Helldiver)",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 4,
+  "fuel_efficiency": -2,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 14,
+    "aluminum": 16
+  },
+  "production_time": 58,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "ww2",
+    "sb2c"
+  ],
+  "description": "Duplex Cyclone on SB2C Helldiver. Powerful but suffered early reliability issues."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "mmp_atgm",
+  "name": "MMP",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 40,
+  "hard_attack": 72,
+  "piercing": 155,
+  "air_attack": 4,
+  "cost": {
+    "steel": 8,
+    "electronics": 42,
+    "explosives": 16
+  },
+  "production_time": 68,
+  "special_flags": [
+    "france",
+    "twenty_twenties",
+    "atgm",
+    "fire_and_forget"
+  ],
+  "description": "Missile Moyenne Portée replacing MILAN. Man-in-loop and fire-and-forget."
+}

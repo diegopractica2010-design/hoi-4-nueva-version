@@ -1,0 +1,21 @@
+{
+  "id": "liberty_ship_engine",
+  "name": "Liberty Ship Power Plant",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 5,
+  "fuel_efficiency": 3,
+  "speed_bonus": 2,
+  "cost": {
+    "steel": 35,
+    "copper": 8
+  },
+  "production_time": 90,
+  "special_flags": [
+    "usa",
+    "ww2",
+    "merchant",
+    "steam"
+  ],
+  "description": "Triple-expansion steam plant on EC2-S-C1 Liberty ships."
+}

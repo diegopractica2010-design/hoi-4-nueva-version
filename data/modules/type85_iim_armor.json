@@ -1,0 +1,21 @@
+{
+  "id": "type85_iim_armor",
+  "name": "Type 85-IIM Armor",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 50,
+  "top_armor_bonus": 28,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 38,
+    "ceramics": 10,
+    "chromium": 4
+  },
+  "production_time": 78,
+  "special_flags": [
+    "china",
+    "eighties",
+    "composite"
+  ],
+  "description": "Improved composite protection on Type 85 family. Export success in Pakistan."
+}

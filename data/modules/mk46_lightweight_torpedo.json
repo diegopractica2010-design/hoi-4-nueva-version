@@ -1,0 +1,24 @@
+{
+  "id": "mk46_lightweight_torpedo",
+  "name": "Mk 46 Lightweight Torpedo",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 28,
+  "hard_attack": 42,
+  "piercing": 20,
+  "anti_ship": 72,
+  "air_attack": 3,
+  "cost": {
+    "steel": 6,
+    "electronics": 18,
+    "explosives": 14
+  },
+  "production_time": 48,
+  "special_flags": [
+    "usa",
+    "asw",
+    "helicopter",
+    "naval"
+  ],
+  "description": "Lightweight ASW torpedo for SH-2, SH-60, and allied naval helicopters."
+}

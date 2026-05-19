@@ -1,0 +1,51 @@
+{
+  "id": "orpzel_sub_1936",
+  "name": "ORP Orzeł",
+  "design_family": "polish_sub_1936",
+  "base_type": "Submarine",
+  "size_category": "Medium",
+  "visual_archetype": "submarine",
+  "crew_required": 32,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 90,
+  "base_stats": {
+    "speed": 18,
+    "reliability": 65,
+    "fuel_consumption": 28,
+    "supply_need": 35,
+    "armor": 28,
+    "hardness": 40
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "submarine_torpedo_tube",
+    "SecondaryWeapon": "g7a_torpedo_sub",
+    "Engine": "holland_diesel_electric"
+  },
+  "unlock_tech": [
+    "naval_1936",
+    "interwar_naval",
+    "pre_ww2_naval",
+    "polish_naval_1936",
+    "submarine"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

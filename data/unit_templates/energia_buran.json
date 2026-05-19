@@ -1,0 +1,38 @@
+{
+  "id": "energia_buran",
+  "name": "Energia / Buran",
+  "design_family": "soviet_space_eighties",
+  "base_type": "Space",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "space_shuttle",
+  "crew_required": 0,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 220,
+  "base_stats": {
+    "speed": 88,
+    "reliability": 65,
+    "fuel_consumption": 110,
+    "supply_need": 85,
+    "payload_capacity": 30,
+    "hardness": 14
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "energia_booster",
+    "Cargo": "buran_orbiter"
+  },
+  "unlock_tech": [
+    "soviet_shuttle",
+    "prototype"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

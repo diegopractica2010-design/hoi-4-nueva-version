@@ -1,0 +1,13 @@
+{
+  "id": "mk14_gyro_sight",
+  "name": "Mk XIV Gyro Gunsight",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 3,
+  "cost": {
+    "electronics": 10,
+    "optics": 6
+  },
+  "production_time": 42,
+  "description": "British lead-computing sight. Major boost to fighter effectiveness."
+}

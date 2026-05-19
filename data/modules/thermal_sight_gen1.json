@@ -1,0 +1,21 @@
+{
+  "id": "thermal_sight_gen1",
+  "name": "AN/VSG-2 Thermal Sight",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 32,
+    "optics": 16,
+    "rare_earths": 8
+  },
+  "production_time": 75,
+  "special_flags": [
+    "usa",
+    "thermal",
+    "seventies",
+    "night_fighting"
+  ],
+  "description": "First-generation tank thermal imager trials. Game-changer for night engagements by 1980s."
+}

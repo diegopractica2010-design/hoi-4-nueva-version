@@ -1,0 +1,23 @@
+{
+  "id": "leclerc_xei_armor",
+  "name": "Leclerc XXI Armor",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 70,
+  "top_armor_bonus": 44,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 48,
+    "ceramics": 26,
+    "titanium": 12,
+    "kevlar": 10
+  },
+  "production_time": 115,
+  "special_flags": [
+    "france",
+    "two_thousands",
+    "leclerc",
+    "upgrade"
+  ],
+  "description": "Leclerc Block XXI upgrade with improved armor and battlefield management."
+}

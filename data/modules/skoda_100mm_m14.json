@@ -1,0 +1,20 @@
+{
+  "id": "skoda_100mm_m14",
+  "name": "10.4 cm Skoda M.14",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 65,
+  "hard_attack": 14,
+  "piercing": 30,
+  "air_attack": 2,
+  "cost": {
+    "steel": 16,
+    "explosives": 8
+  },
+  "production_time": 48,
+  "special_flags": [
+    "ww1",
+    "artillery"
+  ],
+  "description": "Heavy field howitzer of Austria-Hungary. Used on Italian front fortifications."
+}

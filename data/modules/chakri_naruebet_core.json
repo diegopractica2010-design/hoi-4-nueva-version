@@ -1,0 +1,19 @@
+{
+  "id": "chakri_naruebet_core",
+  "name": "Chakri Naruebet Layout",
+  "category": "Cargo",
+  "tier": 4,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 45,
+    "electronics": 15,
+    "aluminum": 12
+  },
+  "production_time": 120,
+  "special_flags": [
+    "thailand",
+    "helicopter_carrier",
+    "twenty_twenties"
+  ],
+  "description": "Small Spanish-built STOVL carrier. Harrier retired; operates helicopters only."
+}

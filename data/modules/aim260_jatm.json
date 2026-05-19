@@ -1,0 +1,24 @@
+{
+  "id": "aim260_jatm",
+  "name": "AIM-260 JATM",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 16,
+  "hard_attack": 14,
+  "air_attack": 98,
+  "anti_air": 94,
+  "cost": {
+    "steel": 8,
+    "electronics": 55,
+    "explosives": 12
+  },
+  "production_time": 90,
+  "special_flags": [
+    "usa",
+    "air_to_air",
+    "twenty_twenties",
+    "bvr",
+    "planned"
+  ],
+  "description": "Joint Advanced Tactical Missile to counter PL-15 and long-range threats. Internal bay compatible."
+}

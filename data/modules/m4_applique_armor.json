@@ -1,0 +1,14 @@
+{
+  "id": "m4_applique_armor",
+  "name": "M4 Appliqué Armor Kit",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 18,
+  "top_armor_bonus": 8,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 16
+  },
+  "production_time": 35,
+  "description": "Field-applied armor plates for Sherman hull and turret. Modest upgrade without new chassis."
+}

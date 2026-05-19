@@ -1,0 +1,20 @@
+{
+  "id": "aegis_bmd_package",
+  "name": "Aegis BMD Package",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 40,
+    "electronics": 80,
+    "aluminum": 15
+  },
+  "production_time": 160,
+  "special_flags": [
+    "usa",
+    "naval",
+    "two_thousands",
+    "ballistic_missile_defense"
+  ],
+  "description": "SM-3 capable Aegis upgrade. Engages ballistic missile threats from sea."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "hs110_diesel_amx30",
+  "name": "HS-110 Diesel",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 5,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 18,
+    "aluminum": 4
+  },
+  "production_time": 65,
+  "special_flags": [
+    "france",
+    "sixties",
+    "multifuel"
+  ],
+  "description": "720 hp engine giving AMX-30 exceptional speed. French doctrine favored maneuver."
+}

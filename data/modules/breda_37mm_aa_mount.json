@@ -1,0 +1,21 @@
+{
+  "id": "breda_37mm_aa_mount",
+  "name": "Breda 37/54 AA Mount",
+  "category": "AntiAir",
+  "tier": 2,
+  "soft_attack": 10,
+  "hard_attack": 6,
+  "air_attack": 38,
+  "anti_air": 40,
+  "cost": {
+    "steel": 8,
+    "electronics": 4
+  },
+  "production_time": 40,
+  "special_flags": [
+    "italy",
+    "naval",
+    "coastal"
+  ],
+  "description": "Late-war Italian dual-purpose mount for ships and static defense."
+}

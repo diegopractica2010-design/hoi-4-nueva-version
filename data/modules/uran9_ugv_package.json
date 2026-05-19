@@ -1,0 +1,20 @@
+{
+  "id": "uran9_ugv_package",
+  "name": "Uran-9 UGV",
+  "category": "DroneAttachment",
+  "tier": 6,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 12,
+    "electronics": 30,
+    "explosives": 8
+  },
+  "production_time": 65,
+  "special_flags": [
+    "russia",
+    "twenty_twenties",
+    "ugv",
+    "urban"
+  ],
+  "description": "Armed unmanned ground vehicle. Mixed combat results in Syria and Ukraine."
+}

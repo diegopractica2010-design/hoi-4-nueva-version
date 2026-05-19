@@ -1,0 +1,21 @@
+{
+  "id": "t54_100mm_d10t2s",
+  "name": "100 mm D-10T2S",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 58,
+  "hard_attack": 54,
+  "piercing": 112,
+  "air_attack": 5,
+  "cost": {
+    "steel": 24,
+    "chromium": 3
+  },
+  "production_time": 78,
+  "special_flags": [
+    "ussr",
+    "cold_war",
+    "stabilized"
+  ],
+  "description": "T-54/55 main gun with stabilizer. Defines early Cold War tank lethality."
+}

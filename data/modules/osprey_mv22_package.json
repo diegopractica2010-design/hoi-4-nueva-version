@@ -1,0 +1,24 @@
+{
+  "id": "osprey_mv22_package",
+  "name": "MV-22 Osprey Package",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 8,
+  "speed_bonus": 22,
+  "cost": {
+    "steel": 16,
+    "aluminum": 28,
+    "electronics": 35,
+    "titanium": 8
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "tiltrotor",
+    "lhd",
+    "twenty_tens",
+    "assault"
+  ],
+  "description": "Tiltrotor assault aircraft from LHD/LHA. Rapid ship-to-shore mobility."
+}

@@ -1,0 +1,44 @@
+{
+  "id": "america_class_lha_2026",
+  "name": "America-class LHA (2026)",
+  "design_family": "us_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 1800,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 200,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 72,
+    "fuel_consumption": 80,
+    "supply_need": 95,
+    "armor": 40,
+    "deck_armor": 28,
+    "hardness": 58
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "america_lha_core",
+    "Sensors": "f35b_stovl_package",
+    "AntiAir": "aim120d_amraam"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "us_amphibious_2026"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

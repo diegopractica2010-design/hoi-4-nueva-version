@@ -1,0 +1,23 @@
+{
+  "id": "tow_launcher_idf",
+  "name": "TOW (IDF)",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 35,
+  "hard_attack": 62,
+  "piercing": 130,
+  "air_attack": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 22,
+    "explosives": 14
+  },
+  "production_time": 52,
+  "special_flags": [
+    "israel",
+    "usa",
+    "atgm",
+    "seventies"
+  ],
+  "description": "U.S. TOW on M113 and jeeps. Critical anti-tank capability in 1973 Sinai fighting."
+}

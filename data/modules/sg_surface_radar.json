@@ -1,0 +1,18 @@
+{
+  "id": "sg_surface_radar",
+  "name": "SG Surface Search Radar",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 18
+  },
+  "production_time": 52,
+  "special_flags": [
+    "radar",
+    "naval",
+    "usa"
+  ],
+  "description": "U.S. microwave surface search radar. Standard on late-war destroyers and cruisers."
+}

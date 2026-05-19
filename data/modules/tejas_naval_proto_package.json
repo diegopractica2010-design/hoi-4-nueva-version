@@ -1,0 +1,23 @@
+{
+  "id": "tejas_naval_proto_package",
+  "name": "Tejas Naval Proto",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 8,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 14,
+    "aluminum": 28,
+    "titanium": 10,
+    "electronics": 22
+  },
+  "production_time": 100,
+  "special_flags": [
+    "india",
+    "prototype",
+    "carrier_capable",
+    "tejas_n"
+  ],
+  "description": "Naval LCA Mk2 prototype with strengthened landing gear and carrier approach avionics."
+}

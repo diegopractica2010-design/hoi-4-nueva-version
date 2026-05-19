@@ -1,0 +1,19 @@
+{
+  "id": "maybach_hl234_engine",
+  "name": "Maybach HL 234",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": -8,
+  "fuel_efficiency": -5,
+  "speed_bonus": 6,
+  "cost": {
+    "steel": 20,
+    "aluminum": 6
+  },
+  "production_time": 65,
+  "special_flags": [
+    "prototype",
+    "germany"
+  ],
+  "description": "900 hp planned upgrade for Tiger II and E-series. Limited testing before collapse."
+}

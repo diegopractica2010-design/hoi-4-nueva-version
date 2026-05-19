@@ -1,0 +1,23 @@
+{
+  "id": "s500_prometey",
+  "name": "S-500 Prometey",
+  "category": "AntiAir",
+  "tier": 9,
+  "soft_attack": 20,
+  "hard_attack": 18,
+  "air_attack": 100,
+  "anti_air": 98,
+  "cost": {
+    "steel": 40,
+    "electronics": 90,
+    "explosives": 30
+  },
+  "production_time": 160,
+  "special_flags": [
+    "russia",
+    "twenty_twenties",
+    "sam",
+    "strategic"
+  ],
+  "description": "S-500 for ballistic missile and hypersonic defense. Complements S-400."
+}

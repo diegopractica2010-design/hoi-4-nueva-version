@@ -1,0 +1,20 @@
+{
+  "id": "ne20_jet_engine",
+  "name": "Ne-20 Turbojet",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": -8,
+  "fuel_efficiency": -3,
+  "speed_bonus": 18,
+  "cost": {
+    "steel": 12,
+    "aluminum": 18
+  },
+  "production_time": 85,
+  "special_flags": [
+    "prototype",
+    "jet_powerplant",
+    "japan"
+  ],
+  "description": "Kikka jet fighter engine based on BMW 003. Eight prototypes; never combat-ready."
+}

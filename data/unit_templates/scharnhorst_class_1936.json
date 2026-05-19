@@ -1,0 +1,55 @@
+{
+  "id": "scharnhorst_class_1936",
+  "name": "Scharnhorst-class",
+  "design_family": "german_naval_1936",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "battleship",
+  "crew_required": 1800,
+  "base_training_level": 33,
+  "max_experience_level": 100,
+  "base_production_days": 230,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 68,
+    "fuel_consumption": 88,
+    "supply_need": 115,
+    "armor": 52,
+    "deck_armor": 28,
+    "hardness": 80
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ger_11inch_skc34",
+    "Engine": "german_wagner_turbine",
+    "Armor": "naval_belt_armor_scheme",
+    "SecondaryWeapon": "g7a_torpedo_sub"
+  },
+  "unlock_tech": [
+    "naval_1936",
+    "interwar_naval",
+    "pre_ww2_naval",
+    "german_naval_1936"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

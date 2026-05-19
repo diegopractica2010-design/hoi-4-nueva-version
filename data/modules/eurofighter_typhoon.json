@@ -1,0 +1,22 @@
+{
+  "id": "eurofighter_typhoon",
+  "name": "Eurofighter Typhoon Package",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 15,
+  "fuel_efficiency": 13,
+  "speed_bonus": 37,
+  "cost": {
+    "steel": 20,
+    "aluminum": 38,
+    "titanium": 16
+  },
+  "production_time": 115,
+  "special_flags": [
+    "uk",
+    "germany_joint",
+    "two_thousands",
+    "typhoon"
+  ],
+  "description": "Eurofighter Typhoon with EJ200. Libya and Baltic air policing missions."
+}

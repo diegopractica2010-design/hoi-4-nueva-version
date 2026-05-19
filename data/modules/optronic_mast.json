@@ -1,0 +1,21 @@
+{
+  "id": "optronic_mast",
+  "name": "Optronic Mast",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 6,
+    "electronics": 45,
+    "optics": 20
+  },
+  "production_time": 90,
+  "special_flags": [
+    "usa",
+    "germany",
+    "stealth",
+    "submarine",
+    "twenty_tens"
+  ],
+  "description": "Non-hull-penetrating photonic mast. Virginia and Type 212 feature."
+}

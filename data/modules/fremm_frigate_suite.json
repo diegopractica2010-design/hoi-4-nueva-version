@@ -1,0 +1,21 @@
+{
+  "id": "fremm_frigate_suite",
+  "name": "FREMM Frigate Suite",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 12,
+    "electronics": 42,
+    "aluminum": 10
+  },
+  "production_time": 88,
+  "special_flags": [
+    "france",
+    "italy",
+    "export",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "FREMM multi-mission frigate combat system. ASW, AAW, and land-attack capable."
+}

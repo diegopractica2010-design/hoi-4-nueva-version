@@ -1,0 +1,47 @@
+{
+  "id": "ka27_helix_india",
+  "name": "Ka-28 Helix (IN)",
+  "design_family": "indian_naval_helo_2026",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "helicopter",
+  "crew_required": 3,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 65,
+  "base_stats": {
+    "speed": 102,
+    "reliability": 82,
+    "fuel_consumption": 26,
+    "supply_need": 20,
+    "armor": 18,
+    "hardness": 30
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "mk48_torpedo",
+    "Sensors": "ka27_helix_asw_suite",
+    "Engine": "klimov_m105_engine"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "indian_naval_aviation",
+    "asw_helicopter"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

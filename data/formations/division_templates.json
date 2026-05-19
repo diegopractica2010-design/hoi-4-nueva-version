@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "divisions": [
+    {
+      "id": "us_armored_div_ww2",
+      "name": "US Armored Division (WW2)",
+      "manpower": 14000,
+      "support_supply_per_day": 85,
+      "equipment": [
+        {"template_id": "m4_sherman_medium", "count": 54},
+        {"template_id": "m3_stuart_light", "count": 54},
+        {"template_id": "gmc_6x6_cargo_truck", "count": 120}
+      ]
+    },
+    {
+      "id": "us_infantry_div_ww2",
+      "name": "US Infantry Division (WW2)",
+      "manpower": 15000,
+      "support_supply_per_day": 72,
+      "equipment": [
+        {"template_id": "m3_stuart_light", "count": 12},
+        {"template_id": "gmc_6x6_cargo_truck", "count": 200}
+      ]
+    },
+    {
+      "id": "sov_motor_rifle_modern",
+      "name": "Motor Rifle Brigade (Modern)",
+      "manpower": 4500,
+      "support_supply_per_day": 48,
+      "equipment": [
+        {"template_id": "m4_sherman_medium", "count": 40},
+        {"template_id": "gmc_6x6_cargo_truck", "count": 60}
+      ]
+    }
+  ]
+}

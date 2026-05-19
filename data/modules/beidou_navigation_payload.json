@@ -1,0 +1,20 @@
+{
+  "id": "beidou_navigation_payload",
+  "name": "BeiDou Navigation Payload",
+  "category": "Communications",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 4,
+    "electronics": 38,
+    "aluminum": 8
+  },
+  "production_time": 95,
+  "special_flags": [
+    "china",
+    "space",
+    "twenty_twenties",
+    "navigation"
+  ],
+  "description": "Chinese global navigation constellation. Independent of GPS/GLONASS."
+}

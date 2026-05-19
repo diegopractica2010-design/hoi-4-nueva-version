@@ -1,0 +1,18 @@
+{
+  "id": "merchant_full_cargo_hold",
+  "name": "Merchant Full Hold",
+  "category": "Cargo",
+  "tier": 3,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 40,
+    "rubber": 8
+  },
+  "production_time": 70,
+  "special_flags": [
+    "naval",
+    "cargo_ship",
+    "cargo_full"
+  ],
+  "description": "Unarmed merchant cargo hold. Maximum tonnage and fuel efficiency."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "interwar_export_fighter_suite",
+  "name": "Interwar Export Fighter Suite",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 2,
+    "electronics": 8,
+    "aluminum": 6
+  },
+  "production_time": 40,
+  "special_flags": [
+    "interwar",
+    "export",
+    "fighter"
+  ],
+  "description": "Licensed fabric biplane fighter avionics for minor air forces."
+}

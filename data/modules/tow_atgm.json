@@ -1,0 +1,23 @@
+{
+  "id": "tow_atgm",
+  "name": "BGM-71 TOW",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 35,
+  "hard_attack": 62,
+  "piercing": 130,
+  "air_attack": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 22,
+    "explosives": 14
+  },
+  "production_time": 55,
+  "special_flags": [
+    "usa",
+    "atgm",
+    "wire_guided",
+    "sixties"
+  ],
+  "description": "Tube-launched optically tracked wire-guided missile. Standard U.S. helicopter and jeep ATGM."
+}

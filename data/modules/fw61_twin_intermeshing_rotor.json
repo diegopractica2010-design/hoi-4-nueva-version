@@ -1,0 +1,23 @@
+{
+  "id": "fw61_twin_intermeshing_rotor",
+  "name": "Fw 61 Intermeshing Rotors",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "fuel_efficiency": 0,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "aluminum": 10,
+    "electronics": 6
+  },
+  "production_time": 70,
+  "special_flags": [
+    "germany",
+    "prototype",
+    "pre_war",
+    "helicopter",
+    "fw61"
+  ],
+  "description": "Focke-Wulf Fw 61 twin-rotor system. First practical helicopter flights 1936–37."
+}

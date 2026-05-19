@@ -1,0 +1,37 @@
+{
+  "id": "f16c_fighting_falcon",
+  "name": "F-16C Fighting Falcon",
+  "design_family": "us_air_eighties",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 72,
+  "base_stats": {
+    "speed": 102,
+    "reliability": 80,
+    "fuel_consumption": 18,
+    "supply_need": 14,
+    "armor": 10,
+    "hardness": 24
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "aim9x_sidewinder",
+    "Engine": "f110_ge_engine"
+  },
+  "unlock_tech": [
+    "us_fighters_nineties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

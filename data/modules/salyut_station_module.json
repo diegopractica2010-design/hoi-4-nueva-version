@@ -1,0 +1,21 @@
+{
+  "id": "salyut_station_module",
+  "name": "Salyut Station Module",
+  "category": "Cargo",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 25,
+    "aluminum": 20,
+    "electronics": 30,
+    "chemicals": 12
+  },
+  "production_time": 130,
+  "special_flags": [
+    "ussr",
+    "space",
+    "seventies",
+    "space_station"
+  ],
+  "description": "First generation Soviet space station core. Military Almaz and civilian Salyut."
+}

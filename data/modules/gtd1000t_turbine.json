@@ -1,0 +1,22 @@
+{
+  "id": "gtd1000t_turbine",
+  "name": "GTD-1000T Gas Turbine",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "fuel_efficiency": -6,
+  "speed_bonus": 15,
+  "cost": {
+    "steel": 20,
+    "aluminum": 24,
+    "titanium": 10
+  },
+  "production_time": 90,
+  "special_flags": [
+    "ussr",
+    "eighties",
+    "gas_turbine",
+    "t80"
+  ],
+  "description": "T-80 family gas turbine. High speed; fuel-hungry compared to T-72 diesel."
+}

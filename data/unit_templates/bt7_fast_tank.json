@@ -1,0 +1,43 @@
+{
+  "id": "bt7_fast_tank",
+  "name": "BT-7",
+  "design_family": "soviet_armored_interwar",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 3,
+  "base_training_level": 20,
+  "max_experience_level": 90,
+  "base_production_days": 50,
+  "base_stats": {
+    "speed": 52,
+    "reliability": 62,
+    "fuel_consumption": 8,
+    "supply_need": 9,
+    "armor": 22,
+    "top_armor": 12,
+    "hardness": 62
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "45mm_m1937_gun",
+    "Engine": "v2_diesel_engine",
+    "Suspension": "christie_suspension_bt"
+  },
+  "unlock_tech": [
+    "interwar_tanks",
+    "soviet_armor"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

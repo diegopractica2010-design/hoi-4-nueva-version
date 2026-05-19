@@ -1,0 +1,23 @@
+{
+  "id": "gyurza_patrol_ukr",
+  "name": "Gyurza-M Patrol",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 18,
+  "hard_attack": 22,
+  "piercing": 20,
+  "anti_ship": 35,
+  "cost": {
+    "steel": 8,
+    "electronics": 15,
+    "explosives": 6
+  },
+  "production_time": 55,
+  "special_flags": [
+    "ukraine",
+    "patrol",
+    "riverine",
+    "twenty_twenties"
+  ],
+  "description": "Ukrainian armored patrol boat for river and coastal defense."
+}

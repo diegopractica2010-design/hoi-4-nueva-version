@@ -1,0 +1,23 @@
+{
+  "id": "b5n_kate_torpedo_load",
+  "name": "Kate Torpedo Load",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 34,
+  "hard_attack": 46,
+  "piercing": 24,
+  "anti_ship": 86,
+  "air_attack": 5,
+  "cost": {
+    "steel": 5,
+    "explosives": 20
+  },
+  "production_time": 40,
+  "special_flags": [
+    "japan",
+    "naval_aviation",
+    "ww2",
+    "b5n_kate"
+  ],
+  "description": "Type 91 torpedo configuration for B5N Kate. Pearl Harbor and Coral Sea weapon."
+}

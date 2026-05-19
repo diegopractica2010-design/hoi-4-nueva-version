@@ -1,0 +1,21 @@
+{
+  "id": "fg1250_infrared_scope",
+  "name": "FG 1250 Infrared Scope",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 1,
+  "cost": {
+    "steel": 4,
+    "electronics": 18,
+    "optics": 12,
+    "rare_earths": 5
+  },
+  "production_time": 70,
+  "special_flags": [
+    "infrared",
+    "night_fighting",
+    "prototype",
+    "germany"
+  ],
+  "description": "Vampir infrared sight for Panther and StG 44. Small combat trials; never widespread."
+}

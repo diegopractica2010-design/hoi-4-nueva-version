@@ -1,0 +1,23 @@
+{
+  "id": "bm13_katyusha_rack",
+  "name": "BM-13 Katyusha",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 95,
+  "hard_attack": 25,
+  "piercing": 15,
+  "air_attack": 4,
+  "cost": {
+    "steel": 8,
+    "explosives": 18,
+    "rubber": 4
+  },
+  "production_time": 35,
+  "special_flags": [
+    "soviet",
+    "rocket_artillery",
+    "ww2",
+    "mountable_on_transport"
+  ],
+  "description": "16-rail truck-mounted rocket salvo. Soviet 'Stalin's organ' saturation fires."
+}

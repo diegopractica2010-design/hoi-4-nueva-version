@@ -1,0 +1,23 @@
+{
+  "id": "m1a2_sep_armor",
+  "name": "M1A2 SEP Armor",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 78,
+  "top_armor_bonus": 58,
+  "reliability_penalty": -7,
+  "cost": {
+    "steel": 52,
+    "ceramics": 32,
+    "uranium": 22,
+    "titanium": 14
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "nineties",
+    "m1a2",
+    "system_enhancement"
+  ],
+  "description": "System Enhancement Package with improved DU arrays and internal Kevlar spall liners."
+}

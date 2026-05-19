@@ -1,0 +1,21 @@
+{
+  "id": "skylab_station",
+  "name": "Skylab Station",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 60,
+    "aluminum": 40,
+    "electronics": 35
+  },
+  "production_time": 160,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "seventies",
+    "space_station"
+  ],
+  "description": "Orbital workshop from Saturn V third stage. First U.S. space station."
+}

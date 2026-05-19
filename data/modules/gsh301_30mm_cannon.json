@@ -1,0 +1,21 @@
+{
+  "id": "gsh301_30mm_cannon",
+  "name": "GSh-30-1",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 40,
+  "hard_attack": 30,
+  "piercing": 52,
+  "air_attack": 58,
+  "cost": {
+    "steel": 10,
+    "aluminum": 6
+  },
+  "production_time": 60,
+  "special_flags": [
+    "ussr",
+    "seventies",
+    "mig29_lineage"
+  ],
+  "description": "Late-1970s Soviet fighter cannon development. High rate of fire for MiG-29 program."
+}

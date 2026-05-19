@@ -1,0 +1,23 @@
+{
+  "id": "aim9x_block2",
+  "name": "AIM-9X Block II",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 82,
+  "anti_air": 78,
+  "cost": {
+    "steel": 5,
+    "electronics": 32,
+    "explosives": 6
+  },
+  "production_time": 68,
+  "special_flags": [
+    "usa",
+    "air_to_air",
+    "twenty_tens",
+    "datalink"
+  ],
+  "description": "Datalink-capable Sidewinder with lock-on-after-launch for F-35 and F-22."
+}

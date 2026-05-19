@@ -1,0 +1,23 @@
+{
+  "id": "spearfish_torpedo_uk",
+  "name": "Spearfish Torpedo",
+  "category": "SecondaryWeapon",
+  "tier": 6,
+  "soft_attack": 26,
+  "hard_attack": 52,
+  "piercing": 34,
+  "anti_ship": 82,
+  "cost": {
+    "steel": 12,
+    "electronics": 32,
+    "explosives": 16
+  },
+  "production_time": 72,
+  "special_flags": [
+    "uk",
+    "submarine",
+    "cold_war",
+    "homing"
+  ],
+  "description": "Heavyweight torpedo for Royal Navy nuclear and conventional subs."
+}

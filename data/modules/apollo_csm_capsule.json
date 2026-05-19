@@ -1,0 +1,23 @@
+{
+  "id": "apollo_csm_capsule",
+  "name": "Apollo CSM Capsule",
+  "category": "LifeSupport",
+  "tier": 5,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 12,
+    "aluminum": 18,
+    "electronics": 25,
+    "chemicals": 8
+  },
+  "production_time": 110,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "sixties",
+    "crewed",
+    "lunar"
+  ],
+  "description": "Command and service module for Apollo lunar missions. Three crew to Moon and back."
+}

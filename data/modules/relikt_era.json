@@ -1,0 +1,22 @@
+{
+  "id": "relikt_era",
+  "name": "Relikt ERA",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 35,
+  "top_armor_bonus": 24,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 14,
+    "explosives": 20,
+    "electronics": 8
+  },
+  "production_time": 62,
+  "special_flags": [
+    "russia",
+    "era",
+    "two_thousands",
+    "anti_apfsds"
+  ],
+  "description": "Third-generation ERA effective vs tandem HEAT and reduced APFSDS threat."
+}

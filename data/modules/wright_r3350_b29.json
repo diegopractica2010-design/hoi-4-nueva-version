@@ -1,0 +1,20 @@
+{
+  "id": "wright_r3350_b29",
+  "name": "Wright R-3350 Duplex-Cyclone",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 2,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 14,
+    "aluminum": 16,
+    "rubber": 3
+  },
+  "production_time": 62,
+  "special_flags": [
+    "bomber_powerplant",
+    "usa"
+  ],
+  "description": "B-29 Superfortress engine. Complex but essential for strategic bombing range."
+}

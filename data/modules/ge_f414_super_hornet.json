@@ -1,0 +1,22 @@
+{
+  "id": "ge_f414_super_hornet",
+  "name": "GE F414 (Super Hornet)",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 16,
+  "fuel_efficiency": 12,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 18,
+    "aluminum": 34,
+    "titanium": 12
+  },
+  "production_time": 98,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "two_thousands",
+    "fa18ef"
+  ],
+  "description": "Upgraded Super Hornet engine. Higher thrust and improved durability."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "uh60_blackhawk_naval",
+  "name": "UH-60 Naval Utility",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 8,
+    "electronics": 24,
+    "aluminum": 10
+  },
+  "production_time": 58,
+  "special_flags": [
+    "usa",
+    "export",
+    "helicopter",
+    "naval"
+  ],
+  "description": "Naval utility helicopter for export LHD and coast guard operations."
+}

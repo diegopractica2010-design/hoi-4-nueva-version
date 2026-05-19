@@ -1,0 +1,20 @@
+{
+  "id": "anzac_frigate_nzl",
+  "name": "Anzac Frigate",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 10,
+    "electronics": 32,
+    "aluminum": 9
+  },
+  "production_time": 80,
+  "special_flags": [
+    "new_zealand",
+    "australia",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Anzac-class frigate operated by Australia and New Zealand."
+}

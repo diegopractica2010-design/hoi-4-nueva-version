@@ -1,0 +1,23 @@
+{
+  "id": "roland_sam",
+  "name": "Roland SAM",
+  "category": "AntiAir",
+  "tier": 5,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 74,
+  "anti_air": 76,
+  "cost": {
+    "steel": 16,
+    "electronics": 28,
+    "explosives": 10
+  },
+  "production_time": 82,
+  "special_flags": [
+    "france",
+    "germany_joint",
+    "sam",
+    "seventies"
+  ],
+  "description": "Franco-German point-defense SAM. Protects armored columns from helicopters and aircraft."
+}

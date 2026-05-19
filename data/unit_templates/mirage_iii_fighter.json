@@ -1,0 +1,37 @@
+{
+  "id": "mirage_iii_fighter",
+  "name": "Mirage III",
+  "design_family": "french_air_sixties",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 62,
+  "base_stats": {
+    "speed": 96,
+    "reliability": 74,
+    "fuel_consumption": 15,
+    "supply_need": 11,
+    "armor": 10,
+    "hardness": 22
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "defa550_30mm",
+    "Engine": "atar9c_turbojet"
+  },
+  "unlock_tech": [
+    "french_fighters_sixties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

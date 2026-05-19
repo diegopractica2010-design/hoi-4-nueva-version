@@ -1,0 +1,19 @@
+{
+  "id": "gun_stabilizer_m3",
+  "name": "Gun Stabilizer M3",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 8,
+    "electronics": 14,
+    "optics": 6
+  },
+  "production_time": 48,
+  "special_flags": [
+    "stabilized",
+    "usa",
+    "cold_war"
+  ],
+  "description": "Gyrostabilizer for M4/M26 lineage. Enables firing on the move."
+}

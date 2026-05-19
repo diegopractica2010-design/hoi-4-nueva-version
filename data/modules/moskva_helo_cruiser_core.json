@@ -1,0 +1,19 @@
+{
+  "id": "moskva_helo_cruiser_core",
+  "name": "Moskva-class Core",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 90,
+    "electronics": 24,
+    "aluminum": 20
+  },
+  "production_time": 175,
+  "special_flags": [
+    "ussr",
+    "helicopter_cruiser",
+    "cold_war"
+  ],
+  "description": "Soviet helicopter cruiser with Ka-25 ASW. Anti-submarine warfare command ship."
+}

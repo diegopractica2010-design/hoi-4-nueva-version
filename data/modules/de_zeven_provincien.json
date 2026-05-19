@@ -1,0 +1,19 @@
+{
+  "id": "de_zeven_provincien",
+  "name": "De Zeven Provinciën",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 12,
+    "electronics": 42,
+    "aluminum": 10
+  },
+  "production_time": 88,
+  "special_flags": [
+    "netherlands",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Dutch air-defense frigate with APAR radar and SM-2."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "mirage_f1_m53_engine",
+  "name": "SNECMA M53",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 7,
+  "speed_bonus": 31,
+  "cost": {
+    "steel": 16,
+    "aluminum": 28,
+    "titanium": 6
+  },
+  "production_time": 88,
+  "special_flags": [
+    "france",
+    "jet_powerplant",
+    "seventies",
+    "mirage_f1"
+  ],
+  "description": "Mirage F1 turbofan. Improved range and payload vs Mirage III Atar."
+}

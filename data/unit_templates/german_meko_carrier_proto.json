@@ -1,0 +1,52 @@
+{
+  "id": "german_meko_carrier_proto",
+  "name": "MEKO Carrier Concept (Proto)",
+  "design_family": "german_naval_planned",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "carrier",
+  "crew_required": 900,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 220,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 60,
+    "fuel_consumption": 70,
+    "supply_need": 90,
+    "armor": 40,
+    "deck_armor": 22,
+    "hardness": 65
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "clemenceau_catapult_deck",
+    "Engine": "fuel_cell_aip_212",
+    "Sensors": "aesa_radar_gen1",
+    "AntiAir": "iris_t_slm"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "german_naval_planned",
+    "twenty_thirties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,15 @@
+{
+  "id": "90mm_ansaldo_gun",
+  "name": "90 mm Ansaldo L/53",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 50,
+  "hard_attack": 44,
+  "piercing": 85,
+  "air_attack": 4,
+  "cost": {
+    "steel": 19
+  },
+  "production_time": 68,
+  "description": "P43 and Semovente 90/53. Strong on paper; very few produced."
+}

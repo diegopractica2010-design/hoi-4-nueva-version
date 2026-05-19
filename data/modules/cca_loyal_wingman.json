@@ -1,0 +1,21 @@
+{
+  "id": "cca_loyal_wingman",
+  "name": "CCA Loyal Wingman",
+  "category": "DroneAttachment",
+  "tier": 8,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "electronics": 55,
+    "aluminum": 18
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "twenty_twenties",
+    "loyal_wingman",
+    "ngad",
+    "unmanned"
+  ],
+  "description": "Collaborative Combat Aircraft escorting NGAD and F-35. Affordable mass for contested airspace."
+}

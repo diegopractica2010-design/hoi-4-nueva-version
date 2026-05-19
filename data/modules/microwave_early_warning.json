@@ -1,0 +1,20 @@
+{
+  "id": "microwave_early_warning",
+  "name": "Chain Home Low Radar",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 10,
+    "electronics": 14,
+    "copper": 8
+  },
+  "production_time": 55,
+  "special_flags": [
+    "radar",
+    "ground",
+    "uk",
+    "early_warning"
+  ],
+  "description": "British coastal early-warning radar network component. Enabled Battle of Britain fighter control."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "naval_deck_armor_scheme",
+  "name": "Deck Armor Scheme",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 12,
+  "top_armor_bonus": 28,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 40
+  },
+  "production_time": 75,
+  "special_flags": [
+    "naval",
+    "plunging_fire"
+  ],
+  "description": "Armored decks against plunging fire and bombs (treats as top/deck armor)."
+}

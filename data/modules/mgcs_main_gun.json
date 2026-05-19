@@ -1,0 +1,24 @@
+{
+  "id": "mgcs_main_gun",
+  "name": "MGCS 140 mm (Planned)",
+  "category": "MainWeapon",
+  "tier": 9,
+  "soft_attack": 82,
+  "hard_attack": 80,
+  "piercing": 210,
+  "air_attack": 5,
+  "cost": {
+    "steel": 42,
+    "chromium": 14,
+    "tungsten": 12
+  },
+  "production_time": 140,
+  "special_flags": [
+    "france",
+    "germany_joint",
+    "twenty_thirties",
+    "mgcs",
+    "planned"
+  ],
+  "description": "Proposed 140 mm main gun for Main Ground Combat System replacing Leopard 2 and Leclerc."
+}

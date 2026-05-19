@@ -1,0 +1,21 @@
+{
+  "id": "invincible_class_core",
+  "name": "Invincible-class Core",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 80,
+    "electronics": 28,
+    "aluminum": 22
+  },
+  "production_time": 170,
+  "special_flags": [
+    "uk",
+    "carrier",
+    "stovl",
+    "falklands",
+    "harrier"
+  ],
+  "description": "Through-deck cruiser operating Sea Harrier and Sea King. Falklands War flagship."
+}

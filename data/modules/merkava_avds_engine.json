@@ -1,0 +1,20 @@
+{
+  "id": "merkava_avds_engine",
+  "name": "Teledyne AVDS-1790 (Merkava)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 5,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 18,
+    "aluminum": 6
+  },
+  "production_time": 65,
+  "special_flags": [
+    "israel",
+    "seventies",
+    "usa_origin"
+  ],
+  "description": "American-origin diesel adapted for Merkava. Proven in desert heat and dust."
+}

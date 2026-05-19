@@ -1,0 +1,19 @@
+{
+  "id": "mercedes_diii_engine",
+  "name": "Mercedes D.III",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": 3,
+  "fuel_efficiency": 3,
+  "speed_bonus": 9,
+  "cost": {
+    "steel": 10,
+    "aluminum": 8
+  },
+  "production_time": 42,
+  "special_flags": [
+    "ww1",
+    "aircraft"
+  ],
+  "description": "160 hp inline on Albatros D.III and early Fokker D.VII variants."
+}

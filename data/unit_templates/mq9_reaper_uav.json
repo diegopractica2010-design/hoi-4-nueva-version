@@ -1,0 +1,37 @@
+{
+  "id": "mq9_reaper_uav",
+  "name": "MQ-9 Reaper",
+  "design_family": "us_air_two_thousands",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "drone",
+  "crew_required": 2,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 65,
+  "base_stats": {
+    "speed": 48,
+    "reliability": 82,
+    "fuel_consumption": 10,
+    "supply_need": 12,
+    "armor": 4,
+    "hardness": 15
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "DroneAttachment": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "ah64_hellfire",
+    "DroneAttachment": "mq9_reaper_package"
+  },
+  "unlock_tech": [
+    "us_uav_two_thousands"
+  ],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

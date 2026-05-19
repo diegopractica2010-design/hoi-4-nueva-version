@@ -1,0 +1,15 @@
+{
+  "id": "75mm_ansaldo_l34_gun",
+  "name": "75 mm Ansaldo L/34",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 42,
+  "hard_attack": 30,
+  "piercing": 62,
+  "air_attack": 4,
+  "cost": {
+    "steel": 13
+  },
+  "production_time": 50,
+  "description": "P40 and Semovente 75/34. Best Italian medium tank gun."
+}

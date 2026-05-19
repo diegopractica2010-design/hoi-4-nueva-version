@@ -1,0 +1,20 @@
+{
+  "id": "british_tabby_scope",
+  "name": "Tabby IR Tank Scope",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 4,
+    "electronics": 14,
+    "optics": 10
+  },
+  "production_time": 45,
+  "special_flags": [
+    "infrared",
+    "night_fighting",
+    "uk",
+    "tank"
+  ],
+  "description": "British infrared vision for Cromwell and Churchill night operations."
+}

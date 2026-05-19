@@ -1,0 +1,21 @@
+{
+  "id": "tf34_intruder_engine",
+  "name": "TF34 (A-6 Intruder)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 10,
+  "speed_bonus": 22,
+  "cost": {
+    "steel": 16,
+    "aluminum": 24
+  },
+  "production_time": 80,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "sixties",
+    "a6_intruder"
+  ],
+  "description": "Non-afterburning turbofan on A-6 Intruder all-weather strike aircraft."
+}

@@ -402,6 +402,10 @@ func _rebuild_adjacency_system() -> void:
 	adjacency_system.end_bulk_registration()
 
 
+func get_city_layer() -> Dictionary:
+	return province_city_layer
+
+
 func get_city_count(province_id: int) -> int:
 	var pid_key := str(province_id)
 	if province_city_layer.has(pid_key):

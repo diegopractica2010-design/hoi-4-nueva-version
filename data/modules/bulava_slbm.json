@@ -1,0 +1,23 @@
+{
+  "id": "bulava_slbm",
+  "name": "RSM-56 Bulava",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 110,
+  "hard_attack": 100,
+  "piercing": 85,
+  "cost": {
+    "steel": 22,
+    "electronics": 55,
+    "explosives": 90,
+    "uranium": 22
+  },
+  "production_time": 145,
+  "special_flags": [
+    "russia",
+    "slbm",
+    "nuclear",
+    "borei"
+  ],
+  "description": "Russian SLBM for Borei-class SSBN."
+}

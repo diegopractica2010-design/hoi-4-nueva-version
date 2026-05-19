@@ -1,0 +1,19 @@
+{
+  "id": "meteor_mk4_engine",
+  "name": "Meteor Mk IV",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 9,
+  "fuel_efficiency": 3,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 15,
+    "aluminum": 6
+  },
+  "production_time": 52,
+  "special_flags": [
+    "uk",
+    "late_war"
+  ],
+  "description": "Upgraded Meteor for Comet and Centurion. Reliable British tank power."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "pershing_ii_mrbm",
+  "name": "Pershing II",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 140,
+  "hard_attack": 65,
+  "piercing": 55,
+  "cost": {
+    "steel": 18,
+    "electronics": 48,
+    "explosives": 55
+  },
+  "production_time": 105,
+  "special_flags": [
+    "usa",
+    "ballistic",
+    "mrbm",
+    "eighties"
+  ],
+  "description": "Euromissile crisis system. Terminal guidance vs hardened targets in Europe."
+}

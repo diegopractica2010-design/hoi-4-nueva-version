@@ -1,0 +1,23 @@
+{
+  "id": "ariane1_first_stage",
+  "name": "Ariane 1 First Stage",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 2,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 18,
+    "aluminum": 12,
+    "explosives": 35
+  },
+  "production_time": 85,
+  "special_flags": [
+    "esa",
+    "france",
+    "space",
+    "seventies",
+    "ariane"
+  ],
+  "description": "European expendable launcher debut 1979. Independent European space access."
+}

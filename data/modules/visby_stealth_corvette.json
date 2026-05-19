@@ -1,0 +1,22 @@
+{
+  "id": "visby_stealth_corvette",
+  "name": "Visby-class Stealth",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 22,
+  "top_armor_bonus": 15,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 28,
+    "electronics": 32,
+    "aluminum": 18
+  },
+  "production_time": 95,
+  "special_flags": [
+    "sweden",
+    "corvette",
+    "stealth",
+    "twenty_twenties"
+  ],
+  "description": "Swedish composite stealth corvette for Baltic operations."
+}

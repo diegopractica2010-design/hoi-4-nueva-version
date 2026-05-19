@@ -1,0 +1,19 @@
+{
+  "id": "hispano_suiza_8a_engine",
+  "name": "Hispano-Suiza 8A",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": 5,
+  "fuel_efficiency": 4,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 9,
+    "aluminum": 9
+  },
+  "production_time": 44,
+  "special_flags": [
+    "ww1",
+    "aircraft"
+  ],
+  "description": "200 hp V-8 on SPAD S.XIII. Top Allied fighter engine of 1918."
+}

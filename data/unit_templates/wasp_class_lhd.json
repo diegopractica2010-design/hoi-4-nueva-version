@@ -1,0 +1,45 @@
+{
+  "id": "wasp_class_lhd",
+  "name": "Wasp-class LHD",
+  "design_family": "us_naval_amphibious_modern",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 1800,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 190,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 72,
+    "fuel_consumption": 80,
+    "supply_need": 95,
+    "armor": 40,
+    "deck_armor": 28,
+    "hardness": 58
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "wasp_lhd_core",
+    "Sensors": "mh60s_knighthawk_suite",
+    "AntiAir": "aim120_amraam"
+  },
+  "unlock_tech": [
+    "us_naval_aviation",
+    "naval_helicopters",
+    "lhd",
+    "twenty_tens"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

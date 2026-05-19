@@ -1,0 +1,55 @@
+{
+  "id": "jap_frigate_1918",
+  "name": "Tenryū-class Light Cruiser",
+  "design_family": "japanese_naval_1918",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "frigate",
+  "crew_required": 140,
+  "base_training_level": 26,
+  "max_experience_level": 100,
+  "base_production_days": 100,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 66,
+    "fuel_consumption": 45,
+    "supply_need": 55,
+    "armor": 28,
+    "deck_armor": 14,
+    "hardness": 55
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ijn_12_7cm_type89",
+    "SecondaryWeapon": "ww1_18inch_torpedo",
+    "Engine": "ijn_kampon_turbine"
+  },
+  "unlock_tech": [
+    "naval_1918",
+    "ww1_naval",
+    "great_war_naval",
+    "japanese_naval_1918",
+    "frigate"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,25 @@
+{
+  "id": "df21_css5_mrbm",
+  "name": "DF-21 (CSS-5)",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 150,
+  "hard_attack": 70,
+  "piercing": 58,
+  "anti_ship": 80,
+  "cost": {
+    "steel": 20,
+    "electronics": 55,
+    "explosives": 60
+  },
+  "production_time": 115,
+  "special_flags": [
+    "china",
+    "ballistic",
+    "mrbm",
+    "two_thousands",
+    "asbm",
+    "mountable_on_transport"
+  ],
+  "description": "Medium-range ballistic missile. DF-21D variant threatens carrier strike groups."
+}

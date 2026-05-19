@@ -1,0 +1,19 @@
+{
+  "id": "rafale_f4_package",
+  "name": "Rafale F4",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 12,
+    "electronics": 65,
+    "aluminum": 22
+  },
+  "production_time": 140,
+  "special_flags": [
+    "france",
+    "twenty_twenties",
+    "rafale"
+  ],
+  "description": "Rafale F4 standard with RBE2 AA AESA and Talios pod. Export and French Air Force."
+}

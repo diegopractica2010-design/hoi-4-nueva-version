@@ -1,0 +1,23 @@
+{
+  "id": "bmpt_terminator",
+  "name": "BMPT Terminator Package",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 48,
+  "hard_attack": 38,
+  "piercing": 75,
+  "air_attack": 25,
+  "cost": {
+    "steel": 35,
+    "electronics": 22,
+    "explosives": 18
+  },
+  "production_time": 95,
+  "special_flags": [
+    "russia",
+    "twenty_tens",
+    "urban_combat",
+    "support_tank"
+  ],
+  "description": "Tank support fighting vehicle with dual 30 mm and Ataka missiles. Chechnya and Syria."
+}

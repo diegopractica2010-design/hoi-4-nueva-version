@@ -1,0 +1,19 @@
+{
+  "id": "kolkata_class_destroyer",
+  "name": "Kolkata-class Destroyer",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 14,
+    "electronics": 40,
+    "aluminum": 12
+  },
+  "production_time": 90,
+  "special_flags": [
+    "india",
+    "destroyer",
+    "twenty_twenties"
+  ],
+  "description": "Indian guided-missile destroyer with Barak-8 and BrahMos."
+}

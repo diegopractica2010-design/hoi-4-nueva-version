@@ -1,0 +1,23 @@
+{
+  "id": "ch53e_super_stallion",
+  "name": "CH-53E Super Stallion",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "fuel_efficiency": -2,
+  "speed_bonus": 12,
+  "cost": {
+    "steel": 18,
+    "aluminum": 22,
+    "titanium": 6
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "assault",
+    "helicopter",
+    "eighties",
+    "heavy_lift"
+  ],
+  "description": "Heavy assault helicopter for USMC from LHA/LHD. Iraq and Afghanistan amphibious ops."
+}

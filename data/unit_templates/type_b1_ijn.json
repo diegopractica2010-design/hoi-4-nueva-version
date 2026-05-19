@@ -1,0 +1,52 @@
+{
+  "id": "type_b1_ijn",
+  "name": "Type B1 (I-15)",
+  "design_family": "japanese_sub_ww2",
+  "base_type": "Submarine",
+  "size_category": "Heavy",
+  "visual_archetype": "submarine",
+  "crew_required": 94,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 140,
+  "base_stats": {
+    "speed": 22,
+    "reliability": 72,
+    "fuel_consumption": 35,
+    "supply_need": 40,
+    "armor": 32,
+    "hardness": 45
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "submarine_torpedo_tube",
+    "SecondaryWeapon": "type95_sub_torpedo",
+    "Engine": "carrier_boiler_yarrow",
+    "Armor": "pressure_hull_fleet"
+  },
+  "unlock_tech": [
+    "japanese_submarines",
+    "ww2"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

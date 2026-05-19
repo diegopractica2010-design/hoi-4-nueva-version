@@ -1,0 +1,22 @@
+{
+  "id": "pratt_j79_phantom",
+  "name": "Pratt & Whitney J79",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 2,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 16,
+    "aluminum": 28,
+    "titanium": 4
+  },
+  "production_time": 78,
+  "special_flags": [
+    "usa",
+    "jet_powerplant",
+    "sixties",
+    "f4_phantom"
+  ],
+  "description": "F-4 Phantom and F-104 engine. Afterburning turbojet defining 1960s U.S. air superiority."
+}

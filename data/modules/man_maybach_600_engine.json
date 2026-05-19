@@ -1,0 +1,15 @@
+{
+  "id": "man_maybach_600_engine",
+  "name": "Maybach HL 230 (Panther)",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": -6,
+  "fuel_efficiency": -3,
+  "speed_bonus": 5,
+  "cost": {
+    "steel": 17,
+    "aluminum": 4
+  },
+  "production_time": 52,
+  "description": "Panther Ausf. G powerplant. Powerful but prone to final-drive failures."
+}

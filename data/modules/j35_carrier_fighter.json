@@ -1,0 +1,23 @@
+{
+  "id": "j35_carrier_fighter",
+  "name": "J-35",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 14,
+  "speed_bonus": 36,
+  "cost": {
+    "steel": 22,
+    "aluminum": 42,
+    "titanium": 26,
+    "electronics": 40
+  },
+  "production_time": 170,
+  "special_flags": [
+    "china",
+    "twenty_twenties",
+    "carrier",
+    "stealth"
+  ],
+  "description": "Carrier-based fifth-gen fighter for Fujian and Shandong upgrades."
+}

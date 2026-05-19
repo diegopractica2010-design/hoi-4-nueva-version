@@ -1,0 +1,23 @@
+{
+  "id": "vanguard_second_stage",
+  "name": "Vanguard Second Stage",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 4,
+  "speed_bonus": 18,
+  "cost": {
+    "steel": 6,
+    "aluminum": 8,
+    "explosives": 12
+  },
+  "production_time": 55,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "fifties",
+    "satellite_launch"
+  ],
+  "description": "Solid upper stage for Vanguard. Second U.S. satellite launcher after Explorer."
+}

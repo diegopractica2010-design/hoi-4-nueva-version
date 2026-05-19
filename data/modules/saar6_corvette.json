@@ -1,0 +1,21 @@
+{
+  "id": "saar6_corvette",
+  "name": "Sa'ar 6 Corvette",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 28,
+  "top_armor_bonus": 18,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 35,
+    "electronics": 38,
+    "aluminum": 12
+  },
+  "production_time": 110,
+  "special_flags": [
+    "israel",
+    "corvette",
+    "twenty_twenties"
+  ],
+  "description": "Israeli corvette with Iron Dome naval and Barak interceptors."
+}

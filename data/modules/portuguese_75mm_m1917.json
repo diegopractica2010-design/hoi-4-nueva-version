@@ -1,0 +1,19 @@
+{
+  "id": "portuguese_75mm_m1917",
+  "name": "75 mm m/917 Field Gun",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 48,
+  "hard_attack": 10,
+  "piercing": 18,
+  "air_attack": 1,
+  "cost": {
+    "steel": 8
+  },
+  "production_time": 32,
+  "special_flags": [
+    "portugal",
+    "ww1_surplus"
+  ],
+  "description": "Portuguese designation for French 75 copies. Neutral nation standard artillery."
+}

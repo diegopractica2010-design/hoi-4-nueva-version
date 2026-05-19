@@ -1,0 +1,19 @@
+{
+  "id": "serbian_m1904_75mm",
+  "name": "75 mm M1904 Schneider",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 46,
+  "hard_attack": 10,
+  "piercing": 18,
+  "air_attack": 1,
+  "cost": {
+    "steel": 8
+  },
+  "production_time": 34,
+  "special_flags": [
+    "ww1",
+    "serbia"
+  ],
+  "description": "French-supplied Serbian field gun. Obsolete but still fielded in Balkan wars."
+}

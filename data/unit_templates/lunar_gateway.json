@@ -1,0 +1,42 @@
+{
+  "id": "lunar_gateway",
+  "name": "Lunar Gateway",
+  "design_family": "international_space_twenty_thirties",
+  "base_type": "Space",
+  "size_category": "Heavy",
+  "visual_archetype": "space_station",
+  "crew_required": 4,
+  "base_training_level": 40,
+  "max_experience_level": 100,
+  "base_production_days": 210,
+  "base_stats": {
+    "speed": 25,
+    "reliability": 86,
+    "fuel_consumption": 42,
+    "supply_need": 65,
+    "payload_capacity": 8,
+    "hardness": 20
+  },
+  "slots": {
+    "Cargo": {
+      "max": 2
+    },
+    "LifeSupport": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "gateway_lunar_station",
+    "LifeSupport": "orion_spacecraft",
+    "Communications": "lasercom_interplanetary"
+  },
+  "unlock_tech": [
+    "lunar_gateway",
+    "artemis"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

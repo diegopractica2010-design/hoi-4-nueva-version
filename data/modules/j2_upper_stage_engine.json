@@ -1,0 +1,23 @@
+{
+  "id": "j2_upper_stage_engine",
+  "name": "J-2 Upper Stage",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 4,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 18,
+    "aluminum": 14,
+    "explosives": 30
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "sixties",
+    "hydrogen"
+  ],
+  "description": "Saturn V second and third stage engine. LH2/LOX high-efficiency upper stage."
+}

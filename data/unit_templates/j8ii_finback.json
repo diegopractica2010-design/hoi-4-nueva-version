@@ -1,0 +1,37 @@
+{
+  "id": "j8ii_finback",
+  "name": "J-8II Finback",
+  "design_family": "chinese_air_eighties",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 70,
+  "base_stats": {
+    "speed": 98,
+    "reliability": 68,
+    "fuel_consumption": 16,
+    "supply_need": 12,
+    "armor": 8,
+    "hardness": 22
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "pl8_air_missile",
+    "Engine": "wp13f_j8_engine"
+  },
+  "unlock_tech": [
+    "chinese_fighters_eighties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

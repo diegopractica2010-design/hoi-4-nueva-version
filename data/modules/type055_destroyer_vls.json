@@ -1,0 +1,24 @@
+{
+  "id": "type055_destroyer_vls",
+  "name": "Type 055 VLS Suite",
+  "category": "SecondaryWeapon",
+  "tier": 8,
+  "soft_attack": 65,
+  "hard_attack": 75,
+  "piercing": 55,
+  "anti_ship": 105,
+  "air_attack": 50,
+  "cost": {
+    "steel": 45,
+    "electronics": 60,
+    "explosives": 55
+  },
+  "production_time": 160,
+  "special_flags": [
+    "china",
+    "naval",
+    "twenty_twenties",
+    "destroyer"
+  ],
+  "description": "112-cell VLS on Renhai cruiser. Area air defense and anti-ship strike."
+}

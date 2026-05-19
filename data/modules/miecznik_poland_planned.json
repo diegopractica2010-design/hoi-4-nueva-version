@@ -1,0 +1,20 @@
+{
+  "id": "miecznik_poland_planned",
+  "name": "Miecznik Frigate (Planned)",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 11,
+    "electronics": 35,
+    "aluminum": 10
+  },
+  "production_time": 88,
+  "special_flags": [
+    "poland",
+    "frigate",
+    "planned",
+    "twenty_twenties"
+  ],
+  "description": "Polish triple frigate program based on Miecznik/Babcock Arrowhead 140."
+}

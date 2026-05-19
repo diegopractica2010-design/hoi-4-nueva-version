@@ -1,0 +1,20 @@
+{
+  "id": "qf_25pdr_gun",
+  "name": "QF 25-pdr Field Gun",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 78,
+  "hard_attack": 14,
+  "piercing": 28,
+  "air_attack": 2,
+  "cost": {
+    "steel": 14,
+    "explosives": 10
+  },
+  "production_time": 58,
+  "special_flags": [
+    "excellent_vs_soft",
+    "artillery"
+  ],
+  "description": "Bishop/Crusader CS and towed artillery. Outstanding HE; limited tank AP."
+}

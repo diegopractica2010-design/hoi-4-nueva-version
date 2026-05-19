@@ -1,0 +1,52 @@
+{
+  "id": "trump_class_battleship",
+  "name": "Trump-class Battleship",
+  "design_family": "us_naval_planned",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 1200,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 320,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 72,
+    "fuel_consumption": 120,
+    "supply_need": 150,
+    "armor": 95,
+    "deck_armor": 70,
+    "hardness": 88
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "trump_class_16inch_modern",
+    "SecondaryWeapon": "trump_class_vls_farm",
+    "Armor": "trump_class_hull",
+    "Sensors": "ddgx_combat_system",
+    "AntiAir": "hel_mdi_laser"
+  },
+  "unlock_tech": [
+    "us_naval_planned",
+    "trump_class",
+    "battleship_revival"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

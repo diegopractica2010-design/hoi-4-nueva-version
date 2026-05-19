@@ -1,0 +1,22 @@
+{
+  "id": "m68a1_105mm_gun",
+  "name": "105 mm M68A1",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 62,
+  "hard_attack": 58,
+  "piercing": 122,
+  "air_attack": 5,
+  "cost": {
+    "steel": 24,
+    "explosives": 4,
+    "tungsten": 3
+  },
+  "production_time": 82,
+  "special_flags": [
+    "usa",
+    "sixties",
+    "nato_standard"
+  ],
+  "description": "M60A1 and M1 Abrams interim gun. Fires M735 APFSDS; benchmark Western tank armament."
+}

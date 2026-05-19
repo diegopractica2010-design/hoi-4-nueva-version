@@ -1,0 +1,23 @@
+{
+  "id": "westinghouse_s5w_reactor",
+  "name": "Westinghouse S5W Reactor",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 20,
+  "speed_bonus": 18,
+  "cost": {
+    "steel": 25,
+    "uranium": 35,
+    "electronics": 30,
+    "titanium": 8
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "nuclear",
+    "submarine",
+    "cold_war"
+  ],
+  "description": "Nautilus and Los Angeles lineage pressurized-water reactor. Unlimited endurance."
+}

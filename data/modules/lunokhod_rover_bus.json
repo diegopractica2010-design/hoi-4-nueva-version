@@ -1,0 +1,20 @@
+{
+  "id": "lunokhod_rover_bus",
+  "name": "Lunokhod Rover Bus",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 8,
+    "electronics": 18,
+    "aluminum": 10
+  },
+  "production_time": 75,
+  "special_flags": [
+    "ussr",
+    "space",
+    "seventies",
+    "lunar_rover"
+  ],
+  "description": "Remote-controlled lunar rover. Soviet surface exploration first."
+}

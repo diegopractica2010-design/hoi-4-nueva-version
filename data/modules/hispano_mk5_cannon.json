@@ -1,0 +1,21 @@
+{
+  "id": "hispano_mk5_cannon",
+  "name": "Hispano Mk V",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 26,
+  "hard_attack": 16,
+  "piercing": 34,
+  "air_attack": 46,
+  "cost": {
+    "steel": 7,
+    "aluminum": 3
+  },
+  "production_time": 36,
+  "special_flags": [
+    "aircraft_gun",
+    "uk",
+    "20mm"
+  ],
+  "description": "Compact high-velocity 20 mm for Spitfire and Tempest wings."
+}

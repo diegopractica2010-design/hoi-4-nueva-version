@@ -1,0 +1,20 @@
+{
+  "id": "sonar_qcba",
+  "name": "QCB Sonar",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 4,
+    "electronics": 14,
+    "copper": 4
+  },
+  "production_time": 40,
+  "special_flags": [
+    "naval",
+    "asw",
+    "sonar",
+    "usa"
+  ],
+  "description": "Early U.S. active sonar for destroyer escorts. Enables underwater detection and attack runs."
+}

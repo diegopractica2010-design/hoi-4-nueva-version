@@ -1,0 +1,22 @@
+{
+  "id": "german_wasserbombe",
+  "name": "Wasserbombe W44",
+  "category": "SecondaryWeapon",
+  "tier": 2,
+  "soft_attack": 9,
+  "hard_attack": 46,
+  "piercing": 11,
+  "anti_ship": 30,
+  "cost": {
+    "steel": 3,
+    "explosives": 11
+  },
+  "production_time": 24,
+  "special_flags": [
+    "naval",
+    "asw",
+    "germany",
+    "depth_charge"
+  ],
+  "description": "Kriegsmarine depth charge. Used on U-boat hunters and destroyers."
+}

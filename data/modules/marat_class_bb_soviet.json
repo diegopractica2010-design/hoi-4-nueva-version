@@ -1,0 +1,23 @@
+{
+  "id": "marat_class_bb_soviet",
+  "name": "Marat 12\"/52",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 34,
+  "hard_attack": 38,
+  "piercing": 36,
+  "anti_ship": 70,
+  "cost": {
+    "steel": 28,
+    "chromium": 5,
+    "explosives": 11
+  },
+  "production_time": 82,
+  "special_flags": [
+    "soviet",
+    "battleship",
+    "interwar",
+    "modernized"
+  ],
+  "description": "Modernized Gangut/Marat class. Baltic and Black Sea fleets 1936."
+}

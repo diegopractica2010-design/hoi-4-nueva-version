@@ -1,0 +1,22 @@
+{
+  "id": "3bm69_apfsds",
+  "name": "3BM69 Vacuum-1",
+  "category": "Cargo",
+  "tier": 8,
+  "soft_attack": 14,
+  "hard_attack": 32,
+  "piercing": 55,
+  "cost": {
+    "tungsten": 18,
+    "uranium": 8,
+    "steel": 2
+  },
+  "production_time": 55,
+  "special_flags": [
+    "russia",
+    "ammunition",
+    "apfsds",
+    "twenty_twenties"
+  ],
+  "description": "Latest Russian long-rod penetrator for 125 mm smoothbore."
+}

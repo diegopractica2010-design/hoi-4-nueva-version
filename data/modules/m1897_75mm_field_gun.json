@@ -1,0 +1,21 @@
+{
+  "id": "m1897_75mm_field_gun",
+  "name": "75 mm M1897 Field Gun",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 62,
+  "hard_attack": 12,
+  "piercing": 22,
+  "air_attack": 1,
+  "cost": {
+    "steel": 10,
+    "explosives": 6
+  },
+  "production_time": 40,
+  "special_flags": [
+    "ww1",
+    "excellent_vs_soft",
+    "artillery"
+  ],
+  "description": "French-designed 'French 75' used by AEF. Rapid, accurate indirect fire; weak vs armor."
+}

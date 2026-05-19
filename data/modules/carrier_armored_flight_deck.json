@@ -1,0 +1,20 @@
+{
+  "id": "carrier_armored_flight_deck",
+  "name": "Armored Flight Deck",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 38,
+  "top_armor_bonus": 55,
+  "reliability_penalty": -8,
+  "cost": {
+    "steel": 70,
+    "chromium": 6
+  },
+  "production_time": 120,
+  "special_flags": [
+    "carrier",
+    "uk",
+    "illustrious_class"
+  ],
+  "description": "British armored carrier flight deck. Withstands bomb hits that would cripple U.S. wooden decks."
+}

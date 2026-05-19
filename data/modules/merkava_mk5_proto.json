@@ -1,0 +1,23 @@
+{
+  "id": "merkava_mk5_proto",
+  "name": "Merkava Mk V (Prototype)",
+  "category": "Armor",
+  "tier": 9,
+  "armor_bonus": 85,
+  "top_armor_bonus": 52,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 52,
+    "ceramics": 32,
+    "electronics": 28,
+    "kevlar": 18
+  },
+  "production_time": 150,
+  "special_flags": [
+    "israel",
+    "twenty_thirties",
+    "merkava",
+    "planned"
+  ],
+  "description": "Projected Merkava with hybrid drive, Trophy HV, and reduced crew via automation."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "martadinata_indonesia",
+  "name": "Martadinata-class",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 10,
+    "electronics": 30,
+    "aluminum": 9
+  },
+  "production_time": 78,
+  "special_flags": [
+    "indonesia",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Indonesian SIGMA 10514 frigate."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "atar9c_turbojet",
+  "name": "Atar 9C",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 4,
+  "speed_bonus": 29,
+  "cost": {
+    "steel": 14,
+    "aluminum": 24,
+    "titanium": 3
+  },
+  "production_time": 75,
+  "special_flags": [
+    "france",
+    "jet_powerplant",
+    "sixties",
+    "mirage3"
+  ],
+  "description": "Mirage III and Mirage 5 engine. French strategic independence in combat aircraft."
+}

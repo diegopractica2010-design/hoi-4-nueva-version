@@ -1,0 +1,20 @@
+{
+  "id": "albion_class_lpd",
+  "name": "Albion-class LPD",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 68,
+    "electronics": 22,
+    "aluminum": 18
+  },
+  "production_time": 158,
+  "special_flags": [
+    "uk",
+    "lpd",
+    "helicopter",
+    "two_thousands"
+  ],
+  "description": "Royal Navy landing platform dock with Merlin and Lynx/Wildcat support."
+}

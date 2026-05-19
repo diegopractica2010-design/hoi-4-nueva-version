@@ -1,0 +1,22 @@
+{
+  "id": "ariane6_launcher",
+  "name": "Ariane 6",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 8,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 28,
+    "aluminum": 20,
+    "explosives": 45
+  },
+  "production_time": 110,
+  "special_flags": [
+    "esa",
+    "space",
+    "twenty_twenties",
+    "ariane"
+  ],
+  "description": "Next-generation European launcher replacing Ariane 5."
+}

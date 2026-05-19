@@ -1,0 +1,24 @@
+{
+  "id": "d4y_judy_strike_load",
+  "name": "Judy Strike Load",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 70,
+  "hard_attack": 40,
+  "piercing": 36,
+  "anti_ship": 62,
+  "air_attack": 14,
+  "cost": {
+    "steel": 5,
+    "explosives": 26,
+    "electronics": 3
+  },
+  "production_time": 46,
+  "special_flags": [
+    "japan",
+    "naval_aviation",
+    "ww2",
+    "d4y_judy"
+  ],
+  "description": "Fast Judy dive bomber / recon load for late-war Japanese carriers."
+}

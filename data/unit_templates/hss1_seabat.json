@@ -1,0 +1,44 @@
+{
+  "id": "hss1_seabat",
+  "name": "HSS-1 Seabat",
+  "design_family": "us_naval_helo_historic",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "helicopter",
+  "crew_required": 2,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 48,
+  "base_stats": {
+    "speed": 48,
+    "reliability": 65,
+    "fuel_consumption": 10,
+    "supply_need": 8,
+    "armor": 5,
+    "hardness": 10
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "mark44_lightweight_torpedo",
+    "Sensors": "hss1_seabat_asw",
+    "Engine": "h34_choctaw_naval"
+  },
+  "unlock_tech": [
+    "us_naval_aviation",
+    "naval_helicopters",
+    "fifties",
+    "asw_helicopter"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

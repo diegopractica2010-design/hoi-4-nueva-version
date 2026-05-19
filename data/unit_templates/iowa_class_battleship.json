@@ -1,0 +1,55 @@
+{
+  "id": "iowa_class_battleship",
+  "name": "Iowa-class",
+  "design_family": "us_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 2200,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 310,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 78,
+    "fuel_consumption": 110,
+    "supply_need": 140,
+    "armor": 60,
+    "deck_armor": 35,
+    "hardness": 92
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "us_16inch_50_gun",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "iowa_class_turbine_212k",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37",
+    "Communications": "scr_522_radio"
+  },
+  "unlock_tech": [
+    "us_battleships",
+    "fast_battleship"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

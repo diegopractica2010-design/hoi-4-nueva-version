@@ -1,0 +1,23 @@
+{
+  "id": "s300_pmu_sam",
+  "name": "S-300 PMU",
+  "category": "AntiAir",
+  "tier": 7,
+  "soft_attack": 16,
+  "hard_attack": 14,
+  "air_attack": 92,
+  "anti_air": 94,
+  "cost": {
+    "steel": 30,
+    "electronics": 60,
+    "explosives": 22
+  },
+  "production_time": 125,
+  "special_flags": [
+    "ussr",
+    "sam",
+    "eighties",
+    "strategic"
+  ],
+  "description": "Long-range SAM system. Export to China and Syria; cornerstone of Soviet air defense."
+}

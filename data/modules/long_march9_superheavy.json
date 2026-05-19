@@ -1,0 +1,22 @@
+{
+  "id": "long_march9_superheavy",
+  "name": "Long March 9",
+  "category": "Cargo",
+  "tier": 9,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 80,
+    "aluminum": 55,
+    "explosives": 120
+  },
+  "production_time": 200,
+  "special_flags": [
+    "china",
+    "space",
+    "twenty_thirties",
+    "super_heavy",
+    "planned",
+    "mars"
+  ],
+  "description": "Chinese super-heavy launcher for lunar base and Mars aspirations."
+}

@@ -1,0 +1,46 @@
+{
+  "id": "tbf_avenger_strike",
+  "name": "TBF/TBM Avenger",
+  "design_family": "us_carrier_air_ww2",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "bomber",
+  "crew_required": 3,
+  "base_training_level": 31,
+  "max_experience_level": 100,
+  "base_production_days": 56,
+  "base_stats": {
+    "speed": 68,
+    "reliability": 68,
+    "fuel_consumption": 14,
+    "supply_need": 12,
+    "armor": 16,
+    "hardness": 22
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "tbf_strike_torpedo_load",
+    "SecondaryWeapon": "mk13_aerial_torpedo",
+    "Engine": "wasp_r1340_carrier_scout",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "us_naval_aviation",
+    "carrier_air_wing"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,20 @@
+{
+  "id": "fu_g_202_lichtenstein",
+  "name": "FuG 202 Lichtenstein",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 5,
+    "electronics": 18,
+    "aluminum": 5
+  },
+  "production_time": 52,
+  "special_flags": [
+    "radar",
+    "airborne",
+    "night_fighter",
+    "germany"
+  ],
+  "description": "German night-fighter airborne radar. Gave Bf 110 and Ju 88 crews night interception capability."
+}

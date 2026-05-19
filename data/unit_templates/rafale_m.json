@@ -1,0 +1,47 @@
+{
+  "id": "rafale_m",
+  "name": "Rafale M",
+  "design_family": "french_carrier_air",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 85,
+  "base_stats": {
+    "speed": 105,
+    "reliability": 82,
+    "fuel_consumption": 26,
+    "supply_need": 20,
+    "armor": 18,
+    "hardness": 30
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "mica_air_missile",
+    "SecondaryWeapon": "scalp_cruise_missile",
+    "Engine": "rafale_package",
+    "Sensors": "rafale_m_carrier_package"
+  },
+  "unlock_tech": [
+    "french_naval_aviation",
+    "carrier_strike",
+    "cdg_air_wing"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

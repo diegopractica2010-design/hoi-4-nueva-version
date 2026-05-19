@@ -1,0 +1,23 @@
+{
+  "id": "leopard2a7_package",
+  "name": "Leopard 2A7V Package",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 78,
+  "top_armor_bonus": 55,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 52,
+    "ceramics": 30,
+    "titanium": 14,
+    "kevlar": 12
+  },
+  "production_time": 135,
+  "special_flags": [
+    "germany",
+    "twenty_tens",
+    "leopard2a7",
+    "urban_kit"
+  ],
+  "description": "Leopard 2A7+ with mine protection and FLW 200 RCWS. Qatar and Hungary export."
+}

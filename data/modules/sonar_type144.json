@@ -1,0 +1,19 @@
+{
+  "id": "sonar_type144",
+  "name": "Type 144 Sonar",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 4,
+    "electronics": 12
+  },
+  "production_time": 38,
+  "special_flags": [
+    "naval",
+    "asw",
+    "sonar",
+    "uk"
+  ],
+  "description": "British destroyer sonar set. Improved bearing accuracy for Hedgehog attacks."
+}

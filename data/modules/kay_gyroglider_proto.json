@@ -1,0 +1,21 @@
+{
+  "id": "kay_gyroglider_proto",
+  "name": "Kay Gyroglider Proto",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": -6,
+  "fuel_efficiency": 2,
+  "speed_bonus": 4,
+  "cost": {
+    "steel": 5,
+    "aluminum": 4
+  },
+  "production_time": 40,
+  "special_flags": [
+    "uk",
+    "prototype",
+    "pre_war",
+    "autogyro"
+  ],
+  "description": "British 1930s gyroglider experiments. Tow-launched rotary-wing research."
+}

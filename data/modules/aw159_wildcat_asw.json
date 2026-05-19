@@ -1,0 +1,21 @@
+{
+  "id": "aw159_wildcat_asw",
+  "name": "AW159 Wildcat ASW",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 7,
+    "electronics": 32,
+    "aluminum": 10
+  },
+  "production_time": 65,
+  "special_flags": [
+    "uk",
+    "south_korea",
+    "philippines",
+    "asw",
+    "helicopter"
+  ],
+  "description": "Light naval helicopter for frigates and smaller carriers. Sea Skua and torpedo capable."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "stalingrad_bc_design",
+  "name": "Stalingrad BC Design",
+  "category": "NavalGun",
+  "tier": 5,
+  "soft_attack": 46,
+  "hard_attack": 52,
+  "piercing": 50,
+  "anti_ship": 85,
+  "cost": {
+    "steel": 38,
+    "chromium": 9,
+    "explosives": 14
+  },
+  "production_time": 105,
+  "special_flags": [
+    "ussr",
+    "battlecruiser",
+    "prototype",
+    "cold_war",
+    "paper"
+  ],
+  "description": "Soviet large battlecruiser with 12-inch guns. Cancelled after Stalin's death."
+}

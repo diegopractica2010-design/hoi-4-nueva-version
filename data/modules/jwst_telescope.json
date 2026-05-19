@@ -1,0 +1,23 @@
+{
+  "id": "jwst_telescope",
+  "name": "James Webb Space Telescope",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 16,
+  "cost": {
+    "steel": 12,
+    "electronics": 80,
+    "optics": 60,
+    "aluminum": 20
+  },
+  "production_time": 280,
+  "special_flags": [
+    "nasa",
+    "esa",
+    "space",
+    "twenty_twenties",
+    "science",
+    "lagrange"
+  ],
+  "description": "Infrared space telescope at Sun-Earth L2. Successor to Hubble for deep universe."
+}

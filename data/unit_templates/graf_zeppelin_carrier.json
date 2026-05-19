@@ -1,0 +1,51 @@
+{
+  "id": "graf_zeppelin_carrier",
+  "name": "Graf Zeppelin",
+  "design_family": "german_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 1760,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 320,
+  "base_stats": {
+    "speed": 33,
+    "reliability": 65,
+    "fuel_consumption": 85,
+    "supply_need": 100,
+    "armor": 35,
+    "deck_armor": 25,
+    "hardness": 62
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Armor": "carrier_island_superstructure",
+    "Engine": "geared_steam_turbine_60k",
+    "Cargo": "carrier_air_wing_bunker",
+    "Sensors": "wurzburg_ground_radar",
+    "AntiAir": "flakvierling_38_quad"
+  },
+  "unlock_tech": [
+    "german_carriers",
+    "german_paper_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

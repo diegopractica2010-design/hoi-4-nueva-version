@@ -1,0 +1,20 @@
+{
+  "id": "ab212_asw_italy",
+  "name": "AB-212 ASW (Italy)",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 7,
+    "electronics": 20,
+    "aluminum": 9
+  },
+  "production_time": 52,
+  "special_flags": [
+    "italy",
+    "asw",
+    "helicopter",
+    "cold_war"
+  ],
+  "description": "Italian naval ASW helicopter on destroyers and Garibaldi."
+}

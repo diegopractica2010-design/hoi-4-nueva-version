@@ -1,0 +1,20 @@
+{
+  "id": "panther_naval_france",
+  "name": "Panther Naval",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 7,
+    "electronics": 26,
+    "aluminum": 10
+  },
+  "production_time": 60,
+  "special_flags": [
+    "france",
+    "helicopter",
+    "naval",
+    "mistral"
+  ],
+  "description": "Light naval helicopter on Mistral-class and French frigates."
+}

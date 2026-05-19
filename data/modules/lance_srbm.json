@@ -1,0 +1,22 @@
+{
+  "id": "lance_srbm",
+  "name": "MGM-52 Lance",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 100,
+  "hard_attack": 45,
+  "piercing": 35,
+  "cost": {
+    "steel": 14,
+    "electronics": 30,
+    "explosives": 40
+  },
+  "production_time": 80,
+  "special_flags": [
+    "usa",
+    "ballistic",
+    "srbm",
+    "seventies"
+  ],
+  "description": "NATO division-level nuclear-capable SRBM replaced by ATACMS."
+}

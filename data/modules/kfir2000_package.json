@@ -1,0 +1,19 @@
+{
+  "id": "kfir2000_package",
+  "name": "Kfir 2000 Avionics",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 6,
+    "electronics": 35,
+    "optics": 14
+  },
+  "production_time": 75,
+  "special_flags": [
+    "israel",
+    "eighties",
+    "fighter_upgrade"
+  ],
+  "description": "Multi-mode radar and avionics upgrade for Kfir and export fighters."
+}

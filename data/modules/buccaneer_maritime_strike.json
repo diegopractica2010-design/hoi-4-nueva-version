@@ -1,0 +1,24 @@
+{
+  "id": "buccaneer_maritime_strike",
+  "name": "Buccaneer Maritime Strike",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 72,
+  "hard_attack": 55,
+  "piercing": 48,
+  "anti_ship": 80,
+  "air_attack": 10,
+  "cost": {
+    "steel": 8,
+    "explosives": 35,
+    "electronics": 12
+  },
+  "production_time": 65,
+  "special_flags": [
+    "uk",
+    "naval_aviation",
+    "sixties",
+    "buccaneer"
+  ],
+  "description": "Martel and conventional bomb load for Buccaneer anti-ship strike."
+}

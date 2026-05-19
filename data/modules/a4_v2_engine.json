@@ -1,0 +1,23 @@
+{
+  "id": "a4_v2_engine",
+  "name": "A4/V-2 Rocket Engine",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": -8,
+  "fuel_efficiency": -12,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 12,
+    "aluminum": 8,
+    "explosives": 25
+  },
+  "production_time": 80,
+  "special_flags": [
+    "germany",
+    "space",
+    "forties",
+    "liquid_fuel",
+    "ballistic"
+  ],
+  "description": "Walter HWK 109-509 style ethanol/LOX engine on V-2. First long-range ballistic missile."
+}

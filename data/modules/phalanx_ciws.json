@@ -1,0 +1,23 @@
+{
+  "id": "phalanx_ciws",
+  "name": "Phalanx CIWS",
+  "category": "AntiAir",
+  "tier": 6,
+  "soft_attack": 22,
+  "hard_attack": 10,
+  "air_attack": 82,
+  "anti_air": 85,
+  "cost": {
+    "steel": 16,
+    "aluminum": 12,
+    "electronics": 28
+  },
+  "production_time": 90,
+  "special_flags": [
+    "usa",
+    "naval",
+    "ciws",
+    "seventies"
+  ],
+  "description": "Radar-guided 20 mm Gatling last-ditch defense. Entered trials late 1970s."
+}

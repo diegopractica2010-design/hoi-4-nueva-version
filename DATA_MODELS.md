@@ -28,7 +28,8 @@ The atomic building blocks placed into `UnitTemplate` slots.
 - `soft_attack`: Effectiveness vs soft targets (infantry, crew, unarmored).
 - `hard_attack`: Effectiveness vs hard/armored targets.
 - `piercing`: Ability to defeat armor. Higher piercing beats higher armor.
-- Other combat stats: `air_attack`, `anti_ship`, `anti_drone`, etc.
+- Other combat stats: `air_attack`, `anti_ship`, `anti_air`, `anti_drone`, etc.
+- Naval modules often use category `NavalGun` with high `anti_ship` and `anti_air` values.
 - Economic: cost, production_time.
 
 **Categories** (examples):
@@ -181,6 +182,21 @@ National focuses can influence:
 ## 9. Supporting Systems
 
 - **ProductionLine**: Tied to `UnitTemplate` or `EquipmentModule`. Handles output, efficiency, and resource consumption.
+- **Design Maturity & Reliability**: New `UnitTemplate` designs start immature (low reliability, high maintenance, reduced combat readiness). Maturity grows from production experience and refinement/shakedown projects. See `ReliabilityProfile`, `ReliabilityCalculator`, and `refinement_projects` in `data/production/production_line_rules.json`.
+
+### Design Maturity Trade-offs
+
+| Path | Upfront cost | Time | Long-term effect |
+|------|----------------|------|------------------|
+| Rush production (no projects) | Low | Fastest | High maintenance, breakdown risk, weak combat readiness |
+| Shakedown batches | Low–medium | Short, parallel | Gradual reliability; maintenance stays elevated longer |
+| Quality programs | Medium | Medium | Balanced reliability and supply costs |
+| Field overhaul (blocks line) | High | Long halt | Best reliability, lowest upkeep |
+
+Derived stats on `ReliabilityProfile`:
+- `effective_reliability` — stat used in combat/logistics
+- `maintenance_index` / `supply_cost_multiplier` — long-term operating cost
+- `combat_readiness` / `breakdown_risk` — combat performance penalties while immature
 - **Agent**: Level, experience, stats, abilities, mission history.
 - **Event**: Moddable events that make the game world feel dynamic and reactive.
 - **TechNode**: Includes both regular technology and Doctrine nodes.

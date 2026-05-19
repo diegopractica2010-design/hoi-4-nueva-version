@@ -1,0 +1,54 @@
+{
+  "id": "bismarck_battleship",
+  "name": "Bismarck",
+  "design_family": "german_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 2200,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 68,
+    "fuel_consumption": 95,
+    "supply_need": 130,
+    "armor": 58,
+    "deck_armor": 30,
+    "hardness": 84
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ger_15inch_skc34",
+    "SecondaryWeapon": "g7a_torpedo",
+    "Engine": "german_wagner_turbine",
+    "Armor": "naval_belt_armor_scheme",
+    "Communications": "fug_16_zyf_radio",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "german_battleships"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

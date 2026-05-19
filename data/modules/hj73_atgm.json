@@ -1,0 +1,23 @@
+{
+  "id": "hj73_atgm",
+  "name": "HJ-73 ATGM",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 28,
+  "hard_attack": 46,
+  "piercing": 90,
+  "air_attack": 3,
+  "cost": {
+    "steel": 4,
+    "electronics": 8,
+    "explosives": 6
+  },
+  "production_time": 35,
+  "special_flags": [
+    "china",
+    "atgm",
+    "sixties",
+    "sagger_copy"
+  ],
+  "description": "Chinese copy of 9M14 Malyutka. Equips Type 63 and early anti-tank teams."
+}

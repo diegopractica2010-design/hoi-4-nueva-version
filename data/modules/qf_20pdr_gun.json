@@ -1,0 +1,19 @@
+{
+  "id": "qf_20pdr_gun",
+  "name": "QF 20-pdr",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 54,
+  "hard_attack": 50,
+  "piercing": 105,
+  "air_attack": 5,
+  "cost": {
+    "steel": 20
+  },
+  "production_time": 70,
+  "special_flags": [
+    "uk",
+    "cold_war"
+  ],
+  "description": "Centurion Mk 1 gun. First Western tank to outgun Tiger II routinely."
+}

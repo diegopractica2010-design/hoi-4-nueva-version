@@ -1,0 +1,53 @@
+{
+  "id": "israeli_dolphin",
+  "name": "Dolphin-class",
+  "design_family": "israeli_sub_modern",
+  "base_type": "Submarine",
+  "size_category": "Medium",
+  "visual_archetype": "submarine",
+  "crew_required": 35,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 140,
+  "base_stats": {
+    "speed": 22,
+    "reliability": 72,
+    "fuel_consumption": 35,
+    "supply_need": 40,
+    "armor": 32,
+    "hardness": 45
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "submarine_torpedo_tube",
+    "SecondaryWeapon": "harpoon_sub_launch",
+    "Engine": "fuel_cell_aip_212",
+    "Sensors": "passive_sonar_ww2"
+  },
+  "unlock_tech": [
+    "israeli_submarines",
+    "german_export",
+    "twenty_tens"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

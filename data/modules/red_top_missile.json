@@ -1,0 +1,22 @@
+{
+  "id": "red_top_missile",
+  "name": "Red Top",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 7,
+  "hard_attack": 5,
+  "air_attack": 60,
+  "anti_air": 56,
+  "cost": {
+    "steel": 4,
+    "electronics": 18,
+    "explosives": 6
+  },
+  "production_time": 50,
+  "special_flags": [
+    "uk",
+    "air_to_air",
+    "sixties"
+  ],
+  "description": "Improved Firestreak IR missile for Lightning and Harrier. Limited all-aspect capability."
+}

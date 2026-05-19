@@ -1,0 +1,20 @@
+{
+  "id": "ajax_ifv_package",
+  "name": "Ajax IFV Package",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 22,
+    "electronics": 45,
+    "optics": 25
+  },
+  "production_time": 95,
+  "special_flags": [
+    "uk",
+    "twenty_twenties",
+    "ajax",
+    "ct40"
+  ],
+  "description": "Ajax with 40 mm CTA cannon and advanced sensors. Troubled program but 2020s fielding."
+}

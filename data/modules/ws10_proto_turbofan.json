@@ -1,0 +1,22 @@
+{
+  "id": "ws10_proto_turbofan",
+  "name": "WS-10 (Prototype)",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 8,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 16,
+    "aluminum": 28,
+    "titanium": 8
+  },
+  "production_time": 95,
+  "special_flags": [
+    "china",
+    "jet_powerplant",
+    "nineties",
+    "indigenous"
+  ],
+  "description": "Indigenous turbofan development for J-10 and J-11 programs. Testing through late 1990s."
+}

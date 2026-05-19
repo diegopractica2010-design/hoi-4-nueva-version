@@ -1,0 +1,22 @@
+{
+  "id": "hybrid_steel_hull_virginia",
+  "name": "HY-100 Hybrid Hull",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 48,
+  "top_armor_bonus": 48,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 55,
+    "titanium": 12,
+    "chromium": 8
+  },
+  "production_time": 110,
+  "special_flags": [
+    "usa",
+    "submarine",
+    "deep_diving",
+    "twenty_tens"
+  ],
+  "description": "High-strength hull for Virginia-class deep operations."
+}

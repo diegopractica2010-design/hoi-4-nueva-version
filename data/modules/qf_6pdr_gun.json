@@ -1,0 +1,18 @@
+{
+  "id": "qf_6pdr_gun",
+  "name": "QF 6-pdr Mk III",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 44,
+  "hard_attack": 36,
+  "piercing": 72,
+  "air_attack": 4,
+  "cost": {
+    "steel": 12
+  },
+  "production_time": 48,
+  "special_flags": [
+    "decent_ap"
+  ],
+  "description": "Churchill and Crusader up-gun. Credible threat to Panzer III/IV."
+}

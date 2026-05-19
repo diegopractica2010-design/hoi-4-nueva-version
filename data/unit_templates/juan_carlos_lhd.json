@@ -1,0 +1,44 @@
+{
+  "id": "juan_carlos_lhd",
+  "name": "LHD Juan Carlos I",
+  "design_family": "spanish_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "carrier",
+  "crew_required": 2200,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 185,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 75,
+    "fuel_consumption": 95,
+    "supply_need": 120,
+    "armor": 50,
+    "deck_armor": 38,
+    "hardness": 70
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "juan_carlos_ski_jump",
+    "Sensors": "aesa_radar_gen1",
+    "AntiAir": "meteor_missile"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "spanish_amphibious_2026"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

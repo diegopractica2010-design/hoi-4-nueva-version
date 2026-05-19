@@ -1,0 +1,47 @@
+{
+  "id": "fa18ef_super_hornet",
+  "name": "F/A-18E/F Super Hornet",
+  "design_family": "us_carrier_air_modern",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 82,
+  "base_stats": {
+    "speed": 105,
+    "reliability": 82,
+    "fuel_consumption": 26,
+    "supply_need": 20,
+    "armor": 18,
+    "hardness": 30
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "aim120d_amraam",
+    "SecondaryWeapon": "aim9x_block2",
+    "Engine": "ge_f414_super_hornet",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "us_carrier_aviation",
+    "cold_war_naval_air",
+    "twenty_first_century_carrier"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

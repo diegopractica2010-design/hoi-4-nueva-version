@@ -1,0 +1,22 @@
+{
+  "id": "j57_f8_crusader",
+  "name": "J57 Afterburner (F-8)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 2,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 15,
+    "aluminum": 26,
+    "titanium": 4
+  },
+  "production_time": 78,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "sixties",
+    "f8_crusader"
+  ],
+  "description": "Afterburning J57 on F-8 Crusader. Last U.S. gunfighter; Mach 1.7 capable."
+}

@@ -1,0 +1,54 @@
+{
+  "id": "zara_class_cruiser",
+  "name": "Zara-class",
+  "design_family": "italian_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "cruiser",
+  "crew_required": 800,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 215,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 70,
+    "fuel_consumption": 62,
+    "supply_need": 78,
+    "armor": 42,
+    "deck_armor": 20,
+    "hardness": 72
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ita_12inch_m1914",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "italian_cruisers",
+    "ww2_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,16 @@
+{
+  "id": "db_605a_engine",
+  "name": "Daimler-Benz DB 605A",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "fuel_efficiency": 4,
+  "speed_bonus": 16,
+  "cost": {
+    "steel": 11,
+    "aluminum": 14
+  },
+  "production_time": 50,
+  "special_flags": ["fighter_powerplant", "inverted_v12"],
+  "description": "1,475 hp inverted V-12 standard on Bf 109G and Bf 110. Excellent power-to-weight for high-altitude fighter combat."
+}

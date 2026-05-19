@@ -1,0 +1,22 @@
+{
+  "id": "merkava_mk1_armor",
+  "name": "Merkava Mk I Armor",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 54,
+  "top_armor_bonus": 32,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 40,
+    "chromium": 5,
+    "ceramics": 6
+  },
+  "production_time": 80,
+  "special_flags": [
+    "israel",
+    "seventies",
+    "front_engine",
+    "mbt"
+  ],
+  "description": "Front-engine layout protecting crew. Spaced armor lessons from 1973 Yom Kippur War."
+}

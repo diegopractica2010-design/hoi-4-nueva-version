@@ -1,0 +1,16 @@
+{
+  "id": "type99_800kg_bomb",
+  "name": "Type 99 800 kg Bomb",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 78,
+  "hard_attack": 14,
+  "piercing": 8,
+  "air_attack": 9,
+  "cost": {
+    "steel": 5,
+    "explosives": 26
+  },
+  "production_time": 42,
+  "description": "Kate and Val dive/tactical bomb load."
+}

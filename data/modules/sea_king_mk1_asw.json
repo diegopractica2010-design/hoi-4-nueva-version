@@ -1,0 +1,20 @@
+{
+  "id": "sea_king_mk1_asw",
+  "name": "Sea King Mk 1 ASW",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "electronics": 26,
+    "aluminum": 12
+  },
+  "production_time": 60,
+  "special_flags": [
+    "uk",
+    "asw",
+    "helicopter",
+    "sixties"
+  ],
+  "description": "British Sea King ASW variant. Invincible-class and destroyer operations."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "ger_15inch_skc34",
+  "name": "38 cm SK C/34",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 82,
+  "hard_attack": 74,
+  "piercing": 118,
+  "air_attack": 3,
+  "anti_ship": 98,
+  "cost": {
+    "steel": 48,
+    "explosives": 16,
+    "chromium": 5
+  },
+  "production_time": 115,
+  "special_flags": [
+    "naval",
+    "battleship",
+    "germany"
+  ],
+  "description": "Bismarck and Scharnhorst class 15-inch equivalent. Highly effective AP shells."
+}

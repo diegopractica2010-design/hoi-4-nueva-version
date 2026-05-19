@@ -1,0 +1,20 @@
+{
+  "id": "wasp_r1340_carrier_scout",
+  "name": "Wasp R-1340 (Carrier Scout)",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 9,
+  "fuel_efficiency": 5,
+  "speed_bonus": 9,
+  "cost": {
+    "steel": 9,
+    "aluminum": 10
+  },
+  "production_time": 44,
+  "special_flags": [
+    "carrier_capable",
+    "usa",
+    "scout_aircraft"
+  ],
+  "description": "F4F Wildcat and OS2U Kingfisher powerplant. Standard U.S. carrier aviation engine."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "merkava_mk4_armor",
+  "name": "Merkava Mk IV Armor",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 72,
+  "top_armor_bonus": 45,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 48,
+    "ceramics": 24,
+    "kevlar": 14,
+    "electronics": 10
+  },
+  "production_time": 110,
+  "special_flags": [
+    "israel",
+    "two_thousands",
+    "merkava",
+    "front_engine"
+  ],
+  "description": "Merkava Mk IV with modular armor and improved belly protection. 2006 Lebanon War."
+}

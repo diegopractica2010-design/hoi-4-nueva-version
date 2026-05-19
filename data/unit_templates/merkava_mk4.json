@@ -1,0 +1,46 @@
+{
+  "id": "merkava_mk4",
+  "name": "Merkava Mk IV",
+  "design_family": "israeli_armored_two_thousands",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 4,
+  "base_training_level": 40,
+  "max_experience_level": 100,
+  "base_production_days": 115,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 84,
+    "fuel_consumption": 14,
+    "supply_need": 18,
+    "armor": 72,
+    "top_armor": 45,
+    "hardness": 95
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "merkava_mk4m_120mm",
+    "Engine": "merkava_avds_engine",
+    "Armor": "merkava_mk4_armor",
+    "Sensors": "trophy_aps_israel"
+  },
+  "unlock_tech": [
+    "israeli_mbt_two_thousands"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

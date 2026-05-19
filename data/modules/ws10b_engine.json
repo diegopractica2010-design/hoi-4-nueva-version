@@ -1,0 +1,21 @@
+{
+  "id": "ws10b_engine",
+  "name": "WS-10B Turbofan",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 12,
+  "speed_bonus": 33,
+  "cost": {
+    "steel": 18,
+    "aluminum": 34,
+    "titanium": 14
+  },
+  "production_time": 105,
+  "special_flags": [
+    "china",
+    "twenty_tens",
+    "indigenous"
+  ],
+  "description": "Indigenous fighter engine for J-10C and J-11B. Reduces reliance on Russian AL-31."
+}

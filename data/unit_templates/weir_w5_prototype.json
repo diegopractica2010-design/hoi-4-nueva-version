@@ -1,0 +1,39 @@
+{
+  "id": "weir_w5_prototype",
+  "name": "Weir W.5 Prototype",
+  "design_family": "experimental_rotary_pre_war",
+  "base_type": "Air",
+  "size_category": "Light",
+  "visual_archetype": "helicopter",
+  "crew_required": 1,
+  "base_training_level": 20,
+  "max_experience_level": 88,
+  "base_production_days": 65,
+  "base_stats": {
+    "speed": 42,
+    "reliability": 50,
+    "fuel_consumption": 14,
+    "supply_need": 10,
+    "armor": 4,
+    "hardness": 8
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "weir_w5_proto_engine",
+    "Sensors": "cierva_autogyro_c30"
+  },
+  "unlock_tech": [
+    "helicopter",
+    "uk_aviation",
+    "prototype"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

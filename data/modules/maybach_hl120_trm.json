@@ -1,0 +1,15 @@
+{
+  "id": "maybach_hl120_trm",
+  "name": "Maybach HL 120 TRM",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "fuel_efficiency": 1,
+  "speed_bonus": 5,
+  "cost": {
+    "steel": 12,
+    "rubber": 2
+  },
+  "production_time": 42,
+  "description": "300 hp engine for Panzer III and early Panzer IV. Adequate for medium tanks."
+}

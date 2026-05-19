@@ -1,0 +1,22 @@
+{
+  "id": "oerlikon_ff_mk2",
+  "name": "Oerlikon FF Mk II",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 20,
+  "hard_attack": 12,
+  "piercing": 28,
+  "air_attack": 36,
+  "cost": {
+    "steel": 6,
+    "aluminum": 3
+  },
+  "production_time": 30,
+  "special_flags": [
+    "aircraft_gun",
+    "naval",
+    "20mm",
+    "swiss_design"
+  ],
+  "description": "Swiss-designed 20 mm used on naval mounts and some aircraft."
+}

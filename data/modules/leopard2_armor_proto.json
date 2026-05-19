@@ -1,0 +1,21 @@
+{
+  "id": "leopard2_armor_proto",
+  "name": "Leopard 2 Armor Package",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 58,
+  "top_armor_bonus": 38,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 44,
+    "ceramics": 12,
+    "chromium": 6
+  },
+  "production_time": 88,
+  "special_flags": [
+    "germany",
+    "seventies",
+    "mbt"
+  ],
+  "description": "Leopard 2 composite and spaced armor. Designed to defeat 125 mm APFSDS at combat ranges."
+}

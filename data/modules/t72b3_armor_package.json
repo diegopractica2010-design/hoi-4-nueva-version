@@ -1,0 +1,22 @@
+{
+  "id": "t72b3_armor_package",
+  "name": "T-72B3 Armor Package",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 60,
+  "top_armor_bonus": 36,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 40,
+    "ceramics": 16,
+    "explosives": 14
+  },
+  "production_time": 85,
+  "special_flags": [
+    "russia",
+    "twenty_tens",
+    "t72",
+    "modernization"
+  ],
+  "description": "T-72B3 mod with Relikt, Sosna-U sight, and improved FCS. Mass upgrade for budget constraints."
+}

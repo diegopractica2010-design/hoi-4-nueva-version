@@ -1,0 +1,41 @@
+{
+  "id": "j10c_fighter",
+  "name": "J-10C",
+  "design_family": "chinese_air_twenty_tens",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 80,
+  "base_stats": {
+    "speed": 105,
+    "reliability": 76,
+    "fuel_consumption": 16,
+    "supply_need": 12,
+    "armor": 8,
+    "hardness": 24
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "pl12_air_missile",
+    "Engine": "j10c_package",
+    "Sensors": "aesa_radar_gen1"
+  },
+  "unlock_tech": [
+    "chinese_fighters_twenty_tens"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

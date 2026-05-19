@@ -1,0 +1,21 @@
+{
+  "id": "kwk_43_l71_88_extended",
+  "name": "8.8 cm KwK 43 L/71 (E-series)",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 58,
+  "hard_attack": 66,
+  "piercing": 132,
+  "air_attack": 4,
+  "cost": {
+    "steel": 30,
+    "chromium": 5
+  },
+  "production_time": 100,
+  "special_flags": [
+    "excellent_ap",
+    "prototype",
+    "e50_program"
+  ],
+  "description": "Planned standard gun for E-50 and E-75 medium/heavy line. Never fielded in quantity."
+}

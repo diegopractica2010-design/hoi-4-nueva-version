@@ -1,0 +1,20 @@
+{
+  "id": "u2_night_fighter_radar_combo",
+  "name": "U2 Night Fighter Radar Suite",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 4,
+    "electronics": 18,
+    "optics": 8
+  },
+  "production_time": 50,
+  "special_flags": [
+    "radar",
+    "infrared",
+    "night_fighter",
+    "combined"
+  ],
+  "description": "Representative combined AI radar + IR sight fit for late-war night fighters."
+}

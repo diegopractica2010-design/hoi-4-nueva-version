@@ -1,0 +1,46 @@
+{
+  "id": "chn_fighter_2026",
+  "name": "J-20A",
+  "design_family": "chinese_army_2026_air",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 120,
+  "base_stats": {
+    "speed": 108,
+    "reliability": 78,
+    "fuel_consumption": 20,
+    "supply_need": 18,
+    "armor": 10,
+    "hardness": 28
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "pl15e_missile",
+    "Engine": "j20a_operational"
+  },
+  "unlock_tech": [
+    "forces_2026",
+    "army_2026",
+    "air_2026",
+    "twenty_twenties_army",
+    "twenty_twenties_air",
+    "chinese_army",
+    "china"
+  ],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

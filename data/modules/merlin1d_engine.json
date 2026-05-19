@@ -1,0 +1,23 @@
+{
+  "id": "merlin1d_engine",
+  "name": "Merlin 1D",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 10,
+  "speed_bonus": 30,
+  "cost": {
+    "steel": 10,
+    "aluminum": 14,
+    "explosives": 18
+  },
+  "production_time": 70,
+  "special_flags": [
+    "spacex",
+    "usa",
+    "space",
+    "twenty_twenties",
+    "reusable"
+  ],
+  "description": "Falcon 9 first-stage engine. Designed for reusability and high flight rate."
+}

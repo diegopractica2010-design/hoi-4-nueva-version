@@ -1,0 +1,55 @@
+{
+  "id": "dunkerque_class_bb",
+  "name": "Dunkerque-class",
+  "design_family": "french_naval_interwar",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 1300,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 270,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 70,
+    "fuel_consumption": 100,
+    "supply_need": 130,
+    "armor": 58,
+    "deck_armor": 32,
+    "hardness": 88
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "fra_13_4inch_m1934",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37",
+    "Communications": "scr_522_radio"
+  },
+  "unlock_tech": [
+    "french_battleships",
+    "treaty_battleship"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

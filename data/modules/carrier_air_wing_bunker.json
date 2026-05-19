@@ -1,0 +1,18 @@
+{
+  "id": "carrier_air_wing_bunker",
+  "name": "Air Wing Hangar Storage",
+  "category": "Cargo",
+  "tier": 3,
+  "reliability_bonus": 0,
+  "cost": {
+    "steel": 30,
+    "aluminum": 8
+  },
+  "production_time": 80,
+  "special_flags": [
+    "carrier",
+    "hangar",
+    "aircraft_capacity"
+  ],
+  "description": "Hangar deck arrangement and aviation fuel stowage. Determines effective air group size."
+}

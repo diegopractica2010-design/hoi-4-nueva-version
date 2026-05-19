@@ -1,0 +1,20 @@
+{
+  "id": "brdm2_scout",
+  "name": "BRDM-2 Recon Package",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 8,
+    "electronics": 10,
+    "optics": 6
+  },
+  "production_time": 40,
+  "special_flags": [
+    "ussr",
+    "germany_captured",
+    "recon",
+    "sixties"
+  ],
+  "description": "Warsaw Pact scout vehicle ubiquitous in NATO threat training. Used as OPFOR benchmark."
+}

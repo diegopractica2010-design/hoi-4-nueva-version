@@ -1,0 +1,14 @@
+{
+  "id": "renault_v6_engine",
+  "name": "Renault V-6",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": 2,
+  "fuel_efficiency": 2,
+  "speed_bonus": 2,
+  "cost": {
+    "steel": 8
+  },
+  "production_time": 35,
+  "description": "Char B1 and R35 powerplant. Underpowered and cramped."
+}

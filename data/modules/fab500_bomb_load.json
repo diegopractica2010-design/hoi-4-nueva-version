@@ -1,0 +1,16 @@
+{
+  "id": "fab500_bomb_load",
+  "name": "FAB-500 Bomb Load",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 85,
+  "hard_attack": 18,
+  "piercing": 10,
+  "air_attack": 10,
+  "cost": {
+    "steel": 5,
+    "explosives": 32
+  },
+  "production_time": 45,
+  "description": "Heavier Soviet tactical bombing load for Il-4 and Tu-2."
+}

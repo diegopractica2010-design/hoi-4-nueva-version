@@ -1,0 +1,24 @@
+{
+  "id": "ssn2_styx_missile",
+  "name": "P-15 Termit (SS-N-2)",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 38,
+  "hard_attack": 48,
+  "piercing": 35,
+  "anti_ship": 82,
+  "air_attack": 4,
+  "cost": {
+    "steel": 8,
+    "electronics": 16,
+    "explosives": 20
+  },
+  "production_time": 65,
+  "special_flags": [
+    "ussr",
+    "anti_ship",
+    "guided",
+    "sixties"
+  ],
+  "description": "Soviet anti-ship missile. Sunk Eilat 1967; defined missile boat warfare."
+}

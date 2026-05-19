@@ -1,0 +1,22 @@
+{
+  "id": "j48_turbojet_f9f",
+  "name": "J48 Turbojet (F9F)",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 0,
+  "speed_bonus": 24,
+  "cost": {
+    "steel": 12,
+    "aluminum": 20,
+    "titanium": 2
+  },
+  "production_time": 65,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "fifties",
+    "f9f_panther"
+  ],
+  "description": "F9F Panther carrier fighter jet. First U.S. Navy jet to score air-to-air kills in Korea."
+}

@@ -1,0 +1,52 @@
+{
+  "id": "crewless_strike_sub_2030",
+  "name": "Crewless Strike Sub (Proto)",
+  "design_family": "multinational_sub_planned",
+  "base_type": "Submarine",
+  "size_category": "Medium",
+  "visual_archetype": "submarine",
+  "crew_required": 0,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 100,
+  "base_stats": {
+    "speed": 18,
+    "reliability": 70,
+    "fuel_consumption": 10,
+    "supply_need": 6,
+    "armor": 10,
+    "hardness": 12
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Sensors": "crewless_submarine_2030",
+    "SecondaryWeapon": "kalibr_vls_sub",
+    "Engine": "fuel_cell_aip_212"
+  },
+  "unlock_tech": [
+    "prototype",
+    "twenty_thirties",
+    "autonomous_undersea"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

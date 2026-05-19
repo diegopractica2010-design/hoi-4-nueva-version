@@ -1,0 +1,23 @@
+{
+  "id": "ariane5_core_stage",
+  "name": "Ariane 5 Core Stage",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 4,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 40,
+    "aluminum": 25,
+    "explosives": 65
+  },
+  "production_time": 130,
+  "special_flags": [
+    "esa",
+    "space",
+    "nineties",
+    "ariane",
+    "heavy_lift"
+  ],
+  "description": "Ariane 5 ECA heavy lifter. Launched Rosetta, JWST, and Galileo."
+}

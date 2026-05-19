@@ -1,0 +1,23 @@
+{
+  "id": "iris_t_slx",
+  "name": "IRIS-T SLX",
+  "category": "AntiAir",
+  "tier": 8,
+  "soft_attack": 14,
+  "hard_attack": 12,
+  "air_attack": 92,
+  "anti_air": 88,
+  "cost": {
+    "steel": 20,
+    "electronics": 48,
+    "explosives": 14
+  },
+  "production_time": 95,
+  "special_flags": [
+    "germany",
+    "twenty_twenties",
+    "sam",
+    "extended_range"
+  ],
+  "description": "Extended-range IRIS-T for European Sky Shield and national defense."
+}

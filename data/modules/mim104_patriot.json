@@ -1,0 +1,23 @@
+{
+  "id": "mim104_patriot",
+  "name": "MIM-104 Patriot",
+  "category": "AntiAir",
+  "tier": 7,
+  "soft_attack": 14,
+  "hard_attack": 12,
+  "air_attack": 90,
+  "anti_air": 92,
+  "cost": {
+    "steel": 28,
+    "electronics": 55,
+    "explosives": 20
+  },
+  "production_time": 120,
+  "special_flags": [
+    "usa",
+    "sam",
+    "eighties",
+    "tmd"
+  ],
+  "description": "Theater air-defense system. Engages aircraft, ballistic missiles, and cruise missiles."
+}

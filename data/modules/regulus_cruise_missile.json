@@ -1,0 +1,24 @@
+{
+  "id": "regulus_cruise_missile",
+  "name": "Regulus I Cruise Missile",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 40,
+  "hard_attack": 50,
+  "piercing": 30,
+  "anti_ship": 85,
+  "air_attack": 5,
+  "cost": {
+    "steel": 20,
+    "electronics": 25,
+    "explosives": 30
+  },
+  "production_time": 100,
+  "special_flags": [
+    "guided_weapon",
+    "naval",
+    "usa",
+    "cold_war"
+  ],
+  "description": "Submarine-launched cruise missile 1955. Submarine aircraft carrier concept."
+}

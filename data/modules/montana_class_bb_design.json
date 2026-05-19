@@ -1,0 +1,24 @@
+{
+  "id": "montana_class_bb_design",
+  "name": "Montana-class BB Design",
+  "category": "NavalGun",
+  "tier": 6,
+  "soft_attack": 55,
+  "hard_attack": 62,
+  "piercing": 58,
+  "anti_ship": 95,
+  "cost": {
+    "steel": 45,
+    "chromium": 12,
+    "explosives": 20
+  },
+  "production_time": 120,
+  "special_flags": [
+    "usa",
+    "battleship",
+    "prototype",
+    "ww2",
+    "paper"
+  ],
+  "description": "USN 12-gun super-battleship design cancelled 1942. Would have exceeded Iowa firepower."
+}

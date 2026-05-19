@@ -1,0 +1,20 @@
+{
+  "id": "midway_class_flight_deck",
+  "name": "Midway-class Flight Deck",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 90,
+    "electronics": 20,
+    "aluminum": 25
+  },
+  "production_time": 200,
+  "special_flags": [
+    "usa",
+    "carrier",
+    "cold_war",
+    "angled_deck"
+  ],
+  "description": "First U.S. supercarrier with angled deck and steam catapults. Postwar jet operations."
+}

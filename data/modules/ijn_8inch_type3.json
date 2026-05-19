@@ -1,0 +1,21 @@
+{
+  "id": "ijn_8inch_type3",
+  "name": "20 cm Type 3 No.1",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 58,
+  "hard_attack": 48,
+  "piercing": 82,
+  "air_attack": 5,
+  "anti_ship": 68,
+  "cost": {
+    "steel": 24
+  },
+  "production_time": 70,
+  "special_flags": [
+    "naval",
+    "heavy_cruiser",
+    "japan"
+  ],
+  "description": "Myoko and Takao class 8-inch. Long-range cruiser killer."
+}

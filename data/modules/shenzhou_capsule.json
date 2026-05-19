@@ -1,0 +1,21 @@
+{
+  "id": "shenzhou_capsule",
+  "name": "Shenzhou Capsule",
+  "category": "LifeSupport",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 12,
+    "aluminum": 16,
+    "electronics": 28
+  },
+  "production_time": 115,
+  "special_flags": [
+    "china",
+    "space",
+    "two_thousands",
+    "crewed",
+    "shenzhou"
+  ],
+  "description": "Chinese crewed spacecraft derived from Soyuz architecture. First taikonaut 2003."
+}

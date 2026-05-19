@@ -1,0 +1,21 @@
+{
+  "id": "baden_wurttemberg_f125",
+  "name": "Baden-Württemberg F125",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 32,
+  "top_armor_bonus": 22,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 50,
+    "electronics": 28,
+    "aluminum": 15
+  },
+  "production_time": 130,
+  "special_flags": [
+    "germany",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "German F125 frigate optimized for stabilization and littoral missions."
+}

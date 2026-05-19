@@ -1,0 +1,21 @@
+{
+  "id": "thermal_imager_an_vsg3",
+  "name": "AN/VSG-3 Thermal Imager",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 5,
+    "electronics": 38,
+    "optics": 18,
+    "rare_earths": 10
+  },
+  "production_time": 70,
+  "special_flags": [
+    "usa",
+    "thermal",
+    "nineties",
+    "tank_sight"
+  ],
+  "description": "Second-generation FLIR for M1A2 commander and gunner. Standard U.S. tank night-fighting."
+}

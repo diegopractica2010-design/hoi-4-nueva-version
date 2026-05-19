@@ -1,0 +1,23 @@
+{
+  "id": "asraam_missile",
+  "name": "ASRAAM",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 9,
+  "hard_attack": 7,
+  "air_attack": 80,
+  "anti_air": 76,
+  "cost": {
+    "steel": 5,
+    "electronics": 32,
+    "explosives": 6
+  },
+  "production_time": 65,
+  "special_flags": [
+    "uk",
+    "air_to_air",
+    "nineties",
+    "ir_imaging"
+  ],
+  "description": "Imaging-infrared within-visual-range missile. Joint UK/Germany/Canada program."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "v54_diesel_engine",
+  "name": "V-54 Diesel",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 10,
+  "speed_bonus": 7,
+  "cost": {
+    "steel": 18
+  },
+  "production_time": 55,
+  "special_flags": [
+    "diesel",
+    "ussr",
+    "cold_war"
+  ],
+  "description": "T-54 powerplant. Reliable, compact, and widely exported."
+}

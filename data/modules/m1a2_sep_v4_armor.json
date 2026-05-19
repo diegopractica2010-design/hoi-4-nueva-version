@@ -1,0 +1,24 @@
+{
+  "id": "m1a2_sep_v4_armor",
+  "name": "M1A2 SEP v4 Armor",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 90,
+  "top_armor_bonus": 68,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 58,
+    "ceramics": 40,
+    "uranium": 28,
+    "titanium": 18,
+    "kevlar": 16
+  },
+  "production_time": 160,
+  "special_flags": [
+    "usa",
+    "twenty_twenties",
+    "m1a2",
+    "trophy"
+  ],
+  "description": "Latest Abrams with Trophy HV, improved DU, and Trophy-ready wiring. Standard U.S. Army MBT of 2020s."
+}

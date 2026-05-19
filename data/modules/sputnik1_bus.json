@@ -1,0 +1,21 @@
+{
+  "id": "sputnik1_bus",
+  "name": "Sputnik 1 Bus",
+  "category": "Communications",
+  "tier": 2,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 3,
+    "electronics": 8,
+    "aluminum": 4
+  },
+  "production_time": 35,
+  "special_flags": [
+    "ussr",
+    "space",
+    "fifties",
+    "beep",
+    "first_satellite"
+  ],
+  "description": "Simple radio beacon satellite. October 1957; opened the Space Age."
+}

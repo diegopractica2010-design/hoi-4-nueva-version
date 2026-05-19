@@ -1,0 +1,20 @@
+{
+  "id": "pratt_whitney_j57",
+  "name": "Pratt & Whitney J57",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 3,
+  "speed_bonus": 26,
+  "cost": {
+    "steel": 14,
+    "aluminum": 24
+  },
+  "production_time": 72,
+  "special_flags": [
+    "usa",
+    "jet_powerplant",
+    "cold_war"
+  ],
+  "description": "F-100 Super Sabre and B-52 engine. Defines 1950s U.S. jet aviation."
+}

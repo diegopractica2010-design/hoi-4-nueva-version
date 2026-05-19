@@ -1,0 +1,41 @@
+{
+  "id": "su57_felon_serial",
+  "name": "Su-57 (Serial)",
+  "design_family": "russian_air_twenty_twenties",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 120,
+  "base_stats": {
+    "speed": 112,
+    "reliability": 74,
+    "fuel_consumption": 22,
+    "supply_need": 18,
+    "armor": 10,
+    "hardness": 28
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "DroneAttachment": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "r77_1_adder",
+    "Engine": "su57_serial_package",
+    "DroneAttachment": "okhotnik_ucav"
+  },
+  "unlock_tech": [
+    "russian_fighters_twenty_twenties"
+  ],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

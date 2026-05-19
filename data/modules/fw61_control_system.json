@@ -1,0 +1,20 @@
+{
+  "id": "fw61_control_system",
+  "name": "Fw 61 Cyclic Control",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 4,
+    "electronics": 10,
+    "aluminum": 4
+  },
+  "production_time": 50,
+  "special_flags": [
+    "germany",
+    "helicopter",
+    "pre_war",
+    "control_system"
+  ],
+  "description": "Cyclic and collective pitch control proving helicopter maneuverability."
+}

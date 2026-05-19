@@ -1,0 +1,22 @@
+{
+  "id": "uk_14inch_mk7",
+  "name": "BL 14-inch Mk VII",
+  "category": "NavalGun",
+  "tier": 2,
+  "soft_attack": 72,
+  "hard_attack": 62,
+  "piercing": 98,
+  "air_attack": 3,
+  "anti_ship": 82,
+  "cost": {
+    "steel": 40,
+    "explosives": 12
+  },
+  "production_time": 95,
+  "special_flags": [
+    "naval",
+    "battleship",
+    "uk"
+  ],
+  "description": "King George V class main armament. Modern RN battleship standard."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "wright_r1820_cyclone",
+  "name": "Wright R-1820-97 Cyclone",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 3,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 14,
+    "aluminum": 16,
+    "rubber": 3
+  },
+  "production_time": 52,
+  "special_flags": ["bomber_powerplant", "turbo_supercharged"],
+  "description": "1,200 hp radial with turbo-supercharger on the B-17. Four engines provide redundancy; proven but complex at extreme altitudes."
+}

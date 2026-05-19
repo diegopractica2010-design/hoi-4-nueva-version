@@ -1,0 +1,21 @@
+{
+  "id": "telstar_comms_payload",
+  "name": "Telstar Comms Payload",
+  "category": "Communications",
+  "tier": 4,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 4,
+    "electronics": 22,
+    "aluminum": 8
+  },
+  "production_time": 65,
+  "special_flags": [
+    "usa",
+    "space",
+    "sixties",
+    "comms",
+    "transatlantic"
+  ],
+  "description": "First active communications satellite relay. AT&T/NASA collaboration."
+}

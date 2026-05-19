@@ -1,0 +1,22 @@
+{
+  "id": "tf30_f14_engine",
+  "name": "TF30 Turbofan (F-14)",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 8,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 18,
+    "aluminum": 32,
+    "titanium": 10
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "seventies",
+    "f14_tomcat"
+  ],
+  "description": "Twin TF30 on F-14 Tomcat. Powerful but maintenance-intensive early Tomcat operations."
+}

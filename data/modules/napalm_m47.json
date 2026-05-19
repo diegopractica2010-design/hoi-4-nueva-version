@@ -1,0 +1,23 @@
+{
+  "id": "napalm_m47",
+  "name": "M47 Napalm Tank",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 95,
+  "hard_attack": 8,
+  "piercing": 4,
+  "air_attack": 6,
+  "cost": {
+    "steel": 4,
+    "explosives": 20,
+    "chemicals": 18
+  },
+  "production_time": 35,
+  "special_flags": [
+    "incendiary",
+    "napalm",
+    "usa",
+    "anti_soft"
+  ],
+  "description": "Gel incendiary tanks for fighter-bombers. Devastating vs personnel and light structures."
+}

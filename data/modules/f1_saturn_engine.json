@@ -1,0 +1,23 @@
+{
+  "id": "f1_saturn_engine",
+  "name": "F-1 (Saturn V)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 8,
+  "fuel_efficiency": -14,
+  "speed_bonus": 38,
+  "cost": {
+    "steel": 45,
+    "aluminum": 20,
+    "explosives": 80
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "sixties",
+    "lunar"
+  ],
+  "description": "Most powerful single-chamber liquid rocket ever flown. Saturn V first stage."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "aw101_merlin_asw",
+  "name": "AW101 Merlin ASW",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 12,
+    "electronics": 42,
+    "aluminum": 16
+  },
+  "production_time": 82,
+  "special_flags": [
+    "uk",
+    "italy",
+    "asw",
+    "helicopter",
+    "two_thousands"
+  ],
+  "description": "Merlin HM.1/2 on Type 23 frigates and Queen Elizabeth ASW escort."
+}

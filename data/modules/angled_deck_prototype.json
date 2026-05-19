@@ -1,0 +1,19 @@
+{
+  "id": "angled_deck_prototype",
+  "name": "Angled Flight Deck (Proto)",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 40,
+    "electronics": 10
+  },
+  "production_time": 90,
+  "special_flags": [
+    "carrier",
+    "prototype",
+    "cold_war",
+    "uk"
+  ],
+  "description": "Royal Navy 1952 prototype angled deck. Allows simultaneous launch and recovery."
+}

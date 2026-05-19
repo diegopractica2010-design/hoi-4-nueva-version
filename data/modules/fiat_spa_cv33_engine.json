@@ -1,0 +1,19 @@
+{
+  "id": "fiat_spa_cv33_engine",
+  "name": "Fiat SPA CV3 Engine",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": -2,
+  "fuel_efficiency": 4,
+  "speed_bonus": 2,
+  "cost": {
+    "steel": 6
+  },
+  "production_time": 28,
+  "special_flags": [
+    "interwar",
+    "italy",
+    "light_tank"
+  ],
+  "description": "Tiny tankette powerplant used by Italy, Hungary, and export customers."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "uk_6inch_bl_mk12",
+  "name": "BL 6-inch Mk XII",
+  "category": "NavalGun",
+  "tier": 2,
+  "soft_attack": 50,
+  "hard_attack": 38,
+  "piercing": 65,
+  "air_attack": 6,
+  "anti_ship": 52,
+  "cost": {
+    "steel": 20
+  },
+  "production_time": 60,
+  "special_flags": [
+    "naval",
+    "light_cruiser",
+    "uk"
+  ],
+  "description": "County-class cruiser gun. Standard RN light cruiser armament interwar."
+}

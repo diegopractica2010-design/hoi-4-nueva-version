@@ -1,0 +1,21 @@
+{
+  "id": "aegis_spy1_radar",
+  "name": "AN/SPY-1 Aegis",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 35,
+    "electronics": 65,
+    "aluminum": 12
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "naval",
+    "radar",
+    "eighties",
+    "aegis"
+  ],
+  "description": "Phased-array naval radar on Ticonderoga and Arleigh Burke. Revolution in fleet air defense."
+}

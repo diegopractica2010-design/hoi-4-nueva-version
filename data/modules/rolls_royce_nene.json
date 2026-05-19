@@ -1,0 +1,20 @@
+{
+  "id": "rolls_royce_nene",
+  "name": "Rolls-Royce Nene",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 4,
+  "speed_bonus": 22,
+  "cost": {
+    "steel": 12,
+    "aluminum": 18
+  },
+  "production_time": 65,
+  "special_flags": [
+    "uk",
+    "jet_powerplant",
+    "exported"
+  ],
+  "description": "Exported to U.S. and USSR. Powered MiG-15 and many 1950s fighters."
+}

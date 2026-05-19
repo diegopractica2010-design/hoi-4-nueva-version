@@ -1,0 +1,50 @@
+{
+  "id": "lexington_class_cv_1936",
+  "name": "Lexington-class CV",
+  "design_family": "us_naval_1936",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 2100,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 240,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 70,
+    "fuel_consumption": 75,
+    "supply_need": 95,
+    "armor": 28,
+    "deck_armor": 18,
+    "hardness": 58
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "carrier_air_wing_bunker",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "carrier_armored_flight_deck",
+    "Sensors": "sg_surface_radar"
+  },
+  "unlock_tech": [
+    "naval_1936",
+    "interwar_naval",
+    "pre_ww2_naval",
+    "us_naval_1936",
+    "carrier"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

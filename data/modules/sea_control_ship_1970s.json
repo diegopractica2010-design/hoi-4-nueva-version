@@ -1,0 +1,21 @@
+{
+  "id": "sea_control_ship_1970s",
+  "name": "Sea Control Ship (1970s)",
+  "category": "Cargo",
+  "tier": 4,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 55,
+    "electronics": 15,
+    "aluminum": 12
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "carrier",
+    "prototype",
+    "cold_war",
+    "vtol"
+  ],
+  "description": "Small carrier concept for ASW and sea control. Precursor to LHA/LHD thinking."
+}

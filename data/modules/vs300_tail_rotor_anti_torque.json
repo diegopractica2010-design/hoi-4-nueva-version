@@ -1,0 +1,20 @@
+{
+  "id": "vs300_tail_rotor_anti_torque",
+  "name": "VS-300 Tail Rotor",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 5,
+    "aluminum": 6,
+    "electronics": 5
+  },
+  "production_time": 45,
+  "special_flags": [
+    "usa",
+    "helicopter",
+    "pre_war",
+    "anti_torque"
+  ],
+  "description": "Tail rotor anti-torque solution adopted by virtually all Western helicopters."
+}

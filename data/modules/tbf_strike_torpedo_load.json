@@ -1,0 +1,24 @@
+{
+  "id": "tbf_strike_torpedo_load",
+  "name": "TBF Strike Torpedo Load",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 38,
+  "hard_attack": 50,
+  "piercing": 28,
+  "anti_ship": 88,
+  "air_attack": 6,
+  "cost": {
+    "steel": 8,
+    "explosives": 26,
+    "electronics": 5
+  },
+  "production_time": 48,
+  "special_flags": [
+    "usa",
+    "naval_aviation",
+    "ww2",
+    "tbf_avenger"
+  ],
+  "description": "Torpedo and bomb bay load for TBF/TBM Avenger strike missions."
+}

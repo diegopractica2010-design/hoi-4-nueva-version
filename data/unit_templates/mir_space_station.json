@@ -1,0 +1,41 @@
+{
+  "id": "mir_space_station",
+  "name": "Mir",
+  "design_family": "soviet_space_eighties",
+  "base_type": "Space",
+  "size_category": "Heavy",
+  "visual_archetype": "space_station",
+  "crew_required": 3,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 200,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 78,
+    "fuel_consumption": 40,
+    "supply_need": 60,
+    "payload_capacity": 15,
+    "hardness": 20
+  },
+  "slots": {
+    "Cargo": {
+      "max": 2
+    },
+    "LifeSupport": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "mir_core_module",
+    "LifeSupport": "soyuz_spacecraft_bus",
+    "Communications": "glonass_payload"
+  },
+  "unlock_tech": [
+    "space_stations"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

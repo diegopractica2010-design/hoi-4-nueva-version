@@ -1,0 +1,24 @@
+{
+  "id": "minuteman_1_icbm",
+  "name": "LGM-30A Minuteman I",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 200,
+  "hard_attack": 90,
+  "piercing": 70,
+  "air_attack": 10,
+  "cost": {
+    "steel": 40,
+    "electronics": 80,
+    "explosives": 90,
+    "chromium": 12
+  },
+  "production_time": 180,
+  "special_flags": [
+    "usa",
+    "icbm",
+    "sixties",
+    "strategic"
+  ],
+  "description": "First solid-fuel U.S. ICBM in silos. Cold War triad leg."
+}

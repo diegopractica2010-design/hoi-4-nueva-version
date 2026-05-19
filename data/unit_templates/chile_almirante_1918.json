@@ -1,0 +1,54 @@
+{
+  "id": "chile_almirante_1918",
+  "name": "Almirante Latorre",
+  "design_family": "chilean_naval_1918",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "battleship",
+  "crew_required": 920,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 245,
+  "base_stats": {
+    "speed": 22,
+    "reliability": 65,
+    "fuel_consumption": 85,
+    "supply_need": 110,
+    "armor": 50,
+    "deck_armor": 24,
+    "hardness": 78
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_14inch_mk7",
+    "Engine": "us_parsons_turbine",
+    "Armor": "naval_belt_armor_scheme"
+  },
+  "unlock_tech": [
+    "naval_1918",
+    "ww1_naval",
+    "great_war_naval",
+    "chilean_naval_1918"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

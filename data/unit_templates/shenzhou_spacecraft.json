@@ -1,0 +1,37 @@
+{
+  "id": "shenzhou_spacecraft",
+  "name": "Shenzhou",
+  "design_family": "chinese_space_two_thousands",
+  "base_type": "Space",
+  "size_category": "Medium",
+  "visual_archetype": "crew_capsule",
+  "crew_required": 3,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 105,
+  "base_stats": {
+    "speed": 72,
+    "reliability": 84,
+    "fuel_consumption": 52,
+    "supply_need": 34,
+    "payload_capacity": 3,
+    "hardness": 12
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "LifeSupport": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "long_march2_engine",
+    "LifeSupport": "shenzhou_capsule"
+  },
+  "unlock_tech": [
+    "chinese_crewed_space"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

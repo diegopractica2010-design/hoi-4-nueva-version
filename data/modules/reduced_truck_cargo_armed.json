@@ -1,0 +1,19 @@
+{
+  "id": "reduced_truck_cargo_armed",
+  "name": "Reduced Cargo (Armed)",
+  "category": "Cargo",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 8,
+    "rubber": 2,
+    "explosives": 4
+  },
+  "production_time": 30,
+  "special_flags": [
+    "transport",
+    "armed_transport",
+    "cargo_reduced"
+  ],
+  "description": "Ammo racks replace part of cargo space when MainWeapon pod is fitted."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "holland_diesel_electric",
+  "name": "Holland Diesel-Electric",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 6,
+  "speed_bonus": 4,
+  "cost": {
+    "steel": 12,
+    "electronics": 4
+  },
+  "production_time": 55,
+  "special_flags": [
+    "usa",
+    "diesel_electric",
+    "pre_ww1",
+    "submarine"
+  ],
+  "description": "Early gasoline/electric submarine propulsion on Holland boats."
+}

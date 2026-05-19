@@ -1,0 +1,22 @@
+{
+  "id": "t90m_armor_package",
+  "name": "T-90M Armor Package",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 68,
+  "top_armor_bonus": 42,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 46,
+    "ceramics": 22,
+    "explosives": 16
+  },
+  "production_time": 100,
+  "special_flags": [
+    "russia",
+    "twenty_twenties",
+    "t90m",
+    "relikt"
+  ],
+  "description": "T-90M Proryv with Relikt ERA, Kalina FCS, and 2A46M-5 gun. Ukraine combat record."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "carrier_wooden_flight_deck",
+  "name": "Wooden Flight Deck",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 8,
+  "top_armor_bonus": 18,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 25,
+    "rubber": 6
+  },
+  "production_time": 70,
+  "special_flags": [
+    "carrier",
+    "usa",
+    "essex_class"
+  ],
+  "description": "U.S. carrier wooden deck with steel support. Easier repair; vulnerable to armor-piercing bombs."
+}

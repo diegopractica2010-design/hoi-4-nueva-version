@@ -1,0 +1,22 @@
+{
+  "id": "h2a_launch_vehicle",
+  "name": "H-IIA Launch Vehicle",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 6,
+  "speed_bonus": 30,
+  "cost": {
+    "steel": 20,
+    "aluminum": 16,
+    "explosives": 35
+  },
+  "production_time": 100,
+  "special_flags": [
+    "jaxa",
+    "japan",
+    "space",
+    "two_thousands"
+  ],
+  "description": "Japanese reliable launcher for science and reconnaissance satellites."
+}

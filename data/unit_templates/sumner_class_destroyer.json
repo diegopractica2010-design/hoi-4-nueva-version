@@ -1,0 +1,53 @@
+{
+  "id": "sumner_class_destroyer",
+  "name": "Sumner-class",
+  "design_family": "us_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 320,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 120,
+  "base_stats": {
+    "speed": 34,
+    "reliability": 76,
+    "fuel_consumption": 45,
+    "supply_need": 55,
+    "armor": 22,
+    "deck_armor": 12,
+    "hardness": 55
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "us_5inch_38_gun",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "geared_steam_turbine_60k",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "us_destroyers",
+    "ww2_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

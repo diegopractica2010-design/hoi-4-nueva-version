@@ -1,0 +1,22 @@
+{
+  "id": "rd33_mig29_engine",
+  "name": "Klimov RD-33",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 6,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 14,
+    "aluminum": 26,
+    "titanium": 10
+  },
+  "production_time": 80,
+  "special_flags": [
+    "ussr",
+    "jet_powerplant",
+    "eighties",
+    "mig29"
+  ],
+  "description": "Twin-engine MiG-29 powerplant. Optimized for short-range air superiority."
+}

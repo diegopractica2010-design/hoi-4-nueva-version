@@ -1,0 +1,15 @@
+{
+  "id": "sakae_radial_engine",
+  "name": "Sakae 21 Radial",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 5,
+  "fuel_efficiency": 6,
+  "speed_bonus": 11,
+  "cost": {
+    "steel": 9,
+    "aluminum": 10
+  },
+  "production_time": 44,
+  "description": "1,130 hp engine for A6M Zero. Excellent range and agility enabler."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "gps_ins_navigation",
+  "name": "GPS/INS Navigation Suite",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 3,
+    "electronics": 35
+  },
+  "production_time": 55,
+  "special_flags": [
+    "usa",
+    "nineties",
+    "precision_navigation"
+  ],
+  "description": "Global Positioning System integration for armor and aircraft. Revolutionizes maneuver and fires."
+}

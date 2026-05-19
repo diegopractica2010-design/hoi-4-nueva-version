@@ -1,0 +1,25 @@
+{
+  "id": "trump_class_vls_farm",
+  "name": "Trump-class VLS Farm",
+  "category": "SecondaryWeapon",
+  "tier": 8,
+  "soft_attack": 60,
+  "hard_attack": 70,
+  "piercing": 50,
+  "anti_ship": 100,
+  "air_attack": 45,
+  "cost": {
+    "steel": 50,
+    "electronics": 55,
+    "explosives": 60
+  },
+  "production_time": 150,
+  "special_flags": [
+    "usa",
+    "naval",
+    "vls",
+    "planned",
+    "trump_class"
+  ],
+  "description": "128+ cell VLS for Tomahawk, SM-6, and hypersonic weapons alongside gun armament."
+}

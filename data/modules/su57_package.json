@@ -1,0 +1,23 @@
+{
+  "id": "su57_package",
+  "name": "Su-57 Felon Package",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 14,
+  "speed_bonus": 38,
+  "cost": {
+    "steel": 22,
+    "aluminum": 40,
+    "titanium": 26,
+    "electronics": 35
+  },
+  "production_time": 165,
+  "special_flags": [
+    "russia",
+    "twenty_tens",
+    "stealth",
+    "pak_fa"
+  ],
+  "description": "Su-57 fifth-generation fighter. Limited production; Syria and Ukraine testing."
+}

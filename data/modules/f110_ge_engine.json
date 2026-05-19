@@ -1,0 +1,22 @@
+{
+  "id": "f110_ge_engine",
+  "name": "GE F110 Turbofan",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 10,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 18,
+    "aluminum": 32,
+    "titanium": 12
+  },
+  "production_time": 88,
+  "special_flags": [
+    "usa",
+    "jet_powerplant",
+    "eighties",
+    "f16"
+  ],
+  "description": "F-16C Block powerplant. High thrust-to-weight for energy fighting and strike missions."
+}

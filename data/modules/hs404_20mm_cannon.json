@@ -1,0 +1,16 @@
+{
+  "id": "hs404_20mm_cannon",
+  "name": "Hispano-Suiza HS.404",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 24,
+  "hard_attack": 14,
+  "piercing": 31,
+  "air_attack": 42,
+  "cost": {
+    "steel": 7,
+    "aluminum": 3
+  },
+  "production_time": 34,
+  "description": "D.520 and late MS.406 armament. Competitive 20 mm cannon."
+}

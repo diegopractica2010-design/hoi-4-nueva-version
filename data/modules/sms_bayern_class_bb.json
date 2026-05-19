@@ -1,0 +1,23 @@
+{
+  "id": "sms_bayern_class_bb",
+  "name": "SMS Bayern 38cm",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 42,
+  "hard_attack": 48,
+  "piercing": 45,
+  "anti_ship": 82,
+  "cost": {
+    "steel": 35,
+    "chromium": 8,
+    "explosives": 14
+  },
+  "production_time": 95,
+  "special_flags": [
+    "germany",
+    "battleship",
+    "ww1",
+    "high_seas_fleet"
+  ],
+  "description": "Bavaria-class 15-inch guns. Germany's final WWI battleship design."
+}

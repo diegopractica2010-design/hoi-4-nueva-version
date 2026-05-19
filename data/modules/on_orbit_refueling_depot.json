@@ -1,0 +1,22 @@
+{
+  "id": "on_orbit_refueling_depot",
+  "name": "On-Orbit Refueling Depot",
+  "category": "Cargo",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 25,
+    "aluminum": 20,
+    "electronics": 35,
+    "chemicals": 30
+  },
+  "production_time": 140,
+  "special_flags": [
+    "global",
+    "space",
+    "twenty_thirties",
+    "planned",
+    "infrastructure"
+  ],
+  "description": "Propellant depot enabling deep-space missions and reusable tugs."
+}

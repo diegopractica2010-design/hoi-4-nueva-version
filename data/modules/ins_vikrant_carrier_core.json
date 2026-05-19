@@ -1,0 +1,20 @@
+{
+  "id": "ins_vikrant_carrier_core",
+  "name": "INS Vikrant (R11) Core",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 110,
+    "electronics": 40,
+    "aluminum": 35
+  },
+  "production_time": 220,
+  "special_flags": [
+    "india",
+    "carrier",
+    "twenty_twenties",
+    "ski_jump"
+  ],
+  "description": "Indigenous STOBAR carrier commissioned 2022. Operates MiG-29K and future Tejas N."
+}

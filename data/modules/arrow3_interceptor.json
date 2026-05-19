@@ -1,0 +1,24 @@
+{
+  "id": "arrow3_interceptor",
+  "name": "Arrow 3",
+  "category": "AntiAir",
+  "tier": 8,
+  "soft_attack": 8,
+  "hard_attack": 6,
+  "air_attack": 94,
+  "anti_air": 96,
+  "cost": {
+    "steel": 26,
+    "electronics": 58,
+    "explosives": 16
+  },
+  "production_time": 125,
+  "special_flags": [
+    "israel",
+    "sam",
+    "tmd",
+    "twenty_twenties",
+    "arrow"
+  ],
+  "description": "Exo-atmospheric interceptor. Upper tier of Israeli layered missile defense."
+}

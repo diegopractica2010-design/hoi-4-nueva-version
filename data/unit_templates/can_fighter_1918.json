@@ -1,0 +1,43 @@
+{
+  "id": "can_fighter_1918",
+  "name": "Sopwith Camel (Canadian)",
+  "design_family": "canadian_army_1918_air",
+  "base_type": "Air",
+  "size_category": "Light",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 20,
+  "max_experience_level": 100,
+  "base_production_days": 36,
+  "base_stats": {
+    "speed": 68,
+    "reliability": 62,
+    "fuel_consumption": 7,
+    "supply_need": 6,
+    "armor": 6,
+    "hardness": 16
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "vickers_machine_gun",
+    "Engine": "rolls_royce_eagle_engine"
+  },
+  "unlock_tech": [
+    "forces_1918",
+    "army_1918",
+    "air_1918",
+    "ww1_army",
+    "ww1_air",
+    "canadian_army",
+    "canada"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

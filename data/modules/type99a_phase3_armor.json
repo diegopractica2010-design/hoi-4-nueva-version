@@ -1,0 +1,21 @@
+{
+  "id": "type99a_phase3_armor",
+  "name": "Type 99A Phase III",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 72,
+  "top_armor_bonus": 45,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 48,
+    "ceramics": 26,
+    "explosives": 14
+  },
+  "production_time": 105,
+  "special_flags": [
+    "china",
+    "twenty_twenties",
+    "type99a"
+  ],
+  "description": "Latest Type 99A with improved FY-4 ERA and battlefield networking."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "weapon_alpha_asw",
+  "name": "Weapon Alpha ASW Rocket",
+  "category": "SecondaryWeapon",
+  "tier": 4,
+  "soft_attack": 20,
+  "hard_attack": 60,
+  "piercing": 12,
+  "anti_ship": 52,
+  "cost": {
+    "steel": 12,
+    "explosives": 16,
+    "electronics": 8
+  },
+  "production_time": 55,
+  "special_flags": [
+    "naval",
+    "asw",
+    "usa",
+    "cold_war",
+    "nuclear_depth_charge_capable"
+  ],
+  "description": "U.S. ahead-throwing ASW weapon of the 1950s. Bridge between Hedgehog and modern ASROC."
+}

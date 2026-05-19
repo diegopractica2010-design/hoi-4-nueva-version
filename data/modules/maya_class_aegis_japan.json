@@ -1,0 +1,20 @@
+{
+  "id": "maya_class_aegis_japan",
+  "name": "Maya-class Aegis",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 12,
+    "electronics": 50,
+    "aluminum": 14
+  },
+  "production_time": 98,
+  "special_flags": [
+    "japan",
+    "destroyer",
+    "aegis",
+    "twenty_twenties"
+  ],
+  "description": "JMSDF Maya-class with Cooperative Engagement Capability."
+}

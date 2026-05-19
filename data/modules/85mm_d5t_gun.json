@@ -1,0 +1,16 @@
+{
+  "id": "85mm_d5t_gun",
+  "name": "85 mm D-5T",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 54,
+  "hard_attack": 48,
+  "piercing": 95,
+  "air_attack": 6,
+  "cost": {
+    "steel": 20,
+    "explosives": 2
+  },
+  "production_time": 68,
+  "description": "T-34/85 and SU-85 gun. Restores Soviet AP parity vs Panther."
+}

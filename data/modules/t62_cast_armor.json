@@ -1,0 +1,20 @@
+{
+  "id": "t62_cast_armor",
+  "name": "T-62 Cast Armor",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 48,
+  "top_armor_bonus": 24,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 36,
+    "chromium": 4
+  },
+  "production_time": 68,
+  "special_flags": [
+    "ussr",
+    "sixties",
+    "mbt"
+  ],
+  "description": "T-62 hull and turret protection. Thicker than T-55; vulnerable to 105 mm APFSDS."
+}

@@ -1,0 +1,42 @@
+{
+  "id": "ho229_prototype",
+  "name": "Ho 229 (Prototype)",
+  "design_family": "german_paper_ww2",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "stealth_bomber",
+  "crew_required": 1,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 90,
+  "base_stats": {
+    "speed": 112,
+    "reliability": 50,
+    "fuel_consumption": 14,
+    "supply_need": 10,
+    "armor": 12,
+    "hardness": 18
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "mk108_30mm_revolver",
+    "Engine": "jumo_004_jet_engine",
+    "Armor": "ho229_flying_wing_airframe"
+  },
+  "unlock_tech": [
+    "german_paper_planes",
+    "german_jet_fighters"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

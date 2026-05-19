@@ -1,0 +1,20 @@
+{
+  "id": "fab9000_bomb_load",
+  "name": "FAB-9000 Bomb Load",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 115,
+  "hard_attack": 25,
+  "piercing": 12,
+  "air_attack": 6,
+  "cost": {
+    "steel": 8,
+    "explosives": 55
+  },
+  "production_time": 60,
+  "special_flags": [
+    "strategic_bombing",
+    "ussr"
+  ],
+  "description": "Late-war heavy demolition bomb for Pe-8 and Tu-4. Enormous area effect."
+}

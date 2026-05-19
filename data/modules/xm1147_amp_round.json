@@ -1,0 +1,22 @@
+{
+  "id": "xm1147_amp_round",
+  "name": "XM1147 AMP-TH",
+  "category": "Cargo",
+  "tier": 8,
+  "soft_attack": 25,
+  "hard_attack": 20,
+  "piercing": 35,
+  "cost": {
+    "electronics": 18,
+    "explosives": 12,
+    "steel": 3
+  },
+  "production_time": 50,
+  "special_flags": [
+    "usa",
+    "ammunition",
+    "twenty_twenties",
+    "programmable"
+  ],
+  "description": "Advanced Multi-Purpose programmable fuze round. One round type for multiple targets."
+}

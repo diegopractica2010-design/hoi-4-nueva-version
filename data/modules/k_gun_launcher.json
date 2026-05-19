@@ -1,0 +1,22 @@
+{
+  "id": "k_gun_launcher",
+  "name": "K-gun Depth Charge Projector",
+  "category": "SecondaryWeapon",
+  "tier": 2,
+  "soft_attack": 8,
+  "hard_attack": 44,
+  "piercing": 10,
+  "anti_ship": 30,
+  "cost": {
+    "steel": 6,
+    "explosives": 10
+  },
+  "production_time": 26,
+  "special_flags": [
+    "naval",
+    "asw",
+    "usa",
+    "depth_charge"
+  ],
+  "description": "Side-thrown depth charge launcher. Widens attack pattern around escorts."
+}

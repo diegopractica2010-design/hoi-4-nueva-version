@@ -1,0 +1,57 @@
+{
+  "id": "town_class_cruiser_1918",
+  "name": "Town-class Cruiser",
+  "design_family": "australian_naval_1918",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "cruiser",
+  "crew_required": 550,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 170,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 68,
+    "fuel_consumption": 50,
+    "supply_need": 65,
+    "armor": 32,
+    "deck_armor": 16,
+    "hardness": 58
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_4_7inch_qf",
+    "SecondaryWeapon": "ww1_18inch_torpedo",
+    "Engine": "us_parsons_turbine",
+    "Sensors": "naval_fire_control_mk37",
+    "Communications": "wireless_set_no19"
+  },
+  "unlock_tech": [
+    "naval_1918",
+    "ww1_naval",
+    "great_war_naval",
+    "australian_naval_1918",
+    "cruiser"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

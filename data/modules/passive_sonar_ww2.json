@@ -1,0 +1,19 @@
+{
+  "id": "passive_sonar_ww2",
+  "name": "Passive Sonar (WWII)",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 14,
+    "rubber": 6
+  },
+  "production_time": 48,
+  "special_flags": [
+    "submarine",
+    "sonar",
+    "ww2"
+  ],
+  "description": "Hydrophone ranging on U-boats and fleet boats. Primary ASW detection of era."
+}

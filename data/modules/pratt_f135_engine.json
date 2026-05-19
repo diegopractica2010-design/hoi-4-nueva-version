@@ -1,0 +1,22 @@
+{
+  "id": "pratt_f135_engine",
+  "name": "Pratt & Whitney F135",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 16,
+  "fuel_efficiency": 15,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 20,
+    "aluminum": 45,
+    "titanium": 30
+  },
+  "production_time": 150,
+  "special_flags": [
+    "usa",
+    "jet_powerplant",
+    "twenty_tens",
+    "f35"
+  ],
+  "description": "F-35 single-engine turbofan. Most powerful fighter engine in production."
+}

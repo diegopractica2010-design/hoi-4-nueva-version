@@ -1,0 +1,23 @@
+{
+  "id": "lahat_gun_launched",
+  "name": "LAHAT",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 36,
+  "hard_attack": 65,
+  "piercing": 138,
+  "air_attack": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 26,
+    "explosives": 12
+  },
+  "production_time": 60,
+  "special_flags": [
+    "israel",
+    "atgm",
+    "nineties",
+    "gun_launched"
+  ],
+  "description": "Laser homing anti-tank missile fired from 105 mm and 120 mm guns."
+}

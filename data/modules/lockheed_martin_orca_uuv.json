@@ -1,0 +1,21 @@
+{
+  "id": "lockheed_martin_orca_uuv",
+  "name": "Orca XLUUV Suite",
+  "category": "DroneAttachment",
+  "tier": 7,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 8,
+    "electronics": 55,
+    "aluminum": 12
+  },
+  "production_time": 110,
+  "special_flags": [
+    "usa",
+    "uuv",
+    "prototype",
+    "twenty_twenties",
+    "autonomous"
+  ],
+  "description": "Extra-large UUV for mine warfare and ISR. Deployed from sub or shore."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "hot3_atgm",
+  "name": "HOT-3",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 36,
+  "hard_attack": 65,
+  "piercing": 135,
+  "air_attack": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 22,
+    "explosives": 14
+  },
+  "production_time": 55,
+  "special_flags": [
+    "france",
+    "atgm",
+    "nineties",
+    "tandem_warhead"
+  ],
+  "description": "Tandem-warhead SACLOS ATGM for Tiger and VAB. Defeats ERA of the 1990s."
+}

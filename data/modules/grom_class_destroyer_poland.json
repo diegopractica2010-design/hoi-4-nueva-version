@@ -1,0 +1,22 @@
+{
+  "id": "grom_class_destroyer_poland",
+  "name": "Grom-class Destroyer",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 20,
+  "hard_attack": 22,
+  "piercing": 20,
+  "anti_ship": 45,
+  "cost": {
+    "steel": 14,
+    "electronics": 8,
+    "explosives": 7
+  },
+  "production_time": 62,
+  "special_flags": [
+    "poland",
+    "destroyer",
+    "interwar"
+  ],
+  "description": "Polish destroyer built in UK. Fast Baltic escort on eve of WWII."
+}

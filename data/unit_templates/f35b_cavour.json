@@ -1,0 +1,47 @@
+{
+  "id": "f35b_cavour",
+  "name": "F-35B (Cavour)",
+  "design_family": "italian_carrier_air_2026",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 80,
+  "base_stats": {
+    "speed": 102,
+    "reliability": 82,
+    "fuel_consumption": 26,
+    "supply_need": 20,
+    "armor": 18,
+    "hardness": 30
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "aim120d_amraam",
+    "Engine": "pratt_f135_engine",
+    "Sensors": "f35b_stovl_package"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "italian_naval_aviation",
+    "cavour_air_wing"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

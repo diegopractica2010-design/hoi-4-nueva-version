@@ -1,0 +1,21 @@
+{
+  "id": "type83_destroyer_planned",
+  "name": "Type 83 Destroyer (Planned)",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 12,
+    "electronics": 55,
+    "aluminum": 10
+  },
+  "production_time": 100,
+  "special_flags": [
+    "uk",
+    "destroyer",
+    "prototype",
+    "twenty_thirties",
+    "planned"
+  ],
+  "description": "Future Royal Navy air-defense destroyer replacing Type 45."
+}

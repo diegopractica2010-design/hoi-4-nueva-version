@@ -1,0 +1,19 @@
+{
+  "id": "pratt_whitney_r2800",
+  "name": "Pratt & Whitney R-2800",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 4,
+  "speed_bonus": 15,
+  "cost": {
+    "steel": 12,
+    "aluminum": 14,
+    "rubber": 2
+  },
+  "production_time": 55,
+  "special_flags": [
+    "fighter_powerplant"
+  ],
+  "description": "2,000 hp Double Wasp on P-47 Thunderbolt. Excellent power and ruggedness."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "perkins_cv12_engine",
+  "name": "Perkins CV12",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 8,
+  "speed_bonus": 12,
+  "cost": {
+    "steel": 20,
+    "aluminum": 6
+  },
+  "production_time": 75,
+  "special_flags": [
+    "uk",
+    "eighties",
+    "challenger",
+    "diesel"
+  ],
+  "description": "Challenger 1 diesel powerpack. Reliable 1200 hp engine derived from Chieftain lineage."
+}

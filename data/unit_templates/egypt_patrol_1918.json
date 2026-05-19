@@ -1,0 +1,52 @@
+{
+  "id": "egypt_patrol_1918",
+  "name": "Egyptian Patrol",
+  "design_family": "egyptian_naval_1918",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "patrol",
+  "crew_required": 28,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 42,
+  "base_stats": {
+    "speed": 24,
+    "reliability": 60,
+    "fuel_consumption": 25,
+    "supply_need": 30,
+    "armor": 12,
+    "deck_armor": 8,
+    "hardness": 38
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ww1_coastal_patrol"
+  },
+  "unlock_tech": [
+    "naval_1918",
+    "ww1_naval",
+    "great_war_naval",
+    "egyptian_naval_1918"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

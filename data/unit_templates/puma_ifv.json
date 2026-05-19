@@ -1,0 +1,42 @@
+{
+  "id": "puma_ifv",
+  "name": "Puma IFV",
+  "design_family": "german_armored_twenty_tens",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "apc",
+  "crew_required": 3,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 95,
+  "base_stats": {
+    "speed": 40,
+    "reliability": 82,
+    "fuel_consumption": 11,
+    "supply_need": 14,
+    "armor": 42,
+    "top_armor": 28,
+    "hardness": 78
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "rh202_20mm_cannon",
+    "SecondaryWeapon": "spike_lr2_atgm",
+    "Armor": "puma_ifv_package"
+  },
+  "unlock_tech": [
+    "german_ifv_twenty_tens"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

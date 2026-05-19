@@ -1,0 +1,52 @@
+{
+  "id": "kss3_korea_2026",
+  "name": "KSS-III",
+  "design_family": "korean_sub_2026",
+  "base_type": "Submarine",
+  "size_category": "Heavy",
+  "visual_archetype": "submarine",
+  "crew_required": 50,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 175,
+  "base_stats": {
+    "speed": 22,
+    "reliability": 78,
+    "fuel_consumption": 35,
+    "supply_need": 45,
+    "armor": 35,
+    "hardness": 48
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "submarine_torpedo_tube",
+    "SecondaryWeapon": "cj10_china_cruise",
+    "Engine": "fuel_cell_aip_212",
+    "Sensors": "flank_array_sonar",
+    "Cargo": "vls_missile_compartment"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "korean_naval_2026",
+    "submarine"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

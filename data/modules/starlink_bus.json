@@ -1,0 +1,21 @@
+{
+  "id": "starlink_bus",
+  "name": "Starlink v2 Bus",
+  "category": "Communications",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 3,
+    "electronics": 28,
+    "aluminum": 5
+  },
+  "production_time": 25,
+  "special_flags": [
+    "spacex",
+    "usa",
+    "space",
+    "twenty_twenties",
+    "mega_constellation"
+  ],
+  "description": "Mass-produced broadband satellite. Defines LEO constellation warfare concerns."
+}

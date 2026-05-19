@@ -1,0 +1,56 @@
+{
+  "id": "le_fantasque_1936",
+  "name": "Le Fantasque-class",
+  "design_family": "french_naval_1936",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 220,
+  "base_training_level": 33,
+  "max_experience_level": 100,
+  "base_production_days": 110,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 65,
+    "fuel_consumption": 28,
+    "supply_need": 35,
+    "armor": 16,
+    "deck_armor": 10,
+    "hardness": 42
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "le_fantasque_destroyer",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "us_parsons_turbine",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "naval_1936",
+    "interwar_naval",
+    "pre_ww2_naval",
+    "french_naval_1936",
+    "destroyer"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,21 @@
+{
+  "id": "falcon9_stage_package",
+  "name": "Falcon 9 Stage Package",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 25,
+    "aluminum": 22,
+    "electronics": 30
+  },
+  "production_time": 95,
+  "special_flags": [
+    "spacex",
+    "usa",
+    "space",
+    "twenty_twenties",
+    "reusable"
+  ],
+  "description": "Falcon 9 booster with landing legs and grid fins. Dominant commercial launcher."
+}

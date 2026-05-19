@@ -1,0 +1,18 @@
+{
+  "id": "an_tps1_radar",
+  "name": "AN/TPS-1 Radar",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 6,
+    "electronics": 22
+  },
+  "production_time": 55,
+  "special_flags": [
+    "radar",
+    "usa",
+    "cold_war"
+  ],
+  "description": "Early post-war search radar for air defense and fleet support."
+}

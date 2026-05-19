@@ -1,0 +1,22 @@
+{
+  "id": "type100_mbt_proto",
+  "name": "Type 100 (Prototype)",
+  "category": "Armor",
+  "tier": 9,
+  "armor_bonus": 80,
+  "top_armor_bonus": 50,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 55,
+    "ceramics": 35,
+    "electronics": 30
+  },
+  "production_time": 180,
+  "special_flags": [
+    "china",
+    "twenty_thirties",
+    "mbt",
+    "planned"
+  ],
+  "description": "Projected fourth-generation Chinese MBT with unmanned turret and active protection."
+}

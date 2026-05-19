@@ -1,0 +1,55 @@
+{
+  "id": "swe_frigate_1936",
+  "name": "SWE Frigate (1936)",
+  "design_family": "swedish_naval_1936",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "frigate",
+  "crew_required": 180,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 120,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 72,
+    "fuel_consumption": 45,
+    "supply_need": 65,
+    "armor": 32,
+    "deck_armor": 14,
+    "hardness": 60
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_4_7inch_qf",
+    "SecondaryWeapon": "mk15_torpedo_tube",
+    "Engine": "us_parsons_turbine"
+  },
+  "unlock_tech": [
+    "naval_1936",
+    "interwar_naval",
+    "pre_ww2_naval",
+    "swedish_naval_1936",
+    "frigate"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

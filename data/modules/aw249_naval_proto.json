@@ -1,0 +1,23 @@
+{
+  "id": "aw249_naval_proto",
+  "name": "AW249 Naval (Proto)",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 6,
+  "speed_bonus": 16,
+  "cost": {
+    "steel": 12,
+    "aluminum": 20,
+    "electronics": 35,
+    "titanium": 8
+  },
+  "production_time": 105,
+  "special_flags": [
+    "italy",
+    "prototype",
+    "twenty_thirties",
+    "attack_helicopter"
+  ],
+  "description": "Italian next-gen attack helicopter with naval strike variant under study."
+}

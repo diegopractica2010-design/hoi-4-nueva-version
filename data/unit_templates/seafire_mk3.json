@@ -1,0 +1,46 @@
+{
+  "id": "seafire_mk3",
+  "name": "Seafire Mk III",
+  "design_family": "uk_carrier_air_ww2",
+  "base_type": "Air",
+  "size_category": "Light",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 33,
+  "max_experience_level": 100,
+  "base_production_days": 46,
+  "base_stats": {
+    "speed": 88,
+    "reliability": 72,
+    "fuel_consumption": 10,
+    "supply_need": 8,
+    "armor": 14,
+    "hardness": 24
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "hispano_mk2_cannon",
+    "SecondaryWeapon": "browning_303_battery",
+    "Engine": "rolls_royce_merlin_carrier",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "uk_naval_aviation",
+    "carrier_air_wing"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

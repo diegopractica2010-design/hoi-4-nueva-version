@@ -1,0 +1,17 @@
+{
+  "id": "v2_diesel_engine",
+  "name": "V-2-34 Diesel",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 8,
+  "speed_bonus": 5,
+  "cost": {
+    "steel": 14
+  },
+  "production_time": 44,
+  "special_flags": [
+    "diesel"
+  ],
+  "description": "500 hp diesel for T-34. Safer fuel; good cold-weather starting with effort."
+}

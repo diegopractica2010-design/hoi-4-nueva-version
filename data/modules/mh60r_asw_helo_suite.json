@@ -1,0 +1,22 @@
+{
+  "id": "mh60r_asw_helo_suite",
+  "name": "MH-60R ASW Suite",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 8,
+    "electronics": 38,
+    "aluminum": 12
+  },
+  "production_time": 75,
+  "special_flags": [
+    "usa",
+    "australia",
+    "india",
+    "asw",
+    "helicopter",
+    "twenty_twenties"
+  ],
+  "description": "Romeo Seahawk dipping sonar, torpedoes, and surface search radar. Standard Western ASW helo."
+}

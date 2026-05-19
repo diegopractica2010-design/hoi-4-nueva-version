@@ -1,0 +1,14 @@
+{
+  "id": "italian_riveted_armor",
+  "name": "Italian Riveted Armor",
+  "category": "Armor",
+  "tier": 1,
+  "armor_bonus": 20,
+  "top_armor_bonus": 8,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 16
+  },
+  "production_time": 32,
+  "description": "Thin riveted armor on Italian mediums. Poor survivability after 1942."
+}

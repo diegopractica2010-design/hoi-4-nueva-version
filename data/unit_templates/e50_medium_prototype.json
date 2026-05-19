@@ -1,0 +1,46 @@
+{
+  "id": "e50_medium_prototype",
+  "name": "E-50 Standardpanzer (Paper)",
+  "design_family": "german_paper_ww2",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 5,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 95,
+  "base_stats": {
+    "speed": 38,
+    "reliability": 60,
+    "fuel_consumption": 11,
+    "supply_need": 15,
+    "armor": 54,
+    "top_armor": 28,
+    "hardness": 87
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "kwk_43_l71_88_extended",
+    "Engine": "maybach_hl234_engine",
+    "Armor": "e50_standard_armor"
+  },
+  "unlock_tech": [
+    "german_paper_tanks",
+    "e_program"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

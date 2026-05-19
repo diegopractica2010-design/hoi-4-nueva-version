@@ -1,0 +1,21 @@
+{
+  "id": "tamandare_class_brazil",
+  "name": "Tamandaré-class Frigate",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 30,
+  "top_armor_bonus": 20,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 40,
+    "electronics": 28,
+    "aluminum": 12
+  },
+  "production_time": 105,
+  "special_flags": [
+    "brazil",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Brazilian Tamandaré (MEKO) frigate program with European systems."
+}

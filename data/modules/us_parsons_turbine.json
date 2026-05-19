@@ -1,0 +1,19 @@
+{
+  "id": "us_parsons_turbine",
+  "name": "Parsons Steam Turbine Set",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 6,
+  "fuel_efficiency": -6,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 45,
+    "copper": 12
+  },
+  "production_time": 120,
+  "special_flags": [
+    "naval",
+    "steam"
+  ],
+  "description": "Representative U.S./RN destroyer and cruiser propulsion plant."
+}

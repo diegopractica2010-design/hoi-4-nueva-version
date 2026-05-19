@@ -1,0 +1,22 @@
+{
+  "id": "fajr5_rocket",
+  "name": "Fajr-5",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 98,
+  "hard_attack": 38,
+  "piercing": 25,
+  "cost": {
+    "steel": 9,
+    "explosives": 32,
+    "electronics": 8
+  },
+  "production_time": 60,
+  "special_flags": [
+    "iran",
+    "rocket_artillery",
+    "two_thousands",
+    "mountable_on_transport"
+  ],
+  "description": "333 mm Iranian heavy rocket for strategic bombardment."
+}

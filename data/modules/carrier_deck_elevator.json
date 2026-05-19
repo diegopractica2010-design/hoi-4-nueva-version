@@ -1,0 +1,17 @@
+{
+  "id": "carrier_deck_elevator",
+  "name": "Aircraft Elevator System",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 20,
+    "electronics": 6
+  },
+  "production_time": 60,
+  "special_flags": [
+    "carrier",
+    "elevator"
+  ],
+  "description": "Heavy elevator connecting hangar to flight deck. Through-deck or edge designs."
+}

@@ -65,6 +65,13 @@ var hover_label: Label = null
 var selected_province_id: int = -1
 var _selection_highlight: Polygon2D = null
 
+#region Supply overlay
+@export var supply_overlay_panel: SupplyMenuPanel
+var supply_map_layer: SupplyMapLayer = null
+var supply_mode: bool = false
+var _supply_reroute_active: bool = false
+#endregion
+
 
 func _ready():
 	if btn_close == null:
@@ -91,17 +98,22 @@ func _ready():
 
 
 func _input(event: InputEvent) -> void:
-	# Scroll wheel zoom - handled here for reliability
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			_zoom_toward_mouse(1.0 + zoom_speed)
-			event.accept_event()
+			get_viewport().set_input_as_handled()
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_zoom_toward_mouse(1.0 - zoom_speed)
-			event.accept_event()
+			get_viewport().set_input_as_handled()
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_L:
+			_toggle_supply_overlay()
+			get_viewport().set_input_as_handled()
+			return
+
 	# Middle mouse drag start
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
@@ -234,6 +246,7 @@ func render_provinces():
 		province_nodes[id] = node
 
 	_refresh_province_detail_visibility()
+	_setup_supply_layer()
 	print("✅ Map rendered with real polygons")
 
 
@@ -416,6 +429,9 @@ func _get_province_color(province: Province) -> Color:
 
 func _on_province_input(_viewport: Node, event: InputEvent, _shape_idx: int, province: Province, node: Node2D):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if supply_mode and _handle_supply_province_click(province):
+			_select_province(province, node)
+			return
 		show_info_panel(province)
 		_select_province(province, node)
 
@@ -517,6 +533,192 @@ func show_info_panel(province: Province):
 func hide_info_panel():
 	if info_panel:
 		info_panel.visible = false
+
+
+#region Supply map layer
+func _setup_supply_layer() -> void:
+	if container == null:
+		return
+	if supply_map_layer == null or not is_instance_valid(supply_map_layer):
+		supply_map_layer = SupplyMapLayer.new()
+		supply_map_layer.name = "SupplyMapLayer"
+		container.add_child(supply_map_layer)
+	var sm := _supply_manager()
+	if sm != null and sm.rules != null:
+		supply_map_layer.setup(province_centroids, sm.rules)
+	_ensure_supply_overlay_panel()
+	_refresh_supply_routes()
+
+
+func _ensure_supply_overlay_panel() -> void:
+	if supply_overlay_panel != null:
+		supply_overlay_panel.set_callbacks(
+			_on_supply_commit, _on_supply_clear_waypoints, _on_supply_close_overlay,
+		)
+		return
+	var ui := get_node_or_null("UI")
+	if ui == null:
+		return
+	supply_overlay_panel = SupplyMenuPanel.new()
+	supply_overlay_panel.name = "SupplyMenuPanel"
+	supply_overlay_panel.custom_minimum_size = Vector2(420, 300)
+	supply_overlay_panel.position = Vector2(16, 120)
+	ui.add_child(supply_overlay_panel)
+	var vbox := VBoxContainer.new()
+	vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
+	vbox.offset_left = 12
+	vbox.offset_top = 12
+	vbox.offset_right = -12
+	vbox.offset_bottom = -12
+	supply_overlay_panel.add_child(vbox)
+	supply_overlay_panel.title_label = Label.new()
+	supply_overlay_panel.title_label.text = "Supply command"
+	vbox.add_child(supply_overlay_panel.title_label)
+	supply_overlay_panel.mode_option = OptionButton.new()
+	vbox.add_child(supply_overlay_panel.mode_option)
+	supply_overlay_panel.setup_mode_selector()
+	supply_overlay_panel.depot_label = Label.new()
+	supply_overlay_panel.depot_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(supply_overlay_panel.depot_label)
+	supply_overlay_panel.attrition_label = Label.new()
+	supply_overlay_panel.attrition_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(supply_overlay_panel.attrition_label)
+	supply_overlay_panel.body_label = RichTextLabel.new()
+	supply_overlay_panel.body_label.fit_content = true
+	supply_overlay_panel.body_label.custom_minimum_size = Vector2(380, 90)
+	vbox.add_child(supply_overlay_panel.body_label)
+	var row := HBoxContainer.new()
+	supply_overlay_panel.btn_commit = Button.new()
+	supply_overlay_panel.btn_commit.text = "Commit route"
+	row.add_child(supply_overlay_panel.btn_commit)
+	supply_overlay_panel.btn_clear = Button.new()
+	supply_overlay_panel.btn_clear.text = "Clear waypoints"
+	row.add_child(supply_overlay_panel.btn_clear)
+	supply_overlay_panel.btn_close = Button.new()
+	supply_overlay_panel.btn_close.text = "Close"
+	row.add_child(supply_overlay_panel.btn_close)
+	vbox.add_child(row)
+	supply_overlay_panel.set_callbacks(
+		_on_supply_commit, _on_supply_clear_waypoints, _on_supply_close_overlay,
+	)
+	supply_overlay_panel.set_mode_callback(_on_supply_mode_changed)
+
+
+func _supply_manager() -> Node:
+	return get_tree().root.get_node_or_null("SupplyManager")
+
+
+func build_supply_network(city_layer: Dictionary, player_tag: String = "USA") -> void:
+	var sm := _supply_manager()
+	if sm == null:
+		return
+	sm.build_network(provinces, countries, city_layer, adjacency, player_tag)
+	if sm.has_method("seed_demo_enemy_forces"):
+		sm.seed_demo_enemy_forces()
+	_setup_supply_layer()
+
+
+func _toggle_supply_overlay() -> void:
+	var sm := _supply_manager()
+	if sm == null:
+		return
+	sm.toggle_overlay()
+	supply_mode = sm.overlay_visible
+	if supply_map_layer:
+		supply_map_layer.visible = supply_mode
+	if supply_mode:
+		_refresh_supply_routes()
+	else:
+		_end_supply_reroute()
+	if supply_overlay_panel:
+		if not supply_mode:
+			supply_overlay_panel.hide_panel()
+
+
+func _refresh_supply_routes() -> void:
+	var sm := _supply_manager()
+	if supply_map_layer == null or sm == null:
+		return
+	supply_map_layer.set_routes(sm.get_all_routes())
+	supply_map_layer.visible = supply_mode
+
+
+func _handle_supply_province_click(province: Province) -> bool:
+	var sm := _supply_manager()
+	if sm == null:
+		return false
+	sm.set_selected_province(province.id)
+	if not _supply_reroute_active:
+		var source: int = sm.get_capital_hub_id()
+		if source < 0:
+			source = province.id
+		sm.begin_player_reroute(source, province.id)
+		_supply_reroute_active = true
+		_show_supply_preview()
+		return true
+	sm.add_reroute_waypoint(province.id)
+	_show_supply_preview()
+	return true
+
+
+func _show_supply_preview() -> void:
+	var sm := _supply_manager()
+	if sm == null:
+		return
+	var plan: SupplyRoutePlan = sm.preview_player_route()
+	_update_supply_menu(plan, true)
+	_refresh_supply_routes()
+
+
+func _update_supply_menu(plan: SupplyRoutePlan, reroute_mode: bool) -> void:
+	var sm := _supply_manager()
+	if sm == null or supply_overlay_panel == null:
+		return
+	var depot: ProvinceDepotState = sm.get_depot_state(sm.get_selected_province_id())
+	if depot == null:
+		depot = sm.get_depot_state(plan.target_province_id)
+	var attrition: Dictionary = sm.get_attrition_cargo_summary()
+	var extra := ""
+	for line in sm.get_depot_menu_lines(5):
+		extra += line + "\n"
+	if supply_overlay_panel.body_label:
+		supply_overlay_panel.show_supply_state(plan, depot, attrition, reroute_mode)
+		supply_overlay_panel.body_label.text += "\n\nTop depots:\n" + extra
+
+
+func _on_supply_mode_changed(mode: String) -> void:
+	var sm := _supply_manager()
+	if sm:
+		sm.set_routing_mode(mode)
+	_show_supply_preview()
+
+
+func _on_supply_commit() -> void:
+	var sm := _supply_manager()
+	if sm == null:
+		return
+	var plan: SupplyRoutePlan = sm.commit_player_route()
+	_update_supply_menu(plan, false)
+	_refresh_supply_routes()
+
+
+func _on_supply_clear_waypoints() -> void:
+	var sm := _supply_manager()
+	if sm:
+		sm.clear_reroute_waypoints()
+	_show_supply_preview()
+
+
+func _on_supply_close_overlay() -> void:
+	_toggle_supply_overlay()
+
+
+func _end_supply_reroute() -> void:
+	_supply_reroute_active = false
+	var sm := _supply_manager()
+	if sm:
+		sm.clear_reroute_waypoints()
+#endregion
 
 
 func _get_feature_icon(feature: String) -> String:

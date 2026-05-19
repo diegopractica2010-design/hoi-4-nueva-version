@@ -1,0 +1,50 @@
+{
+  "id": "aquila_carrier",
+  "name": "Aquila",
+  "design_family": "italian_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 1400,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 75,
+    "fuel_consumption": 90,
+    "supply_need": 110,
+    "armor": 30,
+    "deck_armor": 22,
+    "hardness": 62
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "carrier_air_wing_bunker",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "carrier_wooden_flight_deck",
+    "AntiAir": "carrier_aa_20mm_oerlikon"
+  },
+  "unlock_tech": [
+    "italian_carriers",
+    "german_paper_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

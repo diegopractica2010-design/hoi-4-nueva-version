@@ -1,0 +1,22 @@
+{
+  "id": "type95_sub_torpedo",
+  "name": "Type 95 Sub Torpedo",
+  "category": "SecondaryWeapon",
+  "tier": 3,
+  "soft_attack": 17,
+  "hard_attack": 36,
+  "piercing": 25,
+  "anti_ship": 55,
+  "cost": {
+    "steel": 8,
+    "explosives": 12
+  },
+  "production_time": 46,
+  "special_flags": [
+    "japan",
+    "ww2",
+    "submarine",
+    "oxygen_torpedo"
+  ],
+  "description": "Oxygen-powered torpedo on IJN submarines. Long range and wakeless."
+}

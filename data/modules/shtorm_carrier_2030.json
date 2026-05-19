@@ -1,0 +1,22 @@
+{
+  "id": "shtorm_carrier_2030",
+  "name": "Project Shtorm (2030)",
+  "category": "Cargo",
+  "tier": 8,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 120,
+    "electronics": 55,
+    "aluminum": 35,
+    "uranium": 12
+  },
+  "production_time": 260,
+  "special_flags": [
+    "russia",
+    "carrier",
+    "prototype",
+    "twenty_thirties",
+    "planned"
+  ],
+  "description": "Russian 100,000-ton nuclear supercarrier design. Uncertain funding timeline."
+}

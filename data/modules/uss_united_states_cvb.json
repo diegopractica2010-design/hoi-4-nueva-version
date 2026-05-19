@@ -1,0 +1,21 @@
+{
+  "id": "uss_united_states_cvb",
+  "name": "USS United States (CVB) Design",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 100,
+    "electronics": 22,
+    "aluminum": 28
+  },
+  "production_time": 225,
+  "special_flags": [
+    "usa",
+    "carrier",
+    "prototype",
+    "cold_war",
+    "paper"
+  ],
+  "description": "USN flush-deck supercarrier cancelled 1949. Influenced Forrestal layout."
+}

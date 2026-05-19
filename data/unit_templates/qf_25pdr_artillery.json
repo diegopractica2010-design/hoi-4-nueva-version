@@ -1,0 +1,37 @@
+{
+  "id": "qf_25pdr_artillery",
+  "name": "QF 25-pdr Battery",
+  "design_family": "uk_artillery_interwar",
+  "base_type": "Land",
+  "size_category": "Light",
+  "visual_archetype": "artillery",
+  "crew_required": 6,
+  "base_training_level": 22,
+  "max_experience_level": 100,
+  "base_production_days": 40,
+  "base_stats": {
+    "speed": 14,
+    "reliability": 82,
+    "fuel_consumption": 3,
+    "supply_need": 10,
+    "armor": 4,
+    "hardness": 15
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "qf_25pdr_gun",
+    "Suspension": "m1897_towed_carriage"
+  },
+  "unlock_tech": [
+    "field_artillery"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": false
+}

@@ -1,0 +1,21 @@
+{
+  "id": "change_lunar_lander",
+  "name": "Chang'e Lunar Lander",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 10,
+    "electronics": 35,
+    "aluminum": 14
+  },
+  "production_time": 120,
+  "special_flags": [
+    "china",
+    "space",
+    "twenty_twenties",
+    "lunar",
+    "sample_return"
+  ],
+  "description": "Chang'e lunar lander and sample return. Far side landing first."
+}

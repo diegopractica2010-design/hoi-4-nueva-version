@@ -1,0 +1,39 @@
+{
+  "id": "amx13_light",
+  "name": "AMX-13",
+  "design_family": "french_armored_cold_war",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 3,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 70,
+  "base_stats": {
+    "speed": 44,
+    "reliability": 72,
+    "fuel_consumption": 8,
+    "supply_need": 10,
+    "armor": 32,
+    "top_armor": 16,
+    "hardness": 72
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "amx13_75mm_fl10",
+    "Engine": "renault_v6_engine"
+  },
+  "unlock_tech": [
+    "french_light_tanks",
+    "cold_war_tanks"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

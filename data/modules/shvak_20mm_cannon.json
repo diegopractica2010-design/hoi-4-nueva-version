@@ -1,0 +1,16 @@
+{
+  "id": "shvak_20mm_cannon",
+  "name": "ShVAK 20mm",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 23,
+  "hard_attack": 13,
+  "piercing": 30,
+  "air_attack": 42,
+  "cost": {
+    "steel": 6,
+    "aluminum": 3
+  },
+  "production_time": 34,
+  "description": "LaGG-3, La-5, and Il-2 wing cannon. Reliable Soviet autocannon."
+}

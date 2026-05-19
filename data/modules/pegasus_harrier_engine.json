@@ -1,0 +1,22 @@
+{
+  "id": "pegasus_harrier_engine",
+  "name": "Rolls-Royce Pegasus",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 4,
+  "speed_bonus": 24,
+  "cost": {
+    "steel": 18,
+    "aluminum": 30,
+    "titanium": 8
+  },
+  "production_time": 100,
+  "special_flags": [
+    "uk",
+    "vstol",
+    "sixties",
+    "harrier"
+  ],
+  "description": "Harrier vectored-thrust engine. Enables STOVL operations from small carriers and forward bases."
+}

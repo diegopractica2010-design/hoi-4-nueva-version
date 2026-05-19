@@ -1,0 +1,23 @@
+{
+  "id": "swingfire_atgm",
+  "name": "Swingfire",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 30,
+  "hard_attack": 54,
+  "piercing": 110,
+  "air_attack": 3,
+  "cost": {
+    "steel": 5,
+    "electronics": 14,
+    "explosives": 10
+  },
+  "production_time": 48,
+  "special_flags": [
+    "uk",
+    "atgm",
+    "sixties",
+    "saclos"
+  ],
+  "description": "British vehicle-mounted ATGM. FV438 and Striker; wide firing arc."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "wp13f_j8_engine",
+  "name": "WP-13F Turbojet",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 4,
+  "speed_bonus": 30,
+  "cost": {
+    "steel": 14,
+    "aluminum": 22
+  },
+  "production_time": 72,
+  "special_flags": [
+    "china",
+    "jet_powerplant",
+    "eighties",
+    "j8"
+  ],
+  "description": "J-8II Finback engine. Twin layout for high-altitude interception."
+}

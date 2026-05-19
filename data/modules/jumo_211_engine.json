@@ -1,0 +1,16 @@
+{
+  "id": "jumo_211_engine",
+  "name": "Junkers Jumo 211J",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": -4,
+  "fuel_efficiency": 2,
+  "speed_bonus": 6,
+  "cost": {
+    "steel": 12,
+    "aluminum": 10
+  },
+  "production_time": 45,
+  "special_flags": ["inverted_v12"],
+  "description": "1,400 hp inverted V-12 used on Ju 87 and He 111. Adequate for dive-bomber missions but leaves the Stuka vulnerable to modern fighters."
+}

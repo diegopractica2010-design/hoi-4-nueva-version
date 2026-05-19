@@ -1,0 +1,43 @@
+{
+  "id": "e2c_hawkeye",
+  "name": "E-2C Hawkeye",
+  "design_family": "us_carrier_air_modern",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "awacs",
+  "crew_required": 5,
+  "base_training_level": 40,
+  "max_experience_level": 100,
+  "base_production_days": 90,
+  "base_stats": {
+    "speed": 85,
+    "reliability": 76,
+    "fuel_consumption": 22,
+    "supply_need": 16,
+    "armor": 14,
+    "hardness": 26
+  },
+  "slots": {
+    "Sensors": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Sensors": "e2c_hawkeye_radar",
+    "Engine": "j52_skyhawk_engine",
+    "Communications": "scr_522_radio"
+  },
+  "unlock_tech": [
+    "us_carrier_aviation",
+    "cold_war_naval_air",
+    "carrier_aew"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,21 @@
+{
+  "id": "izumo_stovl_upgrade",
+  "name": "Izumo STOVL Upgrade",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 90,
+    "electronics": 42,
+    "aluminum": 32
+  },
+  "production_time": 200,
+  "special_flags": [
+    "japan",
+    "carrier",
+    "stovl",
+    "f35b",
+    "twenty_twenties"
+  ],
+  "description": "JS Izumo/Kaga conversion for F-35B operations. Japan's return to fixed-wing carrier aviation."
+}

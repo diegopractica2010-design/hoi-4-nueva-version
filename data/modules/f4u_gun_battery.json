@@ -1,0 +1,22 @@
+{
+  "id": "f4u_gun_battery",
+  "name": "F4U Gun Battery (6× .50)",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 40,
+  "hard_attack": 14,
+  "piercing": 28,
+  "air_attack": 50,
+  "cost": {
+    "steel": 8,
+    "aluminum": 5
+  },
+  "production_time": 34,
+  "special_flags": [
+    "usa",
+    "naval_aviation",
+    "ww2",
+    "f4u_corsair"
+  ],
+  "description": "Six .50 cal guns on F4U Corsair. Also used in ground-attack and interdiction roles."
+}

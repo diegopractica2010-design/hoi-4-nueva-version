@@ -1,0 +1,47 @@
+{
+  "id": "f47_ngad_proto",
+  "name": "F-47 NGAD (Development)",
+  "design_family": "us_air_twenty_twenties",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 42,
+  "max_experience_level": 100,
+  "base_production_days": 160,
+  "base_stats": {
+    "speed": 118,
+    "reliability": 76,
+    "fuel_consumption": 22,
+    "supply_need": 24,
+    "armor": 8,
+    "hardness": 26
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "DroneAttachment": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "aim260_jatm",
+    "Engine": "ngad_adaptive_engine",
+    "Sensors": "aesa_radar_gen2",
+    "DroneAttachment": "cca_loyal_wingman"
+  },
+  "unlock_tech": [
+    "us_fighters_twenty_twenties",
+    "ngad",
+    "planned"
+  ],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

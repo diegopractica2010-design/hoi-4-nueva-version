@@ -1,0 +1,20 @@
+{
+  "id": "hss1_seabat_asw",
+  "name": "HSS-1 Seabat ASW",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 14,
+    "aluminum": 6
+  },
+  "production_time": 45,
+  "special_flags": [
+    "usa",
+    "asw",
+    "helicopter",
+    "fifties"
+  ],
+  "description": "First purpose-built U.S. Navy ASW helicopter. Dipping sonar and depth charges."
+}

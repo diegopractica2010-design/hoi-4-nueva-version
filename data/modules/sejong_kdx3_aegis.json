@@ -1,0 +1,20 @@
+{
+  "id": "sejong_kdx3_aegis",
+  "name": "Sejong KDX-III Aegis",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 9,
+  "cost": {
+    "steel": 14,
+    "electronics": 52,
+    "aluminum": 12
+  },
+  "production_time": 100,
+  "special_flags": [
+    "south_korea",
+    "destroyer",
+    "aegis",
+    "twenty_twenties"
+  ],
+  "description": "ROK Sejong the Great-class with Aegis and cruise missile strike."
+}

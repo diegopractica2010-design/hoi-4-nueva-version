@@ -1,0 +1,23 @@
+{
+  "id": "m2_bradley_tow",
+  "name": "M2 Bradley TOW-2",
+  "category": "SecondaryWeapon",
+  "tier": 5,
+  "soft_attack": 38,
+  "hard_attack": 65,
+  "piercing": 135,
+  "air_attack": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 20,
+    "explosives": 14
+  },
+  "production_time": 52,
+  "special_flags": [
+    "usa",
+    "atgm",
+    "eighties",
+    "tow"
+  ],
+  "description": "TOW-2 launcher on Bradley IFV. Defines U.S. combined-arms anti-armor doctrine."
+}

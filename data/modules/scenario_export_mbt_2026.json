@@ -1,0 +1,21 @@
+{
+  "id": "scenario_export_mbt_2026",
+  "name": "2026 Export MBT Package",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 24,
+  "top_armor_bonus": 16,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 40,
+    "electronics": 18,
+    "tungsten": 8
+  },
+  "production_time": 100,
+  "special_flags": [
+    "export",
+    "twenty_twenties",
+    "mbt"
+  ],
+  "description": "Standard Western export armor and FCS kit for allied MBT sales."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "an_apg77_radar",
+  "name": "AN/APG-77 AESA",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 8,
+    "electronics": 75,
+    "rare_earths": 12
+  },
+  "production_time": 130,
+  "special_flags": [
+    "usa",
+    "radar",
+    "nineties",
+    "aesa",
+    "stealth_fighter"
+  ],
+  "description": "Active electronically scanned array for F-22. Low probability of intercept and high track count."
+}

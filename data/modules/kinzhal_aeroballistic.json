@@ -1,0 +1,23 @@
+{
+  "id": "kinzhal_aeroballistic",
+  "name": "Kh-47M2 Kinzhal",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 130,
+  "hard_attack": 80,
+  "piercing": 70,
+  "air_attack": 15,
+  "cost": {
+    "steel": 18,
+    "electronics": 45,
+    "explosives": 55
+  },
+  "production_time": 110,
+  "special_flags": [
+    "russia",
+    "twenty_twenties",
+    "aeroballistic",
+    "mig31"
+  ],
+  "description": "Air-launched aeroballistic missile. Used against fixed targets in Ukraine."
+}

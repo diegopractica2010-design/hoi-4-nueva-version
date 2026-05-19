@@ -1,0 +1,37 @@
+{
+  "id": "ta183_prototype",
+  "name": "Ta 183 Huckebein (Paper)",
+  "design_family": "german_paper_ww2",
+  "base_type": "Air",
+  "size_category": "Light",
+  "visual_archetype": "jet_fighter",
+  "crew_required": 1,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 75,
+  "base_stats": {
+    "speed": 118,
+    "reliability": 48,
+    "fuel_consumption": 13,
+    "supply_need": 9,
+    "armor": 12,
+    "hardness": 19
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "mk214_50mm_cannon",
+    "Engine": "hes_011_jet_prototype"
+  },
+  "unlock_tech": [
+    "german_paper_planes"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

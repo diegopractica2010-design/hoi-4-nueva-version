@@ -1,0 +1,19 @@
+{
+  "id": "extra_fuel_tanks",
+  "name": "Extra Fuel Tanks",
+  "category": "ExtraFuel",
+  "tier": 1,
+  "reliability_bonus": -3,
+  "fuel_efficiency": -8,
+  "speed_bonus": 0,
+  "cost": {
+    "steel": 4,
+    "rubber": 2
+  },
+  "production_time": 15,
+  "special_flags": [
+    "extended_range",
+    "fire_risk"
+  ],
+  "description": "External or enlarged fuel stowage. Extends operational range at increased fire risk."
+}

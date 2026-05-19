@@ -1,0 +1,20 @@
+{
+  "id": "flank_array_sonar",
+  "name": "Flank Array Sonar",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 9,
+  "cost": {
+    "steel": 12,
+    "electronics": 38,
+    "rubber": 14
+  },
+  "production_time": 80,
+  "special_flags": [
+    "russia",
+    "china",
+    "sonar",
+    "submarine"
+  ],
+  "description": "Conformal flank arrays on Akula and improved Chinese subs."
+}

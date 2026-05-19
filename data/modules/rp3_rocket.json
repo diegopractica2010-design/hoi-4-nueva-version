@@ -1,0 +1,21 @@
+{
+  "id": "rp3_rocket",
+  "name": "RP-3 Rocket",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 38,
+  "hard_attack": 22,
+  "piercing": 28,
+  "air_attack": 10,
+  "cost": {
+    "steel": 5,
+    "explosives": 8
+  },
+  "production_time": 28,
+  "special_flags": [
+    "rocket",
+    "uk",
+    "ground_attack"
+  ],
+  "description": "British 60 lb rocket on Typhoon and Hurricane. Effective vs armor and shipping."
+}

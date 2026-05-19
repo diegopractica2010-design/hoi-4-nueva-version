@@ -1,0 +1,54 @@
+{
+  "id": "independence_lcs_sgp_2026",
+  "name": "Independence-class LCS",
+  "design_family": "singapore_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 75,
+  "base_training_level": 37,
+  "max_experience_level": 100,
+  "base_production_days": 110,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 78,
+    "fuel_consumption": 40,
+    "supply_need": 50,
+    "armor": 25,
+    "deck_armor": 16,
+    "hardness": 52
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "SecondaryWeapon": "harpoon_sub_launch",
+    "Sensors": "independence_lcs_sgp",
+    "AntiAir": "barak8_sam"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "singapore_naval_2026",
+    "corvette"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

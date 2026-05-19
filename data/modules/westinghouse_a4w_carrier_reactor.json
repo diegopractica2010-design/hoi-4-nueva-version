@@ -1,0 +1,22 @@
+{
+  "id": "westinghouse_a4w_carrier_reactor",
+  "name": "Westinghouse A4W (Carrier)",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 20,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 35,
+    "uranium": 35,
+    "electronics": 30
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "nuclear",
+    "carrier",
+    "cold_war"
+  ],
+  "description": "A4W reactor plant on Nimitz and Enterprise. Unlimited range for carrier strike groups."
+}

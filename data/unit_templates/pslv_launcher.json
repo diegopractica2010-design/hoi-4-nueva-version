@@ -1,0 +1,37 @@
+{
+  "id": "pslv_launcher",
+  "name": "PSLV",
+  "design_family": "isro_space",
+  "base_type": "Space",
+  "size_category": "Medium",
+  "visual_archetype": "rocket",
+  "crew_required": 0,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 55,
+  "base_stats": {
+    "speed": 76,
+    "reliability": 88,
+    "fuel_consumption": 70,
+    "supply_need": 30,
+    "payload_capacity": 4,
+    "hardness": 9
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "pslv_launcher",
+    "Sensors": "chandrayaan_lander"
+  },
+  "unlock_tech": [
+    "indian_space"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

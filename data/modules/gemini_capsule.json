@@ -1,0 +1,21 @@
+{
+  "id": "gemini_capsule",
+  "name": "Gemini Capsule",
+  "category": "LifeSupport",
+  "tier": 4,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 8,
+    "aluminum": 12,
+    "electronics": 18
+  },
+  "production_time": 85,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "sixties",
+    "crewed"
+  ],
+  "description": "Two-crew spacecraft. Rendezvous and EVA practice for Apollo."
+}

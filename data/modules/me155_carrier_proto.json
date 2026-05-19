@@ -1,0 +1,23 @@
+{
+  "id": "me155_carrier_proto",
+  "name": "Me 155B Carrier Proto",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": -2,
+  "fuel_efficiency": 0,
+  "speed_bonus": 22,
+  "cost": {
+    "steel": 10,
+    "aluminum": 16,
+    "electronics": 8
+  },
+  "production_time": 70,
+  "special_flags": [
+    "germany",
+    "carrier_capable",
+    "ww2",
+    "prototype",
+    "me155"
+  ],
+  "description": "Navalized Bf 109 development for Graf Zeppelin. Incomplete when carrier was abandoned."
+}

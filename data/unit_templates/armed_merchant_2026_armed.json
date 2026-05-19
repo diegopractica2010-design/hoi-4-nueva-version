@@ -1,0 +1,52 @@
+{
+  "id": "armed_merchant_2026_armed",
+  "name": "Armed Merchant (Modular) (Armed)",
+  "design_family": "merchant_naval",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "cargo_ship",
+  "crew_required": 65,
+  "base_training_level": 24,
+  "max_experience_level": 100,
+  "base_production_days": 110,
+  "base_stats": {
+    "speed": 22,
+    "reliability": 65,
+    "fuel_consumption": 55,
+    "supply_need": 75,
+    "armor": 14,
+    "deck_armor": 4,
+    "hardness": 38,
+    "cargo_capacity": 25000
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "merchant_armed_cargo_hold",
+    "Engine": "modern_container_ship_engine",
+    "SecondaryWeapon": "merchant_ascm_launcher",
+    "AntiAir": "nasams_launcher"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "merchant_naval_2026"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,25 @@
+{
+  "id": "trident_d5_slbm",
+  "name": "Trident II D5",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 120,
+  "hard_attack": 110,
+  "piercing": 90,
+  "air_attack": 8,
+  "cost": {
+    "steel": 25,
+    "electronics": 65,
+    "explosives": 100,
+    "uranium": 25
+  },
+  "production_time": 160,
+  "special_flags": [
+    "usa",
+    "uk",
+    "slbm",
+    "nuclear",
+    "twenty_tens"
+  ],
+  "description": "Ohio and Vanguard SSBN strategic missile. MIRV nuclear deterrent."
+}

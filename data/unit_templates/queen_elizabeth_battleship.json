@@ -1,0 +1,53 @@
+{
+  "id": "queen_elizabeth_battleship",
+  "name": "Queen Elizabeth-class Battleship",
+  "design_family": "uk_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 1200,
+  "base_training_level": 35,
+  "max_experience_level": 100,
+  "base_production_days": 280,
+  "base_stats": {
+    "speed": 24,
+    "reliability": 72,
+    "fuel_consumption": 90,
+    "supply_need": 120,
+    "armor": 55,
+    "deck_armor": 28,
+    "hardness": 82
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_15inch_mk1",
+    "Engine": "us_parsons_turbine",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37",
+    "Communications": "wireless_set_no19"
+  },
+  "unlock_tech": [
+    "uk_battleships"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

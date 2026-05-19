@@ -1,0 +1,22 @@
+{
+  "id": "us_8inch_55_gun",
+  "name": "8\"/55 Mark 12",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 62,
+  "hard_attack": 52,
+  "piercing": 88,
+  "air_attack": 6,
+  "anti_ship": 72,
+  "cost": {
+    "steel": 28,
+    "explosives": 6
+  },
+  "production_time": 75,
+  "special_flags": [
+    "naval",
+    "heavy_cruiser",
+    "usa"
+  ],
+  "description": "Treaty heavy cruiser gun (Portland, Northampton classes)."
+}

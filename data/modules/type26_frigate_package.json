@@ -1,0 +1,20 @@
+{
+  "id": "type26_frigate_package",
+  "name": "Type 26 Frigate Package",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 50,
+    "electronics": 55,
+    "aluminum": 18
+  },
+  "production_time": 150,
+  "special_flags": [
+    "uk",
+    "twenty_twenties",
+    "naval",
+    "asw"
+  ],
+  "description": "City-class ASW frigate with Sonar 2087 and Mk 41 VLS."
+}

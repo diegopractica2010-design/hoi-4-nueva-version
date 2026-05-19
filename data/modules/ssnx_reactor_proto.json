@@ -1,0 +1,24 @@
+{
+  "id": "ssnx_reactor_proto",
+  "name": "SSN(X) Reactor (Proto)",
+  "category": "Engine",
+  "tier": 9,
+  "reliability_bonus": 18,
+  "fuel_efficiency": 24,
+  "speed_bonus": 22,
+  "cost": {
+    "steel": 30,
+    "uranium": 45,
+    "electronics": 45,
+    "titanium": 15
+  },
+  "production_time": 170,
+  "special_flags": [
+    "usa",
+    "nuclear",
+    "prototype",
+    "twenty_thirties",
+    "ssnx"
+  ],
+  "description": "Planned U.S. fast-attack submarine with Virginia successor reactor."
+}

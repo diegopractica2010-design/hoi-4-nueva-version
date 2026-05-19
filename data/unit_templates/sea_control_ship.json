@@ -1,0 +1,54 @@
+{
+  "id": "sea_control_ship",
+  "name": "Sea Control Ship",
+  "design_family": "us_naval_paper",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "carrier",
+  "crew_required": 600,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 160,
+  "base_stats": {
+    "speed": 24,
+    "reliability": 65,
+    "fuel_consumption": 50,
+    "supply_need": 65,
+    "armor": 20,
+    "deck_armor": 14,
+    "hardness": 48
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "sea_control_ship_1970s",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "carrier_wooden_flight_deck",
+    "Sensors": "naval_fire_control_mk37",
+    "AntiAir": "carrier_aa_20mm_oerlikon"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "us_naval_paper",
+    "cold_war_naval",
+    "vtol"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

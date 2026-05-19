@@ -1,0 +1,21 @@
+{
+  "id": "s3b_viking_asw_suite",
+  "name": "S-3B ASW Suite",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "electronics": 42,
+    "aluminum": 12
+  },
+  "production_time": 85,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "asw",
+    "eighties",
+    "s3_viking"
+  ],
+  "description": "Sonobuoys, MAD, and surface-search radar for S-3 Viking carrier ASW."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "checkmate_lts_package",
+  "name": "Su-75 Checkmate",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 14,
+  "speed_bonus": 36,
+  "cost": {
+    "steel": 20,
+    "aluminum": 38,
+    "titanium": 22,
+    "electronics": 35
+  },
+  "production_time": 160,
+  "special_flags": [
+    "russia",
+    "twenty_twenties",
+    "export",
+    "planned",
+    "checkmate"
+  ],
+  "description": "Light tactical stealth fighter for export. Single-engine fifth-gen at reduced cost."
+}

@@ -1,0 +1,39 @@
+{
+  "id": "breguet_dorand_gyrolab",
+  "name": "Breguet-Dorand Gyroplane",
+  "design_family": "experimental_rotary_pre_war",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "helicopter",
+  "crew_required": 1,
+  "base_training_level": 18,
+  "max_experience_level": 85,
+  "base_production_days": 85,
+  "base_stats": {
+    "speed": 45,
+    "reliability": 42,
+    "fuel_consumption": 14,
+    "supply_need": 10,
+    "armor": 4,
+    "hardness": 8
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "breguet_dorand_gyro_laboratory",
+    "Sensors": "breguet_dorand_gyro_laboratory"
+  },
+  "unlock_tech": [
+    "rotary_wing_experiments",
+    "french_aviation",
+    "prototype"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

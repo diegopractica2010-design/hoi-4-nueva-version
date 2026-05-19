@@ -1,0 +1,23 @@
+{
+  "id": "l11a5_120mm_rifled",
+  "name": "120 mm L11A5",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 64,
+  "hard_attack": 60,
+  "piercing": 132,
+  "air_attack": 5,
+  "cost": {
+    "steel": 28,
+    "explosives": 5,
+    "tungsten": 4
+  },
+  "production_time": 88,
+  "special_flags": [
+    "uk",
+    "sixties",
+    "chieftain",
+    "rifled"
+  ],
+  "description": "Chieftain MBT gun. HESH and APDS; exceptional kill range in 1970s NATO exercises."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "ch53k_king_stallion",
+  "name": "CH-53K King Stallion",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 4,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 20,
+    "aluminum": 28,
+    "titanium": 12,
+    "electronics": 15
+  },
+  "production_time": 110,
+  "special_flags": [
+    "usa",
+    "assault",
+    "helicopter",
+    "twenty_tens",
+    "heavy_lift"
+  ],
+  "description": "Next-gen heavy lift for USMC amphibious ready groups."
+}

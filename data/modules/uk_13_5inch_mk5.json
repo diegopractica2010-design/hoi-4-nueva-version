@@ -1,0 +1,23 @@
+{
+  "id": "uk_13_5inch_mk5",
+  "name": "BL 13.5-inch Mk V",
+  "category": "NavalGun",
+  "tier": 1,
+  "soft_attack": 65,
+  "hard_attack": 55,
+  "piercing": 88,
+  "air_attack": 2,
+  "anti_ship": 72,
+  "cost": {
+    "steel": 36,
+    "explosives": 10
+  },
+  "production_time": 88,
+  "special_flags": [
+    "naval",
+    "ww1",
+    "dreadnought",
+    "uk"
+  ],
+  "description": "Queen Elizabeth class super-dreadnought gun. Still dangerous in WWII secondary roles."
+}

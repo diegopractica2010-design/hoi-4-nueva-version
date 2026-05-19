@@ -1,0 +1,22 @@
+{
+  "id": "flakvierling_38_quad",
+  "name": "2 cm Flakvierling 38",
+  "category": "AntiAir",
+  "tier": 3,
+  "soft_attack": 14,
+  "hard_attack": 6,
+  "air_attack": 38,
+  "anti_air": 40,
+  "cost": {
+    "steel": 8,
+    "aluminum": 3
+  },
+  "production_time": 38,
+  "special_flags": [
+    "carrier",
+    "anti_air",
+    "germany",
+    "naval"
+  ],
+  "description": "Quad 2 cm mount for Kriegsmarine carriers and capital ships. Standard close-range AA."
+}

@@ -1,0 +1,34 @@
+{
+  "id": "m3_stuart_light",
+  "name": "M3 Stuart Light Tank",
+  "design_family": "us_armored_ww2",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 4,
+  "base_training_level": 20,
+  "max_experience_level": 100,
+  "base_production_days": 55,
+  "base_stats": {
+    "speed": 42,
+    "reliability": 80,
+    "fuel_consumption": 7,
+    "supply_need": 10,
+    "armor": 38,
+    "top_armor": 22,
+    "hardness": 75
+  },
+  "slots": {
+    "MainWeapon": {"max": 1},
+    "SecondaryWeapon": {"max": 2},
+    "Engine": {"max": 1},
+    "DroneAttachment": {"max": 2}
+  },
+  "module_loadout": {
+    "MainWeapon": "75mm_m3_gun",
+    "Engine": "continental_r975_engine"
+  },
+  "unlock_tech": ["light_tanks"],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

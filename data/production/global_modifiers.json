@@ -1,0 +1,62 @@
+{
+  "production_stances": {
+    "balanced": {
+      "id": "stance_balanced",
+      "source": "stance:balanced",
+      "output_multiplier": 1.0,
+      "reliability_multiplier": 1.0
+    },
+    "quantity": {
+      "id": "stance_quantity",
+      "source": "stance:quantity",
+      "output_multiplier": 1.18,
+      "reliability_multiplier": 0.92,
+      "tooling_gain_multiplier": 1.12,
+      "new_design_experience_rate_multiplier": 1.25,
+      "tags": ["quantity_focus"]
+    },
+    "quality": {
+      "id": "stance_quality",
+      "source": "stance:quality",
+      "output_multiplier": 0.9,
+      "reliability_multiplier": 1.15,
+      "reliability_flat_bonus": 4.0,
+      "tooling_gain_multiplier": 0.88,
+      "retooling_days_multiplier": 0.85,
+      "tags": ["quality_focus"]
+    }
+  },
+  "doctrines": {
+    "land_mass_production": {
+      "id": "doctrine_land_mass_production",
+      "source": "doctrine:land_mass_production",
+      "output_multiplier": 1.08,
+      "tooling_gain_multiplier": 1.1,
+      "tags": ["doctrine", "land"]
+    },
+    "land_precision_engineering": {
+      "id": "doctrine_land_precision",
+      "source": "doctrine:land_precision_engineering",
+      "reliability_multiplier": 1.1,
+      "reliability_flat_bonus": 2.0,
+      "retooling_days_multiplier": 0.9,
+      "tags": ["doctrine", "land"]
+    }
+  },
+  "focuses": {
+    "industrial_mobilization": {
+      "id": "focus_industrial_mobilization",
+      "source": "focus:industrial_mobilization",
+      "output_multiplier": 1.05,
+      "cost_multiplier": 0.95,
+      "tags": ["focus", "economy"]
+    },
+    "armored_excellence": {
+      "id": "focus_armored_excellence",
+      "source": "focus:armored_excellence",
+      "reliability_multiplier": 1.08,
+      "tooling_gain_multiplier": 1.05,
+      "tags": ["focus", "armor"]
+    }
+  }
+}

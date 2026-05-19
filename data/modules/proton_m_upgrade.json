@@ -1,0 +1,22 @@
+{
+  "id": "proton_m_upgrade",
+  "name": "Proton-M Upgrade",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "fuel_efficiency": -4,
+  "speed_bonus": 35,
+  "cost": {
+    "steel": 38,
+    "aluminum": 18,
+    "explosives": 75
+  },
+  "production_time": 125,
+  "special_flags": [
+    "russia",
+    "space",
+    "two_thousands",
+    "commercial"
+  ],
+  "description": "Modernized Proton for ISS modules and commercial satellites."
+}

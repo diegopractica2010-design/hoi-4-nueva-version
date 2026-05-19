@@ -1,0 +1,23 @@
+{
+  "id": "spear3_missile",
+  "name": "SPEAR 3",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 50,
+  "hard_attack": 58,
+  "piercing": 70,
+  "air_attack": 10,
+  "cost": {
+    "steel": 8,
+    "electronics": 40,
+    "explosives": 18
+  },
+  "production_time": 75,
+  "special_flags": [
+    "uk",
+    "twenty_twenties",
+    "cruise_missile",
+    "miniature"
+  ],
+  "description": "Miniature cruise missile for F-35 internal bays. Swarming precision strike."
+}

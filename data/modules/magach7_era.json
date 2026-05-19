@@ -1,0 +1,22 @@
+{
+  "id": "magach7_era",
+  "name": "Magach 7 ERA",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 48,
+  "top_armor_bonus": 30,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 35,
+    "explosives": 14,
+    "electronics": 6
+  },
+  "production_time": 75,
+  "special_flags": [
+    "israel",
+    "eighties",
+    "m60_derivative",
+    "era"
+  ],
+  "description": "M60-based Magach with Blazer/ERA and improved FCS. Lebanon and intifada service."
+}

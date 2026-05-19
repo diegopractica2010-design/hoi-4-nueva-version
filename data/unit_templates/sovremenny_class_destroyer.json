@@ -1,0 +1,54 @@
+{
+  "id": "sovremenny_class_destroyer",
+  "name": "Sovremenny-class",
+  "design_family": "russian_naval_modern",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "destroyer",
+  "crew_required": 300,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 160,
+  "base_stats": {
+    "speed": 34,
+    "reliability": 76,
+    "fuel_consumption": 45,
+    "supply_need": 55,
+    "armor": 22,
+    "deck_armor": 12,
+    "hardness": 55
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ger_15cm_tb",
+    "SecondaryWeapon": "kalibr_vls_sub",
+    "Engine": "geared_steam_turbine_60k",
+    "Sensors": "type281_surface_radar",
+    "AntiAir": "s300_pmu_sam"
+  },
+  "unlock_tech": [
+    "russian_destroyers",
+    "twenty_tens"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

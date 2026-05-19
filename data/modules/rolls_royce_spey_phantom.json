@@ -1,0 +1,21 @@
+{
+  "id": "rolls_royce_spey_phantom",
+  "name": "Spey Mk 202 (Phantom FG.1)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 6,
+  "speed_bonus": 30,
+  "cost": {
+    "steel": 16,
+    "aluminum": 28
+  },
+  "production_time": 82,
+  "special_flags": [
+    "uk",
+    "carrier_capable",
+    "seventies",
+    "phantom_naval"
+  ],
+  "description": "British Spey on Phantom FG.1 for HMS Ark Royal. Higher thrust at sea level than J79."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "cj10_china_cruise",
+  "name": "CJ-10 Cruise Missile",
+  "category": "SecondaryWeapon",
+  "tier": 6,
+  "soft_attack": 52,
+  "hard_attack": 55,
+  "piercing": 42,
+  "anti_ship": 82,
+  "cost": {
+    "steel": 12,
+    "electronics": 35,
+    "explosives": 28
+  },
+  "production_time": 80,
+  "special_flags": [
+    "china",
+    "cruise_missile",
+    "submarine"
+  ],
+  "description": "Chinese submarine-launched cruise missile on Shang and Type 093A."
+}

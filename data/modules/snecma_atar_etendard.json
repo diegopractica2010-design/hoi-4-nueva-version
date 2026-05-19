@@ -1,0 +1,21 @@
+{
+  "id": "snecma_atar_etendard",
+  "name": "SNECMA Atar (Étendard)",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 4,
+  "speed_bonus": 26,
+  "cost": {
+    "steel": 12,
+    "aluminum": 20
+  },
+  "production_time": 68,
+  "special_flags": [
+    "france",
+    "carrier_capable",
+    "sixties",
+    "super_etendard"
+  ],
+  "description": "Atar turbojet on Étendard IVM and Super Étendard. French carrier strike lineage."
+}

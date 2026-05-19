@@ -1,0 +1,22 @@
+{
+  "id": "long_march2_engine",
+  "name": "Long March 2 Engine",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 6,
+  "fuel_efficiency": -2,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 16,
+    "aluminum": 10,
+    "explosives": 30
+  },
+  "production_time": 80,
+  "special_flags": [
+    "china",
+    "space",
+    "seventies",
+    "casc"
+  ],
+  "description": "LM-2 family engines. Launched FSW satellites and early crew program tests."
+}

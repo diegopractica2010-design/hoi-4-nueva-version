@@ -1,0 +1,22 @@
+{
+  "id": "dante_alighieri_bb",
+  "name": "Dante Alighieri 12\"",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 32,
+  "hard_attack": 36,
+  "piercing": 34,
+  "anti_ship": 65,
+  "cost": {
+    "steel": 26,
+    "chromium": 5,
+    "explosives": 10
+  },
+  "production_time": 82,
+  "special_flags": [
+    "italy",
+    "battleship",
+    "ww1"
+  ],
+  "description": "First Italian all-big-gun battleship. Adriatic operations against Austria-Hungary."
+}

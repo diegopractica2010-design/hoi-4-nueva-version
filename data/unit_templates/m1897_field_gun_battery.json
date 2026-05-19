@@ -1,0 +1,38 @@
+{
+  "id": "m1897_field_gun_battery",
+  "name": "75 mm M1897 Battery",
+  "design_family": "us_artillery_ww1",
+  "base_type": "Land",
+  "size_category": "Light",
+  "visual_archetype": "artillery",
+  "crew_required": 6,
+  "base_training_level": 18,
+  "max_experience_level": 90,
+  "base_production_days": 35,
+  "base_stats": {
+    "speed": 12,
+    "reliability": 80,
+    "fuel_consumption": 2,
+    "supply_need": 8,
+    "armor": 4,
+    "hardness": 15
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "m1897_75mm_field_gun",
+    "Suspension": "m1897_towed_carriage"
+  },
+  "unlock_tech": [
+    "field_artillery",
+    "ww1_artillery"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": false
+}

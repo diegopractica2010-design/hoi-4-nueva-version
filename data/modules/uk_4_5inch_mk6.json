@@ -1,0 +1,23 @@
+{
+  "id": "uk_4_5inch_mk6",
+  "name": "QF 4.5-inch Mark 6",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 44,
+  "hard_attack": 30,
+  "piercing": 52,
+  "air_attack": 26,
+  "anti_ship": 40,
+  "anti_air": 30,
+  "cost": {
+    "steel": 18,
+    "electronics": 8
+  },
+  "production_time": 62,
+  "special_flags": [
+    "naval",
+    "uk",
+    "cold_war"
+  ],
+  "description": "Cold War British destroyer DP gun. Replaced wartime 4.7-inch mounts."
+}

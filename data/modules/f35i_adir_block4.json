@@ -1,0 +1,20 @@
+{
+  "id": "f35i_adir_block4",
+  "name": "F-35I Adir Block 4",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 12,
+    "electronics": 75,
+    "aluminum": 22
+  },
+  "production_time": 165,
+  "special_flags": [
+    "israel",
+    "twenty_twenties",
+    "f35",
+    "stealth"
+  ],
+  "description": "Israeli F-35I with indigenous EW and strike packages. Regional strike role."
+}

@@ -1,0 +1,53 @@
+{
+  "id": "iceland_patrol_2026",
+  "name": "Þór-class OPV",
+  "design_family": "icelandic_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 20,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 65,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 78,
+    "fuel_consumption": 40,
+    "supply_need": 50,
+    "armor": 25,
+    "deck_armor": 16,
+    "hardness": 52
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "coast_guard_patrol_minor",
+    "Sensors": "aesa_radar_gen1"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "icelandic_naval_2026",
+    "patrol"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

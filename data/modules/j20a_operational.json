@@ -1,0 +1,23 @@
+{
+  "id": "j20a_operational",
+  "name": "J-20A Operational",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 16,
+  "speed_bonus": 40,
+  "cost": {
+    "steel": 26,
+    "aluminum": 48,
+    "titanium": 30,
+    "electronics": 45
+  },
+  "production_time": 185,
+  "special_flags": [
+    "china",
+    "twenty_twenties",
+    "j20",
+    "stealth"
+  ],
+  "description": "WS-15-powered J-20 in serial production. PLAAF premier air superiority fighter."
+}

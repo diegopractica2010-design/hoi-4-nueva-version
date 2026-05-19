@@ -1,0 +1,21 @@
+{
+  "id": "iss_destiny_lab",
+  "name": "ISS Destiny Lab",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 38,
+    "aluminum": 32,
+    "electronics": 42
+  },
+  "production_time": 150,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "nineties",
+    "iss"
+  ],
+  "description": "U.S. laboratory module for ISS science."
+}

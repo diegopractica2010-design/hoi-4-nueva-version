@@ -1,0 +1,21 @@
+{
+  "id": "bristol_hercules_barracuda",
+  "name": "Bristol Hercules (Barracuda)",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 1,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 11,
+    "aluminum": 10
+  },
+  "production_time": 46,
+  "special_flags": [
+    "uk",
+    "carrier_capable",
+    "ww2",
+    "barracuda"
+  ],
+  "description": "Powerplant for Fairey Barracuda dive/torpedo bomber on British fleet carriers."
+}

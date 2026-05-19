@@ -1,0 +1,21 @@
+{
+  "id": "f35c_carrier_package",
+  "name": "F-35C Carrier Package",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 22,
+    "electronics": 58,
+    "aluminum": 38,
+    "titanium": 24
+  },
+  "production_time": 155,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "f35c",
+    "catapult"
+  ],
+  "description": "Larger wing, reinforced landing gear, and tailhook for catapult carrier ops."
+}

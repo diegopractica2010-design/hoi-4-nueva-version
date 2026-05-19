@@ -1,0 +1,22 @@
+{
+  "id": "rapier_fsc_sam",
+  "name": "Rapier FSC",
+  "category": "AntiAir",
+  "tier": 6,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 76,
+  "anti_air": 78,
+  "cost": {
+    "steel": 14,
+    "electronics": 30,
+    "explosives": 10
+  },
+  "production_time": 75,
+  "special_flags": [
+    "uk",
+    "sam",
+    "nineties"
+  ],
+  "description": "Improved Rapier with FLIR and improved guidance. Falklands lessons incorporated."
+}

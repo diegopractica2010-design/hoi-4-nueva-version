@@ -1,0 +1,20 @@
+{
+  "id": "autonomous_ugv_2030",
+  "name": "Autonomous UGV (2030)",
+  "category": "DroneAttachment",
+  "tier": 9,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 15,
+    "electronics": 65,
+    "lithium": 18
+  },
+  "production_time": 110,
+  "special_flags": [
+    "global",
+    "twenty_thirties",
+    "ugv",
+    "autonomous"
+  ],
+  "description": "Optionally manned and autonomous ground resupply and combat vehicles."
+}

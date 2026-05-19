@@ -1,0 +1,18 @@
+{
+  "id": "daimler_knight_engine",
+  "name": "Daimler-Knight Sleeve Valve",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": -4,
+  "fuel_efficiency": 2,
+  "speed_bonus": 3,
+  "cost": {
+    "steel": 8
+  },
+  "production_time": 35,
+  "special_flags": [
+    "ww1",
+    "heavy_tank"
+  ],
+  "description": "Mark IV and early British tank engine. Underpowered and mechanically delicate."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "krupp_tiger_armor",
+  "name": "Krupp Tiger Armor Package",
+  "category": "Armor",
+  "tier": 3,
+  "armor_bonus": 52,
+  "top_armor_bonus": 24,
+  "reliability_penalty": -8,
+  "cost": {
+    "steel": 48,
+    "chromium": 6
+  },
+  "production_time": 70,
+  "special_flags": ["heavy_armor", "flat_plate"],
+  "description": "Up to 120 mm frontal hull and 100 mm turret on the Tiger I. Exceptional protection for 1942–43; very heavy and strains transmission and suspension."
+}

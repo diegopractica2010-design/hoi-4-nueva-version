@@ -1,0 +1,21 @@
+{
+  "id": "gps_block1_payload",
+  "name": "GPS Block I Payload",
+  "category": "Communications",
+  "tier": 5,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 4,
+    "electronics": 35,
+    "aluminum": 6
+  },
+  "production_time": 90,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "seventies",
+    "navigation"
+  ],
+  "description": "Navstar global positioning satellite. Transformed warfare and civilian navigation."
+}

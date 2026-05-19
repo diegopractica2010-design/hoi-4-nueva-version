@@ -1,0 +1,22 @@
+{
+  "id": "flraa_maritime_proto",
+  "name": "FLRAA Maritime (Proto)",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 14,
+    "electronics": 55,
+    "aluminum": 22,
+    "titanium": 10
+  },
+  "production_time": 120,
+  "special_flags": [
+    "usa",
+    "prototype",
+    "twenty_thirties",
+    "tiltrotor",
+    "naval"
+  ],
+  "description": "Future Long-Range Assault Aircraft for USMC from LHA. Tiltrotor endurance and shipboard ops."
+}

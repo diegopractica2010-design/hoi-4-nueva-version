@@ -1,0 +1,21 @@
+{
+  "id": "sh2_seasprite_asw",
+  "name": "SH-2 Seasprite ASW",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 8,
+    "electronics": 24,
+    "aluminum": 10
+  },
+  "production_time": 55,
+  "special_flags": [
+    "usa",
+    "asw",
+    "helicopter",
+    "sixties",
+    "frigate"
+  ],
+  "description": "Light ASW helicopter for destroyers and frigates. LAMPS Mk I program."
+}

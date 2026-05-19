@@ -1,0 +1,23 @@
+{
+  "id": "m142_himars_system",
+  "name": "M142 HIMARS",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 130,
+  "hard_attack": 50,
+  "piercing": 40,
+  "cost": {
+    "steel": 28,
+    "electronics": 45,
+    "explosives": 42,
+    "aluminum": 8
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "rocket_artillery",
+    "two_thousands",
+    "mountable_on_transport"
+  ],
+  "description": "Wheeled six-pack launcher. Shares GMLRS/ATACMS/PrSM family munitions."
+}

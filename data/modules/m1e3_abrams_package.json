@@ -1,0 +1,24 @@
+{
+  "id": "m1e3_abrams_package",
+  "name": "M1E3 Abrams Package",
+  "category": "Armor",
+  "tier": 9,
+  "armor_bonus": 95,
+  "top_armor_bonus": 72,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 60,
+    "ceramics": 45,
+    "uranium": 30,
+    "titanium": 20,
+    "electronics": 25
+  },
+  "production_time": 175,
+  "special_flags": [
+    "usa",
+    "twenty_thirties",
+    "m1e3",
+    "planned"
+  ],
+  "description": "AbramsX-derived production tank with hybrid drive, lighter hull, and standard Trophy."
+}

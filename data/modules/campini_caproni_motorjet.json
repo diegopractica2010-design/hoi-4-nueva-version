@@ -1,0 +1,20 @@
+{
+  "id": "campini_caproni_motorjet",
+  "name": "Campini-Caproni Motorjet",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": -5,
+  "fuel_efficiency": -6,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 14,
+    "aluminum": 12
+  },
+  "production_time": 70,
+  "special_flags": [
+    "prototype",
+    "italy",
+    "motorjet"
+  ],
+  "description": "CC.2 experimental propulsion. Early jet precursor; unreliable but innovative."
+}

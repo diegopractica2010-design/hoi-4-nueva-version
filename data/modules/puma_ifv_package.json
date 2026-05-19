@@ -1,0 +1,22 @@
+{
+  "id": "puma_ifv_package",
+  "name": "Puma IFV Package",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 42,
+  "top_armor_bonus": 28,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 35,
+    "ceramics": 18,
+    "electronics": 12
+  },
+  "production_time": 95,
+  "special_flags": [
+    "germany",
+    "twenty_tens",
+    "ifv",
+    "puma"
+  ],
+  "description": "Puma IFV with 30 mm MK30-2 and Spike. Most protected Western IFV."
+}

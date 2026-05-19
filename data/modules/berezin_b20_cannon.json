@@ -1,0 +1,21 @@
+{
+  "id": "berezin_b20_cannon",
+  "name": "Berezin B-20",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 28,
+  "hard_attack": 18,
+  "piercing": 36,
+  "air_attack": 44,
+  "cost": {
+    "steel": 7,
+    "aluminum": 4
+  },
+  "production_time": 38,
+  "special_flags": [
+    "aircraft_gun",
+    "ussr",
+    "20mm"
+  ],
+  "description": "Soviet 20 mm cannon for Il-2 and late fighters. Higher muzzle velocity than ShVAK."
+}

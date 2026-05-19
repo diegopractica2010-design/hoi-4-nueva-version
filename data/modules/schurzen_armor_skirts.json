@@ -1,0 +1,18 @@
+{
+  "id": "schurzen_armor_skirts",
+  "name": "Schürzen Side Skirts",
+  "category": "Armor",
+  "tier": 2,
+  "armor_bonus": 12,
+  "top_armor_bonus": 0,
+  "reliability_penalty": -2,
+  "cost": {
+    "steel": 8
+  },
+  "production_time": 20,
+  "special_flags": [
+    "anti_cumulative",
+    "anti_heat"
+  ],
+  "description": "Hinged side plates vs Soviet AT rifles and early hollow-charge warheads."
+}

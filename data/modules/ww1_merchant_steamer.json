@@ -1,0 +1,19 @@
+{
+  "id": "ww1_merchant_steamer",
+  "name": "WWI Merchant Steamer",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 2,
+  "cost": {
+    "steel": 28,
+    "copper": 6
+  },
+  "production_time": 80,
+  "special_flags": [
+    "ww1",
+    "merchant",
+    "steam"
+  ],
+  "description": "Coal-fired tramp steamer engine for Great War sealift."
+}

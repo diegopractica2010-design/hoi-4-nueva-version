@@ -1,0 +1,53 @@
+{
+  "id": "g3_battlecruiser_uk",
+  "name": "G3 Battlecruiser (Paper)",
+  "design_family": "uk_naval_paper",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "carrier",
+  "crew_required": 1800,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 62,
+    "fuel_consumption": 95,
+    "supply_need": 120,
+    "armor": 48,
+    "deck_armor": 24,
+    "hardness": 75
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "carrier_air_wing_bunker",
+    "Engine": "carrier_boiler_yarrow",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37",
+    "AntiAir": "carrier_aa_20mm_oerlikon"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "uk_naval_paper",
+    "interwar_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

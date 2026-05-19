@@ -1,0 +1,21 @@
+{
+  "id": "m60a1_patton_armor",
+  "name": "M60A1 Patton Armor",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 50,
+  "top_armor_bonus": 28,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 38,
+    "chromium": 6,
+    "titanium": 2
+  },
+  "production_time": 72,
+  "special_flags": [
+    "usa",
+    "sixties",
+    "main_battle_tank"
+  ],
+  "description": "Cast turret and improved glacis on M60A1. Standard U.S. MBT through Vietnam and 1973."
+}

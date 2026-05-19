@@ -1,0 +1,43 @@
+{
+  "id": "d4y_judy",
+  "name": "D4Y Judy",
+  "design_family": "japanese_carrier_air_ww2",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "bomber",
+  "crew_required": 2,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 52,
+  "base_stats": {
+    "speed": 78,
+    "reliability": 68,
+    "fuel_consumption": 14,
+    "supply_need": 12,
+    "armor": 16,
+    "hardness": 22
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "d4y_judy_strike_load",
+    "Engine": "sakae_radial_engine",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "japanese_naval_aviation",
+    "kido_butai",
+    "late_war_carrier"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,19 @@
+{
+  "id": "wurzburg_ground_radar",
+  "name": "Würzburg Ground Radar",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 6,
+    "electronics": 12
+  },
+  "production_time": 42,
+  "special_flags": [
+    "radar",
+    "ground",
+    "germany",
+    "flak"
+  ],
+  "description": "German fire-control radar for flak batteries. Also used in coastal defense."
+}

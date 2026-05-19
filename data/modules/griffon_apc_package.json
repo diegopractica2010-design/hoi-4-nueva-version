@@ -1,0 +1,22 @@
+{
+  "id": "griffon_apc_package",
+  "name": "Griffon APC",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 30,
+  "top_armor_bonus": 18,
+  "reliability_penalty": -2,
+  "cost": {
+    "steel": 22,
+    "aluminum": 12,
+    "ceramics": 6
+  },
+  "production_time": 55,
+  "special_flags": [
+    "france",
+    "twenty_twenties",
+    "scorpion",
+    "apc"
+  ],
+  "description": "Multi-role armored vehicle replacing VAB. Scorpion fleet backbone."
+}

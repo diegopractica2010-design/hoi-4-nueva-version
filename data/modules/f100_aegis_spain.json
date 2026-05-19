@@ -1,0 +1,20 @@
+{
+  "id": "f100_aegis_spain",
+  "name": "F100 Álvaro de Bazán",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 12,
+    "electronics": 42,
+    "aluminum": 10
+  },
+  "production_time": 88,
+  "special_flags": [
+    "spain",
+    "frigate",
+    "aegis",
+    "twenty_twenties"
+  ],
+  "description": "Spanish Aegis frigate design exported to Australia and Norway."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "wireless_set_no19",
+  "name": "Wireless Set No. 19",
+  "category": "Communications",
+  "tier": 2,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 2,
+    "electronics": 7,
+    "copper": 3
+  },
+  "production_time": 24,
+  "description": "Standard British tank brigade radio (infantry/tank liaison capable)."
+}

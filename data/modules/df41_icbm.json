@@ -1,0 +1,23 @@
+{
+  "id": "df41_icbm",
+  "name": "DF-41",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 270,
+  "hard_attack": 125,
+  "piercing": 98,
+  "cost": {
+    "steel": 42,
+    "electronics": 110,
+    "explosives": 105
+  },
+  "production_time": 220,
+  "special_flags": [
+    "china",
+    "icbm",
+    "twenty_twenties",
+    "strategic",
+    "mountable_on_transport"
+  ],
+  "description": "MIRV ICBM with intercontinental range. Parade debut 2019."
+}

@@ -1,0 +1,145 @@
+{
+  "design_families": {
+    "output_bonus_per_10_national_units": 0.02,
+    "max_family_output_bonus": 0.18,
+    "same_family_retool_discount": 0.30,
+    "cross_line_synergy_per_active_line": 0.01,
+    "max_cross_line_synergy": 0.06
+  },
+  "efficiency_ramp": {
+    "days_to_max_time_bonus": 120,
+    "max_time_on_design_output_bonus": 0.12
+  },
+  "tooling": {
+    "gain_per_unit": 0.18,
+    "gain_per_day_idle_on_design": 0.02,
+    "max_efficiency": 100,
+    "output_multiplier_at_zero": 0.82,
+    "output_multiplier_at_max": 1.38
+  },
+  "retooling": {
+    "max_penalty_days": 42,
+    "min_penalty_days": 3,
+    "efficiency_multiplier_during_retool": 0.45,
+    "similarity_weights": {
+      "shared_module": 0.40,
+      "same_base_type": 0.25,
+      "same_size_category": 0.20,
+      "same_visual_archetype": 0.15
+    }
+  },
+  "reliability": {
+    "new_design_multiplier": 0.62,
+    "maturity_units_for_full_production_learning": 20,
+    "production_maturity_weight": 0.55,
+    "maturity_gain_per_unit_produced": 0.028,
+    "max_maturity_from_production": 0.55,
+    "tooling_reliability_bonus_per_10_efficiency": 1.2,
+    "max_refinement_bonus": 25
+  },
+  "maintenance": {
+    "immaturity_maintenance_scale": 0.45,
+    "low_reliability_maintenance_scale": 0.35,
+    "supply_cost_per_maintenance_index": 0.35
+  },
+  "combat_readiness": {
+    "minimum_readiness": 0.62,
+    "maturity_weight": 0.35,
+    "reliability_weight": 0.65,
+    "base_breakdown_risk": 0.04,
+    "immaturity_breakdown_risk": 0.18
+  },
+  "logistics": {
+    "reference_cargo_tons": 10000,
+    "supply_need_per_cargo_ton": 0.0008,
+    "default_reduced_cargo_multiplier": 0.72,
+    "armed_supply_overhead_per_weapon_slot": 0.06,
+    "maintenance_index_per_lost_cargo_fraction": 0.12,
+    "combat_readiness_applies_to_cargo_units": true,
+    "cargo_module_multipliers": {
+      "standard_truck_cargo_bed": 1.0,
+      "reduced_truck_cargo_armed": 0.72,
+      "merchant_full_cargo_hold": 1.0,
+      "merchant_armed_cargo_hold": 0.68,
+      "mlrs_reload_trailer": 0.85
+    },
+    "weapon_slot_cargo_penalty": {
+      "MainWeapon": 0.28,
+      "SecondaryWeapon": 0.22,
+      "AntiAir": 0.15,
+      "NavalGun": 0.30
+    }
+  },
+  "refinement_projects": [
+    {
+      "id": "pilot_shakedown",
+      "category": "shakedown",
+      "name": "Pilot Shakedown Batch",
+      "days": 14,
+      "reliability_gain": 3,
+      "maturity_gain": 0.10,
+      "maintenance_reduction": 0.06,
+      "cost": {"steel": 20, "rubber": 3},
+      "blocks_production": false,
+      "production_penalty": 0.08,
+      "max_completions": 3,
+      "tradeoff_summary": "Low cost, runs alongside production. Modest reliability gains; maintenance stays elevated."
+    },
+    {
+      "id": "proving_ground_trials",
+      "category": "shakedown",
+      "name": "Proving Ground Trials",
+      "days": 28,
+      "reliability_gain": 5,
+      "maturity_gain": 0.18,
+      "maintenance_reduction": 0.10,
+      "cost": {"steel": 45, "fuel": 12},
+      "blocks_production": false,
+      "production_penalty": 0.18,
+      "max_completions": 2,
+      "tradeoff_summary": "Dedicated test fleet. Slower factory output for two weeks but strong long-term savings."
+    },
+    {
+      "id": "quality_control",
+      "category": "refinement",
+      "name": "Quality Control Program",
+      "days": 28,
+      "reliability_gain": 6,
+      "maturity_gain": 0.12,
+      "maintenance_reduction": 0.08,
+      "cost": {"steel": 40, "rubber": 5},
+      "blocks_production": false,
+      "production_penalty": 0.15,
+      "max_completions": 2,
+      "tradeoff_summary": "Balanced investment. Minor production hit; improves combat readiness and supply costs."
+    },
+    {
+      "id": "field_feedback_overhaul",
+      "category": "refinement",
+      "name": "Field Feedback Overhaul",
+      "days": 45,
+      "reliability_gain": 12,
+      "maturity_gain": 0.22,
+      "maintenance_reduction": 0.18,
+      "cost": {"steel": 80, "explosives": 10},
+      "blocks_production": true,
+      "production_penalty": 0.0,
+      "max_completions": 1,
+      "tradeoff_summary": "Halts the line. Best reliability and lowest upkeep, but no new units until complete."
+    },
+    {
+      "id": "metallurgy_upgrade",
+      "category": "refinement",
+      "name": "Metallurgy Upgrade",
+      "days": 60,
+      "reliability_gain": 10,
+      "maturity_gain": 0.15,
+      "maintenance_reduction": 0.12,
+      "cost": {"steel": 120, "aluminum": 15},
+      "blocks_production": false,
+      "production_penalty": 0.25,
+      "max_completions": 1,
+      "tradeoff_summary": "Expensive retooling of materials. Heavy production penalty; excellent durability payoff."
+    }
+  ]
+}

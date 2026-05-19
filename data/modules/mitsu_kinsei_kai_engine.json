@@ -1,0 +1,19 @@
+{
+  "id": "mitsu_kinsei_kai_engine",
+  "name": "Mitsubishi Kinsei Kai",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 5,
+  "fuel_efficiency": 4,
+  "speed_bonus": 13,
+  "cost": {
+    "steel": 10,
+    "aluminum": 11
+  },
+  "production_time": 50,
+  "special_flags": [
+    "japan",
+    "late_war"
+  ],
+  "description": "Upgraded Kinsei for Ki-84 and late bombers. Last generation of Japanese radials."
+}

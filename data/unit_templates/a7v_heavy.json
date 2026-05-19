@@ -1,0 +1,42 @@
+{
+  "id": "a7v_heavy",
+  "name": "A7V Sturmpanzerwagen",
+  "design_family": "german_armored_ww1",
+  "base_type": "Armored",
+  "size_category": "Heavy",
+  "visual_archetype": "heavy_tank",
+  "crew_required": 18,
+  "base_training_level": 10,
+  "max_experience_level": 70,
+  "base_production_days": 60,
+  "base_stats": {
+    "speed": 10,
+    "reliability": 45,
+    "fuel_consumption": 8,
+    "supply_need": 12,
+    "armor": 32,
+    "top_armor": 14,
+    "hardness": 62
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "kwk_57mm_a7v_gun",
+    "SecondaryWeapon": "mg08_machine_gun",
+    "Engine": "daimler_knight_engine"
+  },
+  "unlock_tech": [
+    "ww1_tanks"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

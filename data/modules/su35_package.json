@@ -1,0 +1,22 @@
+{
+  "id": "su35_package",
+  "name": "Su-35S Package",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 10,
+  "speed_bonus": 36,
+  "cost": {
+    "steel": 18,
+    "aluminum": 34,
+    "titanium": 14
+  },
+  "production_time": 100,
+  "special_flags": [
+    "russia",
+    "two_thousands",
+    "flanker",
+    "supermaneuverable"
+  ],
+  "description": "Su-35 with AL-41F1S engines and thrust vectoring. Export and Syria operations."
+}

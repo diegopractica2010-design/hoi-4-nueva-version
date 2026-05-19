@@ -1,0 +1,17 @@
+{
+  "id": "maybach_hl230_engine",
+  "name": "Maybach HL230 P45",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": -10,
+  "fuel_efficiency": -4,
+  "speed_bonus": 3,
+  "cost": {
+    "steel": 18,
+    "rubber": 2,
+    "aluminum": 4
+  },
+  "production_time": 55,
+  "special_flags": ["heavy_powerplant"],
+  "description": "690 hp gasoline engine for Panther and Tiger I. Powerful but heavy, fuel-thirsty, and maintenance-intensive under combat conditions."
+}

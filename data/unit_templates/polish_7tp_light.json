@@ -1,0 +1,39 @@
+{
+  "id": "polish_7tp_light",
+  "name": "7TP",
+  "design_family": "polish_armored_interwar",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 3,
+  "base_training_level": 18,
+  "max_experience_level": 90,
+  "base_production_days": 46,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 72,
+    "fuel_consumption": 6,
+    "supply_need": 8,
+    "armor": 26,
+    "top_armor": 14,
+    "hardness": 66
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "bofors_37mm_at",
+    "Engine": "spa_diesel_v8_engine"
+  },
+  "unlock_tech": [
+    "interwar_tanks",
+    "polish_armor"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

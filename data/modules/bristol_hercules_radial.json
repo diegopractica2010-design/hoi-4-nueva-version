@@ -1,0 +1,20 @@
+{
+  "id": "bristol_hercules_radial",
+  "name": "Bristol Hercules",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 7,
+  "fuel_efficiency": 5,
+  "speed_bonus": 11,
+  "cost": {
+    "steel": 11,
+    "aluminum": 12
+  },
+  "production_time": 50,
+  "special_flags": [
+    "fighter_powerplant",
+    "uk",
+    "twin_engine"
+  ],
+  "description": "Beaufighter, Wellington, and transport aircraft. Reliable twin-row radial."
+}

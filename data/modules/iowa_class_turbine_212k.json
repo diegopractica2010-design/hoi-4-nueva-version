@@ -1,0 +1,22 @@
+{
+  "id": "iowa_class_turbine_212k",
+  "name": "Iowa-class Turbine (212k shp)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 10,
+  "fuel_efficiency": -10,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 65,
+    "chromium": 8,
+    "copper": 12
+  },
+  "production_time": 150,
+  "special_flags": [
+    "naval",
+    "steam",
+    "battleship",
+    "fast_capital"
+  ],
+  "description": "Westinghouse geared turbines on Iowa-class battleships. Exceptional speed for capital ship."
+}

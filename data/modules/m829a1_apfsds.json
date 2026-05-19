@@ -1,0 +1,22 @@
+{
+  "id": "m829a1_apfsds",
+  "name": "M829A1 APFSDS",
+  "category": "Cargo",
+  "tier": 7,
+  "soft_attack": 10,
+  "hard_attack": 28,
+  "piercing": 45,
+  "cost": {
+    "uranium": 18,
+    "tungsten": 8,
+    "steel": 2
+  },
+  "production_time": 50,
+  "special_flags": [
+    "usa",
+    "ammunition",
+    "apfsds",
+    "nineties"
+  ],
+  "description": "M829A1 'Silver Bullet' DU penetrator. Defeated Iraqi T-72 at extreme ranges in 1991."
+}

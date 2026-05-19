@@ -1,0 +1,23 @@
+{
+  "id": "b21_raider_package",
+  "name": "B-21 Raider Package",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 16,
+  "speed_bonus": 30,
+  "cost": {
+    "steel": 35,
+    "aluminum": 60,
+    "titanium": 30,
+    "electronics": 50
+  },
+  "production_time": 220,
+  "special_flags": [
+    "usa",
+    "twenty_twenties",
+    "stealth",
+    "bomber"
+  ],
+  "description": "B-21 stealth bomber entering service. Penetrating strike against peer adversaries."
+}

@@ -1,0 +1,42 @@
+{
+  "id": "etendard_ivm",
+  "name": "Étendard IVM",
+  "design_family": "french_carrier_air",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 33,
+  "max_experience_level": 100,
+  "base_production_days": 65,
+  "base_stats": {
+    "speed": 98,
+    "reliability": 74,
+    "fuel_consumption": 20,
+    "supply_need": 15,
+    "armor": 12,
+    "hardness": 24
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "us_1000lb_bomb_load",
+    "Engine": "snecma_atar_etendard",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "french_naval_aviation",
+    "carrier_strike"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

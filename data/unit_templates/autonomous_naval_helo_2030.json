@@ -1,0 +1,44 @@
+{
+  "id": "autonomous_naval_helo_2030",
+  "name": "MQ-8C / Autonomous (Proto)",
+  "design_family": "us_naval_helo_planned",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "helicopter",
+  "crew_required": 0,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 85,
+  "base_stats": {
+    "speed": 75,
+    "reliability": 85,
+    "fuel_consumption": 14,
+    "supply_need": 12,
+    "armor": 12,
+    "hardness": 18
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Sensors": "autonomous_naval_helo_2030",
+    "Engine": "ge_f404_hornet"
+  },
+  "unlock_tech": [
+    "us_naval_aviation",
+    "naval_helicopters",
+    "twenty_thirties",
+    "uav",
+    "asw_helicopter"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

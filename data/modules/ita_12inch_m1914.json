@@ -1,0 +1,21 @@
+{
+  "id": "ita_12inch_m1914",
+  "name": "305 mm Model 1914",
+  "category": "NavalGun",
+  "tier": 1,
+  "soft_attack": 60,
+  "hard_attack": 50,
+  "piercing": 80,
+  "air_attack": 2,
+  "anti_ship": 64,
+  "cost": {
+    "steel": 30
+  },
+  "production_time": 78,
+  "special_flags": [
+    "naval",
+    "ww1",
+    "italy"
+  ],
+  "description": "Andrea Doria class 12-inch. Obsolete WWII battleship armament."
+}

@@ -1,0 +1,42 @@
+{
+  "id": "saturn_v_apollo",
+  "name": "Saturn V (Apollo)",
+  "design_family": "us_space_sixties",
+  "base_type": "Space",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "rocket",
+  "crew_required": 3,
+  "base_training_level": 40,
+  "max_experience_level": 100,
+  "base_production_days": 180,
+  "base_stats": {
+    "speed": 95,
+    "reliability": 82,
+    "fuel_consumption": 120,
+    "supply_need": 90,
+    "payload_capacity": 45,
+    "hardness": 15
+  },
+  "slots": {
+    "Engine": {
+      "max": 3
+    },
+    "Cargo": {
+      "max": 2
+    },
+    "LifeSupport": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Engine": "f1_saturn_engine",
+    "Cargo": "apollo_lm_lander",
+    "LifeSupport": "apollo_csm_capsule"
+  },
+  "unlock_tech": [
+    "apollo_program",
+    "lunar_landing"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

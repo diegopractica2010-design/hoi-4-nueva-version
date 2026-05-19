@@ -1,0 +1,23 @@
+{
+  "id": "ws10j_j15_engine",
+  "name": "WS-10J (J-15)",
+  "category": "Engine",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 10,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 18,
+    "aluminum": 34,
+    "titanium": 12,
+    "electronics": 15
+  },
+  "production_time": 100,
+  "special_flags": [
+    "china",
+    "carrier_capable",
+    "j15",
+    "liaoning"
+  ],
+  "description": "Indigenous turbofan for J-15 Flying Shark on Liaoning and Shandong."
+}

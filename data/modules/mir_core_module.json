@@ -1,0 +1,22 @@
+{
+  "id": "mir_core_module",
+  "name": "Mir Core Module",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 50,
+    "aluminum": 35,
+    "electronics": 40,
+    "chemicals": 15
+  },
+  "production_time": 170,
+  "special_flags": [
+    "ussr",
+    "russia",
+    "space",
+    "eighties",
+    "space_station"
+  ],
+  "description": "Modular space station operated 1986–2001. Long-duration Soviet/Russian presence in LEO."
+}

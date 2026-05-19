@@ -1,0 +1,24 @@
+{
+  "id": "m1a2_sep_v2_armor",
+  "name": "M1A2 SEP v2 Armor",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 82,
+  "top_armor_bonus": 62,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 55,
+    "ceramics": 35,
+    "uranium": 24,
+    "titanium": 16,
+    "kevlar": 12
+  },
+  "production_time": 145,
+  "special_flags": [
+    "usa",
+    "two_thousands",
+    "m1a2",
+    "du_armor"
+  ],
+  "description": "Upgraded SEP with improved DU and CROW armor kits for Iraq and Afghanistan."
+}

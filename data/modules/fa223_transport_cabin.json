@@ -1,0 +1,22 @@
+{
+  "id": "fa223_transport_cabin",
+  "name": "Fa 223 Transport Cabin",
+  "category": "Cargo",
+  "tier": 3,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 10,
+    "aluminum": 10,
+    "electronics": 4
+  },
+  "production_time": 55,
+  "special_flags": [
+    "germany",
+    "helicopter",
+    "ww2",
+    "fa223",
+    "cargo",
+    "luftwaffe"
+  ],
+  "description": "Enclosed cabin for troops, wounded, or 1,000+ kg cargo. Naval rescue and supply trials."
+}

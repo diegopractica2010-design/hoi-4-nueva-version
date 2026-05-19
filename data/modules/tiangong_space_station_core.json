@@ -1,0 +1,20 @@
+{
+  "id": "tiangong_space_station_core",
+  "name": "CSS Core Module (Tianhe)",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 48,
+    "aluminum": 38,
+    "electronics": 42
+  },
+  "production_time": 165,
+  "special_flags": [
+    "china",
+    "space",
+    "twenty_twenties",
+    "iss_class"
+  ],
+  "description": "Chinese Space Station core. Permanent crew and international experiment racks."
+}

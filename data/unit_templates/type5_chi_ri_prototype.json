@@ -1,0 +1,42 @@
+{
+  "id": "type5_chi_ri_prototype",
+  "name": "Type 5 Chi-Ri (Prototype)",
+  "design_family": "japanese_paper_ww2",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 5,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 85,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 60,
+    "fuel_consumption": 11,
+    "supply_need": 14,
+    "armor": 44,
+    "top_armor": 22,
+    "hardness": 78
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "type5_75mm_l70_gun",
+    "Engine": "mitsubishi_al_engine",
+    "Armor": "type5_chi_ri_armor"
+  },
+  "unlock_tech": [
+    "japanese_paper_tanks"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

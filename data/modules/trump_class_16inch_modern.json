@@ -1,0 +1,27 @@
+{
+  "id": "trump_class_16inch_modern",
+  "name": "Modernized 16-inch Battery",
+  "category": "NavalGun",
+  "tier": 9,
+  "soft_attack": 120,
+  "hard_attack": 95,
+  "piercing": 145,
+  "air_attack": 35,
+  "anti_ship": 115,
+  "anti_air": 40,
+  "cost": {
+    "steel": 90,
+    "electronics": 40,
+    "explosives": 80,
+    "chromium": 15
+  },
+  "production_time": 200,
+  "special_flags": [
+    "usa",
+    "naval",
+    "battleship",
+    "planned",
+    "trump_class"
+  ],
+  "description": "Two triple 16-inch/50 cal batteries with GPS-guided shells and reduced crew via automation."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "halifax_class_system",
+  "name": "Halifax-class Combat System",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 10,
+    "electronics": 38,
+    "aluminum": 8
+  },
+  "production_time": 82,
+  "special_flags": [
+    "canada",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Royal Canadian Navy Halifax-class with ESSM and Harpoon."
+}

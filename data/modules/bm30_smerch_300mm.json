@@ -1,0 +1,22 @@
+{
+  "id": "bm30_smerch_300mm",
+  "name": "BM-30 Smerch",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 140,
+  "hard_attack": 45,
+  "piercing": 35,
+  "cost": {
+    "steel": 14,
+    "explosives": 50,
+    "electronics": 12
+  },
+  "production_time": 90,
+  "special_flags": [
+    "soviet",
+    "rocket_artillery",
+    "eighties",
+    "mountable_on_transport"
+  ],
+  "description": "12-tube 300 mm heavy MLRS. Area denial and counter-battery."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "brahmos_air_launched",
+  "name": "BrahMos-A",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 50,
+  "hard_attack": 62,
+  "piercing": 55,
+  "anti_ship": 105,
+  "air_attack": 8,
+  "cost": {
+    "steel": 12,
+    "electronics": 35,
+    "explosives": 28
+  },
+  "production_time": 88,
+  "special_flags": [
+    "india",
+    "russia_joint",
+    "anti_ship",
+    "twenty_twenties"
+  ],
+  "description": "Air-launched BrahMos for Su-30MKI and planned naval strike roles from Vikrant."
+}

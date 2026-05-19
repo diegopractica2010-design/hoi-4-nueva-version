@@ -1,0 +1,23 @@
+{
+  "id": "a150_super_yamato_design",
+  "name": "A-150 Super-Yamato Design",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 72,
+  "top_armor_bonus": 45,
+  "reliability_penalty": -8,
+  "cost": {
+    "steel": 80,
+    "chromium": 20,
+    "titanium": 8
+  },
+  "production_time": 150,
+  "special_flags": [
+    "japan",
+    "battleship",
+    "prototype",
+    "ww2",
+    "paper"
+  ],
+  "description": "Planned 20-inch gunned super-battleship. Cancelled 1942 in favor of carriers."
+}

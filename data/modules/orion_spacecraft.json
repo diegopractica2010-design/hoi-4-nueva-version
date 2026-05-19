@@ -1,0 +1,23 @@
+{
+  "id": "orion_spacecraft",
+  "name": "Orion Spacecraft",
+  "category": "LifeSupport",
+  "tier": 7,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 18,
+    "aluminum": 22,
+    "electronics": 45
+  },
+  "production_time": 140,
+  "special_flags": [
+    "nasa",
+    "usa",
+    "esa_joint",
+    "space",
+    "twenty_twenties",
+    "crewed",
+    "deep_space"
+  ],
+  "description": "Orion crew capsule for Artemis beyond-LEO missions."
+}

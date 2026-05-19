@@ -1,0 +1,22 @@
+{
+  "id": "puma_vjtf_upgrade",
+  "name": "Puma VJTF Upgrade",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 48,
+  "top_armor_bonus": 32,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 38,
+    "ceramics": 22,
+    "electronics": 15
+  },
+  "production_time": 100,
+  "special_flags": [
+    "germany",
+    "twenty_twenties",
+    "puma",
+    "nato"
+  ],
+  "description": "Puma enhancement for Very High Readiness Joint Task Force."
+}

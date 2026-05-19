@@ -1,0 +1,23 @@
+{
+  "id": "s400_triumf",
+  "name": "S-400 Triumf",
+  "category": "AntiAir",
+  "tier": 8,
+  "soft_attack": 18,
+  "hard_attack": 16,
+  "air_attack": 98,
+  "anti_air": 96,
+  "cost": {
+    "steel": 38,
+    "electronics": 85,
+    "explosives": 28
+  },
+  "production_time": 150,
+  "special_flags": [
+    "russia",
+    "sam",
+    "two_thousands",
+    "strategic"
+  ],
+  "description": "S-400 long-range SAM. Export to China and Turkey; cornerstone of Russian air defense."
+}

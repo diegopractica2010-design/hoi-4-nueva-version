@@ -1,0 +1,19 @@
+{
+  "id": "polish_wz35_at",
+  "name": "wz. 35 Anti-Tank Rifle",
+  "category": "SecondaryWeapon",
+  "tier": 1,
+  "soft_attack": 8,
+  "hard_attack": 12,
+  "piercing": 28,
+  "air_attack": 0,
+  "cost": {
+    "steel": 3
+  },
+  "production_time": 14,
+  "special_flags": [
+    "poland",
+    "1939"
+  ],
+  "description": "Uruguay-pattern AT rifle. Limited effectiveness even in 1939."
+}

@@ -1,0 +1,39 @@
+{
+  "id": "cv33_tankette",
+  "name": "L3/33 Tankette",
+  "design_family": "italian_armored_interwar",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 2,
+  "base_training_level": 12,
+  "max_experience_level": 80,
+  "base_production_days": 35,
+  "base_stats": {
+    "speed": 22,
+    "reliability": 60,
+    "fuel_consumption": 4,
+    "supply_need": 5,
+    "armor": 14,
+    "top_armor": 8,
+    "hardness": 50
+  },
+  "slots": {
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "SecondaryWeapon": "fiat_revelli_mg",
+    "Engine": "fiat_spa_cv33_engine"
+  },
+  "unlock_tech": [
+    "interwar_tanks",
+    "tankettes"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

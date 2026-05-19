@@ -1,0 +1,48 @@
+{
+  "id": "p51d_mustang",
+  "name": "P-51D Mustang",
+  "design_family": "us_air_ww2",
+  "base_type": "Air",
+  "size_category": "Light",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 48,
+  "base_stats": {
+    "speed": 96,
+    "reliability": 80,
+    "fuel_consumption": 10,
+    "supply_need": 8,
+    "armor": 16,
+    "hardness": 24
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "m2_browning_gun_pod",
+    "Engine": "packard_merlin_v1650",
+    "Communications": "scr_522_radio",
+    "Sensors": "us_mark_iii_sight"
+  },
+  "unlock_tech": [
+    "us_fighters"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

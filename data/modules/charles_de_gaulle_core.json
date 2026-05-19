@@ -1,0 +1,22 @@
+{
+  "id": "charles_de_gaulle_core",
+  "name": "Charles de Gaulle Core",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 120,
+    "electronics": 45,
+    "aluminum": 35,
+    "uranium": 8
+  },
+  "production_time": 240,
+  "special_flags": [
+    "france",
+    "carrier",
+    "nuclear",
+    "catapult",
+    "twenty_twenties"
+  ],
+  "description": "Only non-U.S. nuclear carrier. Operates Rafale M and E-2C Hawkeye."
+}

@@ -1,0 +1,50 @@
+{
+  "id": "m270_mlrs_launcher",
+  "name": "M270 MLRS",
+  "design_family": "us_rocket_cold_war",
+  "base_type": "Land",
+  "size_category": "Medium",
+  "visual_archetype": "rocket_launcher",
+  "crew_required": 4,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 85,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 75,
+    "fuel_consumption": 14,
+    "supply_need": 20,
+    "armor": 18,
+    "hardness": 45
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "MainWeapon": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Engine": "agt1500_turbine",
+    "Suspension": "mlrs_launcher_chassis",
+    "Sensors": "hunter_killer_fcs",
+    "MainWeapon": "m270_mlrs",
+    "Cargo": "mlrs_reload_trailer"
+  },
+  "unlock_tech": [
+    "cold_war_rocket_artillery",
+    "us_missiles"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

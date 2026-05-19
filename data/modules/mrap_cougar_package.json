@@ -1,0 +1,22 @@
+{
+  "id": "mrap_cougar_package",
+  "name": "MRAP Cougar Package",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 32,
+  "top_armor_bonus": 22,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 18,
+    "ceramics": 8,
+    "kevlar": 10
+  },
+  "production_time": 48,
+  "special_flags": [
+    "usa",
+    "two_thousands",
+    "mine_protection",
+    "irak"
+  ],
+  "description": "V-hull MRAP for IED protection. Urgent fielding after Iraq/Afghanistan losses."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "space_tug_nuclear_thermal",
+  "name": "Nuclear Thermal Space Tug",
+  "category": "Engine",
+  "tier": 9,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 25,
+  "speed_bonus": 42,
+  "cost": {
+    "steel": 30,
+    "electronics": 50,
+    "uranium": 40
+  },
+  "production_time": 200,
+  "special_flags": [
+    "nasa",
+    "space",
+    "twenty_thirties",
+    "planned",
+    "nuclear"
+  ],
+  "description": "DRACO-class nuclear propulsion for rapid cislunar transfer. 2030s technology goal."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "satcom_mosaic_warfare",
+  "name": "Satcom / Mosaic Warfare",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 14,
+  "cost": {
+    "steel": 5,
+    "electronics": 70
+  },
+  "production_time": 100,
+  "special_flags": [
+    "nato",
+    "twenty_twenties",
+    "space",
+    "datalink"
+  ],
+  "description": "Starlink and military SATCOM enabling distributed kill chains and artillery coordination."
+}

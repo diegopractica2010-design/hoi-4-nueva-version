@@ -1,0 +1,19 @@
+{
+  "id": "german_wagner_turbine",
+  "name": "Wagner High-Pressure Turbine",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "fuel_efficiency": -8,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 52,
+    "chromium": 6
+  },
+  "production_time": 140,
+  "special_flags": [
+    "naval",
+    "steam"
+  ],
+  "description": "Bismarck-class battleship turbine plant. Powerful but complex."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "sb2c_bomb_torpedo_load",
+  "name": "SB2C Strike Load",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 75,
+  "hard_attack": 42,
+  "piercing": 38,
+  "anti_ship": 70,
+  "air_attack": 10,
+  "cost": {
+    "steel": 6,
+    "explosives": 30,
+    "electronics": 4
+  },
+  "production_time": 50,
+  "special_flags": [
+    "usa",
+    "naval_aviation",
+    "ww2",
+    "sb2c_helldiver"
+  ],
+  "description": "Heavy bomb or torpedo load for SB2C Helldiver. Replaced SBD on Essex-class carriers."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "russian_oren_space_station",
+  "name": "ROSS (Russian Orbital Station)",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 45,
+    "aluminum": 35,
+    "electronics": 38
+  },
+  "production_time": 160,
+  "special_flags": [
+    "russia",
+    "space",
+    "twenty_thirties",
+    "space_station",
+    "planned"
+  ],
+  "description": "Planned Russian national station after ISS withdrawal."
+}

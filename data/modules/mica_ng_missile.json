@@ -1,0 +1,23 @@
+{
+  "id": "mica_ng_missile",
+  "name": "MICA NG",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 14,
+  "hard_attack": 12,
+  "air_attack": 90,
+  "anti_air": 86,
+  "cost": {
+    "steel": 7,
+    "electronics": 45,
+    "explosives": 10
+  },
+  "production_time": 75,
+  "special_flags": [
+    "france",
+    "twenty_tens",
+    "air_to_air",
+    "dual_mode"
+  ],
+  "description": "Next-generation MICA with extended range. Rafale standard missile of 2020s development."
+}

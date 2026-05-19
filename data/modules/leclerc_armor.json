@@ -1,0 +1,23 @@
+{
+  "id": "leclerc_armor",
+  "name": "Leclerc Modular Armor",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 65,
+  "top_armor_bonus": 40,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 44,
+    "ceramics": 22,
+    "titanium": 10,
+    "kevlar": 8
+  },
+  "production_time": 105,
+  "special_flags": [
+    "france",
+    "nineties",
+    "composite",
+    "modular"
+  ],
+  "description": "French modular composite with removable ERA blocks. Optimized for Middle East export."
+}

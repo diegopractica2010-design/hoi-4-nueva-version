@@ -1,0 +1,21 @@
+{
+  "id": "d10t_100mm_gun",
+  "name": "100 mm D-10T",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 56,
+  "hard_attack": 52,
+  "piercing": 108,
+  "air_attack": 5,
+  "cost": {
+    "steel": 22,
+    "explosives": 3
+  },
+  "production_time": 72,
+  "special_flags": [
+    "excellent_ap",
+    "ussr",
+    "cold_war"
+  ],
+  "description": "IS-3 and SU-100 gun. Dominated late-war tank engagements."
+}

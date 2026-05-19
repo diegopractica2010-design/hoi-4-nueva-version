@@ -1,0 +1,47 @@
+{
+  "id": "fletcher_asw_destroyer",
+  "name": "Fletcher-class (ASW Fit)",
+  "design_family": "us_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 320,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 125,
+  "base_stats": {
+    "speed": 34,
+    "reliability": 78,
+    "fuel_consumption": 45,
+    "supply_need": 55,
+    "armor": 22,
+    "deck_armor": 12,
+    "hardness": 55
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "us_5inch_38_gun",
+    "SecondaryWeapon": "hedgehog_sprengbombe",
+    "Engine": "geared_steam_turbine_60k",
+    "Sensors": "sonar_gdcs"
+  },
+  "unlock_tech": [
+    "us_destroyers",
+    "asw_doctrine"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

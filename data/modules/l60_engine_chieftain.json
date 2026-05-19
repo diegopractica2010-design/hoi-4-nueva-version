@@ -1,0 +1,20 @@
+{
+  "id": "l60_engine_chieftain",
+  "name": "L60 Multifuel Engine",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": -6,
+  "fuel_efficiency": 4,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 20,
+    "aluminum": 4
+  },
+  "production_time": 70,
+  "special_flags": [
+    "uk",
+    "sixties",
+    "notorious"
+  ],
+  "description": "Chieftain powerplant. Innovative but unreliable; replaced by Leyland in Mk 10."
+}

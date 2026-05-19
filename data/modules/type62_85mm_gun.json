@@ -1,0 +1,20 @@
+{
+  "id": "type62_85mm_gun",
+  "name": "Type 62 85 mm",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 44,
+  "hard_attack": 38,
+  "piercing": 78,
+  "air_attack": 4,
+  "cost": {
+    "steel": 14
+  },
+  "production_time": 55,
+  "special_flags": [
+    "china",
+    "sixties",
+    "light_tank"
+  ],
+  "description": "Light tank gun for southern terrain and mountain warfare. Thin armor, high mobility."
+}

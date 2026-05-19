@@ -1,0 +1,21 @@
+{
+  "id": "fa223_transverse_twin_rotor",
+  "name": "Fa 223 Transverse Twin Rotor",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 12,
+    "aluminum": 14,
+    "electronics": 8
+  },
+  "production_time": 65,
+  "special_flags": [
+    "germany",
+    "helicopter",
+    "ww2",
+    "fa223",
+    "transport"
+  ],
+  "description": "Two 12 m rotors on outrigger booms. First production helicopter; crossed English Channel 1942."
+}

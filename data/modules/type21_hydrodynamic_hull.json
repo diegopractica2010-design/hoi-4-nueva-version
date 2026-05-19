@@ -1,0 +1,21 @@
+{
+  "id": "type21_hydrodynamic_hull",
+  "name": "Type XXI Hydrodynamic Hull",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 35,
+  "top_armor_bonus": 35,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 48,
+    "chromium": 5
+  },
+  "production_time": 95,
+  "special_flags": [
+    "germany",
+    "ww2",
+    "late_war",
+    "prototype_influence"
+  ],
+  "description": "Streamlined U-boat hull. Influenced postwar Soviet and Western designs."
+}

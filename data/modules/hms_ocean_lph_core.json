@@ -1,0 +1,20 @@
+{
+  "id": "hms_ocean_lph_core",
+  "name": "HMS Ocean LPH",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 75,
+    "electronics": 25,
+    "aluminum": 20
+  },
+  "production_time": 165,
+  "special_flags": [
+    "uk",
+    "lph",
+    "helicopter",
+    "two_thousands"
+  ],
+  "description": "British helicopter assault ship. Apache and Merlin operations until sold to Brazil."
+}

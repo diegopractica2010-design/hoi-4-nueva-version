@@ -1,0 +1,23 @@
+{
+  "id": "s400_triumf_proto",
+  "name": "S-300PMU-2 / S-400 Proto",
+  "category": "AntiAir",
+  "tier": 7,
+  "soft_attack": 18,
+  "hard_attack": 16,
+  "air_attack": 95,
+  "anti_air": 96,
+  "cost": {
+    "steel": 35,
+    "electronics": 70,
+    "explosives": 24
+  },
+  "production_time": 135,
+  "special_flags": [
+    "russia",
+    "sam",
+    "nineties",
+    "strategic"
+  ],
+  "description": "Evolved long-range SAM with improved engagement of stealth and ballistic targets."
+}

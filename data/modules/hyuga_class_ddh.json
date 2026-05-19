@@ -1,0 +1,20 @@
+{
+  "id": "hyuga_class_ddh",
+  "name": "Hyūga-class DDH",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 78,
+    "electronics": 32,
+    "aluminum": 22
+  },
+  "production_time": 168,
+  "special_flags": [
+    "japan",
+    "ddh",
+    "helicopter",
+    "two_thousands"
+  ],
+  "description": "Japanese helicopter destroyer before Izumo STOVL conversion."
+}

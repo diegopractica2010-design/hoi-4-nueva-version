@@ -1,0 +1,15 @@
+{
+  "id": "mikulin_v12_engine",
+  "name": "Mikulin V-12 (Klimov)",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "fuel_efficiency": 4,
+  "speed_bonus": 6,
+  "cost": {
+    "steel": 15,
+    "aluminum": 5
+  },
+  "production_time": 48,
+  "description": "IS-series and KV engines. High power; maintenance-intensive."
+}

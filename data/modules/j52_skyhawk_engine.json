@@ -1,0 +1,21 @@
+{
+  "id": "j52_skyhawk_engine",
+  "name": "J52 Turbojet (A-4)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 6,
+  "speed_bonus": 26,
+  "cost": {
+    "steel": 14,
+    "aluminum": 22
+  },
+  "production_time": 72,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "sixties",
+    "a4_skyhawk"
+  ],
+  "description": "Lightweight turbojet on A-4 Skyhawk. 'Scooter' served on U.S. carriers for decades."
+}

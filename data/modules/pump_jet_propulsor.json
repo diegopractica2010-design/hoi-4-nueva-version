@@ -1,0 +1,23 @@
+{
+  "id": "pump_jet_propulsor",
+  "name": "Pump-Jet Propulsor",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 4,
+  "speed_bonus": 6,
+  "cost": {
+    "steel": 12,
+    "electronics": 15,
+    "titanium": 6
+  },
+  "production_time": 75,
+  "special_flags": [
+    "uk",
+    "france",
+    "stealth",
+    "submarine",
+    "quiet"
+  ],
+  "description": "Reduced cavitation propulsor on Astute and Barracuda. Lower acoustic signature."
+}

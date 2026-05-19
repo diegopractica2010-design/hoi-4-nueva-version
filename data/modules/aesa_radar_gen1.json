@@ -1,0 +1,20 @@
+{
+  "id": "aesa_radar_gen1",
+  "name": "AESA Radar (Gen 1)",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 8,
+    "electronics": 65,
+    "rare_earths": 18
+  },
+  "production_time": 120,
+  "special_flags": [
+    "nato",
+    "twenty_tens",
+    "aesa",
+    "fighter"
+  ],
+  "description": "Active electronically scanned array standard on F-22, Rafale, and Typhoon upgrades."
+}

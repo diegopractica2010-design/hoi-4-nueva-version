@@ -1,0 +1,22 @@
+{
+  "id": "challenger2_armor",
+  "name": "Challenger 2 Dorchester",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 74,
+  "top_armor_bonus": 52,
+  "reliability_penalty": -7,
+  "cost": {
+    "steel": 50,
+    "ceramics": 30,
+    "titanium": 12,
+    "kevlar": 10
+  },
+  "production_time": 125,
+  "special_flags": [
+    "uk",
+    "nineties",
+    "challenger2"
+  ],
+  "description": "Second-generation Chobham on Challenger 2. Exceptional crew survivability record."
+}

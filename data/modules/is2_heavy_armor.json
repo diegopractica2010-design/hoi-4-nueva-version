@@ -1,0 +1,15 @@
+{
+  "id": "is2_heavy_armor",
+  "name": "IS-2 Heavy Armor",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 50,
+  "top_armor_bonus": 22,
+  "reliability_penalty": -7,
+  "cost": {
+    "steel": 44,
+    "chromium": 4
+  },
+  "production_time": 72,
+  "description": "120 mm frontal casting on IS-2. Top-tier protection with mobility cost."
+}

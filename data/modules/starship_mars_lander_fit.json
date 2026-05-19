@@ -1,0 +1,25 @@
+{
+  "id": "starship_mars_lander_fit",
+  "name": "Starship Lunar/Mars Fit",
+  "category": "LifeSupport",
+  "tier": 9,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 50,
+    "aluminum": 45,
+    "electronics": 55,
+    "chemicals": 25
+  },
+  "production_time": 200,
+  "special_flags": [
+    "spacex",
+    "usa",
+    "nasa",
+    "space",
+    "twenty_thirties",
+    "hls",
+    "mars",
+    "planned"
+  ],
+  "description": "Starship HLS lunar lander and projected Mars surface missions. Artemis architecture."
+}

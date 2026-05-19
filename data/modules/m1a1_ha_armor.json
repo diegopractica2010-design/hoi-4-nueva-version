@@ -1,0 +1,23 @@
+{
+  "id": "m1a1_ha_armor",
+  "name": "M1A1 HA Depleted-Uranium Package",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 72,
+  "top_armor_bonus": 55,
+  "reliability_penalty": -8,
+  "cost": {
+    "steel": 50,
+    "ceramics": 28,
+    "uranium": 18,
+    "titanium": 12
+  },
+  "production_time": 130,
+  "special_flags": [
+    "usa",
+    "eighties",
+    "du_armor",
+    "m1a1"
+  ],
+  "description": "Heavy armor with DU mesh in turret and hull. Near-impenetrable to 125 mm APFSDS of the era."
+}

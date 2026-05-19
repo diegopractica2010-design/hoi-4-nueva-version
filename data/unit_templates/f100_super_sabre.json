@@ -1,0 +1,38 @@
+{
+  "id": "f100_super_sabre",
+  "name": "F-100D Super Sabre",
+  "design_family": "us_air_cold_war",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "jet_fighter",
+  "crew_required": 1,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 58,
+  "base_stats": {
+    "speed": 125,
+    "reliability": 74,
+    "fuel_consumption": 15,
+    "supply_need": 11,
+    "armor": 18,
+    "hardness": 26
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "m61_vulcan_pod",
+    "Engine": "pratt_whitney_j57"
+  },
+  "unlock_tech": [
+    "us_jet_fighters",
+    "cold_war_air"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

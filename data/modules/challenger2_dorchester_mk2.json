@@ -1,0 +1,22 @@
+{
+  "id": "challenger2_dorchester_mk2",
+  "name": "Dorchester Mk 2",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 76,
+  "top_armor_bonus": 54,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 52,
+    "ceramics": 32,
+    "titanium": 14,
+    "kevlar": 12
+  },
+  "production_time": 130,
+  "special_flags": [
+    "uk",
+    "two_thousands",
+    "challenger2"
+  ],
+  "description": "Challenger 2 with theatre entry upgrades. Basra and Iraq service record."
+}

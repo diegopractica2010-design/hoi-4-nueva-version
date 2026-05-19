@@ -1,0 +1,22 @@
+{
+  "id": "us_6inch_47_gun",
+  "name": "6\"/47 Mark 16",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 55,
+  "hard_attack": 42,
+  "piercing": 72,
+  "air_attack": 10,
+  "anti_ship": 58,
+  "cost": {
+    "steel": 22,
+    "explosives": 4
+  },
+  "production_time": 65,
+  "special_flags": [
+    "naval",
+    "light_cruiser",
+    "usa"
+  ],
+  "description": "U.S. light cruiser automatic rifle. High rate of fire with good AP."
+}

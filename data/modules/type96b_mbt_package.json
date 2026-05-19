@@ -1,0 +1,20 @@
+{
+  "id": "type96b_mbt_package",
+  "name": "Type 96B Package",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 58,
+  "top_armor_bonus": 34,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 40,
+    "ceramics": 14
+  },
+  "production_time": 88,
+  "special_flags": [
+    "china",
+    "two_thousands",
+    "type96"
+  ],
+  "description": "Improved Type 96 with better FCS and armor. Mass-production PLA MBT."
+}

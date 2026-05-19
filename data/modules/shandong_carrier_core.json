@@ -1,0 +1,21 @@
+{
+  "id": "shandong_carrier_core",
+  "name": "Shandong Carrier Core",
+  "category": "Cargo",
+  "tier": 7,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 105,
+    "electronics": 40,
+    "aluminum": 32
+  },
+  "production_time": 225,
+  "special_flags": [
+    "china",
+    "carrier",
+    "ski_jump",
+    "indigenous",
+    "twenty_twenties"
+  ],
+  "description": "Indigenous Type 002 carrier. J-15 air wing with improved island and sensors."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "agm88_harm",
+  "name": "AGM-88 HARM",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 40,
+  "hard_attack": 35,
+  "piercing": 20,
+  "air_attack": 12,
+  "cost": {
+    "steel": 8,
+    "electronics": 35,
+    "explosives": 18
+  },
+  "production_time": 72,
+  "special_flags": [
+    "usa",
+    "anti_radiation",
+    "nineties",
+    "sead"
+  ],
+  "description": "Anti-radiation missile for suppression of enemy air defenses. Essential in Kosovo and Iraq."
+}

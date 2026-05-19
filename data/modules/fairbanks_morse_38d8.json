@@ -1,0 +1,21 @@
+{
+  "id": "fairbanks_morse_38d8",
+  "name": "Fairbanks-Morse 38D8",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 6,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 18,
+    "aluminum": 8
+  },
+  "production_time": 70,
+  "special_flags": [
+    "usa",
+    "diesel_electric",
+    "ww2",
+    "fleet_boat"
+  ],
+  "description": "Gato and Balao class opposed-piston diesels. Reliable Pacific workhorse."
+}

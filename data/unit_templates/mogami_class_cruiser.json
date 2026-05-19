@@ -1,0 +1,54 @@
+{
+  "id": "mogami_class_cruiser",
+  "name": "Mogami-class",
+  "design_family": "japanese_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "cruiser",
+  "crew_required": 850,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 220,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 74,
+    "fuel_consumption": 65,
+    "supply_need": 85,
+    "armor": 40,
+    "deck_armor": 18,
+    "hardness": 70
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ijn_8inch_type3",
+    "SecondaryWeapon": "type93_long_lance",
+    "Engine": "ijn_kampon_turbine",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "japanese_cruisers",
+    "ww2_naval"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

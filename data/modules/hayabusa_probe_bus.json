@@ -1,0 +1,21 @@
+{
+  "id": "hayabusa_probe_bus",
+  "name": "Hayabusa Probe Bus",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 6,
+    "electronics": 32,
+    "aluminum": 10
+  },
+  "production_time": 110,
+  "special_flags": [
+    "jaxa",
+    "japan",
+    "space",
+    "two_thousands",
+    "asteroid"
+  ],
+  "description": "Asteroid sample return demonstrator. Ion propulsion and precision navigation."
+}

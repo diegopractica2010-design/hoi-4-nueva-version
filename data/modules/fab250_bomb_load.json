@@ -1,0 +1,16 @@
+{
+  "id": "fab250_bomb_load",
+  "name": "FAB-250 Bomb Load",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 68,
+  "hard_attack": 12,
+  "piercing": 8,
+  "air_attack": 9,
+  "cost": {
+    "steel": 4,
+    "explosives": 22
+  },
+  "production_time": 38,
+  "description": "Standard Pe-2 / Il-4 tactical bomb load."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "ge_f404_hornet",
+  "name": "GE F404 (F/A-18)",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 10,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 16,
+    "aluminum": 30,
+    "titanium": 8
+  },
+  "production_time": 88,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "eighties",
+    "fa18_hornet"
+  ],
+  "description": "F/A-18 Hornet powerplant. Twin-engine reliability for carrier strike fighter."
+}

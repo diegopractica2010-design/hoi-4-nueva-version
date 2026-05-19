@@ -1,0 +1,21 @@
+{
+  "id": "grand_slam_bomb",
+  "name": "Grand Slam 22,000 lb",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 120,
+  "hard_attack": 70,
+  "piercing": 95,
+  "air_attack": 5,
+  "cost": {
+    "steel": 18,
+    "explosives": 90
+  },
+  "production_time": 95,
+  "special_flags": [
+    "earthquake_bomb",
+    "uk",
+    "anti_structure"
+  ],
+  "description": "Largest conventional bomb of WWII. Collapsed Bielefeld viaduct and U-boat shelters."
+}

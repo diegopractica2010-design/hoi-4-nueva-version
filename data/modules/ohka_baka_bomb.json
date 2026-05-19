@@ -1,0 +1,23 @@
+{
+  "id": "ohka_baka_bomb",
+  "name": "MXY-7 Ohka",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 95,
+  "hard_attack": 40,
+  "piercing": 60,
+  "air_attack": 5,
+  "anti_ship": 75,
+  "cost": {
+    "steel": 6,
+    "explosives": 28,
+    "aluminum": 4
+  },
+  "production_time": 35,
+  "special_flags": [
+    "kamikaze",
+    "anti_ship",
+    "japan"
+  ],
+  "description": "Rocket-powered human-guided anti-ship weapon. Terrifying but vulnerable during approach."
+}

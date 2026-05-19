@@ -1,0 +1,19 @@
+{
+  "id": "jumo_213_fighter_engine",
+  "name": "Jumo 213A",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 3,
+  "fuel_efficiency": 4,
+  "speed_bonus": 15,
+  "cost": {
+    "steel": 12,
+    "aluminum": 14
+  },
+  "production_time": 52,
+  "special_flags": [
+    "fighter_powerplant",
+    "germany"
+  ],
+  "description": "Fw 190D and late German fighters. High-altitude performance."
+}

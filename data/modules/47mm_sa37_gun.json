@@ -1,0 +1,15 @@
+{
+  "id": "47mm_sa37_gun",
+  "name": "47 mm SA 37",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 32,
+  "hard_attack": 30,
+  "piercing": 66,
+  "air_attack": 3,
+  "cost": {
+    "steel": 10
+  },
+  "production_time": 42,
+  "description": "Char B1 bis and S35 gun. Good AP for 1940; limited HE."
+}

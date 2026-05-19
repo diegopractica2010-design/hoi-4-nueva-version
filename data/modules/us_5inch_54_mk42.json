@@ -1,0 +1,24 @@
+{
+  "id": "us_5inch_54_mk42",
+  "name": "5\"/54 Mark 42",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 48,
+  "hard_attack": 32,
+  "piercing": 58,
+  "air_attack": 28,
+  "anti_ship": 42,
+  "anti_air": 32,
+  "cost": {
+    "steel": 22,
+    "electronics": 10
+  },
+  "production_time": 68,
+  "special_flags": [
+    "naval",
+    "autoloading",
+    "usa",
+    "cold_war"
+  ],
+  "description": "First U.S. fully automatic DP destroyer gun. Standard on Forrest Sherman class."
+}

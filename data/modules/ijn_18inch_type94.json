@@ -1,0 +1,24 @@
+{
+  "id": "ijn_18inch_type94",
+  "name": "46 cm Type 94",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 98,
+  "hard_attack": 92,
+  "piercing": 145,
+  "air_attack": 4,
+  "anti_ship": 125,
+  "cost": {
+    "steel": 65,
+    "explosives": 28,
+    "chromium": 10
+  },
+  "production_time": 150,
+  "special_flags": [
+    "naval",
+    "battleship",
+    "japan",
+    "super_heavy"
+  ],
+  "description": "Yamato class 18.1-inch. Largest battleship gun ever deployed."
+}

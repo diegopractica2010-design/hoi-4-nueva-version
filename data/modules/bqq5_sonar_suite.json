@@ -1,0 +1,20 @@
+{
+  "id": "bqq5_sonar_suite",
+  "name": "AN/BQQ-5 Sonar",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 10,
+    "electronics": 42,
+    "rubber": 12
+  },
+  "production_time": 85,
+  "special_flags": [
+    "usa",
+    "sonar",
+    "cold_war",
+    "submarine"
+  ],
+  "description": "Los Angeles class bow sonar and fire control suite."
+}

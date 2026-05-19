@@ -1,0 +1,22 @@
+{
+  "id": "m829a4_apfsds",
+  "name": "M829A4 APFSDS",
+  "category": "Cargo",
+  "tier": 8,
+  "soft_attack": 14,
+  "hard_attack": 34,
+  "piercing": 58,
+  "cost": {
+    "uranium": 28,
+    "tungsten": 8,
+    "steel": 2
+  },
+  "production_time": 58,
+  "special_flags": [
+    "usa",
+    "ammunition",
+    "apfsds",
+    "twenty_twenties"
+  ],
+  "description": "Latest U.S. long-rod penetrator with improved performance vs advanced ERA."
+}

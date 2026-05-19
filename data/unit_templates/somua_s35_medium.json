@@ -1,0 +1,51 @@
+{
+  "id": "somua_s35_medium",
+  "name": "SOMUA S35",
+  "design_family": "french_armored_ww2",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 3,
+  "base_training_level": 22,
+  "max_experience_level": 100,
+  "base_production_days": 68,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 68,
+    "fuel_consumption": 9,
+    "supply_need": 12,
+    "armor": 46,
+    "top_armor": 22,
+    "hardness": 78
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "47mm_sa37_gun",
+    "SecondaryWeapon": "coaxial_mg_mount",
+    "Engine": "renault_v6_engine",
+    "Armor": "french_cast_armor",
+    "Communications": "er538_radio"
+  },
+  "unlock_tech": [
+    "medium_tanks",
+    "french_armored_ww2"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,44 @@
+{
+  "id": "liaoning_carrier",
+  "name": "CNS Liaoning",
+  "design_family": "chinese_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 2200,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 215,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 75,
+    "fuel_consumption": 95,
+    "supply_need": 120,
+    "armor": 50,
+    "deck_armor": 38,
+    "hardness": 70
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "liaoning_carrier_core",
+    "Sensors": "type055_destroyer_vls",
+    "AntiAir": "hq9b_sam"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "chinese_carriers_2026"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

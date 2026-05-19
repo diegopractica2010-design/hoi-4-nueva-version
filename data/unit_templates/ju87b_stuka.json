@@ -1,0 +1,34 @@
+{
+  "id": "ju87b_stuka",
+  "name": "Ju 87B-2 Stuka",
+  "design_family": "german_air_ww2",
+  "base_type": "Air",
+  "size_category": "Medium",
+  "visual_archetype": "bomber",
+  "crew_required": 2,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 58,
+  "base_stats": {
+    "speed": 62,
+    "reliability": 65,
+    "fuel_consumption": 10,
+    "supply_need": 10,
+    "armor": 20,
+    "hardness": 32
+  },
+  "slots": {
+    "MainWeapon": {"max": 1},
+    "SecondaryWeapon": {"max": 2},
+    "Engine": {"max": 1},
+    "Communications": {"max": 1}
+  },
+  "module_loadout": {
+    "MainWeapon": "sc250_bomb_rack",
+    "Engine": "jumo_211_engine",
+    "Communications": "fug_16_zyf_radio"
+  },
+  "unlock_tech": ["german_cas", "dive_bombers"],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

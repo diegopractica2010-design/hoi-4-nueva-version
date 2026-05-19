@@ -1,0 +1,24 @@
+{
+  "id": "uh1_naval_gunship",
+  "name": "UH-1 Naval Gunship",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 42,
+  "hard_attack": 18,
+  "piercing": 22,
+  "air_attack": 25,
+  "cost": {
+    "steel": 6,
+    "aluminum": 6,
+    "explosives": 12
+  },
+  "production_time": 40,
+  "special_flags": [
+    "usa",
+    "gunship",
+    "helicopter",
+    "vietnam",
+    "brown_water"
+  ],
+  "description": "Huey gunship for riverine and amphibious support. U.S. Navy river patrol."
+}

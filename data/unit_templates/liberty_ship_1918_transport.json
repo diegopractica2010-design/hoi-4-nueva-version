@@ -1,0 +1,47 @@
+{
+  "id": "liberty_ship_1918_transport",
+  "name": "Design 1017 Cargo",
+  "design_family": "merchant_naval",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "cargo_ship",
+  "crew_required": 45,
+  "base_training_level": 18,
+  "max_experience_level": 100,
+  "base_production_days": 90,
+  "base_stats": {
+    "speed": 16,
+    "reliability": 70,
+    "fuel_consumption": 40,
+    "supply_need": 50,
+    "armor": 8,
+    "deck_armor": 4,
+    "hardness": 30,
+    "cargo_capacity": 10000
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "merchant_full_cargo_hold",
+    "Engine": "ww1_merchant_steamer"
+  },
+  "unlock_tech": [
+    "naval_1918",
+    "us_naval_1918",
+    "us_naval_1918"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

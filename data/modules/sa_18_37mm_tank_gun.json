@@ -1,0 +1,19 @@
+{
+  "id": "sa_18_37mm_tank_gun",
+  "name": "SA 18 37 mm",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 26,
+  "hard_attack": 16,
+  "piercing": 36,
+  "air_attack": 2,
+  "cost": {
+    "steel": 6
+  },
+  "production_time": 30,
+  "special_flags": [
+    "ww1",
+    "light_tank"
+  ],
+  "description": "Renault FT Puteaux gun. First mass-produced tank cannon."
+}

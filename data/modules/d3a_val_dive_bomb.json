@@ -1,0 +1,23 @@
+{
+  "id": "d3a_val_dive_bomb",
+  "name": "Val Dive Bomb Load",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 65,
+  "hard_attack": 36,
+  "piercing": 32,
+  "anti_ship": 68,
+  "air_attack": 8,
+  "cost": {
+    "steel": 4,
+    "explosives": 22
+  },
+  "production_time": 42,
+  "special_flags": [
+    "japan",
+    "naval_aviation",
+    "ww2",
+    "d3a_val"
+  ],
+  "description": "Fixed-undercarriage dive bomber load for Aichi D3A Val."
+}

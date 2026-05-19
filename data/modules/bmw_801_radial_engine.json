@@ -1,0 +1,17 @@
+{
+  "id": "bmw_801_radial_engine",
+  "name": "BMW 801 D-2 Radial",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 5,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 10,
+    "aluminum": 12,
+    "rubber": 2
+  },
+  "production_time": 48,
+  "special_flags": ["fighter_powerplant"],
+  "description": "1,600 hp 14-cylinder radial powering the Fw 190 and some Bf 109 variants. Rugged design with good power at medium altitudes."
+}

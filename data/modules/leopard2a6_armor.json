@@ -1,0 +1,21 @@
+{
+  "id": "leopard2a6_armor",
+  "name": "Leopard 2A6 Armor",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 72,
+  "top_armor_bonus": 50,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 50,
+    "ceramics": 26,
+    "titanium": 12
+  },
+  "production_time": 115,
+  "special_flags": [
+    "germany",
+    "two_thousands",
+    "leopard2a6"
+  ],
+  "description": "Leopard 2A6 with L/55 gun and improved armor. Afghanistan and export standard."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "t90a_armor_package",
+  "name": "T-90A Armor Package",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 65,
+  "top_armor_bonus": 40,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 44,
+    "ceramics": 20,
+    "explosives": 16
+  },
+  "production_time": 98,
+  "special_flags": [
+    "russia",
+    "two_thousands",
+    "t90",
+    "relikt"
+  ],
+  "description": "T-90A with Relikt ERA and improved composite. Chechen and export combat record."
+}

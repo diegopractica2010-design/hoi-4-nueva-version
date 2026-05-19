@@ -1,0 +1,53 @@
+{
+  "id": "typhoon_ssbn",
+  "name": "Typhoon-class SSBN",
+  "design_family": "russian_sub_cold_war",
+  "base_type": "Submarine",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "submarine",
+  "crew_required": 160,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 300,
+  "base_stats": {
+    "speed": 20,
+    "reliability": 68,
+    "fuel_consumption": 50,
+    "supply_need": 90,
+    "armor": 55,
+    "hardness": 60
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "bulava_slbm",
+    "Engine": "vm_reactor_soviet",
+    "SecondaryWeapon": "va111_shkval_supercavitating",
+    "Armor": "pressure_hull_fleet"
+  },
+  "unlock_tech": [
+    "russian_submarines",
+    "ssbn",
+    "cold_war"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

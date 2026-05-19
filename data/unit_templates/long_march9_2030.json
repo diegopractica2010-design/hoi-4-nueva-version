@@ -1,0 +1,42 @@
+{
+  "id": "long_march9_2030",
+  "name": "Long March 9 (Planned)",
+  "design_family": "chinese_space_twenty_thirties",
+  "base_type": "Space",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "rocket",
+  "crew_required": 0,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 220,
+  "base_stats": {
+    "speed": 96,
+    "reliability": 75,
+    "fuel_consumption": 125,
+    "supply_need": 75,
+    "payload_capacity": 140,
+    "hardness": 12
+  },
+  "slots": {
+    "Engine": {
+      "max": 4
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "LifeSupport": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "long_march2_engine",
+    "Cargo": "long_march9_superheavy",
+    "LifeSupport": "lunar_gateway_hab"
+  },
+  "unlock_tech": [
+    "chinese_super_heavy",
+    "planned"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

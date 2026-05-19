@@ -1,0 +1,21 @@
+{
+  "id": "cierva_autogyro_c30",
+  "name": "Cierva C.30 Autogyro",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 6,
+    "aluminum": 8,
+    "electronics": 3
+  },
+  "production_time": 55,
+  "special_flags": [
+    "uk",
+    "spain",
+    "autogyro",
+    "thirties",
+    "pre_war"
+  ],
+  "description": "Autorotating wing with powered rotor spin-up. Not true helicopter but operational before WWII."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "j20_package",
+  "name": "J-20 Mighty Dragon Package",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 14,
+  "speed_bonus": 38,
+  "cost": {
+    "steel": 24,
+    "aluminum": 45,
+    "titanium": 28,
+    "electronics": 42
+  },
+  "production_time": 170,
+  "special_flags": [
+    "china",
+    "twenty_tens",
+    "stealth",
+    "fifth_gen"
+  ],
+  "description": "J-20 fifth-generation fighter entering service 2017. Long-range air superiority."
+}

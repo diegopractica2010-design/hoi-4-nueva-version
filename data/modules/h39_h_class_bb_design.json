@@ -1,0 +1,24 @@
+{
+  "id": "h39_h_class_bb_design",
+  "name": "H-39 Battleship Design",
+  "category": "NavalGun",
+  "tier": 6,
+  "soft_attack": 52,
+  "hard_attack": 60,
+  "piercing": 56,
+  "anti_ship": 92,
+  "cost": {
+    "steel": 42,
+    "chromium": 10,
+    "explosives": 18
+  },
+  "production_time": 115,
+  "special_flags": [
+    "germany",
+    "battleship",
+    "prototype",
+    "ww2",
+    "paper"
+  ],
+  "description": "German H-class with 16-inch guns. Keels laid but never completed."
+}

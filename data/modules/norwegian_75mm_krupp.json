@@ -1,0 +1,19 @@
+{
+  "id": "norwegian_75mm_krupp",
+  "name": "75 mm Krupp M1908",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 46,
+  "hard_attack": 10,
+  "piercing": 17,
+  "air_attack": 1,
+  "cost": {
+    "steel": 8
+  },
+  "production_time": 34,
+  "special_flags": [
+    "norway",
+    "ww1"
+  ],
+  "description": "Norwegian fortress and field artillery. Captured stocks used by Germany."
+}

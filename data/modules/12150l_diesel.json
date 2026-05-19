@@ -1,0 +1,19 @@
+{
+  "id": "12150l_diesel",
+  "name": "12150L Diesel",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 4,
+  "speed_bonus": 9,
+  "cost": {
+    "steel": 16
+  },
+  "production_time": 58,
+  "special_flags": [
+    "china",
+    "sixties",
+    "tank_engine"
+  ],
+  "description": "Chinese copy of Soviet V-2/V-55 lineage. Powers Type 59 and Type 69 families."
+}

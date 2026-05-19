@@ -1,0 +1,23 @@
+{
+  "id": "henri_coanda_rotor_blower",
+  "name": "Coandă Rotor Blower",
+  "category": "Engine",
+  "tier": 1,
+  "reliability_bonus": -10,
+  "fuel_efficiency": -10,
+  "speed_bonus": 5,
+  "cost": {
+    "steel": 10,
+    "aluminum": 6,
+    "electronics": 4
+  },
+  "production_time": 60,
+  "special_flags": [
+    "romania",
+    "france",
+    "prototype",
+    "pre_war",
+    "experimental"
+  ],
+  "description": "Henri Coandă 1910s rotorcraft concepts. Influential but not operationally successful."
+}

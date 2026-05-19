@@ -1,0 +1,22 @@
+{
+  "id": "ngad_carrier_proto_2030",
+  "name": "NGAD Carrier Variant (Proto)",
+  "category": "Sensors",
+  "tier": 9,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 25,
+    "electronics": 75,
+    "aluminum": 45,
+    "titanium": 35
+  },
+  "production_time": 180,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "planned",
+    "twenty_thirties",
+    "ngad"
+  ],
+  "description": "Planned sixth-generation U.S. Navy carrier fighter. Crewed and loyal-wingman integration."
+}

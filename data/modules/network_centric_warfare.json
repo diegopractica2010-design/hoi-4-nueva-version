@@ -1,0 +1,19 @@
+{
+  "id": "network_centric_warfare",
+  "name": "Network-Centric Warfare Suite",
+  "category": "Sensors",
+  "tier": 7,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 5,
+    "electronics": 55
+  },
+  "production_time": 80,
+  "special_flags": [
+    "nato",
+    "two_thousands",
+    "datalink",
+    "blue_force"
+  ],
+  "description": "Link-16 and battlefield networking. Shared situational awareness across platforms."
+}

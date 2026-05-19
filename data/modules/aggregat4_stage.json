@@ -1,0 +1,20 @@
+{
+  "id": "aggregat4_stage",
+  "name": "Aggregat 4 Stage Package",
+  "category": "Cargo",
+  "tier": 3,
+  "reliability_bonus": -6,
+  "cost": {
+    "steel": 18,
+    "aluminum": 10,
+    "explosives": 40
+  },
+  "production_time": 70,
+  "special_flags": [
+    "germany",
+    "space",
+    "forties",
+    "single_stage_to_space_border"
+  ],
+  "description": "Complete V-2 airframe and propellant tanks. Suborbital only; foundation of space age."
+}

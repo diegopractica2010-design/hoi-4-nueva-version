@@ -1,0 +1,23 @@
+{
+  "id": "lynx_has_missile",
+  "name": "Sea Skua (HAS.1)",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 35,
+  "hard_attack": 42,
+  "piercing": 30,
+  "anti_ship": 75,
+  "cost": {
+    "steel": 6,
+    "electronics": 22,
+    "explosives": 14
+  },
+  "production_time": 62,
+  "special_flags": [
+    "uk",
+    "anti_ship",
+    "helicopter",
+    "seventies"
+  ],
+  "description": "Lynx helicopter anti-ship missile development. Part of 1970s ASW and strike modernization."
+}

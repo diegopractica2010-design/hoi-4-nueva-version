@@ -1,0 +1,24 @@
+{
+  "id": "mim104e_patriot_pac3",
+  "name": "MIM-104E PAC-3",
+  "category": "AntiAir",
+  "tier": 8,
+  "soft_attack": 12,
+  "hard_attack": 10,
+  "air_attack": 98,
+  "anti_air": 100,
+  "cost": {
+    "steel": 30,
+    "electronics": 60,
+    "explosives": 22
+  },
+  "production_time": 130,
+  "special_flags": [
+    "usa",
+    "sam",
+    "tmd",
+    "two_thousands",
+    "patriot"
+  ],
+  "description": "Patriot PAC-3 MSE. Hit-to-kill vs TBMs and maneuvering aircraft."
+}

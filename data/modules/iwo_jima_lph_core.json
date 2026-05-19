@@ -1,0 +1,20 @@
+{
+  "id": "iwo_jima_lph_core",
+  "name": "Iwo Jima-class LPH",
+  "category": "Cargo",
+  "tier": 4,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 70,
+    "electronics": 18,
+    "aluminum": 16
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "lph",
+    "vietnam",
+    "helicopter"
+  ],
+  "description": "First dedicated amphibious assault ships for Vietnam helicopter operations."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "nr23_cannon",
+  "name": "NR-23 23mm",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 28,
+  "hard_attack": 18,
+  "piercing": 36,
+  "air_attack": 48,
+  "cost": {
+    "steel": 7,
+    "aluminum": 4
+  },
+  "production_time": 40,
+  "special_flags": [
+    "ussr",
+    "jet_fighter",
+    "cold_war"
+  ],
+  "description": "MiG-15 and Il-28 cannon. Standard early Soviet jet armament."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "towed_array_sonar",
+  "name": "Towed Array Sonar",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 8,
+    "electronics": 40,
+    "rubber": 10
+  },
+  "production_time": 78,
+  "special_flags": [
+    "usa",
+    "uk",
+    "sonar",
+    "submarine",
+    "asw"
+  ],
+  "description": "Long towed array for passive detection at standoff range."
+}

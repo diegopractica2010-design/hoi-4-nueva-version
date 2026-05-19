@@ -1,0 +1,22 @@
+{
+  "id": "tumansky_r29_mig23",
+  "name": "Tumansky R-29B-300",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 5,
+  "fuel_efficiency": 2,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 16,
+    "aluminum": 24,
+    "titanium": 5
+  },
+  "production_time": 78,
+  "special_flags": [
+    "ussr",
+    "jet_powerplant",
+    "seventies",
+    "variable_geometry"
+  ],
+  "description": "MiG-23 swing-wing fighter engine. Afterburning thrust for intercept and strike."
+}

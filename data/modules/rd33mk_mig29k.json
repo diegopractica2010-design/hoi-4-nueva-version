@@ -1,0 +1,22 @@
+{
+  "id": "rd33mk_mig29k",
+  "name": "RD-33MK (MiG-29K)",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 11,
+  "fuel_efficiency": 8,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 16,
+    "aluminum": 30,
+    "titanium": 8
+  },
+  "production_time": 90,
+  "special_flags": [
+    "russia",
+    "india",
+    "carrier_capable",
+    "mig29k"
+  ],
+  "description": "Navalized Fulcrum engine for MiG-29K on Vikramaditya and planned Russian carriers."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "aim9x_sidewinder",
+  "name": "AIM-9X Sidewinder",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 8,
+  "hard_attack": 6,
+  "air_attack": 75,
+  "anti_air": 72,
+  "cost": {
+    "steel": 5,
+    "electronics": 28,
+    "explosives": 6
+  },
+  "production_time": 62,
+  "special_flags": [
+    "usa",
+    "air_to_air",
+    "nineties",
+    "hoobs"
+  ],
+  "description": "High off-boresight IR missile with thrust vectoring. Dogfight dominance on F-15 and F/A-18."
+}

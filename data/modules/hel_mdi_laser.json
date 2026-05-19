@@ -1,0 +1,23 @@
+{
+  "id": "hel_mdi_laser",
+  "name": "HELI-MD / DE M-SHORAD",
+  "category": "AntiAir",
+  "tier": 9,
+  "soft_attack": 20,
+  "hard_attack": 15,
+  "air_attack": 95,
+  "anti_air": 92,
+  "cost": {
+    "steel": 18,
+    "electronics": 75,
+    "chemicals": 20
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "twenty_thirties",
+    "directed_energy",
+    "laser"
+  ],
+  "description": "Mobile directed-energy weapon for drones and rockets. Unlimited magazine depth vs swarms."
+}

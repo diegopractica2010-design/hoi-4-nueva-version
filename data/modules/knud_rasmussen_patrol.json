@@ -1,0 +1,22 @@
+{
+  "id": "knud_rasmussen_patrol",
+  "name": "Knud Rasmussen OPV",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 18,
+  "top_armor_bonus": 12,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 22,
+    "electronics": 18,
+    "aluminum": 8
+  },
+  "production_time": 65,
+  "special_flags": [
+    "greenland",
+    "denmark",
+    "patrol",
+    "twenty_twenties"
+  ],
+  "description": "Danish Arctic offshore patrol vessel operated in Greenland."
+}

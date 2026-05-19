@@ -1,0 +1,23 @@
+{
+  "id": "redstone_engine",
+  "name": "Redstone Rocket Engine",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "fuel_efficiency": -8,
+  "speed_bonus": 22,
+  "cost": {
+    "steel": 14,
+    "aluminum": 6,
+    "explosives": 20
+  },
+  "production_time": 65,
+  "special_flags": [
+    "usa",
+    "nasa",
+    "space",
+    "fifties",
+    "ballistic"
+  ],
+  "description": "Modified V-2 derived engine for Redstone. First U.S. IRBM and Mercury suborbital launcher."
+}

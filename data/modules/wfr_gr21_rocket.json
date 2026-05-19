@@ -1,0 +1,21 @@
+{
+  "id": "wfr_gr21_rocket",
+  "name": "Wfr. Gr. 21 Rocket",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 55,
+  "hard_attack": 20,
+  "piercing": 25,
+  "air_attack": 14,
+  "cost": {
+    "steel": 6,
+    "explosives": 14
+  },
+  "production_time": 30,
+  "special_flags": [
+    "rocket",
+    "germany",
+    "bomber_destroyer"
+  ],
+  "description": "BR 21 air-launched rocket for bomber interception (Sturmböcke tactics)."
+}

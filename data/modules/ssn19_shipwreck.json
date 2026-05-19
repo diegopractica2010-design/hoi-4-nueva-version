@@ -1,0 +1,24 @@
+{
+  "id": "ssn19_shipwreck",
+  "name": "P-700 Granit",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 50,
+  "hard_attack": 65,
+  "piercing": 50,
+  "anti_ship": 105,
+  "air_attack": 6,
+  "cost": {
+    "steel": 14,
+    "electronics": 45,
+    "explosives": 40
+  },
+  "production_time": 110,
+  "special_flags": [
+    "ussr",
+    "anti_ship",
+    "eighties",
+    "supersonic"
+  ],
+  "description": "Supersonic anti-ship missile on Kirov and Oscar classes. Saturation threat to carrier groups."
+}

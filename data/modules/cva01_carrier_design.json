@@ -1,0 +1,21 @@
+{
+  "id": "cva01_carrier_design",
+  "name": "CVA-01 Carrier Design",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 90,
+    "electronics": 25,
+    "aluminum": 24
+  },
+  "production_time": 200,
+  "special_flags": [
+    "uk",
+    "carrier",
+    "prototype",
+    "cold_war",
+    "paper"
+  ],
+  "description": "British CATOBAR carrier cancelled 1966. Led to Invincible STOVL path."
+}

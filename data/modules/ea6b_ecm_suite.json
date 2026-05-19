@@ -1,0 +1,21 @@
+{
+  "id": "ea6b_ecm_suite",
+  "name": "EA-6B ICAP III ECM",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 8,
+    "electronics": 48,
+    "aluminum": 10
+  },
+  "production_time": 90,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "ew",
+    "nineties",
+    "ea6_prowler"
+  ],
+  "description": "Electronic warfare suite on EA-6B Prowler. Suppresses enemy SAM and radar networks."
+}

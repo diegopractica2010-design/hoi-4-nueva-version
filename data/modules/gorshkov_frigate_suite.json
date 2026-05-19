@@ -1,0 +1,19 @@
+{
+  "id": "gorshkov_frigate_suite",
+  "name": "Admiral Gorshkov Suite",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 14,
+    "electronics": 35,
+    "aluminum": 10
+  },
+  "production_time": 85,
+  "special_flags": [
+    "russia",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Project 22350 frigate with Kalibr and Poliment-Redut air defense."
+}

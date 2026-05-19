@@ -1,0 +1,15 @@
+{
+  "id": "fug_16_zyf_radio",
+  "name": "FuG 16 ZY Radio Set",
+  "category": "Communications",
+  "tier": 2,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 2,
+    "electronics": 6,
+    "copper": 3
+  },
+  "production_time": 22,
+  "special_flags": ["formation_coordination", "ground_link"],
+  "description": "Standard VHF fighter/bomber radio of the mid-war Luftwaffe. Enables squadron coordination and ground-controlled intercept tactics."
+}

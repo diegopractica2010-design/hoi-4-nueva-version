@@ -1,0 +1,24 @@
+{
+  "id": "milan_atgm",
+  "name": "MILAN",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 32,
+  "hard_attack": 58,
+  "piercing": 120,
+  "air_attack": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 16,
+    "explosives": 10
+  },
+  "production_time": 48,
+  "special_flags": [
+    "france",
+    "germany_joint",
+    "atgm",
+    "seventies",
+    "saclos"
+  ],
+  "description": "Franco-German SACLOS ATGM. Standard NATO infantry anti-tank from 1970s."
+}

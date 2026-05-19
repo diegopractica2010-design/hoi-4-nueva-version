@@ -1,0 +1,20 @@
+{
+  "id": "san_giorgio_lpd",
+  "name": "San Giorgio-class LPD",
+  "category": "Cargo",
+  "tier": 4,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 58,
+    "electronics": 18,
+    "aluminum": 14
+  },
+  "production_time": 145,
+  "special_flags": [
+    "italy",
+    "lpd",
+    "helicopter",
+    "cold_war"
+  ],
+  "description": "Italian amphibious warfare ships supporting AB-212 and EH101."
+}

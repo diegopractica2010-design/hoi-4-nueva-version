@@ -1,0 +1,21 @@
+{
+  "id": "m113_idf_apc",
+  "name": "M113 IDF APC Package",
+  "category": "Armor",
+  "tier": 3,
+  "armor_bonus": 18,
+  "top_armor_bonus": 8,
+  "reliability_penalty": -2,
+  "cost": {
+    "steel": 16,
+    "aluminum": 6
+  },
+  "production_time": 45,
+  "special_flags": [
+    "israel",
+    "apc",
+    "sixties",
+    "usa_origin"
+  ],
+  "description": "American M113 adapted for IDF with machine guns and TOW. Backbone of mechanized infantry."
+}

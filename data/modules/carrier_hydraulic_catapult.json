@@ -1,0 +1,19 @@
+{
+  "id": "carrier_hydraulic_catapult",
+  "name": "Hydraulic Catapult H1",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 18,
+    "electronics": 8,
+    "rubber": 4
+  },
+  "production_time": 65,
+  "special_flags": [
+    "carrier",
+    "catapult",
+    "usa"
+  ],
+  "description": "Hydraulic aircraft catapult for fleet carriers. Enables heavier aircraft launch."
+}

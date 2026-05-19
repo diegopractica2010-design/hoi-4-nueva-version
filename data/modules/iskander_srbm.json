@@ -1,0 +1,23 @@
+{
+  "id": "iskander_srbm",
+  "name": "9K720 Iskander",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 120,
+  "hard_attack": 70,
+  "piercing": 60,
+  "air_attack": 8,
+  "cost": {
+    "steel": 20,
+    "electronics": 50,
+    "explosives": 55
+  },
+  "production_time": 110,
+  "special_flags": [
+    "russia",
+    "two_thousands",
+    "ballistic",
+    "precision"
+  ],
+  "description": "Short-range ballistic missile system. Precision strikes vs NATO rear areas."
+}

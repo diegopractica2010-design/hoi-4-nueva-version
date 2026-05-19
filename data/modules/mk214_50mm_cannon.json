@@ -1,0 +1,22 @@
+{
+  "id": "mk214_50mm_cannon",
+  "name": "MK 214 50mm",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 42,
+  "hard_attack": 38,
+  "piercing": 58,
+  "air_attack": 62,
+  "cost": {
+    "steel": 14,
+    "explosives": 8,
+    "tungsten": 3
+  },
+  "production_time": 75,
+  "special_flags": [
+    "prototype",
+    "jet_fighter",
+    "germany"
+  ],
+  "description": "Semi-revolver 50 mm for Me 262 and Ta 152H projects. Limited production trials."
+}

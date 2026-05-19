@@ -1,0 +1,53 @@
+{
+  "id": "syria_patrol_2026",
+  "name": "Tartus Patrol Craft",
+  "design_family": "syrian_naval_2026",
+  "base_type": "Naval",
+  "size_category": "Light",
+  "visual_archetype": "destroyer",
+  "crew_required": 20,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 50,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 55,
+    "fuel_consumption": 18,
+    "supply_need": 22,
+    "armor": 10,
+    "deck_armor": 6,
+    "hardness": 35
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "coast_guard_patrol_minor",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "naval_2026",
+    "twenty_twenties_naval",
+    "syrian_naval_2026",
+    "patrol"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,52 @@
+{
+  "id": "forrestal_class_carrier",
+  "name": "Forrestal-class",
+  "design_family": "us_naval_cold_war",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "carrier",
+  "crew_required": 4500,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 310,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 75,
+    "fuel_consumption": 90,
+    "supply_need": 110,
+    "armor": 30,
+    "deck_armor": 22,
+    "hardness": 62
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "forrestal_supercarrier_deck",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "carrier_armored_flight_deck",
+    "Sensors": "an_sps6_air_search",
+    "AntiAir": "mim23_hawk_sam"
+  },
+  "unlock_tech": [
+    "us_carriers",
+    "cold_war_naval",
+    "supercarrier"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

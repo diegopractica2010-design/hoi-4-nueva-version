@@ -1,0 +1,37 @@
+{
+  "id": "proton_launcher",
+  "name": "Proton",
+  "design_family": "soviet_space_sixties",
+  "base_type": "Space",
+  "size_category": "Heavy",
+  "visual_archetype": "rocket",
+  "crew_required": 0,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 110,
+  "base_stats": {
+    "speed": 80,
+    "reliability": 72,
+    "fuel_consumption": 95,
+    "supply_need": 50,
+    "payload_capacity": 22,
+    "hardness": 10
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "proton_rocket_stage",
+    "Cargo": "proton_m_upgrade"
+  },
+  "unlock_tech": [
+    "soviet_heavy_lift"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

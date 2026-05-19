@@ -1,0 +1,22 @@
+{
+  "id": "nimitz_class_core",
+  "name": "Nimitz-class Core",
+  "category": "Cargo",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 140,
+    "electronics": 50,
+    "aluminum": 40,
+    "uranium": 12
+  },
+  "production_time": 280,
+  "special_flags": [
+    "usa",
+    "carrier",
+    "nuclear",
+    "catapult",
+    "twenty_twenties"
+  ],
+  "description": "U.S. supercarrier hull. CATOBAR ops with Super Hornet, Growler, and E-2D."
+}

@@ -1,0 +1,37 @@
+{
+  "id": "soyuz_spacecraft_tpl",
+  "name": "Soyuz",
+  "design_family": "soviet_space_sixties",
+  "base_type": "Space",
+  "size_category": "Medium",
+  "visual_archetype": "crew_capsule",
+  "crew_required": 3,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 100,
+  "base_stats": {
+    "speed": 72,
+    "reliability": 85,
+    "fuel_consumption": 55,
+    "supply_need": 35,
+    "payload_capacity": 3,
+    "hardness": 12
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "LifeSupport": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "r7_soyuz_engine",
+    "LifeSupport": "soyuz_spacecraft_bus"
+  },
+  "unlock_tech": [
+    "soviet_crewed_space"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

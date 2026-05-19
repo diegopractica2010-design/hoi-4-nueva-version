@@ -1,0 +1,21 @@
+{
+  "id": "westland_wasp_asw",
+  "name": "Westland Wasp ASW",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 6,
+    "electronics": 16,
+    "aluminum": 8
+  },
+  "production_time": 48,
+  "special_flags": [
+    "uk",
+    "asw",
+    "helicopter",
+    "sixties",
+    "falklands"
+  ],
+  "description": "Small frigate-based ASW helicopter. Sank Santa Fe submarine in Falklands."
+}

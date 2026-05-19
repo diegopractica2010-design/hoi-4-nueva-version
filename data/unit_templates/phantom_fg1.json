@@ -1,0 +1,47 @@
+{
+  "id": "phantom_fg1",
+  "name": "Phantom FG.1",
+  "design_family": "uk_carrier_air_cold_war",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "fighter",
+  "crew_required": 2,
+  "base_training_level": 35,
+  "max_experience_level": 100,
+  "base_production_days": 75,
+  "base_stats": {
+    "speed": 100,
+    "reliability": 76,
+    "fuel_consumption": 22,
+    "supply_need": 16,
+    "armor": 14,
+    "hardness": 26
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "skyflash_missile",
+    "SecondaryWeapon": "aim9_sidewinder",
+    "Engine": "rolls_royce_spey_phantom",
+    "Sensors": "carrier_operations_kit"
+  },
+  "unlock_tech": [
+    "uk_naval_aviation",
+    "carrier_air_wing",
+    "uk_carrier_jet"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

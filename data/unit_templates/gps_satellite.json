@@ -1,0 +1,37 @@
+{
+  "id": "gps_satellite",
+  "name": "GPS Satellite",
+  "design_family": "us_space_seventies",
+  "base_type": "Space",
+  "size_category": "Light",
+  "visual_archetype": "satellite",
+  "crew_required": 0,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 60,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 90,
+    "fuel_consumption": 10,
+    "supply_need": 15,
+    "payload_capacity": 0,
+    "hardness": 5
+  },
+  "slots": {
+    "Communications": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Communications": "gps_block1_payload",
+    "Engine": "vanguard_second_stage"
+  },
+  "unlock_tech": [
+    "navigation_satellites"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

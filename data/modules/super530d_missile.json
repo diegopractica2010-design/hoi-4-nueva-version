@@ -1,0 +1,23 @@
+{
+  "id": "super530d_missile",
+  "name": "Super 530D",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 78,
+  "anti_air": 74,
+  "cost": {
+    "steel": 5,
+    "electronics": 30,
+    "explosives": 8
+  },
+  "production_time": 62,
+  "special_flags": [
+    "france",
+    "air_to_air",
+    "eighties",
+    "bvr"
+  ],
+  "description": "Mirage 2000 BVR missile. Pulse-Doppler guidance vs low-altitude targets."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "konkurs_at5_spandrel",
+  "name": "9M113 Konkurs (AT-5)",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 35,
+  "hard_attack": 60,
+  "piercing": 125,
+  "air_attack": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 18,
+    "explosives": 12
+  },
+  "production_time": 50,
+  "special_flags": [
+    "ussr",
+    "atgm",
+    "saclos",
+    "seventies"
+  ],
+  "description": "SACLOS wire-guided ATGM replacing Sagger. Standard BMP-2 and infantry anti-tank."
+}

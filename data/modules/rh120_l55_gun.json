@@ -1,0 +1,23 @@
+{
+  "id": "rh120_l55_gun",
+  "name": "Rh-120 L/55",
+  "category": "MainWeapon",
+  "tier": 7,
+  "soft_attack": 76,
+  "hard_attack": 74,
+  "piercing": 178,
+  "air_attack": 5,
+  "cost": {
+    "steel": 34,
+    "chromium": 10,
+    "tungsten": 8
+  },
+  "production_time": 108,
+  "special_flags": [
+    "germany",
+    "two_thousands",
+    "smoothbore",
+    "leopard2a6"
+  ],
+  "description": "Lengthened Rh-120 for Leopard 2A6. Higher velocity DM53/DM63 ammunition."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "weir_w5_proto_engine",
+  "name": "Weir W.5 Proto Engine",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "fuel_efficiency": 0,
+  "speed_bonus": 6,
+  "cost": {
+    "steel": 8,
+    "aluminum": 8
+  },
+  "production_time": 55,
+  "special_flags": [
+    "uk",
+    "prototype",
+    "pre_war",
+    "helicopter"
+  ],
+  "description": "Early British helicopter prototype engine development parallel to Cierva."
+}

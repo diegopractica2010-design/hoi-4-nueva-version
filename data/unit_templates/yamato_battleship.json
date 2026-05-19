@@ -1,0 +1,54 @@
+{
+  "id": "yamato_battleship",
+  "name": "Yamato",
+  "design_family": "japanese_naval_ww2",
+  "base_type": "Naval",
+  "size_category": "SuperHeavy",
+  "visual_archetype": "battleship",
+  "crew_required": 2700,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 360,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 70,
+    "fuel_consumption": 110,
+    "supply_need": 150,
+    "armor": 65,
+    "deck_armor": 35,
+    "hardness": 90
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "ijn_18inch_type94",
+    "SecondaryWeapon": "type93_long_lance",
+    "Engine": "ijn_kampon_turbine",
+    "Armor": "naval_deck_armor_scheme",
+    "Communications": "type3_ku_radio",
+    "Sensors": "naval_radar_type22"
+  },
+  "unlock_tech": [
+    "japanese_battleships"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

@@ -1,0 +1,23 @@
+{
+  "id": "f35a_package",
+  "name": "F-35A Lightning II Package",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 14,
+  "speed_bonus": 36,
+  "cost": {
+    "steel": 24,
+    "aluminum": 48,
+    "titanium": 32,
+    "electronics": 40
+  },
+  "production_time": 180,
+  "special_flags": [
+    "usa",
+    "twenty_tens",
+    "stealth",
+    "f35"
+  ],
+  "description": "F-35 operational configuration. Sensor fusion and low observability for multi-role strike."
+}

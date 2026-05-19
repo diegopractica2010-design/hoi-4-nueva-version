@@ -1,0 +1,22 @@
+{
+  "id": "dragon2_capsule",
+  "name": "Crew Dragon",
+  "category": "LifeSupport",
+  "tier": 7,
+  "reliability_bonus": 16,
+  "cost": {
+    "steel": 14,
+    "aluminum": 20,
+    "electronics": 40
+  },
+  "production_time": 125,
+  "special_flags": [
+    "spacex",
+    "usa",
+    "nasa",
+    "space",
+    "twenty_twenties",
+    "crewed"
+  ],
+  "description": "Crew Dragon for ISS and commercial flights. Restored U.S. crew launch capability."
+}

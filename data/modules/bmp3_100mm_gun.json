@@ -1,0 +1,23 @@
+{
+  "id": "bmp3_100mm_gun",
+  "name": "2A70 100 mm + 30 mm",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 55,
+  "hard_attack": 42,
+  "piercing": 85,
+  "air_attack": 15,
+  "cost": {
+    "steel": 18,
+    "explosives": 10,
+    "electronics": 8
+  },
+  "production_time": 72,
+  "special_flags": [
+    "russia",
+    "nineties",
+    "bmp3",
+    "ifv"
+  ],
+  "description": "BMP-3 low-pressure 100 mm with 30 mm coaxial. Fires AT-10 Arkan missiles."
+}

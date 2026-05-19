@@ -1,0 +1,24 @@
+{
+  "id": "abramsx_hybrid_package",
+  "name": "AbramsX Hybrid Package",
+  "category": "Engine",
+  "tier": 8,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 18,
+  "speed_bonus": 14,
+  "cost": {
+    "steel": 24,
+    "aluminum": 20,
+    "electronics": 35,
+    "lithium": 12
+  },
+  "production_time": 140,
+  "special_flags": [
+    "usa",
+    "twenty_twenties",
+    "hybrid",
+    "abramsx",
+    "prototype"
+  ],
+  "description": "Diesel-electric hybrid demonstrator with reduced logistics footprint and silent watch."
+}

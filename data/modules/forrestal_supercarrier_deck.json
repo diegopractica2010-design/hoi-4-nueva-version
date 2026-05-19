@@ -1,0 +1,20 @@
+{
+  "id": "forrestal_supercarrier_deck",
+  "name": "Forrestal Supercarrier Deck",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 100,
+    "electronics": 28,
+    "aluminum": 30
+  },
+  "production_time": 220,
+  "special_flags": [
+    "usa",
+    "carrier",
+    "cold_war",
+    "supercarrier"
+  ],
+  "description": "First purpose-built U.S. supercarrier class. Steam catapult and large air wing."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "t90_armor_package",
+  "name": "T-90 Armor Package",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 62,
+  "top_armor_bonus": 38,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 44,
+    "ceramics": 18,
+    "explosives": 14
+  },
+  "production_time": 95,
+  "special_flags": [
+    "russia",
+    "nineties",
+    "t90",
+    "kontakt5"
+  ],
+  "description": "T-72B derivative with Kontakt-5 and Shtora soft-kill system. Export and Chechen combat."
+}

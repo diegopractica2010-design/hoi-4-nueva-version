@@ -1,0 +1,22 @@
+{
+  "id": "bristol_pegasus_swordfish",
+  "name": "Bristol Pegasus (Swordfish)",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 0,
+  "speed_bonus": 4,
+  "cost": {
+    "steel": 9,
+    "aluminum": 6
+  },
+  "production_time": 40,
+  "special_flags": [
+    "uk",
+    "carrier_capable",
+    "ww2",
+    "biplane",
+    "swordfish"
+  ],
+  "description": "Reliable radial on Fairey Swordfish. 'Stringbag' torpedo bomber; Bismarck and Taranto fame."
+}

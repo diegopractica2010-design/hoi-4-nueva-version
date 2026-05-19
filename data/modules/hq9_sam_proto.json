@@ -1,0 +1,23 @@
+{
+  "id": "hq9_sam_proto",
+  "name": "HQ-9 (Prototype)",
+  "category": "AntiAir",
+  "tier": 7,
+  "soft_attack": 16,
+  "hard_attack": 14,
+  "air_attack": 88,
+  "anti_air": 90,
+  "cost": {
+    "steel": 28,
+    "electronics": 55,
+    "explosives": 18
+  },
+  "production_time": 115,
+  "special_flags": [
+    "china",
+    "sam",
+    "nineties",
+    "strategic"
+  ],
+  "description": "Long-range SAM combining S-300 and Patriot influences. Trials late 1990s."
+}

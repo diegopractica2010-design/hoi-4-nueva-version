@@ -1,0 +1,23 @@
+{
+  "id": "blue_moon_lander",
+  "name": "Blue Moon Lander",
+  "category": "LifeSupport",
+  "tier": 8,
+  "reliability_bonus": 10,
+  "cost": {
+    "steel": 30,
+    "aluminum": 28,
+    "electronics": 40
+  },
+  "production_time": 160,
+  "special_flags": [
+    "blue_origin",
+    "usa",
+    "nasa",
+    "space",
+    "twenty_twenties",
+    "lunar",
+    "planned"
+  ],
+  "description": "Blue Origin lunar lander for Artemis cargo and crew variants."
+}

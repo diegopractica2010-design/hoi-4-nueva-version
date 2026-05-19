@@ -1,0 +1,19 @@
+{
+  "id": "istanbul_class_turkey",
+  "name": "Istanbul-class Frigate",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 12,
+    "electronics": 36,
+    "aluminum": 10
+  },
+  "production_time": 86,
+  "special_flags": [
+    "turkey",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Turkish MILGEM-derived frigate with indigenous combat system."
+}

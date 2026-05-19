@@ -1,0 +1,22 @@
+{
+  "id": "hq9_sam_battery",
+  "name": "HQ-9",
+  "category": "AntiAir",
+  "tier": 7,
+  "soft_attack": 14,
+  "hard_attack": 12,
+  "air_attack": 88,
+  "anti_air": 90,
+  "cost": {
+    "steel": 26,
+    "electronics": 52,
+    "explosives": 18
+  },
+  "production_time": 115,
+  "special_flags": [
+    "china",
+    "sam",
+    "two_thousands"
+  ],
+  "description": "Chinese long-range SAM analogous to S-300/Patriot. Export to Pakistan and others."
+}

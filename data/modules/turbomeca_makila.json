@@ -1,0 +1,21 @@
+{
+  "id": "turbomeca_makila",
+  "name": "Turbomeca Makila",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 9,
+  "fuel_efficiency": 4,
+  "speed_bonus": 12,
+  "cost": {
+    "steel": 9,
+    "aluminum": 14
+  },
+  "production_time": 55,
+  "special_flags": [
+    "france",
+    "helicopter",
+    "super_frelon",
+    "panther"
+  ],
+  "description": "French turboshaft for Super Frelon, Panther, and Dauphin naval variants."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "amx10rc_105mm",
+  "name": "105 mm F2 (AMX-10RC)",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 56,
+  "hard_attack": 52,
+  "piercing": 110,
+  "air_attack": 5,
+  "cost": {
+    "steel": 18,
+    "aluminum": 6
+  },
+  "production_time": 68,
+  "special_flags": [
+    "france",
+    "eighties",
+    "wheeled",
+    "recon"
+  ],
+  "description": "Wheeled tank destroyer gun. Rapid deployment for French rapid-action forces."
+}

@@ -1,0 +1,42 @@
+{
+  "id": "a4_v2_rocket",
+  "name": "A4/V-2 Rocket",
+  "design_family": "german_space_ww2",
+  "base_type": "Space",
+  "size_category": "Medium",
+  "visual_archetype": "rocket",
+  "crew_required": 0,
+  "base_training_level": 20,
+  "max_experience_level": 100,
+  "base_production_days": 45,
+  "base_stats": {
+    "speed": 55,
+    "reliability": 45,
+    "fuel_consumption": 95,
+    "supply_need": 40,
+    "payload_capacity": 1,
+    "hardness": 10
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "a4_v2_engine",
+    "Sensors": "v2_guidance_package",
+    "Cargo": "aggregat4_stage"
+  },
+  "unlock_tech": [
+    "german_rockets",
+    "ballistic_missiles"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

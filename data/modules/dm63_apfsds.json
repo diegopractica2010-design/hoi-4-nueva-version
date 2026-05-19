@@ -1,0 +1,22 @@
+{
+  "id": "dm63_apfsds",
+  "name": "DM63 APFSDS",
+  "category": "Cargo",
+  "tier": 7,
+  "soft_attack": 11,
+  "hard_attack": 30,
+  "piercing": 48,
+  "cost": {
+    "tungsten": 16,
+    "uranium": 8,
+    "steel": 2
+  },
+  "production_time": 52,
+  "special_flags": [
+    "germany",
+    "ammunition",
+    "apfsds",
+    "two_thousands"
+  ],
+  "description": "Temperature-independent tungsten penetrator for L/55 guns."
+}

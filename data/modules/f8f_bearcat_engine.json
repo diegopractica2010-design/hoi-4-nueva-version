@@ -1,0 +1,22 @@
+{
+  "id": "f8f_bearcat_engine",
+  "name": "Pratt R-2800 (Bearcat)",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 3,
+  "speed_bonus": 20,
+  "cost": {
+    "steel": 12,
+    "aluminum": 14
+  },
+  "production_time": 52,
+  "special_flags": [
+    "usa",
+    "carrier_capable",
+    "ww2",
+    "f8f_bearcat",
+    "late_war"
+  ],
+  "description": "Lightweight high-power R-2800 installation on F8F Bearcat. Fastest U.S. piston carrier fighter."
+}

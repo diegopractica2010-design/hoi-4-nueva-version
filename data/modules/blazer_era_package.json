@@ -1,0 +1,22 @@
+{
+  "id": "blazer_era_package",
+  "name": "Blazer ERA",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 24,
+  "top_armor_bonus": 16,
+  "reliability_penalty": -3,
+  "cost": {
+    "steel": 10,
+    "explosives": 14,
+    "electronics": 4
+  },
+  "production_time": 50,
+  "special_flags": [
+    "israel",
+    "era",
+    "seventies",
+    "magach"
+  ],
+  "description": "Israeli explosive reactive armor for Magach (M48/M60) upgrades. Response to AT-3 and RPG-7."
+}

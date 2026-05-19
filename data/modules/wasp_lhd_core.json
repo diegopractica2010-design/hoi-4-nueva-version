@@ -1,0 +1,20 @@
+{
+  "id": "wasp_lhd_core",
+  "name": "Wasp-class LHD",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 95,
+    "electronics": 35,
+    "aluminum": 25
+  },
+  "production_time": 185,
+  "special_flags": [
+    "usa",
+    "lhd",
+    "twenty_tens",
+    "stovl"
+  ],
+  "description": "U.S. LHD with well deck, AV-8B/Harrier and later F-35B alongside Marine helos."
+}

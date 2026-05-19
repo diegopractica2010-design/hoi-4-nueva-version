@@ -1,0 +1,20 @@
+{
+  "id": "rolls_royce_gemini",
+  "name": "Rolls-Royce Gem",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 2,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 8,
+    "aluminum": 12
+  },
+  "production_time": 48,
+  "special_flags": [
+    "uk",
+    "helicopter",
+    "lynx"
+  ],
+  "description": "Twin turboshaft for Westland Lynx naval helicopter."
+}

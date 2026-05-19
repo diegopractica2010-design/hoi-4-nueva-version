@@ -1,0 +1,21 @@
+{
+  "id": "rolls_royce_mk104_buccaneer",
+  "name": "Spey Mk 104 (Buccaneer)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 11,
+  "fuel_efficiency": 5,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 18,
+    "aluminum": 26
+  },
+  "production_time": 85,
+  "special_flags": [
+    "uk",
+    "carrier_capable",
+    "sixties",
+    "buccaneer"
+  ],
+  "description": "Twin Spey on Buccaneer S.2. Low-level maritime strike bomber for RN carriers."
+}

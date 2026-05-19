@@ -1,0 +1,19 @@
+{
+  "id": "scr_520_airborne_radar",
+  "name": "SCR-520 Airborne Radar",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 3,
+  "cost": {
+    "steel": 5,
+    "electronics": 16,
+    "aluminum": 4
+  },
+  "production_time": 45,
+  "special_flags": [
+    "radar",
+    "airborne",
+    "usa"
+  ],
+  "description": "Early U.S. air-search radar on B-17 and patrol aircraft. Enables night and bad-weather detection."
+}

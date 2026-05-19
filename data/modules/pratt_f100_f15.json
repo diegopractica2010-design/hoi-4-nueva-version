@@ -1,0 +1,22 @@
+{
+  "id": "pratt_f100_f15",
+  "name": "Pratt F100-PW-220",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 8,
+  "speed_bonus": 35,
+  "cost": {
+    "steel": 18,
+    "aluminum": 34,
+    "titanium": 14
+  },
+  "production_time": 90,
+  "special_flags": [
+    "usa",
+    "jet_powerplant",
+    "eighties",
+    "f15"
+  ],
+  "description": "F-15 Eagle engine. Twin installation gives exceptional climb and sustained turn rate."
+}

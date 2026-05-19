@@ -1,0 +1,21 @@
+{
+  "id": "apfsds_tungsten_rod",
+  "name": "Tungsten APFSDS (Gen 2)",
+  "category": "Cargo",
+  "tier": 5,
+  "soft_attack": 8,
+  "hard_attack": 22,
+  "piercing": 32,
+  "cost": {
+    "tungsten": 12,
+    "steel": 2
+  },
+  "production_time": 40,
+  "special_flags": [
+    "nato",
+    "ammunition",
+    "seventies",
+    "apfsds"
+  ],
+  "description": "Second-generation long-rod penetrators for 105 mm and 115 mm guns. Arms race centerpiece."
+}

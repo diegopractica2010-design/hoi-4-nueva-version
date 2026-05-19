@@ -1,0 +1,21 @@
+{
+  "id": "bf109t_carrier_package",
+  "name": "Bf 109T Carrier Package",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 8,
+    "aluminum": 10,
+    "electronics": 4
+  },
+  "production_time": 38,
+  "special_flags": [
+    "germany",
+    "carrier_capable",
+    "ww2",
+    "bf109t",
+    "graf_zeppelin"
+  ],
+  "description": "Extended wings, arrestor hook, and catapult fittings for Graf Zeppelin air group."
+}

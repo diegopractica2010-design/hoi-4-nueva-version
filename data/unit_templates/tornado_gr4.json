@@ -1,0 +1,41 @@
+{
+  "id": "tornado_gr4",
+  "name": "Tornado GR.4",
+  "design_family": "uk_air_eighties",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "bomber",
+  "crew_required": 2,
+  "base_training_level": 34,
+  "max_experience_level": 100,
+  "base_production_days": 95,
+  "base_stats": {
+    "speed": 92,
+    "reliability": 74,
+    "fuel_consumption": 20,
+    "supply_need": 16,
+    "armor": 12,
+    "hardness": 28
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "brimstone_proto",
+    "Engine": "tornado_gr4_package",
+    "Sensors": "gps_ins_navigation"
+  },
+  "unlock_tech": [
+    "uk_strike_eighties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

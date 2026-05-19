@@ -1,0 +1,20 @@
+{
+  "id": "rolls_royce_merlin_carrier",
+  "name": "Merlin 55 (Carrier Fighter)",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 5,
+  "speed_bonus": 12,
+  "cost": {
+    "steel": 12,
+    "aluminum": 15
+  },
+  "production_time": 56,
+  "special_flags": [
+    "carrier_capable",
+    "uk",
+    "seafire_firefly"
+  ],
+  "description": "Merlin variant for Seafire and Firefly. Navalized for carrier operations."
+}

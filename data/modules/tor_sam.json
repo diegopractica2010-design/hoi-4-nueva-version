@@ -1,0 +1,23 @@
+{
+  "id": "tor_sam",
+  "name": "9K330 Tor",
+  "category": "AntiAir",
+  "tier": 6,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 78,
+  "anti_air": 80,
+  "cost": {
+    "steel": 18,
+    "electronics": 35,
+    "explosives": 12
+  },
+  "production_time": 88,
+  "special_flags": [
+    "ussr",
+    "sam",
+    "eighties",
+    "point_defense"
+  ],
+  "description": "Tracked point-defense SAM for armored columns. Engages PGMs and helicopters."
+}

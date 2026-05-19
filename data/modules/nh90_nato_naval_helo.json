@@ -1,0 +1,22 @@
+{
+  "id": "nh90_nato_naval_helo",
+  "name": "NH90 NFH Suite",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 7,
+  "cost": {
+    "steel": 8,
+    "electronics": 35,
+    "aluminum": 14
+  },
+  "production_time": 72,
+  "special_flags": [
+    "france",
+    "germany",
+    "italy",
+    "norway",
+    "asw",
+    "helicopter"
+  ],
+  "description": "NATO frigate and carrier ASW helicopter. Used on European LHD and destroyers."
+}

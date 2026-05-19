@@ -1,0 +1,19 @@
+{
+  "id": "ansaldo_65mm_mountain",
+  "name": "65 mm Ansaldo Mountain Gun",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 38,
+  "hard_attack": 8,
+  "piercing": 16,
+  "air_attack": 1,
+  "cost": {
+    "steel": 7
+  },
+  "production_time": 32,
+  "special_flags": [
+    "ww1",
+    "mountain_gun"
+  ],
+  "description": "Italian mountain artillery for Alpine front. Light and portable."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "aim120_amraam",
+  "name": "AIM-120 AMRAAM",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 10,
+  "hard_attack": 8,
+  "air_attack": 82,
+  "anti_air": 78,
+  "cost": {
+    "steel": 6,
+    "electronics": 38,
+    "explosives": 10
+  },
+  "production_time": 75,
+  "special_flags": [
+    "usa",
+    "air_to_air",
+    "bvr",
+    "eighties",
+    "active_radar"
+  ],
+  "description": "Fire-and-forget active-radar missile. F-15 and F-16 BVR dominance from late 1980s."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "m163_vulcan_air",
+  "name": "M163 VADS",
+  "category": "AntiAir",
+  "tier": 5,
+  "soft_attack": 18,
+  "hard_attack": 8,
+  "air_attack": 62,
+  "anti_air": 65,
+  "cost": {
+    "steel": 14,
+    "aluminum": 8,
+    "electronics": 12
+  },
+  "production_time": 58,
+  "special_flags": [
+    "usa",
+    "spaag",
+    "sixties",
+    "vietnam"
+  ],
+  "description": "M113 chassis with M61 Vulcan. Short-range air defense for convoys and air bases."
+}

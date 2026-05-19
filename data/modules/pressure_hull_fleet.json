@@ -1,0 +1,20 @@
+{
+  "id": "pressure_hull_fleet",
+  "name": "Fleet Boat Pressure Hull",
+  "category": "Armor",
+  "tier": 3,
+  "armor_bonus": 38,
+  "top_armor_bonus": 38,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 50,
+    "chromium": 4
+  },
+  "production_time": 90,
+  "special_flags": [
+    "submarine",
+    "ww2",
+    "deep_diving"
+  ],
+  "description": "Thick high-tensile steel hull for Pacific and Atlantic fleet submarines."
+}

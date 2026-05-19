@@ -1,0 +1,18 @@
+{
+  "id": "carrier_cic_director",
+  "name": "Carrier CIC Station",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 5,
+  "cost": {
+    "steel": 8,
+    "electronics": 16
+  },
+  "production_time": 55,
+  "special_flags": [
+    "carrier",
+    "radar",
+    "command"
+  ],
+  "description": "Combat Information Center integrating SK radar, fighter direction, and AA fire control."
+}

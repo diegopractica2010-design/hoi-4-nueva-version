@@ -1,0 +1,24 @@
+{
+  "id": "pl21_missile",
+  "name": "PL-21 (Projected)",
+  "category": "MainWeapon",
+  "tier": 9,
+  "soft_attack": 17,
+  "hard_attack": 15,
+  "air_attack": 105,
+  "anti_air": 100,
+  "cost": {
+    "steel": 9,
+    "electronics": 60,
+    "explosives": 14
+  },
+  "production_time": 90,
+  "special_flags": [
+    "china",
+    "twenty_thirties",
+    "air_to_air",
+    "planned",
+    "very_long_range"
+  ],
+  "description": "Next-generation very-long-range AAM for AWACS and tanker kill chains."
+}

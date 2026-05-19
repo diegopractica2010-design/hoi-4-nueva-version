@@ -1,0 +1,24 @@
+{
+  "id": "b6n_jill_torpedo_load",
+  "name": "B6N Jill Torpedo Load",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 36,
+  "hard_attack": 48,
+  "piercing": 26,
+  "anti_ship": 88,
+  "air_attack": 6,
+  "cost": {
+    "steel": 6,
+    "explosives": 24,
+    "electronics": 5
+  },
+  "production_time": 48,
+  "special_flags": [
+    "japan",
+    "naval_aviation",
+    "ww2",
+    "b6n_jill"
+  ],
+  "description": "Improved carrier torpedo bomber load for B6N Jill. Replaced the B5N Kate from 1943."
+}

@@ -1,0 +1,19 @@
+{
+  "id": "dutch_47mm_kni",
+  "name": "47 mm KNI Bombard",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 30,
+  "hard_attack": 20,
+  "piercing": 46,
+  "air_attack": 2,
+  "cost": {
+    "steel": 7
+  },
+  "production_time": 30,
+  "special_flags": [
+    "netherlands",
+    "1939"
+  ],
+  "description": "Dutch Indies anti-tank gun. Too light vs Japanese medium tanks."
+}

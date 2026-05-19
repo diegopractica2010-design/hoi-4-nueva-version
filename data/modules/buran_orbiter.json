@@ -1,0 +1,21 @@
+{
+  "id": "buran_orbiter",
+  "name": "Buran Orbiter",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 75,
+    "aluminum": 55,
+    "electronics": 45
+  },
+  "production_time": 190,
+  "special_flags": [
+    "ussr",
+    "space",
+    "eighties",
+    "reusable",
+    "shuttle_like"
+  ],
+  "description": "Soviet space shuttle. One autonomous flight 1988; program canceled."
+}

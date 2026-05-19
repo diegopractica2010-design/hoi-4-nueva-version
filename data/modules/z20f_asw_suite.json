@@ -1,0 +1,20 @@
+{
+  "id": "z20f_asw_suite",
+  "name": "Z-20F ASW Suite",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "electronics": 38,
+    "aluminum": 14
+  },
+  "production_time": 75,
+  "special_flags": [
+    "china",
+    "asw",
+    "helicopter",
+    "twenty_tens"
+  ],
+  "description": "Chinese naval ASW helicopter (Black Hawk derivative). Type 055 and LHD ops."
+}

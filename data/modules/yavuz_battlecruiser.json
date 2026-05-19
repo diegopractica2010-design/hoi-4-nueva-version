@@ -1,0 +1,24 @@
+{
+  "id": "yavuz_battlecruiser",
+  "name": "SMS Yavuz (Goeben)",
+  "category": "NavalGun",
+  "tier": 4,
+  "soft_attack": 38,
+  "hard_attack": 42,
+  "piercing": 40,
+  "anti_ship": 78,
+  "cost": {
+    "steel": 30,
+    "chromium": 6,
+    "explosives": 12
+  },
+  "production_time": 88,
+  "special_flags": [
+    "ottoman",
+    "turkey",
+    "germany",
+    "battlecruiser",
+    "ww1"
+  ],
+  "description": "Former German Goeben. Ottoman flagship dominating the Black Sea 1914–18."
+}

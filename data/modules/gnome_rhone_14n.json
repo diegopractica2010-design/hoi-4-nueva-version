@@ -1,0 +1,15 @@
+{
+  "id": "gnome_rhone_14n",
+  "name": "Gnome-Rhône 14N",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": 4,
+  "fuel_efficiency": 5,
+  "speed_bonus": 10,
+  "cost": {
+    "steel": 9,
+    "aluminum": 9
+  },
+  "production_time": 44,
+  "description": "Dewoitine D.520 radial. One of the best French fighter engines."
+}

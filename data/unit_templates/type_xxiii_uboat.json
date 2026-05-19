@@ -1,0 +1,54 @@
+{
+  "id": "type_xxiii_uboat",
+  "name": "Type XXIII U-boat",
+  "design_family": "german_sub_ww2",
+  "base_type": "Submarine",
+  "size_category": "Light",
+  "visual_archetype": "submarine",
+  "crew_required": 14,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 95,
+  "base_stats": {
+    "speed": 22,
+    "reliability": 72,
+    "fuel_consumption": 35,
+    "supply_need": 40,
+    "armor": 32,
+    "hardness": 45
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Communications": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "submarine_torpedo_tube",
+    "SecondaryWeapon": "g7a_torpedo_sub",
+    "Engine": "man_m6v40_uboat_diesel",
+    "Armor": "type21_hydrodynamic_hull"
+  },
+  "unlock_tech": [
+    "german_submarines",
+    "ww2",
+    "late_war",
+    "coastal"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

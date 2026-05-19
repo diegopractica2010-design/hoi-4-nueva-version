@@ -1,0 +1,49 @@
+{
+  "id": "tramp_steamer_1918_armed",
+  "name": "Tramp Steamer (Armed)",
+  "design_family": "merchant_naval",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "cargo_ship",
+  "crew_required": 65,
+  "base_training_level": 18,
+  "max_experience_level": 100,
+  "base_production_days": 90,
+  "base_stats": {
+    "speed": 16,
+    "reliability": 65,
+    "fuel_consumption": 55,
+    "supply_need": 75,
+    "armor": 14,
+    "deck_armor": 4,
+    "hardness": 38,
+    "cargo_capacity": 7000
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "merchant_full_cargo_hold",
+    "Engine": "ww1_merchant_steamer",
+    "SecondaryWeapon": "deck_gun_merchant_4inch"
+  },
+  "unlock_tech": [
+    "naval_1918",
+    "ww1_naval",
+    "merchant_naval",
+    "merchant_naval_1918"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

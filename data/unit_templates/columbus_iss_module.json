@@ -1,0 +1,37 @@
+{
+  "id": "columbus_iss_module",
+  "name": "Columbus (ISS)",
+  "design_family": "esa_space_two_thousands",
+  "base_type": "Space",
+  "size_category": "Medium",
+  "visual_archetype": "space_station",
+  "crew_required": 0,
+  "base_training_level": 36,
+  "max_experience_level": 100,
+  "base_production_days": 160,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 90,
+    "fuel_consumption": 25,
+    "supply_need": 40,
+    "payload_capacity": 5,
+    "hardness": 18
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "columbus_lab_module",
+    "Sensors": "rosetta_comet_probe"
+  },
+  "unlock_tech": [
+    "iss_modules"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

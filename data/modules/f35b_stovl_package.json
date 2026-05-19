@@ -1,0 +1,23 @@
+{
+  "id": "f35b_stovl_package",
+  "name": "F-35B STOVL Package",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 20,
+    "electronics": 55,
+    "aluminum": 35,
+    "titanium": 22
+  },
+  "production_time": 150,
+  "special_flags": [
+    "usa",
+    "uk",
+    "carrier_capable",
+    "vstol",
+    "f35b",
+    "queen_elizabeth"
+  ],
+  "description": "Lift fan and roll-post system for F-35B on Queen Elizabeth and Wasp-class ships."
+}

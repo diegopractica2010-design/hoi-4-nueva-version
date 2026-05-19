@@ -1,0 +1,19 @@
+{
+  "id": "ai_targeting_suite",
+  "name": "AI-Assisted Targeting",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 4,
+    "electronics": 65
+  },
+  "production_time": 90,
+  "special_flags": [
+    "global",
+    "twenty_twenties",
+    "ai",
+    "fcs"
+  ],
+  "description": "Machine-learning aided target recognition and prioritization in FCS and ISR."
+}

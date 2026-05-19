@@ -1,0 +1,53 @@
+{
+  "id": "shtorm_class_carrier",
+  "name": "Project Shtorm (Planned)",
+  "design_family": "russian_naval_planned",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 2800,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 320,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 60,
+    "fuel_consumption": 70,
+    "supply_need": 90,
+    "armor": 40,
+    "deck_armor": 22,
+    "hardness": 65
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "shtorm_carrier_2030",
+    "Engine": "vm_reactor_soviet",
+    "Armor": "carrier_armored_flight_deck",
+    "Sensors": "aesa_radar_gen1",
+    "AntiAir": "s400_triumf"
+  },
+  "unlock_tech": [
+    "naval_prototype",
+    "paper_navy",
+    "russian_naval_planned",
+    "twenty_thirties"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

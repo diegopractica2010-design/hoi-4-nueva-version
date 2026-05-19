@@ -1,0 +1,21 @@
+{
+  "id": "kfir_j79_engine",
+  "name": "J79 (Kfir)",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 9,
+  "fuel_efficiency": 2,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 16,
+    "aluminum": 26
+  },
+  "production_time": 75,
+  "special_flags": [
+    "israel",
+    "jet_powerplant",
+    "seventies",
+    "kfir"
+  ],
+  "description": "American J79 in Israeli Kfir fighter. Mirage 5 airframe with U.S. engine after embargo."
+}

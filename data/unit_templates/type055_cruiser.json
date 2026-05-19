@@ -1,0 +1,54 @@
+{
+  "id": "type055_cruiser",
+  "name": "Type 055 Renhai",
+  "design_family": "chinese_naval_modern",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "cruiser",
+  "crew_required": 280,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 210,
+  "base_stats": {
+    "speed": 30,
+    "reliability": 80,
+    "fuel_consumption": 72,
+    "supply_need": 88,
+    "armor": 44,
+    "deck_armor": 26,
+    "hardness": 72
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 2
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "us_5inch_54_mk42",
+    "SecondaryWeapon": "type055_cruiser_vls",
+    "Engine": "geared_steam_turbine_60k",
+    "Armor": "naval_belt_armor_scheme",
+    "Sensors": "type055_destroyer_vls"
+  },
+  "unlock_tech": [
+    "chinese_cruisers",
+    "twenty_tens"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

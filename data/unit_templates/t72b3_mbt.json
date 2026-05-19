@@ -1,0 +1,42 @@
+{
+  "id": "t72b3_mbt",
+  "name": "T-72B3",
+  "design_family": "russian_armored_twenty_tens",
+  "base_type": "Armored",
+  "size_category": "Medium",
+  "visual_archetype": "medium_tank",
+  "crew_required": 3,
+  "base_training_level": 32,
+  "max_experience_level": 100,
+  "base_production_days": 88,
+  "base_stats": {
+    "speed": 34,
+    "reliability": 74,
+    "fuel_consumption": 12,
+    "supply_need": 15,
+    "armor": 60,
+    "top_armor": 36,
+    "hardness": 91
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "2a46m4_125mm_gun",
+    "Engine": "v46_6m_diesel",
+    "Armor": "t72b3_armor_package"
+  },
+  "unlock_tech": [
+    "russian_mbt_twenty_tens"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

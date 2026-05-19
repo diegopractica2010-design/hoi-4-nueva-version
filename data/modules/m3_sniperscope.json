@@ -1,0 +1,20 @@
+{
+  "id": "m3_sniperscope",
+  "name": "M3 Infrared Sniperscope",
+  "category": "Sensors",
+  "tier": 3,
+  "reliability_bonus": 1,
+  "cost": {
+    "steel": 3,
+    "electronics": 12,
+    "optics": 8
+  },
+  "production_time": 40,
+  "special_flags": [
+    "infrared",
+    "night_fighting",
+    "usa",
+    "infantry"
+  ],
+  "description": "U.S. infantry IR scope and illuminator. Limited Pacific night operations."
+}

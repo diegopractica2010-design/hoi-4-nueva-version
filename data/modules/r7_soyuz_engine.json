@@ -1,0 +1,23 @@
+{
+  "id": "r7_soyuz_engine",
+  "name": "RD-107/108 (R-7)",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 2,
+  "speed_bonus": 30,
+  "cost": {
+    "steel": 20,
+    "aluminum": 12,
+    "explosives": 35
+  },
+  "production_time": 90,
+  "special_flags": [
+    "ussr",
+    "space",
+    "fifties",
+    "kerolox",
+    "iconic"
+  ],
+  "description": "R-7 Semyorka booster engines. Launched Sputnik and still flies as Soyuz lineage."
+}

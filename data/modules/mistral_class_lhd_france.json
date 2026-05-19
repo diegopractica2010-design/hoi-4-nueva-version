@@ -1,0 +1,20 @@
+{
+  "id": "mistral_class_lhd_france",
+  "name": "Mistral-class LHD",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 72,
+    "electronics": 28,
+    "aluminum": 20
+  },
+  "production_time": 168,
+  "special_flags": [
+    "france",
+    "lhd",
+    "helicopter",
+    "twenty_tens"
+  ],
+  "description": "French amphibious assault ship. NH90 and Panther; exported to Egypt and Russia (cancelled)."
+}

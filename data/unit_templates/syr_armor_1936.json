@@ -1,0 +1,44 @@
+{
+  "id": "syr_armor_1936",
+  "name": "Mandate Armored Car",
+  "design_family": "syrian_army_1936_armor",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 2,
+  "base_training_level": 22,
+  "max_experience_level": 100,
+  "base_production_days": 52,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 68,
+    "fuel_consumption": 6,
+    "supply_need": 8,
+    "armor": 24,
+    "top_armor": 14,
+    "hardness": 64
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "bofors_37mm_at",
+    "Engine": "spa_diesel_v8_engine"
+  },
+  "unlock_tech": [
+    "forces_1936",
+    "army_1936",
+    "air_1936",
+    "interwar_army",
+    "interwar_air",
+    "syrian_army",
+    "syria"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

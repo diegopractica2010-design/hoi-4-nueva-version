@@ -1,0 +1,23 @@
+{
+  "id": "giat_120mm_cn120",
+  "name": "CN-120-26 120 mm",
+  "category": "MainWeapon",
+  "tier": 6,
+  "soft_attack": 66,
+  "hard_attack": 64,
+  "piercing": 142,
+  "air_attack": 5,
+  "cost": {
+    "steel": 30,
+    "chromium": 6,
+    "tungsten": 4
+  },
+  "production_time": 92,
+  "special_flags": [
+    "france",
+    "seventies",
+    "smoothbore",
+    "amx40_proto"
+  ],
+  "description": "GIAT smoothbore for AMX-40 prototype. French entry in 120 mm NATO gun race."
+}

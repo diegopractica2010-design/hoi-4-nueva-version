@@ -1,0 +1,52 @@
+{
+  "id": "yars_icbm_tel",
+  "name": "Yars TEL",
+  "design_family": "russian_icbm_modern",
+  "base_type": "Land",
+  "size_category": "Medium",
+  "visual_archetype": "icbm_launcher",
+  "crew_required": 4,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 210,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 72,
+    "fuel_consumption": 10,
+    "supply_need": 16,
+    "armor": 12,
+    "hardness": 35
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "MainWeapon": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Engine": "v46_6m_diesel",
+    "Suspension": "wheeled_mlrs_chassis",
+    "Sensors": "hunter_killer_fcs",
+    "MainWeapon": "rs24_yars_icbm",
+    "Cargo": "mlrs_reload_trailer"
+  },
+  "unlock_tech": [
+    "strategic_missiles",
+    "russian_missiles",
+    "icbm",
+    "twenty_twenties_missiles"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

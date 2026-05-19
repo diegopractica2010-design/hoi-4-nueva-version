@@ -1,0 +1,17 @@
+{
+  "id": "us_mark_iii_sight",
+  "name": "Mark III Gyro Sight",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 3,
+    "electronics": 8,
+    "optics": 4
+  },
+  "production_time": 35,
+  "special_flags": [
+    "fighter_aiming"
+  ],
+  "description": "Lead-computing gunsight for U.S. fighters. Improves deflection shooting accuracy."
+}

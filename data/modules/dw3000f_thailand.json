@@ -1,0 +1,19 @@
+{
+  "id": "dw3000f_thailand",
+  "name": "DW3000F Frigate",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 10,
+    "electronics": 30,
+    "aluminum": 9
+  },
+  "production_time": 76,
+  "special_flags": [
+    "thailand",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Thai DW3000F frigate with South Korean-derived systems."
+}

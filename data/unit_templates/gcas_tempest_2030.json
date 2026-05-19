@@ -1,0 +1,42 @@
+{
+  "id": "gcas_tempest_2030",
+  "name": "GCAP Tempest",
+  "design_family": "uk_air_twenty_thirties",
+  "base_type": "Air",
+  "size_category": "Heavy",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 42,
+  "max_experience_level": 100,
+  "base_production_days": 180,
+  "base_stats": {
+    "speed": 118,
+    "reliability": 80,
+    "fuel_consumption": 22,
+    "supply_need": 24,
+    "armor": 8,
+    "hardness": 28
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "DroneAttachment": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "meteor_missile",
+    "Engine": "gcas_tempest_engine",
+    "DroneAttachment": "cca_loyal_wingman"
+  },
+  "unlock_tech": [
+    "uk_fighters_twenty_thirties",
+    "planned"
+  ],
+  "can_mount_drones": true,
+  "is_vehicle": true
+}

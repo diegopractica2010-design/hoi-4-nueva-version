@@ -1,0 +1,22 @@
+{
+  "id": "m8_calliope_rocket",
+  "name": "4.5\" M8 Rocket Launcher",
+  "category": "MainWeapon",
+  "tier": 3,
+  "soft_attack": 75,
+  "hard_attack": 20,
+  "piercing": 14,
+  "cost": {
+    "steel": 6,
+    "explosives": 14,
+    "aluminum": 4
+  },
+  "production_time": 32,
+  "special_flags": [
+    "usa",
+    "rocket_artillery",
+    "ww2",
+    "mountable_on_transport"
+  ],
+  "description": "Sherman-mounted 'Calliope' rocket rack for bunker and infantry suppression."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "shtora_soft_kill",
+  "name": "Shtora-1",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 6,
+    "electronics": 28,
+    "optics": 12
+  },
+  "production_time": 65,
+  "special_flags": [
+    "russia",
+    "nineties",
+    "soft_kill",
+    "t90"
+  ],
+  "description": "IR dazzler and aerosol countermeasures against laser-guided weapons."
+}

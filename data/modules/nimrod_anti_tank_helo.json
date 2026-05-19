@@ -1,0 +1,23 @@
+{
+  "id": "nimrod_anti_tank_helo",
+  "name": "Nimrod ATGM",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 34,
+  "hard_attack": 58,
+  "piercing": 115,
+  "air_attack": 4,
+  "cost": {
+    "steel": 5,
+    "electronics": 18,
+    "explosives": 10
+  },
+  "production_time": 48,
+  "special_flags": [
+    "israel",
+    "helicopter",
+    "atgm",
+    "eighties"
+  ],
+  "description": "Early Israeli helicopter-launched ATGM development before Spike-ER."
+}

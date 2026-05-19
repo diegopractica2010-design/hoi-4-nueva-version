@@ -1,0 +1,20 @@
+{
+  "id": "jumo_004_jet_engine",
+  "name": "Jumo 004B Turbojet",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": -6,
+  "fuel_efficiency": -4,
+  "speed_bonus": 22,
+  "cost": {
+    "steel": 16,
+    "aluminum": 22,
+    "rare_earths": 4
+  },
+  "production_time": 80,
+  "special_flags": [
+    "jet_powerplant",
+    "germany"
+  ],
+  "description": "First operational German turbojet (Me 262, Ar 234). Short engine life; revolutionary performance."
+}

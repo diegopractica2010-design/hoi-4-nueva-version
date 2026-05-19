@@ -1,0 +1,19 @@
+{
+  "id": "lewis_gun_mount",
+  "name": "Lewis Gun Mount",
+  "category": "SecondaryWeapon",
+  "tier": 1,
+  "soft_attack": 14,
+  "hard_attack": 2,
+  "piercing": 3,
+  "air_attack": 12,
+  "cost": {
+    "steel": 3
+  },
+  "production_time": 12,
+  "special_flags": [
+    "ww1",
+    "aircraft"
+  ],
+  "description": "Drum-fed light machine gun on early aircraft and vehicles."
+}

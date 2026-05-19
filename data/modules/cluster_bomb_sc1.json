@@ -1,0 +1,22 @@
+{
+  "id": "cluster_bomb_sc1",
+  "name": "SC-1 Cluster Bomb",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 70,
+  "hard_attack": 12,
+  "piercing": 6,
+  "air_attack": 8,
+  "cost": {
+    "steel": 5,
+    "explosives": 28
+  },
+  "production_time": 45,
+  "special_flags": [
+    "cluster",
+    "usa",
+    "anti_personnel",
+    "late_war"
+  ],
+  "description": "Early cluster munition experiments. Area effect vs airfield dispersal."
+}

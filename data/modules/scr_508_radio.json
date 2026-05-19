@@ -1,0 +1,17 @@
+{
+  "id": "scr_508_radio",
+  "name": "SCR-508 Tank Radio",
+  "category": "Communications",
+  "tier": 2,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 2,
+    "electronics": 5,
+    "copper": 3
+  },
+  "production_time": 20,
+  "special_flags": [
+    "tank_platoon"
+  ],
+  "description": "Standard U.S. armored vehicle FM radio for platoon coordination."
+}

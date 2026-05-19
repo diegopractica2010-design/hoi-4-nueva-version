@@ -1,0 +1,50 @@
+{
+  "id": "bm30_smerch_launcher",
+  "name": "BM-30 Smerch",
+  "design_family": "russian_rocket_modern",
+  "base_type": "Land",
+  "size_category": "Medium",
+  "visual_archetype": "rocket_launcher",
+  "crew_required": 4,
+  "base_training_level": 30,
+  "max_experience_level": 100,
+  "base_production_days": 100,
+  "base_stats": {
+    "speed": 26,
+    "reliability": 72,
+    "fuel_consumption": 10,
+    "supply_need": 16,
+    "armor": 12,
+    "hardness": 35
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Suspension": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "MainWeapon": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Engine": "v46_6m_diesel",
+    "Suspension": "mlrs_launcher_chassis",
+    "Sensors": "hunter_killer_fcs",
+    "MainWeapon": "bm30_smerch_300mm",
+    "Cargo": "mlrs_reload_trailer"
+  },
+  "unlock_tech": [
+    "modern_rocket_artillery",
+    "russian_missiles"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

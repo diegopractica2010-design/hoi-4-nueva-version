@@ -1,0 +1,20 @@
+{
+  "id": "nansen_frigate",
+  "name": "Fridtjof Nansen-class",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 10,
+    "electronics": 40,
+    "aluminum": 10
+  },
+  "production_time": 85,
+  "special_flags": [
+    "norway",
+    "frigate",
+    "aegis",
+    "twenty_twenties"
+  ],
+  "description": "Norwegian Aegis frigate with NSM anti-ship missiles."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "f35_block4_package",
+  "name": "F-35 Block 4 Package",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 12,
+    "electronics": 70,
+    "aluminum": 25
+  },
+  "production_time": 160,
+  "special_flags": [
+    "usa",
+    "twenty_twenties",
+    "f35",
+    "tr3",
+    "aesa"
+  ],
+  "description": "Technology Refresh 3 with improved radar, EW, and computing. Fleet-wide upgrade path."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "type3_ku_radio",
+  "name": "Type 3 Ku Radio",
+  "category": "Communications",
+  "tier": 2,
+  "reliability_bonus": 1,
+  "cost": {
+    "steel": 2,
+    "electronics": 4,
+    "copper": 2
+  },
+  "production_time": 24,
+  "description": "Standard IJA tank company radio. Shorter range than Western sets."
+}

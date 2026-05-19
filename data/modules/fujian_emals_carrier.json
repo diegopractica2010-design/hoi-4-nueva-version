@@ -1,0 +1,20 @@
+{
+  "id": "fujian_emals_carrier",
+  "name": "Fujian EMALS Carrier",
+  "category": "Cargo",
+  "tier": 8,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 150,
+    "electronics": 70,
+    "copper": 40
+  },
+  "production_time": 250,
+  "special_flags": [
+    "china",
+    "twenty_twenties",
+    "carrier",
+    "emals"
+  ],
+  "description": "Type 003 Fujian with electromagnetic catapults. Enables J-35 and KJ-600 operations."
+}

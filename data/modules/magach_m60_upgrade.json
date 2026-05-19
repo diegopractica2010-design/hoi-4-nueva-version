@@ -1,0 +1,21 @@
+{
+  "id": "magach_m60_upgrade",
+  "name": "Magach 6 Package",
+  "category": "Armor",
+  "tier": 4,
+  "armor_bonus": 46,
+  "top_armor_bonus": 24,
+  "reliability_penalty": -4,
+  "cost": {
+    "steel": 32,
+    "chromium": 4,
+    "electronics": 6
+  },
+  "production_time": 70,
+  "special_flags": [
+    "israel",
+    "sixties",
+    "m60_derivative"
+  ],
+  "description": "Israeli M60A1 upgrade with improved FCS and armor. Workhorse until Merkava matured."
+}

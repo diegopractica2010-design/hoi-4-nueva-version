@@ -1,0 +1,20 @@
+{
+  "id": "v46_6m_diesel",
+  "name": "V-46-6M Diesel",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 10,
+  "fuel_efficiency": 6,
+  "speed_bonus": 13,
+  "cost": {
+    "steel": 22,
+    "aluminum": 6
+  },
+  "production_time": 72,
+  "special_flags": [
+    "ussr",
+    "seventies",
+    "t72"
+  ],
+  "description": "T-72 autoloader tank engine. High power-to-weight for Soviet operational doctrine."
+}

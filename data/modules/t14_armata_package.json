@@ -1,0 +1,22 @@
+{
+  "id": "t14_armata_package",
+  "name": "T-14 Armata Package",
+  "category": "Armor",
+  "tier": 8,
+  "armor_bonus": 75,
+  "top_armor_bonus": 50,
+  "reliability_penalty": -10,
+  "cost": {
+    "steel": 50,
+    "ceramics": 30,
+    "electronics": 25
+  },
+  "production_time": 160,
+  "special_flags": [
+    "russia",
+    "twenty_tens",
+    "t14",
+    "unmanned_turret"
+  ],
+  "description": "T-14 Armata with unmanned turret and Afghanit APS. Limited production; doctrinal showcase."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "er538_radio",
+  "name": "ER 538 Radio",
+  "category": "Communications",
+  "tier": 1,
+  "reliability_bonus": 1,
+  "cost": {
+    "steel": 2,
+    "electronics": 4
+  },
+  "production_time": 22,
+  "description": "French tank squadron radio (1940 standard)."
+}

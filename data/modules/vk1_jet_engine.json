@@ -1,0 +1,21 @@
+{
+  "id": "vk1_jet_engine",
+  "name": "VK-1 Turbojet",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 4,
+  "fuel_efficiency": -2,
+  "speed_bonus": 24,
+  "cost": {
+    "steel": 14,
+    "aluminum": 20,
+    "rare_earths": 3
+  },
+  "production_time": 70,
+  "special_flags": [
+    "ussr",
+    "jet_powerplant",
+    "cold_war"
+  ],
+  "description": "Rolls-Royce Nene copy for MiG-15. Powered Soviet air superiority in Korea."
+}

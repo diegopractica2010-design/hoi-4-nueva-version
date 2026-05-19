@@ -1,0 +1,20 @@
+{
+  "id": "v12_5_engine",
+  "name": "V-12-5 Diesel",
+  "category": "Engine",
+  "tier": 5,
+  "reliability_bonus": 8,
+  "fuel_efficiency": 5,
+  "speed_bonus": 11,
+  "cost": {
+    "steel": 20,
+    "aluminum": 4
+  },
+  "production_time": 65,
+  "special_flags": [
+    "ussr",
+    "sixties",
+    "t62"
+  ],
+  "description": "T-62 powerplant. Compact diesel enabling low silhouette Soviet MBT design."
+}

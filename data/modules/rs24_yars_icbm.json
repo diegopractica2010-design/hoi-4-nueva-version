@@ -1,0 +1,23 @@
+{
+  "id": "rs24_yars_icbm",
+  "name": "RS-24 Yars",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 260,
+  "hard_attack": 120,
+  "piercing": 95,
+  "cost": {
+    "steel": 40,
+    "electronics": 105,
+    "explosives": 100
+  },
+  "production_time": 210,
+  "special_flags": [
+    "russia",
+    "icbm",
+    "two_thousands",
+    "strategic",
+    "mountable_on_transport"
+  ],
+  "description": "MIRV mobile ICBM replacing Topol. Core of modern Russian ground deterrent."
+}

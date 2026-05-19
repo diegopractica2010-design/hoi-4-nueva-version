@@ -1,0 +1,21 @@
+{
+  "id": "tumansky_r27_yak38",
+  "name": "R-27 (Yak-38)",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 2,
+  "fuel_efficiency": -4,
+  "speed_bonus": 22,
+  "cost": {
+    "steel": 14,
+    "aluminum": 22
+  },
+  "production_time": 70,
+  "special_flags": [
+    "ussr",
+    "carrier_capable",
+    "vstol",
+    "yak38"
+  ],
+  "description": "Lift/cruise engine package on Yak-38 Forger. Operated from Kiev-class carriers."
+}

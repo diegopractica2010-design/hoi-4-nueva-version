@@ -1,0 +1,19 @@
+{
+  "id": "mlrs_launcher_chassis",
+  "name": "MLRS Launcher Chassis",
+  "category": "Suspension",
+  "tier": 5,
+  "reliability_bonus": 4,
+  "speed_bonus": 2,
+  "cost": {
+    "steel": 18,
+    "rubber": 6
+  },
+  "production_time": 50,
+  "special_flags": [
+    "usa",
+    "launcher_chassis",
+    "tracked"
+  ],
+  "description": "M270 tracked carrier without rocket pod. Accepts GMLRS/ATACMS modules."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "rolls_royce_avon_scimitar",
+  "name": "Avon Mk 202 (Scimitar)",
+  "category": "Engine",
+  "tier": 4,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 2,
+  "speed_bonus": 26,
+  "cost": {
+    "steel": 14,
+    "aluminum": 22
+  },
+  "production_time": 75,
+  "special_flags": [
+    "uk",
+    "carrier_capable",
+    "fifties",
+    "scimitar"
+  ],
+  "description": "Twin Avon on Supermarine Scimitar. First RN swept-wing carrier jet fighter."
+}

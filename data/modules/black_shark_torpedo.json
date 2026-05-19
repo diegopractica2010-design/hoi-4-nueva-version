@@ -1,0 +1,23 @@
+{
+  "id": "black_shark_torpedo",
+  "name": "Black Shark Torpedo",
+  "category": "SecondaryWeapon",
+  "tier": 6,
+  "soft_attack": 24,
+  "hard_attack": 50,
+  "piercing": 32,
+  "anti_ship": 80,
+  "cost": {
+    "steel": 10,
+    "electronics": 30,
+    "explosives": 15
+  },
+  "production_time": 70,
+  "special_flags": [
+    "italy",
+    "export",
+    "submarine",
+    "wire_guided"
+  ],
+  "description": "Italian heavyweight torpedo on Scorpene and export subs."
+}

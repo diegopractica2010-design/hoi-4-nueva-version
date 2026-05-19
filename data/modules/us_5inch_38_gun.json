@@ -1,0 +1,23 @@
+{
+  "id": "us_5inch_38_gun",
+  "name": "5\"/38 Mark 12",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 42,
+  "hard_attack": 28,
+  "piercing": 52,
+  "air_attack": 18,
+  "anti_ship": 38,
+  "anti_air": 22,
+  "cost": {
+    "steel": 18,
+    "explosives": 6
+  },
+  "production_time": 55,
+  "special_flags": [
+    "naval",
+    "dual_purpose",
+    "usa"
+  ],
+  "description": "Standard U.S. destroyer/cruiser DP gun WWII. Excellent AA and solid anti-surface."
+}

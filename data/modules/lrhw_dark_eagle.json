@@ -1,0 +1,23 @@
+{
+  "id": "lrhw_dark_eagle",
+  "name": "LRHW (Dark Eagle)",
+  "category": "MainWeapon",
+  "tier": 8,
+  "soft_attack": 140,
+  "hard_attack": 85,
+  "piercing": 75,
+  "air_attack": 10,
+  "cost": {
+    "steel": 25,
+    "electronics": 60,
+    "explosives": 50
+  },
+  "production_time": 130,
+  "special_flags": [
+    "usa",
+    "twenty_twenties",
+    "hypersonic",
+    "planned"
+  ],
+  "description": "Long-Range Hypersonic Weapon. Ground-launched boost-glide against time-critical targets."
+}

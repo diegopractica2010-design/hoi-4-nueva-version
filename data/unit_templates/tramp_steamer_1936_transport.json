@@ -1,0 +1,48 @@
+{
+  "id": "tramp_steamer_1936_transport",
+  "name": "Coastal Freighter",
+  "design_family": "merchant_naval",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "cargo_ship",
+  "crew_required": 45,
+  "base_training_level": 24,
+  "max_experience_level": 100,
+  "base_production_days": 90,
+  "base_stats": {
+    "speed": 16,
+    "reliability": 70,
+    "fuel_consumption": 40,
+    "supply_need": 50,
+    "armor": 8,
+    "deck_armor": 4,
+    "hardness": 30,
+    "cargo_capacity": 14000
+  },
+  "slots": {
+    "Cargo": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Cargo": "merchant_full_cargo_hold",
+    "Engine": "liberty_ship_engine"
+  },
+  "unlock_tech": [
+    "naval_1936",
+    "interwar_naval",
+    "merchant_naval",
+    "merchant_naval_1936"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

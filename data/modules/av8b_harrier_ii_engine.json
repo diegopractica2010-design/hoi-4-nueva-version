@@ -1,0 +1,23 @@
+{
+  "id": "av8b_harrier_ii_engine",
+  "name": "Pegasus F402 (AV-8B)",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "fuel_efficiency": 8,
+  "speed_bonus": 28,
+  "cost": {
+    "steel": 16,
+    "aluminum": 28,
+    "titanium": 8
+  },
+  "production_time": 92,
+  "special_flags": [
+    "usa",
+    "uk",
+    "carrier_capable",
+    "vstol",
+    "av8b"
+  ],
+  "description": "Upgraded Pegasus on AV-8B Harrier II. STOVL ops from amphibious ships and light carriers."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "ballistic_computer_gpch",
+  "name": "Ballistic Computer (GPCH)",
+  "category": "Sensors",
+  "tier": 4,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 3,
+    "electronics": 18
+  },
+  "production_time": 48,
+  "special_flags": [
+    "nato",
+    "fcs",
+    "sixties"
+  ],
+  "description": "Analog ballistic computer for 1960s MBTs. Reduces engagement time vs manual ranging."
+}

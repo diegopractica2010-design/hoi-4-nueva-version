@@ -1,0 +1,22 @@
+{
+  "id": "h34_choctaw_naval",
+  "name": "H-34 Choctaw Naval",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 6,
+  "fuel_efficiency": 0,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 8,
+    "aluminum": 10
+  },
+  "production_time": 42,
+  "special_flags": [
+    "usa",
+    "helicopter",
+    "naval",
+    "fifties",
+    "sixties"
+  ],
+  "description": "Utility and ASW helicopter on Essex-class carriers and early LPH ships."
+}

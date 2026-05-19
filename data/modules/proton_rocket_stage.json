@@ -1,0 +1,23 @@
+{
+  "id": "proton_rocket_stage",
+  "name": "Proton First Stage",
+  "category": "Cargo",
+  "tier": 5,
+  "reliability_bonus": 6,
+  "fuel_efficiency": -6,
+  "speed_bonus": 34,
+  "cost": {
+    "steel": 35,
+    "aluminum": 15,
+    "explosives": 70
+  },
+  "production_time": 120,
+  "special_flags": [
+    "ussr",
+    "russia",
+    "space",
+    "sixties",
+    "heavy_lift"
+  ],
+  "description": "UR-500 Proton heavy launcher. Military and civilian modules to high orbit."
+}

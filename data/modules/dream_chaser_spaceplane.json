@@ -1,0 +1,21 @@
+{
+  "id": "dream_chaser_spaceplane",
+  "name": "Dream Chaser",
+  "category": "Cargo",
+  "tier": 6,
+  "reliability_bonus": 12,
+  "cost": {
+    "steel": 25,
+    "aluminum": 30,
+    "electronics": 28
+  },
+  "production_time": 120,
+  "special_flags": [
+    "usa",
+    "space",
+    "twenty_twenties",
+    "cargo",
+    "lifting_body"
+  ],
+  "description": "Sierra Space lifting-body cargo vehicle for ISS resupply."
+}

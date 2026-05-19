@@ -1,0 +1,21 @@
+{
+  "id": "defa550_30mm",
+  "name": "DEFA 550",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 38,
+  "hard_attack": 26,
+  "piercing": 46,
+  "air_attack": 56,
+  "cost": {
+    "steel": 9,
+    "aluminum": 5
+  },
+  "production_time": 55,
+  "special_flags": [
+    "france",
+    "aircraft_gun",
+    "sixties"
+  ],
+  "description": "Mirage standard revolver cannon. Exported with French fighters worldwide."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "malyutka_at3_sagger",
+  "name": "9M14 Malyutka (AT-3)",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 30,
+  "hard_attack": 52,
+  "piercing": 105,
+  "air_attack": 3,
+  "cost": {
+    "steel": 4,
+    "electronics": 10,
+    "explosives": 8
+  },
+  "production_time": 38,
+  "special_flags": [
+    "ussr",
+    "atgm",
+    "wire_guided",
+    "sixties"
+  ],
+  "description": "MCLOS ATGM on BMP-1 and BRDM. Iconic Third World export; shocked Israelis in 1973."
+}

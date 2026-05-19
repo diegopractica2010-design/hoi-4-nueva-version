@@ -1,0 +1,22 @@
+{
+  "id": "uk_15inch_mk1",
+  "name": "BL 15-inch Mk I",
+  "category": "NavalGun",
+  "tier": 2,
+  "soft_attack": 78,
+  "hard_attack": 68,
+  "piercing": 108,
+  "air_attack": 3,
+  "anti_ship": 90,
+  "cost": {
+    "steel": 44,
+    "explosives": 14
+  },
+  "production_time": 100,
+  "special_flags": [
+    "naval",
+    "battleship",
+    "uk"
+  ],
+  "description": "Queen Elizabeth and Renown class. Legendary RN capital ship gun."
+}

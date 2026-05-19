@@ -1,0 +1,51 @@
+{
+  "id": "hms_argus_carrier",
+  "name": "HMS Argus",
+  "design_family": "uk_naval_interwar",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "carrier",
+  "crew_required": 450,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 200,
+  "base_stats": {
+    "speed": 20,
+    "reliability": 65,
+    "fuel_consumption": 55,
+    "supply_need": 70,
+    "armor": 18,
+    "deck_armor": 12,
+    "hardness": 45
+  },
+  "slots": {
+    "Armor": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 2
+    },
+    "AntiAir": {
+      "max": 2
+    }
+  },
+  "module_loadout": {
+    "Cargo": "carrier_air_wing_bunker",
+    "Engine": "carrier_boiler_yarrow",
+    "Armor": "carrier_wooden_flight_deck",
+    "Sensors": "naval_fire_control_mk37"
+  },
+  "unlock_tech": [
+    "uk_carriers",
+    "interwar_naval",
+    "first_carrier"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

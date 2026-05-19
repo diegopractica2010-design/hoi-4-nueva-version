@@ -1,0 +1,21 @@
+{
+  "id": "leopard2a4_armor",
+  "name": "Leopard 2A4 Armor",
+  "category": "Armor",
+  "tier": 6,
+  "armor_bonus": 60,
+  "top_armor_bonus": 38,
+  "reliability_penalty": -5,
+  "cost": {
+    "steel": 44,
+    "ceramics": 18,
+    "chromium": 6
+  },
+  "production_time": 95,
+  "special_flags": [
+    "germany",
+    "eighties",
+    "leopard2"
+  ],
+  "description": "Standard Leopard 2 armor before 2A5 wedge upgrade. NATO benchmark MBT of 1980s."
+}

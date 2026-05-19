@@ -1,0 +1,20 @@
+{
+  "id": "trophy_aps_usa",
+  "name": "Trophy APS (U.S. Fit)",
+  "category": "Sensors",
+  "tier": 8,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 12,
+    "electronics": 45,
+    "explosives": 8
+  },
+  "production_time": 90,
+  "special_flags": [
+    "usa",
+    "twenty_tens",
+    "active_protection",
+    "m1a2"
+  ],
+  "description": "Israeli Trophy system on U.S. Abrams. Intercepts RPG and ATGM in close combat."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "naval_radar_type22",
+  "name": "Type 22 Radar",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 4,
+    "electronics": 12
+  },
+  "production_time": 50,
+  "special_flags": [
+    "naval",
+    "radar",
+    "uk"
+  ],
+  "description": "Early British naval surface search radar set."
+}

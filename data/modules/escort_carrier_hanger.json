@@ -1,0 +1,18 @@
+{
+  "id": "escort_carrier_hanger",
+  "name": "Escort Carrier (CVE) Layout",
+  "category": "Cargo",
+  "tier": 2,
+  "reliability_bonus": 1,
+  "cost": {
+    "steel": 22,
+    "aluminum": 4
+  },
+  "production_time": 65,
+  "special_flags": [
+    "carrier",
+    "escort_carrier",
+    "asw_aviation"
+  ],
+  "description": "Smaller hangar optimized for ASW air groups (Wildcat/Avenger, FIDO support)."
+}

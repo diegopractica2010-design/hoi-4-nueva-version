@@ -1,0 +1,16 @@
+{
+  "id": "mauser_mg151_italy",
+  "name": "Mauser MG 151/20 (license)",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 22,
+  "hard_attack": 13,
+  "piercing": 30,
+  "air_attack": 40,
+  "cost": {
+    "steel": 6,
+    "aluminum": 2
+  },
+  "production_time": 32,
+  "description": "License-built 20 mm on Macchi C.202/205 and Bf 109G-6 (Co-Belligerent)."
+}

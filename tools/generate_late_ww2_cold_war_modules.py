@@ -1,0 +1,386 @@
+#!/usr/bin/env python3
+"""Generate late-WWII through early-1950s modules, including Axis prototypes never mass-produced."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+MODULES_DIR = Path(__file__).resolve().parents[1] / "data" / "modules"
+
+# fmt: off
+MODULES: list[dict] = [
+    # ═══════════════════════════════════════════════════════════════════════════
+    # GERMANY · DEFEATED AXIS · TANK / ASSAULT GUNS (built or advanced prototype)
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "kwk_44_128mm_gun", "name": "12.8 cm KwK 44 L/55", "category": "MainWeapon", "tier": 5,
+     "soft_attack": 62, "hard_attack": 72, "piercing": 142, "air_attack": 4,
+     "cost": {"steel": 38, "explosives": 6, "chromium": 8, "tungsten": 4}, "production_time": 120,
+     "special_flags": ["excellent_ap", "prototype", "germany", "paper_panzer"],
+     "description": "Jagdtiger and Maus intended main gun. Could defeat any Allied tank at combat ranges; few completed."},
+    {"id": "sturmtiger_380mm_mortar", "name": "38 cm RW 61 Sturmmörser", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 110, "hard_attack": 35, "piercing": 45, "air_attack": 2,
+     "cost": {"steel": 42, "explosives": 35}, "production_time": 110,
+     "special_flags": ["excellent_vs_soft", "urban_combat", "germany"],
+     "description": "Sturmtiger rocket-assisted mortar. Catastrophic against fortifications; impractical logistics."},
+    {"id": "kwk_43_l71_88_extended", "name": "8.8 cm KwK 43 L/71 (E-series)", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 58, "hard_attack": 66, "piercing": 132, "air_attack": 4,
+     "cost": {"steel": 30, "chromium": 5}, "production_time": 100,
+     "special_flags": ["excellent_ap", "prototype", "e50_program"],
+     "description": "Planned standard gun for E-50 and E-75 medium/heavy line. Never fielded in quantity."},
+    {"id": "maus_superheavy_armor", "name": "Maus Superheavy Armor", "category": "Armor", "tier": 5,
+     "armor_bonus": 72, "top_armor_bonus": 38, "reliability_penalty": -15,
+     "cost": {"steel": 90, "chromium": 12, "tungsten": 6}, "production_time": 140,
+     "special_flags": ["superheavy", "prototype", "germany"],
+     "description": "Up to 220 mm frontal on Panzer VIII Maus. Two prototypes built; impenetrable but immobile."},
+    {"id": "e50_standard_armor", "name": "E-50 Standard Armor Package", "category": "Armor", "tier": 4,
+     "armor_bonus": 48, "top_armor_bonus": 26, "reliability_penalty": -6,
+     "cost": {"steel": 38, "chromium": 5}, "production_time": 75,
+     "special_flags": ["prototype", "paper_panzer", "sloped_armor"],
+     "description": "Planned unified medium tank armor scheme. Part of Entwicklung series cancelled 1945."},
+    {"id": "maybach_hl234_engine", "name": "Maybach HL 234", "category": "Engine", "tier": 4,
+     "reliability_bonus": -8, "fuel_efficiency": -5, "speed_bonus": 6,
+     "cost": {"steel": 20, "aluminum": 6}, "production_time": 65,
+     "special_flags": ["prototype", "germany"],
+     "description": "900 hp planned upgrade for Tiger II and E-series. Limited testing before collapse."},
+    {"id": "fg1250_infrared_scope", "name": "FG 1250 Infrared Scope", "category": "Sensors", "tier": 4,
+     "reliability_bonus": 1,
+     "cost": {"steel": 4, "electronics": 18, "optics": 12, "rare_earths": 5}, "production_time": 70,
+     "special_flags": ["infrared", "night_fighting", "prototype", "germany"],
+     "description": "Vampir infrared sight for Panther and StG 44. Small combat trials; never widespread."},
+    {"id": "wasserfall_sam_prototype", "name": "Wasserfall SAM (Prototype)", "category": "AntiAir", "tier": 4,
+     "soft_attack": 8, "hard_attack": 6, "air_attack": 55, "anti_air": 58,
+     "cost": {"steel": 12, "electronics": 20, "explosives": 15}, "production_time": 90,
+     "special_flags": ["prototype", "guided_weapon", "germany"],
+     "description": "Surface-to-air missile program. Test launches only; could have altered late-war air defense."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # GERMANY · LUFTWAFFE JETS & LATE PROTOTYPES
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "mk108_30mm_revolver", "name": "MK 108 (Me 262 fit)", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 34, "hard_attack": 24, "piercing": 42, "air_attack": 54,
+     "cost": {"steel": 9, "explosives": 5}, "production_time": 45,
+     "special_flags": ["jet_fighter", "bomber_killer", "germany"],
+     "description": "Standard Me 262 armament. Devastating against bombers in short bursts."},
+    {"id": "mk214_50mm_cannon", "name": "MK 214 50mm", "category": "MainWeapon", "tier": 5,
+     "soft_attack": 42, "hard_attack": 38, "piercing": 58, "air_attack": 62,
+     "cost": {"steel": 14, "explosives": 8, "tungsten": 3}, "production_time": 75,
+     "special_flags": ["prototype", "jet_fighter", "germany"],
+     "description": "Semi-revolver 50 mm for Me 262 and Ta 152H projects. Limited production trials."},
+    {"id": "jumo_004_jet_engine", "name": "Jumo 004B Turbojet", "category": "Engine", "tier": 4,
+     "reliability_bonus": -6, "fuel_efficiency": -4, "speed_bonus": 22,
+     "cost": {"steel": 16, "aluminum": 22, "rare_earths": 4}, "production_time": 80,
+     "special_flags": ["jet_powerplant", "germany"],
+     "description": "First operational German turbojet (Me 262, Ar 234). Short engine life; revolutionary performance."},
+    {"id": "bmw_003_jet_engine", "name": "BMW 003 Turbojet", "category": "Engine", "tier": 4,
+     "reliability_bonus": -4, "fuel_efficiency": -3, "speed_bonus": 20,
+     "cost": {"steel": 14, "aluminum": 20}, "production_time": 75,
+     "special_flags": ["jet_powerplant", "germany"],
+     "description": "He 162 Volksjäger engine. Simpler than Jumo 004; rushed into service 1945."},
+    {"id": "hes_011_jet_prototype", "name": "HeS 011 (Prototype)", "category": "Engine", "tier": 5,
+     "reliability_bonus": -10, "fuel_efficiency": -2, "speed_bonus": 26,
+     "cost": {"steel": 18, "aluminum": 28, "rare_earths": 8}, "production_time": 120,
+     "special_flags": ["prototype", "jet_powerplant", "paper_plane"],
+     "description": "Advanced axial-flow jet for Ta 183 and late projects. Never reached front-line units."},
+    {"id": "ho229_flying_wing_airframe", "name": "Ho 229 Flying Wing Package", "category": "Armor", "tier": 4,
+     "armor_bonus": 8, "top_armor_bonus": 4, "reliability_penalty": -5,
+     "cost": {"steel": 6, "aluminum": 24, "rubber": 4}, "production_time": 95,
+     "special_flags": ["stealth_wood", "prototype", "germany"],
+     "description": "Composite flying-wing structure for Horten Ho 229. One prototype captured; low radar signature."},
+    {"id": "fritz_x_guided_bomb", "name": "Fritz X Guided Bomb", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 45, "hard_attack": 55, "piercing": 95, "air_attack": 8, "anti_ship": 88,
+     "cost": {"steel": 8, "electronics": 16, "explosives": 20}, "production_time": 65,
+     "special_flags": ["guided_weapon", "anti_ship", "germany"],
+     "description": "Radio-guided anti-ship munition. Sank Roma; precursor to modern precision strike."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # JAPAN · DEFEATED AXIS · LATE TANK & JET PROJECTS
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "type5_75mm_l70_gun", "name": "Type 5 75 mm L/70", "category": "MainWeapon", "tier": 3,
+     "soft_attack": 50, "hard_attack": 44, "piercing": 92, "air_attack": 4,
+     "cost": {"steel": 18}, "production_time": 68,
+     "special_flags": ["japan", "late_war"],
+     "description": "Chi-Ri II and Chi-To intended gun. Would have matched Sherman 76 mm; few completed."},
+    {"id": "type4_75mm_gun", "name": "Type 4 75 mm L/70", "category": "MainWeapon", "tier": 3,
+     "soft_attack": 48, "hard_attack": 42, "piercing": 88, "air_attack": 4,
+     "cost": {"steel": 17}, "production_time": 62,
+     "special_flags": ["japan", "late_war"],
+     "description": "Chi-To medium tank gun. Best Japanese tank AP; entered service too late."},
+    {"id": "type5_chi_ri_armor", "name": "Type 5 Chi-Ri Armor", "category": "Armor", "tier": 3,
+     "armor_bonus": 40, "top_armor_bonus": 22, "reliability_penalty": -5,
+     "cost": {"steel": 32}, "production_time": 60,
+     "special_flags": ["prototype", "japan"],
+     "description": "Planned medium tank armor. Two prototypes; war ended before production."},
+    {"id": "ne20_jet_engine", "name": "Ne-20 Turbojet", "category": "Engine", "tier": 4,
+     "reliability_bonus": -8, "fuel_efficiency": -3, "speed_bonus": 18,
+     "cost": {"steel": 12, "aluminum": 18}, "production_time": 85,
+     "special_flags": ["prototype", "jet_powerplant", "japan"],
+     "description": "Kikka jet fighter engine based on BMW 003. Eight prototypes; never combat-ready."},
+    {"id": "mitsu_kinsei_kai_engine", "name": "Mitsubishi Kinsei Kai", "category": "Engine", "tier": 3,
+     "reliability_bonus": 5, "fuel_efficiency": 4, "speed_bonus": 13,
+     "cost": {"steel": 10, "aluminum": 11}, "production_time": 50,
+     "special_flags": ["japan", "late_war"],
+     "description": "Upgraded Kinsei for Ki-84 and late bombers. Last generation of Japanese radials."},
+    {"id": "ohka_baka_bomb", "name": "MXY-7 Ohka", "category": "MainWeapon", "tier": 3,
+     "soft_attack": 95, "hard_attack": 40, "piercing": 60, "air_attack": 5, "anti_ship": 75,
+     "cost": {"steel": 6, "explosives": 28, "aluminum": 4}, "production_time": 35,
+     "special_flags": ["kamikaze", "anti_ship", "japan"],
+     "description": "Rocket-powered human-guided anti-ship weapon. Terrifying but vulnerable during approach."},
+    {"id": "i400_submarine_tube", "name": "Type 95 Submarine Torpedo", "category": "SecondaryWeapon", "tier": 3,
+     "soft_attack": 18, "hard_attack": 38, "piercing": 28, "anti_ship": 58,
+     "cost": {"steel": 10, "explosives": 14}, "production_time": 50,
+     "special_flags": ["naval", "submarine", "japan"],
+     "description": "I-400 class submarine torpedo armament. Part of cancelled Panama Canal strike plan."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # ITALY · DEFEATED AXIS · LATE PROJECTS
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "p43_90mm_prototype", "name": "90 mm Ansaldo L/53 (P43)", "category": "MainWeapon", "tier": 3,
+     "soft_attack": 52, "hard_attack": 46, "piercing": 88, "air_attack": 4,
+     "cost": {"steel": 21}, "production_time": 72,
+     "special_flags": ["prototype", "italy", "paper_tank"],
+     "description": "P43 heavy tank gun. Design approved 1943; none completed before armistice."},
+    {"id": "campini_caproni_motorjet", "name": "Campini-Caproni Motorjet", "category": "Engine", "tier": 3,
+     "reliability_bonus": -5, "fuel_efficiency": -6, "speed_bonus": 14,
+     "cost": {"steel": 14, "aluminum": 12}, "production_time": 70,
+     "special_flags": ["prototype", "italy", "motorjet"],
+     "description": "CC.2 experimental propulsion. Early jet precursor; unreliable but innovative."},
+    {"id": "breda_37mm_aa_mount", "name": "Breda 37/54 AA Mount", "category": "AntiAir", "tier": 2,
+     "soft_attack": 10, "hard_attack": 6, "air_attack": 38, "anti_air": 40,
+     "cost": {"steel": 8, "electronics": 4}, "production_time": 40,
+     "special_flags": ["italy", "naval", "coastal"],
+     "description": "Late-war Italian dual-purpose mount for ships and static defense."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # USSR · LATE WW2 → EARLY 1950s
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "d10t_100mm_gun", "name": "100 mm D-10T", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 56, "hard_attack": 52, "piercing": 108, "air_attack": 5,
+     "cost": {"steel": 22, "explosives": 3}, "production_time": 72,
+     "special_flags": ["excellent_ap", "ussr", "cold_war"],
+     "description": "IS-3 and SU-100 gun. Dominated late-war tank engagements."},
+    {"id": "d25t_122mm_modernized", "name": "122 mm D-25T (1949)", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 72, "hard_attack": 68, "piercing": 130, "air_attack": 4,
+     "cost": {"steel": 28, "explosives": 5}, "production_time": 85,
+     "special_flags": ["ussr", "cold_war"],
+     "description": "Improved IS-2/IS-3 ammunition and fire control. Standard into Korean War era."},
+    {"id": "t54_100mm_d10t2s", "name": "100 mm D-10T2S", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 58, "hard_attack": 54, "piercing": 112, "air_attack": 5,
+     "cost": {"steel": 24, "chromium": 3}, "production_time": 78,
+     "special_flags": ["ussr", "cold_war", "stabilized"],
+     "description": "T-54/55 main gun with stabilizer. Defines early Cold War tank lethality."},
+    {"id": "v54_diesel_engine", "name": "V-54 Diesel", "category": "Engine", "tier": 4,
+     "reliability_bonus": 8, "fuel_efficiency": 10, "speed_bonus": 7,
+     "cost": {"steel": 18}, "production_time": 55,
+     "special_flags": ["diesel", "ussr", "cold_war"],
+     "description": "T-54 powerplant. Reliable, compact, and widely exported."},
+    {"id": "t54_cast_armor", "name": "T-54 Cast Armor", "category": "Armor", "tier": 4,
+     "armor_bonus": 46, "top_armor_bonus": 24, "reliability_penalty": -3,
+     "cost": {"steel": 36, "chromium": 4}, "production_time": 68,
+     "special_flags": ["sloped_armor", "ussr", "cold_war"],
+     "description": "Revolutionary sloped hull on T-54. Excellent protection-to-weight ratio."},
+    {"id": "nr23_cannon", "name": "NR-23 23mm", "category": "MainWeapon", "tier": 3,
+     "soft_attack": 28, "hard_attack": 18, "piercing": 36, "air_attack": 48,
+     "cost": {"steel": 7, "aluminum": 4}, "production_time": 40,
+     "special_flags": ["ussr", "jet_fighter", "cold_war"],
+     "description": "MiG-15 and Il-28 cannon. Standard early Soviet jet armament."},
+    {"id": "vk1_jet_engine", "name": "VK-1 Turbojet", "category": "Engine", "tier": 4,
+     "reliability_bonus": 4, "fuel_efficiency": -2, "speed_bonus": 24,
+     "cost": {"steel": 14, "aluminum": 20, "rare_earths": 3}, "production_time": 70,
+     "special_flags": ["ussr", "jet_powerplant", "cold_war"],
+     "description": "Rolls-Royce Nene copy for MiG-15. Powered Soviet air superiority in Korea."},
+    {"id": "fab9000_bomb_load", "name": "FAB-9000 Bomb Load", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 115, "hard_attack": 25, "piercing": 12, "air_attack": 6,
+     "cost": {"steel": 8, "explosives": 55}, "production_time": 60,
+     "special_flags": ["strategic_bombing", "ussr"],
+     "description": "Late-war heavy demolition bomb for Pe-8 and Tu-4. Enormous area effect."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # USA · LATE WW2 → KOREAN WAR ERA
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "m58_120mm_gun", "name": "120 mm M58", "category": "MainWeapon", "tier": 5,
+     "soft_attack": 65, "hard_attack": 62, "piercing": 128, "air_attack": 5,
+     "cost": {"steel": 32, "explosives": 5, "chromium": 5}, "production_time": 95,
+     "special_flags": ["excellent_ap", "usa", "cold_war"],
+     "description": "M103 heavy tank gun. U.S. answer to IS-3; entered service 1953."},
+    {"id": "m68_105mm_gun", "name": "105 mm M68", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 58, "hard_attack": 52, "piercing": 110, "air_attack": 5,
+     "cost": {"steel": 22, "explosives": 3}, "production_time": 75,
+     "special_flags": ["usa", "cold_war", "british_design"],
+     "description": "British L7 derivative for M60. Standard Western tank gun for decades."},
+    {"id": "m36_90mm_gun", "name": "90 mm M3A1 (M36)", "category": "MainWeapon", "tier": 3,
+     "soft_attack": 56, "hard_attack": 52, "piercing": 102, "air_attack": 5,
+     "cost": {"steel": 20}, "production_time": 65,
+     "special_flags": ["usa", "tank_destroyer"],
+     "description": "M36 Jackson gun. Best U.S. late-WWII tank killer before Pershing deployment."},
+    {"id": "av1790_engine", "name": "Continental AV-1790", "category": "Engine", "tier": 4,
+     "reliability_bonus": 10, "fuel_efficiency": 2, "speed_bonus": 8,
+     "cost": {"steel": 16, "aluminum": 8}, "production_time": 58,
+     "special_flags": ["usa", "cold_war"],
+     "description": "M46/M47/M48 powerplant family. Workhorse of early Cold War U.S. armor."},
+    {"id": "m48_patton_armor", "name": "M48 Patton Armor", "category": "Armor", "tier": 4,
+     "armor_bonus": 44, "top_armor_bonus": 22, "reliability_penalty": -4,
+     "cost": {"steel": 34, "chromium": 4}, "production_time": 65,
+     "special_flags": ["usa", "cold_war"],
+     "description": "Cast turret and glacis on M48. Solid protection; upgraded in M48A3."},
+    {"id": "pratt_whitney_j57", "name": "Pratt & Whitney J57", "category": "Engine", "tier": 4,
+     "reliability_bonus": 12, "fuel_efficiency": 3, "speed_bonus": 26,
+     "cost": {"steel": 14, "aluminum": 24}, "production_time": 72,
+     "special_flags": ["usa", "jet_powerplant", "cold_war"],
+     "description": "F-100 Super Sabre and B-52 engine. Defines 1950s U.S. jet aviation."},
+    {"id": "m61_vulcan_pod", "name": "M61 Vulcan Pod", "category": "MainWeapon", "tier": 5,
+     "soft_attack": 32, "hard_attack": 22, "piercing": 40, "air_attack": 58,
+     "cost": {"steel": 10, "aluminum": 8, "electronics": 6}, "production_time": 65,
+     "special_flags": ["usa", "cold_war", "gatling"],
+     "description": "Early 20 mm Vulcan application on F-100 and F-104. High rate of fire revolution."},
+    {"id": "mark7_nuclear_gun", "name": "M65 Atomic Cannon (280 mm)", "category": "MainWeapon", "tier": 5,
+     "soft_attack": 150, "hard_attack": 80, "piercing": 20, "air_attack": 2,
+     "cost": {"steel": 80, "explosives": 120, "uranium": 40}, "production_time": 200,
+     "special_flags": ["nuclear", "prototype", "usa", "cold_war"],
+     "description": "Towed atomic artillery 1953. Strategic weapon; impractical but politically significant."},
+    {"id": "regulus_cruise_missile", "name": "Regulus I Cruise Missile", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 40, "hard_attack": 50, "piercing": 30, "anti_ship": 85, "air_attack": 5,
+     "cost": {"steel": 20, "electronics": 25, "explosives": 30}, "production_time": 100,
+     "special_flags": ["guided_weapon", "naval", "usa", "cold_war"],
+     "description": "Submarine-launched cruise missile 1955. Submarine aircraft carrier concept."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # UK · LATE WW2 → 1950s
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "qf_20pdr_gun", "name": "QF 20-pdr", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 54, "hard_attack": 50, "piercing": 105, "air_attack": 5,
+     "cost": {"steel": 20}, "production_time": 70,
+     "special_flags": ["uk", "cold_war"],
+     "description": "Centurion Mk 1 gun. First Western tank to outgun Tiger II routinely."},
+    {"id": "l7_105mm_rifled", "name": "105 mm L7 Rifled", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 58, "hard_attack": 54, "piercing": 115, "air_attack": 5,
+     "cost": {"steel": 22, "explosives": 3}, "production_time": 78,
+     "special_flags": ["uk", "cold_war", "nato_standard"],
+     "description": "Centurion Mk 5/7 and export standard. Most successful Cold War tank gun."},
+    {"id": "meteor_mk4_engine", "name": "Meteor Mk IV", "category": "Engine", "tier": 3,
+     "reliability_bonus": 9, "fuel_efficiency": 3, "speed_bonus": 8,
+     "cost": {"steel": 15, "aluminum": 6}, "production_time": 52,
+     "special_flags": ["uk", "late_war"],
+     "description": "Upgraded Meteor for Comet and Centurion. Reliable British tank power."},
+    {"id": "rolls_royce_nene", "name": "Rolls-Royce Nene", "category": "Engine", "tier": 4,
+     "reliability_bonus": 8, "fuel_efficiency": 4, "speed_bonus": 22,
+     "cost": {"steel": 12, "aluminum": 18}, "production_time": 65,
+     "special_flags": ["uk", "jet_powerplant", "exported"],
+     "description": "Exported to U.S. and USSR. Powered MiG-15 and many 1950s fighters."},
+    {"id": "centurion_glacis_armor", "name": "Centurion Glacis Armor", "category": "Armor", "tier": 4,
+     "armor_bonus": 42, "top_armor_bonus": 20, "reliability_penalty": -3,
+     "cost": {"steel": 32, "chromium": 3}, "production_time": 62,
+     "special_flags": ["uk", "cold_war", "sloped_armor"],
+     "description": "Well-sloped Centurion hull. Upgraded with ERA in later decades."},
+    {"id": "aden_30mm_revolver", "name": "ADEN 30 mm", "category": "MainWeapon", "tier": 4,
+     "soft_attack": 36, "hard_attack": 24, "piercing": 44, "air_attack": 52,
+     "cost": {"steel": 8, "aluminum": 5}, "production_time": 48,
+     "special_flags": ["uk", "jet_fighter", "cold_war"],
+     "description": "Hawker Hunter and British jet standard. Powerful revolver cannon."},
+    {"id": "red_dean_missile_proto", "name": "Red Dean (Prototype)", "category": "AntiAir", "tier": 4,
+     "soft_attack": 6, "hard_attack": 5, "air_attack": 50, "anti_air": 52,
+     "cost": {"steel": 10, "electronics": 22}, "production_time": 85,
+     "special_flags": ["prototype", "guided_weapon", "uk"],
+     "description": "British air-to-air missile program. Cancelled 1957; informed Bloodhound."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # FRANCE · LATE 1940s
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "sa47_90mm_gun", "name": "90 mm SA 47", "category": "MainWeapon", "tier": 3,
+     "soft_attack": 52, "hard_attack": 46, "piercing": 90, "air_attack": 4,
+     "cost": {"steel": 19}, "production_time": 68,
+     "special_flags": ["france", "late_war"],
+     "description": "ARL 44 and AMX-13 early projects. French post-liberation tank development."},
+    {"id": "amx13_75mm_fl10", "name": "75 mm CN 75-50", "category": "MainWeapon", "tier": 3,
+     "soft_attack": 48, "hard_attack": 40, "piercing": 82, "air_attack": 4,
+     "cost": {"steel": 16, "aluminum": 4}, "production_time": 60,
+     "special_flags": ["france", "cold_war", "oscillating_turret"],
+     "description": "AMX-13 oscillating turret gun. Light but effective on export market."},
+    {"id": "atar_101_jet", "name": "Atar 101 Turbojet", "category": "Engine", "tier": 4,
+     "reliability_bonus": 6, "fuel_efficiency": 2, "speed_bonus": 23,
+     "cost": {"steel": 13, "aluminum": 20}, "production_time": 68,
+     "special_flags": ["france", "jet_powerplant", "cold_war"],
+     "description": "Mystère and early French jet fighter engine. Foundation of French jet industry."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # NAVAL · LATE WW2 → 1950s
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "us_5inch_54_mk42", "name": "5\"/54 Mark 42", "category": "NavalGun", "tier": 4,
+     "soft_attack": 48, "hard_attack": 32, "piercing": 58, "air_attack": 28, "anti_ship": 42, "anti_air": 32,
+     "cost": {"steel": 22, "electronics": 10}, "production_time": 68,
+     "special_flags": ["naval", "autoloading", "usa", "cold_war"],
+     "description": "First U.S. fully automatic DP destroyer gun. Standard on Forrest Sherman class."},
+    {"id": "uk_4_5inch_mk6", "name": "QF 4.5-inch Mark 6", "category": "NavalGun", "tier": 4,
+     "soft_attack": 44, "hard_attack": 30, "piercing": 52, "air_attack": 26, "anti_ship": 40, "anti_air": 30,
+     "cost": {"steel": 18, "electronics": 8}, "production_time": 62,
+     "special_flags": ["naval", "uk", "cold_war"],
+     "description": "Cold War British destroyer DP gun. Replaced wartime 4.7-inch mounts."},
+    {"id": "us_3inch_70_mk26", "name": "3\"/70 Mark 26", "category": "AntiAir", "tier": 4,
+     "soft_attack": 12, "hard_attack": 8, "air_attack": 48, "anti_air": 52,
+     "cost": {"steel": 14, "electronics": 16}, "production_time": 75,
+     "special_flags": ["naval", "usa", "cold_war", "rapid_fire"],
+     "description": "Fastest-firing naval AA gun of its era. Mounted on US destroyer leaders."},
+    {"id": "mk35_torpedo", "name": "Mark 35 Torpedo", "category": "SecondaryWeapon", "tier": 3,
+     "soft_attack": 22, "hard_attack": 42, "piercing": 30, "anti_ship": 62,
+     "cost": {"steel": 10, "explosives": 16, "electronics": 8}, "production_time": 55,
+     "special_flags": ["naval", "homing", "usa", "cold_war"],
+     "description": "Passive homing torpedo introduced 1949. Major ASW advancement."},
+    {"id": "type61_japanese_torpedo", "name": "Type 61 Torpedo", "category": "SecondaryWeapon", "tier": 3,
+     "soft_attack": 20, "hard_attack": 40, "piercing": 28, "anti_ship": 58,
+     "cost": {"steel": 9, "explosives": 14}, "production_time": 50,
+     "special_flags": ["naval", "japan", "kaiten_successor"],
+     "description": "Post-war Japanese torpedo development from Long Lance experience. Limited fleet."},
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # SHARED · ELECTRONICS & SUPPORT (1945–1955)
+    # ═══════════════════════════════════════════════════════════════════════════
+    {"id": "an_tps1_radar", "name": "AN/TPS-1 Radar", "category": "Sensors", "tier": 3,
+     "reliability_bonus": 3,
+     "cost": {"steel": 6, "electronics": 22}, "production_time": 55,
+     "special_flags": ["radar", "usa", "cold_war"],
+     "description": "Early post-war search radar for air defense and fleet support."},
+    {"id": "gun_laying_radar_mk3", "name": "Gun Laying Radar Mk 3", "category": "Sensors", "tier": 3,
+     "reliability_bonus": 4,
+     "cost": {"steel": 5, "electronics": 20}, "production_time": 52,
+     "special_flags": ["radar", "uk", "naval"],
+     "description": "British naval fire-control radar. Improved AA effectiveness in the 1950s."},
+    {"id": "gun_stabilizer_m3", "name": "Gun Stabilizer M3", "category": "Sensors", "tier": 3,
+     "reliability_bonus": 2,
+     "cost": {"steel": 8, "electronics": 14, "optics": 6}, "production_time": 48,
+     "special_flags": ["stabilized", "usa", "cold_war"],
+     "description": "Gyrostabilizer for M4/M26 lineage. Enables firing on the move."},
+    {"id": "nato_standard_fuze", "name": "NATO Standard HEAT-FS", "category": "Cargo", "tier": 3,
+     "soft_attack": 8, "hard_attack": 12, "piercing": 25,
+     "cost": {"steel": 2, "explosives": 8, "chemicals": 4}, "production_time": 25,
+     "special_flags": ["ammunition", "nato", "cold_war"],
+     "description": "Early shaped-charge ammunition standardization across Western armies."},
+    {"id": "reactive_armor_prototype", "name": "Spaced Armor (Early)", "category": "Armor", "tier": 3,
+     "armor_bonus": 14, "top_armor_bonus": 6, "reliability_penalty": -2,
+     "cost": {"steel": 12, "rubber": 4}, "production_time": 35,
+     "special_flags": ["spaced_armor", "prototype", "cold_war"],
+     "description": "Experimental spaced armor panels tested 1945–50. Precursor to modern ERA concepts."},
+]
+# fmt: on
+
+
+def main() -> None:
+    MODULES_DIR.mkdir(parents=True, exist_ok=True)
+    existing = {p.name for p in MODULES_DIR.glob("*.json")}
+    created = 0
+    skipped = 0
+    for mod in MODULES:
+        path = MODULES_DIR / f"{mod['id']}.json"
+        if path.name in existing:
+            skipped += 1
+            continue
+        with path.open("w", encoding="utf-8") as f:
+            json.dump(mod, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+        created += 1
+        print(f"  + {path.name}")
+    total = len(list(MODULES_DIR.glob("*.json")))
+    print(f"\nLate WW2–1950s: {created} created, {skipped} skipped, {total} total modules.")
+
+
+if __name__ == "__main__":
+    main()

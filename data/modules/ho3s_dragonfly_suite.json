@@ -1,0 +1,21 @@
+{
+  "id": "ho3s_dragonfly_suite",
+  "name": "HO3S-1 Dragonfly Suite",
+  "category": "Sensors",
+  "tier": 2,
+  "reliability_bonus": 2,
+  "cost": {
+    "steel": 4,
+    "electronics": 6,
+    "aluminum": 4
+  },
+  "production_time": 35,
+  "special_flags": [
+    "usa",
+    "helicopter",
+    "naval",
+    "forties",
+    "korean_war"
+  ],
+  "description": "Early U.S. Navy rescue and liaison helicopter. Korean War carrier operations."
+}

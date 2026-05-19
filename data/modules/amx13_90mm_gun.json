@@ -1,0 +1,22 @@
+{
+  "id": "amx13_90mm_gun",
+  "name": "90 mm D921",
+  "category": "MainWeapon",
+  "tier": 4,
+  "soft_attack": 50,
+  "hard_attack": 44,
+  "piercing": 95,
+  "air_attack": 4,
+  "cost": {
+    "steel": 16,
+    "aluminum": 4
+  },
+  "production_time": 62,
+  "special_flags": [
+    "france",
+    "sixties",
+    "light_tank",
+    "oscillating"
+  ],
+  "description": "Up-gunned AMX-13 for export. Oscillating turret on light chassis; popular in Third World."
+}

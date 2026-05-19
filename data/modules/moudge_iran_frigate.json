@@ -1,0 +1,19 @@
+{
+  "id": "moudge_iran_frigate",
+  "name": "Moudge-class Frigate",
+  "category": "Sensors",
+  "tier": 5,
+  "reliability_bonus": 4,
+  "cost": {
+    "steel": 12,
+    "electronics": 28,
+    "aluminum": 8
+  },
+  "production_time": 80,
+  "special_flags": [
+    "iran",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Iranian domestically built frigate derived from Alvand class."
+}

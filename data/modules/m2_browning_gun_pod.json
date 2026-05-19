@@ -1,0 +1,19 @@
+{
+  "id": "m2_browning_gun_pod",
+  "name": "M2 Browning Gun Pod",
+  "category": "MainWeapon",
+  "tier": 2,
+  "soft_attack": 20,
+  "hard_attack": 8,
+  "piercing": 18,
+  "air_attack": 38,
+  "cost": {
+    "steel": 5,
+    "aluminum": 2
+  },
+  "production_time": 25,
+  "special_flags": [
+    "air_superiority"
+  ],
+  "description": "Representative .50 cal armament (P-47, P-51, B-17). High volume of fire vs aircraft."
+}

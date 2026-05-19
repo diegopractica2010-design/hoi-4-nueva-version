@@ -1,0 +1,24 @@
+{
+  "id": "us_16inch_45_gun",
+  "name": "16\"/45 Mark 6",
+  "category": "NavalGun",
+  "tier": 3,
+  "soft_attack": 85,
+  "hard_attack": 78,
+  "piercing": 125,
+  "air_attack": 4,
+  "anti_ship": 105,
+  "cost": {
+    "steel": 52,
+    "explosives": 18,
+    "chromium": 6
+  },
+  "production_time": 120,
+  "special_flags": [
+    "naval",
+    "battleship",
+    "usa",
+    "excellent_ap"
+  ],
+  "description": "North Carolina and South Dakota class. Superb balance of penetration and shell weight."
+}

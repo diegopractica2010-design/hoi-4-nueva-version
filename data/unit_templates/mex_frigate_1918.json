@@ -1,0 +1,55 @@
+{
+  "id": "mex_frigate_1918",
+  "name": "MEX Frigate (1918)",
+  "design_family": "mexican_naval_1918",
+  "base_type": "Naval",
+  "size_category": "Medium",
+  "visual_archetype": "frigate",
+  "crew_required": 140,
+  "base_training_level": 26,
+  "max_experience_level": 100,
+  "base_production_days": 100,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 66,
+    "fuel_consumption": 45,
+    "supply_need": 55,
+    "armor": 28,
+    "deck_armor": 14,
+    "hardness": 55
+  },
+  "slots": {
+    "NavalGun": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 2
+    },
+    "Engine": {
+      "max": 1
+    },
+    "Sensors": {
+      "max": 1
+    },
+    "AntiAir": {
+      "max": 1
+    },
+    "Armor": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_4_7inch_qf",
+    "SecondaryWeapon": "ww1_18inch_torpedo",
+    "Engine": "carrier_boiler_yarrow"
+  },
+  "unlock_tech": [
+    "naval_1918",
+    "ww1_naval",
+    "great_war_naval",
+    "mexican_naval_1918",
+    "frigate"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

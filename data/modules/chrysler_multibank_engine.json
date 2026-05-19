@@ -1,0 +1,18 @@
+{
+  "id": "chrysler_multibank_engine",
+  "name": "Chrysler A57 Multibank",
+  "category": "Engine",
+  "tier": 2,
+  "reliability_bonus": -6,
+  "fuel_efficiency": -2,
+  "speed_bonus": 4,
+  "cost": {
+    "steel": 14,
+    "rubber": 2
+  },
+  "production_time": 45,
+  "special_flags": [
+    "complex"
+  ],
+  "description": "Five-car-engine Sherman powerplant (M4A4). Notorious maintenance burden."
+}

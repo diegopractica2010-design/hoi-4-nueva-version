@@ -1,0 +1,23 @@
+{
+  "id": "starship_vehicle_package",
+  "name": "Starship Vehicle",
+  "category": "Cargo",
+  "tier": 9,
+  "reliability_bonus": 6,
+  "cost": {
+    "steel": 90,
+    "aluminum": 70,
+    "electronics": 60,
+    "chemicals": 40
+  },
+  "production_time": 220,
+  "special_flags": [
+    "spacex",
+    "usa",
+    "space",
+    "twenty_twenties",
+    "super_heavy",
+    "reusable"
+  ],
+  "description": "Starship/Super Heavy fully reusable Mars-capable launch system in development."
+}

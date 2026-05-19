@@ -1,0 +1,25 @@
+{
+  "id": "railgun_naval_proto",
+  "name": "Electromagnetic Railgun (Naval)",
+  "category": "NavalGun",
+  "tier": 9,
+  "soft_attack": 100,
+  "hard_attack": 88,
+  "piercing": 130,
+  "anti_ship": 110,
+  "air_attack": 20,
+  "cost": {
+    "steel": 40,
+    "electronics": 80,
+    "copper": 30
+  },
+  "production_time": 190,
+  "special_flags": [
+    "usa",
+    "naval",
+    "twenty_thirties",
+    "planned",
+    "railgun"
+  ],
+  "description": "Hypersonic-velocity projectile launcher for large surface combatants. 2030s technology demonstrator."
+}

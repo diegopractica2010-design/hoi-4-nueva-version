@@ -1,0 +1,47 @@
+{
+  "id": "pal_fighter_1936",
+  "name": "Mandate Trainer Fighter",
+  "design_family": "palestinian_army_1936_air",
+  "base_type": "Air",
+  "size_category": "Light",
+  "visual_archetype": "fighter",
+  "crew_required": 1,
+  "base_training_level": 28,
+  "max_experience_level": 100,
+  "base_production_days": 42,
+  "base_stats": {
+    "speed": 82,
+    "reliability": 68,
+    "fuel_consumption": 9,
+    "supply_need": 7,
+    "armor": 10,
+    "hardness": 22
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    },
+    "SecondaryWeapon": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "lewis_gun_mount",
+    "Engine": "liberty_l12_engine"
+  },
+  "unlock_tech": [
+    "forces_1936",
+    "army_1936",
+    "air_1936",
+    "interwar_army",
+    "interwar_air",
+    "palestinian_army",
+    "palestine",
+    "mandate"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

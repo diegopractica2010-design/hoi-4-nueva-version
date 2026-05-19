@@ -1,0 +1,15 @@
+{
+  "id": "47mm_ansaldo_gun",
+  "name": "47 mm Ansaldo",
+  "category": "MainWeapon",
+  "tier": 1,
+  "soft_attack": 30,
+  "hard_attack": 26,
+  "piercing": 58,
+  "air_attack": 3,
+  "cost": {
+    "steel": 9
+  },
+  "production_time": 40,
+  "description": "M13/40 and M14/41 gun. Weak HE; acceptable AP in 1940–41."
+}

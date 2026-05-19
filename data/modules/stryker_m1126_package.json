@@ -1,0 +1,22 @@
+{
+  "id": "stryker_m1126_package",
+  "name": "Stryker ICV Package",
+  "category": "Armor",
+  "tier": 5,
+  "armor_bonus": 28,
+  "top_armor_bonus": 16,
+  "reliability_penalty": -2,
+  "cost": {
+    "steel": 22,
+    "aluminum": 10,
+    "ceramics": 4
+  },
+  "production_time": 55,
+  "special_flags": [
+    "usa",
+    "two_thousands",
+    "wheeled",
+    "ifv"
+  ],
+  "description": "Eight-wheeled interim combat vehicle for rapid deployment brigades."
+}

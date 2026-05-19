@@ -1,0 +1,22 @@
+{
+  "id": "ge_f110_proto",
+  "name": "GE F101/F110 Lineage",
+  "category": "Engine",
+  "tier": 6,
+  "reliability_bonus": 14,
+  "fuel_efficiency": 8,
+  "speed_bonus": 32,
+  "cost": {
+    "steel": 18,
+    "aluminum": 32,
+    "titanium": 10
+  },
+  "production_time": 95,
+  "special_flags": [
+    "usa",
+    "jet_powerplant",
+    "seventies",
+    "turbofan"
+  ],
+  "description": "High-bypass turbofan development for B-1 and later F-15/F-16. 1970s propulsion leap."
+}

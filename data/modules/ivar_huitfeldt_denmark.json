@@ -1,0 +1,19 @@
+{
+  "id": "ivar_huitfeldt_denmark",
+  "name": "Iver Huitfeldt-class",
+  "category": "Sensors",
+  "tier": 6,
+  "reliability_bonus": 8,
+  "cost": {
+    "steel": 11,
+    "electronics": 38,
+    "aluminum": 10
+  },
+  "production_time": 84,
+  "special_flags": [
+    "denmark",
+    "frigate",
+    "twenty_twenties"
+  ],
+  "description": "Danish air-defense frigate with Mk 41 VLS and Harpoon."
+}

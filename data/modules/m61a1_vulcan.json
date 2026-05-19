@@ -1,0 +1,23 @@
+{
+  "id": "m61a1_vulcan",
+  "name": "M61A1 Vulcan",
+  "category": "MainWeapon",
+  "tier": 5,
+  "soft_attack": 38,
+  "hard_attack": 26,
+  "piercing": 48,
+  "air_attack": 65,
+  "cost": {
+    "steel": 12,
+    "aluminum": 10,
+    "electronics": 8
+  },
+  "production_time": 68,
+  "special_flags": [
+    "usa",
+    "gatling",
+    "sixties",
+    "f4_f15"
+  ],
+  "description": "20 mm Gatling cannon on F-4, F-15, and F-16. Standard U.S. fighter gun through 1990s."
+}

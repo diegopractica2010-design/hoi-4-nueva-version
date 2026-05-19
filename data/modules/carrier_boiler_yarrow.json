@@ -1,0 +1,20 @@
+{
+  "id": "carrier_boiler_yarrow",
+  "name": "Yarrow Boiler Plant",
+  "category": "Engine",
+  "tier": 3,
+  "reliability_bonus": 6,
+  "fuel_efficiency": -8,
+  "speed_bonus": 8,
+  "cost": {
+    "steel": 35,
+    "copper": 8
+  },
+  "production_time": 100,
+  "special_flags": [
+    "naval",
+    "steam",
+    "carrier"
+  ],
+  "description": "High-pressure boilers for fleet carriers. Supplies steam for turbines and catapults."
+}

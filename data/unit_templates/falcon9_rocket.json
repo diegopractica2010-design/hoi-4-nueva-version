@@ -1,0 +1,38 @@
+{
+  "id": "falcon9_rocket",
+  "name": "Falcon 9",
+  "design_family": "spacex_twenty_twenties",
+  "base_type": "Space",
+  "size_category": "Heavy",
+  "visual_archetype": "rocket",
+  "crew_required": 0,
+  "base_training_level": 38,
+  "max_experience_level": 100,
+  "base_production_days": 45,
+  "base_stats": {
+    "speed": 82,
+    "reliability": 92,
+    "fuel_consumption": 75,
+    "supply_need": 35,
+    "payload_capacity": 16,
+    "hardness": 10
+  },
+  "slots": {
+    "Engine": {
+      "max": 1
+    },
+    "Cargo": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "Engine": "merlin1d_engine",
+    "Cargo": "falcon9_stage_package"
+  },
+  "unlock_tech": [
+    "commercial_space",
+    "reusable_rockets"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}

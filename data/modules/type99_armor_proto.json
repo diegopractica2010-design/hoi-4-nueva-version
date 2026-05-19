@@ -1,0 +1,22 @@
+{
+  "id": "type99_armor_proto",
+  "name": "Type 99 Armor (Proto)",
+  "category": "Armor",
+  "tier": 7,
+  "armor_bonus": 60,
+  "top_armor_bonus": 36,
+  "reliability_penalty": -6,
+  "cost": {
+    "steel": 42,
+    "ceramics": 16,
+    "explosives": 10
+  },
+  "production_time": 92,
+  "special_flags": [
+    "china",
+    "nineties",
+    "era",
+    "type99_proto"
+  ],
+  "description": "Late-1990s Type 99 prototype with ERA and improved composite. Limited production."
+}

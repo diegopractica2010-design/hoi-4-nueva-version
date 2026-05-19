@@ -1,0 +1,45 @@
+{
+  "id": "usa_armor_1936",
+  "name": "M2A2 Light Tank",
+  "design_family": "us_army_1936_armor",
+  "base_type": "Armored",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 2,
+  "base_training_level": 22,
+  "max_experience_level": 100,
+  "base_production_days": 52,
+  "base_stats": {
+    "speed": 28,
+    "reliability": 68,
+    "fuel_consumption": 6,
+    "supply_need": 8,
+    "armor": 24,
+    "top_armor": 14,
+    "hardness": 64
+  },
+  "slots": {
+    "MainWeapon": {
+      "max": 1
+    },
+    "Engine": {
+      "max": 1
+    }
+  },
+  "module_loadout": {
+    "MainWeapon": "m1916_37mm_tank_gun",
+    "Engine": "liberty_l12_engine"
+  },
+  "unlock_tech": [
+    "forces_1936",
+    "army_1936",
+    "air_1936",
+    "interwar_army",
+    "interwar_air",
+    "us_army",
+    "usa",
+    "american"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true
+}
