@@ -15,6 +15,8 @@ signal refinement_started(project_id: String, template_id: String)
 signal refinement_completed(project_id: String, template_id: String, reliability_gain: float)
 
 var line_id: String = ""
+var factory_id: String = ""  # Factory registry id (empty = no factory assignment)
+var design_id: String = ""  # Design/template being produced (mirrors current_template_id when set)
 var current_template_id: String = ""
 var design_states: Dictionary = {}
 var retooling_days_remaining: float = 0.0
@@ -80,6 +82,7 @@ func set_template(template_id: String) -> Dictionary:
 		template_changed.emit(current_template_id, template_id, 0.0)
 
 	current_template_id = template_id
+	design_id = template_id
 	custom_module_loadout.clear()
 	_ensure_design_state(template_id)
 	result["success"] = true
@@ -284,7 +287,7 @@ func advance_days(days: float) -> Dictionary:
 	_advance_refinement(days, report)
 
 	var output_mult := get_output_multiplier()
-	var effective_days := days * output_mult
+	var effective_days := days * get_effective_production_rate(output_mult)
 	production_progress += effective_days
 
 	var days_needed := get_days_per_unit()
@@ -399,3 +402,19 @@ func _scaled_cost(raw: Variant, scale: float) -> Dictionary:
 	for key in raw:
 		out[key] = float(raw[key]) * scale
 	return out
+
+
+func get_factory_efficiency() -> float:
+	if factory_id.is_empty():
+		return 1.0
+	var root := Engine.get_main_loop()
+	if root == null:
+		return 1.0
+	var mgr := root.root.get_node_or_null("/root/FactoryManager")
+	if mgr is FactoryManager:
+		return (mgr as FactoryManager).get_factory_efficiency(factory_id)
+	return 1.0
+
+
+func get_effective_production_rate(base_rate: float) -> float:
+	return base_rate * get_factory_efficiency()

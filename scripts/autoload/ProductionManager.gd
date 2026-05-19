@@ -383,10 +383,21 @@ func _clear_modifiers_with_tag(tag: String) -> void:
 		unregister_modifier(modifier_id)
 
 
+func get_line_efficiency(line_id: String) -> float:
+	var line := get_line(line_id)
+	if line == null:
+		return 1.0
+	return line.get_factory_efficiency()
+
+
 func assign_line_to_factory(line_id: String, factory_id: String) -> bool:
+	var line := get_line(line_id)
+	if line == null:
+		return false
+	line.factory_id = factory_id
 	if factory_manager:
 		return factory_manager.assign_production_line_to_factory(factory_id, line_id)
-	return false
+	return not factory_id.is_empty()
 
 
 func get_factory_efficiency(factory_id: String) -> float:
