@@ -473,6 +473,35 @@ func get_line_efficiency(line_id: String) -> float:
 	return line.get_factory_efficiency()
 
 
+func get_lines_on_design_in_factory(factory_id: int, design_id: String) -> int:
+	if factory_manager == null or design_id.is_empty():
+		return 0
+	var factory := factory_manager.get_factory(factory_id)
+	if factory == null:
+		return 0
+
+	var count := 0
+	for assigned_id in factory.assigned_lines:
+		var line := get_line(assigned_id)
+		if line != null and line.design_id == design_id:
+			count += 1
+	return count
+
+
+func get_concentrated_production_multiplier(factory_id: int, design_id: String) -> float:
+	var lines_on_design := get_lines_on_design_in_factory(factory_id, design_id)
+	if lines_on_design <= 1:
+		return 1.0
+
+	var slot_rules: Dictionary = {}
+	if factory_manager != null:
+		slot_rules = factory_manager.rules.get("slot_concentration", {})
+	var per_line := float(slot_rules.get("bonus_per_extra_line", 0.12))
+	var cap := float(slot_rules.get("max_multiplier", 1.6))
+	var bonus := 1.0 + float(lines_on_design - 1) * per_line
+	return minf(bonus, cap)
+
+
 func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 	if factory_manager == null:
 		return false
@@ -485,6 +514,17 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 	var line := get_line(line_id)
 	if line == null:
 		push_warning("ProductionManager: line '%s' not found" % line_id)
+		return false
+
+	if factory.has_assigned_line(line_id):
+		line.factory_id = factory_id
+		return true
+
+	if not factory.can_add_more_lines():
+		push_warning(
+			"Factory %d is at maximum production lines (%d)"
+			% [factory_id, factory.max_production_lines],
+		)
 		return false
 
 	line.factory_id = factory_id
@@ -647,7 +687,10 @@ func advance_production(days: float) -> void:
 		var base_efficiency := factory.current_efficiency
 		var current_eff := factory.get_current_efficiency() if factory.is_retooling else 1.0
 		var concentration := get_concentration_bonus(line.design_id)
-		var daily_points := _get_base_daily_points() * base_efficiency * current_eff * concentration * days
+		var slot_rush := get_concentrated_production_multiplier(line.factory_id, line.design_id)
+		var daily_points := (
+			_get_base_daily_points() * base_efficiency * current_eff * concentration * slot_rush * days
+		)
 		line.add_progress(daily_points)
 		production_progress_updated.emit(line_id, line.progress)
 
@@ -673,10 +716,15 @@ func get_line_progress_info(line_id: String) -> Dictionary:
 		if template != null
 		else {}
 	)
+	var factory := factory_manager.get_factory(line.factory_id) if factory_manager else null
 	return {
 		"line_id": line_id,
 		"design_id": line.design_id,
 		"factory_id": line.factory_id,
+		"factory_max_lines": factory.max_production_lines if factory else 1,
+		"factory_lines_used": factory.assigned_lines.size() if factory else 0,
+		"lines_on_same_design": get_lines_on_design_in_factory(line.factory_id, line.design_id),
+		"slot_rush_multiplier": get_concentrated_production_multiplier(line.factory_id, line.design_id),
 		"progress": line.progress,
 		"design_production_cost": line.design_production_cost,
 		"required_progress": line.design_production_cost,

@@ -14,7 +14,9 @@ const MAX_SLOTS_PER_PROVINCE := 99
 @export var repair_progress: float = 0.0
 @export var is_annexed: bool = false
 
-@export var assigned_lines: Array[String] = []
+@export var assigned_lines: Array[String] = []  # Active ProductionLine ids (production slots)
+@export var max_production_lines: int = 1
+@export var factory_type: String = "standard"  # standard | shipyard | aircraft_factory
 @export var current_production_design: String = ""
 
 @export var is_retooling: bool = false
@@ -136,6 +138,18 @@ func advance_retooling(days: float) -> void:
 		retooling_recovery_progress = 0.0
 		retooling_required = 0.0
 		retooling_recovery_required = 0.0
+
+
+func get_available_line_slots() -> int:
+	return maxi(0, max_production_lines - assigned_lines.size())
+
+
+func can_add_more_lines() -> bool:
+	return assigned_lines.size() < max_production_lines
+
+
+func has_assigned_line(line_id: String) -> bool:
+	return line_id in assigned_lines
 
 
 func sync_production_design(design_id: String) -> void:

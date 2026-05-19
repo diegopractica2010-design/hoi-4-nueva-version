@@ -116,13 +116,32 @@ func assign_production_line_to_factory(factory_id: int, line_id: String) -> bool
 	var f: Factory = factories.get(factory_id)
 	if f == null:
 		return false
-	if line_id not in f.assigned_lines:
-		f.assigned_lines.append(line_id)
+	if f.has_assigned_line(line_id):
 		return true
-	return false
+	if not f.can_add_more_lines():
+		push_warning(
+			"FactoryManager: factory %d at max production lines (%d)"
+			% [factory_id, f.max_production_lines],
+		)
+		return false
+	f.assigned_lines.append(line_id)
+	return true
 
 
-func create_factory_for_province(province_id: int, owner_tag: String, factory_id: int = 0) -> Factory:
+func get_default_max_lines_for_type(factory_type: String) -> int:
+	var type_rules: Dictionary = rules.get("factory_types", {}).get(factory_type, {})
+	if typeof(type_rules) == TYPE_DICTIONARY and type_rules.has("max_production_lines"):
+		return int(type_rules.get("max_production_lines", 1))
+	return 1
+
+
+func create_factory_for_province(
+	province_id: int,
+	owner_tag: String,
+	factory_id: int = 0,
+	factory_type: String = "standard",
+	max_production_lines: int = -1,
+) -> Factory:
 	var fid := factory_id
 	if fid == 0:
 		fid = _allocate_factory_id(province_id)
@@ -139,10 +158,18 @@ func create_factory_for_province(province_id: int, owner_tag: String, factory_id
 	new_factory.factory_id = fid
 	new_factory.province_id = province_id
 	new_factory.owner_tag = owner_tag
+	new_factory.factory_type = factory_type
+	new_factory.max_production_lines = (
+		max_production_lines if max_production_lines > 0 else get_default_max_lines_for_type(factory_type)
+	)
 	new_factory.current_damage = 0.0
 	new_factory.is_seized = false
 	register_factory(new_factory)
 	return new_factory
+
+
+func create_shipyard_for_province(province_id: int, owner_tag: String, levels: int = 4) -> Factory:
+	return create_factory_for_province(province_id, owner_tag, 0, "shipyard", levels)
 
 
 func get_or_create_province_component(province_node: Node, province_id: int) -> ProvinceFactoryComponent:

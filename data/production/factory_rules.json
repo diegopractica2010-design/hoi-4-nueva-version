@@ -22,5 +22,15 @@
     "default_fuel_per_day": 10,
     "default_energy_per_day": 15,
     "shortage_efficiency_penalty": 0.4
+  },
+  "factory_types": {
+    "standard": { "max_production_lines": 1 },
+    "shipyard": { "max_production_lines": 4 },
+    "aircraft_factory": { "max_production_lines": 3 },
+    "tank_plant": { "max_production_lines": 2 }
+  },
+  "slot_concentration": {
+    "bonus_per_extra_line": 0.12,
+    "max_multiplier": 1.6
   }
 }
