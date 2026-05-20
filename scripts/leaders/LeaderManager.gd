@@ -256,6 +256,7 @@ func get_leader_screen_data(country_tag: String) -> LeaderScreenData:
 	var injured := 0
 	var captured := 0
 	var assigned := 0
+
 	var by_type: Dictionary = {}
 	var by_availability: Dictionary = {
 		"available": [],
@@ -284,10 +285,14 @@ func get_leader_screen_data(country_tag: String) -> LeaderScreenData:
 			(by_availability["available"] as Array).append(summary)
 
 		var leader_type := leader.leader_type if not leader.leader_type.is_empty() else "general"
-		_append_leader_group(by_type, leader_type, summary)
+		if not by_type.has(leader_type):
+			by_type[leader_type] = []
+		(by_type[leader_type] as Array).append(summary)
 
 		var tier := str(summary.get("skill_tier", "average"))
-		_append_leader_group(by_skill_tier, tier, summary)
+		if not by_skill_tier.has(tier):
+			by_skill_tier[tier] = []
+		(by_skill_tier[tier] as Array).append(summary)
 
 	data.available_leaders = available
 	data.injured_leaders = injured
@@ -299,13 +304,11 @@ func get_leader_screen_data(country_tag: String) -> LeaderScreenData:
 
 	if country_positions.has(country_tag):
 		data.national_positions = (country_positions[country_tag] as Dictionary).duplicate()
-
-	data.national_position_bonuses = get_national_bonuses(country_tag)
+		data.national_position_bonuses = get_national_bonuses(country_tag)
 
 	data.has_many_injured = (
 		data.total_leaders > 0 and float(injured) > float(data.total_leaders) * 0.25
 	)
-	data.has_unassigned_armies = not get_armies_without_leader(country_tag).is_empty()
 	data.has_no_chief_of_army = not data.national_positions.has(POSITION_CHIEF_OF_ARMY)
 
 	return data

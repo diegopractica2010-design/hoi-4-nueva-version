@@ -2,8 +2,6 @@
 class_name ProductionScreenData
 extends Resource
 
-## Snapshot for the Production Assignment screen. Built by ProductionManager.get_production_screen_data().
-
 @export var country_tag: String = ""
 
 # === Top Summary Bar ===
@@ -16,13 +14,13 @@ extends Resource
 # === Main Factory List ===
 @export var factories: Array[Dictionary] = []
 
-# === Grouped / Filtered Data (for future filters) ===
+# === Grouped Data (for filters) ===
 @export var factories_by_type: Dictionary = {}
 @export var factories_by_status: Dictionary = {}
 
 # === Designs Currently Being Produced ===
 @export var designs_in_production: Dictionary = {}
 
-# === Quick Status Indicators ===
+# === Quick Status Flags ===
 @export var has_critical_efficiency: bool = false
 @export var has_many_retooling: bool = false

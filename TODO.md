@@ -1,61 +1,71 @@
 # Epochs of Ascendancy — TODO / Future Systems
 
-Last Updated: May 2026
+**Last Updated:** May 2026
 
-## High Priority / Core Systems
+## Core Systems (High Priority)
 
 ### National Position Costs (Chiefs of Staff)
-- Changing `chief_of_army`, `chief_of_navy`, `chief_of_air_force`, or `chief_of_space_force` should have a real cost.
-- Possible costs: Stability, Prestige, Political Power, or a cooldown.
-- Currently implemented as a placeholder in `LeaderManager.can_assign_national_position()`.
-- Should clearly display the cost to the player before they confirm the change (transparency).
-- Should support mitigation via Focuses, high leader Prestige, national spirits, or specific events.
-- Need a proper Stability / Prestige / Political Power system to hook this into.
+- Changing `chief_of_army`, `chief_of_navy`, `chief_of_air_force`, or `chief_of_space_force` should have a real cost (Stability, Prestige, Political Power, or cooldown).
+- Must show clear cost preview to the player before confirming the change.
+- Should support mitigation via Focuses, high leader Prestige, or national spirits.
+- Currently only has a placeholder in `can_assign_national_position()`.
 
 ### Province Infrastructure System
-- Provinces are currently placeholders.
-- `CombatWidthCalculator` and supply systems use temporary/default infrastructure values.
-- When real province data is implemented, update:
-  - Combat width calculation
-  - Supply production and throughput
-  - Factory efficiency / repair speed
-  - Logistics and movement modifiers
+- Provinces are still placeholders.
+- `CombatWidthCalculator`, supply, factory repair, and logistics currently use temporary/default values.
+- Needs full implementation and wiring into multiple systems.
 
 ### Civilian vs Military Factories
 - Separate civilian production from military production.
 - Different ideologies should have different consumer goods / stability requirements.
-- Allow conversion of civilian factories to military factories (with time/cost, especially for democratic countries like the USA).
-- Focuses and agents should be able to influence conversion speed and efficiency.
+- Allow conversion of civilian factories to military factories (with time and cost — especially important for democratic countries).
+- Focuses and agents should be able to influence conversion speed.
+
+### Production Licensing & Diplomatic Factory Use
+- Allow nations to license production templates from other countries.
+- Use factories as part of diplomatic/trade deals.
+
+### Smart Production Advisor
+- Tool that suggests which factories to assign when trying to build equipment for a new division/unit, with time-to-completion estimates.
 
 ## Leader System
 
-- Add proper name lists per country/culture for generated leaders.
-- Expand trait system with more negative traits and trait conflicts.
-- Add terrain-specific bonuses more deeply into combat resolution.
-- Create UI for viewing available leaders, their traits, experience, and assigning them to armies/fleets.
-- Allow promotion paths and special trait earning through long campaigns.
+- Proper per-country/culture name lists for generated leaders.
+- Expand negative traits and add trait conflict rules.
+- Deeper integration of terrain-specific trait bonuses into combat.
+- Create Leader Assignment UI flow (view traits, experience, assign to armies/fleets).
+- Promotion paths and special trait earning through long campaigns or achievements.
 
 ## Combat System
 
-- Expand `CombatResolver` with terrain, weather, leaders, air support, shore bombardment, engineers, night penalties, etc.
-- Implement proper Combat Width system using infrastructure + terrain.
+- Expand `CombatResolver` with terrain, weather, air support, shore bombardment, engineers, night penalties, recon, etc.
+- Implement proper **Combat Width** using infrastructure + terrain modifiers.
 - Add reserve/reinforcement mechanics during battles.
-- Define how being surrounded, multi-directional attacks, and supply interdiction affect combat.
+- Effects of being surrounded and attacking from multiple directions.
+- How supply interdiction affects combat over time.
+- Wire more leader and equipment modifiers into actual combat calculations.
+
+## UI & Screen Systems
+
+### Screen Data Caching
+- `ProductionScreenData` and `LeaderScreenData` are currently computed on demand.
+- Implement simple caching with proper invalidation when relevant state changes (factory reassignment, leader assignment, daily tick, etc.).
+
+### Production Assignment Screen
+- Detailed spec: `docs/PRODUCTION_ASSIGNMENT_SCREEN.md` (layout, filters, interaction flow, data requirements).
+- Implement UI against `ProductionScreenData` when visuals are prioritized.
+
+### Leader Assignment Screen
+- Detailed spec: `docs/LEADER_ASSIGNMENT_SCREEN.md` (national positions, two-column layout, data requirements).
+- Implement UI against `LeaderScreenData` when visuals are prioritized.
 
 ## Production & Economy
 
-- Full Civilian Factory system + consumer goods requirements.
-- Production licensing (buying templates and production rights from other nations).
-- Using factories as diplomatic/trade leverage.
-- Smart Production Advisor tool (suggests which factories to assign when building a new division).
+- Improve long-term usage of real scenario data in `ScenarioFactorySpawner`.
+- Create proper Supply production system from provinces (capital as main source + limited local production in large cities).
 
-## UI / Screen Data
+## Notes
 
-- `ProductionScreenData` and `LeaderScreenData` resources in `scripts/ui_data/` (built on demand).
-- Add per-country caching in `ProductionManager` / `LeaderManager` when factory or leader state changes frequently (invalidate on assign, retool, day tick).
-
-## Other Notes
-
-- Add more historical leaders to `data/leaders/historical_leaders_1936.json` and other era files.
-- Improve Scenario Factory Spawner to better reflect historical industrial strength.
-- Create proper Supply production system from provinces (capital + local production).
+- Map, graphics, province visuals, and unit models are intentionally deprioritized for now.
+- Focus remains on building solid backend systems and data structures first.
+- Keep complexity layered: surface information should be simple and clear; deeper math and modifiers should be accessible but not forced on the player.

@@ -1148,10 +1148,15 @@ func get_production_screen_data(country_tag: String) -> ProductionScreenData:
 	var total_efficiency := 0.0
 	var retooling_count := 0
 	var total_daily_output := 0.0
-	var designs_in_production: Dictionary = {}
 	var low_efficiency_count := 0
+
 	var by_type: Dictionary = {}
-	var by_status: Dictionary = {}
+	var by_status: Dictionary = {
+		"producing": [],
+		"retooling": [],
+		"idle": [],
+	}
+	var designs_in_production: Dictionary = {}
 
 	for f in factories:
 		var summary := get_factory_summary(f.factory_id)
@@ -1163,6 +1168,11 @@ func get_production_screen_data(country_tag: String) -> ProductionScreenData:
 
 		if f.is_retooling:
 			retooling_count += 1
+			(by_status["retooling"] as Array).append(summary)
+		elif not f.current_production_design.is_empty():
+			(by_status["producing"] as Array).append(summary)
+		else:
+			(by_status["idle"] as Array).append(summary)
 
 		if efficiency < 0.4:
 			low_efficiency_count += 1
@@ -1172,12 +1182,14 @@ func get_production_screen_data(country_tag: String) -> ProductionScreenData:
 
 		if not f.current_production_design.is_empty():
 			var design_id := f.current_production_design
-			designs_in_production[design_id] = (
-				float(designs_in_production.get(design_id, 0.0)) + daily
-			)
+			if not designs_in_production.has(design_id):
+				designs_in_production[design_id] = 0.0
+			designs_in_production[design_id] = float(designs_in_production[design_id]) + daily
 
-		_append_factory_group(by_type, str(summary.get("factory_type", "standard")), summary)
-		_append_factory_group(by_status, _factory_status_key(f), summary)
+		var factory_type := str(summary.get("factory_type", "standard"))
+		if not by_type.has(factory_type):
+			by_type[factory_type] = []
+		(by_type[factory_type] as Array).append(summary)
 
 	data.total_production_lines = total_lines
 	data.average_efficiency = (
@@ -1195,20 +1207,6 @@ func get_production_screen_data(country_tag: String) -> ProductionScreenData:
 	)
 
 	return data
-
-
-func _factory_status_key(factory: Factory) -> String:
-	if factory.is_retooling:
-		return "retooling"
-	if factory.current_production_design.is_empty():
-		return "idle"
-	return "producing"
-
-
-func _append_factory_group(group: Dictionary, key: String, summary: Dictionary) -> void:
-	if not group.has(key):
-		group[key] = []
-	(group[key] as Array).append(summary)
 
 
 func reassign_factory(factory_id: int, new_design_id: String, new_category: String = "") -> bool:

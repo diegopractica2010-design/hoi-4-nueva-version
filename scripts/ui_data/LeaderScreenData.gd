@@ -2,8 +2,6 @@
 class_name LeaderScreenData
 extends Resource
 
-## Snapshot for the Leader Assignment screen. Built by LeaderManager.get_leader_screen_data().
-
 @export var country_tag: String = ""
 
 # === Top Summary Bar ===
@@ -13,19 +11,18 @@ extends Resource
 @export var captured_leaders: int = 0
 @export var leaders_assigned_to_armies: int = 0
 
-# === National Positions (Chiefs of Staff) ===
+# === National Positions ===
 @export var national_positions: Dictionary = {}
 @export var national_position_bonuses: Dictionary = {}
 
 # === Main Leader List ===
 @export var leaders: Array[Dictionary] = []
 
-# === Grouped Data (for filters) ===
+# === Grouped Data ===
 @export var leaders_by_type: Dictionary = {}
 @export var leaders_by_availability: Dictionary = {}
 @export var leaders_by_skill_tier: Dictionary = {}
 
 # === Quick Status Flags ===
 @export var has_many_injured: bool = false
-@export var has_unassigned_armies: bool = false
 @export var has_no_chief_of_army: bool = false
