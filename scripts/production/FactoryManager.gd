@@ -60,6 +60,7 @@ func register_factory(factory: Factory) -> void:
 	var ids: Array = province_to_factories[pid]
 	if factory.factory_id not in ids:
 		ids.append(factory.factory_id)
+	_invalidate_production_cache_for_owner(factory.owner_tag)
 
 
 func get_factory(factory_id: int) -> Factory:
@@ -98,6 +99,9 @@ func capture_province_factories(province_id: int, new_owner: String, is_annexed:
 		f.is_seized = true
 		f.is_annexed = is_annexed
 		f.start_repair()
+		_invalidate_production_cache_for_owner(old_owner)
+		if new_owner != old_owner:
+			_invalidate_production_cache_for_owner(new_owner)
 		factory_captured.emit(fid, old_owner, new_owner)
 
 
@@ -108,9 +112,10 @@ func advance_repair_for_province(province_id: int, days: float, supply_connected
 		var f: Factory = factories.get(fid)
 		if f == null:
 			continue
-		var damage_before := f.current_damage
+		var was_damaged := f.current_damage > 0.0
 		f.advance_repair(days, supply_connected, rules)
-		if damage_before > 0.0 and f.current_damage <= 0.0:
+		if was_damaged and f.current_damage <= 0.0:
+			_invalidate_production_cache_for_owner(f.owner_tag)
 			factory_repaired.emit(fid)
 
 
@@ -187,7 +192,6 @@ func create_factory_for_province(
 	new_factory.current_damage = 0.0
 	new_factory.is_seized = false
 	register_factory(new_factory)
-	_invalidate_production_cache_for_owner(owner_tag)
 	return new_factory
 
 
@@ -216,6 +220,11 @@ func convert_factory_to_shipyard(factory_id: int, levels: int = 4) -> bool:
 	factory.factory_type = "shipyard"
 	factory.max_production_lines = (
 		levels if levels > 0 else get_default_max_lines_for_type("shipyard")
+	)
+	_invalidate_production_cache_for_owner(factory.owner_tag)
+	print(
+		"Factory %d converted to shipyard (max lines: %d)"
+		% [factory_id, factory.max_production_lines]
 	)
 	return true
 

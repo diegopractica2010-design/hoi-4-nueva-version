@@ -58,15 +58,6 @@ func _ready() -> void:
 	_load_retooling_rules()
 	if not production_completed.is_connected(_on_production_completed):
 		production_completed.connect(_on_production_completed)
-	if factory_manager != null and not factory_manager.factory_captured.is_connected(_on_factory_captured):
-		factory_manager.factory_captured.connect(_on_factory_captured)
-
-
-func _on_factory_captured(_factory_id: int, old_owner: String, new_owner: String) -> void:
-	if not old_owner.is_empty():
-		invalidate_production_cache(old_owner)
-	if not new_owner.is_empty() and new_owner != old_owner:
-		invalidate_production_cache(new_owner)
 
 
 func _get_base_daily_points() -> float:
