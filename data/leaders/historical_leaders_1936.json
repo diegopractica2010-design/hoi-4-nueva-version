@@ -1,0 +1,28 @@
+{
+  "leaders": [
+    {
+      "leader_id": "ger_rommel",
+      "name": "Erwin Rommel",
+      "country_tag": "GER",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "traits": ["desert_fox", "aggressive"]
+    },
+    {
+      "leader_id": "ger_doenitz",
+      "name": "Karl Dönitz",
+      "country_tag": "GER",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 8,
+      "planning_skill": 7,
+      "traits": ["sea_wolf", "cautious"]
+    }
+  ]
+}

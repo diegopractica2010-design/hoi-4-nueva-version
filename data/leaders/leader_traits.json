@@ -1,0 +1,52 @@
+{
+  "arctic_bear": {
+    "name": "Arctic Bear",
+    "description": "Master of arctic and winter warfare. Strong bonuses in cold and snowy conditions.",
+    "positive": true,
+    "terrain_bonus": "arctic"
+  },
+  "sea_wolf": {
+    "name": "Sea Wolf",
+    "description": "Exceptional naval commander. Excels at convoy raiding, submarine warfare, and fleet actions.",
+    "positive": true,
+    "leader_type_bonus": "admiral"
+  },
+  "desert_fox": {
+    "name": "Desert Fox",
+    "description": "Master of desert warfare and rapid mobile operations.",
+    "positive": true,
+    "terrain_bonus": "desert"
+  },
+  "jungle_panther": {
+    "name": "Jungle Panther",
+    "description": "Expert in jungle and dense forest fighting.",
+    "positive": true,
+    "terrain_bonus": "jungle"
+  },
+  "mountain_specialist": {
+    "name": "Mountain Specialist",
+    "description": "Highly effective when fighting in mountainous terrain.",
+    "positive": true,
+    "terrain_bonus": "mountain"
+  },
+  "logistics_wizard": {
+    "name": "Logistics Wizard",
+    "description": "Significantly improves supply efficiency and reduces attrition for their command.",
+    "positive": true
+  },
+  "aggressive": {
+    "name": "Aggressive",
+    "description": "Favors bold offensive action. Bonus to attack but may take more risks.",
+    "positive": true
+  },
+  "cautious": {
+    "name": "Cautious",
+    "description": "Careful planner. Improves defensive performance and organization.",
+    "positive": true
+  },
+  "reckless": {
+    "name": "Reckless",
+    "description": "Takes unnecessary risks. Can increase casualties.",
+    "positive": false
+  }
+}

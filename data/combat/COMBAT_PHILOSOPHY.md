@@ -78,3 +78,11 @@ Every province has an Infrastructure level that determines its base Combat Width
 This system rewards operational planning, infrastructure investment, and combined-arms coordination over simply stacking the maximum number of units in one province.
 
 Rules are data-driven in `data/combat/combat_width_rules.json` and applied via `CombatWidthCalculator` / `CombatResolver.get_combat_width_for_battle()`.
+
+## Leaders (Foundation)
+
+- `Leader` resource: skills 0–10 (attack, defense, organization, logistics, planning), traits, experience, army assignment.
+- Trait definitions in `data/leaders/leader_traits.json` (e.g. Desert Fox, Sea Wolf, Arctic Bear).
+- `LeaderManager` autoload: register leaders, promote (`promote_leader`), assign to armies, national positions (`chief_of_army`, `chief_of_navy`, `chief_of_air_force`, `head_of_state`).
+- Example historical leaders in `data/leaders/historical_leaders_1936.json` (Rommel, Dönitz).
+- Combat hooks: skill/trait modifiers via `get_attack_modifier()`, `get_defense_modifier()`, `get_organization_modifier()` (wired into `CombatResolver` later).

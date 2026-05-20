@@ -20,6 +20,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_sustainment_equipment(design_data) and ok
 	ok = _test_combat_resolver(design_data) and ok
 	ok = _test_combat_width() and ok
+	ok = _test_leader_manager() and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -584,6 +585,68 @@ static func _test_combat_width() -> bool:
 		return false
 
 	print("  [PASS] combat width (plains=", plains_width, " effective=", effective, ")")
+	return true
+
+
+static func _test_leader_manager() -> bool:
+	var lm := Engine.get_main_loop().root.get_node_or_null("/root/LeaderManager")
+	if lm == null:
+		print("  [SKIP] LeaderManager autoload not available")
+		return true
+
+	var patton := Leader.new()
+	patton.leader_id = "usa_patton_test"
+	patton.name = "George S. Patton"
+	patton.country_tag = "USA"
+	patton.leader_type = "general"
+	patton.attack_skill = 4
+	patton.defense_skill = 2
+	patton.organization_skill = 3
+	patton.traits = ["aggressive", "logistics_wizard"]
+
+	lm.register_leader(patton)
+	if not lm.assign_leader_to_army("usa_patton_test", "third_army_test"):
+		print("  [FAIL] could not assign leader to army")
+		return false
+	if lm.get_leader_for_army("third_army_test") != patton:
+		print("  [FAIL] army leader lookup")
+		return false
+	if patton.get_attack_modifier() <= 0.08:
+		print("  [FAIL] leader attack modifier too low: ", patton.get_attack_modifier())
+		return false
+	if not lm.set_country_position("USA", LeaderManager.POSITION_CHIEF_OF_ARMY, "usa_patton_test"):
+		print("  [FAIL] set chief of army position")
+		return false
+	if lm.get_country_position_leader("USA", LeaderManager.POSITION_CHIEF_OF_ARMY) != patton:
+		print("  [FAIL] country position leader lookup")
+		return false
+
+	var rommel: Leader = lm.get_leader("ger_rommel")
+	if rommel == null or not rommel.has_trait("desert_fox"):
+		print("  [FAIL] historical leader Rommel not loaded")
+		return false
+	if rommel.get_attack_modifier() <= 0.0:
+		print("  [FAIL] Rommel attack modifier: ", rommel.get_attack_modifier())
+		return false
+
+	var doenitz: Leader = lm.get_leader("ger_doenitz")
+	if doenitz == null or not doenitz.has_trait("sea_wolf"):
+		print("  [FAIL] historical leader Dönitz not loaded")
+		return false
+
+	patton.attack_skill = 9
+	if not lm.promote_leader("usa_patton_test"):
+		print("  [FAIL] promote_leader")
+		return false
+	if patton.attack_skill != 10:
+		print("  [FAIL] promote should cap at 10: ", patton.attack_skill)
+		return false
+
+	lm.leaders.erase("usa_patton_test")
+	if lm.country_leaders.has("USA"):
+		(lm.country_leaders["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)
+
+	print("  [PASS] LeaderManager registration and assignment")
 	return true
 
 
