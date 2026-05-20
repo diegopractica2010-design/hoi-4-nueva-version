@@ -27,15 +27,46 @@
       "name": "US Infantry Division (1943)",
       "manpower": 14253,
       "support_supply_per_day": 78,
-      "required_equipment": {
-        "rifle": 12000,
-        "artillery_towed": 36,
-        "gmc_6x6_cargo_truck": 800,
-        "m4_sherman_medium": 50
-      },
+      "infantry_equipment_template": "infantry_m1_garand",
       "equipment": [
-        {"template_id": "m4_sherman_medium", "count": 50},
-        {"template_id": "gmc_6x6_cargo_truck", "count": 800}
+        {"type": "infantry", "count": 12000, "infantry_equipment_override": null},
+        {"type": "artillery_towed", "count": 36},
+        {"template_id": "gmc_6x6_cargo_truck", "count": 800},
+        {"template_id": "m4_sherman_medium", "count": 50}
+      ]
+    },
+    {
+      "template_id": "german_infantry_division_1943",
+      "name": "Infanterie-Division 1943",
+      "manpower": 14000,
+      "support_supply_per_day": 75,
+      "infantry_equipment_template": "infantry_k98_bolt_action",
+      "equipment": [
+        {"type": "infantry", "count": 12000, "infantry_equipment_override": null},
+        {"type": "artillery_towed", "count": 36},
+        {"type": "truck", "count": 800}
+      ],
+      "subunits": [
+        {"template_id": "infantry_battalion", "count": 9}
+      ]
+    },
+    {
+      "template_id": "german_infantry_division_1943_mixed",
+      "name": "Infanterie-Division 1943 (Mixed Arms)",
+      "manpower": 14000,
+      "support_supply_per_day": 75,
+      "infantry_equipment_template": "infantry_k98_bolt_action",
+      "subunits": [
+        {
+          "template_id": "infantry_battalion",
+          "count": 6,
+          "infantry_equipment_template": "infantry_k98_bolt_action"
+        },
+        {
+          "template_id": "assault_engineer_battalion",
+          "count": 1,
+          "infantry_equipment_template": "infantry_stg44_assault_rifle"
+        }
       ]
     },
     {

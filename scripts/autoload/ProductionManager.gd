@@ -445,16 +445,22 @@ func apply_equipment_shortage_modifiers(
 	return base_readiness * penalty * infantry_mult
 
 
-func get_division_infantry_combat_multiplier(division_template_id: String) -> float:
-	if division_template_id.is_empty():
-		return 1.0
+func get_division_infantry_stats(division_template_id: String) -> Dictionary:
+	if division_template_id.is_empty() or GameData.design_data == null:
+		return {}
 	var supply := get_node_or_null("/root/SupplyManager")
-	if supply == null or GameData.design_data == null:
+	if supply == null:
+		return {}
+	var template: DivisionTemplate = supply.division_templates.get_division(division_template_id)
+	if template == null:
+		return {}
+	return template.get_aggregated_infantry_stats(GameData.design_data)
+
+
+func get_division_infantry_combat_multiplier(division_template_id: String) -> float:
+	var stats := get_division_infantry_stats(division_template_id)
+	if stats.is_empty():
 		return 1.0
-	var div: DivisionTemplate = supply.division_templates.get_division(division_template_id)
-	if div == null:
-		return 1.0
-	var stats := div.get_aggregated_infantry_stats(GameData.design_data)
 	var soft := float(stats.get("soft_attack", 0.9))
 	return clampf(soft / 0.9, 0.75, 1.75)
 

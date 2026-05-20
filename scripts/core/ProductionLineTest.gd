@@ -349,6 +349,22 @@ static func _test_infantry_equipment_stats(design_data: DesignDataLoader) -> boo
 		print("  [FAIL] division aggregated infantry stats: ", agg)
 		return false
 
+	var german_mixed := supply.division_templates.get_division("german_infantry_division_1943_mixed")
+	if german_mixed == null:
+		print("  [FAIL] german_infantry_division_1943_mixed missing")
+		return false
+	var mixed_stats := german_mixed.get_aggregated_infantry_stats(design_data)
+	if int(mixed_stats.get("generation", mixed_stats.get("average_generation", 0))) < 2:
+		print("  [FAIL] mixed division generation too low: ", mixed_stats)
+		return false
+
+	var pm := _get_production_manager()
+	if pm != null:
+		var via_pm: Dictionary = pm.get_division_infantry_stats("german_infantry_division_1943")
+		if via_pm.is_empty():
+			print("  [FAIL] ProductionManager.get_division_infantry_stats")
+			return false
+
 	print("  [PASS] infantry equipment type/generation stats")
 	return true
 

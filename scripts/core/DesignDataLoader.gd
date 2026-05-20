@@ -42,6 +42,15 @@ func get_template(template_id: String) -> UnitTemplate:
 	return templates.get(template_id)
 
 
+func get_infantry_equipment(template_id: String) -> UnitTemplate:
+	var template: UnitTemplate = get_template(template_id)
+	if template == null:
+		return null
+	if template.is_infantry_equipment():
+		return template
+	return null
+
+
 func get_refinement_project_defs() -> Array:
 	var raw = production_rules.get("refinement_projects", [])
 	return raw if typeof(raw) == TYPE_ARRAY else []

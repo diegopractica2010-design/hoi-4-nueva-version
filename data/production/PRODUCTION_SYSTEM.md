@@ -123,6 +123,12 @@
 - **Infantry Equipment**: produced small arms (rifle/SMG/LMG by type + generation).
 - **Sustainment Equipment**: abstracted bulk gear (uniforms, helmets, grenades, basic ammo, entrenching tools).
 
+### Declaring infantry equipment on divisions
+- **Division default:** `infantry_equipment_template` (e.g. `infantry_k98_bolt_action`).
+- **Equipment block:** `{"type": "infantry", "count": 12000, "infantry_equipment_override": null}` uses the division default unless override is set.
+- **Subunit overrides:** each subunit in `subunits[]` may set its own `infantry_equipment_template`.
+- **API:** `DivisionTemplate.resolve_subunits()` → `get_aggregated_infantry_stats()`; `ProductionManager.get_division_infantry_stats(id)`.
+
 ### Infantry equipment templates (`data/unit_templates/infantry_equipment/`)
 - Fields: `infantry_equipment_type`, `infantry_equipment_generation`, combat stats, `infantry_equipment_per_soldier`, `sustainment_equipment_per_soldier`, `description`.
 - Examples: K98k (gen 1), M1 Garand (gen 2), StG 44 (gen 3), M2 Browning HMG, M16A1 (gen 4).
