@@ -189,6 +189,8 @@ static func _infer_category_from_dict(template: Dictionary) -> String:
 static func _infer_era_from_dict(template: Dictionary) -> String:
 	var era := str(template.get("era", template.get("production_era", "")))
 	if not era.is_empty():
+		if era == "cold_war":
+			return "early_cold_war"
 		return era
 
 	var base_stats: Variant = template.get("base_stats", {})

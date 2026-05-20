@@ -56,29 +56,44 @@ func get_refinement_def(project_id: String) -> Dictionary:
 
 func _load_json_objects_from_dir(dir_path: String, factory: Callable) -> Dictionary:
 	var out: Dictionary = {}
+	_load_json_objects_from_dir_recursive(dir_path, factory, out)
+	return out
+
+
+func _load_json_objects_from_dir_recursive(
+	dir_path: String,
+	factory: Callable,
+	out: Dictionary,
+) -> void:
 	var dir := DirAccess.open(dir_path)
 	if dir == null:
 		push_warning("Could not open directory: " + dir_path)
-		return out
+		return
 	dir.list_dir_begin()
 	var file_name := dir.get_next()
 	while file_name != "":
-		if not dir.current_is_dir() and file_name.ends_with(".json"):
-			var full_path := dir_path.path_join(file_name)
+		if file_name == "." or file_name == "..":
+			file_name = dir.get_next()
+			continue
+		var full_path := dir_path.path_join(file_name)
+		if dir.current_is_dir():
+			_load_json_objects_from_dir_recursive(full_path, factory, out)
+		elif file_name.ends_with(".json"):
 			var data := _load_json_dict(full_path)
 			if data.is_empty():
+				file_name = dir.get_next()
 				continue
 			var obj: Variant = factory.call(data)
 			if obj == null:
+				file_name = dir.get_next()
 				continue
-			var obj_id := str(data.get("id", ""))
+			var obj_id := str(data.get("id", data.get("template_id", "")))
 			if obj_id.is_empty() and obj is Resource:
 				obj_id = str(obj.get("id"))
 			if not obj_id.is_empty():
 				out[obj_id] = obj
 		file_name = dir.get_next()
 	dir.list_dir_end()
-	return out
 
 
 func _load_json_dict(path: String) -> Dictionary:

@@ -15,6 +15,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_production_manager() and ok
 	ok = _test_equipment_shortages() and ok
 	ok = _test_national_equipment_stockpile() and ok
+	ok = _test_infantry_equipment_stats(design_data) and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -259,6 +260,7 @@ static func _test_equipment_shortages() -> bool:
 		print("  [PASS] equipment shortages (tracker only; no autoload)")
 		return true
 
+	pm.set_national_equipment_stockpile({})
 	pm.clear_unit_equipment_stock("test_div_1")
 	pm.set_unit_equipment_stock("test_div_1", stock)
 	var report: Dictionary = pm.get_shortage_report("test_div_1", required)
@@ -297,6 +299,14 @@ static func _test_national_equipment_stockpile() -> bool:
 
 	pm.add_to_national_stockpile("rifle", 100)
 	var required := {"rifle": 80, "m4_sherman_medium": 2}
+	# Shortages use unit + national totals (50 + 30 = 80 available → 20 short of 100)
+	pm.set_national_equipment_stockpile({"rifle": 30, "m4_sherman_medium": 3})
+	pm.set_unit_equipment_stock("stock_test_unit", {"rifle": 50})
+	var pre_shortages := pm.get_unit_shortages("stock_test_unit", {"rifle": 100})
+	if int(pre_shortages.get("rifle", 0)) != 20:
+		print("  [FAIL] national-aware shortages: ", pre_shortages)
+		return false
+
 	var fulfilled := pm.auto_reinforce_unit_from_stockpile("stock_test_unit", required)
 	if int(fulfilled.get("rifle", 0)) != 80 or int(fulfilled.get("m4_sherman_medium", 0)) != 2:
 		print("  [FAIL] auto_reinforce_unit_from_stockpile: ", fulfilled)
@@ -310,6 +320,36 @@ static func _test_national_equipment_stockpile() -> bool:
 	pm.clear_unit_equipment_stock("stock_test_unit")
 	pm.set_national_equipment_stockpile({})
 	print("  [PASS] national equipment stockpile and unit reinforcement")
+	return true
+
+
+static func _test_infantry_equipment_stats(design_data: DesignDataLoader) -> bool:
+	var garand := design_data.get_template("infantry_m1_garand")
+	if garand == null:
+		print("  [FAIL] infantry_m1_garand template missing")
+		return false
+	var stats := garand.get_infantry_stats()
+	if float(stats.get("soft_attack", 0.0)) < 1.4:
+		print("  [FAIL] garand soft_attack too low: ", stats)
+		return false
+
+	var supply := Engine.get_main_loop().root.get_node_or_null("/root/SupplyManager")
+	if supply == null:
+		print("  [PASS] infantry equipment stats (templates only)")
+		return true
+
+	supply.division_templates.load_all()
+	var div: DivisionTemplate = supply.division_templates.get_division("us_infantry_div_ww2")
+	if div == null:
+		print("  [PASS] infantry equipment stats (no division template)")
+		return true
+
+	var agg := div.get_aggregated_infantry_stats(design_data)
+	if float(agg.get("soft_attack", 0.0)) <= 0.0:
+		print("  [FAIL] division aggregated infantry stats: ", agg)
+		return false
+
+	print("  [PASS] infantry equipment type/generation stats")
 	return true
 
 

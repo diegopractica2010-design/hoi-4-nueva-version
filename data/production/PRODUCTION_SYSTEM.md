@@ -116,10 +116,17 @@
 - Finished production adds to `national_equipment_stockpile` via `production_completed` → `_on_production_completed`.
 - APIs: `add_to_national_stockpile`, `take_from_national_stockpile`, `get_national_stockpile_amount` (equipment ints; raw materials remain in `national_stockpile` floats).
 - Units pull gear with `request_equipment_for_unit` and `auto_reinforce_unit_from_stockpile`.
+- `get_unit_shortages` counts **unit stock + national pool**; true gaps only when both are insufficient.
+- `get_unit_shortage_report_with_national` adds `national_stockpile_available` per equipment type for UI.
 
 ### Equipment taxonomy (design)
 - **Infantry Equipment**: produced small arms (rifle/SMG/LMG by type + generation).
 - **Sustainment Equipment**: abstracted bulk gear (uniforms, helmets, grenades, basic ammo, entrenching tools).
+
+### Infantry equipment templates (`data/unit_templates/infantry_equipment/`)
+- Fields: `infantry_equipment_type`, `infantry_equipment_generation`, combat stats, `infantry_equipment_per_soldier`, `sustainment_equipment_per_soldier`, `description`.
+- Examples: K98k (gen 1), M1 Garand (gen 2), StG 44 (gen 3), M2 Browning HMG, M16A1 (gen 4).
+- **Sustainment Equipment** = abstracted bulk gear (uniforms, helmets, grenades, ammo, tools); tooltips TBD.
 
 ### Future
 - Infantry equipment type/generation JSON stats and sustainment costs per soldier.
@@ -130,7 +137,7 @@
 ## 7. Next Development Priorities (Current Order)
 
 1. ~~**Equipment Shortage & Unit Readiness** (Option 4)~~ (foundation done)
-2. Scenario loading + automatic factory spawning from 1918/1936 data
+2. ~~Scenario loading + automatic factory spawning from 1918/1936 data~~ (`ScenarioFactorySpawner` on load)
 3. Connect resource consumption to actual provincial stockpiles / Supply system
 4. ~~Enforce shipyard port location rules~~ (done)
 5. Add technology & focus modifiers for retooling time + recovery speed
@@ -144,6 +151,15 @@
 - ~~Should we allow building **new shipyards** in port provinces, or only converting existing factories?~~ **Both are supported** (build via `create_shipyard_for_province`, convert via `convert_factory_to_shipyard`).
 - How harsh should resource shortages become on **reliability** of finished units? (Current floor ~72%; tune in `production_cost_rules.json` → `resource_shortage`.)
 - Do we want a "partial production" system where missing resources produce a lower-quality variant?
+
+---
+
+## Future Work – Phase B (Infantry Equipment)
+
+- Make `infantry_equipment_per_soldier` and `sustainment_equipment_per_soldier` dynamic based on `infantry_equipment_generation` and `infantry_equipment_type`.
+- Adjust production cost and retooling time when switching between different generations of infantry weapons.
+- Allow divisions to show "Infantry Equipment Quality" in the UI based on the generation they are using.
+- Consider adding a small combat bonus/penalty when mixing generations inside the same division.
 
 ---
 

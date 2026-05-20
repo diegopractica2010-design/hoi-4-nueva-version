@@ -398,7 +398,25 @@ func get_division_required_equipment(division_template_id: String) -> Dictionary
 
 func get_unit_shortages(unit_id: String, required_equipment: Dictionary) -> Dictionary:
 	var current_stock := get_unit_equipment_stock(unit_id)
-	return _equipment_shortage_tracker.calculate_shortages(required_equipment, current_stock)
+	var shortages: Dictionary = {}
+
+	for equipment_id in required_equipment:
+		var needed := int(required_equipment[equipment_id])
+		var have_in_unit := int(current_stock.get(equipment_id, 0))
+		var have_in_national := get_national_stockpile_amount(str(equipment_id))
+		var total_available := have_in_unit + have_in_national
+		if total_available < needed:
+			shortages[str(equipment_id)] = needed - total_available
+
+	return shortages
+
+
+func get_unit_shortage_report_with_national(unit_id: String, required_equipment: Dictionary) -> Dictionary:
+	var report := get_shortage_report(unit_id, required_equipment)
+	report["national_stockpile_available"] = {}
+	for eq in required_equipment:
+		report["national_stockpile_available"][str(eq)] = get_national_stockpile_amount(str(eq))
+	return report
 
 
 func get_unit_readiness_penalty(unit_id: String, required_equipment: Dictionary) -> float:
@@ -420,9 +438,25 @@ func apply_equipment_shortage_modifiers(
 	unit_id: String,
 	base_readiness: float,
 	required_equipment: Dictionary,
+	division_template_id: String = "",
 ) -> float:
 	var penalty := get_unit_readiness_penalty(unit_id, required_equipment)
-	return base_readiness * penalty
+	var infantry_mult := get_division_infantry_combat_multiplier(division_template_id)
+	return base_readiness * penalty * infantry_mult
+
+
+func get_division_infantry_combat_multiplier(division_template_id: String) -> float:
+	if division_template_id.is_empty():
+		return 1.0
+	var supply := get_node_or_null("/root/SupplyManager")
+	if supply == null or GameData.design_data == null:
+		return 1.0
+	var div: DivisionTemplate = supply.division_templates.get_division(division_template_id)
+	if div == null:
+		return 1.0
+	var stats := div.get_aggregated_infantry_stats(GameData.design_data)
+	var soft := float(stats.get("soft_attack", 0.9))
+	return clampf(soft / 0.9, 0.75, 1.75)
 
 
 func request_equipment_for_unit(unit_id: String, equipment_id: String, amount: int) -> int:

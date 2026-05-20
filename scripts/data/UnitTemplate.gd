@@ -25,6 +25,16 @@ extends Resource
 @export var daily_resource_cost: Dictionary = {}
 ## Equipment template id -> count required to field this design at full strength.
 @export var required_equipment: Dictionary = {}
+## Small-arms profile: rifle, assault_rifle, lmg, heavy_machine_gun, etc.
+@export var infantry_equipment_type: String = ""
+## 1 = bolt, 2 = semi-auto, 3 = assault, 4 = modern
+@export var infantry_equipment_generation: int = 0
+## soft_attack, hard_attack, reliability, supply_consumption
+@export var infantry_equipment_stats: Dictionary = {}
+## Production / supply draw per soldier when this weapon is issued.
+@export var infantry_equipment_per_soldier: float = 1.0
+@export var sustainment_equipment_per_soldier: float = 1.0
+@export var description: String = ""
 
 
 func get_module_ids() -> Array[String]:
@@ -64,8 +74,9 @@ func get_daily_supply_draw(mode: String, rules: SupplyRules) -> Dictionary:
 
 static func from_dict(data: Dictionary) -> UnitTemplate:
 	var tpl := UnitTemplate.new()
-	tpl.id = str(data.get("id", ""))
+	tpl.id = str(data.get("id", data.get("template_id", "")))
 	tpl.display_name = str(data.get("name", tpl.id))
+	tpl.description = str(data.get("description", ""))
 	tpl.base_type = str(data.get("base_type", ""))
 	tpl.size_category = str(data.get("size_category", ""))
 	tpl.visual_archetype = str(data.get("visual_archetype", ""))
@@ -86,11 +97,62 @@ static func from_dict(data: Dictionary) -> UnitTemplate:
 	tpl.production_complexity = float(data.get("production_complexity", data.get("complexity", 1.0)))
 	tpl.daily_resource_cost = _dict_from_variant(data.get("daily_resource_cost", {}))
 	tpl.required_equipment = _dict_from_variant(data.get("required_equipment", {}))
+	tpl.infantry_equipment_type = str(data.get("infantry_equipment_type", ""))
+	tpl.infantry_equipment_generation = int(data.get("infantry_equipment_generation", 0))
+	tpl.infantry_equipment_per_soldier = float(data.get("infantry_equipment_per_soldier", 1.0))
+	tpl.sustainment_equipment_per_soldier = float(data.get("sustainment_equipment_per_soldier", 1.0))
+	tpl.infantry_equipment_stats = _parse_infantry_equipment_stats(data)
+	if tpl.is_infantry_equipment():
+		if tpl.base_type.is_empty():
+			tpl.base_type = "InfantryEquipment"
+		if tpl.production_category.is_empty():
+			tpl.production_category = "infantry_equipment"
+		if tpl.visual_archetype.is_empty():
+			tpl.visual_archetype = tpl.infantry_equipment_type
+		tpl.is_vehicle = bool(data.get("is_vehicle", false))
+		if tpl.design_family.is_empty():
+			tpl.design_family = "infantry_equipment"
 	return tpl
+
+
+static func _parse_infantry_equipment_stats(data: Dictionary) -> Dictionary:
+	var stats := _float_dict_from_variant(data.get("infantry_equipment", {}))
+	for key in ["soft_attack", "hard_attack", "reliability", "supply_consumption"]:
+		if data.has(key):
+			stats[key] = float(data[key])
+	return stats
 
 
 func get_required_equipment() -> Dictionary:
 	return required_equipment.duplicate(true)
+
+
+func is_infantry_equipment() -> bool:
+	return (
+		infantry_equipment_type != ""
+		or infantry_equipment_generation > 0
+		or not infantry_equipment_stats.is_empty()
+		or production_category == "infantry_equipment"
+	)
+
+
+func get_infantry_equipment_stats() -> Dictionary:
+	return get_infantry_stats()
+
+
+func get_infantry_stats() -> Dictionary:
+	if infantry_equipment_stats.is_empty():
+		return {
+			"soft_attack": 0.9,
+			"hard_attack": 0.03,
+			"supply_consumption": 1.0,
+			"reliability": 0.95,
+		}
+	return infantry_equipment_stats.duplicate(true)
+
+
+func get_infantry_generation_multiplier() -> float:
+	return 1.0 + float(infantry_equipment_generation - 1) * 0.08
 
 
 func get_daily_resource_cost_dict() -> Dictionary:
@@ -127,6 +189,15 @@ static func _dict_from_variant(raw: Variant) -> Dictionary:
 	if typeof(raw) != TYPE_DICTIONARY:
 		return {}
 	return raw.duplicate(true)
+
+
+static func _float_dict_from_variant(raw: Variant) -> Dictionary:
+	if typeof(raw) != TYPE_DICTIONARY:
+		return {}
+	var out: Dictionary = {}
+	for key in raw:
+		out[str(key)] = float(raw[key])
+	return out
 
 
 static func _string_array(raw: Variant) -> Array[String]:

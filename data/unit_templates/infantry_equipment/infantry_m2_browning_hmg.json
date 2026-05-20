@@ -1,0 +1,15 @@
+{
+  "id": "infantry_m2_browning_hmg",
+  "template_id": "infantry_m2_browning_hmg",
+  "name": "M2 Browning .50 cal",
+  "infantry_equipment_type": "heavy_machine_gun",
+  "infantry_equipment_generation": 3,
+  "soft_attack": 2.10,
+  "hard_attack": 0.65,
+  "supply_consumption": 3.0,
+  "reliability": 0.88,
+  "infantry_equipment_per_soldier": 3.5,
+  "sustainment_equipment_per_soldier": 2.2,
+  "era": "ww2",
+  "description": "Heavy machine gun. Outstanding anti-materiel and anti-fortification capability. Crew-served."
+}

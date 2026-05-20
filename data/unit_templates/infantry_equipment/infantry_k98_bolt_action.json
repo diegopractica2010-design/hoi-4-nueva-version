@@ -1,0 +1,15 @@
+{
+  "id": "infantry_k98_bolt_action",
+  "template_id": "infantry_k98_bolt_action",
+  "name": "Karabiner 98k",
+  "infantry_equipment_type": "rifle",
+  "infantry_equipment_generation": 1,
+  "soft_attack": 0.90,
+  "hard_attack": 0.03,
+  "supply_consumption": 1.0,
+  "reliability": 0.95,
+  "infantry_equipment_per_soldier": 1.0,
+  "sustainment_equipment_per_soldier": 1.0,
+  "era": "ww2",
+  "description": "Standard German bolt-action rifle. Reliable and accurate at long range but slow rate of fire."
+}

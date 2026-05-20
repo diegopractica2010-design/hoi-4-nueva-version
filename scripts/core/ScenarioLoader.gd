@@ -280,9 +280,15 @@ func load_scenario(scenario_name: String) -> bool:
 
 	_rebuild_adjacency_system()
 	_infer_port_access_for_all(provinces)
+	_spawn_scenario_factories(scenario_name)
 	print("✅ Scenario loaded | Provinces: ", provinces.size(), " | Countries: ", countries.size())
 	scenario_loaded.emit()
 	return true
+
+
+func _spawn_scenario_factories(scenario_name: String) -> void:
+	var spawner := ScenarioFactorySpawner.new()
+	spawner.spawn_factories_for_scenario(scenario_name, self)
 
 func get_country(tag: String) -> Variant:
 	return countries.get(tag)

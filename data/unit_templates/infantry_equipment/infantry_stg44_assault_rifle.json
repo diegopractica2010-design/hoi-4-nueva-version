@@ -1,0 +1,15 @@
+{
+  "id": "infantry_stg44_assault_rifle",
+  "template_id": "infantry_stg44_assault_rifle",
+  "name": "StG 44",
+  "infantry_equipment_type": "assault_rifle",
+  "infantry_equipment_generation": 3,
+  "soft_attack": 2.20,
+  "hard_attack": 0.12,
+  "supply_consumption": 1.50,
+  "reliability": 0.82,
+  "infantry_equipment_per_soldier": 1.45,
+  "sustainment_equipment_per_soldier": 1.30,
+  "era": "ww2",
+  "description": "First true assault rifle. Excellent volume of fire in close to medium range combat."
+}
