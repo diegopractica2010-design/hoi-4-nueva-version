@@ -5,8 +5,11 @@ extends Node
 const DEFAULT_SCENARIO := "1936"
 const TOP_INDUSTRIAL_TAGS: Array[String] = ["USA", "GER", "ENG", "SOV", "JAP"]
 const TOP_NAVAL_SHIPYARD_TAGS: Array[String] = ["USA", "ENG", "JAP"]
+const SECOND_TIER_NAVAL_TAGS: Array[String] = ["GER", "ITA", "FRA"]
 const DEFAULT_NAVAL_POWER_TAGS: Array[String] = ["USA", "ENG", "JAP", "GER", "ITA", "FRA"]
-const FALLBACK_PORT_PROVINCES: Array[int] = [5, 9, 11, 17, 23, 26, 33, 34, 42, 69, 74, 96]
+const FALLBACK_PORT_PROVINCES: Array[int] = [
+	5, 9, 11, 17, 23, 26, 33, 34, 42, 55, 69, 74, 87, 96, 101, 120, 150, 205, 310,
+]
 
 
 func spawn_factories_for_scenario(
@@ -59,14 +62,13 @@ func spawn_factories_for_scenario(
 		if key_provinces.is_empty():
 			continue
 
-		var base_factories := _base_factory_count(country_tag, is_major_power)
-		for province_id in key_provinces:
-			var factories_to_create := base_factories
-			if is_major_power:
-				factories_to_create = maxi(2, base_factories / 2)
+		var base_factories := _base_factory_count(country, is_major_power, country_tag)
+		var province_count := maxi(key_provinces.size(), 1)
+		var factories_per_province := maxi(1, base_factories / province_count)
 
+		for province_id in key_provinces:
 			var created := factory_manager.register_factories_for_province(
-				province_id, country_tag, factories_to_create,
+				province_id, country_tag, factories_per_province,
 			)
 			factories_created += created.size()
 			provinces_touched += 1
@@ -75,9 +77,7 @@ func spawn_factories_for_scenario(
 			for province_id in key_provinces:
 				if not _province_has_port(province_id, data, scenario_loader):
 					continue
-				var shipyard_levels := 3
-				if country_tag in TOP_NAVAL_SHIPYARD_TAGS:
-					shipyard_levels = 5
+				var shipyard_levels := _shipyard_levels_for_country(country_tag)
 				var shipyard := factory_manager.create_shipyard_for_province(
 					province_id, country_tag, shipyard_levels,
 				)
@@ -125,13 +125,22 @@ func _resolve_key_provinces(country: Dictionary) -> Array[int]:
 	return []
 
 
-func _base_factory_count(country_tag: String, is_major_power: bool) -> int:
-	var base_factories := 3
+func _base_factory_count(country: Dictionary, is_major_power: bool, country_tag: String) -> int:
+	var industrial_weight := maxi(int(country.get("industrial_weight", 1)), 1)
+	var base_factories := 2
 	if is_major_power:
-		base_factories = 8
+		base_factories = 6
 	if country_tag in TOP_INDUSTRIAL_TAGS:
-		base_factories += 4
-	return base_factories
+		base_factories += 3
+	return base_factories * industrial_weight
+
+
+func _shipyard_levels_for_country(country_tag: String) -> int:
+	if country_tag in TOP_NAVAL_SHIPYARD_TAGS:
+		return 5
+	if country_tag in SECOND_TIER_NAVAL_TAGS:
+		return 4
+	return 3
 
 
 func _default_major_power(country_tag: String) -> bool:
