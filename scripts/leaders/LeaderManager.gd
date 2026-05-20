@@ -268,31 +268,26 @@ func get_leader_screen_data(country_tag: String) -> LeaderScreenData:
 
 	for leader in country_leader_list:
 		var summary := get_leader_summary(leader.leader_id)
-		summary["skill_tier"] = _skill_tier_for_leader(leader)
+		summary["skill_tier"] = _get_skill_tier(leader)
+		summary["leader_type_name"] = _get_leader_type_name(leader.leader_type)
 		data.leaders.append(summary)
 
 		if leader.is_captured:
 			captured += 1
-			(by_availability["captured"] as Array).append(summary)
+			_append_leader_to_group(by_availability, "captured", summary)
 		elif leader.is_injured:
 			injured += 1
-			(by_availability["injured"] as Array).append(summary)
+			_append_leader_to_group(by_availability, "injured", summary)
 		elif not leader.assigned_army_id.is_empty():
 			assigned += 1
-			(by_availability["assigned"] as Array).append(summary)
+			_append_leader_to_group(by_availability, "assigned", summary)
 		else:
 			available += 1
-			(by_availability["available"] as Array).append(summary)
+			_append_leader_to_group(by_availability, "available", summary)
 
 		var leader_type := leader.leader_type if not leader.leader_type.is_empty() else "general"
-		if not by_type.has(leader_type):
-			by_type[leader_type] = []
-		(by_type[leader_type] as Array).append(summary)
-
-		var tier := str(summary.get("skill_tier", "average"))
-		if not by_skill_tier.has(tier):
-			by_skill_tier[tier] = []
-		(by_skill_tier[tier] as Array).append(summary)
+		_append_leader_to_group(by_type, leader_type, summary)
+		_append_leader_to_group(by_skill_tier, str(summary.get("skill_tier", "average")), summary)
 
 	data.available_leaders = available
 	data.injured_leaders = injured
@@ -314,27 +309,43 @@ func get_leader_screen_data(country_tag: String) -> LeaderScreenData:
 	return data
 
 
-func _skill_tier_for_leader(leader: Leader) -> String:
-	var average := (
+# === Leader helper methods ===
+
+func _get_skill_tier(leader: Leader) -> String:
+	var avg_skill := (
 		float(leader.attack_skill)
 		+ float(leader.defense_skill)
-		+ float(leader.organization_skill)
 		+ float(leader.logistics_skill)
 		+ float(leader.planning_skill)
-	) / 5.0
-	if average >= 8.0:
+	) / 4.0
+
+	if avg_skill >= 8.0:
 		return "elite"
-	if average >= 6.0:
+	if avg_skill >= 6.0:
 		return "veteran"
-	if average >= 4.0:
+	if avg_skill >= 4.0:
 		return "average"
 	return "green"
 
 
-func _append_leader_group(group: Dictionary, key: String, summary: Dictionary) -> void:
-	if not group.has(key):
-		group[key] = []
-	(group[key] as Array).append(summary)
+func _get_leader_type_name(leader_type: String) -> String:
+	match leader_type:
+		"general":
+			return "General"
+		"admiral":
+			return "Admiral"
+		"air_marshal":
+			return "Air Marshal"
+		"space_commander":
+			return "Space Commander"
+		_:
+			return leader_type.capitalize()
+
+
+func _append_leader_to_group(group_dict: Dictionary, key: String, summary: Dictionary) -> void:
+	if not group_dict.has(key):
+		group_dict[key] = []
+	(group_dict[key] as Array).append(summary)
 
 
 # === Experience, traits, injury, capture, promotion ===

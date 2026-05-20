@@ -1103,7 +1103,8 @@ func get_factory_summary(factory_id: int) -> Dictionary:
 		"factory_id": factory_id,
 		"province_id": f.province_id,
 		"owner_tag": f.owner_tag,
-		"factory_type": f.factory_type,
+		"factory_type": _get_factory_type(f),
+		"status": _get_factory_status(f),
 		"current_design": f.current_production_design,
 		"efficiency": get_factory_efficiency(factory_id),
 		"daily_output_estimate": f.get_daily_output_estimate(),
@@ -1166,13 +1167,10 @@ func get_production_screen_data(country_tag: String) -> ProductionScreenData:
 		var efficiency := get_factory_efficiency(f.factory_id)
 		total_efficiency += efficiency
 
-		if f.is_retooling:
+		var status := _get_factory_status(f)
+		_append_to_group(by_status, status, summary)
+		if status == "retooling":
 			retooling_count += 1
-			(by_status["retooling"] as Array).append(summary)
-		elif not f.current_production_design.is_empty():
-			(by_status["producing"] as Array).append(summary)
-		else:
-			(by_status["idle"] as Array).append(summary)
 
 		if efficiency < 0.4:
 			low_efficiency_count += 1
@@ -1186,10 +1184,7 @@ func get_production_screen_data(country_tag: String) -> ProductionScreenData:
 				designs_in_production[design_id] = 0.0
 			designs_in_production[design_id] = float(designs_in_production[design_id]) + daily
 
-		var factory_type := str(summary.get("factory_type", "standard"))
-		if not by_type.has(factory_type):
-			by_type[factory_type] = []
-		(by_type[factory_type] as Array).append(summary)
+		_append_to_group(by_type, _get_factory_type(f), summary)
 
 	data.total_production_lines = total_lines
 	data.average_efficiency = (
@@ -1207,6 +1202,41 @@ func get_production_screen_data(country_tag: String) -> ProductionScreenData:
 	)
 
 	return data
+
+
+# === Production helper methods ===
+
+func _get_factory_status(factory: Factory) -> String:
+	if factory.is_retooling:
+		return "retooling"
+	if not factory.current_production_design.is_empty():
+		return "producing"
+	return "idle"
+
+
+func _get_factory_type(factory: Factory) -> String:
+	if not factory.factory_type.is_empty() and factory.factory_type != "standard":
+		return factory.factory_type
+
+	var design := factory.current_production_design.to_lower()
+	if (
+		"ship" in design
+		or "carrier" in design
+		or "destroyer" in design
+		or "battleship" in design
+	):
+		return "shipyard"
+	if "tank" in design or "vehicle" in design or "halftrack" in design:
+		return "tank_factory"
+	if "fighter" in design or "bomber" in design or "aircraft" in design:
+		return "aircraft_factory"
+	return "general_factory"
+
+
+func _append_to_group(group_dict: Dictionary, key: String, value: Variant) -> void:
+	if not group_dict.has(key):
+		group_dict[key] = []
+	(group_dict[key] as Array).append(value)
 
 
 func reassign_factory(factory_id: int, new_design_id: String, new_category: String = "") -> bool:
