@@ -21,6 +21,7 @@ GameData="*res://scripts/autoload/GameData.gd"
 FactoryManager="*res://scripts/production/FactoryManager.gd"
 ProductionManager="*res://scripts/autoload/ProductionManager.gd"
 SupplyManager="*res://scripts/supply/SupplyManager.gd"
+LeaderManager="*res://scripts/leaders/LeaderManager.gd"
 
 [display]
 
