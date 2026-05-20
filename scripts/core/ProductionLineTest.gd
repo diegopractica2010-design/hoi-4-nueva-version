@@ -18,6 +18,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_infantry_equipment_stats(design_data) and ok
 	ok = _test_priority_reinforcement() and ok
 	ok = _test_sustainment_equipment(design_data) and ok
+	ok = _test_combat_resolver(design_data) and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -497,6 +498,58 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 		pm.set_national_equipment_stockpile({})
 
 	print("  [PASS] sustainment equipment templates and division support")
+	return true
+
+
+static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
+	var supply := Engine.get_main_loop().root.get_node_or_null("/root/SupplyManager")
+	if supply == null or GameData.design_data == null:
+		print("  [SKIP] CombatResolver (SupplyManager / GameData not available)")
+		return true
+
+	supply.division_templates.load_all()
+	var resolver := CombatResolver.new()
+	var power: Dictionary = resolver.get_effective_combat_power("us_marine_division_ww2")
+
+	if power.is_empty():
+		resolver.free()
+		print("  [FAIL] CombatResolver marine effective power empty")
+		return false
+	if float(power.get("soft_attack", 0.0)) <= 0.0:
+		resolver.free()
+		print("  [FAIL] CombatResolver soft_attack: ", power)
+		return false
+	if float(power.get("readiness", 0.0)) < 1.0:
+		resolver.free()
+		print("  [FAIL] marine effective readiness should be boosted: ", power)
+		return false
+
+	var pm := _get_production_manager()
+	if pm != null:
+		pm.set_national_equipment_stockpile({
+			"infantry_m1_garand": 50000,
+			"marine_amphibious_sustainment": 50000,
+		})
+		pm.clear_unit_equipment_stock("combat_resolver_test")
+		pm.auto_reinforce_unit_from_stockpile(
+			"combat_resolver_test",
+			supply.division_templates.get_division("us_marine_division_ww2").get_required_equipment(design_data),
+		)
+		var stocked: Dictionary = resolver.get_effective_combat_power(
+			"us_marine_division_ww2",
+			"combat_resolver_test",
+		)
+		if bool(stocked.get("has_shortages", true)):
+			resolver.free()
+			pm.clear_unit_equipment_stock("combat_resolver_test")
+			pm.set_national_equipment_stockpile({})
+			print("  [FAIL] stocked marine should have no shortages: ", stocked)
+			return false
+		pm.clear_unit_equipment_stock("combat_resolver_test")
+		pm.set_national_equipment_stockpile({})
+
+	resolver.free()
+	print("  [PASS] CombatResolver effective combat power")
 	return true
 
 
