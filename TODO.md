@@ -1,5 +1,21 @@
 # Epochs of Ascendancy — TODO / Future Systems
 
+## Current Session State (Last Worked On)
+
+**Date:** May 2026
+
+**Recently Completed:**
+- Created `ProductionScreenData` and `LeaderScreenData` resources
+- Added helper methods (`_get_factory_status`, `_get_factory_type`, `_get_skill_tier`, etc.)
+- Refactored `get_production_screen_data()` and `get_leader_screen_data()` for cleanliness
+- Created detailed specs for both Production Assignment Screen and Leader Assignment Screen
+- Updated and organized `TODO.md`
+
+**Good Place to Resume:**
+- Implement caching for screen data classes (noted in TODO)
+- Expand `CombatResolver` with more modifiers
+- Begin actual UI scene work for the Production Assignment Screen
+
 **Last Updated:** May 2026
 
 ## Core Systems (High Priority)
