@@ -119,6 +119,7 @@
 - `get_unit_shortages` counts **unit stock + national pool**; true gaps only when both are insufficient.
 - `get_unit_shortage_report_with_national` adds `national_stockpile_available` per equipment type for UI.
 - **Reinforcement:** `auto_reinforce_unit_from_stockpile`, `reinforce_all_units`, `daily_reinforcement_tick`; priority units served first via `set_unit_priority_reinforcement`; `unit_reinforced` signal on fulfillment.
+- **Combat stats:** `get_combined_combat_modifiers()` and `get_final_combat_stats(shortages)` on divisions; `ProductionManager.get_division_final_combat_stats(division_id, unit_id)` is the single hook for combat (infantry + sustainment + shortage penalties).
 
 ### Equipment taxonomy (design)
 - **Infantry Equipment**: produced small arms (rifle/SMG/LMG by type + generation).

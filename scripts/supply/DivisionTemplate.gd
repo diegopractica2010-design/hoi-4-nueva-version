@@ -228,6 +228,69 @@ func get_combined_combat_modifiers(design_data: DesignDataLoader = null) -> Dict
 	}
 
 
+func get_final_combat_stats(
+	current_shortages: Dictionary = {},
+	design_data: DesignDataLoader = null,
+) -> Dictionary:
+	var base := get_combined_combat_modifiers(design_data)
+
+	var soft_attack := float(base.get("soft_attack", 0.9))
+	var hard_attack := float(base.get("hard_attack", 0.03))
+	var supply_consumption := float(base.get("supply_consumption", 1.0))
+	var reliability := float(base.get("reliability", 0.95))
+	var readiness := 1.0 + float(base.get("readiness_bonus", 0.0))
+
+	if _shortages_affect_infantry(current_shortages, design_data):
+		soft_attack *= 0.7
+		reliability *= 0.85
+
+	if _shortages_affect_sustainment(current_shortages, design_data):
+		readiness *= 0.75
+		supply_consumption *= 1.15
+
+	return {
+		"soft_attack": soft_attack,
+		"hard_attack": hard_attack,
+		"supply_consumption": supply_consumption,
+		"reliability": clampf(reliability, 0.5, 1.0),
+		"readiness": clampf(readiness, 0.3, 1.5),
+		"infantry_generation": int(base.get("infantry_generation", 1)),
+		"has_shortages": not current_shortages.is_empty(),
+		"has_infantry_shortage": _shortages_affect_infantry(current_shortages, design_data),
+		"has_sustainment_shortage": _shortages_affect_sustainment(current_shortages, design_data),
+	}
+
+
+func _shortages_affect_infantry(current_shortages: Dictionary, design_data: DesignDataLoader) -> bool:
+	if current_shortages.is_empty():
+		return false
+	var loader := _resolve_design_data(design_data)
+	for equipment_id in current_shortages:
+		var key := str(equipment_id)
+		if not infantry_equipment_template.is_empty() and key == infantry_equipment_template:
+			return true
+		if loader != null and loader.get_infantry_equipment(key) != null:
+			return true
+		if key.begins_with("infantry_"):
+			return true
+	return false
+
+
+func _shortages_affect_sustainment(current_shortages: Dictionary, design_data: DesignDataLoader) -> bool:
+	if current_shortages.is_empty():
+		return false
+	var loader := _resolve_design_data(design_data)
+	for equipment_id in current_shortages:
+		var key := str(equipment_id)
+		if not sustainment_equipment_template.is_empty() and key == sustainment_equipment_template:
+			return true
+		if loader != null and not loader.get_sustainment_equipment(key).is_empty():
+			return true
+		if key.contains("sustainment"):
+			return true
+	return false
+
+
 func get_required_equipment(design_data: DesignDataLoader = null) -> Dictionary:
 	var requirements := _build_required_equipment(design_data)
 	for equipment_id in required_equipment:

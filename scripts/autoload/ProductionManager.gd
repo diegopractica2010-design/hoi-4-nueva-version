@@ -532,6 +532,24 @@ func get_division_combat_modifiers(division_template_id: String) -> Dictionary:
 	return template.get_combined_combat_modifiers(GameData.design_data)
 
 
+func get_division_final_combat_stats(division_template_id: String, unit_id: String = "") -> Dictionary:
+	if division_template_id.is_empty() or GameData.design_data == null:
+		return {}
+	var supply := get_node_or_null("/root/SupplyManager")
+	if supply == null:
+		return {}
+	var template: DivisionTemplate = supply.division_templates.get_division(division_template_id)
+	if template == null:
+		return {}
+
+	var shortages: Dictionary = {}
+	if not unit_id.is_empty():
+		var required := template.get_required_equipment(GameData.design_data)
+		shortages = get_unit_shortages(unit_id, required)
+
+	return template.get_final_combat_stats(shortages, GameData.design_data)
+
+
 func request_equipment_for_unit(unit_id: String, equipment_id: String, amount: int) -> int:
 	var taken := take_from_national_stockpile(equipment_id, amount)
 	if taken > 0:

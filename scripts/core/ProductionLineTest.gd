@@ -457,6 +457,11 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 		print("  [FAIL] combined combat modifiers missing supply: ", combat)
 		return false
 
+	var full_stats := marine.get_final_combat_stats({}, design_data)
+	if float(full_stats.get("readiness", 0.0)) < 1.0:
+		print("  [FAIL] marine final readiness should be boosted: ", full_stats)
+		return false
+
 	var pm := _get_production_manager()
 	if pm != null:
 		pm.set_national_equipment_stockpile({
@@ -469,9 +474,25 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 		if fulfilled.is_empty():
 			print("  [FAIL] marine reinforcement fulfilled nothing: ", marine_req)
 			return false
-		var report: Dictionary = pm.get_shortage_report("marine_test", marine_req)
-		if report.get("missing_sustainment_equipment", {}).is_empty() and report.get("missing_infantry_equipment", {}).is_empty():
-			pass  # fully reinforced
+		var final_stats: Dictionary = pm.get_division_final_combat_stats(
+			"us_marine_division_ww2",
+			"marine_test",
+		)
+		if not bool(final_stats.get("has_shortages", false)):
+			print("  [FAIL] marine_test should still have shortages with partial stockpile")
+			return false
+		if float(final_stats.get("readiness", 1.0)) >= float(full_stats.get("readiness", 1.0)):
+			print("  [FAIL] shortages should reduce readiness: ", final_stats)
+			return false
+
+		pm.add_to_national_stockpile("infantry_m1_garand", 20000)
+		pm.add_to_national_stockpile("marine_amphibious_sustainment", 20000)
+		pm.auto_reinforce_unit_from_stockpile("marine_test", marine_req)
+		var stocked_stats := pm.get_division_final_combat_stats("us_marine_division_ww2", "marine_test")
+		if bool(stocked_stats.get("has_shortages", true)):
+			print("  [FAIL] marine_test should be fully stocked: ", stocked_stats)
+			return false
+
 		pm.clear_unit_equipment_stock("marine_test")
 		pm.set_national_equipment_stockpile({})
 
