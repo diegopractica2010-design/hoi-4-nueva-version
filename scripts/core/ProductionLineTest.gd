@@ -19,6 +19,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_priority_reinforcement() and ok
 	ok = _test_sustainment_equipment(design_data) and ok
 	ok = _test_combat_resolver(design_data) and ok
+	ok = _test_combat_width() and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -550,6 +551,39 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 
 	resolver.free()
 	print("  [PASS] CombatResolver effective combat power")
+	return true
+
+
+static func _test_combat_width() -> bool:
+	var calculator := CombatWidthCalculator.new()
+	calculator.ensure_rules_loaded()
+	if calculator.rules.is_empty():
+		calculator.free()
+		print("  [FAIL] combat width rules not loaded")
+		return false
+
+	var plains_width := calculator.get_combat_width(2, "plains")
+	var jungle_width := calculator.get_combat_width(2, "jungle")
+	if plains_width <= 0.0 or jungle_width >= plains_width:
+		calculator.free()
+		print("  [FAIL] combat width terrain modifiers: plains=", plains_width, " jungle=", jungle_width)
+		return false
+
+	var effective := calculator.get_effective_combat_width(2, 4, "mountain")
+	if effective <= 0.0:
+		calculator.free()
+		print("  [FAIL] effective combat width: ", effective)
+		return false
+
+	var resolver := CombatResolver.new()
+	var battle_width := resolver.get_combat_width_for_battle(2, 3, "plains")
+	resolver.free()
+	calculator.free()
+	if battle_width <= 0.0:
+		print("  [FAIL] CombatResolver battle width: ", battle_width)
+		return false
+
+	print("  [PASS] combat width (plains=", plains_width, " effective=", effective, ")")
 	return true
 
 

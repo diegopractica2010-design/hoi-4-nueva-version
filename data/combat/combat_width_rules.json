@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "base_combat_width": 10,
+  "infrastructure_modifiers": {
+    "level_0": 0.6,
+    "level_1": 0.8,
+    "level_2": 1.0,
+    "level_3": 1.2,
+    "level_4": 1.4,
+    "level_5": 1.6
+  },
+  "terrain_modifiers": {
+    "plains": 1.0,
+    "hills": 0.85,
+    "forest": 0.75,
+    "jungle": 0.55,
+    "mountain": 0.45,
+    "urban": 0.65,
+    "marsh": 0.60,
+    "desert": 0.90,
+    "arctic": 0.50
+  },
+  "notes": "Combat width is calculated as: base × infrastructure_modifier × terrain_modifier. Both attacker and defender infrastructure can influence final engagement width."
+}

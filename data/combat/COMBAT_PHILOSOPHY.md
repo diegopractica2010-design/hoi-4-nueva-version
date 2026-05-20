@@ -76,3 +76,5 @@ Every province has an Infrastructure level that determines its base Combat Width
 - Doctrine, leader traits, and infrastructure development can increase a side's effective combat width.
 
 This system rewards operational planning, infrastructure investment, and combined-arms coordination over simply stacking the maximum number of units in one province.
+
+Rules are data-driven in `data/combat/combat_width_rules.json` and applied via `CombatWidthCalculator` / `CombatResolver.get_combat_width_for_battle()`.
