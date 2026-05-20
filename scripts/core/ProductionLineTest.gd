@@ -563,6 +563,18 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 				"",
 				"panzer_army_africa_test",
 			)
+			var plains_power: Dictionary = resolver.get_effective_combat_power(
+				"german_infantry_division_1943",
+				"",
+				"panzer_army_africa_test",
+				"plains",
+			)
+			var desert_power: Dictionary = resolver.get_effective_combat_power(
+				"german_infantry_division_1943",
+				"",
+				"panzer_army_africa_test",
+				"desert",
+			)
 			rommel.assigned_army_id = ""
 			if str(led_power.get("leader_name", "")) != "Erwin Rommel":
 				resolver.free()
@@ -579,6 +591,19 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 					base_power.get("soft_attack"),
 					" led=",
 					led_power.get("soft_attack"),
+				)
+				return false
+			if float(desert_power.get("terrain_bonus_applied", 0.0)) <= 0.0:
+				resolver.free()
+				print("  [FAIL] Rommel desert terrain bonus: ", desert_power)
+				return false
+			if float(desert_power.get("soft_attack", 0.0)) <= float(plains_power.get("soft_attack", 0.0)):
+				resolver.free()
+				print(
+					"  [FAIL] desert should beat plains for Rommel: plains=",
+					plains_power.get("soft_attack"),
+					" desert=",
+					desert_power.get("soft_attack"),
 				)
 				return false
 

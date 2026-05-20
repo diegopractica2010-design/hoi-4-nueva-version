@@ -8,6 +8,7 @@ func get_effective_combat_power(
 	division_template_id: String,
 	unit_id: String = "",
 	army_id: String = "",
+	terrain: String = "plains",
 ) -> Dictionary:
 	var base_stats: Dictionary = ProductionManager.get_division_final_combat_stats(
 		division_template_id, unit_id,
@@ -22,6 +23,7 @@ func get_effective_combat_power(
 	var final_org := 1.0
 
 	var leader: Leader = null
+	var terrain_bonus := 0.0
 	var leader_manager := _leader_manager()
 	if leader_manager != null:
 		if not army_id.is_empty():
@@ -35,6 +37,10 @@ func get_effective_combat_power(
 		final_org += leader.get_organization_modifier()
 		final_readiness += leader.get_logistics_modifier() * 0.5
 
+		terrain_bonus = leader.get_terrain_modifier(terrain)
+		final_soft += terrain_bonus * 8.0
+		final_hard += terrain_bonus * 5.0
+
 	return {
 		"soft_attack": final_soft,
 		"hard_attack": final_hard,
@@ -44,6 +50,8 @@ func get_effective_combat_power(
 		"has_shortages": bool(base_stats.get("has_shortages", false)),
 		"leader_name": leader.name if leader != null else "No Leader",
 		"leader_attack_bonus": leader.get_attack_modifier() if leader != null else 0.0,
+		"terrain": terrain,
+		"terrain_bonus_applied": terrain_bonus,
 	}
 
 

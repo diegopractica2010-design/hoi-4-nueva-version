@@ -72,3 +72,29 @@ func get_logistics_modifier() -> float:
 
 func get_planning_modifier() -> float:
 	return 0.01 * float(planning_skill)
+
+
+# === Terrain-specific trait bonuses ===
+
+func get_terrain_modifier(terrain: String) -> float:
+	var terrain_lower := terrain.to_lower()
+	var bonus := 0.0
+
+	match terrain_lower:
+		"desert":
+			if has_trait("desert_fox"):
+				bonus += 0.12
+		"arctic", "snow", "tundra":
+			if has_trait("arctic_bear"):
+				bonus += 0.12
+		"jungle", "forest":
+			if has_trait("jungle_panther"):
+				bonus += 0.10
+		"mountain":
+			if has_trait("mountain_specialist"):
+				bonus += 0.10
+		"sea", "ocean", "naval":
+			if has_trait("sea_wolf"):
+				bonus += 0.08
+
+	return bonus
