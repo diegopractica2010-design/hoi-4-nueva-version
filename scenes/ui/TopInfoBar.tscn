@@ -1,0 +1,139 @@
+[gd_scene load_steps=2 format=3 uid="uid://topinfobar01"]
+
+[ext_resource type="Script" path="res://scripts/ui/TopInfoBar.gd" id="1_topbar"]
+
+[node name="TopInfoBar" type="Control"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+script = ExtResource("1_topbar")
+player_country_tag = "USA"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.058824, 0.117647, 1)
+
+[node name="ContentRow" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="LeftContainer" type="HBoxContainer" parent="ContentRow"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="DateTimeLabel" type="Label" parent="ContentRow/LeftContainer"]
+layout_mode = 2
+text = "15 June 1939  •  14:32"
+
+[node name="TimeSpeedContainer" type="HBoxContainer" parent="ContentRow/LeftContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="PauseButton" type="Button" parent="ContentRow/LeftContainer/TimeSpeedContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 32)
+text = "||"
+
+[node name="Speed1Button" type="Button" parent="ContentRow/LeftContainer/TimeSpeedContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 32)
+text = "1x"
+
+[node name="Speed2Button" type="Button" parent="ContentRow/LeftContainer/TimeSpeedContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 32)
+text = "2x"
+
+[node name="Speed3Button" type="Button" parent="ContentRow/LeftContainer/TimeSpeedContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 32)
+text = "3x"
+
+[node name="Speed4Button" type="Button" parent="ContentRow/LeftContainer/TimeSpeedContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 32)
+text = "4x"
+
+[node name="CenterContainer" type="HBoxContainer" parent="ContentRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="ProductionButton" type="Button" parent="ContentRow/CenterContainer"]
+layout_mode = 2
+text = "Production"
+
+[node name="TechnologyButton" type="Button" parent="ContentRow/CenterContainer"]
+layout_mode = 2
+text = "Technology"
+
+[node name="DiplomacyButton" type="Button" parent="ContentRow/CenterContainer"]
+layout_mode = 2
+text = "Diplomacy"
+
+[node name="AgentsButton" type="Button" parent="ContentRow/CenterContainer"]
+layout_mode = 2
+text = "Agents"
+
+[node name="MapButton" type="Button" parent="ContentRow/CenterContainer"]
+layout_mode = 2
+text = "Map"
+
+[node name="RightContainer" type="HBoxContainer" parent="ContentRow"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ResourcesContainer" type="HBoxContainer" parent="ContentRow/RightContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="SteelLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+layout_mode = 2
+text = "Steel: 0"
+
+[node name="AluminumLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+layout_mode = 2
+text = "Aluminum: 0"
+
+[node name="OilLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+layout_mode = 2
+text = "Oil: 0"
+
+[node name="RubberLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+layout_mode = 2
+text = "Rubber: 0"
+
+[node name="MenuContainer" type="HBoxContainer" parent="ContentRow/RightContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SaveButton" type="Button" parent="ContentRow/RightContainer/MenuContainer"]
+layout_mode = 2
+text = "Save"
+
+[node name="LoadButton" type="Button" parent="ContentRow/RightContainer/MenuContainer"]
+layout_mode = 2
+text = "Load"
+
+[node name="SettingsButton" type="Button" parent="ContentRow/RightContainer/MenuContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="HelpButton" type="Button" parent="ContentRow/RightContainer/MenuContainer"]
+layout_mode = 2
+text = "Help"

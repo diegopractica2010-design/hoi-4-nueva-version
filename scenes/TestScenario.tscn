@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://e7nwre744kui"]
+[gd_scene load_steps=4 format=3 uid="uid://e7nwre744kui"]
 
 [ext_resource type="Script" uid="uid://dtjxviguusdk4" path="res://scripts/core/TestRunner.gd" id="1_l5b53"]
 [ext_resource type="Script" uid="uid://bofeojlh1wplu" path="res://scripts/core/ScenarioLoader.gd" id="2_wna7v"]
 [ext_resource type="PackedScene" uid="uid://b32rba8qvhmi6" path="res://scenes/WorldMap.tscn" id="3_45mq6"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TopInfoBar.tscn" id="4_topbar"]
 
 [node name="TestScenario" type="Node" unique_id=1430823089]
 script = ExtResource("1_l5b53")
@@ -11,3 +12,8 @@ script = ExtResource("1_l5b53")
 script = ExtResource("2_wna7v")
 
 [node name="WorldMap" parent="." unique_id=504288333 instance=ExtResource("3_45mq6")]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="TopInfoBar" parent="UILayer" instance=ExtResource("4_topbar")]

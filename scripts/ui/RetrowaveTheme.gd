@@ -13,6 +13,29 @@ const WARNING := Color("#ff6666")
 const SUCCESS := Color("#55ff99")
 
 
+static func style_top_info_bar(bar: Control) -> void:
+	var bg := bar.get_node_or_null("Background") as ColorRect
+	if bg != null:
+		bg.color = BG_DEEP
+
+
+static func style_info_bar_label(label: Label, accent: Color = TEXT_PRIMARY) -> void:
+	label.add_theme_color_override("font_color", accent)
+	label.add_theme_font_size_override("font_size", 14)
+
+
+static func style_nav_button(button: Button) -> void:
+	style_secondary_button(button)
+	button.add_theme_font_size_override("font_size", 13)
+
+
+static func style_speed_button(button: Button, active: bool = false) -> void:
+	if active:
+		style_primary_button(button)
+	else:
+		style_secondary_button(button)
+
+
 static func style_production_screen(screen: Control) -> void:
 	var bg := screen.get_node_or_null("Background") as ColorRect
 	if bg != null:
