@@ -14,6 +14,8 @@ signal family_experience_changed(family_id: String, total_units: int)
 signal production_completed(line_id: String, design_id: String, count: int)
 signal production_progress_updated(line_id: String, progress: float)
 signal production_resource_shortage(line_id: String, missing: Dictionary)
+signal equipment_added_to_stockpile(equipment_id: String, amount: int)
+signal equipment_taken_from_stockpile(equipment_id: String, amount: int)
 
 const GLOBAL_MODIFIERS_PATH := "res://data/production/global_modifiers.json"
 const STANCE_TAG := "stance"
@@ -33,8 +35,10 @@ var _stance_presets: Dictionary = {}
 var _doctrine_presets: Dictionary = {}
 var _focus_presets: Dictionary = {}
 var _rules: Dictionary = {}
-## National resource pool used to pay refinement / shakedown project costs.
+## National resource pool used to pay refinement / shakedown project costs (steel, fuel, etc.).
 var national_stockpile: Dictionary = {}
+# === National equipment stockpile (finished designs / small arms / vehicles) ===
+var national_equipment_stockpile: Dictionary = {}  # equipment_id -> int amount
 ## unit_id -> { equipment_template_id: count } currently assigned to the formation.
 var _unit_equipment_stock: Dictionary = {}
 
@@ -45,6 +49,8 @@ func _ready() -> void:
 	_rules = GameData.design_data.production_rules
 	_load_modifier_presets()
 	_load_retooling_rules()
+	if not production_completed.is_connected(_on_production_completed):
+		production_completed.connect(_on_production_completed)
 
 
 func _get_base_daily_points() -> float:
@@ -312,6 +318,53 @@ func pay_cost(cost: Dictionary) -> bool:
 	return true
 
 
+# === National equipment stockpile ===
+
+
+func add_to_national_stockpile(equipment_id: String, amount: int) -> void:
+	if amount <= 0 or equipment_id.is_empty():
+		return
+	if not national_equipment_stockpile.has(equipment_id):
+		national_equipment_stockpile[equipment_id] = 0
+	national_equipment_stockpile[equipment_id] = int(national_equipment_stockpile[equipment_id]) + amount
+	equipment_added_to_stockpile.emit(equipment_id, amount)
+
+
+func take_from_national_stockpile(equipment_id: String, amount: int) -> int:
+	if amount <= 0 or equipment_id.is_empty():
+		return 0
+	if not national_equipment_stockpile.has(equipment_id):
+		return 0
+	var available := int(national_equipment_stockpile[equipment_id])
+	var taken := mini(amount, available)
+	national_equipment_stockpile[equipment_id] = available - taken
+	if int(national_equipment_stockpile[equipment_id]) <= 0:
+		national_equipment_stockpile.erase(equipment_id)
+	equipment_taken_from_stockpile.emit(equipment_id, taken)
+	return taken
+
+
+func get_national_stockpile_amount(equipment_id: String) -> int:
+	return int(national_equipment_stockpile.get(equipment_id, 0))
+
+
+func set_national_equipment_stockpile(stock: Dictionary) -> void:
+	national_equipment_stockpile.clear()
+	for equipment_id in stock:
+		var amount := int(stock[equipment_id])
+		if amount > 0:
+			national_equipment_stockpile[str(equipment_id)] = amount
+
+
+func get_national_equipment_stockpile() -> Dictionary:
+	return national_equipment_stockpile.duplicate(true)
+
+
+func _on_production_completed(_line_id: String, design_id: String, count: int) -> void:
+	add_to_national_stockpile(design_id, count)
+	print("Production complete: %s × %d added to national stockpile" % [design_id, count])
+
+
 # === Equipment shortages (formation readiness / organization) ===
 
 
@@ -370,6 +423,28 @@ func apply_equipment_shortage_modifiers(
 ) -> float:
 	var penalty := get_unit_readiness_penalty(unit_id, required_equipment)
 	return base_readiness * penalty
+
+
+func request_equipment_for_unit(unit_id: String, equipment_id: String, amount: int) -> int:
+	var taken := take_from_national_stockpile(equipment_id, amount)
+	if taken > 0:
+		var current := get_unit_equipment_stock(unit_id)
+		current[equipment_id] = int(current.get(equipment_id, 0)) + taken
+		set_unit_equipment_stock(unit_id, current)
+	return taken
+
+
+func auto_reinforce_unit_from_stockpile(unit_id: String, required_equipment: Dictionary) -> Dictionary:
+	var shortages := get_unit_shortages(unit_id, required_equipment)
+	var fulfilled: Dictionary = {}
+
+	for eq in shortages:
+		var needed := int(shortages[eq])
+		var got := request_equipment_for_unit(unit_id, str(eq), needed)
+		if got > 0:
+			fulfilled[eq] = got
+
+	return fulfilled
 
 
 func get_line_resource_cost_for_days(line_id: String, days: float) -> Dictionary:
@@ -987,11 +1062,7 @@ func advance_production(days: float) -> void:
 func _complete_item(line: ProductionLine, line_id: String) -> void:
 	line.completed_count += 1
 	line.progress -= line.design_production_cost
-	var reli_note := ""
-	if line.shortage_reliability_multiplier < 0.999:
-		reli_note = " | shortage reliability x%.2f" % line.shortage_reliability_multiplier
 	production_completed.emit(line_id, line.design_id, 1)
-	print("Production complete: %s (Total: %d)%s" % [line.design_id, line.completed_count, reli_note])
 
 
 func get_line_progress_info(line_id: String) -> Dictionary:

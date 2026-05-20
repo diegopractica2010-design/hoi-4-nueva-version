@@ -112,8 +112,17 @@
 - **`ProductionManager`**: per-unit stock (`set_unit_equipment_stock`), `get_unit_shortages`, `get_shortage_report`, `apply_equipment_shortage_modifiers` (combat hook).
 - Example formation: `us_infantry_division_1943` in `data/formations/division_templates.json`.
 
+### National equipment stockpile (wired)
+- Finished production adds to `national_equipment_stockpile` via `production_completed` → `_on_production_completed`.
+- APIs: `add_to_national_stockpile`, `take_from_national_stockpile`, `get_national_stockpile_amount` (equipment ints; raw materials remain in `national_stockpile` floats).
+- Units pull gear with `request_equipment_for_unit` and `auto_reinforce_unit_from_stockpile`.
+
+### Equipment taxonomy (design)
+- **Infantry Equipment**: produced small arms (rifle/SMG/LMG by type + generation).
+- **Sustainment Equipment**: abstracted bulk gear (uniforms, helmets, grenades, basic ammo, entrenching tools).
+
 ### Future
-- Connect unit stock to production completions and national equipment pools.
+- Infantry equipment type/generation JSON stats and sustainment costs per soldier.
 - Surface `get_shortage_report` on the Production Assignment UI.
 
 ---

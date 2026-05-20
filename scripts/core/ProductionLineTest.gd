@@ -14,6 +14,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_refinement_tradeoffs(design_data) and ok
 	ok = _test_production_manager() and ok
 	ok = _test_equipment_shortages() and ok
+	ok = _test_national_equipment_stockpile() and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -272,6 +273,43 @@ static func _test_equipment_shortages() -> bool:
 
 	pm.clear_unit_equipment_stock("test_div_1")
 	print("  [PASS] equipment shortages and readiness penalties")
+	return true
+
+
+static func _test_national_equipment_stockpile() -> bool:
+	var pm := _get_production_manager()
+	if pm == null:
+		print("  [SKIP] national equipment stockpile (no autoload)")
+		return true
+
+	pm.set_national_equipment_stockpile({})
+	pm.clear_unit_equipment_stock("stock_test_unit")
+
+	pm.add_to_national_stockpile("m4_sherman_medium", 5)
+	if pm.get_national_stockpile_amount("m4_sherman_medium") != 5:
+		print("  [FAIL] add_to_national_stockpile")
+		return false
+
+	var taken := pm.take_from_national_stockpile("m4_sherman_medium", 2)
+	if taken != 2 or pm.get_national_stockpile_amount("m4_sherman_medium") != 3:
+		print("  [FAIL] take_from_national_stockpile: taken=", taken)
+		return false
+
+	pm.add_to_national_stockpile("rifle", 100)
+	var required := {"rifle": 80, "m4_sherman_medium": 2}
+	var fulfilled := pm.auto_reinforce_unit_from_stockpile("stock_test_unit", required)
+	if int(fulfilled.get("rifle", 0)) != 80 or int(fulfilled.get("m4_sherman_medium", 0)) != 2:
+		print("  [FAIL] auto_reinforce_unit_from_stockpile: ", fulfilled)
+		return false
+
+	var report := pm.get_shortage_report("stock_test_unit", required)
+	if not report.get("missing_equipment", {}).is_empty():
+		print("  [FAIL] unit should be fully reinforced: ", report)
+		return false
+
+	pm.clear_unit_equipment_stock("stock_test_unit")
+	pm.set_national_equipment_stockpile({})
+	print("  [PASS] national equipment stockpile and unit reinforcement")
 	return true
 
 
