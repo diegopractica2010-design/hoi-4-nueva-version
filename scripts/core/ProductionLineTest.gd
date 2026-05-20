@@ -646,11 +646,33 @@ static func _test_leader_manager() -> bool:
 	if patton.get_attack_modifier() <= 0.08:
 		print("  [FAIL] leader attack modifier too low: ", patton.get_attack_modifier())
 		return false
-	if not lm.set_country_position("USA", LeaderManager.POSITION_CHIEF_OF_ARMY, "usa_patton_test"):
+	var assign_check: Dictionary = lm.can_assign_national_position(
+		"USA",
+		LeaderManager.POSITION_CHIEF_OF_ARMY,
+		"usa_patton_test",
+	)
+	if not bool(assign_check.get("can_assign", false)):
+		print("  [FAIL] can_assign_national_position: ", assign_check)
+		return false
+	if float((assign_check.get("cost", {}) as Dictionary).get("stability", 0.0)) <= 0.0:
+		print("  [FAIL] national position cost preview missing stability")
+		return false
+
+	if not lm.set_country_position(
+		"USA",
+		LeaderManager.POSITION_CHIEF_OF_ARMY,
+		"usa_patton_test",
+		false,
+	):
 		print("  [FAIL] set chief of army position")
 		return false
 	if lm.get_country_position_leader("USA", LeaderManager.POSITION_CHIEF_OF_ARMY) != patton:
 		print("  [FAIL] country position leader lookup")
+		return false
+
+	var bonuses: Dictionary = lm.get_national_bonuses("USA")
+	if float(bonuses.get("army_attack", 0.0)) <= 0.0:
+		print("  [FAIL] national bonuses from chief of army: ", bonuses)
 		return false
 
 	var rommel: Leader = lm.get_leader("ger_rommel")
@@ -711,8 +733,8 @@ static func _test_leader_manager() -> bool:
 		return false
 
 	lm.leaders.erase("usa_patton_test")
-	if lm.country_leaders.has("USA"):
-		(lm.country_leaders["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)
+	if lm.country_positions.has("USA"):
+		(lm.country_positions["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)
 
 	print("  [PASS] LeaderManager registration and assignment")
 	return true

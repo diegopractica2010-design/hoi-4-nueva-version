@@ -6,21 +6,26 @@ extends Node
 const POSITION_CHIEF_OF_ARMY := "chief_of_army"
 const POSITION_CHIEF_OF_NAVY := "chief_of_navy"
 const POSITION_CHIEF_OF_AIR_FORCE := "chief_of_air_force"
-const POSITION_HEAD_OF_STATE := "head_of_state"
+const POSITION_CHIEF_OF_SPACE_FORCE := "chief_of_space_force"
 
-const TOP_POSITIONS: Array[String] = [
+const NATIONAL_POSITIONS: Array[String] = [
 	POSITION_CHIEF_OF_ARMY,
 	POSITION_CHIEF_OF_NAVY,
 	POSITION_CHIEF_OF_AIR_FORCE,
-	POSITION_HEAD_OF_STATE,
+	POSITION_CHIEF_OF_SPACE_FORCE,
 ]
+
+const NATIONAL_POSITION_CHANGE_COST: Dictionary = {
+	"stability": 5.0,
+	"prestige": 3.0,
+}
 
 const TRAITS_PATH := "res://data/leaders/leader_traits.json"
 const HISTORICAL_LEADERS_1936_PATH := "res://data/leaders/historical_leaders_1936.json"
 const MAX_SKILL := 10
 
 var leaders: Dictionary = {}  # leader_id -> Leader
-var country_leaders: Dictionary = {}  # country_tag -> { position_id -> leader_id }
+var country_positions: Dictionary = {}  # country_tag -> { position_id -> leader_id }
 var trait_definitions: Dictionary = {}
 
 
@@ -62,10 +67,47 @@ func get_leader_for_army(army_id: String) -> Leader:
 	return null
 
 
-func set_country_position(country_tag: String, position_id: String, leader_id: String) -> bool:
-	if not TOP_POSITIONS.has(position_id):
-		push_warning("LeaderManager: unknown position '%s'" % position_id)
+# === National top positions (chiefs of staff) ===
+
+func can_assign_national_position(
+	country_tag: String,
+	position: String,
+	new_leader_id: String,
+) -> Dictionary:
+	var result := {
+		"can_assign": true,
+		"cost": NATIONAL_POSITION_CHANGE_COST.duplicate(),
+		"reason": "",
+	}
+
+	if not NATIONAL_POSITIONS.has(position):
+		result["can_assign"] = false
+		result["reason"] = "Invalid position"
+		return result
+
+	var leader: Leader = leaders.get(new_leader_id) as Leader
+	if leader == null:
+		result["can_assign"] = false
+		result["reason"] = "Leader not found"
+		return result
+	if leader.country_tag != country_tag:
+		result["can_assign"] = false
+		result["reason"] = "Leader does not match country"
+		return result
+
+	return result
+
+
+func set_country_position(
+	country_tag: String,
+	position: String,
+	leader_id: String,
+	apply_cost: bool = true,
+) -> bool:
+	if not NATIONAL_POSITIONS.has(position):
+		push_warning("LeaderManager: invalid national position: " + position)
 		return false
+
 	var leader: Leader = leaders.get(leader_id) as Leader
 	if leader == null:
 		return false
@@ -75,17 +117,60 @@ func set_country_position(country_tag: String, position_id: String, leader_id: S
 			% [leader_id, leader.country_tag, country_tag]
 		)
 		return false
-	if not country_leaders.has(country_tag):
-		country_leaders[country_tag] = {}
-	(country_leaders[country_tag] as Dictionary)[position_id] = leader_id
+
+	if not country_positions.has(country_tag):
+		country_positions[country_tag] = {}
+
+	if apply_cost:
+		print(
+			"Changing %s position for %s. Cost will be applied (future system)."
+			% [position, country_tag]
+		)
+
+	(country_positions[country_tag] as Dictionary)[position] = leader_id
+	print(
+		"Set %s as %s for %s"
+		% [leader.name, position, country_tag]
+	)
 	return true
 
 
-func get_country_position_leader(country_tag: String, position_id: String) -> Leader:
-	if not country_leaders.has(country_tag):
+func get_country_position_leader(country_tag: String, position: String) -> Leader:
+	if not country_positions.has(country_tag):
 		return null
-	var positions: Dictionary = country_leaders[country_tag]
-	return leaders.get(str(positions.get(position_id, ""))) as Leader
+	var positions: Dictionary = country_positions[country_tag]
+	var leader_id := str(positions.get(position, ""))
+	if leader_id.is_empty():
+		return null
+	return leaders.get(leader_id) as Leader
+
+
+func get_national_bonuses(country_tag: String) -> Dictionary:
+	var bonuses := {
+		"army_attack": 0.0,
+		"army_organization": 0.0,
+		"naval_combat": 0.0,
+		"air_support": 0.0,
+		"planning_speed": 0.0,
+	}
+
+	var chief_army := get_country_position_leader(country_tag, POSITION_CHIEF_OF_ARMY)
+	if chief_army != null:
+		bonuses["army_attack"] = float(bonuses["army_attack"]) + chief_army.get_attack_modifier() * 0.8
+		bonuses["army_organization"] = (
+			float(bonuses["army_organization"]) + chief_army.get_organization_modifier() * 0.7
+		)
+		bonuses["planning_speed"] = float(bonuses["planning_speed"]) + chief_army.get_planning_modifier() * 1.2
+
+	var chief_navy := get_country_position_leader(country_tag, POSITION_CHIEF_OF_NAVY)
+	if chief_navy != null:
+		bonuses["naval_combat"] = float(bonuses["naval_combat"]) + chief_navy.get_attack_modifier() * 0.9
+
+	var chief_air := get_country_position_leader(country_tag, POSITION_CHIEF_OF_AIR_FORCE)
+	if chief_air != null:
+		bonuses["air_support"] = float(bonuses["air_support"]) + chief_air.get_attack_modifier() * 0.6
+
+	return bonuses
 
 
 func get_leaders_for_country(country_tag: String) -> Array[Leader]:

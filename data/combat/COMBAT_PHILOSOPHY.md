@@ -83,6 +83,6 @@ Rules are data-driven in `data/combat/combat_width_rules.json` and applied via `
 
 - `Leader` resource: skills 0–10 (attack, defense, organization, logistics, planning), traits, experience, army assignment.
 - Trait definitions in `data/leaders/leader_traits.json` (e.g. Desert Fox, Sea Wolf, Arctic Bear).
-- `LeaderManager` autoload: register leaders, promote (`promote_leader`), assign to armies, national positions (`chief_of_army`, `chief_of_navy`, `chief_of_air_force`, `head_of_state`).
+- `LeaderManager` autoload: register leaders, promote (`promote_leader`), assign to armies, national chiefs (`chief_of_army`, `chief_of_navy`, `chief_of_air_force`, `chief_of_space_force`) with cost preview via `can_assign_national_position()` and country-wide `get_national_bonuses()`.
 - Example historical leaders in `data/leaders/historical_leaders_1936.json` (Rommel, Dönitz).
 - Combat hooks: `CombatResolver.get_effective_combat_power(..., army_id)` applies leader attack, organization, and logistics bonuses when the army has an active (uninjured, uncaptured) commander.
