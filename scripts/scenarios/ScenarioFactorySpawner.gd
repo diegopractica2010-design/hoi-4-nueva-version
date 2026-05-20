@@ -3,7 +3,10 @@ class_name ScenarioFactorySpawner
 extends Node
 
 const DEFAULT_SCENARIO := "1936"
-const FALLBACK_PORT_PROVINCES: Array[int] = [5, 9, 11, 17, 33, 34, 42, 69]
+const TOP_INDUSTRIAL_TAGS: Array[String] = ["USA", "GER", "ENG", "SOV", "JAP"]
+const TOP_NAVAL_SHIPYARD_TAGS: Array[String] = ["USA", "ENG", "JAP"]
+const DEFAULT_NAVAL_POWER_TAGS: Array[String] = ["USA", "ENG", "JAP", "GER", "ITA", "FRA"]
+const FALLBACK_PORT_PROVINCES: Array[int] = [5, 9, 11, 17, 23, 26, 33, 34, 42, 69, 74, 96]
 
 
 func spawn_factories_for_scenario(
@@ -37,43 +40,63 @@ func spawn_factories_for_scenario(
 			return scenario_loader.provinces.get(province_id) as Province
 		)
 
-	var spawn_provinces := _collect_spawn_provinces(data, scenario_loader)
+	if not data.has("countries"):
+		push_warning("ScenarioFactorySpawner: no countries block in " + path)
+		return
+
 	var factories_created := 0
 	var shipyards_created := 0
+	var provinces_touched := 0
 
-	for entry in spawn_provinces:
-		var province_id := int(entry.get("province_id", 0))
-		var owner_tag := str(entry.get("owner_tag", ""))
-		if province_id <= 0 or owner_tag.is_empty():
+	for country in _iter_countries(data):
+		var country_tag := str(country.get("tag", ""))
+		if country_tag.is_empty():
 			continue
 
-		var factory_count := int(entry.get("factory_count", 2))
-		var created := factory_manager.register_factories_for_province(
-			province_id, owner_tag, maxi(factory_count, 1)
-		)
-		factories_created += created.size()
+		var is_major_power := bool(country.get("major_power", _default_major_power(country_tag)))
+		var is_naval_power := bool(country.get("naval_power", _default_naval_power(country_tag)))
+		var key_provinces := _resolve_key_provinces(country)
+		if key_provinces.is_empty():
+			continue
 
-		if _province_has_port(province_id, scenario_loader):
-			var shipyard := factory_manager.create_shipyard_for_province(province_id, owner_tag, 3)
-			if shipyard != null:
-				shipyards_created += 1
+		var base_factories := _base_factory_count(country_tag, is_major_power)
+		for province_id in key_provinces:
+			var factories_to_create := base_factories
+			if is_major_power:
+				factories_to_create = maxi(2, base_factories / 2)
+
+			var created := factory_manager.register_factories_for_province(
+				province_id, country_tag, factories_to_create,
+			)
+			factories_created += created.size()
+			provinces_touched += 1
+
+		if is_naval_power:
+			for province_id in key_provinces:
+				if not _province_has_port(province_id, data, scenario_loader):
+					continue
+				var shipyard_levels := 3
+				if country_tag in TOP_NAVAL_SHIPYARD_TAGS:
+					shipyard_levels = 5
+				var shipyard := factory_manager.create_shipyard_for_province(
+					province_id, country_tag, shipyard_levels,
+				)
+				if shipyard != null:
+					shipyards_created += 1
 
 	print(
-		"ScenarioFactorySpawner: %s — %d factories, %d shipyards across %d provinces"
-		% [scenario_name, factories_created, shipyards_created, spawn_provinces.size()]
+		"ScenarioFactorySpawner: %s — %d factories, %d shipyards across %d province entries"
+		% [scenario_name, factories_created, shipyards_created, provinces_touched]
 	)
 
 
-func _collect_spawn_provinces(data: Dictionary, loader: ScenarioLoader) -> Array:
+func _iter_countries(data: Dictionary) -> Array:
 	var out: Array = []
-	var seen: Dictionary = {}
-
 	var countries_block: Variant = data.get("countries", [])
 	if typeof(countries_block) == TYPE_ARRAY:
 		for country in countries_block:
-			if typeof(country) != TYPE_DICTIONARY:
-				continue
-			_add_country_spawn_entries(country as Dictionary, loader, out, seen)
+			if typeof(country) == TYPE_DICTIONARY:
+				out.append(country)
 	elif typeof(countries_block) == TYPE_DICTIONARY:
 		for tag in countries_block:
 			var country: Variant = countries_block[tag]
@@ -82,66 +105,56 @@ func _collect_spawn_provinces(data: Dictionary, loader: ScenarioLoader) -> Array
 			var d: Dictionary = country as Dictionary
 			if not d.has("tag"):
 				d["tag"] = str(tag)
-			_add_country_spawn_entries(d, loader, out, seen)
-
-	var provinces_block: Variant = data.get("provinces", [])
-	if typeof(provinces_block) == TYPE_ARRAY:
-		for p_data in provinces_block:
-			if typeof(p_data) != TYPE_DICTIONARY:
-				continue
-			var p: Dictionary = p_data as Dictionary
-			var pid := int(p.get("id", 0))
-			if pid <= 0 or seen.has(pid):
-				continue
-			var factories := int(p.get("factories", 0))
-			if factories < 25:
-				continue
-			var owner := str(p.get("owner_tag", p.get("controller_tag", "")))
-			if owner.is_empty():
-				continue
-			seen[pid] = true
-			out.append({
-				"province_id": pid,
-				"owner_tag": owner,
-				"factory_count": clampi(factories / 25, 1, 4),
-			})
-
+			out.append(d)
 	return out
 
 
-func _add_country_spawn_entries(
-	country: Dictionary,
-	loader: ScenarioLoader,
-	out: Array,
-	seen: Dictionary,
-) -> void:
-	var tag := str(country.get("tag", ""))
-	if tag.is_empty():
-		return
-
+func _resolve_key_provinces(country: Dictionary) -> Array[int]:
 	var key_provinces: Variant = country.get("key_provinces", [])
-	if typeof(key_provinces) == TYPE_ARRAY:
-		for raw_id in key_provinces:
-			_append_spawn(out, seen, int(raw_id), tag, 2)
-	elif country.has("capital_province_id"):
-		_append_spawn(out, seen, int(country.get("capital_province_id", 0)), tag, 2)
+	if typeof(key_provinces) == TYPE_ARRAY and not (key_provinces as Array).is_empty():
+		var out: Array[int] = []
+		for raw_id in key_provinces as Array:
+			var pid := int(raw_id)
+			if pid > 0:
+				out.append(pid)
+		return out
+
+	var capital := int(country.get("capital_province_id", 0))
+	if capital > 0:
+		return [capital]
+	return []
 
 
-func _append_spawn(out: Array, seen: Dictionary, province_id: int, owner_tag: String, count: int) -> void:
-	if province_id <= 0 or seen.has(province_id):
-		return
-	seen[province_id] = true
-	out.append({
-		"province_id": province_id,
-		"owner_tag": owner_tag,
-		"factory_count": count,
-	})
+func _base_factory_count(country_tag: String, is_major_power: bool) -> int:
+	var base_factories := 3
+	if is_major_power:
+		base_factories = 8
+	if country_tag in TOP_INDUSTRIAL_TAGS:
+		base_factories += 4
+	return base_factories
 
 
-func _province_has_port(province_id: int, loader: ScenarioLoader) -> bool:
-	if loader != null and loader.provinces.has(province_id):
-		var province: Province = loader.provinces[province_id]
+func _default_major_power(country_tag: String) -> bool:
+	return country_tag in TOP_INDUSTRIAL_TAGS
+
+
+func _default_naval_power(country_tag: String) -> bool:
+	return country_tag in DEFAULT_NAVAL_POWER_TAGS
+
+
+func _province_has_port(
+	province_id: int,
+	scenario_data: Dictionary,
+	scenario_loader: ScenarioLoader,
+) -> bool:
+	if scenario_loader != null and scenario_loader.provinces.has(province_id):
+		var province: Province = scenario_loader.provinces[province_id]
 		return province != null and province.resolve_has_port()
+
+	var ports_block: Variant = scenario_data.get("ports", [])
+	if typeof(ports_block) == TYPE_ARRAY and province_id in ports_block:
+		return true
+
 	return province_id in FALLBACK_PORT_PROVINCES
 
 
