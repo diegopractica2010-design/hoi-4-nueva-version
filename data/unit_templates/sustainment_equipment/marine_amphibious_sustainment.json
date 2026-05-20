@@ -1,0 +1,9 @@
+{
+  "id": "marine_amphibious_sustainment",
+  "template_id": "marine_amphibious_sustainment",
+  "name": "Amphibious Sustainment Package",
+  "supply_consumption": 1.8,
+  "reliability_impact": -0.02,
+  "readiness_bonus": 0.10,
+  "description": "Specialized gear for amphibious operations. Higher supply use but improves readiness for marine units."
+}

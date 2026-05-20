@@ -1,0 +1,9 @@
+{
+  "id": "basic_sustainment",
+  "template_id": "basic_sustainment",
+  "name": "Basic Sustainment Equipment",
+  "supply_consumption": 1.0,
+  "reliability_impact": 0.0,
+  "readiness_bonus": 0.0,
+  "description": "Standard uniforms, basic gear, and supplies for line infantry."
+}

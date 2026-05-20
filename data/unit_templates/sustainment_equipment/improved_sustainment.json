@@ -1,0 +1,9 @@
+{
+  "id": "improved_sustainment",
+  "template_id": "improved_sustainment",
+  "name": "Improved Sustainment Equipment",
+  "supply_consumption": 0.9,
+  "reliability_impact": 0.03,
+  "readiness_bonus": 0.05,
+  "description": "Better quality gear and logistics support. Slightly improves readiness and reliability."
+}

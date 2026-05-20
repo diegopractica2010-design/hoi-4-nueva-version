@@ -28,6 +28,7 @@
       "manpower": 14253,
       "support_supply_per_day": 78,
       "infantry_equipment_template": "infantry_m1_garand",
+      "sustainment_equipment_template": "improved_sustainment",
       "equipment": [
         {"type": "infantry", "count": 12000, "infantry_equipment_override": null},
         {"type": "artillery_towed", "count": 36},
@@ -65,8 +66,20 @@
         {
           "template_id": "assault_engineer_battalion",
           "count": 1,
-          "infantry_equipment_template": "infantry_stg44_assault_rifle"
+          "infantry_equipment_template": "infantry_stg44_assault_rifle",
+          "sustainment_equipment_template": "engineer_sustainment"
         }
+      ]
+    },
+    {
+      "template_id": "us_marine_division_ww2",
+      "name": "US Marine Division (WW2)",
+      "manpower": 12000,
+      "support_supply_per_day": 82,
+      "infantry_equipment_template": "infantry_m1_garand",
+      "sustainment_equipment_template": "marine_amphibious_sustainment",
+      "equipment": [
+        {"type": "infantry", "count": 10000, "infantry_equipment_override": null}
       ]
     },
     {

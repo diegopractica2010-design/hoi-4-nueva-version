@@ -3,16 +3,19 @@ extends RefCounted
 
 const MODULES_DIR := "res://data/modules/"
 const TEMPLATES_DIR := "res://data/unit_templates/"
+const SUSTAINMENT_DIR := "res://data/unit_templates/sustainment_equipment/"
 const RULES_PATH := "res://data/production/production_line_rules.json"
 
 var modules: Dictionary = {}
 var templates: Dictionary = {}
+var sustainment_templates: Dictionary = {}
 var production_rules: Dictionary = {}
 
 
 func load_all() -> void:
 	load_modules()
 	load_templates()
+	load_sustainment_equipment()
 	load_production_rules()
 
 
@@ -49,6 +52,41 @@ func get_infantry_equipment(template_id: String) -> UnitTemplate:
 	if template.is_infantry_equipment():
 		return template
 	return null
+
+
+func load_sustainment_equipment() -> void:
+	sustainment_templates.clear()
+	var dir := DirAccess.open(SUSTAINMENT_DIR)
+	if dir == null:
+		push_warning("DesignDataLoader: sustainment equipment folder missing: ", SUSTAINMENT_DIR)
+		return
+	dir.list_dir_begin()
+	var file_name := dir.get_next()
+	while file_name != "":
+		if not dir.current_is_dir() and file_name.ends_with(".json"):
+			var data := get_sustainment_equipment(file_name.get_basename())
+			if not data.is_empty():
+				var template_id := str(data.get("template_id", data.get("id", file_name.get_basename())))
+				sustainment_templates[template_id] = data
+		file_name = dir.get_next()
+	dir.list_dir_end()
+	print("✅ Sustainment equipment loaded: ", sustainment_templates.size())
+
+
+func get_sustainment_equipment(template_id: String) -> Dictionary:
+	if sustainment_templates.has(template_id):
+		return (sustainment_templates[template_id] as Dictionary).duplicate(true)
+	var path := "%s%s.json" % [SUSTAINMENT_DIR, template_id]
+	if not ResourceLoader.exists(path):
+		return {}
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return {}
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	file.close()
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return {}
+	return parsed as Dictionary
 
 
 func get_refinement_project_defs() -> Array:

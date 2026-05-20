@@ -1,0 +1,9 @@
+{
+  "id": "engineer_sustainment",
+  "template_id": "engineer_sustainment",
+  "name": "Engineer Sustainment Package",
+  "supply_consumption": 1.6,
+  "reliability_impact": 0.0,
+  "readiness_bonus": 0.08,
+  "description": "Extra tools, explosives, and specialized equipment for combat engineers."
+}

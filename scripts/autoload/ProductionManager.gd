@@ -397,7 +397,7 @@ func get_division_required_equipment(division_template_id: String) -> Dictionary
 	var div: DivisionTemplate = loader.get_division(division_template_id) if loader != null else null
 	if div == null:
 		return {}
-	return div.get_required_equipment()
+	return div.get_required_equipment(GameData.design_data)
 
 
 func get_unit_shortages(unit_id: String, required_equipment: Dictionary) -> Dictionary:
@@ -446,7 +446,20 @@ func apply_equipment_shortage_modifiers(
 ) -> float:
 	var penalty := get_unit_readiness_penalty(unit_id, required_equipment)
 	var infantry_mult := get_division_infantry_combat_multiplier(division_template_id)
-	return base_readiness * penalty * infantry_mult
+	var sustainment_mult := get_division_sustainment_readiness_multiplier(division_template_id)
+	return base_readiness * penalty * infantry_mult * sustainment_mult
+
+
+func get_division_sustainment_readiness_multiplier(division_template_id: String) -> float:
+	if division_template_id.is_empty() or GameData.design_data == null:
+		return 1.0
+	var supply := get_node_or_null("/root/SupplyManager")
+	if supply == null:
+		return 1.0
+	var div: DivisionTemplate = supply.division_templates.get_division(division_template_id)
+	if div == null:
+		return 1.0
+	return 1.0 + div.get_sustainment_readiness_bonus(GameData.design_data)
 
 
 func get_division_infantry_stats(division_template_id: String) -> Dictionary:

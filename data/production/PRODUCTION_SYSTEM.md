@@ -133,7 +133,7 @@
 ### Infantry equipment templates (`data/unit_templates/infantry_equipment/`)
 - Fields: `infantry_equipment_type`, `infantry_equipment_generation`, combat stats, `infantry_equipment_per_soldier`, `sustainment_equipment_per_soldier`, `description`.
 - Examples: K98k (gen 1), M1 Garand (gen 2), StG 44 (gen 3), M2 Browning HMG, M16A1 (gen 4).
-- **Sustainment Equipment** = abstracted bulk gear (uniforms, helmets, grenades, ammo, tools); tooltips TBD.
+- **Sustainment Equipment** (`data/unit_templates/sustainment_equipment/`) = abstracted bulk gear (uniforms, helmets, grenades, ammo, tools); affects supply consumption, readiness, and reliability—not combat stats. Templates: `basic_sustainment`, `improved_sustainment`, `engineer_sustainment`, `marine_amphibious_sustainment`. Divisions set `sustainment_equipment_template`; subunits may override. Included in `get_required_equipment()` for stockpile/reinforcement flow.
 
 ### Future
 - Infantry equipment type/generation JSON stats and sustainment costs per soldier.

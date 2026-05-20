@@ -17,6 +17,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_national_equipment_stockpile() and ok
 	ok = _test_infantry_equipment_stats(design_data) and ok
 	ok = _test_priority_reinforcement() and ok
+	ok = _test_sustainment_equipment(design_data) and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -408,6 +409,38 @@ static func _test_priority_reinforcement() -> bool:
 	pm.clear_unit_equipment_stock("priority_unit")
 	pm.clear_unit_equipment_stock("normal_unit")
 	print("  [PASS] priority reinforcement ordering")
+	return true
+
+
+static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
+	design_data.load_sustainment_equipment()
+	var basic := design_data.get_sustainment_equipment("basic_sustainment")
+	if basic.is_empty():
+		print("  [FAIL] basic_sustainment template missing")
+		return false
+
+	var supply := Engine.get_main_loop().root.get_node_or_null("/root/SupplyManager")
+	if supply == null:
+		print("  [PASS] sustainment equipment (data only)")
+		return true
+
+	supply.division_templates.load_all()
+	var us_div: DivisionTemplate = supply.division_templates.get_division("us_infantry_division_1943")
+	if us_div == null:
+		print("  [FAIL] us_infantry_division_1943 missing")
+		return false
+	if us_div.get_sustainment_equipment_template() != "improved_sustainment":
+		print("  [FAIL] sustainment template on division")
+		return false
+	var required := us_div.get_required_equipment(design_data)
+	if not required.has("improved_sustainment"):
+		print("  [FAIL] sustainment not in required equipment: ", required)
+		return false
+	if float(us_div.get_sustainment_consumption_multiplier(design_data)) >= 1.0:
+		print("  [FAIL] improved sustainment should reduce consumption multiplier")
+		return false
+
+	print("  [PASS] sustainment equipment templates and division support")
 	return true
 
 
