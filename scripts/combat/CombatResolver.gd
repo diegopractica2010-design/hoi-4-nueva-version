@@ -1,10 +1,14 @@
 class_name CombatResolver
 extends Node
 
-## Central place for resolving battles. Starts with equipment-driven effective combat power.
+## Central place for resolving battles. Equipment stats, leaders, terrain, and width.
 
 
-func get_effective_combat_power(division_template_id: String, unit_id: String = "") -> Dictionary:
+func get_effective_combat_power(
+	division_template_id: String,
+	unit_id: String = "",
+	army_id: String = "",
+) -> Dictionary:
 	var base_stats: Dictionary = ProductionManager.get_division_final_combat_stats(
 		division_template_id, unit_id,
 	)
@@ -12,19 +16,34 @@ func get_effective_combat_power(division_template_id: String, unit_id: String = 
 	if base_stats.is_empty():
 		return {}
 
-	# Placeholder for future modifiers (terrain, weather, leaders, etc.)
 	var final_soft := float(base_stats.get("soft_attack", 0.0))
 	var final_hard := float(base_stats.get("hard_attack", 0.0))
 	var final_readiness := float(base_stats.get("readiness", 1.0))
-	var final_org := 1.0  # Will come from unit state later
+	var final_org := 1.0
+
+	var leader: Leader = null
+	var leader_manager := _leader_manager()
+	if leader_manager != null:
+		if not army_id.is_empty():
+			leader = leader_manager.get_leader_for_army(army_id)
+		elif not unit_id.is_empty():
+			pass  # Future: resolve army from unit_id
+
+	if leader != null and not leader.is_injured and not leader.is_captured:
+		final_soft += leader.get_attack_modifier() * 10.0
+		final_hard += leader.get_attack_modifier() * 6.0
+		final_org += leader.get_organization_modifier()
+		final_readiness += leader.get_logistics_modifier() * 0.5
 
 	return {
-		"soft_attack": final_soft * final_readiness,
-		"hard_attack": final_hard * final_readiness,
-		"readiness": final_readiness,
-		"organization": final_org,
+		"soft_attack": final_soft,
+		"hard_attack": final_hard,
+		"readiness": clampf(final_readiness, 0.3, 1.8),
+		"organization": clampf(final_org, 0.4, 1.5),
 		"supply_consumption": float(base_stats.get("supply_consumption", 1.0)),
 		"has_shortages": bool(base_stats.get("has_shortages", false)),
+		"leader_name": leader.name if leader != null else "No Leader",
+		"leader_attack_bonus": leader.get_attack_modifier() if leader != null else 0.0,
 	}
 
 
@@ -57,6 +76,13 @@ func get_combat_width_for_battle(
 	var width := calculator.get_effective_combat_width(attacker_infra, defender_infra, battle_terrain)
 	calculator.free()
 	return width
+
+
+func _leader_manager() -> Node:
+	var tree := Engine.get_main_loop()
+	if tree == null:
+		return null
+	return tree.root.get_node_or_null("/root/LeaderManager")
 
 
 func _find_scenario_loader() -> ScenarioLoader:

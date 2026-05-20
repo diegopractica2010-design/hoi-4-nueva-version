@@ -550,6 +550,38 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 		pm.clear_unit_equipment_stock("combat_resolver_test")
 		pm.set_national_equipment_stockpile({})
 
+	var lm := Engine.get_main_loop().root.get_node_or_null("/root/LeaderManager")
+	if lm != null:
+		var rommel: Leader = lm.get_leader("ger_rommel")
+		if rommel != null:
+			var base_power: Dictionary = resolver.get_effective_combat_power(
+				"german_infantry_division_1943",
+			)
+			lm.assign_leader_to_army("ger_rommel", "panzer_army_africa_test")
+			var led_power: Dictionary = resolver.get_effective_combat_power(
+				"german_infantry_division_1943",
+				"",
+				"panzer_army_africa_test",
+			)
+			rommel.assigned_army_id = ""
+			if str(led_power.get("leader_name", "")) != "Erwin Rommel":
+				resolver.free()
+				print("  [FAIL] leader name in combat power: ", led_power)
+				return false
+			if float(led_power.get("leader_attack_bonus", 0.0)) <= 0.0:
+				resolver.free()
+				print("  [FAIL] Rommel attack bonus missing: ", led_power)
+				return false
+			if float(led_power.get("soft_attack", 0.0)) <= float(base_power.get("soft_attack", 0.0)):
+				resolver.free()
+				print(
+					"  [FAIL] leader should boost soft_attack: base=",
+					base_power.get("soft_attack"),
+					" led=",
+					led_power.get("soft_attack"),
+				)
+				return false
+
 	resolver.free()
 	print("  [PASS] CombatResolver effective combat power")
 	return true
