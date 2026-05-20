@@ -1077,6 +1077,9 @@ func get_total_output_for_design(design_id: String) -> float:
 
 
 # === Production Assignment screen support ===
+# Performance: screen data is computed on demand. When factory/line state changes often,
+# add _production_screen_cache: Dictionary (country_tag -> ProductionScreenData) and
+# invalidate on assign/reassign/advance_days/capture.
 
 func get_all_factories_for_country(country_tag: String) -> Array[Factory]:
 	var result: Array[Factory] = []
@@ -1132,6 +1135,44 @@ func get_factories_producing_design(design_id: String) -> Array[int]:
 	for f in get_factories_producing(design_id):
 		result.append(f.factory_id)
 	return result
+
+
+func get_production_screen_data(country_tag: String) -> ProductionScreenData:
+	var data := ProductionScreenData.new()
+	data.country_tag = country_tag
+
+	var factories := get_all_factories_for_country(country_tag)
+	data.total_factories = factories.size()
+
+	var total_lines := 0
+	var total_efficiency := 0.0
+	var retooling_count := 0
+	var designs_in_production: Dictionary = {}
+
+	for f in factories:
+		var summary := get_factory_summary(f.factory_id)
+		data.factories.append(summary)
+
+		total_lines += f.assigned_lines.size()
+		total_efficiency += get_factory_efficiency(f.factory_id)
+
+		if f.is_retooling:
+			retooling_count += 1
+
+		if not f.current_production_design.is_empty():
+			var design_id := f.current_production_design
+			designs_in_production[design_id] = (
+				float(designs_in_production.get(design_id, 0.0)) + f.get_daily_output_estimate()
+			)
+
+	data.total_production_lines = total_lines
+	data.factories_in_retooling = retooling_count
+	data.designs_in_production = designs_in_production
+
+	if data.total_factories > 0:
+		data.average_efficiency = total_efficiency / float(data.total_factories)
+
+	return data
 
 
 func reassign_factory(factory_id: int, new_design_id: String, new_category: String = "") -> bool:

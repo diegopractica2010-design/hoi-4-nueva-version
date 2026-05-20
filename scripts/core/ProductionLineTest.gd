@@ -789,6 +789,16 @@ static func _test_assignment_screen_backends() -> bool:
 		print("  [FAIL] production overview missing GER factories: ", overview)
 		return false
 
+	var screen_data: ProductionScreenData = pm.get_production_screen_data("GER")
+	if screen_data.total_factories < 1 or screen_data.factories.is_empty():
+		_cleanup_test_factory(fm, test_factory_id)
+		print("  [FAIL] production screen data: ", screen_data.total_factories)
+		return false
+	if not screen_data.designs_in_production.has("m3_stuart_light"):
+		_cleanup_test_factory(fm, test_factory_id)
+		print("  [FAIL] designs in production: ", screen_data.designs_in_production)
+		return false
+
 	var summary: Dictionary = pm.get_factory_summary(test_factory_id)
 	if str(summary.get("current_design", "")) != "m3_stuart_light":
 		_cleanup_test_factory(fm, test_factory_id)
@@ -812,6 +822,12 @@ static func _test_assignment_screen_backends() -> bool:
 		if rommel.assigned_army_id.is_empty() and not rommel_listed:
 			_cleanup_test_factory(fm, test_factory_id)
 			print("  [FAIL] Rommel should be available when unassigned")
+			return false
+
+		var leader_screen: LeaderScreenData = lm.get_leader_screen_data("GER")
+		if leader_screen.total_leaders < 1:
+			_cleanup_test_factory(fm, test_factory_id)
+			print("  [FAIL] leader screen data: ", leader_screen.total_leaders)
 			return false
 
 		var leader_overview: Dictionary = lm.get_country_leader_overview("GER")

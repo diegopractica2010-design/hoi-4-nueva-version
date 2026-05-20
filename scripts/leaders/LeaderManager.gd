@@ -183,6 +183,9 @@ func get_leaders_for_country(country_tag: String) -> Array[Leader]:
 
 
 # === Leader Assignment screen support ===
+# Performance: screen data is computed on demand. When leader assignments change often,
+# add _leader_screen_cache: Dictionary (country_tag -> LeaderScreenData) and invalidate
+# on register/assign/promote/injury/capture/advance_day.
 
 func get_available_leaders(country_tag: String) -> Array[Leader]:
 	var result: Array[Leader] = []
@@ -240,6 +243,37 @@ func get_country_leader_overview(country_tag: String) -> Dictionary:
 		"leaders": summaries,
 		"national_positions": positions,
 	}
+
+
+func get_leader_screen_data(country_tag: String) -> LeaderScreenData:
+	var data := LeaderScreenData.new()
+	data.country_tag = country_tag
+
+	var country_leader_list := get_leaders_for_country(country_tag)
+	data.total_leaders = country_leader_list.size()
+
+	var available := 0
+	var injured := 0
+	var captured := 0
+
+	for leader in country_leader_list:
+		data.leaders.append(get_leader_summary(leader.leader_id))
+
+		if leader.assigned_army_id.is_empty() and not leader.is_captured:
+			available += 1
+		if leader.is_injured:
+			injured += 1
+		if leader.is_captured:
+			captured += 1
+
+	data.available_leaders = available
+	data.injured_leaders = injured
+	data.captured_leaders = captured
+
+	if country_positions.has(country_tag):
+		data.national_positions = (country_positions[country_tag] as Dictionary).duplicate()
+
+	return data
 
 
 # === Experience, traits, injury, capture, promotion ===

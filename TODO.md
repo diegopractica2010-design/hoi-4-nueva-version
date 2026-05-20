@@ -49,6 +49,11 @@ Last Updated: May 2026
 - Using factories as diplomatic/trade leverage.
 - Smart Production Advisor tool (suggests which factories to assign when building a new division).
 
+## UI / Screen Data
+
+- `ProductionScreenData` and `LeaderScreenData` resources in `scripts/ui_data/` (built on demand).
+- Add per-country caching in `ProductionManager` / `LeaderManager` when factory or leader state changes frequently (invalidate on assign, retool, day tick).
+
 ## Other Notes
 
 - Add more historical leaders to `data/leaders/historical_leaders_1936.json` and other era files.
