@@ -16,6 +16,7 @@ signal production_progress_updated(line_id: String, progress: float)
 signal production_resource_shortage(line_id: String, missing: Dictionary)
 signal equipment_added_to_stockpile(equipment_id: String, amount: int)
 signal equipment_taken_from_stockpile(equipment_id: String, amount: int)
+signal unit_reinforced(unit_id: String, equipment_fulfilled: Dictionary)
 
 const GLOBAL_MODIFIERS_PATH := "res://data/production/global_modifiers.json"
 const STANCE_TAG := "stance"
@@ -43,6 +44,9 @@ var national_equipment_stockpile: Dictionary = {}  # equipment_id -> int amount
 var _unit_equipment_stock: Dictionary = {}
 
 var _equipment_shortage_tracker := EquipmentShortageTracker.new()
+
+# === Reinforcement & priority system ===
+var priority_reinforcement_units: Dictionary = {}  # unit_id -> bool
 
 
 func _ready() -> void:
@@ -474,17 +478,65 @@ func request_equipment_for_unit(unit_id: String, equipment_id: String, amount: i
 	return taken
 
 
+func set_unit_priority_reinforcement(unit_id: String, enabled: bool) -> void:
+	if unit_id.is_empty():
+		return
+	if enabled:
+		priority_reinforcement_units[unit_id] = true
+	else:
+		priority_reinforcement_units.erase(unit_id)
+
+
+func is_unit_priority_reinforced(unit_id: String) -> bool:
+	return bool(priority_reinforcement_units.get(unit_id, false))
+
+
 func auto_reinforce_unit_from_stockpile(unit_id: String, required_equipment: Dictionary) -> Dictionary:
 	var shortages := get_unit_shortages(unit_id, required_equipment)
 	var fulfilled: Dictionary = {}
 
-	for eq in shortages:
-		var needed := int(shortages[eq])
-		var got := request_equipment_for_unit(unit_id, str(eq), needed)
+	for equipment_id in shortages:
+		var needed := int(shortages[equipment_id])
+		var got := request_equipment_for_unit(unit_id, str(equipment_id), needed)
 		if got > 0:
-			fulfilled[eq] = got
+			fulfilled[equipment_id] = got
+
+	if not fulfilled.is_empty():
+		unit_reinforced.emit(unit_id, fulfilled.duplicate(true))
 
 	return fulfilled
+
+
+func reinforce_all_units(required_map: Dictionary) -> Dictionary:
+	var report := {"units": {}}
+
+	for unit_id in priority_reinforcement_units:
+		if not is_unit_priority_reinforced(str(unit_id)):
+			continue
+		if not required_map.has(unit_id):
+			continue
+		var required: Variant = required_map[unit_id]
+		if typeof(required) != TYPE_DICTIONARY:
+			continue
+		report["units"][unit_id] = auto_reinforce_unit_from_stockpile(
+			str(unit_id), required as Dictionary
+		)
+
+	for unit_id in required_map:
+		if is_unit_priority_reinforced(str(unit_id)):
+			continue
+		var required: Variant = required_map[unit_id]
+		if typeof(required) != TYPE_DICTIONARY:
+			continue
+		report["units"][unit_id] = auto_reinforce_unit_from_stockpile(
+			str(unit_id), required as Dictionary
+		)
+
+	return report
+
+
+func daily_reinforcement_tick(required_map: Dictionary) -> Dictionary:
+	return reinforce_all_units(required_map)
 
 
 func get_line_resource_cost_for_days(line_id: String, days: float) -> Dictionary:

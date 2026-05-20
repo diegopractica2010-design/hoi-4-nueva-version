@@ -16,6 +16,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_equipment_shortages() and ok
 	ok = _test_national_equipment_stockpile() and ok
 	ok = _test_infantry_equipment_stats(design_data) and ok
+	ok = _test_priority_reinforcement() and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -366,6 +367,47 @@ static func _test_infantry_equipment_stats(design_data: DesignDataLoader) -> boo
 			return false
 
 	print("  [PASS] infantry equipment type/generation stats")
+	return true
+
+
+static func _test_priority_reinforcement() -> bool:
+	var pm := _get_production_manager()
+	if pm == null:
+		print("  [SKIP] priority reinforcement (no autoload)")
+		return true
+
+	pm.set_national_equipment_stockpile({"rifle": 50})
+	pm.clear_unit_equipment_stock("priority_unit")
+	pm.clear_unit_equipment_stock("normal_unit")
+	pm.set_unit_priority_reinforcement("priority_unit", false)
+	pm.set_unit_priority_reinforcement("normal_unit", false)
+
+	var required := {"rifle": 40}
+	var required_map := {
+		"normal_unit": required,
+		"priority_unit": required,
+	}
+
+	pm.set_unit_priority_reinforcement("priority_unit", true)
+	pm.reinforce_all_units(required_map)
+
+	var priority_stock := pm.get_unit_equipment_stock("priority_unit")
+	var normal_stock := pm.get_unit_equipment_stock("normal_unit")
+	if int(priority_stock.get("rifle", 0)) != 40:
+		print("  [FAIL] priority unit should be fully reinforced: ", priority_stock)
+		return false
+	if int(normal_stock.get("rifle", 0)) != 10:
+		print("  [FAIL] normal unit should get remainder: ", normal_stock)
+		return false
+	if not pm.is_unit_priority_reinforced("priority_unit"):
+		print("  [FAIL] priority flag not set")
+		return false
+
+	pm.set_unit_priority_reinforcement("priority_unit", false)
+	pm.set_national_equipment_stockpile({})
+	pm.clear_unit_equipment_stock("priority_unit")
+	pm.clear_unit_equipment_stock("normal_unit")
+	print("  [PASS] priority reinforcement ordering")
 	return true
 
 

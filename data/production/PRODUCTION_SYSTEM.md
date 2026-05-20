@@ -118,6 +118,7 @@
 - Units pull gear with `request_equipment_for_unit` and `auto_reinforce_unit_from_stockpile`.
 - `get_unit_shortages` counts **unit stock + national pool**; true gaps only when both are insufficient.
 - `get_unit_shortage_report_with_national` adds `national_stockpile_available` per equipment type for UI.
+- **Reinforcement:** `auto_reinforce_unit_from_stockpile`, `reinforce_all_units`, `daily_reinforcement_tick`; priority units served first via `set_unit_priority_reinforcement`; `unit_reinforced` signal on fulfillment.
 
 ### Equipment taxonomy (design)
 - **Infantry Equipment**: produced small arms (rifle/SMG/LMG by type + generation).
@@ -166,6 +167,35 @@
 - Adjust production cost and retooling time when switching between different generations of infantry weapons.
 - Allow divisions to show "Infantry Equipment Quality" in the UI based on the generation they are using.
 - Consider adding a small combat bonus/penalty when mixing generations inside the same division.
+
+---
+
+## Future UI / Quality of Life Features (High Priority)
+
+### Unit Information & Reinforcement Panel
+- Show current **Infantry Equipment** and **Sustainment Equipment** counts on every unit.
+- When a unit has taken losses or is understrength, clearly display:
+  - What equipment is missing to return to full strength.
+  - How much is available in the National Stockpile.
+  - Estimated time to produce the missing equipment at current production rates.
+- This information should be easily viewable on a **Unit Info Panel**.
+
+### Division Design Screen
+- When designing a new division, clearly show:
+  - Total equipment required across all categories (Infantry Equipment, Sustainment Equipment, tanks, artillery, trucks, etc.).
+  - Whether the player currently has enough equipment in the National Stockpile to field the unit immediately.
+  - If not enough equipment exists: show estimated time until production can fulfill the requirement.
+- Training should only begin once the required equipment is available (or partially available with penalties).
+
+### Smart Production Advisor (Future Feature)
+- When the player wants to field a new division (or reinforce an army), offer a **"Smart Assign"** button.
+- The advisor should:
+  - Analyze current factory assignments.
+  - Suggest which factories/lines to reassign or prioritize to meet the equipment goal fastest.
+  - Provide a time-to-completion estimate.
+- This should feel helpful and transparent, not opaque.
+
+These features will make production feel connected to actual fielded forces and reduce player frustration when trying to rebuild or reinforce units.
 
 ---
 
