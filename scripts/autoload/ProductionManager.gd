@@ -1147,32 +1147,68 @@ func get_production_screen_data(country_tag: String) -> ProductionScreenData:
 	var total_lines := 0
 	var total_efficiency := 0.0
 	var retooling_count := 0
+	var total_daily_output := 0.0
 	var designs_in_production: Dictionary = {}
+	var low_efficiency_count := 0
+	var by_type: Dictionary = {}
+	var by_status: Dictionary = {}
 
 	for f in factories:
 		var summary := get_factory_summary(f.factory_id)
 		data.factories.append(summary)
 
 		total_lines += f.assigned_lines.size()
-		total_efficiency += get_factory_efficiency(f.factory_id)
+		var efficiency := get_factory_efficiency(f.factory_id)
+		total_efficiency += efficiency
 
 		if f.is_retooling:
 			retooling_count += 1
 
+		if efficiency < 0.4:
+			low_efficiency_count += 1
+
+		var daily := f.get_daily_output_estimate()
+		total_daily_output += daily
+
 		if not f.current_production_design.is_empty():
 			var design_id := f.current_production_design
 			designs_in_production[design_id] = (
-				float(designs_in_production.get(design_id, 0.0)) + f.get_daily_output_estimate()
+				float(designs_in_production.get(design_id, 0.0)) + daily
 			)
 
-	data.total_production_lines = total_lines
-	data.factories_in_retooling = retooling_count
-	data.designs_in_production = designs_in_production
+		_append_factory_group(by_type, str(summary.get("factory_type", "standard")), summary)
+		_append_factory_group(by_status, _factory_status_key(f), summary)
 
-	if data.total_factories > 0:
-		data.average_efficiency = total_efficiency / float(data.total_factories)
+	data.total_production_lines = total_lines
+	data.average_efficiency = (
+		total_efficiency / float(data.total_factories) if data.total_factories > 0 else 1.0
+	)
+	data.factories_in_retooling = retooling_count
+	data.estimated_daily_output = total_daily_output
+	data.designs_in_production = designs_in_production
+	data.factories_by_type = by_type
+	data.factories_by_status = by_status
+
+	data.has_critical_efficiency = low_efficiency_count > 0
+	data.has_many_retooling = (
+		data.total_factories > 0 and float(retooling_count) > float(data.total_factories) * 0.3
+	)
 
 	return data
+
+
+func _factory_status_key(factory: Factory) -> String:
+	if factory.is_retooling:
+		return "retooling"
+	if factory.current_production_design.is_empty():
+		return "idle"
+	return "producing"
+
+
+func _append_factory_group(group: Dictionary, key: String, summary: Dictionary) -> void:
+	if not group.has(key):
+		group[key] = []
+	(group[key] as Array).append(summary)
 
 
 func reassign_factory(factory_id: int, new_design_id: String, new_category: String = "") -> bool:

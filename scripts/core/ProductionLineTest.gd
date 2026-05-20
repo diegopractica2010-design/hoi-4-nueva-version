@@ -798,6 +798,22 @@ static func _test_assignment_screen_backends() -> bool:
 		_cleanup_test_factory(fm, test_factory_id)
 		print("  [FAIL] designs in production: ", screen_data.designs_in_production)
 		return false
+	if screen_data.estimated_daily_output <= 0.0:
+		_cleanup_test_factory(fm, test_factory_id)
+		print("  [FAIL] estimated daily output: ", screen_data.estimated_daily_output)
+		return false
+	if not screen_data.factories_by_status.has("producing"):
+		_cleanup_test_factory(fm, test_factory_id)
+		print("  [FAIL] factories_by_status: ", screen_data.factories_by_status.keys())
+		return false
+	print(
+		"  [INFO] GER production screen: factories=",
+		screen_data.total_factories,
+		" output=",
+		screen_data.estimated_daily_output,
+		" avg_eff=",
+		screen_data.average_efficiency,
+	)
 
 	var summary: Dictionary = pm.get_factory_summary(test_factory_id)
 	if str(summary.get("current_design", "")) != "m3_stuart_light":
