@@ -48,6 +48,9 @@ var _equipment_shortage_tracker := EquipmentShortageTracker.new()
 # === Reinforcement & priority system ===
 var priority_reinforcement_units: Dictionary = {}  # unit_id -> bool
 
+# === Screen data caching ===
+var _production_screen_cache: Dictionary = {}  # country_tag -> ProductionScreenData
+
 
 func _ready() -> void:
 	_rules = GameData.design_data.production_rules
@@ -55,6 +58,15 @@ func _ready() -> void:
 	_load_retooling_rules()
 	if not production_completed.is_connected(_on_production_completed):
 		production_completed.connect(_on_production_completed)
+	if factory_manager != null and not factory_manager.factory_captured.is_connected(_on_factory_captured):
+		factory_manager.factory_captured.connect(_on_factory_captured)
+
+
+func _on_factory_captured(_factory_id: int, old_owner: String, new_owner: String) -> void:
+	if not old_owner.is_empty():
+		invalidate_production_cache(old_owner)
+	if not new_owner.is_empty() and new_owner != old_owner:
+		invalidate_production_cache(new_owner)
 
 
 func _get_base_daily_points() -> float:
@@ -209,6 +221,7 @@ func advance_days(days: float) -> Dictionary:
 		report["lines"][line_id] = line_report
 		report["total_units_completed"] += int(line_report.get("units_completed", 0))
 
+	# Optional: clear_all_production_caches()  # refresh daily output estimates every tick
 	day_advanced.emit(report)
 	return report
 
@@ -1049,6 +1062,7 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 		"Assigned line '%s' to factory %d (Province %d, Slot %d)"
 		% [line_id, factory_id, Factory.province_from_id(factory_id), Factory.slot_from_id(factory_id)]
 	)
+	invalidate_production_cache(factory.owner_tag)
 	return true
 
 
@@ -1077,9 +1091,7 @@ func get_total_output_for_design(design_id: String) -> float:
 
 
 # === Production Assignment screen support ===
-# Performance: screen data is computed on demand. When factory/line state changes often,
-# add _production_screen_cache: Dictionary (country_tag -> ProductionScreenData) and
-# invalidate on assign/reassign/advance_days/capture.
+# Screen snapshots are cached per country; invalidate_production_cache() on state changes.
 
 func get_all_factories_for_country(country_tag: String) -> Array[Factory]:
 	var result: Array[Factory] = []
@@ -1138,7 +1150,32 @@ func get_factories_producing_design(design_id: String) -> Array[int]:
 	return result
 
 
-func get_production_screen_data(country_tag: String) -> ProductionScreenData:
+func get_production_screen_data(country_tag: String, use_cache: bool = true) -> ProductionScreenData:
+	if use_cache and _production_screen_cache.has(country_tag):
+		return _production_screen_cache[country_tag] as ProductionScreenData
+
+	var data := _build_production_screen_data(country_tag)
+	_production_screen_cache[country_tag] = data
+	return data
+
+
+func invalidate_production_cache(country_tag: String) -> void:
+	_production_screen_cache.erase(country_tag)
+
+
+func clear_all_production_caches() -> void:
+	_production_screen_cache.clear()
+
+
+## Clears production and leader screen caches (testing, save load, major resets).
+func clear_all_caches() -> void:
+	clear_all_production_caches()
+	var leader_mgr := get_node_or_null("/root/LeaderManager")
+	if leader_mgr != null and leader_mgr.has_method("clear_all_leader_caches"):
+		leader_mgr.clear_all_leader_caches()
+
+
+func _build_production_screen_data(country_tag: String) -> ProductionScreenData:
 	var data := ProductionScreenData.new()
 	data.country_tag = country_tag
 
@@ -1300,6 +1337,7 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 			float(params.get("recovery_days", 0.0)),
 		]
 	)
+	invalidate_production_cache(factory.owner_tag)
 	return true
 
 
@@ -1368,7 +1406,10 @@ func advance_production(days: float) -> void:
 			continue
 
 		if factory.is_retooling:
+			var was_retooling := factory.is_retooling
 			factory.advance_retooling(days)
+			if was_retooling != factory.is_retooling or factory.is_retooling:
+				invalidate_production_cache(factory.owner_tag)
 
 		evaluate_line_resources(line_id, days)
 

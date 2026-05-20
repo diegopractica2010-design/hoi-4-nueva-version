@@ -83,6 +83,7 @@ func apply_damage_to_factory(factory_id: int, damage: float) -> void:
 		return
 	f.apply_damage(damage)
 	factory_damaged.emit(factory_id, damage)
+	_invalidate_production_cache_for_owner(f.owner_tag)
 
 
 func capture_province_factories(province_id: int, new_owner: String, is_annexed: bool = false) -> void:
@@ -125,8 +126,12 @@ func advance_retooling_for_province(province_id: int, days: float) -> void:
 		return
 	for fid in province_to_factories[province_id]:
 		var f: Factory = factories.get(fid)
-		if f != null:
-			f.advance_retooling(days)
+		if f == null:
+			continue
+		var old_retooling := f.is_retooling
+		f.advance_retooling(days)
+		if old_retooling != f.is_retooling or f.is_retooling:
+			_invalidate_production_cache_for_owner(f.owner_tag)
 
 
 func assign_production_line_to_factory(factory_id: int, line_id: String) -> bool:
@@ -182,6 +187,7 @@ func create_factory_for_province(
 	new_factory.current_damage = 0.0
 	new_factory.is_seized = false
 	register_factory(new_factory)
+	_invalidate_production_cache_for_owner(owner_tag)
 	return new_factory
 
 
@@ -244,3 +250,11 @@ func _allocate_factory_id(province_id: int) -> int:
 			return candidate
 	push_warning("FactoryManager: no free factory slot in province %d" % province_id)
 	return 0
+
+
+func _invalidate_production_cache_for_owner(owner_tag: String) -> void:
+	if owner_tag.is_empty():
+		return
+	var production_mgr := get_node_or_null("/root/ProductionManager")
+	if production_mgr != null and production_mgr.has_method("invalidate_production_cache"):
+		production_mgr.invalidate_production_cache(owner_tag)

@@ -28,6 +28,9 @@ var leaders: Dictionary = {}  # leader_id -> Leader
 var country_positions: Dictionary = {}  # country_tag -> { position_id -> leader_id }
 var trait_definitions: Dictionary = {}
 
+# === Screen data caching ===
+var _leader_screen_cache: Dictionary = {}  # country_tag -> LeaderScreenData
+
 
 func _ready() -> void:
 	_load_trait_definitions()
@@ -39,6 +42,7 @@ func register_leader(leader: Leader) -> void:
 		push_warning("LeaderManager: cannot register leader without leader_id")
 		return
 	leaders[leader.leader_id] = leader
+	invalidate_leader_cache(leader.country_tag)
 
 
 func assign_leader_to_army(leader_id: String, army_id: String) -> bool:
@@ -46,6 +50,7 @@ func assign_leader_to_army(leader_id: String, army_id: String) -> bool:
 	if leader == null:
 		return false
 	leader.assigned_army_id = army_id
+	invalidate_leader_cache(leader.country_tag)
 	return true
 
 
@@ -53,6 +58,7 @@ func unassign_leader_from_army(leader_id: String) -> void:
 	var leader: Leader = leaders.get(leader_id) as Leader
 	if leader != null:
 		leader.assigned_army_id = ""
+		invalidate_leader_cache(leader.country_tag)
 
 
 func get_leader(leader_id: String) -> Leader:
@@ -132,6 +138,7 @@ func set_country_position(
 		"Set %s as %s for %s"
 		% [leader.name, position, country_tag]
 	)
+	invalidate_leader_cache(country_tag)
 	return true
 
 
@@ -183,9 +190,7 @@ func get_leaders_for_country(country_tag: String) -> Array[Leader]:
 
 
 # === Leader Assignment screen support ===
-# Performance: screen data is computed on demand. When leader assignments change often,
-# add _leader_screen_cache: Dictionary (country_tag -> LeaderScreenData) and invalidate
-# on register/assign/promote/injury/capture/advance_day.
+# Screen snapshots are cached per country; invalidate_leader_cache() on state changes.
 
 func get_available_leaders(country_tag: String) -> Array[Leader]:
 	var result: Array[Leader] = []
@@ -245,7 +250,24 @@ func get_country_leader_overview(country_tag: String) -> Dictionary:
 	}
 
 
-func get_leader_screen_data(country_tag: String) -> LeaderScreenData:
+func get_leader_screen_data(country_tag: String, use_cache: bool = true) -> LeaderScreenData:
+	if use_cache and _leader_screen_cache.has(country_tag):
+		return _leader_screen_cache[country_tag] as LeaderScreenData
+
+	var data := _build_leader_screen_data(country_tag)
+	_leader_screen_cache[country_tag] = data
+	return data
+
+
+func invalidate_leader_cache(country_tag: String) -> void:
+	_leader_screen_cache.erase(country_tag)
+
+
+func clear_all_leader_caches() -> void:
+	_leader_screen_cache.clear()
+
+
+func _build_leader_screen_data(country_tag: String) -> LeaderScreenData:
 	var data := LeaderScreenData.new()
 	data.country_tag = country_tag
 
@@ -356,6 +378,7 @@ func award_battle_experience(leader_id: String, amount: int = 25) -> void:
 		return
 	leader.add_experience(amount)
 	_check_for_trait_gain(leader)
+	invalidate_leader_cache(leader.country_tag)
 
 
 func _check_for_trait_gain(leader: Leader) -> void:
@@ -383,6 +406,8 @@ func handle_injury_or_capture(leader_id: String) -> void:
 		leader.is_captured = true
 		print("%s has been captured!" % leader.name)
 
+	invalidate_leader_cache(leader.country_tag)
+
 
 func promote_leader(leader_id: String) -> bool:
 	var leader: Leader = leaders.get(leader_id) as Leader
@@ -394,6 +419,7 @@ func promote_leader(leader_id: String) -> bool:
 	leader.logistics_skill = mini(leader.logistics_skill + 1, MAX_SKILL)
 	leader.planning_skill = mini(leader.planning_skill + 1, MAX_SKILL)
 	print("%s has been promoted!" % leader.name)
+	invalidate_leader_cache(leader.country_tag)
 	return true
 
 

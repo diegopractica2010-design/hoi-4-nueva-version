@@ -281,6 +281,9 @@ func load_scenario(scenario_name: String) -> bool:
 	_rebuild_adjacency_system()
 	_infer_port_access_for_all(provinces)
 	_spawn_scenario_factories(scenario_name)
+	var production_mgr := get_node_or_null("/root/ProductionManager")
+	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
+		production_mgr.clear_all_caches()
 	print("✅ Scenario loaded | Provinces: ", provinces.size(), " | Countries: ", countries.size())
 	scenario_loaded.emit()
 	return true
