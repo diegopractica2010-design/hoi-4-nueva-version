@@ -61,3 +61,18 @@
 - Fortification levels and engineer construction.
 - Weather and day/night cycles.
 - Leader traits and doctrine effects.
+
+## Combat Width & Infrastructure
+
+Combat effectiveness is limited by Infrastructure and Terrain rather than raw unit count. This is one of the primary systems used to prevent doomstacking.
+
+Every province has an Infrastructure level that determines its base Combat Width — the number of units that can effectively engage in combat at the same time.
+
+- Attacking province infrastructure limits how many of the attacker's units can effectively participate in the battle.
+- Defending province infrastructure also limits how many defending units can be brought to bear effectively.
+- Terrain (mountains, jungle, forest, urban, marsh, etc.) applies strong modifiers to effective combat width.
+- Excess units beyond the combat width act as reserves and can reinforce during the battle.
+- Attacking from multiple directions can slightly increase the effective combat width for the attacker.
+- Doctrine, leader traits, and infrastructure development can increase a side's effective combat width.
+
+This system rewards operational planning, infrastructure investment, and combined-arms coordination over simply stacking the maximum number of units in one province.
