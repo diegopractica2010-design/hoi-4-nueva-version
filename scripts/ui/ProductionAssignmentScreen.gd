@@ -13,23 +13,32 @@ extends Control
 @onready var type_filter: OptionButton = $FilterBar/TypeFilter
 @onready var search_edit: LineEdit = $FilterBar/SearchEdit
 
-@onready var factory_list: VBoxContainer = $MainArea/FactoryListColumn/FactoryList/FactoryListContent
+@onready var header_row: HBoxContainer = $MainArea/FactoryColumn/HeaderRow
+@onready var factory_list: VBoxContainer = $MainArea/FactoryColumn/FactoryList/FactoryListContent
+@onready var detail_panel: PanelContainer = $MainArea/DetailPanel
 @onready var detail_label: Label = $MainArea/DetailPanel/DetailLabel
 
 var current_data: ProductionScreenData
 var filtered_factories: Array[Dictionary] = []
 
-const COL_PROVINCE := 80
-const COL_DESIGN := 180
-const COL_EFFICIENCY := 80
-const COL_RETOOL := 60
-const COL_OUTPUT := 80
-const COL_BUTTON := 80
-const ROW_HEIGHT := 32
+const HEADER_SPECS: Array[Dictionary] = [
+	{"text": "Province", "width": 100},
+	{"text": "Current Design", "width": 200},
+	{"text": "Efficiency", "width": 90},
+	{"text": "Retooling", "width": 80},
+	{"text": "Daily Output", "width": 90},
+	{"text": "", "width": 0, "expand": true},
+	{"text": "Change", "width": 90},
+	{"text": "Details", "width": 90},
+]
+const ROW_HEIGHT := 36
 
 
 func _ready() -> void:
+	add_to_group("production_screen")
+	_apply_screen_theme()
 	_setup_filters()
+	_setup_headers()
 	status_filter.item_selected.connect(_on_filter_changed)
 	type_filter.item_selected.connect(_on_filter_changed)
 	search_edit.text_changed.connect(_on_filter_changed)
@@ -43,14 +52,38 @@ func _exit_tree() -> void:
 		ProductionManager.day_advanced.disconnect(_on_day_advanced)
 
 
-func _on_day_advanced(_report: Dictionary) -> void:
-	refresh_screen()
+func _apply_screen_theme() -> void:
+	RetrowaveTheme.style_production_screen(self)
+	RetrowaveTheme.style_summary_metric(total_factories_label)
+	RetrowaveTheme.style_summary_metric(avg_efficiency_label, RetrowaveTheme.CYAN)
+	RetrowaveTheme.style_summary_metric(retooling_label, RetrowaveTheme.MAGENTA)
+	RetrowaveTheme.style_summary_metric(daily_output_label)
+	RetrowaveTheme.style_search(search_edit)
+	search_edit.placeholder_text = "Search design or province..."
+	RetrowaveTheme.style_filter_option(status_filter)
+	RetrowaveTheme.style_filter_option(type_filter)
+	RetrowaveTheme.style_detail_panel(detail_panel)
+	RetrowaveTheme.style_detail_label(detail_label)
 
 
-func refresh_screen() -> void:
-	current_data = ProductionManager.get_production_screen_data(country_tag, false)
-	_update_summary_bar()
-	_apply_filters()
+func _setup_headers() -> void:
+	for child in header_row.get_children():
+		child.queue_free()
+
+	for spec in HEADER_SPECS:
+		if bool(spec.get("expand", false)):
+			var spacer := Control.new()
+			spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			header_row.add_child(spacer)
+			continue
+
+		var label := Label.new()
+		label.text = str(spec.get("text", ""))
+		var width := int(spec.get("width", 100))
+		if width > 0:
+			label.custom_minimum_size = Vector2(width, 0)
+		RetrowaveTheme.style_column_header(label)
+		header_row.add_child(label)
 
 
 func _setup_filters() -> void:
@@ -69,6 +102,16 @@ func _setup_filters() -> void:
 	type_filter.add_item("general_factory")
 
 
+func _on_day_advanced(_report: Dictionary) -> void:
+	refresh_screen()
+
+
+func refresh_screen() -> void:
+	current_data = ProductionManager.get_production_screen_data(country_tag, false)
+	_update_summary_bar()
+	_apply_filters()
+
+
 func _update_summary_bar() -> void:
 	if current_data == null:
 		return
@@ -79,9 +122,9 @@ func _update_summary_bar() -> void:
 
 	retooling_label.text = "Retooling: %d" % current_data.factories_in_retooling
 	if current_data.has_many_retooling:
-		retooling_label.modulate = Color.YELLOW
+		retooling_label.modulate = RetrowaveTheme.WARNING
 	else:
-		retooling_label.modulate = Color.WHITE
+		retooling_label.modulate = RetrowaveTheme.MAGENTA
 
 	daily_output_label.text = "Daily Output: %.1f" % current_data.estimated_daily_output
 
@@ -132,8 +175,8 @@ func _populate_factory_list() -> void:
 	for child in factory_list.get_children():
 		child.queue_free()
 
-	for factory_summary in filtered_factories:
-		factory_list.add_child(_create_factory_row(factory_summary))
+	for summary in filtered_factories:
+		factory_list.add_child(_create_factory_row(summary))
 
 
 func _create_factory_row(summary: Dictionary) -> HBoxContainer:
@@ -141,23 +184,22 @@ func _create_factory_row(summary: Dictionary) -> HBoxContainer:
 	hbox.custom_minimum_size = Vector2(0, ROW_HEIGHT)
 	hbox.add_theme_constant_override("separation", 8)
 
-	hbox.add_child(_column_label(str(summary.get("province_id", "?")), COL_PROVINCE))
+	hbox.add_child(_row_label(str(summary.get("province_id", "?")), 100))
 
 	var design_text: String = summary.get("current_design", "")
 	if design_text.is_empty():
 		design_text = "(idle)"
-	hbox.add_child(_column_label(design_text, COL_DESIGN))
+	hbox.add_child(_row_label(design_text, 200))
 
 	var efficiency := float(summary.get("efficiency", 0.0))
-	var eff_label := _column_label("%.1f%%" % (efficiency * 100.0), COL_EFFICIENCY)
+	var eff_label := _row_label("%.1f%%" % (efficiency * 100.0), 90)
 	eff_label.modulate = _efficiency_color(efficiency)
 	hbox.add_child(eff_label)
 
-	var retool_text := "Yes" if summary.get("is_retooling", false) else "No"
-	hbox.add_child(_column_label(retool_text, COL_RETOOL))
-	hbox.add_child(
-		_column_label("%.1f" % float(summary.get("daily_output_estimate", 0.0)), COL_OUTPUT)
-	)
+	var retool_label := _row_label("Yes" if summary.get("is_retooling", false) else "No", 80)
+	hbox.add_child(retool_label)
+
+	hbox.add_child(_row_label("%.1f" % float(summary.get("daily_output_estimate", 0.0)), 90))
 
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -165,33 +207,36 @@ func _create_factory_row(summary: Dictionary) -> HBoxContainer:
 
 	var change_btn := Button.new()
 	change_btn.text = "Change"
-	change_btn.custom_minimum_size = Vector2(COL_BUTTON, 0)
+	change_btn.custom_minimum_size = Vector2(90, 0)
+	RetrowaveTheme.style_primary_button(change_btn)
 	change_btn.pressed.connect(_on_change_pressed.bind(summary))
 	hbox.add_child(change_btn)
 
 	var details_btn := Button.new()
 	details_btn.text = "Details"
-	details_btn.custom_minimum_size = Vector2(COL_BUTTON, 0)
+	details_btn.custom_minimum_size = Vector2(90, 0)
+	RetrowaveTheme.style_secondary_button(details_btn)
 	details_btn.pressed.connect(_on_details_pressed.bind(summary))
 	hbox.add_child(details_btn)
 
 	return hbox
 
 
-func _column_label(text: String, min_width: int) -> Label:
+func _row_label(text: String, min_width: int) -> Label:
 	var label := Label.new()
 	label.text = text
 	label.custom_minimum_size = Vector2(min_width, 0)
 	label.clip_text = true
+	RetrowaveTheme.style_row_label(label)
 	return label
 
 
 func _efficiency_color(efficiency: float) -> Color:
 	if efficiency >= 0.8:
-		return Color.GREEN
+		return RetrowaveTheme.SUCCESS
 	if efficiency >= 0.5:
-		return Color.YELLOW
-	return Color.RED
+		return Color(1.0, 0.9, 0.2)
+	return RetrowaveTheme.WARNING
 
 
 func _on_details_pressed(summary: Dictionary) -> void:
@@ -215,8 +260,19 @@ func _on_details_pressed(summary: Dictionary) -> void:
 
 
 func _on_change_pressed(summary: Dictionary) -> void:
-	print("Change production for factory:", summary.get("factory_id"))
-	# TODO: Open design picker + show retooling warning popup
+	var picker_scene: PackedScene = load("res://scenes/ui/DesignPickerPopup.tscn")
+	if picker_scene == null:
+		push_warning("DesignPickerPopup.tscn not found")
+		return
+
+	var picker: DesignPickerPopup = picker_scene.instantiate() as DesignPickerPopup
+	if picker == null:
+		return
+
+	picker.factory_id = int(summary.get("factory_id", 0))
+	picker.country_tag = country_tag
+	get_tree().root.add_child(picker)
+	picker.popup_centered()
 
 
 func _on_filter_changed(_value: Variant = null) -> void:

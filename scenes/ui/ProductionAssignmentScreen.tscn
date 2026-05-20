@@ -12,16 +12,26 @@ grow_vertical = 2
 script = ExtResource("1_screen")
 country_tag = "GER"
 
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.058824, 0.117647, 1)
+
 [node name="TopSummaryBar" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = 56.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 64.0
 grow_horizontal = 2
-theme_override_constants/separation = 24
+theme_override_constants/separation = 28
 
 [node name="TotalFactoriesLabel" type="Label" parent="TopSummaryBar"]
 layout_mode = 2
@@ -43,24 +53,25 @@ text = "Daily Output: 0.0"
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 16.0
-offset_top = 64.0
-offset_right = -16.0
-offset_bottom = 104.0
+offset_left = 20.0
+offset_top = 72.0
+offset_right = -20.0
+offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_constants/separation = 12
 
 [node name="StatusFilter" type="OptionButton" parent="FilterBar"]
 layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(168, 36)
 
 [node name="TypeFilter" type="OptionButton" parent="FilterBar"]
 layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(168, 36)
 
 [node name="SearchEdit" type="LineEdit" parent="FilterBar"]
 layout_mode = 2
 size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 36)
 placeholder_text = "Search design or province..."
 
 [node name="MainArea" type="HBoxContainer" parent="."]
@@ -68,77 +79,36 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 112.0
-offset_right = -16.0
-offset_bottom = -16.0
+offset_left = 20.0
+offset_top = 120.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 14
 
-[node name="FactoryListColumn" type="VBoxContainer" parent="MainArea"]
+[node name="FactoryColumn" type="VBoxContainer" parent="MainArea"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 4
+theme_override_constants/separation = 6
 
-[node name="ListHeaderRow" type="HBoxContainer" parent="MainArea/FactoryListColumn"]
+[node name="HeaderRow" type="HBoxContainer" parent="MainArea/FactoryColumn"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="ProvinceHeader" type="Label" parent="MainArea/FactoryListColumn/ListHeaderRow"]
-layout_mode = 2
-custom_minimum_size = Vector2(80, 0)
-theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
-text = "Province"
-
-[node name="DesignHeader" type="Label" parent="MainArea/FactoryListColumn/ListHeaderRow"]
-layout_mode = 2
-custom_minimum_size = Vector2(180, 0)
-theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
-text = "Design"
-
-[node name="EfficiencyHeader" type="Label" parent="MainArea/FactoryListColumn/ListHeaderRow"]
-layout_mode = 2
-custom_minimum_size = Vector2(80, 0)
-theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
-text = "Efficiency"
-
-[node name="RetoolingHeader" type="Label" parent="MainArea/FactoryListColumn/ListHeaderRow"]
-layout_mode = 2
-custom_minimum_size = Vector2(60, 0)
-theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
-text = "Retooling"
-
-[node name="OutputHeader" type="Label" parent="MainArea/FactoryListColumn/ListHeaderRow"]
-layout_mode = 2
-custom_minimum_size = Vector2(80, 0)
-theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
-text = "Daily Output"
-
-[node name="HeaderSpacer" type="Control" parent="MainArea/FactoryListColumn/ListHeaderRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ActionsHeader" type="Label" parent="MainArea/FactoryListColumn/ListHeaderRow"]
-layout_mode = 2
-custom_minimum_size = Vector2(168, 0)
-theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
-text = "Actions"
-horizontal_alignment = 1
-
-[node name="FactoryList" type="ScrollContainer" parent="MainArea/FactoryListColumn"]
+[node name="FactoryList" type="ScrollContainer" parent="MainArea/FactoryColumn"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FactoryListContent" type="VBoxContainer" parent="MainArea/FactoryListColumn/FactoryList"]
+[node name="FactoryListContent" type="VBoxContainer" parent="MainArea/FactoryColumn/FactoryList"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
 [node name="DetailPanel" type="PanelContainer" parent="MainArea"]
 layout_mode = 2
-custom_minimum_size = Vector2(280, 0)
+custom_minimum_size = Vector2(300, 0)
 
 [node name="DetailLabel" type="Label" parent="MainArea/DetailPanel"]
 layout_mode = 2
