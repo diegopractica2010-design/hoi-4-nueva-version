@@ -23,6 +23,18 @@
       "logistics_skill": 8,
       "planning_skill": 7,
       "traits": ["sea_wolf", "cautious"]
+    },
+    {
+      "leader_id": "fin_mannerheim",
+      "name": "Carl Gustaf Emil Mannerheim",
+      "country_tag": "FIN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 8,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "traits": ["arctic_bear", "cautious"]
     }
   ]
 }

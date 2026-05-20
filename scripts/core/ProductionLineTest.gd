@@ -633,6 +633,42 @@ static func _test_leader_manager() -> bool:
 	if doenitz == null or not doenitz.has_trait("sea_wolf"):
 		print("  [FAIL] historical leader Dönitz not loaded")
 		return false
+	if doenitz.leader_type != "admiral":
+		print("  [FAIL] Dönitz should be admiral: ", doenitz.leader_type)
+		return false
+
+	var manstein := Leader.new()
+	manstein.leader_id = "ger_manstein_test"
+	manstein.name = "Erich von Manstein"
+	manstein.country_tag = "GER"
+	manstein.leader_type = "general"
+	manstein.attack_skill = 8
+	manstein.defense_skill = 7
+	manstein.add_trait("arctic_bear", 1)
+	lm.register_leader(manstein)
+	if not manstein.has_trait("arctic_bear"):
+		print("  [FAIL] Manstein arctic_bear trait")
+		return false
+	if manstein.get_defense_modifier() <= 0.1:
+		print("  [FAIL] arctic_bear defense bonus: ", manstein.get_defense_modifier())
+		return false
+	lm.leaders.erase("ger_manstein_test")
+
+	var generated: Leader = lm.create_and_register_new_leader("FRA", "general")
+	if generated == null or generated.country_tag != "FRA":
+		print("  [FAIL] generated leader: ", generated)
+		return false
+	if generated.attack_skill < 1 or generated.attack_skill > 6:
+		print("  [FAIL] generated attack skill out of range: ", generated.attack_skill)
+		lm.leaders.erase(generated.leader_id)
+		return false
+	lm.leaders.erase(generated.leader_id)
+
+	var exp_before := patton.experience
+	lm.award_battle_experience("usa_patton_test", 50)
+	if patton.experience != exp_before + 50 or patton.battles_fought < 1:
+		print("  [FAIL] battle experience: exp=", patton.experience, " battles=", patton.battles_fought)
+		return false
 
 	patton.attack_skill = 9
 	if not lm.promote_leader("usa_patton_test"):

@@ -97,6 +97,42 @@ func get_leaders_for_country(country_tag: String) -> Array[Leader]:
 	return out
 
 
+# === Experience, traits, injury, capture, promotion ===
+
+func award_battle_experience(leader_id: String, amount: int = 25) -> void:
+	var leader: Leader = leaders.get(leader_id) as Leader
+	if leader == null:
+		return
+	leader.add_experience(amount)
+	_check_for_trait_gain(leader)
+
+
+func _check_for_trait_gain(leader: Leader) -> void:
+	if leader.battles_fought >= 15 and not leader.has_trait("logistics_wizard"):
+		if randf() < 0.25:
+			leader.add_trait("logistics_wizard", 1)
+			print("%s has gained the trait: Logistics Wizard!" % leader.name)
+
+	if leader.battles_fought >= 25 and randf() < 0.15:
+		if not leader.has_trait("desert_fox") and randf() < 0.3:
+			leader.add_trait("desert_fox", 1)
+			print("%s has gained the trait: Desert Fox!" % leader.name)
+
+
+func handle_injury_or_capture(leader_id: String) -> void:
+	var leader: Leader = leaders.get(leader_id) as Leader
+	if leader == null:
+		return
+
+	if randf() < 0.04:
+		leader.is_injured = true
+		print("%s has been injured!" % leader.name)
+
+	if randf() < 0.015:
+		leader.is_captured = true
+		print("%s has been captured!" % leader.name)
+
+
 func promote_leader(leader_id: String) -> bool:
 	var leader: Leader = leaders.get(leader_id) as Leader
 	if leader == null:
@@ -106,7 +142,16 @@ func promote_leader(leader_id: String) -> bool:
 	leader.organization_skill = mini(leader.organization_skill + 1, MAX_SKILL)
 	leader.logistics_skill = mini(leader.logistics_skill + 1, MAX_SKILL)
 	leader.planning_skill = mini(leader.planning_skill + 1, MAX_SKILL)
+	print("%s has been promoted!" % leader.name)
 	return true
+
+
+func create_and_register_new_leader(country_tag: String, leader_type: String = "general") -> Leader:
+	var generator := LeaderGenerator.new()
+	var new_leader := generator.generate_leader(country_tag, leader_type)
+	generator.free()
+	register_leader(new_leader)
+	return new_leader
 
 
 func get_trait_definition(trait_id: String) -> Dictionary:
