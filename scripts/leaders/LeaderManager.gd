@@ -255,25 +255,83 @@ func get_leader_screen_data(country_tag: String) -> LeaderScreenData:
 	var available := 0
 	var injured := 0
 	var captured := 0
+	var assigned := 0
+	var by_type: Dictionary = {}
+	var by_availability: Dictionary = {
+		"available": [],
+		"assigned": [],
+		"injured": [],
+		"captured": [],
+	}
+	var by_skill_tier: Dictionary = {}
 
 	for leader in country_leader_list:
-		data.leaders.append(get_leader_summary(leader.leader_id))
+		var summary := get_leader_summary(leader.leader_id)
+		summary["skill_tier"] = _skill_tier_for_leader(leader)
+		data.leaders.append(summary)
 
-		if leader.assigned_army_id.is_empty() and not leader.is_captured:
-			available += 1
-		if leader.is_injured:
-			injured += 1
 		if leader.is_captured:
 			captured += 1
+			(by_availability["captured"] as Array).append(summary)
+		elif leader.is_injured:
+			injured += 1
+			(by_availability["injured"] as Array).append(summary)
+		elif not leader.assigned_army_id.is_empty():
+			assigned += 1
+			(by_availability["assigned"] as Array).append(summary)
+		else:
+			available += 1
+			(by_availability["available"] as Array).append(summary)
+
+		var leader_type := leader.leader_type if not leader.leader_type.is_empty() else "general"
+		_append_leader_group(by_type, leader_type, summary)
+
+		var tier := str(summary.get("skill_tier", "average"))
+		_append_leader_group(by_skill_tier, tier, summary)
 
 	data.available_leaders = available
 	data.injured_leaders = injured
 	data.captured_leaders = captured
+	data.leaders_assigned_to_armies = assigned
+	data.leaders_by_type = by_type
+	data.leaders_by_availability = by_availability
+	data.leaders_by_skill_tier = by_skill_tier
 
 	if country_positions.has(country_tag):
 		data.national_positions = (country_positions[country_tag] as Dictionary).duplicate()
 
+	data.national_position_bonuses = get_national_bonuses(country_tag)
+
+	data.has_many_injured = (
+		data.total_leaders > 0 and float(injured) > float(data.total_leaders) * 0.25
+	)
+	data.has_unassigned_armies = not get_armies_without_leader(country_tag).is_empty()
+	data.has_no_chief_of_army = not data.national_positions.has(POSITION_CHIEF_OF_ARMY)
+
 	return data
+
+
+func _skill_tier_for_leader(leader: Leader) -> String:
+	var average := (
+		float(leader.attack_skill)
+		+ float(leader.defense_skill)
+		+ float(leader.organization_skill)
+		+ float(leader.logistics_skill)
+		+ float(leader.planning_skill)
+	) / 5.0
+	if average >= 8.0:
+		return "elite"
+	if average >= 6.0:
+		return "veteran"
+	if average >= 4.0:
+		return "average"
+	return "green"
+
+
+func _append_leader_group(group: Dictionary, key: String, summary: Dictionary) -> void:
+	if not group.has(key):
+		group[key] = []
+	(group[key] as Array).append(summary)
 
 
 # === Experience, traits, injury, capture, promotion ===

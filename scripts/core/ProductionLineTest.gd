@@ -845,6 +845,22 @@ static func _test_assignment_screen_backends() -> bool:
 			_cleanup_test_factory(fm, test_factory_id)
 			print("  [FAIL] leader screen data: ", leader_screen.total_leaders)
 			return false
+		if leader_screen.leaders.is_empty() or not leader_screen.leaders_by_type.has("general"):
+			_cleanup_test_factory(fm, test_factory_id)
+			print("  [FAIL] leaders_by_type: ", leader_screen.leaders_by_type.keys())
+			return false
+		if not leader_screen.national_position_bonuses.has("army_attack"):
+			_cleanup_test_factory(fm, test_factory_id)
+			print("  [FAIL] national_position_bonuses: ", leader_screen.national_position_bonuses)
+			return false
+		print(
+			"  [INFO] GER leader screen: total=",
+			leader_screen.total_leaders,
+			" available=",
+			leader_screen.available_leaders,
+			" no_chief_army=",
+			leader_screen.has_no_chief_of_army,
+		)
 
 		var leader_overview: Dictionary = lm.get_country_leader_overview("GER")
 		if int(leader_overview.get("total_leaders", 0)) < 1:
