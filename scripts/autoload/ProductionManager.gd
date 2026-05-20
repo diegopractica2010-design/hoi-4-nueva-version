@@ -430,11 +430,49 @@ func get_unit_readiness_penalty(unit_id: String, required_equipment: Dictionary)
 
 func get_shortage_report(unit_id: String, required_equipment: Dictionary) -> Dictionary:
 	var shortages := get_unit_shortages(unit_id, required_equipment)
+	var categorized := _categorize_equipment_shortages(shortages, required_equipment)
 	return {
 		"unit_id": unit_id,
 		"missing_equipment": shortages,
+		"missing_infantry_equipment": categorized.get("infantry", {}),
+		"missing_sustainment_equipment": categorized.get("sustainment", {}),
+		"missing_other_equipment": categorized.get("other", {}),
 		"readiness_multiplier": get_unit_readiness_penalty(unit_id, required_equipment),
 	}
+
+
+func _categorize_equipment_shortages(
+	shortages: Dictionary,
+	required_equipment: Dictionary,
+) -> Dictionary:
+	var infantry: Dictionary = {}
+	var sustainment: Dictionary = {}
+	var other: Dictionary = {}
+	for equipment_id in shortages:
+		var key := str(equipment_id)
+		var amount := int(shortages[equipment_id])
+		if _is_sustainment_equipment_id(key):
+			sustainment[key] = amount
+		elif _is_infantry_equipment_id(key):
+			infantry[key] = amount
+		else:
+			other[key] = amount
+	return {"infantry": infantry, "sustainment": sustainment, "other": other}
+
+
+func _is_sustainment_equipment_id(equipment_id: String) -> bool:
+	if equipment_id.contains("sustainment"):
+		return true
+	if GameData.design_data != null:
+		return not GameData.design_data.get_sustainment_equipment(equipment_id).is_empty()
+	return false
+
+
+func _is_infantry_equipment_id(equipment_id: String) -> bool:
+	if GameData.design_data == null:
+		return equipment_id.begins_with("infantry_")
+	var template := GameData.design_data.get_infantry_equipment(equipment_id)
+	return template != null
 
 
 ## Combat / evaluation hook: scale base readiness by equipment fill level.
@@ -480,6 +518,18 @@ func get_division_infantry_combat_multiplier(division_template_id: String) -> fl
 		return 1.0
 	var soft := float(stats.get("soft_attack", 0.9))
 	return clampf(soft / 0.9, 0.75, 1.75)
+
+
+func get_division_combat_modifiers(division_template_id: String) -> Dictionary:
+	if division_template_id.is_empty() or GameData.design_data == null:
+		return {}
+	var supply := get_node_or_null("/root/SupplyManager")
+	if supply == null:
+		return {}
+	var template: DivisionTemplate = supply.division_templates.get_division(division_template_id)
+	if template == null:
+		return {}
+	return template.get_combined_combat_modifiers(GameData.design_data)
 
 
 func request_equipment_for_unit(unit_id: String, equipment_id: String, amount: int) -> int:

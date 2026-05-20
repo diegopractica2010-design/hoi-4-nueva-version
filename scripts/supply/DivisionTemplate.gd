@@ -167,58 +167,7 @@ func get_sustainment_reliability_impact(design_data: DesignDataLoader = null) ->
 	return float(get_sustainment_stats(design_data).get("reliability_impact", 0.0))
 
 
-func get_required_equipment(design_data: DesignDataLoader = null) -> Dictionary:
-	var out: Dictionary = {}
-	if not required_equipment.is_empty():
-		out = required_equipment.duplicate(true)
-	for entry in equipment:
-		if typeof(entry) != TYPE_DICTIONARY:
-			continue
-		var eq_type := str(entry.get("type", "")).to_lower()
-		if eq_type == "infantry":
-			var infantry_id := _infantry_template_id_for_equipment_entry(entry)
-			var count := int(entry.get("count", 0))
-			if not infantry_id.is_empty() and count > 0:
-				out[infantry_id] = int(out.get(infantry_id, 0)) + count
-			continue
-		var template_id := str(entry.get("template_id", entry.get("type", "")))
-		var amount := int(entry.get("count", 0))
-		if template_id.is_empty() or amount <= 0:
-			continue
-		out[template_id] = int(out.get(template_id, 0)) + amount
-	_append_sustainment_requirements(out, design_data)
-	return out
-
-
-func _append_sustainment_requirements(out: Dictionary, design_data: DesignDataLoader) -> void:
-	var soldier_count := _sustainment_headcount()
-	if soldier_count <= 0:
-		return
-	var per_soldier := get_sustainment_consumption_multiplier(design_data)
-	var sustainment_id := get_sustainment_equipment_template()
-	if sustainment_id.is_empty():
-		sustainment_id = "basic_sustainment"
-	var amount := int(ceil(float(soldier_count) * per_soldier))
-	out[sustainment_id] = int(out.get(sustainment_id, 0)) + amount
-
-	# Specialized subunits draw extra sustainment packages.
-	for subunit_def in subunit_defs:
-		if typeof(subunit_def) != TYPE_DICTIONARY:
-			continue
-		var sub_id := str(subunit_def.get("sustainment_equipment_template", ""))
-		if sub_id.is_empty():
-			continue
-		var weight := maxi(int(subunit_def.get("count", 1)), 1)
-		var sub_data := {}
-		var loader := _resolve_design_data(design_data)
-		if loader != null:
-			sub_data = loader.get_sustainment_equipment(sub_id)
-		var sub_per_soldier := float(sub_data.get("supply_consumption", 1.0))
-		var extra := int(ceil(200.0 * float(weight) * sub_per_soldier))
-		out[sub_id] = int(out.get(sub_id, 0)) + extra
-
-
-func _sustainment_headcount() -> int:
+func get_total_infantry_headcount() -> int:
 	var count := 0
 	for entry in equipment:
 		if typeof(entry) != TYPE_DICTIONARY:
@@ -230,6 +179,138 @@ func _sustainment_headcount() -> int:
 	if manpower > 0:
 		return manpower
 	return 0
+
+
+func get_specialized_sustainment_demand() -> float:
+	var extra := 0.0
+	var division_sustainment := sustainment_equipment_template.to_lower()
+	if division_sustainment.contains("marine") or division_sustainment.contains("amphibious"):
+		extra += 180.0
+	elif division_sustainment.contains("engineer"):
+		extra += 120.0
+
+	for subunit_def in subunit_defs:
+		if typeof(subunit_def) != TYPE_DICTIONARY:
+			continue
+		var subunit_type := _subunit_type_key(subunit_def as Dictionary)
+		var weight := maxf(float(maxi(int(subunit_def.get("count", 1)), 1)), 1.0)
+		match subunit_type:
+			"engineer", "combat_engineer":
+				extra += 120.0 * weight
+			"marine", "amphibious":
+				extra += 180.0 * weight
+			"recon", "reconnaissance":
+				extra += 60.0 * weight
+			"medical", "field_hospital":
+				extra += 40.0 * weight
+			"signals", "communications":
+				extra += 35.0 * weight
+			_:
+				pass
+
+	return extra
+
+
+func get_combined_combat_modifiers(design_data: DesignDataLoader = null) -> Dictionary:
+	var infantry_stats := get_aggregated_infantry_stats(design_data)
+	var sustainment_mult := get_sustainment_consumption_multiplier(design_data)
+	var base_reliability := float(infantry_stats.get("reliability", 0.95))
+	base_reliability += get_sustainment_reliability_impact(design_data)
+	base_reliability = clampf(base_reliability, 0.5, 1.0)
+
+	return {
+		"soft_attack": float(infantry_stats.get("soft_attack", 0.9)),
+		"hard_attack": float(infantry_stats.get("hard_attack", 0.03)),
+		"supply_consumption": float(infantry_stats.get("supply_consumption", 1.0)) * sustainment_mult,
+		"reliability": base_reliability,
+		"readiness_bonus": get_sustainment_readiness_bonus(design_data),
+		"infantry_generation": int(infantry_stats.get("generation", infantry_stats.get("average_generation", 1))),
+	}
+
+
+func get_required_equipment(design_data: DesignDataLoader = null) -> Dictionary:
+	var requirements := _build_required_equipment(design_data)
+	for equipment_id in required_equipment:
+		requirements[str(equipment_id)] = int(required_equipment[equipment_id])
+	return requirements
+
+
+func _build_required_equipment(design_data: DesignDataLoader = null) -> Dictionary:
+	var requirements: Dictionary = {}
+
+	if not infantry_equipment_template.is_empty():
+		var infantry_count := get_total_infantry_headcount()
+		if infantry_count > 0:
+			requirements[infantry_equipment_template] = int(
+				requirements.get(infantry_equipment_template, 0)
+			) + infantry_count
+
+	var sustainment_id := get_sustainment_equipment_template()
+	if sustainment_id.is_empty():
+		sustainment_id = "basic_sustainment"
+	var headcount := get_total_infantry_headcount()
+	if headcount > 0:
+		var base_sustainment := float(headcount) * 0.8
+		var specialized_bonus := get_specialized_sustainment_demand()
+		requirements[sustainment_id] = int(ceil(base_sustainment + specialized_bonus))
+
+	for entry in equipment:
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		var eq_type := str(entry.get("type", "")).to_lower()
+		if eq_type == "infantry":
+			var infantry_id := _infantry_template_id_for_equipment_entry(entry)
+			var infantry_amount := int(entry.get("count", 0))
+			if not infantry_id.is_empty() and infantry_amount > 0:
+				requirements[infantry_id] = int(requirements.get(infantry_id, 0)) + infantry_amount
+			continue
+		var template_id := str(entry.get("template_id", ""))
+		var amount := int(entry.get("count", 0))
+		if eq_type in ["artillery_towed", "truck"] or (template_id.is_empty() and not eq_type.is_empty()):
+			var key := template_id if not template_id.is_empty() else eq_type
+			if amount > 0:
+				requirements[key] = int(requirements.get(key, 0)) + amount
+			continue
+		if not template_id.is_empty() and amount > 0:
+			requirements[template_id] = int(requirements.get(template_id, 0)) + amount
+
+	_append_subunit_sustainment_packages(requirements, design_data)
+	return requirements
+
+
+func _append_subunit_sustainment_packages(requirements: Dictionary, design_data: DesignDataLoader) -> void:
+	var loader := _resolve_design_data(design_data)
+	if loader == null:
+		return
+	for subunit_def in subunit_defs:
+		if typeof(subunit_def) != TYPE_DICTIONARY:
+			continue
+		var sub_id := str(subunit_def.get("sustainment_equipment_template", ""))
+		if sub_id.is_empty():
+			continue
+		var weight := maxi(int(subunit_def.get("count", 1)), 1)
+		var sub_data := loader.get_sustainment_equipment(sub_id)
+		var sub_per_soldier := float(sub_data.get("supply_consumption", 1.0))
+		var extra := int(ceil(200.0 * float(weight) * sub_per_soldier))
+		requirements[sub_id] = int(requirements.get(sub_id, 0)) + extra
+
+
+func _subunit_type_key(subunit: Dictionary) -> String:
+	var explicit := str(subunit.get("type", "")).to_lower()
+	if not explicit.is_empty():
+		return explicit
+	var template_id := str(subunit.get("template_id", "")).to_lower()
+	if template_id.contains("engineer"):
+		return "combat_engineer"
+	if template_id.contains("marine") or template_id.contains("amphibious"):
+		return "marine"
+	if template_id.contains("recon"):
+		return "recon"
+	if template_id.contains("medical") or template_id.contains("hospital"):
+		return "medical"
+	if template_id.contains("signal"):
+		return "signals"
+	return ""
 
 
 func _infantry_template_id_for_equipment_entry(entry: Dictionary) -> String:

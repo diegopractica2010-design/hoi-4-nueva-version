@@ -65,6 +65,7 @@
         },
         {
           "template_id": "assault_engineer_battalion",
+          "type": "combat_engineer",
           "count": 1,
           "infantry_equipment_template": "infantry_stg44_assault_rifle",
           "sustainment_equipment_template": "engineer_sustainment"

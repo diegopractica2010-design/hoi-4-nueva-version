@@ -440,6 +440,41 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 		print("  [FAIL] improved sustainment should reduce consumption multiplier")
 		return false
 
+	var marine: DivisionTemplate = supply.division_templates.get_division("us_marine_division_ww2")
+	if marine == null:
+		print("  [FAIL] us_marine_division_ww2 missing")
+		return false
+	var marine_required := marine.get_required_equipment(design_data)
+	if not marine_required.has("marine_amphibious_sustainment"):
+		print("  [FAIL] marine sustainment not required: ", marine_required)
+		return false
+	if marine.get_specialized_sustainment_demand() < 180.0:
+		print("  [FAIL] marine division should add amphibious sustainment demand")
+		return false
+
+	var combat := marine.get_combined_combat_modifiers(design_data)
+	if float(combat.get("supply_consumption", 0.0)) <= 0.0:
+		print("  [FAIL] combined combat modifiers missing supply: ", combat)
+		return false
+
+	var pm := _get_production_manager()
+	if pm != null:
+		pm.set_national_equipment_stockpile({
+			"infantry_m1_garand": 5000,
+			"marine_amphibious_sustainment": 5000,
+		})
+		pm.clear_unit_equipment_stock("marine_test")
+		var marine_req := marine.get_required_equipment(design_data)
+		var fulfilled := pm.auto_reinforce_unit_from_stockpile("marine_test", marine_req)
+		if fulfilled.is_empty():
+			print("  [FAIL] marine reinforcement fulfilled nothing: ", marine_req)
+			return false
+		var report: Dictionary = pm.get_shortage_report("marine_test", marine_req)
+		if report.get("missing_sustainment_equipment", {}).is_empty() and report.get("missing_infantry_equipment", {}).is_empty():
+			pass  # fully reinforced
+		pm.clear_unit_equipment_stock("marine_test")
+		pm.set_national_equipment_stockpile({})
+
 	print("  [PASS] sustainment equipment templates and division support")
 	return true
 
