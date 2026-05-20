@@ -44,6 +44,40 @@ func _ready() -> void:
 			sm.advance_supply_day(1.0)
 		print("Supply network ready (toggle overlay with L)")
 
+	_add_production_screen_test_button(player_tag)
+
+
+func _add_production_screen_test_button(default_country_tag: String) -> void:
+	var layer := CanvasLayer.new()
+	layer.name = "UITestLayer"
+	add_child(layer)
+
+	var btn := Button.new()
+	btn.text = "Production"
+	btn.position = Vector2(16, 16)
+	btn.pressed.connect(func() -> void:
+		_open_production_assignment_screen(default_country_tag)
+	)
+	layer.add_child(btn)
+
+
+func _open_production_assignment_screen(country_tag: String) -> void:
+	var existing := get_tree().root.get_node_or_null("ProductionAssignmentScreen")
+	if existing != null:
+		existing.queue_free()
+
+	var scene: PackedScene = load("res://scenes/ui/ProductionAssignmentScreen.tscn")
+	if scene == null:
+		push_warning("ProductionAssignmentScreen.tscn not found")
+		return
+
+	var screen: ProductionAssignmentScreen = scene.instantiate() as ProductionAssignmentScreen
+	if screen == null:
+		return
+	screen.country_tag = country_tag
+	screen.name = "ProductionAssignmentScreen"
+	get_tree().root.add_child(screen)
+
 
 func _wire_factory_province_lookup() -> void:
 	var fm := get_node_or_null("/root/FactoryManager") as FactoryManager
