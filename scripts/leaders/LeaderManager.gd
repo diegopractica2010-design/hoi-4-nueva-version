@@ -182,6 +182,66 @@ func get_leaders_for_country(country_tag: String) -> Array[Leader]:
 	return out
 
 
+# === Leader Assignment screen support ===
+
+func get_available_leaders(country_tag: String) -> Array[Leader]:
+	var result: Array[Leader] = []
+	for leader_id in leaders:
+		var leader: Leader = leaders[leader_id] as Leader
+		if leader == null or leader.country_tag != country_tag:
+			continue
+		if leader.assigned_army_id.is_empty() and not leader.is_captured:
+			result.append(leader)
+	return result
+
+
+func get_armies_without_leader(_country_tag: String) -> Array[String]:
+	# Placeholder until Army registry exists.
+	return []
+
+
+func get_leader_summary(leader_id: String) -> Dictionary:
+	var leader: Leader = get_leader(leader_id)
+	if leader == null:
+		return {}
+
+	return {
+		"leader_id": leader_id,
+		"name": leader.name,
+		"country_tag": leader.country_tag,
+		"leader_type": leader.leader_type,
+		"attack_skill": leader.attack_skill,
+		"defense_skill": leader.defense_skill,
+		"organization_skill": leader.organization_skill,
+		"logistics_skill": leader.logistics_skill,
+		"planning_skill": leader.planning_skill,
+		"traits": leader.traits.duplicate(),
+		"experience": leader.experience,
+		"battles_fought": leader.battles_fought,
+		"is_injured": leader.is_injured,
+		"is_captured": leader.is_captured,
+		"assigned_army_id": leader.assigned_army_id,
+	}
+
+
+func get_country_leader_overview(country_tag: String) -> Dictionary:
+	var summaries: Array = []
+	for leader in get_leaders_for_country(country_tag):
+		summaries.append(get_leader_summary(leader.leader_id))
+
+	var positions: Dictionary = {}
+	if country_positions.has(country_tag):
+		positions = (country_positions[country_tag] as Dictionary).duplicate()
+
+	return {
+		"country_tag": country_tag,
+		"total_leaders": summaries.size(),
+		"available_count": get_available_leaders(country_tag).size(),
+		"leaders": summaries,
+		"national_positions": positions,
+	}
+
+
 # === Experience, traits, injury, capture, promotion ===
 
 func award_battle_experience(leader_id: String, amount: int = 25) -> void:

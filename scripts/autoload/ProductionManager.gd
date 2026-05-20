@@ -1076,6 +1076,64 @@ func get_total_output_for_design(design_id: String) -> float:
 	return total
 
 
+# === Production Assignment screen support ===
+
+func get_all_factories_for_country(country_tag: String) -> Array[Factory]:
+	var result: Array[Factory] = []
+	if factory_manager == null or country_tag.is_empty():
+		return result
+	for fid in factory_manager.factories:
+		var f: Factory = factory_manager.factories[fid] as Factory
+		if f != null and f.owner_tag == country_tag:
+			result.append(f)
+	return result
+
+
+func get_factory_summary(factory_id: int) -> Dictionary:
+	if factory_manager == null:
+		return {}
+	var f: Factory = factory_manager.get_factory(factory_id)
+	if f == null:
+		return {}
+
+	return {
+		"factory_id": factory_id,
+		"province_id": f.province_id,
+		"owner_tag": f.owner_tag,
+		"factory_type": f.factory_type,
+		"current_design": f.current_production_design,
+		"efficiency": get_factory_efficiency(factory_id),
+		"daily_output_estimate": f.get_daily_output_estimate(),
+		"is_retooling": f.is_retooling,
+		"retooling_progress": f.retooling_progress,
+		"retooling_required": f.retooling_required,
+		"max_lines": f.max_production_lines,
+		"assigned_lines": f.assigned_lines.size(),
+		"assigned_line_ids": f.assigned_lines.duplicate(),
+		"current_damage": f.current_damage,
+	}
+
+
+func get_country_production_overview(country_tag: String) -> Dictionary:
+	var factories := get_all_factories_for_country(country_tag)
+	var factory_summaries: Array = []
+	for f in factories:
+		factory_summaries.append(get_factory_summary(f.factory_id))
+
+	return {
+		"country_tag": country_tag,
+		"total_factories": factories.size(),
+		"factories": factory_summaries,
+	}
+
+
+func get_factories_producing_design(design_id: String) -> Array[int]:
+	var result: Array[int] = []
+	for f in get_factories_producing(design_id):
+		result.append(f.factory_id)
+	return result
+
+
 func reassign_factory(factory_id: int, new_design_id: String, new_category: String = "") -> bool:
 	if factory_manager == null:
 		return false

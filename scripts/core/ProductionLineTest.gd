@@ -21,6 +21,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_combat_resolver(design_data) and ok
 	ok = _test_combat_width() and ok
 	ok = _test_leader_manager() and ok
+	ok = _test_assignment_screen_backends() and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
 	ok = _test_armed_merchant_template(design_data) and ok
@@ -763,6 +764,81 @@ static func _test_leader_manager() -> bool:
 
 	print("  [PASS] LeaderManager registration and assignment")
 	return true
+
+
+static func _test_assignment_screen_backends() -> bool:
+	var pm := _get_production_manager()
+	var fm := Engine.get_main_loop().root.get_node_or_null("/root/FactoryManager") as FactoryManager
+	var lm := Engine.get_main_loop().root.get_node_or_null("/root/LeaderManager")
+	if pm == null or fm == null or lm == null:
+		print("  [SKIP] assignment screen backends (autoloads not available)")
+		return true
+
+	var test_factory_id := Factory.make_id(9999, 1)
+	var test_factory := Factory.new()
+	test_factory.factory_id = test_factory_id
+	test_factory.province_id = 9999
+	test_factory.owner_tag = "GER"
+	test_factory.current_production_design = "m3_stuart_light"
+	test_factory.max_production_lines = 2
+	fm.register_factory(test_factory)
+
+	var overview: Dictionary = pm.get_country_production_overview("GER")
+	if int(overview.get("total_factories", 0)) < 1:
+		_cleanup_test_factory(fm, test_factory_id)
+		print("  [FAIL] production overview missing GER factories: ", overview)
+		return false
+
+	var summary: Dictionary = pm.get_factory_summary(test_factory_id)
+	if str(summary.get("current_design", "")) != "m3_stuart_light":
+		_cleanup_test_factory(fm, test_factory_id)
+		print("  [FAIL] factory summary: ", summary)
+		return false
+
+	var producing: Array = pm.get_factories_producing_design("m3_stuart_light")
+	if test_factory_id not in producing:
+		_cleanup_test_factory(fm, test_factory_id)
+		print("  [FAIL] factories producing design: ", producing)
+		return false
+
+	var rommel: Leader = lm.get_leader("ger_rommel")
+	if rommel != null:
+		var available := lm.get_available_leaders("GER")
+		var rommel_listed := false
+		for leader in available:
+			if leader.leader_id == "ger_rommel":
+				rommel_listed = true
+				break
+		if rommel.assigned_army_id.is_empty() and not rommel_listed:
+			_cleanup_test_factory(fm, test_factory_id)
+			print("  [FAIL] Rommel should be available when unassigned")
+			return false
+
+		var leader_overview: Dictionary = lm.get_country_leader_overview("GER")
+		if int(leader_overview.get("total_leaders", 0)) < 1:
+			_cleanup_test_factory(fm, test_factory_id)
+			print("  [FAIL] leader overview: ", leader_overview)
+			return false
+
+		var rommel_summary: Dictionary = lm.get_leader_summary("ger_rommel")
+		if not rommel_summary.has("traits") or str(rommel_summary.get("name", "")).is_empty():
+			_cleanup_test_factory(fm, test_factory_id)
+			print("  [FAIL] leader summary: ", rommel_summary)
+			return false
+
+	_cleanup_test_factory(fm, test_factory_id)
+	print("  [PASS] Production and Leader assignment screen backends")
+	return true
+
+
+static func _cleanup_test_factory(fm: FactoryManager, factory_id: int) -> void:
+	fm.factories.erase(factory_id)
+	var pid := Factory.province_from_id(factory_id)
+	if fm.province_to_factories.has(pid):
+		var ids: Array = fm.province_to_factories[pid]
+		ids.erase(factory_id)
+		if ids.is_empty():
+			fm.province_to_factories.erase(pid)
 
 
 static func _test_refinement_tradeoffs(design_data: DesignDataLoader) -> bool:
