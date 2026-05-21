@@ -862,7 +862,19 @@ static func _test_leader_manager() -> bool:
 	if pershing == null:
 		print("  [FAIL] 1918 Pershing not loaded")
 		return false
-	LeaderManager.load_leaders_for_scenario("1936")
+
+	LeaderManager.load_historical_leaders(LeaderManager.HISTORICAL_LEADERS_1936_PATH)
+	rommel = LeaderManager.get_leader("ger_rommel")
+	if rommel == null:
+		print("  [FAIL] Rommel not loaded via load_historical_leaders")
+		return false
+	if rommel.get_trait_level("desert_fox") < 3:
+		print("  [FAIL] Rommel Desert Fox level: ", rommel.get_trait_level("desert_fox"))
+		return false
+	var rommel_effects: Dictionary = LeaderManager.get_leader_trait_effects(rommel)
+	if float(rommel_effects.get("desert_attack", 0.0)) <= 0.0:
+		print("  [FAIL] Rommel trait effects missing desert_attack: ", rommel_effects)
+		return false
 
 	print("  [PASS] LeaderManager registration and assignment")
 	return true

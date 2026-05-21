@@ -12,18 +12,64 @@ const SPECIAL_TRAITS: Array[String] = [
 ]
 
 
-func generate_leader(country_tag: String, leader_type: String = "general") -> Leader:
+static func create_leader_from_data(leader_data: Dictionary) -> Leader:
 	var leader := Leader.new()
-	leader.leader_id = "%s_gen_%d" % [country_tag, Time.get_unix_time_from_system()]
-	leader.country_tag = country_tag
-	leader.leader_type = leader_type
-	leader.name = _generate_name(country_tag)
 
-	leader.attack_skill = randi_range(1, 6)
-	leader.defense_skill = randi_range(1, 6)
-	leader.organization_skill = randi_range(2, 7)
-	leader.logistics_skill = randi_range(1, 6)
-	leader.planning_skill = randi_range(1, 6)
+	leader.leader_id = str(leader_data.get("leader_id", ""))
+	leader.name = str(leader_data.get("name", "Unknown"))
+	leader.leader_type = str(leader_data.get("leader_type", "general"))
+	leader.country_tag = str(leader_data.get("country_tag", ""))
+
+	leader.attack_skill = clampi(int(leader_data.get("attack_skill", 5)), 0, 10)
+	leader.defense_skill = clampi(int(leader_data.get("defense_skill", 5)), 0, 10)
+	leader.organization_skill = clampi(int(leader_data.get("organization_skill", 5)), 0, 10)
+	leader.logistics_skill = clampi(int(leader_data.get("logistics_skill", 5)), 0, 10)
+	leader.planning_skill = clampi(int(leader_data.get("planning_skill", 5)), 0, 10)
+	leader.initiative_skill = clampi(int(leader_data.get("initiative_skill", 5)), 0, 10)
+
+	leader.experience = int(leader_data.get("experience", 0))
+	leader.battles_fought = int(leader_data.get("battles_fought", 0))
+	leader.is_injured = bool(leader_data.get("is_injured", false))
+	leader.is_captured = bool(leader_data.get("is_captured", false))
+	leader.assigned_army_id = str(leader_data.get("assigned_army_id", ""))
+
+	_apply_traits_from_data(leader, leader_data)
+	return leader
+
+
+static func _apply_traits_from_data(leader: Leader, leader_data: Dictionary) -> void:
+	leader.trait_levels.clear()
+	leader.traits.clear()
+
+	if leader_data.has("trait_levels"):
+		var trait_levels_block: Variant = leader_data.get("trait_levels")
+		if typeof(trait_levels_block) == TYPE_DICTIONARY:
+			for trait_id in (trait_levels_block as Dictionary).keys():
+				leader.add_trait_unchecked(
+					str(trait_id),
+					int((trait_levels_block as Dictionary)[trait_id]),
+				)
+	elif leader_data.has("traits"):
+		var traits_block: Variant = leader_data.get("traits")
+		if typeof(traits_block) == TYPE_ARRAY:
+			for trait_id in traits_block as Array:
+				leader.add_trait_unchecked(str(trait_id), 1)
+
+
+func generate_leader(country_tag: String, leader_type: String = "general") -> Leader:
+	var leader_data := {
+		"leader_id": "%s_gen_%d" % [country_tag, Time.get_unix_time_from_system()],
+		"name": _generate_name(country_tag),
+		"country_tag": country_tag,
+		"leader_type": leader_type,
+		"attack_skill": randi_range(1, 6),
+		"defense_skill": randi_range(1, 6),
+		"organization_skill": randi_range(2, 7),
+		"logistics_skill": randi_range(1, 6),
+		"planning_skill": randi_range(1, 6),
+		"initiative_skill": randi_range(3, 6),
+	}
+	var leader := create_leader_from_data(leader_data)
 
 	if randf() < 0.15:
 		var trait_id := SPECIAL_TRAITS[randi() % SPECIAL_TRAITS.size()]

@@ -53,7 +53,7 @@ var _leader_screen_cache: Dictionary = {}  # country_tag -> LeaderScreenData
 
 func _ready() -> void:
 	_load_trait_definitions()
-	load_leaders_for_scenario("1936")
+	load_historical_leaders(HISTORICAL_LEADERS_1936_PATH)
 
 
 func register_leader(leader: Leader) -> void:
@@ -951,25 +951,44 @@ func reload_leaders_from_json(path: String) -> int:
 	leaders.clear()
 	country_positions.clear()
 	clear_all_leader_caches()
-	return load_leaders_from_json(path)
+	return load_historical_leaders(path)
 
 
 func load_leaders_from_json(path: String) -> int:
-	if not ResourceLoader.exists(path):
-		return 0
-	var file := FileAccess.open(path, FileAccess.READ)
-	if file == null:
-		return 0
-	var parsed: Variant = JSON.parse_string(file.get_as_text())
-	file.close()
-	if typeof(parsed) != TYPE_DICTIONARY:
+	return load_historical_leaders(path)
+
+
+# === Historical Leaders Loading ===
+
+func load_historical_leaders(path: String = HISTORICAL_LEADERS_1936_PATH) -> int:
+	if not FileAccess.file_exists(path):
+		push_warning("Historical leaders file not found: %s" % path)
 		return 0
 
-	var loaded := 0
-	var block: Variant = (parsed as Dictionary).get("leaders", [])
-	if typeof(block) != TYPE_ARRAY:
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		push_warning("Historical leaders file could not be opened: %s" % path)
 		return 0
-	for entry in block as Array:
+
+	var json_text := file.get_as_text()
+	file.close()
+
+	var json := JSON.new()
+	var error := json.parse(json_text)
+	if error != OK:
+		push_warning(
+			"Failed to parse historical leaders JSON: %s" % json.get_error_message()
+		)
+		return 0
+
+	var data: Variant = json.get_data()
+	if typeof(data) != TYPE_DICTIONARY:
+		push_warning("Historical leaders JSON root must be a dictionary")
+		return 0
+
+	var entries: Array = _historical_leader_entries_from_data(data as Dictionary)
+	var loaded := 0
+	for entry in entries:
 		if typeof(entry) != TYPE_DICTIONARY:
 			continue
 		var leader := _leader_from_dict(entry as Dictionary)
@@ -977,37 +996,34 @@ func load_leaders_from_json(path: String) -> int:
 			continue
 		register_leader(leader)
 		loaded += 1
+
+	print("Loaded %d historical leaders from %s" % [loaded, path])
 	return loaded
 
 
-func _leader_from_dict(data: Dictionary) -> Leader:
-	var leader_id := str(data.get("leader_id", ""))
-	if leader_id.is_empty():
-		return null
-	var leader := Leader.new()
-	leader.leader_id = leader_id
-	leader.name = str(data.get("name", ""))
-	leader.country_tag = str(data.get("country_tag", ""))
-	leader.leader_type = str(data.get("leader_type", "general"))
-	leader.attack_skill = clampi(int(data.get("attack_skill", 3)), 0, MAX_SKILL)
-	leader.defense_skill = clampi(int(data.get("defense_skill", 3)), 0, MAX_SKILL)
-	leader.organization_skill = clampi(int(data.get("organization_skill", 3)), 0, MAX_SKILL)
-	leader.logistics_skill = clampi(int(data.get("logistics_skill", 3)), 0, MAX_SKILL)
-	leader.planning_skill = clampi(int(data.get("planning_skill", 3)), 0, MAX_SKILL)
-	leader.initiative_skill = clampi(int(data.get("initiative_skill", 3)), 0, MAX_SKILL)
-	leader.experience = int(data.get("experience", 0))
-	leader.battles_fought = int(data.get("battles_fought", 0))
-	leader.is_injured = bool(data.get("is_injured", false))
-	leader.is_captured = bool(data.get("is_captured", false))
-	leader.assigned_army_id = str(data.get("assigned_army_id", ""))
+func _historical_leader_entries_from_data(data: Dictionary) -> Array:
+	var entries: Array = []
+	var leaders_block: Variant = data.get("leaders", null)
+	if typeof(leaders_block) == TYPE_ARRAY:
+		for entry in leaders_block as Array:
+			if typeof(entry) == TYPE_DICTIONARY:
+				entries.append(entry)
+		return entries
 
-	var trait_levels_block: Variant = data.get("trait_levels", {})
-	if typeof(trait_levels_block) == TYPE_DICTIONARY:
-		for trait_key in (trait_levels_block as Dictionary).keys():
-			leader.add_trait_unchecked(str(trait_key), int((trait_levels_block as Dictionary)[trait_key]))
-	else:
-		var traits_block: Variant = data.get("traits", [])
-		if typeof(traits_block) == TYPE_ARRAY:
-			for trait_id in traits_block as Array:
-				leader.add_trait_unchecked(str(trait_id), 1)
+	# Flat map format: { "ger_rommel": { ... }, ... }
+	for leader_key in data.keys():
+		var leader_data: Variant = data[leader_key]
+		if typeof(leader_data) != TYPE_DICTIONARY:
+			continue
+		var entry: Dictionary = (leader_data as Dictionary).duplicate()
+		if not entry.has("leader_id"):
+			entry["leader_id"] = str(leader_key)
+		entries.append(entry)
+	return entries
+
+
+func _leader_from_dict(data: Dictionary) -> Leader:
+	var leader := LeaderGenerator.create_leader_from_data(data)
+	if leader == null or leader.leader_id.is_empty():
+		return null
 	return leader
