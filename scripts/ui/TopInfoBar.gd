@@ -192,8 +192,6 @@ func _toggle_screen(screen_name: String, scene_path: String, configure: Callable
 	configure.call(scene)
 	scene.name = screen_name
 	get_tree().root.add_child(scene)
-	if scene is Window:
-		(scene as Window).popup_centered()
 
 
 func _on_save_pressed() -> void:

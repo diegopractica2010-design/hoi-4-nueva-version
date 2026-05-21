@@ -1,8 +1,11 @@
 # scripts/ui/LeaderAssignmentScreen.gd
 class_name LeaderAssignmentScreen
-extends Window
+extends DraggablePanel
 
 @export var country_tag: String = "GER"
+
+@onready var title_label: Label = $TitleBar/TitleLabel
+@onready var close_button: Button = $TitleBar/CloseButton
 
 @onready var total_leaders_label: Label = (
 	$MarginContainer/VBoxContainer/TopSummaryBar/TotalLeadersLabel
@@ -56,27 +59,23 @@ const ROW_HEIGHT := 36
 
 func _ready() -> void:
 	add_to_group("leader_screen")
-	_configure_window()
+	drag_handle = $TitleBar
+	super._ready()
 	_apply_screen_theme()
 	_setup_headers()
-	close_requested.connect(_on_close_requested)
+	close_button.pressed.connect(_on_close_pressed)
 	refresh_screen()
 
 
-func _configure_window() -> void:
-	title = "Leader Assignment — %s" % country_tag
-	size = Vector2i(1100, 700)
-	position = Vector2i(200, 80)
-	initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
-	min_size = Vector2i(900, 560)
-
-
-func _on_close_requested() -> void:
+func _on_close_pressed() -> void:
 	queue_free()
 
 
 func _apply_screen_theme() -> void:
-	RetrowaveTheme.style_popup_root(self)
+	RetrowaveTheme.style_production_screen(self)
+	RetrowaveTheme.style_title(title_label, RetrowaveTheme.CYAN)
+	RetrowaveTheme.style_secondary_button(close_button)
+	title_label.text = "Leader Assignment — %s" % country_tag
 	RetrowaveTheme.style_summary_metric(total_leaders_label)
 	RetrowaveTheme.style_summary_metric(available_leaders_label, RetrowaveTheme.SUCCESS)
 	RetrowaveTheme.style_summary_metric(injured_leaders_label, RetrowaveTheme.WARNING)

@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" path="res://scripts/ui/LeaderAssignmentScreen.gd" id="1_screen"]
 
-[node name="LeaderAssignmentScreen" type="Window"]
-title = "Leader Assignment"
-initial_position = 0
-size = Vector2i(1100, 700)
-position = Vector2i(200, 80)
+[node name="LeaderAssignmentScreen" type="Control"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 80.0
+offset_right = 1300.0
+offset_bottom = 780.0
+mouse_filter = 0
 script = ExtResource("1_screen")
 country_tag = "GER"
 
@@ -19,12 +21,30 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.058824, 0.058824, 0.117647, 1)
 
+[node name="TitleBar" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1100.0
+offset_bottom = 40.0
+mouse_filter = 0
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="TitleBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Leader Assignment"
+
+[node name="CloseButton" type="Button" parent="TitleBar"]
+layout_mode = 2
+text = "Close"
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 0.0
+offset_top = 40.0
+offset_right = 1100.0
+offset_bottom = 700.0
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
