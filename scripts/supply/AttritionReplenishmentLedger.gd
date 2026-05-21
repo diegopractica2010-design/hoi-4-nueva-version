@@ -25,7 +25,7 @@ func clear() -> void:
 
 
 func compute_replenishment_cargo(
-	division_loader: DivisionTemplateLoader,
+	_division_loader: DivisionTemplateLoader,
 	design_data: DesignDataLoader,
 	rules: SupplyRules,
 ) -> Dictionary:

@@ -202,11 +202,12 @@ func create_shipyard_for_province(province_id: int, owner_tag: String, levels: i
 			% province_id
 		)
 		return null
-	return create_factory_for_province(province_id, owner_tag, 0, "shipyard", levels)
+	var shipyard: Factory = create_factory_for_province(province_id, owner_tag, 0, "shipyard", levels)
+	return shipyard
 
 
 func convert_factory_to_shipyard(factory_id: int, levels: int = 4) -> bool:
-	var factory := get_factory(factory_id)
+	var factory: Factory = get_factory(factory_id)
 	if factory == null:
 		return false
 	if not province_has_port(factory.province_id):
@@ -242,7 +243,7 @@ func get_or_create_province_component(province_node: Node, province_id: int) -> 
 func register_factories_for_province(province_id: int, owner_tag: String, count: int = 1) -> Array[Factory]:
 	var created: Array[Factory] = []
 	for i in count:
-		var f := create_factory_for_province(province_id, owner_tag)
+		var f: Factory = create_factory_for_province(province_id, owner_tag)
 		if f != null:
 			created.append(f)
 	return created

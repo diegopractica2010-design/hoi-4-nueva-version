@@ -447,7 +447,7 @@ func get_shortage_report(unit_id: String, required_equipment: Dictionary) -> Dic
 
 func _categorize_equipment_shortages(
 	shortages: Dictionary,
-	required_equipment: Dictionary,
+	_required_equipment: Dictionary,
 ) -> Dictionary:
 	var infantry: Dictionary = {}
 	var sustainment: Dictionary = {}
@@ -666,11 +666,11 @@ func _shortage_rules() -> Dictionary:
 
 func _critical_resource_set() -> Dictionary:
 	var raw: Variant = _shortage_rules().get("critical_resources", [])
-	var set: Dictionary = {}
+	var critical_set: Dictionary = {}
 	if typeof(raw) == TYPE_ARRAY:
 		for item in raw:
-			set[str(item).to_lower()] = true
-	return set
+			critical_set[str(item).to_lower()] = true
+	return critical_set
 
 
 func _weighted_fill_ratio(needed: Dictionary) -> float:
@@ -907,7 +907,7 @@ func _on_line_unit_completed(
 	template_id: String,
 	_reliability: float,
 	_profile: ReliabilityProfile,
-	line_id: String,
+	_line_id: String,
 ) -> void:
 	var template := GameData.design_data.get_template(template_id)
 	if template == null or template.design_family.is_empty():

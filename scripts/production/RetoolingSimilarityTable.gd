@@ -58,11 +58,11 @@ static func category_group_for_design(design_id: String) -> String:
 static func compute_retool_plan(from_group: String, to_group: String) -> Dictionary:
 	_load()
 	var similarity := get_similarity(from_group, to_group)
-	var floor := float(_data.get("default_floor", 0.20))
+	var efficiency_floor := float(_data.get("default_floor", 0.20))
 	var retained_rules: Dictionary = _data.get("retained_efficiency", {})
 	var retained_base := float(retained_rules.get("base", 0.15))
 	var retained_scale := float(retained_rules.get("similarity_scale", 0.80))
-	var retained := maxf(floor, retained_base + similarity * retained_scale)
+	var retained := maxf(efficiency_floor, retained_base + similarity * retained_scale)
 
 	var base_days := float(_data.get("base_retool_days", 90.0))
 	var recovery := float(_data.get("recovery_days", 45.0))

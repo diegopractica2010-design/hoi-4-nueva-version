@@ -180,7 +180,7 @@ static func _edge_cost_for_mode(
 
 
 static func _edge_cost(
-	from_id: int,
+	_from_id: int,
 	to_id: int,
 	provinces: Dictionary,
 	hubs: Dictionary,
@@ -232,7 +232,7 @@ static func _populate_timing(
 
 
 static func _segment_mode(
-	from_id: int,
+	_from_id: int,
 	to_id: int,
 	provinces: Dictionary,
 	hubs: Dictionary,
