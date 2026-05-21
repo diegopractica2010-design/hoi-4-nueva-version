@@ -1,48 +1,45 @@
 # scripts/ui/LeaderAssignmentScreen.gd
 class_name LeaderAssignmentScreen
-extends Control
+extends Window
 
 @export var country_tag: String = "GER"
 
-@onready var total_leaders_label: Label = $TopSummaryBar/TotalLeadersLabel
-@onready var available_leaders_label: Label = $TopSummaryBar/AvailableLeadersLabel
-@onready var injured_leaders_label: Label = $TopSummaryBar/InjuredLeadersLabel
-@onready var captured_leaders_label: Label = $TopSummaryBar/CapturedLeadersLabel
+@onready var total_leaders_label: Label = (
+	$MarginContainer/VBoxContainer/TopSummaryBar/TotalLeadersLabel
+)
+@onready var available_leaders_label: Label = (
+	$MarginContainer/VBoxContainer/TopSummaryBar/AvailableLeadersLabel
+)
+@onready var injured_leaders_label: Label = (
+	$MarginContainer/VBoxContainer/TopSummaryBar/InjuredLeadersLabel
+)
+@onready var captured_leaders_label: Label = (
+	$MarginContainer/VBoxContainer/TopSummaryBar/CapturedLeadersLabel
+)
 
 @onready var national_positions_container: HBoxContainer = (
-	$NationalPositionsSection/PositionsContainer
+	$MarginContainer/VBoxContainer/NationalPositionsSection/PositionsContainer
 )
-@onready var available_header_row: HBoxContainer = $MainArea/AvailableLeadersColumn/AvailableHeaderRow
+@onready var available_header_row: HBoxContainer = (
+	$MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn/AvailableHeaderRow
+)
 @onready var available_leaders_list: VBoxContainer = (
-	$MainArea/AvailableLeadersColumn/AvailableLeadersList/AvailableLeadersContent
+	$MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn/AvailableLeadersList/AvailableLeadersContent
 )
 @onready var formations_content: VBoxContainer = (
-	$MainArea/FormationsWithoutLeader/FormationsList/FormationsContent
+	$MarginContainer/VBoxContainer/MainArea/FormationsWithoutLeader/FormationsList/FormationsContent
 )
-@onready var detail_panel: PanelContainer = $MainArea/DetailPanel
-@onready var detail_label: Label = $MainArea/DetailPanel/DetailLabel
+@onready var detail_panel: PanelContainer = $MarginContainer/VBoxContainer/MainArea/DetailPanel
+@onready var detail_label: Label = $MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailLabel
 
 var current_data: LeaderScreenData
 var _pending_position_key: String = ""
-var _pending_assign_leader_id: String = ""
 
 const NATIONAL_POSITIONS: Array[Dictionary] = [
-	{
-		"key": LeaderManager.POSITION_CHIEF_OF_ARMY,
-		"label": "Chief of Army",
-	},
-	{
-		"key": LeaderManager.POSITION_CHIEF_OF_NAVY,
-		"label": "Chief of Navy",
-	},
-	{
-		"key": LeaderManager.POSITION_CHIEF_OF_AIR_FORCE,
-		"label": "Chief of Air Force",
-	},
-	{
-		"key": LeaderManager.POSITION_CHIEF_OF_SPACE_FORCE,
-		"label": "Chief of Space Force",
-	},
+	{"key": LeaderManager.POSITION_CHIEF_OF_ARMY, "label": "Chief of Army"},
+	{"key": LeaderManager.POSITION_CHIEF_OF_NAVY, "label": "Chief of Navy"},
+	{"key": LeaderManager.POSITION_CHIEF_OF_AIR_FORCE, "label": "Chief of Air Force"},
+	{"key": LeaderManager.POSITION_CHIEF_OF_SPACE_FORCE, "label": "Chief of Space Force"},
 ]
 
 const HEADER_SPECS: Array[Dictionary] = [
@@ -59,20 +56,38 @@ const ROW_HEIGHT := 36
 
 func _ready() -> void:
 	add_to_group("leader_screen")
+	_configure_window()
 	_apply_screen_theme()
 	_setup_headers()
+	close_requested.connect(_on_close_requested)
 	refresh_screen()
 
 
+func _configure_window() -> void:
+	title = "Leader Assignment — %s" % country_tag
+	size = Vector2i(1100, 700)
+	position = Vector2i(200, 80)
+	initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
+	min_size = Vector2i(900, 560)
+
+
+func _on_close_requested() -> void:
+	queue_free()
+
+
 func _apply_screen_theme() -> void:
-	RetrowaveTheme.style_production_screen(self)
+	RetrowaveTheme.style_popup_root(self)
 	RetrowaveTheme.style_summary_metric(total_leaders_label)
 	RetrowaveTheme.style_summary_metric(available_leaders_label, RetrowaveTheme.SUCCESS)
 	RetrowaveTheme.style_summary_metric(injured_leaders_label, RetrowaveTheme.WARNING)
 	RetrowaveTheme.style_summary_metric(captured_leaders_label, RetrowaveTheme.MAGENTA)
-	RetrowaveTheme.style_title($NationalPositionsSection/SectionTitle)
-	RetrowaveTheme.style_title($MainArea/AvailableLeadersColumn/AvailableLeadersTitle)
-	RetrowaveTheme.style_title($MainArea/FormationsWithoutLeader/FormationsTitle)
+	RetrowaveTheme.style_title($MarginContainer/VBoxContainer/NationalPositionsSection/SectionTitle)
+	RetrowaveTheme.style_title(
+		$MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn/AvailableLeadersTitle,
+	)
+	RetrowaveTheme.style_title(
+		$MarginContainer/VBoxContainer/MainArea/FormationsWithoutLeader/FormationsTitle,
+	)
 	RetrowaveTheme.style_detail_panel(detail_panel)
 	RetrowaveTheme.style_detail_label(detail_label)
 
@@ -231,7 +246,7 @@ func _populate_unassigned_formations() -> void:
 	var available_formations: Array[Dictionary] = LeaderManager.get_available_formations(country_tag)
 	if available_formations.is_empty():
 		var note := Label.new()
-		note.text = "No divisions without a leader."
+		note.text = "No formations without a leader."
 		note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		RetrowaveTheme.style_body_label(note)
 		formations_content.add_child(note)
@@ -357,73 +372,6 @@ func _on_assign_pressed(summary: Dictionary) -> void:
 		refresh_screen()
 	else:
 		print("Failed to assign leader.")
-
-
-func _open_formation_picker(leader_name: String, available_formations: Array[Dictionary]) -> void:
-	var popup := Window.new()
-	popup.title = "Assign %s to Formation" % leader_name
-	popup.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
-	popup.size = Vector2i(420, 360)
-	RetrowaveTheme.style_popup_root(popup)
-
-	var margin := MarginContainer.new()
-	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left", 16)
-	margin.add_theme_constant_override("margin_top", 16)
-	margin.add_theme_constant_override("margin_right", 16)
-	margin.add_theme_constant_override("margin_bottom", 16)
-	popup.add_child(margin)
-
-	var vbox := VBoxContainer.new()
-	vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_child(vbox)
-
-	var hint := Label.new()
-	hint.text = "Select a division to assign this leader to:"
-	RetrowaveTheme.style_body_label(hint)
-	vbox.add_child(hint)
-
-	var list := ItemList.new()
-	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	RetrowaveTheme.style_item_list(list)
-	for formation in available_formations:
-		list.add_item(str(formation.get("name", formation.get("formation_id", ""))))
-	vbox.add_child(list)
-
-	var buttons := HBoxContainer.new()
-	buttons.alignment = BoxContainer.ALIGNMENT_END
-	vbox.add_child(buttons)
-
-	var confirm := Button.new()
-	confirm.text = "Assign"
-	RetrowaveTheme.style_primary_button(confirm)
-	confirm.disabled = true
-	buttons.add_child(confirm)
-
-	var cancel := Button.new()
-	cancel.text = "Cancel"
-	RetrowaveTheme.style_secondary_button(cancel)
-	buttons.add_child(cancel)
-
-	list.item_selected.connect(func(_index: int) -> void: confirm.disabled = false)
-	confirm.pressed.connect(
-		func() -> void:
-			var idx := list.get_selected_items()
-			if idx.is_empty():
-				return
-			var formation_id: String = str(
-				available_formations[idx[0]].get("formation_id", ""),
-			)
-			if LeaderManager.assign_leader_to_army(_pending_assign_leader_id, formation_id):
-				refresh_screen()
-			_pending_assign_leader_id = ""
-			popup.queue_free(),
-	)
-	cancel.pressed.connect(popup.queue_free)
-	popup.close_requested.connect(popup.queue_free)
-
-	get_tree().root.add_child(popup)
-	popup.popup_centered()
 
 
 func _open_leader_picker(
