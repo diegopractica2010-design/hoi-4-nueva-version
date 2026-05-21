@@ -953,7 +953,7 @@ func _naval_production_allowed(line: ProductionLine, design_id: String) -> bool:
 		return true
 	if factory_manager == null:
 		return false
-	var factory := factory_manager.get_factory(line.factory_id)
+	var factory: Factory = factory_manager.get_factory(line.factory_id)
 	if factory == null:
 		return false
 	if not ProductionNavalRules.factory_can_build_naval(factory):
@@ -981,7 +981,7 @@ func get_line_efficiency(line_id: String) -> float:
 func get_lines_on_design_in_factory(factory_id: int, design_id: String) -> int:
 	if factory_manager == null or design_id.is_empty():
 		return 0
-	var factory := factory_manager.get_factory(factory_id)
+	var factory: Factory = factory_manager.get_factory(factory_id)
 	if factory == null:
 		return 0
 
@@ -1011,7 +1011,7 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 	if factory_manager == null:
 		return false
 
-	var factory := factory_manager.get_factory(factory_id)
+	var factory: Factory = factory_manager.get_factory(factory_id)
 	if factory == null:
 		push_warning("FactoryManager: Factory %d not found" % factory_id)
 		return false
@@ -1271,12 +1271,12 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 	if factory_manager == null:
 		return false
 
-	var factory := factory_manager.get_factory(factory_id)
+	var factory: Factory = factory_manager.get_factory(factory_id)
 	if factory == null:
 		push_warning("Cannot reassign - factory %d not found" % factory_id)
 		return false
 
-	var old_design := factory.current_production_design
+	var old_design: String = factory.current_production_design
 	if old_design == new_design_id:
 		return true
 
@@ -1392,25 +1392,25 @@ func advance_production(days: float) -> void:
 
 		if factory_manager == null:
 			continue
-		var factory := factory_manager.get_factory(line.factory_id)
+		var factory: Factory = factory_manager.get_factory(line.factory_id)
 		if factory == null:
 			continue
 
 		if factory.is_retooling:
-			var was_retooling := factory.is_retooling
+			var was_retooling: bool = factory.is_retooling
 			factory.advance_retooling(days)
 			if was_retooling != factory.is_retooling or factory.is_retooling:
 				invalidate_production_cache(factory.owner_tag)
 
 		evaluate_line_resources(line_id, days)
 
-		var base_efficiency := line.get_factory_efficiency()
-		var retool_eff := factory.get_current_efficiency() if factory.is_retooling else 1.0
-		var shortage_eff := line.resource_shortage_penalty
+		var base_efficiency: float = line.get_factory_efficiency()
+		var retool_eff: float = factory.get_current_efficiency() if factory.is_retooling else 1.0
+		var shortage_eff: float = line.resource_shortage_penalty
 
-		var concentration := get_concentration_bonus(line.design_id)
-		var slot_rush := get_concentrated_production_multiplier(line.factory_id, line.design_id)
-		var daily_points := (
+		var concentration: float = get_concentration_bonus(line.design_id)
+		var slot_rush: float = get_concentrated_production_multiplier(line.factory_id, line.design_id)
+		var daily_points: float = (
 			_get_base_daily_points()
 			* base_efficiency
 			* retool_eff
@@ -1443,7 +1443,7 @@ func get_line_progress_info(line_id: String) -> Dictionary:
 		if template != null
 		else {}
 	)
-	var factory := factory_manager.get_factory(line.factory_id) if factory_manager else null
+	var factory: Factory = factory_manager.get_factory(line.factory_id) if factory_manager else null
 	return {
 		"line_id": line_id,
 		"design_id": line.design_id,
