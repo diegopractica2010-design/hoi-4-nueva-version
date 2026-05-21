@@ -613,6 +613,13 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 				)
 				return false
 
+			var rommel_xp_before := rommel.experience
+			resolver.resolve_combat_experience("panzer_army_africa_test", "", 1.0)
+			if rommel.experience <= rommel_xp_before:
+				resolver.free()
+				print("  [FAIL] combat XP not awarded: ", rommel.experience)
+				return false
+
 	resolver.free()
 	print("  [PASS] CombatResolver effective combat power")
 	return true
@@ -769,6 +776,9 @@ static func _test_leader_manager() -> bool:
 	if rommel == null or not rommel.has_trait("desert_fox"):
 		print("  [FAIL] historical leader Rommel not loaded")
 		return false
+	if rommel.get_trait_level("desert_fox") < 3:
+		print("  [FAIL] Rommel should have Desert Fox III: ", rommel.get_trait_level("desert_fox"))
+		return false
 	if rommel.get_attack_modifier() <= 0.0:
 		print("  [FAIL] Rommel attack modifier: ", rommel.get_attack_modifier())
 		return false
@@ -812,6 +822,20 @@ static func _test_leader_manager() -> bool:
 	LeaderManager.award_battle_experience("usa_patton_test", 50)
 	if patton.experience != exp_before + 50 or patton.battles_fought < 1:
 		print("  [FAIL] battle experience: exp=", patton.experience, " battles=", patton.battles_fought)
+		return false
+
+	patton.add_trait_unchecked("bold", 1)
+	var bold_cost := LeaderManager.get_trait_level_up_cost(patton, "bold")
+	if bold_cost <= 0:
+		print("  [FAIL] trait level-up cost missing")
+		return false
+	patton.experience = bold_cost + 50
+	var spend_result: Dictionary = LeaderManager.spend_xp_on_trait("usa_patton_test", "bold")
+	if not bool(spend_result.get("success", false)):
+		print("  [FAIL] spend_xp_on_trait: ", spend_result)
+		return false
+	if patton.get_trait_level("bold") < 2:
+		print("  [FAIL] bold trait should be level 2: ", patton.get_trait_level("bold"))
 		return false
 
 	patton.attack_skill = 9

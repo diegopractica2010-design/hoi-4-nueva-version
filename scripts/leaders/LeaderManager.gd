@@ -27,6 +27,15 @@ const MAX_SKILL := 10
 const MAX_TRAITS_PER_LEADER := 6
 const MAX_LEGENDARY_TRAITS := 2
 const RARITY_LEGENDARY := "legendary"
+const XP_BASE_COMBAT := 25
+const XP_COMBAT_MULTIPLIER := 2.75
+const XP_COST_BY_RARITY: Dictionary = {
+	"common": 100,
+	"notable": 200,
+	"rare": 350,
+	"legendary": 600,
+}
+const ROMAN_LEVELS: Array[String] = ["", "I", "II", "III", "IV"]
 
 var leaders: Dictionary = {}  # leader_id -> Leader
 var formations: Dictionary = {}  # formation_id -> Formation
@@ -414,8 +423,10 @@ func get_leader_summary(leader_id: String) -> Dictionary:
 		"organization_skill": leader.organization_skill,
 		"logistics_skill": leader.logistics_skill,
 		"planning_skill": leader.planning_skill,
+		"initiative_skill": leader.initiative_skill,
 		"traits": leader.traits.duplicate(),
 		"trait_levels": leader.trait_levels.duplicate(),
+		"trait_display": get_trait_display_list(leader),
 		"experience": leader.experience,
 		"battles_fought": leader.battles_fought,
 		"is_injured": leader.is_injured,
@@ -564,13 +575,169 @@ func _append_leader_to_group(group_dict: Dictionary, key: String, summary: Dicti
 
 # === Experience, traits, injury, capture, promotion ===
 
-func award_battle_experience(leader_id: String, amount: int = 25) -> void:
+func award_battle_experience(leader_id: String, amount: int = 25, count_as_battle: bool = true) -> void:
 	var leader: Leader = leaders.get(leader_id) as Leader
 	if leader == null:
 		return
-	leader.add_experience(amount)
+	leader.add_experience(amount, count_as_battle)
 	_check_for_trait_gain(leader)
 	invalidate_leader_cache(leader.country_tag)
+
+
+func award_combat_experience_for_army(army_id: String, intensity: float = 1.0) -> void:
+	if army_id.is_empty():
+		return
+	var leader: Leader = get_leader_for_army(army_id)
+	if leader == null or leader.is_injured or leader.is_captured:
+		return
+	var amount := int(float(XP_BASE_COMBAT) * clampf(intensity, 0.25, 4.0) * XP_COMBAT_MULTIPLIER)
+	award_battle_experience(leader.leader_id, amount, true)
+
+
+func get_trait_level_up_cost(leader: Leader, trait_id: String) -> int:
+	if leader == null or trait_id.is_empty():
+		return 0
+	var rarity := get_trait_rarity(trait_id)
+	var base_cost := int(XP_COST_BY_RARITY.get(rarity, 100))
+	var target_level := 1
+	if leader.has_trait(trait_id):
+		target_level = mini(leader.get_trait_level(trait_id) + 1, get_trait_max_level(trait_id))
+	return base_cost * target_level
+
+
+func can_spend_xp_on_trait(leader: Leader, trait_id: String) -> Dictionary:
+	if leader == null:
+		return {"ok": false, "reason": "no_leader"}
+	if get_trait_definition(trait_id).is_empty():
+		return {"ok": false, "reason": "unknown_trait"}
+	var cost := get_trait_level_up_cost(leader, trait_id)
+	if leader.experience < cost:
+		return {"ok": false, "reason": "insufficient_xp", "cost": cost}
+	if not can_add_trait(leader, trait_id, 1):
+		return {"ok": false, "reason": "blocked", "cost": cost}
+	return {"ok": true, "cost": cost}
+
+
+func spend_xp_on_trait(leader_id: String, trait_id: String) -> Dictionary:
+	var leader: Leader = leaders.get(leader_id) as Leader
+	var check := can_spend_xp_on_trait(leader, trait_id)
+	if not bool(check.get("ok", false)):
+		return {"success": false, "reason": str(check.get("reason", "blocked"))}
+
+	var cost := int(check.get("cost", 0))
+	if not try_add_trait_to_leader(leader, trait_id, 1):
+		return {"success": false, "reason": "failed"}
+	leader.experience -= cost
+	invalidate_leader_cache(leader.country_tag)
+	return {
+		"success": true,
+		"cost": cost,
+		"trait_id": trait_id,
+		"new_level": leader.get_trait_level(trait_id),
+	}
+
+
+func get_trait_display_list(leader: Leader) -> Array:
+	if leader == null:
+		return []
+	var rows: Array = []
+	for trait_id in leader.traits:
+		var level := leader.get_trait_level(trait_id)
+		var def := get_trait_definition(trait_id)
+		var display_name := str(def.get("name", trait_id))
+		var roman := ROMAN_LEVELS[mini(level, ROMAN_LEVELS.size() - 1)]
+		var max_level := get_trait_max_level(trait_id)
+		var effects := get_trait_effects_at_level(trait_id, level)
+		rows.append({
+			"id": trait_id,
+			"name": display_name,
+			"level": level,
+			"max_level": max_level,
+			"roman": roman,
+			"rarity": get_trait_rarity(trait_id),
+			"description": str(def.get("description", "")),
+			"effects_text": format_trait_effects_text(effects),
+			"can_level_up": can_add_trait(leader, trait_id, 1),
+			"level_up_cost": get_trait_level_up_cost(leader, trait_id),
+		})
+	return rows
+
+
+func format_trait_effects_text(effects: Dictionary) -> String:
+	if effects.is_empty():
+		return ""
+	var parts: PackedStringArray = []
+	for effect_key in effects.keys():
+		var key := str(effect_key)
+		var value: float = float(effects[effect_key])
+		parts.append("%s: %s" % [_format_effect_label(key), _format_effect_value(key, value)])
+	return ", ".join(parts)
+
+
+func _format_effect_label(effect_key: String) -> String:
+	match effect_key:
+		"attack":
+			return "Attack"
+		"defense":
+			return "Defense"
+		"logistics":
+			return "Logistics"
+		"planning":
+			return "Planning"
+		"initiative":
+			return "Initiative"
+		"organization":
+			return "Organization"
+		"supply_consumption":
+			return "Supply use"
+		"breakthrough":
+			return "Breakthrough"
+		"combined_arms_sync":
+			return "Combined arms"
+		"organization_recovery":
+			return "Org recovery"
+		"reinforcement_speed":
+			return "Reinforcement"
+		"attrition_reduction":
+			return "Attrition"
+		"casualties":
+			return "Casualties"
+		"naval_combat":
+			return "Naval combat"
+		"armor_attack":
+			return "Armor attack"
+		"combat_width":
+			return "Combat width"
+		"desert_attack":
+			return "Desert attack"
+		"desert_defense":
+			return "Desert defense"
+		"arctic_attack":
+			return "Arctic attack"
+		"arctic_defense":
+			return "Arctic defense"
+		"jungle_attack":
+			return "Jungle attack"
+		"jungle_defense":
+			return "Jungle defense"
+		"mountain_attack":
+			return "Mountain attack"
+		"mountain_defense":
+			return "Mountain defense"
+		_:
+			return effect_key.replace("_", " ").capitalize()
+
+
+func _format_effect_value(effect_key: String, value: float) -> String:
+	if effect_key in ["attack", "defense", "logistics", "planning", "initiative", "organization"]:
+		if value >= 0.0:
+			return "+%d" % int(value)
+		return "%d" % int(value)
+	if effect_key == "supply_consumption":
+		return "%+d%%" % int(value * 100.0)
+	if absf(value) < 1.0:
+		return "%+d%%" % int(value * 100.0)
+	return "%+.2f" % value
 
 
 func _check_for_trait_gain(leader: Leader) -> void:
@@ -801,6 +968,7 @@ func _leader_from_dict(data: Dictionary) -> Leader:
 	leader.organization_skill = clampi(int(data.get("organization_skill", 3)), 0, MAX_SKILL)
 	leader.logistics_skill = clampi(int(data.get("logistics_skill", 3)), 0, MAX_SKILL)
 	leader.planning_skill = clampi(int(data.get("planning_skill", 3)), 0, MAX_SKILL)
+	leader.initiative_skill = clampi(int(data.get("initiative_skill", 3)), 0, MAX_SKILL)
 	leader.experience = int(data.get("experience", 0))
 	leader.battles_fought = int(data.get("battles_fought", 0))
 	leader.is_injured = bool(data.get("is_injured", false))

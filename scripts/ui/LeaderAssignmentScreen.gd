@@ -36,6 +36,8 @@ extends DraggablePanel
 @onready var detail_label: Label = $MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailLabel
 
 var current_data: LeaderScreenData
+var _detail_traits_box: VBoxContainer
+var _selected_leader_id: String = ""
 
 const NATIONAL_POSITIONS: Array[Dictionary] = [
 	{"key": LeaderManager.POSITION_CHIEF_OF_ARMY, "label": "Chief of Army"},
@@ -60,6 +62,7 @@ func _ready() -> void:
 	add_to_group("leader_screen")
 	drag_handle = $TitleBar
 	super._ready()
+	_setup_detail_panel()
 	_apply_screen_theme()
 	_setup_headers()
 	close_button.pressed.connect(_on_close_pressed)
@@ -88,6 +91,24 @@ func _apply_screen_theme() -> void:
 	)
 	RetrowaveTheme.style_detail_panel(detail_panel)
 	RetrowaveTheme.style_detail_label(detail_label)
+
+
+func _setup_detail_panel() -> void:
+	if detail_panel.get_node_or_null("DetailVBox") != null:
+		_detail_traits_box = detail_panel.get_node("DetailVBox/DetailTraitsVBox") as VBoxContainer
+		return
+
+	var vbox := VBoxContainer.new()
+	vbox.name = "DetailVBox"
+	vbox.add_theme_constant_override("separation", 8)
+	detail_panel.remove_child(detail_label)
+	detail_panel.add_child(vbox)
+	vbox.add_child(detail_label)
+
+	_detail_traits_box = VBoxContainer.new()
+	_detail_traits_box.name = "DetailTraitsVBox"
+	_detail_traits_box.add_theme_constant_override("separation", 4)
+	vbox.add_child(_detail_traits_box)
 
 
 func _setup_headers() -> void:
@@ -268,8 +289,7 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 		)
 	)
 
-	var traits: Array = summary.get("traits", []) as Array
-	hbox.add_child(_row_label(", ".join(traits), 200))
+	hbox.add_child(_row_label(_format_traits_row(summary), 200))
 
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -301,22 +321,107 @@ func _row_label(text: String, min_width: int) -> Label:
 	return label
 
 
-func _on_details_pressed(summary: Dictionary) -> void:
+func _format_traits_row(summary: Dictionary) -> String:
+	var display: Array = summary.get("trait_display", []) as Array
+	if not display.is_empty():
+		var parts: PackedStringArray = []
+		for entry in display:
+			if typeof(entry) != TYPE_DICTIONARY:
+				continue
+			var row := entry as Dictionary
+			var roman: String = str(row.get("roman", ""))
+			var suffix := " %s" % roman if not roman.is_empty() else ""
+			parts.append("%s%s" % [row.get("name", row.get("id", "")), suffix])
+		return ", ".join(parts)
+
 	var traits: Array = summary.get("traits", []) as Array
+	return ", ".join(traits)
+
+
+func _on_details_pressed(summary: Dictionary) -> void:
+	_selected_leader_id = str(summary.get("leader_id", ""))
 	var text := "Name: %s\n" % summary.get("name", "")
 	text += "Type: %s\n" % summary.get("leader_type_name", summary.get("leader_type", ""))
-	text += "Attack: %d | Defense: %d | Logistics: %d | Planning: %d\n" % [
+	text += "Atk %d | Def %d | Log %d | Plan %d | Init %d\n" % [
 		int(summary.get("attack_skill", 0)),
 		int(summary.get("defense_skill", 0)),
 		int(summary.get("logistics_skill", 0)),
 		int(summary.get("planning_skill", 0)),
+		int(summary.get("initiative_skill", 0)),
 	]
-	text += "Traits: %s\n" % ", ".join(traits)
-	text += "Experience: %d | Battles: %d" % [
+	text += "XP: %d | Battles: %d\n" % [
 		int(summary.get("experience", 0)),
 		int(summary.get("battles_fought", 0)),
 	]
 	detail_label.text = text
+	_populate_trait_detail(summary)
+
+
+func _populate_trait_detail(summary: Dictionary) -> void:
+	if _detail_traits_box == null:
+		return
+	for child in _detail_traits_box.get_children():
+		child.queue_free()
+
+	var display: Array = summary.get("trait_display", []) as Array
+	if display.is_empty():
+		var note := Label.new()
+		note.text = "No traits."
+		RetrowaveTheme.style_body_label(note)
+		_detail_traits_box.add_child(note)
+		return
+
+	var leader_xp := int(summary.get("experience", 0))
+	for entry in display:
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		var row := entry as Dictionary
+		var trait_row := VBoxContainer.new()
+		trait_row.add_theme_constant_override("separation", 2)
+
+		var title := Label.new()
+		var level := int(row.get("level", 1))
+		var max_level := int(row.get("max_level", 1))
+		var roman: String = str(row.get("roman", ""))
+		title.text = "%s %s (%d/%d)" % [row.get("name", ""), roman, level, max_level]
+		RetrowaveTheme.style_column_header(title)
+		trait_row.add_child(title)
+
+		var desc := str(row.get("description", ""))
+		var effects_text := str(row.get("effects_text", ""))
+		if not desc.is_empty() or not effects_text.is_empty():
+			var body := Label.new()
+			body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			body.text = desc
+			if not effects_text.is_empty():
+				body.text += "\n" + effects_text if not desc.is_empty() else effects_text
+			RetrowaveTheme.style_body_label(body)
+			trait_row.add_child(body)
+
+		if bool(row.get("can_level_up", false)):
+			var cost := int(row.get("level_up_cost", 0))
+			var level_btn := Button.new()
+			level_btn.text = "Level Up (%d XP)" % cost
+			RetrowaveTheme.style_primary_button(level_btn)
+			level_btn.disabled = leader_xp < cost
+			var trait_id: String = str(row.get("id", ""))
+			level_btn.pressed.connect(_on_level_trait_pressed.bind(trait_id))
+			trait_row.add_child(level_btn)
+
+		_detail_traits_box.add_child(trait_row)
+
+
+func _on_level_trait_pressed(trait_id: String) -> void:
+	if _selected_leader_id.is_empty():
+		return
+	var result: Dictionary = LeaderManager.spend_xp_on_trait(_selected_leader_id, trait_id)
+	if not bool(result.get("success", false)):
+		push_warning("Could not level trait %s: %s" % [trait_id, result.get("reason", "")])
+		return
+	refresh_screen()
+	var leader_summary := LeaderManager.get_leader_summary(_selected_leader_id)
+	if not leader_summary.is_empty():
+		_on_details_pressed(leader_summary)
 
 
 func _on_assign_pressed(summary: Dictionary) -> void:

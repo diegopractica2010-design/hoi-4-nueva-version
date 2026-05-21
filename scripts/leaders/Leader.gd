@@ -25,9 +25,10 @@ extends Resource
 var trait_levels: Dictionary = {}  # trait_id -> level
 
 
-func add_experience(amount: int) -> void:
-	experience += amount
-	battles_fought += 1
+func add_experience(amount: int, count_as_battle: bool = true) -> void:
+	experience += maxi(amount, 0)
+	if count_as_battle:
+		battles_fought += 1
 
 
 func add_trait_unchecked(trait_id: String, level: int = 1) -> void:

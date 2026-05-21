@@ -5,12 +5,57 @@
       "name": "Erwin Rommel",
       "country_tag": "GER",
       "leader_type": "general",
-      "attack_skill": 7,
+      "attack_skill": 8,
       "defense_skill": 6,
       "organization_skill": 6,
-      "logistics_skill": 5,
-      "planning_skill": 6,
-      "traits": ["desert_fox", "aggressive"]
+      "logistics_skill": 7,
+      "planning_skill": 5,
+      "initiative_skill": 8,
+      "experience": 850,
+      "battles_fought": 42,
+      "trait_levels": {
+        "desert_fox": 3,
+        "tank_leader": 2,
+        "aggressive": 2
+      }
+    },
+    {
+      "leader_id": "ger_manstein",
+      "name": "Erich von Manstein",
+      "country_tag": "GER",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 8,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 9,
+      "initiative_skill": 6,
+      "experience": 780,
+      "battles_fought": 38,
+      "trait_levels": {
+        "methodical": 3,
+        "combined_arms_master": 2,
+        "cautious": 1
+      }
+    },
+    {
+      "leader_id": "ger_guderian",
+      "name": "Heinz Guderian",
+      "country_tag": "GER",
+      "leader_type": "general",
+      "attack_skill": 8,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 8,
+      "experience": 720,
+      "battles_fought": 35,
+      "trait_levels": {
+        "tank_leader": 3,
+        "blitzkrieg_advocate": 1,
+        "bold": 2
+      }
     },
     {
       "leader_id": "ger_doenitz",
@@ -22,67 +67,128 @@
       "organization_skill": 7,
       "logistics_skill": 8,
       "planning_skill": 7,
-      "traits": ["sea_wolf", "cautious"]
+      "initiative_skill": 6,
+      "experience": 640,
+      "battles_fought": 28,
+      "trait_levels": {
+        "sea_wolf": 3,
+        "blockade_runner": 2,
+        "cautious": 1
+      }
     },
     {
-      "leader_id": "fin_mannerheim",
-      "name": "Carl Gustaf Emil Mannerheim",
-      "country_tag": "FIN",
+      "leader_id": "sov_zhukov",
+      "name": "Georgy Zhukov",
+      "country_tag": "SOV",
       "leader_type": "general",
-      "attack_skill": 6,
-      "defense_skill": 8,
-      "organization_skill": 7,
-      "logistics_skill": 6,
-      "planning_skill": 7,
-      "traits": ["arctic_bear", "cautious"]
+      "attack_skill": 8,
+      "defense_skill": 7,
+      "organization_skill": 8,
+      "logistics_skill": 8,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 900,
+      "battles_fought": 48,
+      "trait_levels": {
+        "butcher": 2,
+        "ruthless": 1,
+        "combined_arms_master": 2,
+        "political_general": 1
+      }
     },
     {
       "leader_id": "usa_patton",
       "name": "George S. Patton",
       "country_tag": "USA",
       "leader_type": "general",
-      "attack_skill": 8,
-      "defense_skill": 4,
+      "attack_skill": 9,
+      "defense_skill": 5,
       "organization_skill": 5,
       "logistics_skill": 6,
-      "planning_skill": 5,
-      "traits": ["aggressive", "logistics_wizard"]
+      "planning_skill": 7,
+      "initiative_skill": 9,
+      "experience": 920,
+      "battles_fought": 40,
+      "trait_levels": {
+        "tank_leader": 3,
+        "aggressive": 3,
+        "bold": 2
+      }
     },
     {
       "leader_id": "usa_eisenhower",
       "name": "Dwight D. Eisenhower",
       "country_tag": "USA",
       "leader_type": "general",
-      "attack_skill": 5,
-      "defense_skill": 6,
-      "organization_skill": 8,
-      "logistics_skill": 7,
-      "planning_skill": 8,
-      "traits": ["logistics_wizard", "cautious"]
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 9,
+      "logistics_skill": 8,
+      "planning_skill": 9,
+      "initiative_skill": 6,
+      "experience": 700,
+      "battles_fought": 30,
+      "trait_levels": {
+        "logistics_wizard": 2,
+        "combined_arms_master": 2,
+        "charismatic": 1
+      }
     },
     {
       "leader_id": "usa_nimitz",
       "name": "Chester W. Nimitz",
       "country_tag": "USA",
       "leader_type": "admiral",
-      "attack_skill": 6,
-      "defense_skill": 7,
-      "organization_skill": 7,
+      "attack_skill": 7,
+      "defense_skill": 8,
+      "organization_skill": 8,
       "logistics_skill": 7,
-      "planning_skill": 8,
-      "traits": ["sea_wolf", "cautious"]
+      "planning_skill": 9,
+      "initiative_skill": 7,
+      "experience": 760,
+      "battles_fought": 34,
+      "trait_levels": {
+        "carrier_admiral": 2,
+        "sea_wolf": 2,
+        "cautious": 1
+      }
     },
     {
       "leader_id": "usa_arnold",
       "name": "Henry H. Arnold",
       "country_tag": "USA",
       "leader_type": "air_marshal",
-      "attack_skill": 5,
+      "attack_skill": 6,
       "defense_skill": 5,
       "organization_skill": 7,
       "logistics_skill": 6,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 580,
+      "battles_fought": 22,
+      "trait_levels": {
+        "blitzkrieg_advocate": 1,
+        "aggressive": 2
+      }
+    },
+    {
+      "leader_id": "fin_mannerheim",
+      "name": "Carl Gustaf Emil Mannerheim",
+      "country_tag": "FIN",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 8,
+      "organization_skill": 7,
+      "logistics_skill": 6,
       "planning_skill": 7,
-      "traits": ["aggressive"]
+      "initiative_skill": 6,
+      "experience": 650,
+      "battles_fought": 36,
+      "trait_levels": {
+        "arctic_bear": 3,
+        "cautious": 2,
+        "iron_will": 1
+      }
     }
   ]
 }

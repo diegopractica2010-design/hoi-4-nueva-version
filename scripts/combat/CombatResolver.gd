@@ -50,6 +50,20 @@ func get_effective_combat_power(
 	}
 
 
+## Call once when a battle concludes (not during power previews).
+func resolve_combat_experience(
+	attacker_army_id: String = "",
+	defender_army_id: String = "",
+	intensity: float = 1.0,
+) -> void:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	if not attacker_army_id.is_empty():
+		LeaderManager.award_combat_experience_for_army(attacker_army_id, intensity)
+	if not defender_army_id.is_empty():
+		LeaderManager.award_combat_experience_for_army(defender_army_id, intensity * 0.65)
+
+
 func get_combat_width_for_battle(
 	attacker_province_id: int,
 	defender_province_id: int,
