@@ -281,6 +281,7 @@ func load_scenario(scenario_name: String) -> bool:
 	_rebuild_adjacency_system()
 	_infer_port_access_for_all(provinces)
 	_spawn_scenario_factories(scenario_name)
+	_spawn_scenario_formations()
 	var production_mgr := get_node_or_null("/root/ProductionManager")
 	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
 		production_mgr.clear_all_caches()
@@ -292,6 +293,17 @@ func load_scenario(scenario_name: String) -> bool:
 func _spawn_scenario_factories(scenario_name: String) -> void:
 	var spawner := ScenarioFactorySpawner.new()
 	spawner.spawn_factories_for_scenario(scenario_name, self)
+
+
+func _spawn_scenario_formations() -> void:
+	LeaderManager.clear_all_formations()
+	var formation_spawner := FormationSpawner.new()
+	formation_spawner.spawn_test_formations_for_country("GER", 8)
+	formation_spawner.spawn_test_formations_for_country("USA", 6)
+	formation_spawner.spawn_test_formations_for_country("SOV", 7)
+	LeaderManager.clear_all_leader_caches()
+	print("Scenario loaded with formations for leader assignment.")
+
 
 func get_country(tag: String) -> Variant:
 	return countries.get(tag)

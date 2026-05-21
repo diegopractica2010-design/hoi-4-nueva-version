@@ -21,6 +21,7 @@ static func run_all(design_data: DesignDataLoader) -> bool:
 	ok = _test_combat_resolver(design_data) and ok
 	ok = _test_combat_width() and ok
 	ok = _test_leader_manager() and ok
+	ok = _test_formation_spawner() and ok
 	ok = _test_assignment_screen_backends() and ok
 	ok = _test_cargo_logistics(design_data) and ok
 	ok = _test_armed_cargo_penalty(design_data) and ok
@@ -647,6 +648,66 @@ static func _test_combat_width() -> bool:
 		return false
 
 	print("  [PASS] combat width (plains=", plains_width, " effective=", effective, ")")
+	return true
+
+
+static func _test_formation_spawner() -> bool:
+	if Engine.get_main_loop() == null:
+		print("  [SKIP] formation spawner (no main loop)")
+		return true
+
+	LeaderManager.clear_all_formations()
+
+	var spawner := FormationSpawner.new()
+	spawner.spawn_test_formations_for_country("GER", 6)
+
+	var ger_available: Array[Dictionary] = LeaderManager.get_available_formations("GER")
+	if ger_available.size() < 6:
+		print("  [FAIL] expected at least 6 GER formations, got ", ger_available.size())
+		return false
+
+	var general := Leader.new()
+	general.leader_id = "ger_test_general"
+	general.name = "Test General"
+	general.country_tag = "GER"
+	general.leader_type = "general"
+	LeaderManager.register_leader(general)
+
+	var division_id := ""
+	for entry in ger_available:
+		if str(entry.get("type", "")) == Formation.TYPE_DIVISION:
+			division_id = str(entry.get("formation_id", ""))
+			break
+
+	if division_id.is_empty():
+		print("  [FAIL] no division formation found for GER")
+		LeaderManager.leaders.erase("ger_test_general")
+		return false
+
+	if not LeaderManager.assign_leader_to_formation("ger_test_general", division_id):
+		print("  [FAIL] assign general to division")
+		LeaderManager.leaders.erase("ger_test_general")
+		return false
+
+	var admiral := Leader.new()
+	admiral.leader_id = "ger_test_admiral"
+	admiral.name = "Test Admiral"
+	admiral.country_tag = "GER"
+	admiral.leader_type = "admiral"
+	LeaderManager.register_leader(admiral)
+
+	if LeaderManager.assign_leader_to_formation("ger_test_admiral", division_id):
+		print("  [FAIL] admiral should not lead a land division")
+		LeaderManager.leaders.erase("ger_test_admiral")
+		LeaderManager.unassign_leader_from_army("ger_test_general")
+		LeaderManager.leaders.erase("ger_test_general")
+		return false
+
+	LeaderManager.unassign_leader_from_army("ger_test_general")
+	LeaderManager.leaders.erase("ger_test_general")
+	LeaderManager.leaders.erase("ger_test_admiral")
+
+	print("  [PASS] formation spawner and leader type validation")
 	return true
 
 

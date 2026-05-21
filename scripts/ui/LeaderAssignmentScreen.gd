@@ -326,17 +326,37 @@ func _on_details_pressed(summary: Dictionary) -> void:
 
 
 func _on_assign_pressed(summary: Dictionary) -> void:
-	var leader_id := str(summary.get("leader_id", ""))
+	var leader_id: String = str(summary.get("leader_id", ""))
 	if leader_id.is_empty():
 		return
 
 	var available_formations: Array[Dictionary] = LeaderManager.get_available_formations(country_tag)
 	if available_formations.is_empty():
-		print("No available formations to assign to.")
+		print("No available formations found for ", country_tag)
 		return
 
-	_pending_assign_leader_id = leader_id
-	_open_formation_picker(str(summary.get("name", "Leader")), available_formations)
+	print("=== Available Formations ===")
+	for formation in available_formations:
+		print(
+			"- %s (%s) [%s]"
+			% [
+				formation.get("name", ""),
+				formation.get("formation_id", ""),
+				formation.get("type", ""),
+			]
+		)
+
+	var first_formation: Dictionary = available_formations[0]
+	var success: bool = LeaderManager.assign_leader_to_formation(
+		leader_id,
+		str(first_formation.get("formation_id", "")),
+	)
+
+	if success:
+		print("Assigned leader to: ", first_formation.get("name", ""))
+		refresh_screen()
+	else:
+		print("Failed to assign leader.")
 
 
 func _open_formation_picker(leader_name: String, available_formations: Array[Dictionary]) -> void:

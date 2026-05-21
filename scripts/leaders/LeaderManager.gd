@@ -169,12 +169,15 @@ func register_division_formations_for_country(country_tag: String) -> void:
 		register_formation(Formation.from_division_template(div_id, div_template, country_tag))
 
 
+func clear_all_formations() -> void:
+	formations.clear()
+
+
 ## Formations for [param country_tag] that do not have a leader assigned.
 func get_available_formations(country_tag: String) -> Array[Dictionary]:
 	var available: Array[Dictionary] = []
 
-	if formations.is_empty():
-		register_division_formations_for_country(country_tag)
+	register_division_formations_for_country(country_tag)
 
 	for formation_id in formations:
 		var formation: Formation = formations[formation_id] as Formation
