@@ -28,7 +28,23 @@ Yearly rolls in `LeaderManager.check_leader_mortality()` — **no fixed historic
 | 75–79 | 11.0% | 30.0% |
 | 80+ | 18.0%+ | 35.0% |
 
-Modifiers: combat assignment, `training` / `rear_area` duty, traits (`iron_will`, `reckless`, etc.), experience 800+, injury, `stayed_past_retirement`.
+Modifiers: `training` / `rear_area` duty, traits (`iron_will`, `reckless`, etc.), experience 800+, injury, `stayed_past_retirement`.
+
+**Note:** Being assigned to combat does **not** increase yearly natural death. Combat risk is handled separately (below).
+
+### Combat casualties (per battle)
+
+| Situation | Chance |
+|-----------|--------|
+| Leader in combat, formation survives | **0.03%** death per battle (`COMBAT_DEATH_CHANCE_PER_BATTLE`) |
+| Leader's formation destroyed | **~30%** death **or** capture (`FORMATION_DESTROYED_FATE_CHANCE`) |
+
+Destroyed formation: ~45% of fate outcomes are death, remainder capture (tunable via `FORMATION_DESTROYED_DEATH_SHARE`).
+
+```gdscript
+CombatResolver.resolve_combat_experience(attacker_id, defender_id, 1.0)
+CombatResolver.resolve_formation_destroyed(formation_id)
+```
 
 ### Retirement flow
 

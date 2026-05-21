@@ -4,6 +4,7 @@ extends Node
 ## Registry for leaders, army assignments, and national command positions.
 
 signal leader_died(leader_id: String, cause: String)
+signal leader_captured(leader_id: String, cause: String)
 signal leader_retirement_offered(leader_id: String)
 signal leader_retired(leader_id: String)
 signal leader_introduced(leader_id: String)
@@ -49,6 +50,13 @@ const XP_COST_BY_RARITY: Dictionary = {
 const ROMAN_LEVELS: Array[String] = ["", "I", "II", "III", "IV"]
 
 ## Yearly mortality chart (max age exclusive upper bound in loop).
+## Per-battle while assigned to an active formation (not yearly natural death).
+const COMBAT_DEATH_CHANCE_PER_BATTLE := 0.0003
+## When the leader's formation is destroyed, death or capture combined chance.
+const FORMATION_DESTROYED_FATE_CHANCE := 0.30
+## Share of destroyed-formation fate rolls that kill rather than capture.
+const FORMATION_DESTROYED_DEATH_SHARE := 0.45
+
 const AGE_MORTALITY_BRACKETS: Array[Dictionary] = [
 	{"max_age": 50, "death": 0.003, "retire": 0.005},
 	{"max_age": 60, "death": 0.008, "retire": 0.020},
@@ -500,11 +508,100 @@ func _base_chance_for_age(age: int, kind: String) -> float:
 	return 0.0
 
 
+func get_combat_death_chance_per_battle(leader: Leader, intensity: float = 1.0) -> float:
+	if leader == null or not leader.is_available_for_command() or not leader.is_in_combat_role():
+		return 0.0
+	var chance := COMBAT_DEATH_CHANCE_PER_BATTLE * clampf(intensity, 0.25, 4.0)
+	chance *= _combat_casualty_trait_multiplier(leader)
+	if leader.is_injured:
+		chance *= 1.5
+	return clampf(chance, 0.0, 0.01)
+
+
+func get_formation_destroyed_fate_chance(leader: Leader) -> float:
+	if leader == null or not leader.is_available_for_command():
+		return 0.0
+	if leader.assigned_army_id.is_empty():
+		return 0.0
+	return clampf(
+		FORMATION_DESTROYED_FATE_CHANCE * _combat_casualty_trait_multiplier(leader),
+		0.0,
+		0.5,
+	)
+
+
+func roll_combat_battle_casualty(
+	army_or_formation_id: String,
+	intensity: float = 1.0,
+) -> Dictionary:
+	var leader: Leader = get_leader_for_army(army_or_formation_id)
+	if leader == null:
+		return {"type": "none", "leader_id": ""}
+
+	var chance := get_combat_death_chance_per_battle(leader, intensity)
+	if chance <= 0.0:
+		return {"type": "none", "leader_id": leader.leader_id}
+
+	if randf() < chance:
+		var leader_id := leader.leader_id
+		_remove_leader(leader_id, "combat", true)
+		leader_died.emit(leader_id, "combat")
+		return {"type": "death", "leader_id": leader_id, "cause": "combat", "chance": chance}
+
+	return {"type": "none", "leader_id": leader.leader_id, "chance": chance}
+
+
+func handle_formation_destroyed(formation_id: String) -> Dictionary:
+	var leader: Leader = get_leader_for_army(formation_id)
+	if leader == null:
+		return {"type": "none", "leader_id": ""}
+
+	var leader_id := leader.leader_id
+	var fate_chance := get_formation_destroyed_fate_chance(leader)
+	if randf() >= fate_chance:
+		return {"type": "survived", "leader_id": leader_id, "chance": fate_chance}
+
+	_unassign_leader_from_current_formation(leader)
+	_clear_leader_from_national_positions(leader_id)
+
+	if randf() < FORMATION_DESTROYED_DEATH_SHARE:
+		_remove_leader(leader_id, "formation_destroyed", true)
+		leader_died.emit(leader_id, "formation_destroyed")
+		return {
+			"type": "death",
+			"leader_id": leader_id,
+			"cause": "formation_destroyed",
+			"chance": fate_chance,
+		}
+
+	leader.is_captured = true
+	print("%s has been captured after their command was destroyed!" % leader.name)
+	invalidate_leader_cache(leader.country_tag)
+	leader_captured.emit(leader_id, "formation_destroyed")
+	return {
+		"type": "captured",
+		"leader_id": leader_id,
+		"cause": "formation_destroyed",
+		"chance": fate_chance,
+	}
+
+
+func _combat_casualty_trait_multiplier(leader: Leader) -> float:
+	var mult := 1.0
+	if leader.has_trait("iron_will"):
+		mult *= 0.75
+	if leader.has_trait("reckless"):
+		mult *= 1.35
+	if leader.has_trait("cautious"):
+		mult *= 0.9
+	if leader.duty_post == "rear_area":
+		mult *= 0.5
+	return mult
+
+
 func _mortality_situation_multiplier(leader: Leader, for_death: bool) -> float:
 	var mult := 1.0
-	if leader.is_in_combat_role():
-		mult *= 1.5 if for_death else 0.8
-	elif leader.duty_post == "training":
+	if leader.duty_post == "training":
 		mult *= 0.55 if for_death else 0.7
 	elif leader.duty_post == "rear_area":
 		mult *= 0.4 if for_death else 0.6

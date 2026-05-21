@@ -890,6 +890,19 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] mortality chances for elderly leader: ", death_chance, retire_chance)
 		return false
 
+	var rommel_combat := LeaderManager.get_leader("ger_rommel")
+	if rommel_combat != null:
+		rommel_combat.assigned_army_id = "test_combat_formation"
+		var per_battle := LeaderManager.get_combat_death_chance_per_battle(rommel_combat)
+		if absf(per_battle - 0.0003) > 0.0001:
+			print("  [FAIL] combat death chance should be ~0.03%: ", per_battle)
+			return false
+		var destroyed_chance := LeaderManager.get_formation_destroyed_fate_chance(rommel_combat)
+		if absf(destroyed_chance - 0.30) > 0.05:
+			print("  [FAIL] formation destroyed fate chance: ", destroyed_chance)
+			return false
+		rommel_combat.assigned_army_id = ""
+
 	rommel = LeaderManager.get_leader("ger_rommel")
 	if rommel == null:
 		print("  [FAIL] Rommel not loaded via load_historical_leaders")
