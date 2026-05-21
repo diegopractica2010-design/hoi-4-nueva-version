@@ -35,16 +35,16 @@ static var _rules_cache: Dictionary = {}
 static var _rules_loaded: bool = false
 
 
-static func make_id(province_id: int, slot: int) -> int:
-	return province_id * 100 + slot
+static func make_id(p_province_id: int, slot: int) -> int:
+	return p_province_id * ID_SLOT_SCALE + slot
 
 
-static func province_from_id(factory_id: int) -> int:
-	return factory_id / 100
+static func province_from_id(f_id: int) -> int:
+	return f_id // ID_SLOT_SCALE
 
 
-static func slot_from_id(factory_id: int) -> int:
-	return factory_id % 100
+static func slot_from_id(f_id: int) -> int:
+	return f_id % ID_SLOT_SCALE
 
 
 func apply_damage(amount: float) -> void:
