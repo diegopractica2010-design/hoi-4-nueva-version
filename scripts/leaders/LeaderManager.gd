@@ -242,6 +242,20 @@ func _infer_division_country_tag(division_id: String) -> String:
 
 # === National top positions (chiefs of staff) ===
 
+func get_valid_leader_types_for_position(position: String) -> Array[String]:
+	match position:
+		POSITION_CHIEF_OF_NAVY:
+			return ["admiral"]
+		POSITION_CHIEF_OF_AIR_FORCE:
+			return ["air_marshal"]
+		POSITION_CHIEF_OF_SPACE_FORCE:
+			return ["space_commander"]
+		POSITION_CHIEF_OF_ARMY:
+			return ["general", "field_marshal"]
+		_:
+			return ["general", "field_marshal", "admiral", "air_marshal"]
+
+
 func can_assign_national_position(
 	country_tag: String,
 	position: String,
@@ -266,6 +280,12 @@ func can_assign_national_position(
 	if leader.country_tag != country_tag:
 		result["can_assign"] = false
 		result["reason"] = "Leader does not match country"
+		return result
+
+	var valid_types := get_valid_leader_types_for_position(position)
+	if not valid_types.has(leader.leader_type):
+		result["can_assign"] = false
+		result["reason"] = "Leader type not eligible for this position"
 		return result
 
 	return result

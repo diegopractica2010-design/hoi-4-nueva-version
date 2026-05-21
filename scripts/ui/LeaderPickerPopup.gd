@@ -14,6 +14,7 @@ signal leader_selected(leader_id: String)
 @onready var confirm_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/ConfirmButton
 @onready var cancel_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/CancelButton
 
+var valid_leader_types: Array[String] = []
 var _leader_ids: Array[String] = []
 var _filtered_ids: Array[String] = []
 var _selected_leader_id: String = ""
@@ -39,6 +40,9 @@ func _ready() -> void:
 		title_label.text = dialog_title
 		title = dialog_title
 
+	if not position_key.is_empty():
+		valid_leader_types = LeaderManager.get_valid_leader_types_for_position(position_key)
+
 	_load_leaders()
 
 
@@ -48,6 +52,8 @@ func _load_leaders() -> void:
 
 	for leader in LeaderManager.get_leaders_for_country(country_tag):
 		if leader.is_captured or leader.is_injured:
+			continue
+		if not valid_leader_types.is_empty() and not valid_leader_types.has(leader.leader_type):
 			continue
 		_leader_ids.append(leader.leader_id)
 
@@ -67,6 +73,15 @@ func _apply_filter(search_text: String) -> void:
 			_filtered_ids.append(leader_id)
 
 	leader_list.clear()
+	if _filtered_ids.is_empty():
+		var empty_msg := "No eligible leaders for this position."
+		if not valid_leader_types.is_empty():
+			empty_msg = "No eligible leaders (%s)." % ", ".join(valid_leader_types)
+		leader_list.add_item(empty_msg)
+		_selected_leader_id = ""
+		confirm_button.disabled = true
+		return
+
 	for leader_id in _filtered_ids:
 		var leader: Leader = LeaderManager.get_leader(leader_id)
 		if leader == null:
