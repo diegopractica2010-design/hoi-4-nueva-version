@@ -10,9 +10,7 @@ func get_effective_combat_power(
 	army_id: String = "",
 	terrain: String = "plains",
 ) -> Dictionary:
-	var base_stats: Dictionary = ProductionManager.get_division_final_combat_stats(
-		division_template_id, unit_id,
-	)
+	var base_stats := ProductionManager.get_division_final_combat_stats(division_template_id, unit_id)
 
 	if base_stats.is_empty():
 		return {}
@@ -22,14 +20,11 @@ func get_effective_combat_power(
 	var final_readiness := float(base_stats.get("readiness", 1.0))
 	var final_org := 1.0
 
+	# Leader modifiers
 	var leader: Leader = null
 	var terrain_bonus := 0.0
-	var leader_manager := _leader_manager()
-	if leader_manager != null:
-		if not army_id.is_empty():
-			leader = leader_manager.get_leader_for_army(army_id)
-		elif not unit_id.is_empty():
-			pass  # Future: resolve army from unit_id
+	if not army_id.is_empty() and LeaderManager != null:
+		leader = LeaderManager.get_leader_for_army(army_id)
 
 	if leader != null and not leader.is_injured and not leader.is_captured:
 		final_soft += leader.get_attack_modifier() * 10.0
@@ -84,13 +79,6 @@ func get_combat_width_for_battle(
 	var width := calculator.get_effective_combat_width(attacker_infra, defender_infra, battle_terrain)
 	calculator.free()
 	return width
-
-
-func _leader_manager() -> Node:
-	var tree := Engine.get_main_loop()
-	if tree == null:
-		return null
-	return tree.root.get_node_or_null("/root/LeaderManager")
 
 
 func _find_scenario_loader() -> ScenarioLoader:
