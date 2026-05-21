@@ -850,9 +850,15 @@ static func _test_leader_manager() -> bool:
 	if LeaderManager.country_positions.has("USA"):
 		(LeaderManager.country_positions["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)
 
-	var loaded_1918 := LeaderManager.load_leaders_for_scenario("1918")
-	if loaded_1918 < 70:
+	var loaded_1918 := LeaderManager.load_leaders_for_scenario("1918", 1918)
+	if loaded_1918 < 60:
 		print("  [FAIL] 1918 historical leaders load count: ", loaded_1918)
+		return false
+	if LeaderManager.get_leader("ger_rommel") != null:
+		print("  [FAIL] Rommel must not be active in 1918 scenario year")
+		return false
+	if not LeaderManager.leader_pool.has("irn_reza"):
+		print("  [FAIL] Reza Khan (start 1921) should be in 1918 leader pool")
 		return false
 	var hindenburg: Leader = LeaderManager.get_leader("ger_hindenburg")
 	if hindenburg == null or hindenburg.get_trait_level("methodical") < 2:
@@ -863,7 +869,27 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] 1918 Pershing not loaded")
 		return false
 
-	LeaderManager.load_historical_leaders(LeaderManager.HISTORICAL_LEADERS_1936_PATH)
+	LeaderManager.load_historical_leaders(LeaderManager.HISTORICAL_LEADERS_1936_PATH, 1936)
+	if LeaderManager.get_leader("ger_guderian") != null:
+		print("  [FAIL] Guderian should be in pool until 1939, not active in 1936")
+		return false
+	if not LeaderManager.leader_pool.has("ger_guderian"):
+		print("  [FAIL] Guderian missing from 1936 leader pool")
+		return false
+	LeaderManager.set_current_year(1939)
+	if LeaderManager.introduce_eligible_leaders_for_year(1939) < 1:
+		print("  [FAIL] Guderian should enter in 1939")
+		return false
+	if LeaderManager.get_leader("ger_guderian") == null:
+		print("  [FAIL] Guderian not introduced in 1939")
+		return false
+
+	var death_chance := LeaderManager.get_yearly_death_chance(LeaderManager.get_leader("ger_hindenburg"))
+	var retire_chance := LeaderManager.get_yearly_retirement_chance(LeaderManager.get_leader("ger_hindenburg"))
+	if death_chance <= 0.0 or retire_chance <= 0.0:
+		print("  [FAIL] mortality chances for elderly leader: ", death_chance, retire_chance)
+		return false
+
 	rommel = LeaderManager.get_leader("ger_rommel")
 	if rommel == null:
 		print("  [FAIL] Rommel not loaded via load_historical_leaders")

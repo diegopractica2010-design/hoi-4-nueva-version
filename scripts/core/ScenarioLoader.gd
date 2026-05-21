@@ -281,7 +281,8 @@ func load_scenario(scenario_name: String) -> bool:
 	_rebuild_adjacency_system()
 	_infer_port_access_for_all(provinces)
 	_spawn_scenario_factories(scenario_name)
-	_load_scenario_leaders(scenario_name)
+	var scenario_year := _parse_scenario_start_year(data)
+	_load_scenario_leaders(scenario_name, scenario_year)
 	_spawn_scenario_formations(scenario_name)
 	var production_mgr := get_node_or_null("/root/ProductionManager")
 	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
@@ -296,11 +297,27 @@ func _spawn_scenario_factories(scenario_name: String) -> void:
 	spawner.spawn_factories_for_scenario(scenario_name, self)
 
 
-func _load_scenario_leaders(scenario_name: String) -> void:
+func _parse_scenario_start_year(data: Dictionary) -> int:
+	var start_date := str(data.get("start_date", "1936-01-01"))
+	var parts := start_date.split("-")
+	if parts.size() >= 1 and parts[0].is_valid_int():
+		return int(parts[0])
+	return 1936
+
+
+func _load_scenario_leaders(scenario_name: String, start_year: int) -> void:
 	if typeof(LeaderManager) == TYPE_NIL:
 		return
-	var loaded := LeaderManager.load_leaders_for_scenario(scenario_name)
-	print("✅ Scenario leaders loaded (%s): %d" % [scenario_name, loaded])
+	var loaded := LeaderManager.load_leaders_for_scenario(scenario_name, start_year)
+	print(
+		"✅ Scenario leaders loaded (%s, %d): %d active, %d pooled"
+		% [
+			scenario_name,
+			start_year,
+			loaded,
+			LeaderManager.get_pool_leader_count(),
+		]
+	)
 
 
 func _spawn_scenario_formations(scenario_name: String) -> void:

@@ -17,7 +17,10 @@
         "desert_fox": 3,
         "tank_leader": 2,
         "aggressive": 2
-      }
+      },
+      "birth_year": 1891,
+      "start_year": 1935,
+      "end_year": 1944
     },
     {
       "leader_id": "ger_manstein",
@@ -36,7 +39,10 @@
         "methodical": 3,
         "combined_arms_master": 2,
         "cautious": 1
-      }
+      },
+      "birth_year": 1887,
+      "start_year": 1934,
+      "end_year": 1945
     },
     {
       "leader_id": "ger_guderian",
@@ -55,11 +61,14 @@
         "tank_leader": 3,
         "blitzkrieg_advocate": 1,
         "bold": 2
-      }
+      },
+      "birth_year": 1888,
+      "start_year": 1939,
+      "end_year": 1945
     },
     {
       "leader_id": "ger_doenitz",
-      "name": "Karl Dönitz",
+      "name": "Karl D\u00f6nitz",
       "country_tag": "GER",
       "leader_type": "admiral",
       "attack_skill": 6,
@@ -74,7 +83,10 @@
         "sea_wolf": 3,
         "blockade_runner": 2,
         "cautious": 1
-      }
+      },
+      "birth_year": 1892,
+      "start_year": 1935,
+      "end_year": 1945
     },
     {
       "leader_id": "sov_zhukov",
@@ -94,7 +106,9 @@
         "ruthless": 1,
         "combined_arms_master": 2,
         "political_general": 1
-      }
+      },
+      "birth_year": 1896,
+      "start_year": 1935
     },
     {
       "leader_id": "usa_patton",
@@ -113,7 +127,10 @@
         "tank_leader": 3,
         "aggressive": 3,
         "bold": 2
-      }
+      },
+      "birth_year": 1885,
+      "start_year": 1935,
+      "end_year": 1945
     },
     {
       "leader_id": "usa_eisenhower",
@@ -132,7 +149,9 @@
         "logistics_wizard": 2,
         "combined_arms_master": 2,
         "charismatic": 1
-      }
+      },
+      "birth_year": 1890,
+      "start_year": 1941
     },
     {
       "leader_id": "usa_nimitz",
@@ -151,7 +170,9 @@
         "carrier_admiral": 2,
         "sea_wolf": 2,
         "cautious": 1
-      }
+      },
+      "birth_year": 1885,
+      "start_year": 1941
     },
     {
       "leader_id": "usa_arnold",
@@ -169,7 +190,9 @@
       "trait_levels": {
         "blitzkrieg_advocate": 1,
         "aggressive": 2
-      }
+      },
+      "birth_year": 1886,
+      "start_year": 1938
     },
     {
       "leader_id": "fin_mannerheim",
@@ -188,7 +211,9 @@
         "arctic_bear": 3,
         "cautious": 2,
         "iron_will": 1
-      }
+      },
+      "birth_year": 1867,
+      "start_year": 1918
     }
   ]
 }

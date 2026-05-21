@@ -17,7 +17,10 @@
         "methodical": 2,
         "cautious": 2,
         "iron_will": 1
-      }
+      },
+      "birth_year": 1847,
+      "start_year": 1914,
+      "end_year": 1919
     },
     {
       "leader_id": "ger_ludendorff",
@@ -36,7 +39,10 @@
         "logistics_wizard": 2,
         "aggressive": 2,
         "butcher": 1
-      }
+      },
+      "birth_year": 1865,
+      "start_year": 1914,
+      "end_year": 1919
     },
     {
       "leader_id": "ger_hutier",
@@ -55,7 +61,10 @@
         "aggressive": 2,
         "bold": 2,
         "artillery_expert": 2
-      }
+      },
+      "birth_year": 1857,
+      "start_year": 1916,
+      "end_year": 1919
     },
     {
       "leader_id": "ger_scheer",
@@ -74,7 +83,10 @@
         "sea_wolf": 2,
         "blockade_runner": 1,
         "cautious": 1
-      }
+      },
+      "birth_year": 1863,
+      "start_year": 1914,
+      "end_year": 1919
     },
     {
       "leader_id": "fra_foch",
@@ -93,7 +105,10 @@
         "methodical": 3,
         "combined_arms_master": 2,
         "charismatic": 1
-      }
+      },
+      "birth_year": 1851,
+      "start_year": 1914,
+      "end_year": 1925
     },
     {
       "leader_id": "fra_petain",
@@ -112,7 +127,9 @@
         "cautious": 3,
         "iron_will": 2,
         "logistics_wizard": 1
-      }
+      },
+      "birth_year": 1856,
+      "start_year": 1914
     },
     {
       "leader_id": "fra_mangin",
@@ -131,7 +148,10 @@
         "aggressive": 3,
         "ruthless": 1,
         "bold": 1
-      }
+      },
+      "birth_year": 1866,
+      "start_year": 1914,
+      "end_year": 1925
     },
     {
       "leader_id": "fra_gauchet",
@@ -149,7 +169,10 @@
       "trait_levels": {
         "sea_wolf": 2,
         "cautious": 1
-      }
+      },
+      "birth_year": 1856,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "eng_haig",
@@ -168,7 +191,10 @@
         "methodical": 2,
         "logistics_wizard": 2,
         "butcher": 1
-      }
+      },
+      "birth_year": 1861,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "eng_plumer",
@@ -187,7 +213,10 @@
         "cautious": 2,
         "morale_builder": 2,
         "artillery_expert": 1
-      }
+      },
+      "birth_year": 1857,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "eng_beatty",
@@ -206,7 +235,10 @@
         "bold": 2,
         "sea_wolf": 2,
         "aggressive": 1
-      }
+      },
+      "birth_year": 1871,
+      "start_year": 1914,
+      "end_year": 1927
     },
     {
       "leader_id": "eng_trenchard",
@@ -225,7 +257,10 @@
         "blitzkrieg_advocate": 1,
         "aggressive": 2,
         "logistics_wizard": 1
-      }
+      },
+      "birth_year": 1873,
+      "start_year": 1915,
+      "end_year": 1930
     },
     {
       "leader_id": "usa_pershing",
@@ -244,7 +279,10 @@
         "methodical": 2,
         "logistics_wizard": 2,
         "charismatic": 1
-      }
+      },
+      "birth_year": 1860,
+      "start_year": 1917,
+      "end_year": 1924
     },
     {
       "leader_id": "usa_liggett",
@@ -263,7 +301,10 @@
         "combined_arms_master": 2,
         "cautious": 1,
         "artillery_expert": 2
-      }
+      },
+      "birth_year": 1863,
+      "start_year": 1918,
+      "end_year": 1925
     },
     {
       "leader_id": "usa_sims",
@@ -281,7 +322,10 @@
       "trait_levels": {
         "sea_wolf": 2,
         "blockade_runner": 2
-      }
+      },
+      "birth_year": 1858,
+      "start_year": 1917,
+      "end_year": 1922
     },
     {
       "leader_id": "usa_mitchell",
@@ -300,7 +344,10 @@
         "bold": 2,
         "aggressive": 2,
         "arrogant": 1
-      }
+      },
+      "birth_year": 1879,
+      "start_year": 1918,
+      "end_year": 1936
     },
     {
       "leader_id": "sov_trotsky",
@@ -319,7 +366,10 @@
         "political_general": 1,
         "charismatic": 1,
         "logistics_wizard": 2
-      }
+      },
+      "birth_year": 1879,
+      "start_year": 1917,
+      "end_year": 1940
     },
     {
       "leader_id": "sov_brusilov",
@@ -338,7 +388,10 @@
         "combined_arms_master": 2,
         "bold": 2,
         "aggressive": 2
-      }
+      },
+      "birth_year": 1853,
+      "start_year": 1914,
+      "end_year": 1926
     },
     {
       "leader_id": "sov_tukhachevsky",
@@ -357,7 +410,10 @@
         "deep_battle_theorist": 1,
         "bold": 2,
         "aggressive": 1
-      }
+      },
+      "birth_year": 1893,
+      "start_year": 1920,
+      "end_year": 1940
     },
     {
       "leader_id": "sov_budyonny",
@@ -376,7 +432,9 @@
         "aggressive": 2,
         "ruthless": 2,
         "bold": 1
-      }
+      },
+      "birth_year": 1883,
+      "start_year": 1918
     },
     {
       "leader_id": "ita_diaz",
@@ -395,7 +453,10 @@
         "methodical": 2,
         "morale_builder": 2,
         "cautious": 1
-      }
+      },
+      "birth_year": 1865,
+      "start_year": 1917,
+      "end_year": 1924
     },
     {
       "leader_id": "ita_cadorna",
@@ -414,7 +475,10 @@
         "methodical": 2,
         "butcher": 2,
         "arrogant": 1
-      }
+      },
+      "birth_year": 1850,
+      "start_year": 1914,
+      "end_year": 1918
     },
     {
       "leader_id": "ita_thaon",
@@ -432,7 +496,10 @@
       "trait_levels": {
         "sea_wolf": 2,
         "cautious": 2
-      }
+      },
+      "birth_year": 1857,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "jap_uehara",
@@ -451,7 +518,10 @@
         "methodical": 2,
         "cautious": 2,
         "mountain_specialist": 1
-      }
+      },
+      "birth_year": 1860,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "jap_kato",
@@ -470,7 +540,10 @@
         "sea_wolf": 2,
         "cautious": 1,
         "blockade_runner": 1
-      }
+      },
+      "birth_year": 1848,
+      "start_year": 1914,
+      "end_year": 1923
     },
     {
       "leader_id": "jap_hanzo",
@@ -488,7 +561,10 @@
       "trait_levels": {
         "aggressive": 2,
         "night_operator": 1
-      }
+      },
+      "birth_year": 1876,
+      "start_year": 1918,
+      "end_year": 1930
     },
     {
       "leader_id": "tur_kemal",
@@ -507,7 +583,9 @@
         "bold": 3,
         "iron_will": 2,
         "mountain_specialist": 2
-      }
+      },
+      "birth_year": 1881,
+      "start_year": 1915
     },
     {
       "leader_id": "tur_cevat",
@@ -526,7 +604,10 @@
         "cautious": 2,
         "methodical": 2,
         "logistics_wizard": 1
-      }
+      },
+      "birth_year": 1870,
+      "start_year": 1914,
+      "end_year": 1922
     },
     {
       "leader_id": "tur_sanders",
@@ -545,7 +626,10 @@
         "methodical": 2,
         "cautious": 2,
         "artillery_expert": 1
-      }
+      },
+      "birth_year": 1855,
+      "start_year": 1915,
+      "end_year": 1919
     },
     {
       "leader_id": "pol_pilsudski",
@@ -564,7 +648,9 @@
         "bold": 2,
         "charismatic": 1,
         "aggressive": 2
-      }
+      },
+      "birth_year": 1867,
+      "start_year": 1914
     },
     {
       "leader_id": "pol_haller",
@@ -583,7 +669,10 @@
         "morale_builder": 2,
         "logistics_wizard": 1,
         "cautious": 1
-      }
+      },
+      "birth_year": 1873,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "pol_sikorski",
@@ -601,7 +690,10 @@
       "trait_levels": {
         "combined_arms_master": 1,
         "methodical": 2
-      }
+      },
+      "birth_year": 1881,
+      "start_year": 1918,
+      "end_year": 1943
     },
     {
       "leader_id": "ukr_petliura",
@@ -620,7 +712,10 @@
         "charismatic": 1,
         "aggressive": 2,
         "morale_builder": 1
-      }
+      },
+      "birth_year": 1879,
+      "start_year": 1918,
+      "end_year": 1926
     },
     {
       "leader_id": "ukr_grebenko",
@@ -638,7 +733,10 @@
       "trait_levels": {
         "cautious": 2,
         "morale_builder": 1
-      }
+      },
+      "birth_year": 1885,
+      "start_year": 1918,
+      "end_year": 1920
     },
     {
       "leader_id": "fin_mannerheim",
@@ -657,7 +755,9 @@
         "arctic_bear": 3,
         "cautious": 2,
         "iron_will": 1
-      }
+      },
+      "birth_year": 1867,
+      "start_year": 1918
     },
     {
       "leader_id": "fin_osterman",
@@ -675,7 +775,10 @@
       "trait_levels": {
         "cautious": 2,
         "logistics_wizard": 1
-      }
+      },
+      "birth_year": 1876,
+      "start_year": 1918,
+      "end_year": 1925
     },
     {
       "leader_id": "nor_hvidsten",
@@ -693,7 +796,10 @@
       "trait_levels": {
         "sea_wolf": 1,
         "cautious": 2
-      }
+      },
+      "birth_year": 1871,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "nor_laurentzon",
@@ -711,7 +817,10 @@
       "trait_levels": {
         "arctic_bear": 2,
         "cautious": 1
-      }
+      },
+      "birth_year": 1865,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "swe_horn",
@@ -729,7 +838,10 @@
       "trait_levels": {
         "cautious": 2,
         "methodical": 1
-      }
+      },
+      "birth_year": 1855,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "swe_prince",
@@ -747,7 +859,10 @@
       "trait_levels": {
         "methodical": 1,
         "morale_builder": 1
-      }
+      },
+      "birth_year": 1882,
+      "start_year": 1918,
+      "end_year": 1930
     },
     {
       "leader_id": "dnk_host",
@@ -765,7 +880,10 @@
       "trait_levels": {
         "blockade_runner": 1,
         "cautious": 2
-      }
+      },
+      "birth_year": 1871,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "dnk_werther",
@@ -782,7 +900,10 @@
       "battles_fought": 8,
       "trait_levels": {
         "cautious": 2
-      }
+      },
+      "birth_year": 1855,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "nld_snijders",
@@ -800,7 +921,10 @@
       "trait_levels": {
         "logistics_wizard": 1,
         "cautious": 2
-      }
+      },
+      "birth_year": 1860,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "nld_winkelman",
@@ -818,7 +942,10 @@
       "trait_levels": {
         "methodical": 2,
         "cautious": 1
-      }
+      },
+      "birth_year": 1874,
+      "start_year": 1918,
+      "end_year": 1940
     },
     {
       "leader_id": "saf_smuts",
@@ -837,7 +964,9 @@
         "bold": 2,
         "combined_arms_master": 1,
         "charismatic": 1
-      }
+      },
+      "birth_year": 1870,
+      "start_year": 1914
     },
     {
       "leader_id": "saf_lukin",
@@ -855,7 +984,10 @@
       "trait_levels": {
         "methodical": 2,
         "morale_builder": 1
-      }
+      },
+      "birth_year": 1862,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "aus_monash",
@@ -874,7 +1006,10 @@
         "combined_arms_master": 2,
         "methodical": 2,
         "logistics_wizard": 1
-      }
+      },
+      "birth_year": 1865,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "aus_birdwood",
@@ -892,7 +1027,10 @@
       "trait_levels": {
         "cautious": 2,
         "morale_builder": 1
-      }
+      },
+      "birth_year": 1865,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "nzl_russell",
@@ -910,7 +1048,10 @@
       "trait_levels": {
         "methodical": 2,
         "morale_builder": 2
-      }
+      },
+      "birth_year": 1868,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "nzl_godley",
@@ -928,7 +1069,10 @@
       "trait_levels": {
         "cautious": 2,
         "butcher": 1
-      }
+      },
+      "birth_year": 1867,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "can_currie",
@@ -947,7 +1091,10 @@
         "methodical": 3,
         "logistics_wizard": 1,
         "morale_builder": 1
-      }
+      },
+      "birth_year": 1875,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "can_byng",
@@ -966,7 +1113,10 @@
         "combined_arms_master": 1,
         "cautious": 1,
         "artillery_expert": 2
-      }
+      },
+      "birth_year": 1862,
+      "start_year": 1914,
+      "end_year": 1935
     },
     {
       "leader_id": "arg_dellepiane",
@@ -984,7 +1134,10 @@
       "trait_levels": {
         "cautious": 1,
         "methodical": 1
-      }
+      },
+      "birth_year": 1875,
+      "start_year": 1914,
+      "end_year": 1925
     },
     {
       "leader_id": "arg_heras",
@@ -1002,7 +1155,10 @@
       "trait_levels": {
         "aggressive": 1,
         "bold": 1
-      }
+      },
+      "birth_year": 1868,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "bra_goes",
@@ -1020,7 +1176,10 @@
       "trait_levels": {
         "logistics_wizard": 1,
         "cautious": 1
-      }
+      },
+      "birth_year": 1871,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "bra_fernandes",
@@ -1038,7 +1197,10 @@
       "trait_levels": {
         "sea_wolf": 1,
         "cautious": 1
-      }
+      },
+      "birth_year": 1875,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "mex_obregon",
@@ -1057,7 +1219,10 @@
         "bold": 2,
         "aggressive": 2,
         "artillery_expert": 1
-      }
+      },
+      "birth_year": 1880,
+      "start_year": 1914,
+      "end_year": 1928
     },
     {
       "leader_id": "mex_gonzalez",
@@ -1075,7 +1240,10 @@
       "trait_levels": {
         "ruthless": 1,
         "aggressive": 1
-      }
+      },
+      "birth_year": 1873,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "chl_altamirano",
@@ -1093,7 +1261,10 @@
       "trait_levels": {
         "aggressive": 1,
         "political_general": 1
-      }
+      },
+      "birth_year": 1875,
+      "start_year": 1914,
+      "end_year": 1925
     },
     {
       "leader_id": "chl_lagos",
@@ -1110,7 +1281,10 @@
       "battles_fought": 6,
       "trait_levels": {
         "sea_wolf": 1
-      }
+      },
+      "birth_year": 1873,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "egy_allenby",
@@ -1129,7 +1303,10 @@
         "desert_fox": 2,
         "bold": 2,
         "combined_arms_master": 1
-      }
+      },
+      "birth_year": 1861,
+      "start_year": 1917,
+      "end_year": 1925
     },
     {
       "leader_id": "egy_watson",
@@ -1147,7 +1324,10 @@
       "trait_levels": {
         "cautious": 2,
         "logistics_wizard": 1
-      }
+      },
+      "birth_year": 1870,
+      "start_year": 1917,
+      "end_year": 1920
     },
     {
       "leader_id": "irn_reza",
@@ -1166,7 +1346,9 @@
         "bold": 2,
         "aggressive": 1,
         "political_general": 1
-      }
+      },
+      "birth_year": 1878,
+      "start_year": 1921
     },
     {
       "leader_id": "irn_firuz",
@@ -1184,7 +1366,10 @@
       "trait_levels": {
         "cautious": 2,
         "methodical": 1
-      }
+      },
+      "birth_year": 1878,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "isr_jabotinsky",
@@ -1203,7 +1388,10 @@
         "charismatic": 1,
         "aggressive": 2,
         "morale_builder": 1
-      }
+      },
+      "birth_year": 1880,
+      "start_year": 1918,
+      "end_year": 1940
     },
     {
       "leader_id": "isr_trumpeldor",
@@ -1222,7 +1410,10 @@
         "iron_will": 1,
         "morale_builder": 2,
         "bold": 1
-      }
+      },
+      "birth_year": 1880,
+      "start_year": 1917,
+      "end_year": 1918
     },
     {
       "leader_id": "pal_wavell",
@@ -1241,7 +1432,10 @@
         "methodical": 2,
         "cautious": 1,
         "desert_fox": 1
-      }
+      },
+      "birth_year": 1883,
+      "start_year": 1918,
+      "end_year": 1940
     },
     {
       "leader_id": "pal_shea",
@@ -1259,7 +1453,10 @@
       "trait_levels": {
         "cautious": 2,
         "logistics_wizard": 1
-      }
+      },
+      "birth_year": 1870,
+      "start_year": 1918,
+      "end_year": 1925
     },
     {
       "leader_id": "nga_lugard",
@@ -1277,7 +1474,10 @@
       "trait_levels": {
         "logistics_wizard": 1,
         "political_general": 1
-      }
+      },
+      "birth_year": 1858,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "syr_gouraud",
@@ -1296,7 +1496,10 @@
         "methodical": 2,
         "mountain_specialist": 2,
         "butcher": 1
-      }
+      },
+      "birth_year": 1867,
+      "start_year": 1914,
+      "end_year": 1925
     },
     {
       "leader_id": "syr_de_castelnau",
@@ -1314,7 +1517,10 @@
       "trait_levels": {
         "cautious": 2,
         "artillery_expert": 1
-      }
+      },
+      "birth_year": 1851,
+      "start_year": 1914,
+      "end_year": 1920
     },
     {
       "leader_id": "isl_jonsson",
@@ -1332,7 +1538,10 @@
       "trait_levels": {
         "arctic_bear": 1,
         "cautious": 1
-      }
+      },
+      "birth_year": 1885,
+      "start_year": 1918,
+      "end_year": 1930
     },
     {
       "leader_id": "grl_knud",
@@ -1350,7 +1559,10 @@
       "trait_levels": {
         "arctic_bear": 2,
         "logistics_wizard": 1
-      }
+      },
+      "birth_year": 1879,
+      "start_year": 1918,
+      "end_year": 1930
     }
   ]
 }

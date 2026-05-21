@@ -3,6 +3,12 @@ extends Node
 
 ## Registry for leaders, army assignments, and national command positions.
 
+signal leader_died(leader_id: String, cause: String)
+signal leader_retirement_offered(leader_id: String)
+signal leader_retired(leader_id: String)
+signal leader_introduced(leader_id: String)
+signal game_year_advanced(year: int)
+
 const POSITION_CHIEF_OF_ARMY := "chief_of_army"
 const POSITION_CHIEF_OF_NAVY := "chief_of_navy"
 const POSITION_CHIEF_OF_AIR_FORCE := "chief_of_air_force"
@@ -42,10 +48,25 @@ const XP_COST_BY_RARITY: Dictionary = {
 }
 const ROMAN_LEVELS: Array[String] = ["", "I", "II", "III", "IV"]
 
+## Yearly mortality chart (max age exclusive upper bound in loop).
+const AGE_MORTALITY_BRACKETS: Array[Dictionary] = [
+	{"max_age": 50, "death": 0.003, "retire": 0.005},
+	{"max_age": 60, "death": 0.008, "retire": 0.020},
+	{"max_age": 65, "death": 0.018, "retire": 0.050},
+	{"max_age": 70, "death": 0.035, "retire": 0.120},
+	{"max_age": 75, "death": 0.065, "retire": 0.220},
+	{"max_age": 80, "death": 0.110, "retire": 0.300},
+	{"max_age": 999, "death": 0.180, "retire": 0.350},
+]
+
 var leaders: Dictionary = {}  # leader_id -> Leader
+var leader_pool: Dictionary = {}  # leader_id -> Dictionary (not yet available by year)
+var pending_retirements: Array[String] = []
 var formations: Dictionary = {}  # formation_id -> Formation
 var country_positions: Dictionary = {}  # country_tag -> { position_id -> leader_id }
 var trait_definitions: Dictionary = {}
+var current_year: int = 1936
+var _historical_leaders_source_path: String = ""
 
 # === Screen data caching ===
 var _leader_screen_cache: Dictionary = {}  # country_tag -> LeaderScreenData
@@ -53,7 +74,8 @@ var _leader_screen_cache: Dictionary = {}  # country_tag -> LeaderScreenData
 
 func _ready() -> void:
 	_load_trait_definitions()
-	load_historical_leaders(HISTORICAL_LEADERS_1936_PATH)
+	set_current_year(1936)
+	load_historical_leaders(HISTORICAL_LEADERS_1936_PATH, 1936)
 
 
 func register_leader(leader: Leader) -> void:
@@ -403,9 +425,216 @@ func get_available_leaders(country_tag: String) -> Array[Leader]:
 		var leader: Leader = leaders[leader_id] as Leader
 		if leader == null or leader.country_tag != country_tag:
 			continue
-		if leader.assigned_army_id.is_empty() and not leader.is_captured:
+		if not leader.is_available_for_command():
+			continue
+		if leader.is_injured:
+			continue
+		if leader.assigned_army_id.is_empty():
 			result.append(leader)
 	return result
+
+
+func get_current_year() -> int:
+	return current_year
+
+
+func set_current_year(year: int) -> void:
+	current_year = maxi(year, 1)
+
+
+func get_leader_age(leader: Leader) -> int:
+	if leader == null:
+		return 0
+	return maxi(current_year - leader.birth_year, 18)
+
+
+func get_pool_leader_count(country_tag: String = "") -> int:
+	if country_tag.is_empty():
+		return leader_pool.size()
+	var count := 0
+	for entry in leader_pool.values():
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		if str((entry as Dictionary).get("country_tag", "")) == country_tag:
+			count += 1
+	return count
+
+
+func is_leader_entry_active_for_year(entry: Dictionary, year: int) -> bool:
+	var start := int(entry.get("start_year", 0))
+	if start > 0 and year < start:
+		return false
+	var end := int(entry.get("end_year", 0))
+	if end > 0 and year > end:
+		return false
+	return true
+
+
+func get_yearly_death_chance(leader: Leader) -> float:
+	if leader == null or leader.is_deceased or leader.is_retired:
+		return 0.0
+	var age := get_leader_age(leader)
+	var base := _base_chance_for_age(age, "death")
+	base *= _mortality_situation_multiplier(leader, true)
+	base *= leader.health
+	if leader.stayed_past_retirement:
+		base *= 1.25
+	return clampf(base, 0.0, 0.35)
+
+
+func get_yearly_retirement_chance(leader: Leader) -> float:
+	if leader == null or leader.is_deceased or leader.is_retired:
+		return 0.0
+	var age := get_leader_age(leader)
+	var base := _base_chance_for_age(age, "retire")
+	base *= _mortality_situation_multiplier(leader, false)
+	if leader.stayed_past_retirement:
+		base *= 1.35
+	return clampf(base, 0.0, 0.45)
+
+
+func _base_chance_for_age(age: int, kind: String) -> float:
+	for bracket in AGE_MORTALITY_BRACKETS:
+		if age < int(bracket.get("max_age", 999)):
+			return float(bracket.get(kind, 0.0))
+	return 0.0
+
+
+func _mortality_situation_multiplier(leader: Leader, for_death: bool) -> float:
+	var mult := 1.0
+	if leader.is_in_combat_role():
+		mult *= 1.5 if for_death else 0.8
+	elif leader.duty_post == "training":
+		mult *= 0.55 if for_death else 0.7
+	elif leader.duty_post == "rear_area":
+		mult *= 0.4 if for_death else 0.6
+	if leader.experience >= 800:
+		mult *= 0.85 if for_death else 0.9
+	if leader.has_trait("iron_will"):
+		mult *= 0.8 if for_death else 0.9
+	if leader.has_trait("reckless") or leader.has_trait("arrogant"):
+		mult *= 1.25 if for_death else 1.1
+	if leader.has_trait("political_liability"):
+		mult *= 1.15 if for_death else 1.2
+	if leader.has_trait("logistics_wizard"):
+		mult *= 0.92 if for_death else 0.95
+	if leader.is_injured:
+		mult *= 1.35 if for_death else 1.0
+	return mult
+
+
+func check_leader_mortality(year: int = -1) -> Array[Dictionary]:
+	if year > 0:
+		set_current_year(year)
+	var events: Array[Dictionary] = []
+	for leader_id in leaders.keys():
+		var leader: Leader = leaders[leader_id] as Leader
+		if leader == null or not leader.is_available_for_command():
+			continue
+		if leader_id in pending_retirements:
+			continue
+
+		var death_chance := get_yearly_death_chance(leader)
+		if randf() < death_chance:
+			_remove_leader(leader_id, "natural", true)
+			events.append({"type": "death", "leader_id": leader_id, "cause": "natural"})
+			leader_died.emit(leader_id, "natural")
+			continue
+
+		var retire_chance := get_yearly_retirement_chance(leader)
+		if randf() < retire_chance:
+			pending_retirements.append(leader_id)
+			events.append({"type": "retirement_offer", "leader_id": leader_id})
+			leader_retirement_offered.emit(leader_id)
+
+	return events
+
+
+func resolve_retirement(leader_id: String, let_retire: bool, ask_to_stay: bool = false) -> bool:
+	if leader_id not in pending_retirements:
+		return false
+	pending_retirements.erase(leader_id)
+	var leader: Leader = leaders.get(leader_id) as Leader
+	if leader == null:
+		return false
+
+	if let_retire:
+		_remove_leader(leader_id, "retirement", false)
+		leader_retired.emit(leader_id)
+		return true
+
+	if ask_to_stay:
+		var agree_chance := 0.55
+		if leader.has_trait("charismatic"):
+			agree_chance += 0.1
+		if leader.has_trait("iron_will"):
+			agree_chance += 0.08
+		if randf() < agree_chance:
+			leader.stayed_past_retirement = true
+			print("%s agrees to serve one more year." % leader.name)
+			return true
+
+	_remove_leader(leader_id, "retirement", false)
+	leader_retired.emit(leader_id)
+	return true
+
+
+func advance_game_year() -> Dictionary:
+	current_year += 1
+	var introduced := introduce_eligible_leaders_for_year(current_year)
+	var mortality_events := check_leader_mortality()
+	game_year_advanced.emit(current_year)
+	return {
+		"year": current_year,
+		"introduced": introduced,
+		"mortality_events": mortality_events,
+	}
+
+
+func introduce_eligible_leaders_for_year(year: int = -1) -> int:
+	var target_year := year if year > 0 else current_year
+	var introduced := 0
+	for leader_id in leader_pool.keys():
+		var entry: Variant = leader_pool[leader_id]
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		if not is_leader_entry_active_for_year(entry as Dictionary, target_year):
+			continue
+		if leaders.has(leader_id):
+			continue
+		var leader := _leader_from_dict(entry as Dictionary)
+		if leader == null:
+			continue
+		register_leader(leader)
+		leader_pool.erase(leader_id)
+		introduced += 1
+		leader_introduced.emit(leader_id)
+		print("%s has entered command (%d)." % [leader.name, target_year])
+	return introduced
+
+
+func _remove_leader(leader_id: String, cause: String, is_death: bool) -> void:
+	var leader: Leader = leaders.get(leader_id) as Leader
+	if leader == null:
+		return
+	_unassign_leader_from_current_formation(leader)
+	_clear_leader_from_national_positions(leader_id)
+	if is_death:
+		leader.is_deceased = true
+		print("%s has died (%s)." % [leader.name, cause])
+	else:
+		leader.is_retired = true
+		print("%s has retired." % leader.name)
+	leaders.erase(leader_id)
+	invalidate_leader_cache(leader.country_tag)
+
+
+func _clear_leader_from_national_positions(leader_id: String) -> void:
+	for country_tag in country_positions.keys():
+		var positions: Dictionary = country_positions[country_tag] as Dictionary
+		for position_key in positions.keys():
+			if str(positions[position_key]) == leader_id:
+				positions.erase(position_key)
 
 
 func get_armies_without_leader(_country_tag: String) -> Array[String]:
@@ -434,8 +663,16 @@ func get_leader_summary(leader_id: String) -> Dictionary:
 		"trait_display": get_trait_display_list(leader),
 		"experience": leader.experience,
 		"battles_fought": leader.battles_fought,
+		"birth_year": leader.birth_year,
+		"start_year": leader.start_year,
+		"end_year": leader.end_year,
+		"age": get_leader_age(leader),
+		"health": leader.health,
+		"duty_post": leader.duty_post,
 		"is_injured": leader.is_injured,
 		"is_captured": leader.is_captured,
+		"is_retired": leader.is_retired,
+		"is_deceased": leader.is_deceased,
 		"assigned_army_id": leader.assigned_army_id,
 	}
 
@@ -942,16 +1179,21 @@ func get_leaders_path_for_scenario(scenario_name: String) -> String:
 	return HISTORICAL_LEADERS_1936_PATH
 
 
-func load_leaders_for_scenario(scenario_name: String) -> int:
+func load_leaders_for_scenario(scenario_name: String, start_year: int = -1) -> int:
+	if start_year > 0:
+		set_current_year(start_year)
 	var path := get_leaders_path_for_scenario(scenario_name)
-	return reload_leaders_from_json(path)
+	return reload_leaders_from_json(path, current_year)
 
 
-func reload_leaders_from_json(path: String) -> int:
+func reload_leaders_from_json(path: String, as_of_year: int = -1) -> int:
 	leaders.clear()
+	leader_pool.clear()
+	pending_retirements.clear()
 	country_positions.clear()
 	clear_all_leader_caches()
-	return load_historical_leaders(path)
+	var year := as_of_year if as_of_year > 0 else current_year
+	return load_historical_leaders(path, year)
 
 
 func load_leaders_from_json(path: String) -> int:
@@ -960,7 +1202,10 @@ func load_leaders_from_json(path: String) -> int:
 
 # === Historical Leaders Loading ===
 
-func load_historical_leaders(path: String = HISTORICAL_LEADERS_1936_PATH) -> int:
+func load_historical_leaders(
+	path: String = HISTORICAL_LEADERS_1936_PATH,
+	as_of_year: int = -1,
+) -> int:
 	if not FileAccess.file_exists(path):
 		push_warning("Historical leaders file not found: %s" % path)
 		return 0
@@ -986,18 +1231,32 @@ func load_historical_leaders(path: String = HISTORICAL_LEADERS_1936_PATH) -> int
 		push_warning("Historical leaders JSON root must be a dictionary")
 		return 0
 
+	_historical_leaders_source_path = path
+	var year := as_of_year if as_of_year > 0 else current_year
 	var entries: Array = _historical_leader_entries_from_data(data as Dictionary)
 	var loaded := 0
+	var pooled := 0
 	for entry in entries:
 		if typeof(entry) != TYPE_DICTIONARY:
 			continue
-		var leader := _leader_from_dict(entry as Dictionary)
+		var entry_dict := entry as Dictionary
+		var leader_id := str(entry_dict.get("leader_id", ""))
+		if leader_id.is_empty():
+			continue
+		if not is_leader_entry_active_for_year(entry_dict, year):
+			leader_pool[leader_id] = entry_dict.duplicate(true)
+			pooled += 1
+			continue
+		var leader := _leader_from_dict(entry_dict)
 		if leader == null:
 			continue
 		register_leader(leader)
 		loaded += 1
 
-	print("Loaded %d historical leaders from %s" % [loaded, path])
+	print(
+		"Loaded %d leaders (%d in pool) from %s for year %d"
+		% [loaded, pooled, path, year]
+	)
 	return loaded
 
 

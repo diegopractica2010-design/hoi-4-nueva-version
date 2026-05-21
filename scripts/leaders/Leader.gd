@@ -20,7 +20,18 @@ extends Resource
 @export var battles_fought: int = 0
 @export var is_injured: bool = false
 @export var is_captured: bool = false
+@export var is_retired: bool = false
+@export var is_deceased: bool = false
 @export var assigned_army_id: String = ""
+
+@export var birth_year: int = 1900
+@export var start_year: int = 1914
+@export var end_year: int = 0
+@export var health: float = 1.0
+## active, training, rear_area — training/rear reduce mortality risk.
+@export var duty_post: String = "active"
+## Set when player asks a retiring leader to stay; bumps risk next yearly check.
+@export var stayed_past_retirement: bool = false
 
 var trait_levels: Dictionary = {}  # trait_id -> level
 
@@ -50,6 +61,14 @@ func add_trait(trait_id: String, level: int = 1) -> bool:
 
 func has_trait(trait_id: String) -> bool:
 	return traits.has(trait_id)
+
+
+func is_available_for_command() -> bool:
+	return not is_deceased and not is_retired and not is_captured
+
+
+func is_in_combat_role() -> bool:
+	return duty_post == "active" and not assigned_army_id.is_empty()
 
 
 func get_trait_level(trait_id: String) -> int:

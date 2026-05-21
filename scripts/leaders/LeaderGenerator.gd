@@ -33,6 +33,12 @@ static func create_leader_from_data(leader_data: Dictionary) -> Leader:
 	leader.is_captured = bool(leader_data.get("is_captured", false))
 	leader.assigned_army_id = str(leader_data.get("assigned_army_id", ""))
 
+	leader.birth_year = int(leader_data.get("birth_year", 1900))
+	leader.start_year = int(leader_data.get("start_year", 1914))
+	leader.end_year = int(leader_data.get("end_year", 0))
+	leader.health = clampf(float(leader_data.get("health", 1.0)), 0.1, 1.0)
+	leader.duty_post = str(leader_data.get("duty_post", "active"))
+
 	_apply_traits_from_data(leader, leader_data)
 	return leader
 
@@ -68,6 +74,8 @@ func generate_leader(country_tag: String, leader_type: String = "general") -> Le
 		"logistics_skill": randi_range(1, 6),
 		"planning_skill": randi_range(1, 6),
 		"initiative_skill": randi_range(3, 6),
+		"birth_year": randi_range(1895, 1910),
+		"start_year": LeaderManager.get_current_year() if typeof(LeaderManager) != TYPE_NIL else 1936,
 	}
 	var leader := create_leader_from_data(leader_data)
 
