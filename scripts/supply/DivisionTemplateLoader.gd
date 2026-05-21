@@ -29,4 +29,12 @@ func load_all() -> void:
 
 
 func get_division(division_id: String) -> DivisionTemplate:
-	return divisions.get(division_id)
+	return divisions.get(division_id) as DivisionTemplate
+
+
+func get_all_division_ids() -> Array[String]:
+	var ids: Array[String] = []
+	for division_id in divisions.keys():
+		ids.append(str(division_id))
+	ids.sort()
+	return ids

@@ -45,12 +45,6 @@ const NATIONAL_POSITIONS: Array[Dictionary] = [
 	},
 ]
 
-const PLACEHOLDER_FORMATIONS: Array[Dictionary] = [
-	{"army_id": "first_army_placeholder", "name": "1st Army (placeholder)"},
-	{"army_id": "second_army_placeholder", "name": "2nd Army (placeholder)"},
-	{"army_id": "third_army_placeholder", "name": "3rd Army (placeholder)"},
-]
-
 const HEADER_SPECS: Array[Dictionary] = [
 	{"text": "Name", "width": 180},
 	{"text": "Type", "width": 120},
@@ -108,7 +102,7 @@ func refresh_screen() -> void:
 	_update_summary_bar()
 	_populate_national_positions()
 	_populate_available_leaders()
-	_populate_formations_placeholder()
+	_populate_unassigned_formations()
 
 
 func _update_summary_bar() -> void:
@@ -230,24 +224,33 @@ func _populate_available_leaders() -> void:
 		available_leaders_list.add_child(_create_leader_row(leader_summary))
 
 
-func _populate_formations_placeholder() -> void:
+func _populate_unassigned_formations() -> void:
 	for child in formations_content.get_children():
 		child.queue_free()
 
-	for formation in PLACEHOLDER_FORMATIONS:
+	var available_formations: Array[Dictionary] = LeaderManager.get_available_formations(country_tag)
+	if available_formations.is_empty():
+		var note := Label.new()
+		note.text = "No divisions without a leader."
+		note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		RetrowaveTheme.style_body_label(note)
+		formations_content.add_child(note)
+		return
+
+	for formation in available_formations:
 		var row := HBoxContainer.new()
 		row.custom_minimum_size = Vector2(0, ROW_HEIGHT)
 
 		var name_label := Label.new()
-		name_label.text = str(formation.get("name", ""))
+		name_label.text = str(formation.get("name", formation.get("formation_id", "")))
 		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		RetrowaveTheme.style_row_label(name_label)
 		row.add_child(name_label)
 
-		var note := Label.new()
-		note.text = "(no leader)"
-		RetrowaveTheme.style_body_label(note)
-		row.add_child(note)
+		var type_label := Label.new()
+		type_label.text = str(formation.get("type", "division"))
+		RetrowaveTheme.style_body_label(type_label)
+		row.add_child(type_label)
 
 		formations_content.add_child(row)
 
@@ -323,13 +326,20 @@ func _on_details_pressed(summary: Dictionary) -> void:
 
 
 func _on_assign_pressed(summary: Dictionary) -> void:
-	_pending_assign_leader_id = str(summary.get("leader_id", ""))
-	if _pending_assign_leader_id.is_empty():
+	var leader_id := str(summary.get("leader_id", ""))
+	if leader_id.is_empty():
 		return
-	_open_formation_picker(str(summary.get("name", "Leader")))
+
+	var available_formations: Array[Dictionary] = LeaderManager.get_available_formations(country_tag)
+	if available_formations.is_empty():
+		print("No available formations to assign to.")
+		return
+
+	_pending_assign_leader_id = leader_id
+	_open_formation_picker(str(summary.get("name", "Leader")), available_formations)
 
 
-func _open_formation_picker(leader_name: String) -> void:
+func _open_formation_picker(leader_name: String, available_formations: Array[Dictionary]) -> void:
 	var popup := Window.new()
 	popup.title = "Assign %s to Formation" % leader_name
 	popup.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
@@ -349,15 +359,15 @@ func _open_formation_picker(leader_name: String) -> void:
 	margin.add_child(vbox)
 
 	var hint := Label.new()
-	hint.text = "Placeholder formations (full army system coming later):"
+	hint.text = "Select a division to assign this leader to:"
 	RetrowaveTheme.style_body_label(hint)
 	vbox.add_child(hint)
 
 	var list := ItemList.new()
 	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	RetrowaveTheme.style_item_list(list)
-	for formation in PLACEHOLDER_FORMATIONS:
-		list.add_item(str(formation.get("name", "")))
+	for formation in available_formations:
+		list.add_item(str(formation.get("name", formation.get("formation_id", ""))))
 	vbox.add_child(list)
 
 	var buttons := HBoxContainer.new()
@@ -381,8 +391,10 @@ func _open_formation_picker(leader_name: String) -> void:
 			var idx := list.get_selected_items()
 			if idx.is_empty():
 				return
-			var army_id: String = str(PLACEHOLDER_FORMATIONS[idx[0]].get("army_id", ""))
-			if LeaderManager.assign_leader_to_army(_pending_assign_leader_id, army_id):
+			var formation_id: String = str(
+				available_formations[idx[0]].get("formation_id", ""),
+			)
+			if LeaderManager.assign_leader_to_army(_pending_assign_leader_id, formation_id):
 				refresh_screen()
 			_pending_assign_leader_id = ""
 			popup.queue_free(),

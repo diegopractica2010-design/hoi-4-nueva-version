@@ -25,6 +25,7 @@ const HISTORICAL_LEADERS_1936_PATH := "res://data/leaders/historical_leaders_193
 const MAX_SKILL := 10
 
 var leaders: Dictionary = {}  # leader_id -> Leader
+var formations: Dictionary = {}  # formation_id -> Formation
 var country_positions: Dictionary = {}  # country_tag -> { position_id -> leader_id }
 var trait_definitions: Dictionary = {}
 
@@ -46,9 +47,13 @@ func register_leader(leader: Leader) -> void:
 
 
 func assign_leader_to_army(leader_id: String, army_id: String) -> bool:
+	if formations.has(army_id):
+		return assign_leader_to_formation(leader_id, army_id)
+
 	var leader: Leader = leaders.get(leader_id) as Leader
 	if leader == null:
 		return false
+	_unassign_leader_from_current_formation(leader)
 	leader.assigned_army_id = army_id
 	invalidate_leader_cache(leader.country_tag)
 	return true
@@ -56,9 +61,11 @@ func assign_leader_to_army(leader_id: String, army_id: String) -> bool:
 
 func unassign_leader_from_army(leader_id: String) -> void:
 	var leader: Leader = leaders.get(leader_id) as Leader
-	if leader != null:
-		leader.assigned_army_id = ""
-		invalidate_leader_cache(leader.country_tag)
+	if leader == null:
+		return
+	_unassign_leader_from_current_formation(leader)
+	leader.assigned_army_id = ""
+	invalidate_leader_cache(leader.country_tag)
 
 
 func get_leader(leader_id: String) -> Leader:
@@ -66,11 +73,168 @@ func get_leader(leader_id: String) -> Leader:
 
 
 func get_leader_for_army(army_id: String) -> Leader:
-	for leader_id in leaders:
-		var leader: Leader = leaders[leader_id] as Leader
+	var formation: Formation = get_formation(army_id)
+	if formation != null and formation.has_leader():
+		return get_leader(formation.leader_id)
+
+	for leader_key in leaders:
+		var leader: Leader = leaders[leader_key] as Leader
 		if leader != null and leader.assigned_army_id == army_id:
 			return leader
 	return null
+
+
+# === Formation registry & assignment ===
+
+func register_formation(formation: Formation) -> void:
+	if formation == null or formation.formation_id.is_empty():
+		push_warning("LeaderManager: cannot register formation without formation_id")
+		return
+	formations[formation.formation_id] = formation
+	invalidate_leader_cache(formation.country_tag)
+
+
+func get_formation(formation_id: String) -> Formation:
+	return formations.get(formation_id) as Formation
+
+
+func get_formations_for_country(country_tag: String) -> Array[Formation]:
+	var result: Array[Formation] = []
+	for formation_id in formations:
+		var formation: Formation = formations[formation_id] as Formation
+		if formation != null and formation.country_tag == country_tag:
+			result.append(formation)
+	return result
+
+
+func assign_leader_to_formation(leader_id: String, formation_id: String) -> bool:
+	var leader: Leader = get_leader(leader_id)
+	var formation: Formation = get_formation(formation_id)
+
+	if leader == null or formation == null:
+		return false
+
+	if not _is_leader_valid_for_formation(leader, formation):
+		push_warning(
+			"LeaderManager: leader type mismatch — %s cannot lead %s (%s)"
+			% [leader.leader_type, formation.name, formation.formation_type]
+		)
+		return false
+
+	_unassign_leader_from_current_formation(leader)
+
+	var previous_leader: Leader = get_leader(formation.leader_id)
+	if previous_leader != null and previous_leader != leader:
+		_unassign_leader_from_current_formation(previous_leader)
+
+	formation.assign_leader(leader)
+	leader.assigned_army_id = formation_id
+	invalidate_leader_cache(leader.country_tag)
+	return true
+
+
+func unassign_leader_from_formation(formation_id: String) -> void:
+	var formation: Formation = get_formation(formation_id)
+	if formation == null or not formation.has_leader():
+		return
+
+	var leader: Leader = get_leader(formation.leader_id)
+	formation.remove_leader()
+	if leader != null:
+		leader.assigned_army_id = ""
+		invalidate_leader_cache(leader.country_tag)
+
+
+## Register division templates from SupplyManager as land formations for a country.
+func register_division_formations_for_country(country_tag: String) -> void:
+	if SupplyManager == null or SupplyManager.division_templates == null:
+		return
+
+	SupplyManager.division_templates.load_all()
+
+	for div_id in SupplyManager.division_templates.get_all_division_ids():
+		var div_template: DivisionTemplate = SupplyManager.division_templates.get_division(div_id)
+		if div_template == null:
+			continue
+
+		var division_country := div_template.country_tag
+		if division_country.is_empty():
+			division_country = _infer_division_country_tag(div_id)
+		if division_country != country_tag:
+			continue
+
+		if formations.has(div_id):
+			continue
+
+		register_formation(Formation.from_division_template(div_id, div_template, country_tag))
+
+
+## Formations for [param country_tag] that do not have a leader assigned.
+func get_available_formations(country_tag: String) -> Array[Dictionary]:
+	var available: Array[Dictionary] = []
+
+	if formations.is_empty():
+		register_division_formations_for_country(country_tag)
+
+	for formation_id in formations:
+		var formation: Formation = formations[formation_id] as Formation
+		if formation == null:
+			continue
+		if formation.country_tag != country_tag:
+			continue
+		if formation.has_leader():
+			continue
+
+		available.append({
+			"formation_id": formation.formation_id,
+			"name": formation.name,
+			"type": formation.formation_type,
+			"category": formation.get_category(),
+		})
+
+	return available
+
+
+func _unassign_leader_from_current_formation(leader: Leader) -> void:
+	if leader == null or leader.assigned_army_id.is_empty():
+		return
+
+	var current: Formation = get_formation(leader.assigned_army_id)
+	if current != null and current.leader_id == leader.leader_id:
+		current.remove_leader()
+
+
+func _is_leader_valid_for_formation(leader: Leader, formation: Formation) -> bool:
+	match formation.formation_type:
+		Formation.TYPE_FLEET, Formation.TYPE_TASK_FORCE, Formation.TYPE_SHIP:
+			return leader.leader_type == "admiral"
+		Formation.TYPE_AIR_WING, Formation.TYPE_AIR_SQUADRON, Formation.TYPE_AIR_GROUP:
+			return leader.leader_type == "air_marshal"
+		Formation.TYPE_SPACE_WING, Formation.TYPE_ORBITAL_GROUP:
+			return leader.leader_type == "space_commander"
+		Formation.TYPE_DIVISION, Formation.TYPE_ARMY, Formation.TYPE_ARMY_GROUP, Formation.TYPE_GARRISON, Formation.TYPE_BRIGADE:
+			return leader.leader_type in ["general", "field_marshal"]
+		_:
+			return true
+
+
+func _infer_division_country_tag(division_id: String) -> String:
+	var div_key := division_id.to_lower()
+	const PREFIX_TAGS: Array[Dictionary] = [
+		{"prefix": "german_", "tag": "GER"},
+		{"prefix": "us_", "tag": "USA"},
+		{"prefix": "sov_", "tag": "SOV"},
+		{"prefix": "fra_", "tag": "FRA"},
+		{"prefix": "uk_", "tag": "ENG"},
+		{"prefix": "eng_", "tag": "ENG"},
+		{"prefix": "ita_", "tag": "ITA"},
+		{"prefix": "jap_", "tag": "JAP"},
+		{"prefix": "ger_", "tag": "GER"},
+	]
+	for entry in PREFIX_TAGS:
+		if div_key.begins_with(str(entry.get("prefix", ""))):
+			return str(entry.get("tag", ""))
+	return ""
 
 
 # === National top positions (chiefs of staff) ===

@@ -3,6 +3,8 @@ extends Resource
 
 @export var id: String = ""
 @export var display_name: String = ""
+## Scenario country tag (e.g. USA, GER). Inferred from division id when omitted in data.
+@export var country_tag: String = ""
 @export var manpower: int = 0
 @export var support_supply_per_day: float = 0.0
 @export var equipment: Array[Dictionary] = []
@@ -22,6 +24,7 @@ static func from_dict(data: Dictionary) -> DivisionTemplate:
 	var div := DivisionTemplate.new()
 	div.id = str(data.get("id", data.get("template_id", "")))
 	div.display_name = str(data.get("name", div.id))
+	div.country_tag = str(data.get("country_tag", ""))
 	div.manpower = int(data.get("manpower", 0))
 	div.support_supply_per_day = float(data.get("support_supply_per_day", 0.0))
 	var raw_equipment: Variant = data.get("equipment", [])
