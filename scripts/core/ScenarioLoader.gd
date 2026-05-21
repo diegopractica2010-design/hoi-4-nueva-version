@@ -281,7 +281,8 @@ func load_scenario(scenario_name: String) -> bool:
 	_rebuild_adjacency_system()
 	_infer_port_access_for_all(provinces)
 	_spawn_scenario_factories(scenario_name)
-	_spawn_scenario_formations()
+	_load_scenario_leaders(scenario_name)
+	_spawn_scenario_formations(scenario_name)
 	var production_mgr := get_node_or_null("/root/ProductionManager")
 	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
 		production_mgr.clear_all_caches()
@@ -295,14 +296,52 @@ func _spawn_scenario_factories(scenario_name: String) -> void:
 	spawner.spawn_factories_for_scenario(scenario_name, self)
 
 
-func _spawn_scenario_formations() -> void:
+func _load_scenario_leaders(scenario_name: String) -> void:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	var loaded := LeaderManager.load_leaders_for_scenario(scenario_name)
+	print("✅ Scenario leaders loaded (%s): %d" % [scenario_name, loaded])
+
+
+func _spawn_scenario_formations(scenario_name: String) -> void:
 	LeaderManager.clear_all_formations()
 	var formation_spawner := FormationSpawner.new()
-	formation_spawner.spawn_test_formations_for_country("GER", 8)
-	formation_spawner.spawn_test_formations_for_country("USA", 6)
-	formation_spawner.spawn_test_formations_for_country("SOV", 7)
+	var countries_to_spawn: Array[String] = _get_formation_spawn_countries(scenario_name)
+	var count_by_tag: Dictionary = _get_formation_counts_for_scenario(scenario_name)
+	for country_tag in countries_to_spawn:
+		var count := int(count_by_tag.get(country_tag, 4))
+		formation_spawner.spawn_test_formations_for_country(country_tag, count)
 	LeaderManager.clear_all_leader_caches()
-	print("Scenario loaded with formations for leader assignment.")
+	print(
+		"Scenario loaded with formations for %d countries (leader assignment)."
+		% countries_to_spawn.size()
+	)
+
+
+func _get_formation_spawn_countries(scenario_name: String) -> Array[String]:
+	var tags: Array[String] = []
+	for tag in countries.keys():
+		tags.append(str(tag))
+	if tags.is_empty():
+		return ["GER", "USA", "SOV"] as Array[String]
+	tags.sort()
+	return tags
+
+
+func _get_formation_counts_for_scenario(scenario_name: String) -> Dictionary:
+	var counts: Dictionary = {}
+	for tag in countries.keys():
+		var country: Variant = countries[tag]
+		var is_major := false
+		if typeof(country) == TYPE_DICTIONARY:
+			is_major = bool((country as Dictionary).get("major_power", false))
+		elif country is Country:
+			is_major = (country as Country).major_power
+		counts[str(tag)] = 8 if is_major else 4
+	if scenario_name == "1918":
+		for major_tag in ["GER", "FRA", "ENG", "USA", "SOV", "JAP"]:
+			counts[major_tag] = 8
+	return counts
 
 
 func get_country(tag: String) -> Variant:

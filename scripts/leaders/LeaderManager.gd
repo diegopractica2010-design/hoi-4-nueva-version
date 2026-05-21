@@ -23,6 +23,11 @@ const NATIONAL_POSITION_CHANGE_COST: Dictionary = {
 const TRAITS_PATH := "res://data/leaders/traits.json"
 const LEGACY_TRAITS_PATH := "res://data/leaders/leader_traits.json"
 const HISTORICAL_LEADERS_1936_PATH := "res://data/leaders/historical_leaders_1936.json"
+const HISTORICAL_LEADERS_1918_PATH := "res://data/leaders/historical_leaders_1918.json"
+const SCENARIO_LEADER_PATHS: Dictionary = {
+	"1918": HISTORICAL_LEADERS_1918_PATH,
+	"1936": HISTORICAL_LEADERS_1936_PATH,
+}
 const MAX_SKILL := 10
 const MAX_TRAITS_PER_LEADER := 6
 const MAX_LEGENDARY_TRAITS := 2
@@ -48,7 +53,7 @@ var _leader_screen_cache: Dictionary = {}  # country_tag -> LeaderScreenData
 
 func _ready() -> void:
 	_load_trait_definitions()
-	load_leaders_from_json(HISTORICAL_LEADERS_1936_PATH)
+	load_leaders_for_scenario("1936")
 
 
 func register_leader(leader: Leader) -> void:
@@ -926,6 +931,27 @@ func _read_trait_json_file(path: String) -> Dictionary:
 	if typeof(parsed) != TYPE_DICTIONARY:
 		return {}
 	return parsed as Dictionary
+
+
+func get_leaders_path_for_scenario(scenario_name: String) -> String:
+	var key := scenario_name.strip_edges().to_lower()
+	if SCENARIO_LEADER_PATHS.has(key):
+		return str(SCENARIO_LEADER_PATHS[key])
+	if ResourceLoader.exists("res://data/leaders/historical_leaders_%s.json" % key):
+		return "res://data/leaders/historical_leaders_%s.json" % key
+	return HISTORICAL_LEADERS_1936_PATH
+
+
+func load_leaders_for_scenario(scenario_name: String) -> int:
+	var path := get_leaders_path_for_scenario(scenario_name)
+	return reload_leaders_from_json(path)
+
+
+func reload_leaders_from_json(path: String) -> int:
+	leaders.clear()
+	country_positions.clear()
+	clear_all_leader_caches()
+	return load_leaders_from_json(path)
 
 
 func load_leaders_from_json(path: String) -> int:

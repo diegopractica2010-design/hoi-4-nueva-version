@@ -850,6 +850,20 @@ static func _test_leader_manager() -> bool:
 	if LeaderManager.country_positions.has("USA"):
 		(LeaderManager.country_positions["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)
 
+	var loaded_1918 := LeaderManager.load_leaders_for_scenario("1918")
+	if loaded_1918 < 70:
+		print("  [FAIL] 1918 historical leaders load count: ", loaded_1918)
+		return false
+	var hindenburg: Leader = LeaderManager.get_leader("ger_hindenburg")
+	if hindenburg == null or hindenburg.get_trait_level("methodical") < 2:
+		print("  [FAIL] 1918 Hindenburg not loaded with traits")
+		return false
+	var pershing: Leader = LeaderManager.get_leader("usa_pershing")
+	if pershing == null:
+		print("  [FAIL] 1918 Pershing not loaded")
+		return false
+	LeaderManager.load_leaders_for_scenario("1936")
+
 	print("  [PASS] LeaderManager registration and assignment")
 	return true
 
