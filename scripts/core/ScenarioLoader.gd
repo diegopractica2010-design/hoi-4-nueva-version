@@ -335,8 +335,6 @@ func _get_formation_counts_for_scenario(scenario_name: String) -> Dictionary:
 		var is_major := false
 		if typeof(country) == TYPE_DICTIONARY:
 			is_major = bool((country as Dictionary).get("major_power", false))
-		elif country is Country:
-			is_major = (country as Country).major_power
 		counts[str(tag)] = 8 if is_major else 4
 	if scenario_name == "1918":
 		for major_tag in ["GER", "FRA", "ENG", "USA", "SOV", "JAP"]:
