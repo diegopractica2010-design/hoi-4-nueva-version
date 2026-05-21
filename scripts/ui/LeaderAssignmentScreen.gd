@@ -344,33 +344,20 @@ func _on_assign_pressed(summary: Dictionary) -> void:
 	if leader_id.is_empty():
 		return
 
-	var available_formations: Array[Dictionary] = LeaderManager.get_available_formations(country_tag)
-	if available_formations.is_empty():
-		print("No available formations found for ", country_tag)
+	var picker_scene: PackedScene = load("res://scenes/ui/FormationPickerPopup.tscn")
+	if picker_scene == null:
+		push_warning("FormationPickerPopup.tscn not found")
 		return
 
-	print("=== Available Formations ===")
-	for formation in available_formations:
-		print(
-			"- %s (%s) [%s]"
-			% [
-				formation.get("name", ""),
-				formation.get("formation_id", ""),
-				formation.get("type", ""),
-			]
-		)
+	var picker: FormationPickerPopup = picker_scene.instantiate() as FormationPickerPopup
+	if picker == null:
+		return
 
-	var first_formation: Dictionary = available_formations[0]
-	var success: bool = LeaderManager.assign_leader_to_formation(
-		leader_id,
-		str(first_formation.get("formation_id", "")),
-	)
-
-	if success:
-		print("Assigned leader to: ", first_formation.get("name", ""))
-		refresh_screen()
-	else:
-		print("Failed to assign leader.")
+	picker.leader_id = leader_id
+	picker.country_tag = country_tag
+	picker.leader_name = str(summary.get("name", ""))
+	get_tree().root.add_child(picker)
+	picker.popup_centered()
 
 
 func _open_leader_picker(
