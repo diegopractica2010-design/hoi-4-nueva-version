@@ -5,6 +5,8 @@ extends Node
 @onready var map_renderer: MapRenderer = $WorldMap
 @onready var camera_controller: CameraController = $WorldMap/CameraInput
 
+var player_tag: String = "USA"
+
 
 func _ready() -> void:
 	print("=== Epochs of Ascendancy Test Starting ===")
@@ -30,13 +32,9 @@ func _ready() -> void:
 	if camera_controller and map_renderer.container:
 		camera_controller.target = map_renderer.container
 
+	player_tag = _resolve_player_tag()
+
 	if map_renderer and loader:
-		var player_tag := "USA"
-		if loader.get_country(player_tag) == null:
-			for c in loader.countries.values():
-				if c is Country:
-					player_tag = (c as Country).tag
-					break
 		map_renderer.build_supply_network(loader.get_city_layer(), player_tag)
 		var sm := get_node_or_null("/root/SupplyManager")
 		if sm:
@@ -45,6 +43,18 @@ func _ready() -> void:
 		print("Supply network ready (toggle overlay with L)")
 
 	_configure_top_info_bar(player_tag)
+
+
+func _resolve_player_tag() -> String:
+	var tag := player_tag
+	if loader == null:
+		return tag
+	if loader.get_country(tag) != null:
+		return tag
+	for c in loader.countries.values():
+		if c is Country:
+			return (c as Country).tag
+	return tag
 
 
 func _configure_top_info_bar(player_tag: String) -> void:
