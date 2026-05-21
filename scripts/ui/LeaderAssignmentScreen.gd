@@ -9,22 +9,47 @@ extends Control
 @onready var injured_leaders_label: Label = $TopSummaryBar/InjuredLeadersLabel
 @onready var captured_leaders_label: Label = $TopSummaryBar/CapturedLeadersLabel
 
-@onready var chief_of_army_button: Button = $NationalPositionsSection/ChiefOfArmyButton
-@onready var chief_of_navy_button: Button = $NationalPositionsSection/ChiefOfNavyButton
-@onready var chief_of_air_force_button: Button = $NationalPositionsSection/ChiefOfAirForceButton
-@onready var chief_of_space_force_button: Button = $NationalPositionsSection/ChiefOfSpaceForceButton
-
+@onready var national_positions_container: HBoxContainer = (
+	$NationalPositionsSection/PositionsContainer
+)
 @onready var available_header_row: HBoxContainer = $MainArea/AvailableLeadersColumn/AvailableHeaderRow
 @onready var available_leaders_list: VBoxContainer = (
 	$MainArea/AvailableLeadersColumn/AvailableLeadersList/AvailableLeadersContent
 )
 @onready var formations_content: VBoxContainer = (
-	$MainArea/FormationsColumn/FormationsList/FormationsContent
+	$MainArea/FormationsWithoutLeader/FormationsList/FormationsContent
 )
 @onready var detail_panel: PanelContainer = $MainArea/DetailPanel
 @onready var detail_label: Label = $MainArea/DetailPanel/DetailLabel
 
 var current_data: LeaderScreenData
+var _pending_position_key: String = ""
+var _pending_assign_leader_id: String = ""
+
+const NATIONAL_POSITIONS: Array[Dictionary] = [
+	{
+		"key": LeaderManager.POSITION_CHIEF_OF_ARMY,
+		"label": "Chief of Army",
+	},
+	{
+		"key": LeaderManager.POSITION_CHIEF_OF_NAVY,
+		"label": "Chief of Navy",
+	},
+	{
+		"key": LeaderManager.POSITION_CHIEF_OF_AIR_FORCE,
+		"label": "Chief of Air Force",
+	},
+	{
+		"key": LeaderManager.POSITION_CHIEF_OF_SPACE_FORCE,
+		"label": "Chief of Space Force",
+	},
+]
+
+const PLACEHOLDER_FORMATIONS: Array[Dictionary] = [
+	{"army_id": "first_army_placeholder", "name": "1st Army (placeholder)"},
+	{"army_id": "second_army_placeholder", "name": "2nd Army (placeholder)"},
+	{"army_id": "third_army_placeholder", "name": "3rd Army (placeholder)"},
+]
 
 const HEADER_SPECS: Array[Dictionary] = [
 	{"text": "Name", "width": 180},
@@ -37,11 +62,11 @@ const HEADER_SPECS: Array[Dictionary] = [
 ]
 const ROW_HEIGHT := 36
 
+
 func _ready() -> void:
 	add_to_group("leader_screen")
 	_apply_screen_theme()
 	_setup_headers()
-	_connect_position_buttons()
 	refresh_screen()
 
 
@@ -51,17 +76,11 @@ func _apply_screen_theme() -> void:
 	RetrowaveTheme.style_summary_metric(available_leaders_label, RetrowaveTheme.SUCCESS)
 	RetrowaveTheme.style_summary_metric(injured_leaders_label, RetrowaveTheme.WARNING)
 	RetrowaveTheme.style_summary_metric(captured_leaders_label, RetrowaveTheme.MAGENTA)
+	RetrowaveTheme.style_title($NationalPositionsSection/SectionTitle)
+	RetrowaveTheme.style_title($MainArea/AvailableLeadersColumn/AvailableLeadersTitle)
+	RetrowaveTheme.style_title($MainArea/FormationsWithoutLeader/FormationsTitle)
 	RetrowaveTheme.style_detail_panel(detail_panel)
 	RetrowaveTheme.style_detail_label(detail_label)
-	RetrowaveTheme.style_title($MainArea/AvailableLeadersColumn/AvailableLeadersTitle)
-	RetrowaveTheme.style_title($MainArea/FormationsColumn/FormationsTitle)
-	for btn in [
-		chief_of_army_button,
-		chief_of_navy_button,
-		chief_of_air_force_button,
-		chief_of_space_force_button,
-	]:
-		RetrowaveTheme.style_secondary_button(btn)
 
 
 func _setup_headers() -> void:
@@ -84,25 +103,10 @@ func _setup_headers() -> void:
 		available_header_row.add_child(label)
 
 
-func _connect_position_buttons() -> void:
-	chief_of_army_button.pressed.connect(
-		_on_position_pressed.bind(LeaderManager.POSITION_CHIEF_OF_ARMY),
-	)
-	chief_of_navy_button.pressed.connect(
-		_on_position_pressed.bind(LeaderManager.POSITION_CHIEF_OF_NAVY),
-	)
-	chief_of_air_force_button.pressed.connect(
-		_on_position_pressed.bind(LeaderManager.POSITION_CHIEF_OF_AIR_FORCE),
-	)
-	chief_of_space_force_button.pressed.connect(
-		_on_position_pressed.bind(LeaderManager.POSITION_CHIEF_OF_SPACE_FORCE),
-	)
-
-
 func refresh_screen() -> void:
 	current_data = LeaderManager.get_leader_screen_data(country_tag, false)
 	_update_summary_bar()
-	_update_national_positions()
+	_populate_national_positions()
 	_populate_available_leaders()
 	_populate_formations_placeholder()
 
@@ -124,47 +128,90 @@ func _update_summary_bar() -> void:
 		injured_leaders_label.modulate = Color.WHITE
 
 
-func _update_national_positions() -> void:
-	if current_data == null:
+# =====================
+# NATIONAL POSITIONS
+# =====================
+
+func _populate_national_positions() -> void:
+	for child in national_positions_container.get_children():
+		child.queue_free()
+
+	for entry in NATIONAL_POSITIONS:
+		var position_key: String = str(entry.get("key", ""))
+		var display_name: String = str(entry.get("label", position_key))
+		var leader: Leader = LeaderManager.get_country_position_leader(country_tag, position_key)
+		var card: Control = _create_national_position_card(display_name, position_key, leader)
+		national_positions_container.add_child(card)
+
+
+func _create_national_position_card(
+	display_name: String,
+	position_key: String,
+	leader: Leader,
+) -> PanelContainer:
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size = Vector2(180, 96)
+	RetrowaveTheme.style_detail_panel(panel)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 6)
+	panel.add_child(vbox)
+
+	var title := Label.new()
+	title.text = display_name
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	RetrowaveTheme.style_column_header(title)
+	vbox.add_child(title)
+
+	var leader_name := Label.new()
+	leader_name.text = leader.name if leader != null else "Unassigned"
+	leader_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	if leader == null and position_key == LeaderManager.POSITION_CHIEF_OF_ARMY:
+		leader_name.modulate = RetrowaveTheme.WARNING
+	RetrowaveTheme.style_row_label(leader_name)
+	vbox.add_child(leader_name)
+
+	var change_btn := Button.new()
+	change_btn.text = "Change"
+	RetrowaveTheme.style_secondary_button(change_btn)
+	change_btn.pressed.connect(_on_change_national_position.bind(position_key))
+	vbox.add_child(change_btn)
+
+	return panel
+
+
+func _on_change_national_position(position_key: String) -> void:
+	_pending_position_key = position_key
+	var display_name := _position_display_name(position_key)
+	_open_leader_picker(
+		"Assign %s" % display_name,
+		position_key,
+		_on_national_position_leader_picked,
+	)
+
+
+func _on_national_position_leader_picked(leader_id: String) -> void:
+	if _pending_position_key.is_empty():
 		return
 
-	_set_position_button(
-		chief_of_army_button,
-		"Chief of Army",
-		LeaderManager.POSITION_CHIEF_OF_ARMY,
+	var check: Dictionary = LeaderManager.can_assign_national_position(
+		country_tag,
+		_pending_position_key,
+		leader_id,
 	)
-	_set_position_button(
-		chief_of_navy_button,
-		"Chief of Navy",
-		LeaderManager.POSITION_CHIEF_OF_NAVY,
-	)
-	_set_position_button(
-		chief_of_air_force_button,
-		"Chief of Air Force",
-		LeaderManager.POSITION_CHIEF_OF_AIR_FORCE,
-	)
-	_set_position_button(
-		chief_of_space_force_button,
-		"Chief of Space Force",
-		LeaderManager.POSITION_CHIEF_OF_SPACE_FORCE,
-	)
-
-
-func _set_position_button(button: Button, title: String, position_id: String) -> void:
-	var leader_id: String = str(current_data.national_positions.get(position_id, ""))
-	if leader_id.is_empty():
-		button.text = "%s: (vacant)" % title
-		if position_id == LeaderManager.POSITION_CHIEF_OF_ARMY and current_data.has_no_chief_of_army:
-			button.modulate = RetrowaveTheme.WARNING
-		else:
-			button.modulate = Color.WHITE
+	if not bool(check.get("can_assign", false)):
+		push_warning("Cannot assign position: %s" % check.get("reason", "unknown"))
+		_pending_position_key = ""
 		return
 
-	var leader: Leader = LeaderManager.get_leader(leader_id)
-	var leader_name: String = leader.name if leader != null else leader_id
-	button.text = "%s: %s" % [title, leader_name]
-	button.modulate = RetrowaveTheme.CYAN
+	if LeaderManager.set_country_position(country_tag, _pending_position_key, leader_id, false):
+		refresh_screen()
+	_pending_position_key = ""
 
+
+# =====================
+# AVAILABLE LEADERS
+# =====================
 
 func _populate_available_leaders() -> void:
 	for child in available_leaders_list.get_children():
@@ -187,11 +234,22 @@ func _populate_formations_placeholder() -> void:
 	for child in formations_content.get_children():
 		child.queue_free()
 
-	var note := Label.new()
-	note.text = "Formation assignment list (TODO)"
-	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	RetrowaveTheme.style_body_label(note)
-	formations_content.add_child(note)
+	for formation in PLACEHOLDER_FORMATIONS:
+		var row := HBoxContainer.new()
+		row.custom_minimum_size = Vector2(0, ROW_HEIGHT)
+
+		var name_label := Label.new()
+		name_label.text = str(formation.get("name", ""))
+		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		RetrowaveTheme.style_row_label(name_label)
+		row.add_child(name_label)
+
+		var note := Label.new()
+		note.text = "(no leader)"
+		RetrowaveTheme.style_body_label(note)
+		row.add_child(note)
+
+		formations_content.add_child(row)
 
 
 func _create_leader_row(summary: Dictionary) -> HBoxContainer:
@@ -214,8 +272,7 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 	)
 
 	var traits: Array = summary.get("traits", []) as Array
-	var traits_text: String = ", ".join(traits)
-	hbox.add_child(_row_label(traits_text, 200))
+	hbox.add_child(_row_label(", ".join(traits), 200))
 
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -266,9 +323,101 @@ func _on_details_pressed(summary: Dictionary) -> void:
 
 
 func _on_assign_pressed(summary: Dictionary) -> void:
-	print("Assign leader:", summary.get("name"))
-	# TODO: Open a list of formations to assign this leader to
+	_pending_assign_leader_id = str(summary.get("leader_id", ""))
+	if _pending_assign_leader_id.is_empty():
+		return
+	_open_formation_picker(str(summary.get("name", "Leader")))
 
 
-func _on_position_pressed(position_id: String) -> void:
-	print("Manage national position:", position_id, " (TODO picker)")
+func _open_formation_picker(leader_name: String) -> void:
+	var popup := Window.new()
+	popup.title = "Assign %s to Formation" % leader_name
+	popup.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
+	popup.size = Vector2i(420, 360)
+	RetrowaveTheme.style_popup_root(popup)
+
+	var margin := MarginContainer.new()
+	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	margin.add_theme_constant_override("margin_left", 16)
+	margin.add_theme_constant_override("margin_top", 16)
+	margin.add_theme_constant_override("margin_right", 16)
+	margin.add_theme_constant_override("margin_bottom", 16)
+	popup.add_child(margin)
+
+	var vbox := VBoxContainer.new()
+	vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	margin.add_child(vbox)
+
+	var hint := Label.new()
+	hint.text = "Placeholder formations (full army system coming later):"
+	RetrowaveTheme.style_body_label(hint)
+	vbox.add_child(hint)
+
+	var list := ItemList.new()
+	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	RetrowaveTheme.style_item_list(list)
+	for formation in PLACEHOLDER_FORMATIONS:
+		list.add_item(str(formation.get("name", "")))
+	vbox.add_child(list)
+
+	var buttons := HBoxContainer.new()
+	buttons.alignment = BoxContainer.ALIGNMENT_END
+	vbox.add_child(buttons)
+
+	var confirm := Button.new()
+	confirm.text = "Assign"
+	RetrowaveTheme.style_primary_button(confirm)
+	confirm.disabled = true
+	buttons.add_child(confirm)
+
+	var cancel := Button.new()
+	cancel.text = "Cancel"
+	RetrowaveTheme.style_secondary_button(cancel)
+	buttons.add_child(cancel)
+
+	list.item_selected.connect(func(_index: int) -> void: confirm.disabled = false)
+	confirm.pressed.connect(
+		func() -> void:
+			var idx := list.get_selected_items()
+			if idx.is_empty():
+				return
+			var army_id: String = str(PLACEHOLDER_FORMATIONS[idx[0]].get("army_id", ""))
+			if LeaderManager.assign_leader_to_army(_pending_assign_leader_id, army_id):
+				refresh_screen()
+			_pending_assign_leader_id = ""
+			popup.queue_free(),
+	)
+	cancel.pressed.connect(popup.queue_free)
+	popup.close_requested.connect(popup.queue_free)
+
+	get_tree().root.add_child(popup)
+	popup.popup_centered()
+
+
+func _open_leader_picker(
+	title_text: String,
+	position_key: String,
+	on_selected: Callable,
+) -> void:
+	var scene: PackedScene = load("res://scenes/ui/LeaderPickerPopup.tscn")
+	if scene == null:
+		push_warning("LeaderPickerPopup.tscn not found")
+		return
+
+	var picker: LeaderPickerPopup = scene.instantiate() as LeaderPickerPopup
+	if picker == null:
+		return
+
+	picker.dialog_title = title_text
+	picker.country_tag = country_tag
+	picker.position_key = position_key
+	picker.leader_selected.connect(on_selected)
+	get_tree().root.add_child(picker)
+	picker.popup_centered()
+
+
+func _position_display_name(position_key: String) -> String:
+	for entry in NATIONAL_POSITIONS:
+		if str(entry.get("key", "")) == position_key:
+			return str(entry.get("label", position_key))
+	return position_key

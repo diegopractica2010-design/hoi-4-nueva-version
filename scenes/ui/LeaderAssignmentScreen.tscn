@@ -49,36 +49,24 @@ text = "Injured: 0"
 layout_mode = 2
 text = "Captured: 0"
 
-[node name="NationalPositionsSection" type="HBoxContainer" parent="."]
+[node name="NationalPositionsSection" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 20.0
 offset_top = 72.0
 offset_right = -20.0
-offset_bottom = 112.0
+offset_bottom = 200.0
 grow_horizontal = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 8
 
-[node name="ChiefOfArmyButton" type="Button" parent="NationalPositionsSection"]
+[node name="SectionTitle" type="Label" parent="NationalPositionsSection"]
 layout_mode = 2
-custom_minimum_size = Vector2(200, 36)
-text = "Chief of Army: (vacant)"
+text = "National Positions"
 
-[node name="ChiefOfNavyButton" type="Button" parent="NationalPositionsSection"]
+[node name="PositionsContainer" type="HBoxContainer" parent="NationalPositionsSection"]
 layout_mode = 2
-custom_minimum_size = Vector2(200, 36)
-text = "Chief of Navy: (vacant)"
-
-[node name="ChiefOfAirForceButton" type="Button" parent="NationalPositionsSection"]
-layout_mode = 2
-custom_minimum_size = Vector2(220, 36)
-text = "Chief of Air Force: (vacant)"
-
-[node name="ChiefOfSpaceForceButton" type="Button" parent="NationalPositionsSection"]
-layout_mode = 2
-custom_minimum_size = Vector2(220, 36)
-text = "Chief of Space Force: (vacant)"
+theme_override_constants/separation = 16
 
 [node name="MainArea" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -86,7 +74,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 20.0
-offset_top = 120.0
+offset_top = 208.0
 offset_right = -20.0
 offset_bottom = -20.0
 grow_horizontal = 2
@@ -116,21 +104,21 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
-[node name="FormationsColumn" type="VBoxContainer" parent="MainArea"]
+[node name="FormationsWithoutLeader" type="VBoxContainer" parent="MainArea"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="FormationsTitle" type="Label" parent="MainArea/FormationsColumn"]
+[node name="FormationsTitle" type="Label" parent="MainArea/FormationsWithoutLeader"]
 layout_mode = 2
 text = "Formations Without Leader"
 
-[node name="FormationsList" type="ScrollContainer" parent="MainArea/FormationsColumn"]
+[node name="FormationsList" type="ScrollContainer" parent="MainArea/FormationsWithoutLeader"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FormationsContent" type="VBoxContainer" parent="MainArea/FormationsColumn/FormationsList"]
+[node name="FormationsContent" type="VBoxContainer" parent="MainArea/FormationsWithoutLeader/FormationsList"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
