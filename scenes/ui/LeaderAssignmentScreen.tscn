@@ -1,0 +1,145 @@
+[gd_scene load_steps=2 format=3 uid="uid://leaderassignscreen01"]
+
+[ext_resource type="Script" path="res://scripts/ui/LeaderAssignmentScreen.gd" id="1_screen"]
+
+[node name="LeaderAssignmentScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_screen")
+country_tag = "GER"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.058824, 0.117647, 1)
+
+[node name="TopSummaryBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_constants/separation = 28
+
+[node name="TotalLeadersLabel" type="Label" parent="TopSummaryBar"]
+layout_mode = 2
+text = "Total Leaders: 0"
+
+[node name="AvailableLeadersLabel" type="Label" parent="TopSummaryBar"]
+layout_mode = 2
+text = "Available: 0"
+
+[node name="InjuredLeadersLabel" type="Label" parent="TopSummaryBar"]
+layout_mode = 2
+text = "Injured: 0"
+
+[node name="CapturedLeadersLabel" type="Label" parent="TopSummaryBar"]
+layout_mode = 2
+text = "Captured: 0"
+
+[node name="NationalPositionsSection" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 72.0
+offset_right = -20.0
+offset_bottom = 112.0
+grow_horizontal = 2
+theme_override_constants/separation = 12
+
+[node name="ChiefOfArmyButton" type="Button" parent="NationalPositionsSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 36)
+text = "Chief of Army: (vacant)"
+
+[node name="ChiefOfNavyButton" type="Button" parent="NationalPositionsSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 36)
+text = "Chief of Navy: (vacant)"
+
+[node name="ChiefOfAirForceButton" type="Button" parent="NationalPositionsSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 36)
+text = "Chief of Air Force: (vacant)"
+
+[node name="ChiefOfSpaceForceButton" type="Button" parent="NationalPositionsSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 36)
+text = "Chief of Space Force: (vacant)"
+
+[node name="MainArea" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 120.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="AvailableLeadersColumn" type="VBoxContainer" parent="MainArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="AvailableLeadersTitle" type="Label" parent="MainArea/AvailableLeadersColumn"]
+layout_mode = 2
+text = "Available Leaders"
+
+[node name="AvailableHeaderRow" type="HBoxContainer" parent="MainArea/AvailableLeadersColumn"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AvailableLeadersList" type="ScrollContainer" parent="MainArea/AvailableLeadersColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AvailableLeadersContent" type="VBoxContainer" parent="MainArea/AvailableLeadersColumn/AvailableLeadersList"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="FormationsColumn" type="VBoxContainer" parent="MainArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="FormationsTitle" type="Label" parent="MainArea/FormationsColumn"]
+layout_mode = 2
+text = "Formations Without Leader"
+
+[node name="FormationsList" type="ScrollContainer" parent="MainArea/FormationsColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FormationsContent" type="VBoxContainer" parent="MainArea/FormationsColumn/FormationsList"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="DetailPanel" type="PanelContainer" parent="MainArea"]
+layout_mode = 2
+custom_minimum_size = Vector2(300, 0)
+
+[node name="DetailLabel" type="Label" parent="MainArea/DetailPanel"]
+layout_mode = 2
+text = "Select a leader for details."
+autowrap_mode = 2

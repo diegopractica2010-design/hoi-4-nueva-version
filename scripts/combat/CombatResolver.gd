@@ -85,5 +85,5 @@ func _find_scenario_loader() -> ScenarioLoader:
 	var tree := Engine.get_main_loop()
 	if tree == null:
 		return null
-	var runner := tree.root.find_child("ScenarioLoader", true, false)
-	return runner as ScenarioLoader
+	var loader_node: Node = tree.root.find_child("ScenarioLoader", true, false)
+	return loader_node as ScenarioLoader

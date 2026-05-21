@@ -274,7 +274,7 @@ static func _test_equipment_shortages() -> bool:
 		print("  [FAIL] ProductionManager shortage report: ", report)
 		return false
 
-	var modified := pm.apply_equipment_shortage_modifiers("test_div_1", 1.0, required)
+	var modified: float = pm.apply_equipment_shortage_modifiers("test_div_1", 1.0, required)
 	if absf(modified - readiness) > 0.001:
 		print("  [FAIL] apply_equipment_shortage_modifiers: ", modified, " vs ", readiness)
 		return false
@@ -298,7 +298,7 @@ static func _test_national_equipment_stockpile() -> bool:
 		print("  [FAIL] add_to_national_stockpile")
 		return false
 
-	var taken := pm.take_from_national_stockpile("m4_sherman_medium", 2)
+	var taken: int = pm.take_from_national_stockpile("m4_sherman_medium", 2)
 	if taken != 2 or pm.get_national_stockpile_amount("m4_sherman_medium") != 3:
 		print("  [FAIL] take_from_national_stockpile: taken=", taken)
 		return false
@@ -308,19 +308,19 @@ static func _test_national_equipment_stockpile() -> bool:
 	# Shortages use unit + national totals (50 + 30 = 80 available → 20 short of 100)
 	pm.set_national_equipment_stockpile({"rifle": 30, "m4_sherman_medium": 3})
 	pm.set_unit_equipment_stock("stock_test_unit", {"rifle": 50})
-	var pre_shortages := pm.get_unit_shortages("stock_test_unit", {"rifle": 100})
+	var pre_shortages: Dictionary = pm.get_unit_shortages("stock_test_unit", {"rifle": 100})
 	if int(pre_shortages.get("rifle", 0)) != 20:
 		print("  [FAIL] national-aware shortages: ", pre_shortages)
 		return false
 
-	var fulfilled := pm.auto_reinforce_unit_from_stockpile("stock_test_unit", required)
+	var fulfilled: Dictionary = pm.auto_reinforce_unit_from_stockpile("stock_test_unit", required)
 	if int(fulfilled.get("rifle", 0)) != 80 or int(fulfilled.get("m4_sherman_medium", 0)) != 2:
 		print("  [FAIL] auto_reinforce_unit_from_stockpile: ", fulfilled)
 		return false
 
-	var report := pm.get_shortage_report("stock_test_unit", required)
-	if not report.get("missing_equipment", {}).is_empty():
-		print("  [FAIL] unit should be fully reinforced: ", report)
+	var stock_report: Dictionary = pm.get_shortage_report("stock_test_unit", required)
+	if not stock_report.get("missing_equipment", {}).is_empty():
+		print("  [FAIL] unit should be fully reinforced: ", stock_report)
 		return false
 
 	pm.clear_unit_equipment_stock("stock_test_unit")
@@ -339,13 +339,12 @@ static func _test_infantry_equipment_stats(design_data: DesignDataLoader) -> boo
 		print("  [FAIL] garand soft_attack too low: ", stats)
 		return false
 
-	var supply := Engine.get_main_loop().root.get_node_or_null("/root/SupplyManager")
-	if supply == null:
+	if Engine.get_main_loop() == null:
 		print("  [PASS] infantry equipment stats (templates only)")
 		return true
 
-	supply.division_templates.load_all()
-	var div: DivisionTemplate = supply.division_templates.get_division("us_infantry_div_ww2")
+	SupplyManager.division_templates.load_all()
+	var div: DivisionTemplate = SupplyManager.division_templates.get_division("us_infantry_div_ww2")
 	if div == null:
 		print("  [PASS] infantry equipment stats (no division template)")
 		return true
@@ -355,11 +354,13 @@ static func _test_infantry_equipment_stats(design_data: DesignDataLoader) -> boo
 		print("  [FAIL] division aggregated infantry stats: ", agg)
 		return false
 
-	var german_mixed := supply.division_templates.get_division("german_infantry_division_1943_mixed")
+	var german_mixed: DivisionTemplate = SupplyManager.division_templates.get_division(
+		"german_infantry_division_1943_mixed",
+	)
 	if german_mixed == null:
 		print("  [FAIL] german_infantry_division_1943_mixed missing")
 		return false
-	var mixed_stats := german_mixed.get_aggregated_infantry_stats(design_data)
+	var mixed_stats: Dictionary = german_mixed.get_aggregated_infantry_stats(design_data)
 	if int(mixed_stats.get("generation", mixed_stats.get("average_generation", 0))) < 2:
 		print("  [FAIL] mixed division generation too low: ", mixed_stats)
 		return false
@@ -396,8 +397,8 @@ static func _test_priority_reinforcement() -> bool:
 	pm.set_unit_priority_reinforcement("priority_unit", true)
 	pm.reinforce_all_units(required_map)
 
-	var priority_stock := pm.get_unit_equipment_stock("priority_unit")
-	var normal_stock := pm.get_unit_equipment_stock("normal_unit")
+	var priority_stock: Dictionary = pm.get_unit_equipment_stock("priority_unit")
+	var normal_stock: Dictionary = pm.get_unit_equipment_stock("normal_unit")
 	if int(priority_stock.get("rifle", 0)) != 40:
 		print("  [FAIL] priority unit should be fully reinforced: ", priority_stock)
 		return false
@@ -423,13 +424,12 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 		print("  [FAIL] basic_sustainment template missing")
 		return false
 
-	var supply := Engine.get_main_loop().root.get_node_or_null("/root/SupplyManager")
-	if supply == null:
+	if Engine.get_main_loop() == null:
 		print("  [PASS] sustainment equipment (data only)")
 		return true
 
-	supply.division_templates.load_all()
-	var us_div: DivisionTemplate = supply.division_templates.get_division("us_infantry_division_1943")
+	SupplyManager.division_templates.load_all()
+	var us_div: DivisionTemplate = SupplyManager.division_templates.get_division("us_infantry_division_1943")
 	if us_div == null:
 		print("  [FAIL] us_infantry_division_1943 missing")
 		return false
@@ -444,7 +444,7 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 		print("  [FAIL] improved sustainment should reduce consumption multiplier")
 		return false
 
-	var marine: DivisionTemplate = supply.division_templates.get_division("us_marine_division_ww2")
+	var marine: DivisionTemplate = SupplyManager.division_templates.get_division("us_marine_division_ww2")
 	if marine == null:
 		print("  [FAIL] us_marine_division_ww2 missing")
 		return false
@@ -474,7 +474,7 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 		})
 		pm.clear_unit_equipment_stock("marine_test")
 		var marine_req := marine.get_required_equipment(design_data)
-		var fulfilled := pm.auto_reinforce_unit_from_stockpile("marine_test", marine_req)
+		var fulfilled: Dictionary = pm.auto_reinforce_unit_from_stockpile("marine_test", marine_req)
 		if fulfilled.is_empty():
 			print("  [FAIL] marine reinforcement fulfilled nothing: ", marine_req)
 			return false
@@ -492,7 +492,10 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 		pm.add_to_national_stockpile("infantry_m1_garand", 20000)
 		pm.add_to_national_stockpile("marine_amphibious_sustainment", 20000)
 		pm.auto_reinforce_unit_from_stockpile("marine_test", marine_req)
-		var stocked_stats := pm.get_division_final_combat_stats("us_marine_division_ww2", "marine_test")
+		var stocked_stats: Dictionary = pm.get_division_final_combat_stats(
+			"us_marine_division_ww2",
+			"marine_test",
+		)
 		if bool(stocked_stats.get("has_shortages", true)):
 			print("  [FAIL] marine_test should be fully stocked: ", stocked_stats)
 			return false
@@ -505,12 +508,11 @@ static func _test_sustainment_equipment(design_data: DesignDataLoader) -> bool:
 
 
 static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
-	var supply := Engine.get_main_loop().root.get_node_or_null("/root/SupplyManager")
-	if supply == null or GameData.design_data == null:
+	if Engine.get_main_loop() == null or GameData.design_data == null:
 		print("  [SKIP] CombatResolver (SupplyManager / GameData not available)")
 		return true
 
-	supply.division_templates.load_all()
+	SupplyManager.division_templates.load_all()
 	var resolver := CombatResolver.new()
 	var power: Dictionary = resolver.get_effective_combat_power("us_marine_division_ww2")
 
@@ -534,9 +536,12 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 			"marine_amphibious_sustainment": 50000,
 		})
 		pm.clear_unit_equipment_stock("combat_resolver_test")
+		var marine_div: DivisionTemplate = SupplyManager.division_templates.get_division(
+			"us_marine_division_ww2",
+		)
 		pm.auto_reinforce_unit_from_stockpile(
 			"combat_resolver_test",
-			supply.division_templates.get_division("us_marine_division_ww2").get_required_equipment(design_data),
+			marine_div.get_required_equipment(design_data),
 		)
 		var stocked: Dictionary = resolver.get_effective_combat_power(
 			"us_marine_division_ww2",
@@ -551,14 +556,13 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 		pm.clear_unit_equipment_stock("combat_resolver_test")
 		pm.set_national_equipment_stockpile({})
 
-	var lm := Engine.get_main_loop().root.get_node_or_null("/root/LeaderManager")
-	if lm != null:
-		var rommel: Leader = lm.get_leader("ger_rommel")
+	if Engine.get_main_loop() != null:
+		var rommel: Leader = LeaderManager.get_leader("ger_rommel")
 		if rommel != null:
 			var base_power: Dictionary = resolver.get_effective_combat_power(
 				"german_infantry_division_1943",
 			)
-			lm.assign_leader_to_army("ger_rommel", "panzer_army_africa_test")
+			LeaderManager.assign_leader_to_army("ger_rommel", "panzer_army_africa_test")
 			var led_power: Dictionary = resolver.get_effective_combat_power(
 				"german_infantry_division_1943",
 				"",
@@ -647,8 +651,7 @@ static func _test_combat_width() -> bool:
 
 
 static func _test_leader_manager() -> bool:
-	var lm := Engine.get_main_loop().root.get_node_or_null("/root/LeaderManager")
-	if lm == null:
+	if Engine.get_main_loop() == null:
 		print("  [SKIP] LeaderManager autoload not available")
 		return true
 
@@ -662,17 +665,17 @@ static func _test_leader_manager() -> bool:
 	patton.organization_skill = 3
 	patton.traits = ["aggressive", "logistics_wizard"]
 
-	lm.register_leader(patton)
-	if not lm.assign_leader_to_army("usa_patton_test", "third_army_test"):
+	LeaderManager.register_leader(patton)
+	if not LeaderManager.assign_leader_to_army("usa_patton_test", "third_army_test"):
 		print("  [FAIL] could not assign leader to army")
 		return false
-	if lm.get_leader_for_army("third_army_test") != patton:
+	if LeaderManager.get_leader_for_army("third_army_test") != patton:
 		print("  [FAIL] army leader lookup")
 		return false
 	if patton.get_attack_modifier() <= 0.08:
 		print("  [FAIL] leader attack modifier too low: ", patton.get_attack_modifier())
 		return false
-	var assign_check: Dictionary = lm.can_assign_national_position(
+	var assign_check: Dictionary = LeaderManager.can_assign_national_position(
 		"USA",
 		LeaderManager.POSITION_CHIEF_OF_ARMY,
 		"usa_patton_test",
@@ -684,7 +687,7 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] national position cost preview missing stability")
 		return false
 
-	if not lm.set_country_position(
+	if not LeaderManager.set_country_position(
 		"USA",
 		LeaderManager.POSITION_CHIEF_OF_ARMY,
 		"usa_patton_test",
@@ -692,16 +695,16 @@ static func _test_leader_manager() -> bool:
 	):
 		print("  [FAIL] set chief of army position")
 		return false
-	if lm.get_country_position_leader("USA", LeaderManager.POSITION_CHIEF_OF_ARMY) != patton:
+	if LeaderManager.get_country_position_leader("USA", LeaderManager.POSITION_CHIEF_OF_ARMY) != patton:
 		print("  [FAIL] country position leader lookup")
 		return false
 
-	var bonuses: Dictionary = lm.get_national_bonuses("USA")
+	var bonuses: Dictionary = LeaderManager.get_national_bonuses("USA")
 	if float(bonuses.get("army_attack", 0.0)) <= 0.0:
 		print("  [FAIL] national bonuses from chief of army: ", bonuses)
 		return false
 
-	var rommel: Leader = lm.get_leader("ger_rommel")
+	var rommel: Leader = LeaderManager.get_leader("ger_rommel")
 	if rommel == null or not rommel.has_trait("desert_fox"):
 		print("  [FAIL] historical leader Rommel not loaded")
 		return false
@@ -709,7 +712,7 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] Rommel attack modifier: ", rommel.get_attack_modifier())
 		return false
 
-	var doenitz: Leader = lm.get_leader("ger_doenitz")
+	var doenitz: Leader = LeaderManager.get_leader("ger_doenitz")
 	if doenitz == null or not doenitz.has_trait("sea_wolf"):
 		print("  [FAIL] historical leader Dönitz not loaded")
 		return false
@@ -725,42 +728,42 @@ static func _test_leader_manager() -> bool:
 	manstein.attack_skill = 8
 	manstein.defense_skill = 7
 	manstein.add_trait("arctic_bear", 1)
-	lm.register_leader(manstein)
+	LeaderManager.register_leader(manstein)
 	if not manstein.has_trait("arctic_bear"):
 		print("  [FAIL] Manstein arctic_bear trait")
 		return false
 	if manstein.get_defense_modifier() <= 0.1:
 		print("  [FAIL] arctic_bear defense bonus: ", manstein.get_defense_modifier())
 		return false
-	lm.leaders.erase("ger_manstein_test")
+	LeaderManager.leaders.erase("ger_manstein_test")
 
-	var generated: Leader = lm.create_and_register_new_leader("FRA", "general")
+	var generated: Leader = LeaderManager.create_and_register_new_leader("FRA", "general")
 	if generated == null or generated.country_tag != "FRA":
 		print("  [FAIL] generated leader: ", generated)
 		return false
 	if generated.attack_skill < 1 or generated.attack_skill > 6:
 		print("  [FAIL] generated attack skill out of range: ", generated.attack_skill)
-		lm.leaders.erase(generated.leader_id)
+		LeaderManager.leaders.erase(generated.leader_id)
 		return false
-	lm.leaders.erase(generated.leader_id)
+	LeaderManager.leaders.erase(generated.leader_id)
 
 	var exp_before := patton.experience
-	lm.award_battle_experience("usa_patton_test", 50)
+	LeaderManager.award_battle_experience("usa_patton_test", 50)
 	if patton.experience != exp_before + 50 or patton.battles_fought < 1:
 		print("  [FAIL] battle experience: exp=", patton.experience, " battles=", patton.battles_fought)
 		return false
 
 	patton.attack_skill = 9
-	if not lm.promote_leader("usa_patton_test"):
+	if not LeaderManager.promote_leader("usa_patton_test"):
 		print("  [FAIL] promote_leader")
 		return false
 	if patton.attack_skill != 10:
 		print("  [FAIL] promote should cap at 10: ", patton.attack_skill)
 		return false
 
-	lm.leaders.erase("usa_patton_test")
-	if lm.country_positions.has("USA"):
-		(lm.country_positions["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)
+	LeaderManager.leaders.erase("usa_patton_test")
+	if LeaderManager.country_positions.has("USA"):
+		(LeaderManager.country_positions["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)
 
 	print("  [PASS] LeaderManager registration and assignment")
 	return true
@@ -768,9 +771,7 @@ static func _test_leader_manager() -> bool:
 
 static func _test_assignment_screen_backends() -> bool:
 	var pm := _get_production_manager()
-	var fm := Engine.get_main_loop().root.get_node_or_null("/root/FactoryManager")
-	var lm := Engine.get_main_loop().root.get_node_or_null("/root/LeaderManager")
-	if pm == null or fm == null or lm == null:
+	if pm == null or Engine.get_main_loop() == null:
 		print("  [SKIP] assignment screen backends (autoloads not available)")
 		return true
 
@@ -781,29 +782,29 @@ static func _test_assignment_screen_backends() -> bool:
 	test_factory.owner_tag = "GER"
 	test_factory.current_production_design = "m3_stuart_light"
 	test_factory.max_production_lines = 2
-	fm.register_factory(test_factory)
+	FactoryManager.register_factory(test_factory)
 
 	var overview: Dictionary = pm.get_country_production_overview("GER")
 	if int(overview.get("total_factories", 0)) < 1:
-		_cleanup_test_factory(fm, test_factory_id)
+		_cleanup_test_factory(FactoryManager, test_factory_id)
 		print("  [FAIL] production overview missing GER factories: ", overview)
 		return false
 
 	var screen_data: ProductionScreenData = pm.get_production_screen_data("GER")
 	if screen_data.total_factories < 1 or screen_data.factories.is_empty():
-		_cleanup_test_factory(fm, test_factory_id)
+		_cleanup_test_factory(FactoryManager, test_factory_id)
 		print("  [FAIL] production screen data: ", screen_data.total_factories)
 		return false
 	if not screen_data.designs_in_production.has("m3_stuart_light"):
-		_cleanup_test_factory(fm, test_factory_id)
+		_cleanup_test_factory(FactoryManager, test_factory_id)
 		print("  [FAIL] designs in production: ", screen_data.designs_in_production)
 		return false
 	if screen_data.estimated_daily_output <= 0.0:
-		_cleanup_test_factory(fm, test_factory_id)
+		_cleanup_test_factory(FactoryManager, test_factory_id)
 		print("  [FAIL] estimated daily output: ", screen_data.estimated_daily_output)
 		return false
 	if not screen_data.factories_by_status.has("producing"):
-		_cleanup_test_factory(fm, test_factory_id)
+		_cleanup_test_factory(FactoryManager, test_factory_id)
 		print("  [FAIL] factories_by_status: ", screen_data.factories_by_status.keys())
 		return false
 	print(
@@ -817,40 +818,40 @@ static func _test_assignment_screen_backends() -> bool:
 
 	var summary: Dictionary = pm.get_factory_summary(test_factory_id)
 	if str(summary.get("current_design", "")) != "m3_stuart_light":
-		_cleanup_test_factory(fm, test_factory_id)
+		_cleanup_test_factory(FactoryManager, test_factory_id)
 		print("  [FAIL] factory summary: ", summary)
 		return false
 
 	var producing: Array = pm.get_factories_producing_design("m3_stuart_light")
 	if test_factory_id not in producing:
-		_cleanup_test_factory(fm, test_factory_id)
+		_cleanup_test_factory(FactoryManager, test_factory_id)
 		print("  [FAIL] factories producing design: ", producing)
 		return false
 
-	var rommel: Leader = lm.get_leader("ger_rommel")
+	var rommel: Leader = LeaderManager.get_leader("ger_rommel")
 	if rommel != null:
-		var available := lm.get_available_leaders("GER")
+		var available: Array[Leader] = LeaderManager.get_available_leaders("GER")
 		var rommel_listed := false
 		for leader in available:
 			if leader.leader_id == "ger_rommel":
 				rommel_listed = true
 				break
 		if rommel.assigned_army_id.is_empty() and not rommel_listed:
-			_cleanup_test_factory(fm, test_factory_id)
+			_cleanup_test_factory(FactoryManager, test_factory_id)
 			print("  [FAIL] Rommel should be available when unassigned")
 			return false
 
-		var leader_screen: LeaderScreenData = lm.get_leader_screen_data("GER")
+		var leader_screen: LeaderScreenData = LeaderManager.get_leader_screen_data("GER")
 		if leader_screen.total_leaders < 1:
-			_cleanup_test_factory(fm, test_factory_id)
+			_cleanup_test_factory(FactoryManager, test_factory_id)
 			print("  [FAIL] leader screen data: ", leader_screen.total_leaders)
 			return false
 		if leader_screen.leaders.is_empty() or not leader_screen.leaders_by_type.has("general"):
-			_cleanup_test_factory(fm, test_factory_id)
+			_cleanup_test_factory(FactoryManager, test_factory_id)
 			print("  [FAIL] leaders_by_type: ", leader_screen.leaders_by_type.keys())
 			return false
 		if not leader_screen.national_position_bonuses.has("army_attack"):
-			_cleanup_test_factory(fm, test_factory_id)
+			_cleanup_test_factory(FactoryManager, test_factory_id)
 			print("  [FAIL] national_position_bonuses: ", leader_screen.national_position_bonuses)
 			return false
 		print(
@@ -862,19 +863,19 @@ static func _test_assignment_screen_backends() -> bool:
 			leader_screen.has_no_chief_of_army,
 		)
 
-		var leader_overview: Dictionary = lm.get_country_leader_overview("GER")
+		var leader_overview: Dictionary = LeaderManager.get_country_leader_overview("GER")
 		if int(leader_overview.get("total_leaders", 0)) < 1:
-			_cleanup_test_factory(fm, test_factory_id)
+			_cleanup_test_factory(FactoryManager, test_factory_id)
 			print("  [FAIL] leader overview: ", leader_overview)
 			return false
 
-		var rommel_summary: Dictionary = lm.get_leader_summary("ger_rommel")
+		var rommel_summary: Dictionary = LeaderManager.get_leader_summary("ger_rommel")
 		if not rommel_summary.has("traits") or str(rommel_summary.get("name", "")).is_empty():
-			_cleanup_test_factory(fm, test_factory_id)
+			_cleanup_test_factory(FactoryManager, test_factory_id)
 			print("  [FAIL] leader summary: ", rommel_summary)
 			return false
 
-	_cleanup_test_factory(fm, test_factory_id)
+	_cleanup_test_factory(FactoryManager, test_factory_id)
 	print("  [PASS] Production and Leader assignment screen backends")
 	return true
 

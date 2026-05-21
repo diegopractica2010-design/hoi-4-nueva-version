@@ -64,10 +64,12 @@ func spawn_factories_for_scenario(
 
 		var base_factories := _base_factory_count(country, is_major_power, country_tag)
 		var province_count := maxi(key_provinces.size(), 1)
-		var factories_per_province := maxi(1, base_factories / province_count)
+		var factories_per_province: int = maxi(
+			1, int(float(base_factories) / float(province_count)),
+		)
 
 		for province_id in key_provinces:
-			var created := factory_manager.register_factories_for_province(
+			var created: Array[Factory] = factory_manager.register_factories_for_province(
 				province_id, country_tag, factories_per_province,
 			)
 			factories_created += created.size()
@@ -78,7 +80,7 @@ func spawn_factories_for_scenario(
 				if not _province_has_port(province_id, data, scenario_loader):
 					continue
 				var shipyard_levels := _shipyard_levels_for_country(country_tag)
-				var shipyard := factory_manager.create_shipyard_for_province(
+				var shipyard: Factory = factory_manager.create_shipyard_for_province(
 					province_id, country_tag, shipyard_levels,
 				)
 				if shipyard != null:

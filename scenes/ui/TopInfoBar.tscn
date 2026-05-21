@@ -78,6 +78,10 @@ theme_override_constants/separation = 8
 layout_mode = 2
 text = "Production"
 
+[node name="LeadersButton" type="Button" parent="ContentRow/CenterContainer"]
+layout_mode = 2
+text = "Leaders"
+
 [node name="TechnologyButton" type="Button" parent="ContentRow/CenterContainer"]
 layout_mode = 2
 text = "Technology"

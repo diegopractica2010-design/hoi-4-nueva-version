@@ -71,8 +71,18 @@ static func style_filter_option(option: OptionButton) -> void:
 	option.add_theme_color_override("font_color", TEXT_PRIMARY)
 
 
-static func style_popup_root(root: Control) -> void:
-	var bg := root.get_node_or_null("Background") as ColorRect
+static func style_popup_root(popup: Window) -> void:
+	if popup == null:
+		return
+
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.08, 0.08, 0.12)
+	panel_style.border_color = CYAN
+	panel_style.set_border_width_all(2)
+	panel_style.set_corner_radius_all(6)
+	popup.add_theme_stylebox_override("panel", panel_style)
+
+	var bg := popup.get_node_or_null("Background") as ColorRect
 	if bg != null:
 		bg.color = BG_DARK
 

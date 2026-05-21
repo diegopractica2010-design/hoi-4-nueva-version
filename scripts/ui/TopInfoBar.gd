@@ -13,6 +13,7 @@ extends Control
 @onready var speed4_button: Button = $ContentRow/LeftContainer/TimeSpeedContainer/Speed4Button
 
 @onready var production_button: Button = $ContentRow/CenterContainer/ProductionButton
+@onready var leaders_button: Button = $ContentRow/CenterContainer/LeadersButton
 @onready var technology_button: Button = $ContentRow/CenterContainer/TechnologyButton
 @onready var diplomacy_button: Button = $ContentRow/CenterContainer/DiplomacyButton
 @onready var agents_button: Button = $ContentRow/CenterContainer/AgentsButton
@@ -53,6 +54,7 @@ func _apply_theme() -> void:
 		RetrowaveTheme.style_info_bar_label(label, RetrowaveTheme.TEXT_DIM)
 	for btn in [
 		production_button,
+		leaders_button,
 		technology_button,
 		diplomacy_button,
 		agents_button,
@@ -60,6 +62,7 @@ func _apply_theme() -> void:
 	]:
 		RetrowaveTheme.style_nav_button(btn)
 	RetrowaveTheme.style_primary_button(production_button)
+	RetrowaveTheme.style_primary_button(leaders_button)
 	for btn in [save_button, load_button, settings_button, help_button, pause_button]:
 		RetrowaveTheme.style_secondary_button(btn)
 
@@ -72,6 +75,7 @@ func _connect_buttons() -> void:
 	speed4_button.pressed.connect(func() -> void: _set_game_speed(4))
 
 	production_button.pressed.connect(_on_production_pressed)
+	leaders_button.pressed.connect(_on_leaders_pressed)
 	technology_button.pressed.connect(_on_technology_pressed)
 	diplomacy_button.pressed.connect(_on_diplomacy_pressed)
 	agents_button.pressed.connect(_on_agents_pressed)
@@ -125,22 +129,27 @@ func _update_resources() -> void:
 
 
 func _on_production_pressed() -> void:
-	var existing := get_tree().root.get_node_or_null("ProductionAssignmentScreen")
-	if existing != null:
-		existing.queue_free()
-		return
+	_close_screen("LeaderAssignmentScreen")
+	_toggle_screen(
+		"ProductionAssignmentScreen",
+		"res://scenes/ui/ProductionAssignmentScreen.tscn",
+		func(scene: Node) -> void:
+			var screen := scene as ProductionAssignmentScreen
+			if screen != null:
+				screen.country_tag = player_country_tag
+	)
 
-	var scene: PackedScene = load("res://scenes/ui/ProductionAssignmentScreen.tscn")
-	if scene == null:
-		push_warning("ProductionAssignmentScreen.tscn not found")
-		return
 
-	var screen: ProductionAssignmentScreen = scene.instantiate() as ProductionAssignmentScreen
-	if screen == null:
-		return
-	screen.country_tag = player_country_tag
-	screen.name = "ProductionAssignmentScreen"
-	get_tree().root.add_child(screen)
+func _on_leaders_pressed() -> void:
+	_close_screen("ProductionAssignmentScreen")
+	_toggle_screen(
+		"LeaderAssignmentScreen",
+		"res://scenes/ui/LeaderAssignmentScreen.tscn",
+		func(scene: Node) -> void:
+			var screen := scene as LeaderAssignmentScreen
+			if screen != null:
+				screen.country_tag = player_country_tag
+	)
 
 
 func _on_technology_pressed() -> void:
@@ -156,9 +165,33 @@ func _on_agents_pressed() -> void:
 
 
 func _on_map_pressed() -> void:
-	var existing := get_tree().root.get_node_or_null("ProductionAssignmentScreen")
+	_close_screen("ProductionAssignmentScreen")
+	_close_screen("LeaderAssignmentScreen")
+
+
+func _close_screen(screen_name: String) -> void:
+	var existing := get_tree().root.get_node_or_null(screen_name)
 	if existing != null:
 		existing.queue_free()
+
+
+func _toggle_screen(screen_name: String, scene_path: String, configure: Callable) -> void:
+	var existing := get_tree().root.get_node_or_null(screen_name)
+	if existing != null:
+		existing.queue_free()
+		return
+
+	var packed: PackedScene = load(scene_path)
+	if packed == null:
+		push_warning("%s not found at %s" % [screen_name, scene_path])
+		return
+
+	var scene: Node = packed.instantiate()
+	if scene == null:
+		return
+	configure.call(scene)
+	scene.name = screen_name
+	get_tree().root.add_child(scene)
 
 
 func _on_save_pressed() -> void:
