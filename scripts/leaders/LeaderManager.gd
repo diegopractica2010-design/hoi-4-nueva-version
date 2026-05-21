@@ -20,9 +20,13 @@ const NATIONAL_POSITION_CHANGE_COST: Dictionary = {
 	"prestige": 3.0,
 }
 
-const TRAITS_PATH := "res://data/leaders/leader_traits.json"
+const TRAITS_PATH := "res://data/leaders/traits.json"
+const LEGACY_TRAITS_PATH := "res://data/leaders/leader_traits.json"
 const HISTORICAL_LEADERS_1936_PATH := "res://data/leaders/historical_leaders_1936.json"
 const MAX_SKILL := 10
+const MAX_TRAITS_PER_LEADER := 6
+const MAX_LEGENDARY_TRAITS := 2
+const RARITY_LEGENDARY := "legendary"
 
 var leaders: Dictionary = {}  # leader_id -> Leader
 var formations: Dictionary = {}  # formation_id -> Formation
@@ -411,6 +415,7 @@ func get_leader_summary(leader_id: String) -> Dictionary:
 		"logistics_skill": leader.logistics_skill,
 		"planning_skill": leader.planning_skill,
 		"traits": leader.traits.duplicate(),
+		"trait_levels": leader.trait_levels.duplicate(),
 		"experience": leader.experience,
 		"battles_fought": leader.battles_fought,
 		"is_injured": leader.is_injured,
@@ -570,14 +575,13 @@ func award_battle_experience(leader_id: String, amount: int = 25) -> void:
 
 func _check_for_trait_gain(leader: Leader) -> void:
 	if leader.battles_fought >= 15 and not leader.has_trait("logistics_wizard"):
-		if randf() < 0.25:
-			leader.add_trait("logistics_wizard", 1)
+		if randf() < 0.25 and try_add_trait_to_leader(leader, "logistics_wizard", 1):
 			print("%s has gained the trait: Logistics Wizard!" % leader.name)
 
 	if leader.battles_fought >= 25 and randf() < 0.15:
 		if not leader.has_trait("desert_fox") and randf() < 0.3:
-			leader.add_trait("desert_fox", 1)
-			print("%s has gained the trait: Desert Fox!" % leader.name)
+			if try_add_trait_to_leader(leader, "desert_fox", 1):
+				print("%s has gained the trait: Desert Fox!" % leader.name)
 
 
 func handle_injury_or_capture(leader_id: String) -> void:
@@ -625,16 +629,136 @@ func get_trait_definition(trait_id: String) -> Dictionary:
 	return {}
 
 
+func get_trait_max_level(trait_id: String) -> int:
+	var def := get_trait_definition(trait_id)
+	if def.is_empty():
+		return 1
+	return maxi(int(def.get("max_level", 1)), 1)
+
+
+func get_trait_rarity(trait_id: String) -> String:
+	var def := get_trait_definition(trait_id)
+	return str(def.get("rarity", "common"))
+
+
+func get_trait_effects_at_level(trait_id: String, level: int) -> Dictionary:
+	var def := get_trait_definition(trait_id)
+	if def.is_empty():
+		return {}
+	var by_level: Variant = def.get("effects_by_level", {})
+	if typeof(by_level) != TYPE_DICTIONARY:
+		return {}
+	var clamped_level := clampi(level, 1, get_trait_max_level(trait_id))
+	var level_key := str(clamped_level)
+	if not (by_level as Dictionary).has(level_key):
+		return {}
+	var effects: Variant = (by_level as Dictionary)[level_key]
+	if typeof(effects) != TYPE_DICTIONARY:
+		return {}
+	return (effects as Dictionary).duplicate()
+
+
+func get_leader_trait_effects(leader: Leader) -> Dictionary:
+	if leader == null:
+		return {}
+	var combined: Dictionary = {}
+	for trait_id in leader.traits:
+		var level := leader.get_trait_level(trait_id)
+		var effects := get_trait_effects_at_level(trait_id, level)
+		for effect_key in effects.keys():
+			var key := str(effect_key)
+			combined[key] = float(combined.get(key, 0.0)) + float(effects[effect_key])
+	return combined
+
+
+func count_traits_by_rarity(leader: Leader, rarity: String) -> int:
+	var count := 0
+	for trait_id in leader.traits:
+		if get_trait_rarity(trait_id) == rarity:
+			count += 1
+	return count
+
+
+func traits_conflict(leader: Leader, trait_id: String) -> bool:
+	var def := get_trait_definition(trait_id)
+	if def.is_empty():
+		return false
+	var exclusive: Variant = def.get("exclusive_with", [])
+	if typeof(exclusive) != TYPE_ARRAY:
+		return false
+	for other_id in exclusive as Array:
+		if leader.has_trait(str(other_id)):
+			return true
+	for existing_id in leader.traits:
+		var existing_def := get_trait_definition(existing_id)
+		var existing_exclusive: Variant = existing_def.get("exclusive_with", [])
+		if typeof(existing_exclusive) == TYPE_ARRAY:
+			for blocked_id in existing_exclusive as Array:
+				if str(blocked_id) == trait_id:
+					return true
+	return false
+
+
+func can_add_trait(leader: Leader, trait_id: String, level: int = 1) -> bool:
+	if leader == null or trait_id.is_empty():
+		return false
+	if get_trait_definition(trait_id).is_empty():
+		push_warning("LeaderManager: unknown trait '%s'" % trait_id)
+		return false
+	if traits_conflict(leader, trait_id):
+		return false
+	if leader.has_trait(trait_id):
+		var next_level := leader.get_trait_level(trait_id) + level
+		if next_level > get_trait_max_level(trait_id):
+			return false
+		return true
+	if leader.traits.size() >= MAX_TRAITS_PER_LEADER:
+		return false
+	if get_trait_rarity(trait_id) == RARITY_LEGENDARY:
+		if count_traits_by_rarity(leader, RARITY_LEGENDARY) >= MAX_LEGENDARY_TRAITS:
+			return false
+	return true
+
+
+func try_add_trait_to_leader(leader: Leader, trait_id: String, level: int = 1) -> bool:
+	if not can_add_trait(leader, trait_id, level):
+		return false
+	if leader.has_trait(trait_id):
+		var new_level := mini(
+			leader.get_trait_level(trait_id) + level,
+			get_trait_max_level(trait_id)
+		)
+		leader.trait_levels[trait_id] = new_level
+	else:
+		leader.add_trait_unchecked(trait_id, clampi(level, 1, get_trait_max_level(trait_id)))
+	invalidate_leader_cache(leader.country_tag)
+	return true
+
+
+func level_trait(leader_id: String, trait_id: String, levels: int = 1) -> bool:
+	var leader: Leader = leaders.get(leader_id) as Leader
+	if leader == null:
+		return false
+	return try_add_trait_to_leader(leader, trait_id, levels)
+
+
 func _load_trait_definitions() -> void:
-	if not ResourceLoader.exists(TRAITS_PATH):
-		return
-	var file := FileAccess.open(TRAITS_PATH, FileAccess.READ)
+	trait_definitions = _read_trait_json_file(TRAITS_PATH)
+	if trait_definitions.is_empty():
+		trait_definitions = _read_trait_json_file(LEGACY_TRAITS_PATH)
+
+
+func _read_trait_json_file(path: String) -> Dictionary:
+	if not ResourceLoader.exists(path):
+		return {}
+	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		return
+		return {}
 	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	file.close()
-	if typeof(parsed) == TYPE_DICTIONARY:
-		trait_definitions = parsed
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return {}
+	return parsed as Dictionary
 
 
 func load_leaders_from_json(path: String) -> int:
@@ -683,8 +807,13 @@ func _leader_from_dict(data: Dictionary) -> Leader:
 	leader.is_captured = bool(data.get("is_captured", false))
 	leader.assigned_army_id = str(data.get("assigned_army_id", ""))
 
-	var traits_block: Variant = data.get("traits", [])
-	if typeof(traits_block) == TYPE_ARRAY:
-		for trait_id in traits_block as Array:
-			leader.add_trait(str(trait_id))
+	var trait_levels_block: Variant = data.get("trait_levels", {})
+	if typeof(trait_levels_block) == TYPE_DICTIONARY:
+		for trait_key in (trait_levels_block as Dictionary).keys():
+			leader.add_trait_unchecked(str(trait_key), int((trait_levels_block as Dictionary)[trait_key]))
+	else:
+		var traits_block: Variant = data.get("traits", [])
+		if typeof(traits_block) == TYPE_ARRAY:
+			for trait_id in traits_block as Array:
+				leader.add_trait_unchecked(str(trait_id), 1)
 	return leader

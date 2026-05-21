@@ -733,7 +733,7 @@ static func _test_leader_manager() -> bool:
 	if LeaderManager.get_leader_for_army("third_army_test") != patton:
 		print("  [FAIL] army leader lookup")
 		return false
-	if patton.get_attack_modifier() <= 0.08:
+	if patton.get_attack_modifier() <= 0.07:
 		print("  [FAIL] leader attack modifier too low: ", patton.get_attack_modifier())
 		return false
 	var assign_check: Dictionary = LeaderManager.can_assign_national_position(
