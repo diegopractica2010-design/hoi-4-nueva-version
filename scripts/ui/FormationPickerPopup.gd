@@ -20,6 +20,7 @@ var selected_formation_id: String = ""
 
 
 func _ready() -> void:
+	visible = false
 	close_requested.connect(_on_cancel_pressed)
 	RetrowaveTheme.style_popup_root(self)
 	RetrowaveTheme.style_title(title_label, RetrowaveTheme.CYAN)
@@ -37,6 +38,14 @@ func _ready() -> void:
 
 	_update_title()
 	_load_available_formations()
+	call_deferred("_present_popup")
+
+
+func _present_popup() -> void:
+	if not is_inside_tree():
+		return
+	popup_centered()
+	visible = true
 
 
 func _update_title() -> void:

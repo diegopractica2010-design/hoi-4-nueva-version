@@ -36,7 +36,6 @@ extends DraggablePanel
 @onready var detail_label: Label = $MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailLabel
 
 var current_data: LeaderScreenData
-var _pending_position_key: String = ""
 
 const NATIONAL_POSITIONS: Array[Dictionary] = [
 	{"key": LeaderManager.POSITION_CHIEF_OF_ARMY, "label": "Chief of Army"},
@@ -189,32 +188,13 @@ func _create_national_position_card(
 
 
 func _on_change_national_position(position_key: String) -> void:
-	_pending_position_key = position_key
 	var display_name := _position_display_name(position_key)
-	_open_leader_picker(
-		"Assign %s" % display_name,
-		position_key,
-		_on_national_position_leader_picked,
+	LeaderPickerPopup.open_picker(
+		func(picker: LeaderPickerPopup) -> void:
+			picker.country_tag = country_tag
+			picker.position_key = position_key
+			picker.dialog_title = "Assign %s" % display_name,
 	)
-
-
-func _on_national_position_leader_picked(leader_id: String) -> void:
-	if _pending_position_key.is_empty():
-		return
-
-	var check: Dictionary = LeaderManager.can_assign_national_position(
-		country_tag,
-		_pending_position_key,
-		leader_id,
-	)
-	if not bool(check.get("can_assign", false)):
-		push_warning("Cannot assign position: %s" % check.get("reason", "unknown"))
-		_pending_position_key = ""
-		return
-
-	if LeaderManager.set_country_position(country_tag, _pending_position_key, leader_id, false):
-		refresh_screen()
-	_pending_position_key = ""
 
 
 # =====================
@@ -356,30 +336,9 @@ func _on_assign_pressed(summary: Dictionary) -> void:
 	picker.leader_id = leader_id
 	picker.country_tag = country_tag
 	picker.leader_name = str(summary.get("name", ""))
-	get_tree().root.add_child(picker)
-	picker.popup_centered()
-
-
-func _open_leader_picker(
-	title_text: String,
-	position_key: String,
-	on_selected: Callable,
-) -> void:
-	var scene: PackedScene = load("res://scenes/ui/LeaderPickerPopup.tscn")
-	if scene == null:
-		push_warning("LeaderPickerPopup.tscn not found")
-		return
-
-	var picker: LeaderPickerPopup = scene.instantiate() as LeaderPickerPopup
-	if picker == null:
-		return
-
-	picker.dialog_title = title_text
-	picker.country_tag = country_tag
-	picker.position_key = position_key
-	picker.leader_selected.connect(on_selected)
-	get_tree().root.add_child(picker)
-	picker.popup_centered()
+	var tree := get_tree()
+	if tree != null and tree.root != null:
+		tree.root.add_child(picker)
 
 
 func _position_display_name(position_key: String) -> String:

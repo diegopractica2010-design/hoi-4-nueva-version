@@ -35,6 +35,54 @@
       "logistics_skill": 6,
       "planning_skill": 7,
       "traits": ["arctic_bear", "cautious"]
+    },
+    {
+      "leader_id": "usa_patton",
+      "name": "George S. Patton",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 8,
+      "defense_skill": 4,
+      "organization_skill": 5,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "traits": ["aggressive", "logistics_wizard"]
+    },
+    {
+      "leader_id": "usa_eisenhower",
+      "name": "Dwight D. Eisenhower",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 8,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "traits": ["logistics_wizard", "cautious"]
+    },
+    {
+      "leader_id": "usa_nimitz",
+      "name": "Chester W. Nimitz",
+      "country_tag": "USA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "traits": ["sea_wolf", "cautious"]
+    },
+    {
+      "leader_id": "usa_arnold",
+      "name": "Henry H. Arnold",
+      "country_tag": "USA",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "traits": ["aggressive"]
     }
   ]
 }
