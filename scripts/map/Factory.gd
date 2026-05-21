@@ -36,15 +36,15 @@ static var _rules_loaded: bool = false
 
 
 static func make_id(p_province_id: int, slot: int) -> int:
-	return p_province_id * ID_SLOT_SCALE + slot
+	return p_province_id * 100 + slot
 
 
 static func province_from_id(f_id: int) -> int:
-	return f_id // ID_SLOT_SCALE
+	return int(f_id / 100)
 
 
 static func slot_from_id(f_id: int) -> int:
-	return f_id % ID_SLOT_SCALE
+	return f_id % 100
 
 
 func apply_damage(amount: float) -> void:
