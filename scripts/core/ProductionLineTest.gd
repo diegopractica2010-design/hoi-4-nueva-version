@@ -768,7 +768,7 @@ static func _test_leader_manager() -> bool:
 
 static func _test_assignment_screen_backends() -> bool:
 	var pm := _get_production_manager()
-	var fm := Engine.get_main_loop().root.get_node_or_null("/root/FactoryManager") as FactoryManager
+	var fm := Engine.get_main_loop().root.get_node_or_null("/root/FactoryManager")
 	var lm := Engine.get_main_loop().root.get_node_or_null("/root/LeaderManager")
 	if pm == null or fm == null or lm == null:
 		print("  [SKIP] assignment screen backends (autoloads not available)")
@@ -879,7 +879,7 @@ static func _test_assignment_screen_backends() -> bool:
 	return true
 
 
-static func _cleanup_test_factory(fm: FactoryManager, factory_id: int) -> void:
+static func _cleanup_test_factory(fm: Node, factory_id: int) -> void:
 	fm.factories.erase(factory_id)
 	var pid := Factory.province_from_id(factory_id)
 	if fm.province_to_factories.has(pid):

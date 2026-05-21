@@ -481,11 +481,11 @@ func _sync_factory_production_design() -> void:
 		factory.sync_production_design(design_id)
 
 
-func _factory_manager() -> FactoryManager:
+func _factory_manager() -> Node:
 	var tree := Engine.get_main_loop()
 	if tree == null:
 		return null
-	return tree.root.get_node_or_null("/root/FactoryManager") as FactoryManager
+	return tree.root.get_node_or_null("/root/FactoryManager")
 
 
 func get_daily_resource_cost() -> Dictionary:

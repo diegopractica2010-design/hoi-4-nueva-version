@@ -54,7 +54,7 @@ func _configure_top_info_bar(player_tag: String) -> void:
 
 
 func _wire_factory_province_lookup() -> void:
-	var fm := get_node_or_null("/root/FactoryManager") as FactoryManager
+	var fm := get_node_or_null("/root/FactoryManager")
 	if fm == null or loader == null:
 		return
 	fm.set_province_lookup(func(province_id: int) -> Province:

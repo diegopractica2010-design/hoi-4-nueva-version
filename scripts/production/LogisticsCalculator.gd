@@ -121,11 +121,11 @@ static func _compute_supply_demand(
 	rules: Dictionary,
 ) -> float:
 	var base_supply := template.get_stat("supply_need", 0.0)
-	var reference := float(rules.get("reference_cargo_tons", 10000.0))
+	var reference_cargo := float(rules.get("reference_cargo_tons", 10000.0))
 	var per_ton := float(rules.get("supply_need_per_cargo_ton", 0.0008))
 	var cargo_component := 0.0
-	if effective_cargo > 0.0 and reference > 0.0:
-		cargo_component = (effective_cargo / reference) * reference * per_ton
+	if effective_cargo > 0.0 and reference_cargo > 0.0:
+		cargo_component = (effective_cargo / reference_cargo) * reference_cargo * per_ton
 
 	var overhead := float(rules.get("armed_supply_overhead_per_weapon_slot", 0.06))
 	var weapon_slots := _count_weapon_slots(loadout)

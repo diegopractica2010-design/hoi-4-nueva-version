@@ -1,6 +1,6 @@
 extends Node
 
-@onready var factory_manager: FactoryManager = get_node_or_null("/root/FactoryManager")
+@onready var factory_manager: Node = get_node_or_null("/root/FactoryManager")
 
 ## National production coordinator: multiple lines, design families, focus/doctrine modifiers.
 

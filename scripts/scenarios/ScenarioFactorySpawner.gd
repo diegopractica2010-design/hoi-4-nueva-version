@@ -167,8 +167,8 @@ func _province_has_port(
 	return province_id in FALLBACK_PORT_PROVINCES
 
 
-func _factory_manager() -> FactoryManager:
+func _factory_manager() -> Node:
 	var tree := Engine.get_main_loop()
 	if tree == null:
 		return null
-	return tree.root.get_node_or_null("/root/FactoryManager") as FactoryManager
+	return tree.root.get_node_or_null("/root/FactoryManager")

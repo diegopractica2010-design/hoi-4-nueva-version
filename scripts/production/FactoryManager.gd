@@ -1,5 +1,5 @@
 # scripts/production/FactoryManager.gd
-class_name FactoryManager
+## Registered as autoload "FactoryManager" — do not add class_name (conflicts with singleton).
 extends Node
 
 signal factory_captured(factory_id: int, old_owner: String, new_owner: String)

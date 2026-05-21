@@ -53,5 +53,5 @@ func capture_all_factories(new_owner: String, is_annexed: bool = false) -> void:
 			mgr.factory_captured.emit(f.factory_id, old, new_owner)
 
 
-func _factory_manager() -> FactoryManager:
-	return get_node_or_null("/root/FactoryManager") as FactoryManager
+func _factory_manager() -> Node:
+	return get_node_or_null("/root/FactoryManager")
