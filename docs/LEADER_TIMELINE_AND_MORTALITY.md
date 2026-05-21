@@ -46,12 +46,19 @@ CombatResolver.resolve_combat_experience(attacker_id, defender_id, 1.0)
 CombatResolver.resolve_formation_destroyed(formation_id)
 ```
 
-### Retirement flow
+### Retirement flow (Phase 3 UI)
 
-1. Retirement roll → leader added to `pending_retirements`, `leader_retirement_offered` signal.
-2. `resolve_retirement(leader_id, let_retire, ask_to_stay)`:
-   - **Retire** — leader removed with honors.
-   - **Ask to stay** — ~55% chance they remain; `stayed_past_retirement` increases next year’s risk.
+1. Retirement roll → `pending_retirements` + `leader_retirement_offered` signal.
+2. **LeaderEventUI** opens `RetirementOfferPopup` with two choices:
+   - **Retire with honors** — +3 prestige, +2 unity (per country stub).
+   - **Your country still needs you…** — ~55% chance they stay one more year (`stayed_past_retirement`).
+3. News toasts (bottom-right) for death, retirement, capture, and new commander introductions.
+
+```gdscript
+LeaderManager.resolve_retirement(leader_id, true, false)   # honors retire
+LeaderManager.resolve_retirement(leader_id, false, true)  # ask to stay
+LeaderEventUI.post_news("Title", "Body", "retirement")
+```
 
 ### API
 

@@ -56,6 +56,8 @@ const COMBAT_DEATH_CHANCE_PER_BATTLE := 0.0003
 const FORMATION_DESTROYED_FATE_CHANCE := 0.30
 ## Share of destroyed-formation fate rolls that kill rather than capture.
 const FORMATION_DESTROYED_DEATH_SHARE := 0.45
+const RETIREMENT_HONORS_PRESTIGE := 3.0
+const RETIREMENT_HONORS_UNITY := 2.0
 
 const AGE_MORTALITY_BRACKETS: Array[Dictionary] = [
 	{"max_age": 50, "death": 0.003, "retire": 0.005},
@@ -75,6 +77,9 @@ var country_positions: Dictionary = {}  # country_tag -> { position_id -> leader
 var trait_definitions: Dictionary = {}
 var current_year: int = 1936
 var _historical_leaders_source_path: String = ""
+## Per-country morale bonuses from honored retirements (stub until national UI exists).
+var national_prestige: Dictionary = {}  # country_tag -> float
+var national_unity: Dictionary = {}  # country_tag -> float
 
 # === Screen data caching ===
 var _leader_screen_cache: Dictionary = {}  # country_tag -> LeaderScreenData
@@ -656,6 +661,7 @@ func resolve_retirement(leader_id: String, let_retire: bool, ask_to_stay: bool =
 		return false
 
 	if let_retire:
+		apply_retirement_honors(leader.country_tag)
 		_remove_leader(leader_id, "retirement", false)
 		leader_retired.emit(leader_id)
 		return true
@@ -671,9 +677,29 @@ func resolve_retirement(leader_id: String, let_retire: bool, ask_to_stay: bool =
 			print("%s agrees to serve one more year." % leader.name)
 			return true
 
+	apply_retirement_honors(leader.country_tag)
 	_remove_leader(leader_id, "retirement", false)
 	leader_retired.emit(leader_id)
 	return true
+
+
+func apply_retirement_honors(country_tag: String) -> void:
+	if country_tag.is_empty():
+		return
+	national_prestige[country_tag] = (
+		float(national_prestige.get(country_tag, 50.0)) + RETIREMENT_HONORS_PRESTIGE
+	)
+	national_unity[country_tag] = (
+		float(national_unity.get(country_tag, 50.0)) + RETIREMENT_HONORS_UNITY
+	)
+
+
+func get_national_prestige(country_tag: String) -> float:
+	return float(national_prestige.get(country_tag, 50.0))
+
+
+func get_national_unity(country_tag: String) -> float:
+	return float(national_unity.get(country_tag, 50.0))
 
 
 func advance_game_year() -> Dictionary:
