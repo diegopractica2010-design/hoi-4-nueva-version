@@ -42,7 +42,8 @@ static func make_id(p_province_id: int, slot: int) -> int:
 
 
 static func province_from_id(f_id: int) -> int:
-	return f_id // ID_SLOT_SCALE
+	var scale := float(ID_SLOT_SCALE)
+	return int(float(f_id) / scale)
 
 
 static func slot_from_id(f_id: int) -> int:
