@@ -126,38 +126,25 @@ func _try_show_next_retirement() -> void:
 	if popup == null:
 		return
 	_active_retirement_popup = popup
-	popup.retirement_resolved.connect(_on_retirement_popup_resolved)
+	popup.retirement_completed.connect(_on_retirement_popup_completed)
 
 
-func _on_retirement_popup_resolved(
-	resolved_leader_id: String,
-	let_retire: bool,
-	asked_to_stay: bool,
-) -> void:
+func _on_retirement_popup_completed(resolved_leader_id: String, outcome: String) -> void:
 	_active_retirement_popup = null
 	var leader_name := _leader_display_name(resolved_leader_id)
 
-	if let_retire:
-		LeaderManager.resolve_retirement(resolved_leader_id, true, false)
-		post_news(
-			"%s Retires" % leader_name,
-			"%s has retired with honors. The nation gains prestige."
-			% leader_name,
-			"retirement",
-		)
-	elif asked_to_stay:
-		var stayed := LeaderManager.resolve_retirement(resolved_leader_id, false, true)
-		if stayed:
+	match outcome:
+		"honors", "retired_anyway":
 			post_news(
-				"%s Stays in Command" % leader_name,
-				"\"Your country still needs you…\" %s will remain for one more year."
+				"%s Retires" % leader_name,
+				"%s has retired with honors. The nation gains prestige."
 				% leader_name,
 				"retirement",
 			)
-		else:
+		"stayed":
 			post_news(
-				"%s Retires" % leader_name,
-				"%s declined to extend their service and has retired."
+				"%s Stays in Command" % leader_name,
+				"\"Your country still needs you…\" %s will remain for one more year."
 				% leader_name,
 				"retirement",
 			)

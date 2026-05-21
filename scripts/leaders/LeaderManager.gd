@@ -89,6 +89,8 @@ func _ready() -> void:
 	_load_trait_definitions()
 	set_current_year(1936)
 	load_historical_leaders(HISTORICAL_LEADERS_1936_PATH, 1936)
+	# Retirement popups + news toasts: LeaderEventUI autoload listens to
+	# leader_retirement_offered and related signals.
 
 
 func register_leader(leader: Leader) -> void:
@@ -667,7 +669,7 @@ func resolve_retirement(leader_id: String, let_retire: bool, ask_to_stay: bool =
 		return true
 
 	if ask_to_stay:
-		var agree_chance := 0.55
+		var agree_chance := 0.65
 		if leader.has_trait("charismatic"):
 			agree_chance += 0.1
 		if leader.has_trait("iron_will"):

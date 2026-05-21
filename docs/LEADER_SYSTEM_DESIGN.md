@@ -219,6 +219,48 @@ Personality traits (Charismatic, Visionary, Arrogant, etc.) are usually set at g
 
 ---
 
+## 7b. Retirement & Mortality Flow (Implemented)
+
+The live game uses a **probability chart**, not fixed historical death dates. Leaders are gated by `start_year` / optional `end_year` and held in `leader_pool` until introduced.
+
+### Yearly checks (`check_leader_mortality`)
+
+| Age | Death / year | Retirement / year |
+|-----|--------------|-------------------|
+| Under 50 | 0.3% | 0.5% |
+| 50–59 | 0.8% | 2.0% |
+| 60–64 | 1.8% | 5.0% |
+| 65–69 | 3.5% | 12.0% |
+| 70–74 | 6.5% | 22.0% |
+| 75–79 | 11.0% | 30.0% |
+| 80+ | 18%+ | 35% |
+
+Modifiers: duty post (`training` / `rear_area`), traits (`iron_will`, `reckless`, etc.), high experience, injury, `stayed_past_retirement`.
+
+### Combat (separate from yearly natural death)
+
+- **0.03%** leader death per battle while formation survives.
+- **~30%** death or capture when the formation is destroyed (~45% of those outcomes are death).
+
+### Retirement player choice (`RetirementOfferPopup`)
+
+When a leader fails the yearly retirement roll, the player sees:
+
+- **Retire with Honors** — leader leaves; nation gains prestige/unity stub bonuses.
+- **Your Country Still Needs You…** — ~65% chance they serve one more year; refusal retires them with honors; staying increases next year’s personal risk.
+
+Signals and UI: `LeaderEventUI` autoload, `leader_retirement_offered`, news toasts. See `docs/LEADER_TIMELINE_AND_MORTALITY.md`.
+
+### Replacement (planned)
+
+Hybrid model: automatic interim commander, then player picks a permanent replacement from eligible leaders (HOI4-style, type-filtered).
+
+### Officer Training Program (planned)
+
+National position: assign a veteran to train officers — bonus XP for new leaders, chance to pass one trait at level I to mentees.
+
+---
+
 ## 8. Integration with Existing Systems
 
 Traits should modify real gameplay systems you already have:

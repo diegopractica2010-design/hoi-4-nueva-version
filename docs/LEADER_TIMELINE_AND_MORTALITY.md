@@ -48,16 +48,24 @@ CombatResolver.resolve_formation_destroyed(formation_id)
 
 ### Retirement flow (Phase 3 UI)
 
-1. Retirement roll → `pending_retirements` + `leader_retirement_offered` signal.
-2. **LeaderEventUI** opens `RetirementOfferPopup` with two choices:
-   - **Retire with honors** — +3 prestige, +2 unity (per country stub).
-   - **Your country still needs you…** — ~55% chance they stay one more year (`stayed_past_retirement`).
-3. News toasts (bottom-right) for death, retirement, capture, and new commander introductions.
+1. Yearly retirement roll → leader added to `pending_retirements`.
+2. `leader_retirement_offered` signal → **LeaderEventUI** opens `RetirementOfferPopup`.
+3. Player chooses (window cannot be dismissed without a choice):
+
+| Button | Effect |
+|--------|--------|
+| **Retire with Honors** | `resolve_retirement(id, true, false)` — +3 prestige, +2 unity |
+| **Your Country Still Needs You…** | `resolve_retirement(id, false, true)` — ~65% agree to stay one year; if they refuse, honored retirement |
+
+4. If they stay: `stayed_past_retirement = true` (higher death/retirement risk next yearly check).
+5. **LeaderEventUI** posts a news toast (bottom-right). Same toasts for death, capture, and new commanders.
+
+**Wiring:** `LeaderEventUI` autoload connects to `LeaderManager` signals in `_ready()`. No manual hookup in `ScenarioLoader` required.
 
 ```gdscript
-LeaderManager.resolve_retirement(leader_id, true, false)   # honors retire
-LeaderManager.resolve_retirement(leader_id, false, true)  # ask to stay
-LeaderEventUI.post_news("Title", "Body", "retirement")
+# Debug: force a retirement offer
+LeaderManager.pending_retirements.append("eng_haig")
+LeaderManager.leader_retirement_offered.emit("eng_haig")
 ```
 
 ### API
@@ -72,6 +80,6 @@ LeaderManager.introduce_eligible_leaders_for_year(1940)
 
 ## Next phases
 
-- Phase 3: UI for retirement offers and “Your country still needs you…”
-- Phase 4: Officer Training Program position, replacement picker
-- Phase 5: Trait mentoring for generated officers
+- Phase 4: Officer Training national position + mentoring / trait inheritance
+- Phase 4: Leader replacement picker after death/retirement (auto fallback + player choice)
+- Phase 5: Full news feed panel; XP earn/spend UI for trait leveling

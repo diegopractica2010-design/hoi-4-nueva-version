@@ -2,38 +2,49 @@
 class_name RetirementOfferPopup
 extends Window
 
-signal retirement_resolved(leader_id: String, let_retire: bool, asked_to_stay: bool)
+## Emitted after the player chooses and LeaderManager.resolve_retirement runs.
+## outcome: "honors" | "stayed" | "retired_anyway"
+signal retirement_completed(leader_id: String, outcome: String)
 
 @export var leader_id: String = ""
 
 @onready var title_label: Label = $MarginContainer/VBoxContainer/TitleLabel
-@onready var leader_name_label: Label = $MarginContainer/VBoxContainer/LeaderNameLabel
-@onready var body_label: Label = $MarginContainer/VBoxContainer/BodyLabel
-@onready var honors_label: Label = $MarginContainer/VBoxContainer/HonorsLabel
-@onready var stay_button: Button = $MarginContainer/VBoxContainer/ButtonRow/StayButton
-@onready var retire_button: Button = $MarginContainer/VBoxContainer/ButtonRow/RetireButton
+@onready var leader_info_label: Label = $MarginContainer/VBoxContainer/LeaderInfoLabel
+@onready var description_label: Label = $MarginContainer/VBoxContainer/DescriptionLabel
+@onready var retire_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/RetireButton
+@onready var stay_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/StayButton
+@onready var note_label: Label = $MarginContainer/VBoxContainer/NoteLabel
+
+var leader: Leader
 
 
 func _ready() -> void:
+	if leader_id.is_empty():
+		queue_free()
+		return
+
+	leader = LeaderManager.get_leader(leader_id)
+	if leader == null:
+		queue_free()
+		return
+
 	visible = false
-	unresizable = true
 	close_requested.connect(_on_close_blocked)
 	RetrowaveTheme.style_popup_root(self)
 	RetrowaveTheme.style_title(title_label, RetrowaveTheme.MAGENTA)
-	RetrowaveTheme.style_column_header(leader_name_label)
-	RetrowaveTheme.style_body_label(body_label)
-	RetrowaveTheme.style_body_label(honors_label)
-	RetrowaveTheme.style_primary_button(stay_button)
+	RetrowaveTheme.style_column_header(leader_info_label)
+	RetrowaveTheme.style_body_label(description_label)
+	RetrowaveTheme.style_body_label(note_label)
 	RetrowaveTheme.style_secondary_button(retire_button)
+	RetrowaveTheme.style_primary_button(stay_button)
 
-	stay_button.pressed.connect(_on_stay_pressed)
+	_setup_ui()
 	retire_button.pressed.connect(_on_retire_pressed)
-	_populate_from_leader()
+	stay_button.pressed.connect(_on_stay_pressed)
 	call_deferred("_present_popup")
 
 
 func _on_close_blocked() -> void:
-	# Require an explicit choice — retirement is pending until resolved.
 	pass
 
 
@@ -44,56 +55,45 @@ func _present_popup() -> void:
 	visible = true
 
 
-func _populate_from_leader() -> void:
-	var summary := LeaderManager.get_leader_summary(leader_id)
-	if summary.is_empty():
-		leader_name_label.text = "Unknown Commander"
-		body_label.text = "This leader is considering retirement."
-		return
+func _setup_ui() -> void:
+	title = "Leadership Transition"
+	title_label.text = "A Respected Commander Considers Retirement"
 
-	var leader_name: String = str(summary.get("name", "Unknown"))
-	var age := int(summary.get("age", 0))
-	var xp := int(summary.get("experience", 0))
-	var battles := int(summary.get("battles_fought", 0))
-	leader_name_label.text = leader_name
-	title = "%s — Retirement" % leader_name
-	title_label.text = "Considering Retirement"
+	var age := LeaderManager.get_leader_age(leader)
+	var role_name := leader.leader_type.replace("_", " ").capitalize()
+	leader_info_label.text = "%s (%d) — %s" % [leader.name, age, role_name]
 
-	var trait_lines: PackedStringArray = []
-	for entry in summary.get("trait_display", []) as Array:
-		if typeof(entry) != TYPE_DICTIONARY:
-			continue
-		var row := entry as Dictionary
-		trait_lines.append(
-			"%s %s" % [row.get("name", ""), row.get("roman", "")]
-		)
-
-	body_label.text = (
-		"%s has served with distinction and is considering stepping down.\n\n"
-		% leader_name
-		+ "Age: %d | Experience: %d | Battles: %d\n" % [age, xp, battles]
-		+ ("Traits: %s" % ", ".join(trait_lines) if not trait_lines.is_empty() else "")
+	description_label.text = (
+		"%s has served with distinction. "
+		% leader.name
+		+ "They are considering stepping down to spend more time with family and reflect on their legacy."
 	)
 
-	honors_label.text = (
-		"Retire with honors: +%.0f prestige, +%.0f national unity."
+	note_label.text = (
+		"Retiring with honors grants +%.0f prestige and +%.0f unity. "
 		% [
 			LeaderManager.RETIREMENT_HONORS_PRESTIGE,
 			LeaderManager.RETIREMENT_HONORS_UNITY,
 		]
+		+ "Asking them to stay may succeed (~65%% chance) but increases strain next year. "
+		+ "Their position will be freed if they leave."
 	)
 
 
 func _on_retire_pressed() -> void:
-	_finish(true, false)
+	LeaderManager.resolve_retirement(leader_id, true, false)
+	retirement_completed.emit(leader_id, "honors")
+	queue_free()
 
 
 func _on_stay_pressed() -> void:
-	_finish(false, true)
-
-
-func _finish(let_retire: bool, asked_to_stay: bool) -> void:
-	retirement_resolved.emit(leader_id, let_retire, asked_to_stay)
+	var stayed := LeaderManager.resolve_retirement(leader_id, false, true)
+	if stayed:
+		print("%s agreed to stay one more year." % leader.name)
+		retirement_completed.emit(leader_id, "stayed")
+	else:
+		print("%s has decided to retire anyway." % leader.name)
+		retirement_completed.emit(leader_id, "retired_anyway")
 	queue_free()
 
 

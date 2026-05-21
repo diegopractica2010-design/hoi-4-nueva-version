@@ -1,22 +1,42 @@
 # Epochs of Ascendancy — TODO / Future Systems
 
+## Leader System — Current Status (May 21, 2026)
+
+**Completed:**
+- Leveled traits (I–III) with rarity + exclusivity (`data/leaders/traits.json`)
+- Historical leaders (1918 + 1936) with `trait_levels`, skills, initiative
+- Timeline gating (`birth_year`, `start_year`, `end_year`) + `leader_pool`
+- Probability-based yearly mortality + retirement (no fixed death dates)
+- Combat death split: **0.03%** per battle / **~30%** death-or-capture on formation destroyed
+- `RetirementOfferPopup` + `LeaderEventUI` news toasts
+- XP gain from combat + spend-to-level traits (basic)
+- Leader Assignment screen with trait levels and detail panel
+
+**Next priorities:**
+- Officer Training national position + mentoring / trait inheritance
+- Leader replacement picker after death/retirement (auto fallback + player choice)
+- Full news feed panel (history beyond toasts)
+- Earned trait triggers (terrain, campaigns)
+- Doctrine/focus-gated trait introductions
+- Field Marshal tier + multi-formation command
+
+---
+
 ## Current Session State (Last Worked On)
 
 **Date:** May 2026
 
 **Recently Completed:**
-- Created `ProductionScreenData` and `LeaderScreenData` resources
-- Added helper methods (`_get_factory_status`, `_get_factory_type`, `_get_skill_tier`, etc.)
-- Refactored `get_production_screen_data()` and `get_leader_screen_data()` for cleanliness
-- Created detailed specs for both Production Assignment Screen and Leader Assignment Screen
-- Updated and organized `TODO.md`
+- Phase A–C leader system: traits, historical rosters, timeline, mortality, combat risk
+- `RetirementOfferPopup` + `LeaderEventUI` autoload
+- 73 WWI + 10 WWII historical commanders with `trait_levels`
 
 **Good Place to Resume:**
-- Implement caching for screen data classes (noted in TODO)
-- Expand `CombatResolver` with more modifiers
-- Begin actual UI scene work for the Production Assignment Screen
+- Officer Training national position
+- Leader replacement picker after death/retirement
+- Wire `resolve_formation_destroyed()` into formation elimination code
 
-**Last Updated:** May 2026
+**Last Updated:** May 21, 2026
 
 ## Core Systems (High Priority)
 
@@ -47,10 +67,10 @@
 ## Leader System
 
 - Proper per-country/culture name lists for generated leaders.
-- Expand negative traits and add trait conflict rules.
-- Deeper integration of terrain-specific trait bonuses into combat.
-- Create Leader Assignment UI flow (view traits, experience, assign to armies/fleets).
-- Promotion paths and special trait earning through long campaigns or achievements.
+- Officer Training Program national position (mentoring, trait pass-down).
+- Replacement picker UI after death/retirement.
+- Earned trait triggers (terrain time, encirclements, etc.).
+- Promotion paths and Field Marshal multi-formation command.
 
 ## Combat System
 

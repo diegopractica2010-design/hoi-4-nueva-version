@@ -3,9 +3,10 @@
 [ext_resource type="Script" path="res://scripts/ui/RetirementOfferPopup.gd" id="1_popup"]
 
 [node name="RetirementOfferPopup" type="Window"]
-title = "Retirement Offer"
+title = "Leadership Transition"
 initial_position = 1
-size = Vector2i(520, 420)
+size = Vector2i(520, 400)
+unresizable = true
 script = ExtResource("1_popup")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -34,34 +35,34 @@ theme_override_constants/separation = 12
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Considering Retirement"
+text = "A Leader Considers Retirement"
 
-[node name="LeaderNameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="LeaderInfoLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Leader Name"
+text = "Commander Name (0) — General"
 
-[node name="BodyLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 autowrap_mode = 3
-text = "This commander is considering retirement."
+text = "Flavor text about retirement."
 
-[node name="HonorsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-autowrap_mode = 3
-text = "Retiring with honors grants national prestige."
-
-[node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="StayButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonRow"]
+[node name="RetireButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Your country still needs you..."
+text = "Retire with Honors"
 
-[node name="RetireButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonRow"]
+[node name="StayButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Retire with honors"
+text = "Your Country Still Needs You…"
+
+[node name="NoteLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Consequences note."
