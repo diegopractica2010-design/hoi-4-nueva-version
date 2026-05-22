@@ -551,7 +551,10 @@ func get_division_final_combat_stats(division_template_id: String, unit_id: Stri
 		var required := template.get_required_equipment(GameData.design_data)
 		shortages = get_unit_shortages(unit_id, required)
 
-	return template.get_final_combat_stats(shortages, GameData.design_data)
+	var stats := template.get_final_combat_stats(shortages, GameData.design_data)
+	if typeof(LeaderManager) != TYPE_NIL and not unit_id.is_empty():
+		stats = LeaderManager.apply_training_path_supply_to_stats(stats, unit_id)
+	return stats
 
 
 func request_equipment_for_unit(unit_id: String, equipment_id: String, amount: int) -> int:
@@ -580,9 +583,21 @@ func auto_reinforce_unit_from_stockpile(unit_id: String, required_equipment: Dic
 	var shortages := get_unit_shortages(unit_id, required_equipment)
 	var fulfilled: Dictionary = {}
 
+	var leader_id := ""
+	if typeof(LeaderManager) != TYPE_NIL:
+		leader_id = LeaderManager.resolve_leader_id_for_formation(unit_id)
+
+	var reinforcement_mult := 1.0
+	if not leader_id.is_empty() and typeof(LeaderManager) != TYPE_NIL:
+		reinforcement_mult = LeaderManager.get_training_path_reinforcement_multiplier(leader_id)
+
 	for equipment_id in shortages:
 		var needed := int(shortages[equipment_id])
 		var got := request_equipment_for_unit(unit_id, str(equipment_id), needed)
+		if got < needed and reinforcement_mult > 1.0:
+			var bonus := int(ceil(float(needed - got) * (reinforcement_mult - 1.0)))
+			if bonus > 0:
+				got += request_equipment_for_unit(unit_id, str(equipment_id), bonus)
 		if got > 0:
 			fulfilled[equipment_id] = got
 

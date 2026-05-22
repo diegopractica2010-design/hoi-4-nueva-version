@@ -221,8 +221,9 @@ func _create_path_row(path: Dictionary) -> PanelContainer:
 		and not is_active
 		and LeaderManager.can_switch_training_path(leader_id, path_id)
 	):
+		var switch_cost := LeaderManager.get_training_path_switch_cost(leader_id, path_id)
 		var switch_btn := Button.new()
-		switch_btn.text = "Switch School (%d XP)" % LeaderManager.TRAINING_PATH_SWITCH_COST
+		switch_btn.text = "Switch School (%d XP)" % switch_cost
 		switch_btn.pressed.connect(_on_switch_pressed.bind(path_id))
 		RetrowaveTheme.style_secondary_button(switch_btn)
 		vbox.add_child(switch_btn)

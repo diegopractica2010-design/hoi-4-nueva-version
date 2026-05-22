@@ -620,6 +620,48 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 				print("  [FAIL] combat XP not awarded: ", rommel.experience)
 				return false
 
+		var path_leader := Leader.new()
+		path_leader.leader_id = "usa_path_combat_test"
+		path_leader.name = "Path Combat Test"
+		path_leader.country_tag = "USA"
+		LeaderManager.register_leader(path_leader)
+		LeaderManager.assign_leader_to_army("usa_path_combat_test", "path_combat_army_test")
+		path_leader.clear_training_path()
+		var power_no_path: Dictionary = resolver.get_effective_combat_power(
+			"us_marine_division_ww2",
+			"",
+			"path_combat_army_test",
+		)
+		path_leader.set_training_path("school_of_maneuver", 3)
+		var power_with_path: Dictionary = resolver.get_effective_combat_power(
+			"us_marine_division_ww2",
+			"",
+			"path_combat_army_test",
+		)
+		var path_mods: Dictionary = LeaderManager.get_leader_training_path_combat_modifiers(
+			"usa_path_combat_test",
+		)
+		LeaderManager.leaders.erase("usa_path_combat_test")
+		if path_mods.is_empty():
+			resolver.free()
+			print("  [FAIL] maneuver school combat modifiers empty at level 3")
+			return false
+		if float(power_with_path.get("training_path_soft_bonus", 0.0)) <= 0.0:
+			resolver.free()
+			print("  [FAIL] training path soft bonus missing: ", power_with_path)
+			return false
+		if float(power_with_path.get("soft_attack", 0.0)) <= float(
+			power_no_path.get("soft_attack", 0.0)
+		):
+			resolver.free()
+			print(
+				"  [FAIL] training path should boost soft_attack: no_path=",
+				power_no_path.get("soft_attack"),
+				" with_path=",
+				power_with_path.get("soft_attack"),
+			)
+			return false
+
 	resolver.free()
 	print("  [PASS] CombatResolver effective combat power")
 	return true
@@ -923,8 +965,8 @@ static func _test_leader_manager() -> bool:
 		"usa_patton_test",
 		"school_of_layered_defense",
 	)
-	if switch_cost != 500:
-		print("  [FAIL] training path switch cost: ", switch_cost)
+	if switch_cost != 700:
+		print("  [FAIL] training path switch cost at level 2 (expected 700): ", switch_cost)
 		return false
 	patton.experience = 600
 	if LeaderManager.can_switch_training_path("usa_patton_test", "school_of_layered_defense"):
@@ -958,6 +1000,22 @@ static func _test_leader_manager() -> bool:
 		return false
 	LeaderManager.set_country_military_doctrine("USA", "mobile_warfare", false)
 	LeaderManager.set_country_military_doctrine("USA", "mass_assault", false)
+
+	patton.set_training_path("school_of_layered_defense", 2)
+	var supply_mods: Dictionary = LeaderManager.get_leader_training_path_supply_modifiers(
+		"usa_patton_test",
+	)
+	if not supply_mods.has("supply_consumption"):
+		print("  [FAIL] layered defense should reduce supply consumption: ", supply_mods)
+		return false
+	var base_stats := {"supply_consumption": 1.0, "readiness": 1.0}
+	var boosted: Dictionary = LeaderManager.apply_training_path_supply_to_stats(
+		base_stats,
+		"usa_patton_test",
+	)
+	if float(boosted.get("supply_consumption", 1.0)) >= 1.0:
+		print("  [FAIL] supply path should lower consumption: ", boosted)
+		return false
 
 	LeaderManager.leaders.erase("usa_patton_test")
 	if LeaderManager.country_positions.has("USA"):

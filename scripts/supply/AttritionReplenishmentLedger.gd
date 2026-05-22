@@ -4,13 +4,16 @@ extends RefCounted
 ## Tracks combat/attrition losses and converts them into cargo demand for supply routes.
 
 var _losses: Dictionary = {}
+var _division_leader_ids: Dictionary = {}  # division_id -> leader_id
 
 
-func record_manpower_loss(division_id: String, amount: int) -> void:
+func record_manpower_loss(division_id: String, amount: int, leader_id: String = "") -> void:
 	if amount <= 0:
 		return
 	var key := "manpower:%s" % division_id
 	_losses[key] = int(_losses.get(key, 0)) + amount
+	if not leader_id.is_empty():
+		_division_leader_ids[division_id] = leader_id
 
 
 func record_equipment_loss(template_id: String, count: float) -> void:
@@ -22,6 +25,33 @@ func record_equipment_loss(template_id: String, count: float) -> void:
 
 func clear() -> void:
 	_losses.clear()
+	_division_leader_ids.clear()
+
+
+func get_primary_leader_id() -> String:
+	for leader_id in _division_leader_ids.values():
+		var lid := str(leader_id)
+		if not lid.is_empty():
+			return lid
+	return ""
+
+
+func get_leader_id_for_formation(formation_id: String) -> String:
+	return str(_division_leader_ids.get(formation_id, ""))
+
+
+## Applies training-path attrition_reduction for the formation's leader (if any).
+func calculate_attrition(formation_id: String, base_attrition: float) -> float:
+	if formation_id.is_empty() or typeof(LeaderManager) == TYPE_NIL:
+		return maxf(base_attrition, 0.0)
+
+	var leader_id := get_leader_id_for_formation(formation_id)
+	if leader_id.is_empty():
+		leader_id = LeaderManager.resolve_leader_id_for_formation(formation_id)
+	if leader_id.is_empty():
+		return maxf(base_attrition, 0.0)
+
+	return LeaderManager.apply_attrition_for_leader(base_attrition, leader_id)
 
 
 func compute_replenishment_cargo(
@@ -43,7 +73,9 @@ func compute_replenishment_cargo(
 	for key in _losses:
 		var amount: float = float(_losses[key])
 		if str(key).begins_with("manpower:"):
-			out["crew_tons"] += amount * per_man * attrition_frac
+			var division_id := str(key).trim_prefix("manpower:")
+			var replacement_burden := calculate_attrition(division_id, amount * attrition_frac)
+			out["crew_tons"] += replacement_burden * per_man
 		elif str(key).begins_with("equip:"):
 			var tpl_id := str(key).trim_prefix("equip:")
 			var tpl: UnitTemplate = design_data.get_template(tpl_id) if design_data else null

@@ -145,18 +145,67 @@ func get_enemy_presence() -> Dictionary:
 	return get_meta("enemy_presence") if has_meta("enemy_presence") else {}
 
 
-func record_attrition(division_id: String, manpower_lost: int, equipment_losses: Dictionary = {}) -> void:
-	attrition_ledger.record_manpower_loss(division_id, manpower_lost)
+func record_attrition(
+	division_id: String,
+	manpower_lost: int,
+	equipment_losses: Dictionary = {},
+	leader_id: String = "",
+) -> void:
+	var resolved_leader := leader_id
+	if resolved_leader.is_empty() and typeof(LeaderManager) != TYPE_NIL:
+		resolved_leader = LeaderManager.resolve_leader_id_for_formation(division_id)
+	attrition_ledger.record_manpower_loss(division_id, manpower_lost, resolved_leader)
 	for tpl_id in equipment_losses:
 		attrition_ledger.record_equipment_loss(str(tpl_id), float(equipment_losses[tpl_id]))
 
 
-func get_attrition_cargo_summary() -> Dictionary:
+func get_formation(formation_id: String) -> Formation:
+	if formation_id.is_empty() or typeof(LeaderManager) == TYPE_NIL:
+		return null
+	return LeaderManager.get_formation(formation_id)
+
+
+func _get_base_supply_consumption(formation_id: String) -> float:
+	var template: DivisionTemplate = division_templates.get_division(formation_id)
+	if template == null:
+		return 1.0
 	var design_data: DesignDataLoader = null
 	var gd := get_node_or_null("/root/GameData")
 	if gd != null and "design_data" in gd:
 		design_data = gd.design_data
-	return attrition_ledger.compute_replenishment_cargo(division_templates, design_data, rules)
+	var stats := template.get_final_combat_stats({}, design_data)
+	return float(stats.get("supply_consumption", 1.0))
+
+
+## Daily supply use for a formation, including training-path supply_consumption modifiers.
+func calculate_daily_supply_consumption(formation_id: String) -> float:
+	var base_consumption := _get_base_supply_consumption(formation_id)
+	if typeof(LeaderManager) == TYPE_NIL:
+		return base_consumption
+
+	var formation := get_formation(formation_id)
+	if formation != null and formation.has_leader():
+		return LeaderManager.apply_supply_consumption_for_leader(
+			base_consumption,
+			formation.leader_id,
+		)
+
+	var leader_id := LeaderManager.resolve_leader_id_for_formation(formation_id)
+	if not leader_id.is_empty():
+		return LeaderManager.apply_supply_consumption_for_leader(base_consumption, leader_id)
+	return base_consumption
+
+
+func get_attrition_cargo_summary(_leader_id: String = "") -> Dictionary:
+	var design_data: DesignDataLoader = null
+	var gd := get_node_or_null("/root/GameData")
+	if gd != null and "design_data" in gd:
+		design_data = gd.design_data
+	return attrition_ledger.compute_replenishment_cargo(
+		division_templates,
+		design_data,
+		rules,
+	)
 
 
 func advance_supply_day(days: float = 1.0) -> void:

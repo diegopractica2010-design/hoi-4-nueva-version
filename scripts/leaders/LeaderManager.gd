@@ -34,7 +34,8 @@ const NATIONAL_POSITION_CHANGE_COST: Dictionary = {
 const TRAITS_PATH := "res://data/leaders/traits.json"
 const LEGACY_TRAITS_PATH := "res://data/leaders/leader_traits.json"
 const TRAINING_PATHS_PATH := "res://data/leaders/doctrine_training_paths.json"
-const TRAINING_PATH_SWITCH_COST := 500
+const TRAINING_PATH_SWITCH_COST_BASE := 400
+const TRAINING_PATH_SWITCH_COST_PER_LEVEL := 150
 const HISTORICAL_LEADERS_1936_PATH := "res://data/leaders/historical_leaders_1936.json"
 const HISTORICAL_LEADERS_1918_PATH := "res://data/leaders/historical_leaders_1918.json"
 const SCENARIO_LEADER_PATHS: Dictionary = {
@@ -1270,10 +1271,13 @@ func invest_xp_in_training_path(leader_id: String, path_id: String) -> bool:
 	return true
 
 
-## Switch to a different training path (expensive).
+## Switch a leader to a different training path (expensive).
 func switch_training_path(leader_id: String, new_path_id: String) -> bool:
 	var leader := get_leader(leader_id)
 	if leader == null:
+		return false
+
+	if leader.training_path_id == new_path_id:
 		return false
 
 	var path_data := _get_training_path_data(new_path_id)
@@ -1281,11 +1285,12 @@ func switch_training_path(leader_id: String, new_path_id: String) -> bool:
 		return false
 	if not _country_has_doctrine(leader.country_tag, str(path_data.get("doctrine_requirement", ""))):
 		return false
-	if leader.training_path_id == new_path_id:
-		return false
 
-	var switch_cost := TRAINING_PATH_SWITCH_COST
+	var switch_cost := get_training_path_switch_cost(leader_id, new_path_id)
+	if switch_cost <= 0:
+		return false
 	if leader.experience < switch_cost:
+		print("Not enough XP to switch training path. Cost: %d" % switch_cost)
 		return false
 	if not leader.spend_experience(switch_cost):
 		return false
@@ -1293,6 +1298,10 @@ func switch_training_path(leader_id: String, new_path_id: String) -> bool:
 	var old_path_id := leader.training_path_id
 	leader.set_training_path(new_path_id, 1)
 	invalidate_leader_cache(leader.country_tag)
+	print(
+		"%s switched to new training path: %s (Cost: %d XP)"
+		% [leader.name, new_path_id, switch_cost]
+	)
 	emit_signal("training_path_switched", leader_id, old_path_id, new_path_id)
 	return true
 
@@ -1330,12 +1339,147 @@ func get_leader_training_path_effects(leader: Leader) -> Dictionary:
 	return get_training_path_effects_at_level(leader.training_path_id, leader.training_path_level)
 
 
+# ============================================
+# TRAINING PATH - COMBAT MODIFIERS
+# ============================================
+
+const TRAINING_PATH_COMBAT_EFFECT_KEYS: Array[String] = [
+	"attack",
+	"defense",
+	"initiative",
+	"breakthrough",
+	"planning",
+	"combined_arms_sync",
+]
+
+
+## Returns combat-related modifiers from the leader's current training path.
+func get_leader_training_path_combat_modifiers(leader_id: String) -> Dictionary:
+	var leader := get_leader(leader_id)
+	if leader == null or not leader.has_training_path():
+		return {}
+
+	var effects := get_training_path_effects_at_level(
+		leader.training_path_id,
+		leader.training_path_level,
+	)
+	if effects.is_empty():
+		return {}
+
+	var modifiers: Dictionary = {}
+	for effect_key in effects.keys():
+		var key := str(effect_key)
+		if TRAINING_PATH_COMBAT_EFFECT_KEYS.has(key):
+			modifiers[key] = float(effects[effect_key])
+	return modifiers
+
+
+# ============================================
+# TRAINING PATH - SUPPLY & LOGISTICS MODIFIERS
+# ============================================
+
+## Returns supply and logistics modifiers from the leader's current training path.
+func get_leader_training_path_supply_modifiers(leader_id: String) -> Dictionary:
+	var leader := get_leader(leader_id)
+	if leader == null or leader.training_path_id.is_empty():
+		return {}
+
+	var path_id := leader.training_path_id
+	var level := leader.training_path_level
+	var effects := _get_training_path_effects(path_id, level)
+	if effects.is_empty():
+		return {}
+
+	var modifiers: Dictionary = {}
+	if effects.has("supply_consumption"):
+		modifiers["supply_consumption"] = effects["supply_consumption"]
+	if effects.has("organization_recovery"):
+		modifiers["organization_recovery"] = effects["organization_recovery"]
+	if effects.has("reinforcement_speed"):
+		modifiers["reinforcement_speed"] = effects["reinforcement_speed"]
+	if effects.has("attrition_reduction"):
+		modifiers["attrition_reduction"] = effects["attrition_reduction"]
+	return modifiers
+
+
+func resolve_leader_id_for_formation(formation_id: String) -> String:
+	if formation_id.is_empty():
+		return ""
+	var formation := get_formation(formation_id)
+	if formation != null and formation.has_leader():
+		return formation.leader_id
+	return get_leader_id_for_army(formation_id)
+
+
+func apply_supply_consumption_for_leader(base_consumption: float, leader_id: String) -> float:
+	var modifiers := get_leader_training_path_supply_modifiers(leader_id)
+	if modifiers.has("supply_consumption"):
+		return base_consumption * (1.0 + float(modifiers["supply_consumption"]))
+	return base_consumption
+
+
+func apply_attrition_for_leader(base_attrition: float, leader_id: String) -> float:
+	var modifiers := get_leader_training_path_supply_modifiers(leader_id)
+	var final_attrition := base_attrition
+	if modifiers.has("attrition_reduction"):
+		final_attrition *= maxf(1.0 - float(modifiers["attrition_reduction"]), 0.0)
+	return maxf(final_attrition, 0.0)
+
+
+func apply_reinforcement_rate_for_leader(base_rate: float, leader_id: String) -> float:
+	var modifiers := get_leader_training_path_supply_modifiers(leader_id)
+	if modifiers.has("reinforcement_speed"):
+		return base_rate * (1.0 + float(modifiers["reinforcement_speed"]))
+	return base_rate
+
+
+## Applies training path supply/logistics modifiers to division combat/supply stats.
+func apply_training_path_supply_to_stats(
+	stats: Dictionary,
+	army_or_unit_id: String = "",
+) -> Dictionary:
+	if stats.is_empty():
+		return stats
+
+	var leader_id := resolve_leader_id_for_formation(army_or_unit_id)
+	var modifiers := get_leader_training_path_supply_modifiers(leader_id)
+	if modifiers.is_empty():
+		return stats
+
+	var modified := stats.duplicate()
+	modified["supply_consumption"] = apply_supply_consumption_for_leader(
+		float(modified.get("supply_consumption", 1.0)),
+		leader_id,
+	)
+
+	if modifiers.has("organization_recovery"):
+		var recovery := float(modifiers["organization_recovery"])
+		modified["readiness"] = float(modified.get("readiness", 1.0)) + recovery * 0.35
+		modified["organization"] = float(modified.get("organization", 1.0)) + recovery * 0.25
+
+	modified["training_path_supply_modifiers"] = modifiers
+	return modified
+
+
+func get_training_path_reinforcement_multiplier(leader_id: String) -> float:
+	return apply_reinforcement_rate_for_leader(1.0, leader_id)
+
+
+func get_training_path_data(path_id: String) -> Dictionary:
+	return _get_training_path_data(path_id)
+
+
 func get_training_path_level_cost(current_level: int) -> int:
 	return 150 + (maxi(current_level, 0) * 100)
 
 
-func get_training_path_switch_cost(_leader_id: String, _new_path_id: String) -> int:
-	return TRAINING_PATH_SWITCH_COST
+## Returns how much XP it would cost to switch to a new training path.
+func get_training_path_switch_cost(leader_id: String, new_path_id: String) -> int:
+	var leader := get_leader(leader_id)
+	if leader == null or leader.training_path_id == new_path_id:
+		return 0
+	var current_level := leader.training_path_level
+	return TRAINING_PATH_SWITCH_COST_BASE + (current_level * TRAINING_PATH_SWITCH_COST_PER_LEVEL)
 
 
 func can_invest_training_path(leader_id: String, path_id: String) -> bool:
@@ -1363,7 +1507,8 @@ func can_switch_training_path(leader_id: String, new_path_id: String) -> bool:
 		leader.country_tag, get_training_path_doctrine_requirement(new_path_id)
 	):
 		return false
-	return leader_has_training_path(leader_id) and leader.experience >= TRAINING_PATH_SWITCH_COST
+	var switch_cost := get_training_path_switch_cost(leader_id, new_path_id)
+	return leader_has_training_path(leader_id) and switch_cost > 0 and leader.experience >= switch_cost
 
 
 func get_leader_training_path_state(leader_id: String) -> Dictionary:
@@ -1395,7 +1540,7 @@ func get_available_training_paths_for_leader(leader_id: String) -> Array[Diction
 				current_level if is_active else 0
 			),
 			"can_switch": can_switch_training_path(leader_id, pid) and not is_active,
-			"switch_cost": TRAINING_PATH_SWITCH_COST,
+			"switch_cost": get_training_path_switch_cost(leader_id, pid),
 			"at_max_level": is_active and current_level >= max_level,
 		})
 		rows.append(row)
@@ -1425,7 +1570,10 @@ func get_leader_training_path_summary(leader_id: String) -> Dictionary:
 		"effects_text": format_trait_effects_text(effects),
 		"can_invest": can_invest_training_path(leader_id, leader.training_path_id),
 		"invest_cost": get_training_path_level_cost(leader.training_path_level),
-		"switch_cost_preview": TRAINING_PATH_SWITCH_COST,
+		"switch_cost_preview": (
+			TRAINING_PATH_SWITCH_COST_BASE
+			+ leader.training_path_level * TRAINING_PATH_SWITCH_COST_PER_LEVEL
+		),
 		"previous_path_id": leader.previous_training_path_id,
 	}
 
@@ -1863,10 +2011,6 @@ func get_leader_trait_effects(leader: Leader) -> Dictionary:
 		for effect_key in effects.keys():
 			var key := str(effect_key)
 			combined[key] = float(combined.get(key, 0.0)) + float(effects[effect_key])
-	var path_effects := get_leader_training_path_effects(leader)
-	for effect_key in path_effects.keys():
-		var key := str(effect_key)
-		combined[key] = float(combined.get(key, 0.0)) + float(path_effects[effect_key])
 	return combined
 
 

@@ -15,16 +15,22 @@ func get_effective_combat_power(
 	if base_stats.is_empty():
 		return {}
 
-	var final_soft := float(base_stats.get("soft_attack", 0.0))
-	var final_hard := float(base_stats.get("hard_attack", 0.0))
-	var final_readiness := float(base_stats.get("readiness", 1.0))
-	var final_org := 1.0
-
-	# Leader modifiers
 	var leader: Leader = null
+	var leader_id := ""
 	var terrain_bonus := 0.0
-	if not army_id.is_empty() and LeaderManager != null:
+	if not army_id.is_empty() and typeof(LeaderManager) != TYPE_NIL:
 		leader = LeaderManager.get_leader_for_army(army_id)
+		if leader != null:
+			leader_id = leader.leader_id
+
+	var combat_stats := base_stats
+	if not leader_id.is_empty():
+		combat_stats = apply_training_path_modifiers(leader_id, base_stats)
+
+	var final_soft := float(combat_stats.get("soft_attack", 0.0))
+	var final_hard := float(combat_stats.get("hard_attack", 0.0))
+	var final_readiness := float(combat_stats.get("readiness", 1.0))
+	var final_org := float(combat_stats.get("organization", 1.0))
 
 	if leader != null and not leader.is_injured and not leader.is_captured:
 		final_soft += leader.get_attack_modifier() * 10.0
@@ -36,18 +42,85 @@ func get_effective_combat_power(
 		final_soft += terrain_bonus * 8.0
 		final_hard += terrain_bonus * 5.0
 
+	var training_path_bonus := float(combat_stats.get("training_path_soft_bonus", 0.0))
+
 	return {
 		"soft_attack": final_soft,
 		"hard_attack": final_hard,
 		"readiness": clampf(final_readiness, 0.3, 1.8),
 		"organization": clampf(final_org, 0.4, 1.5),
-		"supply_consumption": float(base_stats.get("supply_consumption", 1.0)),
+		"supply_consumption": float(combat_stats.get("supply_consumption", 1.0)),
 		"has_shortages": bool(base_stats.get("has_shortages", false)),
 		"leader_name": leader.name if leader != null else "No Leader",
+		"leader_id": leader_id,
 		"leader_attack_bonus": leader.get_attack_modifier() if leader != null else 0.0,
+		"training_path_soft_bonus": training_path_bonus,
+		"training_path_modifiers": combat_stats.get("training_path_modifiers", {}),
 		"terrain": terrain,
 		"terrain_bonus_applied": terrain_bonus,
 	}
+
+
+# ============================================
+# TRAINING PATH INTEGRATION
+# ============================================
+
+## Applies training path bonuses to division combat stats (before trait-based leader modifiers).
+func apply_training_path_modifiers(leader_id: String, base_stats: Dictionary) -> Dictionary:
+	if leader_id.is_empty() or typeof(LeaderManager) == TYPE_NIL:
+		return base_stats
+
+	var modifiers := LeaderManager.get_leader_training_path_combat_modifiers(leader_id)
+	if modifiers.is_empty():
+		return base_stats
+
+	var modified := base_stats.duplicate()
+	var soft_bonus := 0.0
+	var hard_bonus := 0.0
+
+	if modifiers.has("attack"):
+		var attack_levels := float(modifiers["attack"])
+		soft_bonus += attack_levels * 1.5
+		hard_bonus += attack_levels * 0.9
+		modified["attack"] = float(modified.get("attack", 0.0)) + attack_levels
+
+	if modifiers.has("defense"):
+		var defense_levels := float(modifiers["defense"])
+		modified["defense"] = float(modified.get("defense", 0.0)) + defense_levels
+		modified["organization"] = float(modified.get("organization", 1.0)) + defense_levels * 0.05
+
+	if modifiers.has("initiative"):
+		var init_levels := float(modifiers["initiative"])
+		modified["initiative"] = float(modified.get("initiative", 0.0)) + init_levels
+		modified["readiness"] = float(modified.get("readiness", 1.0)) + init_levels * 0.04
+
+	if modifiers.has("planning"):
+		var plan_levels := float(modifiers["planning"])
+		modified["planning"] = float(modified.get("planning", 0.0)) + plan_levels
+		modified["readiness"] = float(modified.get("readiness", 1.0)) + plan_levels * 0.03
+
+	if modifiers.has("breakthrough"):
+		var breakthrough := float(modifiers["breakthrough"])
+		soft_bonus += breakthrough * 8.0
+		hard_bonus += breakthrough * 5.0
+		modified["breakthrough"] = float(modified.get("breakthrough", 0.0)) + breakthrough
+
+	if modifiers.has("combined_arms_sync"):
+		var sync := float(modifiers["combined_arms_sync"])
+		soft_bonus += sync * 8.0
+		hard_bonus += sync * 5.0
+		modified["combined_arms_sync"] = float(modified.get("combined_arms_sync", 0.0)) + sync
+
+	if modifiers.has("organization_recovery"):
+		var recovery := float(modifiers["organization_recovery"])
+		modified["organization"] = float(modified.get("organization", 1.0)) + recovery * 0.5
+		modified["organization_recovery"] = float(modified.get("organization_recovery", 0.0)) + recovery
+
+	modified["soft_attack"] = float(modified.get("soft_attack", 0.0)) + soft_bonus
+	modified["hard_attack"] = float(modified.get("hard_attack", 0.0)) + hard_bonus
+	modified["training_path_soft_bonus"] = soft_bonus
+	modified["training_path_modifiers"] = modifiers
+	return modified
 
 
 ## Call once when a battle concludes (not during power previews).

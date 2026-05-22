@@ -12,6 +12,7 @@ const XP_HIGHLIGHT_COLOR := Color(0.4, 0.9, 0.6)
 )
 @onready var skills_label: Label = $MarginContainer/VBoxContainer/Header/InfoVBox/SkillsLabel
 @onready var xp_label: Label = $MarginContainer/VBoxContainer/Header/InfoVBox/XPLabel
+@onready var training_path_label: Label = $MarginContainer/VBoxContainer/Header/InfoVBox/TrainingPathLabel
 
 @onready var current_traits_list: VBoxContainer = (
 	$MarginContainer/VBoxContainer/CurrentTraitsSection/TraitsScroll/TraitsList
@@ -128,6 +129,7 @@ func refresh_screen() -> void:
 	_populate_level_up_options()
 	_populate_potential_traits()
 	_update_training_button_visibility()
+	_update_training_path_indicator()
 
 
 func _apply_theme() -> void:
@@ -135,6 +137,9 @@ func _apply_theme() -> void:
 	RetrowaveTheme.style_title(name_label, RetrowaveTheme.CYAN)
 	RetrowaveTheme.style_body_label(age_assignment_label)
 	RetrowaveTheme.style_body_label(skills_label)
+	if training_path_label:
+		training_path_label.add_theme_font_size_override("font_size", 13)
+		RetrowaveTheme.style_body_label(training_path_label)
 	if training_paths_btn:
 		RetrowaveTheme.style_primary_button(training_paths_btn)
 	RetrowaveTheme.style_secondary_button(close_button)
@@ -165,6 +170,49 @@ func _update_training_button_visibility() -> void:
 		return
 	var available_paths := LeaderManager.get_available_training_paths(leader_id)
 	training_paths_btn.visible = available_paths.size() > 0
+
+
+func _update_training_path_indicator() -> void:
+	var indicator := _get_training_path_indicator()
+	if indicator == null:
+		return
+
+	if current_leader == null or current_leader.training_path_id == "":
+		indicator.text = "Specialization: None"
+		indicator.modulate = Color(0.6, 0.6, 0.6)
+		return
+
+	var path_data := LeaderManager.get_training_path_definition(current_leader.training_path_id)
+	var path_name := str(path_data.get("name", current_leader.training_path_id))
+	indicator.text = "Specialization: %s (Level %d)" % [
+		path_name,
+		current_leader.training_path_level,
+	]
+	indicator.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	indicator.modulate = Color(0.4, 0.85, 0.95)
+
+
+func _get_training_path_indicator() -> Label:
+	if training_path_label != null:
+		return training_path_label
+	var existing := get_node_or_null(
+		"MarginContainer/VBoxContainer/Header/InfoVBox/TrainingPathLabel"
+	) as Label
+	if existing != null:
+		training_path_label = existing
+		return existing
+
+	var info_vbox := get_node_or_null("MarginContainer/VBoxContainer/Header/InfoVBox") as VBoxContainer
+	if info_vbox == null:
+		return null
+
+	var indicator := Label.new()
+	indicator.name = "TrainingPathLabel"
+	indicator.add_theme_font_size_override("font_size", 13)
+	RetrowaveTheme.style_body_label(indicator)
+	info_vbox.add_child(indicator)
+	training_path_label = indicator
+	return indicator
 
 
 func _update_header() -> void:
