@@ -144,21 +144,21 @@ func _populate_current_traits() -> void:
 		_add_note_label(current_traits_list, "No traits yet.")
 		return
 
-	for trait in traits_data:
+	for trait_entry in traits_data:
 		var vbox := VBoxContainer.new()
 		vbox.add_theme_constant_override("separation", 2)
 
 		var header := Label.new()
 		header.text = "%s %s  —  Level %d" % [
-			trait.get("name", trait.get("trait_id", "")),
-			_get_rarity_tag(str(trait.get("rarity", "common"))),
-			int(trait.get("level", 1)),
+			trait_entry.get("name", trait_entry.get("trait_id", "")),
+			_get_rarity_tag(str(trait_entry.get("rarity", "common"))),
+			int(trait_entry.get("level", 1)),
 		]
 		header.add_theme_font_size_override("font_size", 15)
 		RetrowaveTheme.style_column_header(header)
 		vbox.add_child(header)
 
-		var effects: Dictionary = trait.get("effects", {}) as Dictionary
+		var effects: Dictionary = trait_entry.get("effects", {}) as Dictionary
 		if not effects.is_empty():
 			var effects_label := Label.new()
 			effects_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -175,39 +175,39 @@ func _populate_level_up_options() -> void:
 
 	var traits_data := LeaderManager.get_leader_trait_display_data(leader_id)
 	var any_option := false
-	for trait in traits_data:
-		if bool(trait.get("can_level_up", false)):
+	for trait_entry in traits_data:
+		if bool(trait_entry.get("can_level_up", false)):
 			any_option = true
-			level_up_list.add_child(_create_level_up_row(trait))
+			level_up_list.add_child(_create_level_up_row(trait_entry))
 
 	if not any_option:
 		_add_note_label(level_up_list, "No traits available to level up.")
 
 
-func _create_level_up_row(trait: Dictionary) -> HBoxContainer:
+func _create_level_up_row(trait_entry: Dictionary) -> HBoxContainer:
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 12)
 
 	var name_lbl := Label.new()
 	name_lbl.text = "%s (Level %d → %d)" % [
-		trait.get("name", trait.get("trait_id", "")),
-		int(trait.get("level", 1)),
-		int(trait.get("level", 1)) + 1,
+		trait_entry.get("name", trait_entry.get("trait_id", "")),
+		int(trait_entry.get("level", 1)),
+		int(trait_entry.get("level", 1)) + 1,
 	]
 	name_lbl.custom_minimum_size = Vector2(260, 0)
 	RetrowaveTheme.style_row_label(name_lbl)
 	hbox.add_child(name_lbl)
 
 	var cost_lbl := Label.new()
-	cost_lbl.text = "%d XP" % int(trait.get("level_up_cost", 0))
+	cost_lbl.text = "%d XP" % int(trait_entry.get("level_up_cost", 0))
 	cost_lbl.modulate = XP_HIGHLIGHT_COLOR
 	hbox.add_child(cost_lbl)
 
 	var level_btn := Button.new()
 	level_btn.text = "Level Up"
 	RetrowaveTheme.style_primary_button(level_btn)
-	level_btn.disabled = current_leader.experience < int(trait.get("level_up_cost", 0))
-	level_btn.pressed.connect(_on_level_up_pressed.bind(str(trait.get("trait_id", ""))))
+	level_btn.disabled = current_leader.experience < int(trait_entry.get("level_up_cost", 0))
+	level_btn.pressed.connect(_on_level_up_pressed.bind(str(trait_entry.get("trait_id", ""))))
 	hbox.add_child(level_btn)
 
 	return hbox
@@ -221,14 +221,14 @@ func _populate_potential_traits() -> void:
 		_add_note_label(potential_traits_list, "No additional traits previewed for this leader.")
 		return
 
-	for trait in potential:
+	for trait_entry in potential:
 		var hbox := HBoxContainer.new()
 		hbox.add_theme_constant_override("separation", 8)
 
 		var label := Label.new()
 		label.text = "%s %s" % [
-			trait.get("name", trait.get("trait_id", "")),
-			_get_rarity_tag(str(trait.get("rarity", "common"))),
+			trait_entry.get("name", trait_entry.get("trait_id", "")),
+			_get_rarity_tag(str(trait_entry.get("rarity", "common"))),
 		]
 		label.modulate = Color(0.55, 0.55, 0.55)
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -237,7 +237,7 @@ func _populate_potential_traits() -> void:
 
 		var info_btn := Button.new()
 		info_btn.text = "?"
-		info_btn.tooltip_text = str(trait.get("unlock_reason", ""))
+		info_btn.tooltip_text = str(trait_entry.get("unlock_reason", ""))
 		info_btn.custom_minimum_size = Vector2(28, 28)
 		RetrowaveTheme.style_secondary_button(info_btn)
 		hbox.add_child(info_btn)

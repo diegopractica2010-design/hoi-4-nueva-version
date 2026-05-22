@@ -50,7 +50,8 @@ const HEADER_SPECS: Array[Dictionary] = [
 	{"text": "Name", "width": 180},
 	{"text": "Type", "width": 120},
 	{"text": "Skills", "width": 140},
-	{"text": "Traits", "width": 200},
+	{"text": "Traits", "width": 180},
+	{"text": "XP", "width": 56},
 	{"text": "", "width": 0, "expand": true},
 	{"text": "Assign", "width": 90},
 	{"text": "Details", "width": 90},
@@ -275,21 +276,41 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 	hbox.custom_minimum_size = Vector2(0, ROW_HEIGHT)
 	hbox.add_theme_constant_override("separation", 8)
 
+	var name_btn := Button.new()
+	var leader_name := str(summary.get("name", "Unknown"))
+	if _leader_has_level_up_option(summary):
+		leader_name += " ▲"
+	name_btn.text = leader_name
+	name_btn.flat = true
+	name_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	name_btn.custom_minimum_size = Vector2(180, 0)
+	name_btn.clip_text = true
+	_style_leader_name_button(name_btn)
+	name_btn.pressed.connect(_on_leader_name_pressed.bind(summary))
+	hbox.add_child(name_btn)
+
 	var type_name: String = str(summary.get("leader_type_name", summary.get("leader_type", "")))
-	hbox.add_child(_row_label(str(summary.get("name", "Unknown")), 180))
-	hbox.add_child(_row_label(type_name, 120))
+	hbox.add_child(_row_label(type_name.capitalize(), 120))
 	hbox.add_child(
 		_row_label(
-			"A:%d D:%d L:%d" % [
+			"A:%d  D:%d  L:%d  P:%d" % [
 				int(summary.get("attack_skill", 0)),
 				int(summary.get("defense_skill", 0)),
 				int(summary.get("logistics_skill", 0)),
+				int(summary.get("planning_skill", 0)),
 			],
 			140,
 		)
 	)
+	hbox.add_child(_row_label(_format_traits_row(summary), 180))
 
-	hbox.add_child(_row_label(_format_traits_row(summary), 200))
+	var xp_label := Label.new()
+	xp_label.text = str(int(summary.get("experience", 0)))
+	xp_label.custom_minimum_size = Vector2(56, 0)
+	xp_label.clip_text = true
+	xp_label.add_theme_color_override("font_color", RetrowaveTheme.SUCCESS)
+	RetrowaveTheme.style_row_label(xp_label)
+	hbox.add_child(xp_label)
 
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -310,6 +331,38 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 	hbox.add_child(details_btn)
 
 	return hbox
+
+
+func _style_leader_name_button(button: Button) -> void:
+	button.add_theme_color_override("font_color", RetrowaveTheme.CYAN)
+	button.add_theme_color_override("font_hover_color", RetrowaveTheme.MAGENTA)
+	button.add_theme_font_size_override("font_size", 14)
+	button.focus_mode = Control.FOCUS_NONE
+
+
+func _leader_has_level_up_option(summary: Dictionary) -> bool:
+	for entry in summary.get("trait_display", []) as Array:
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		if bool((entry as Dictionary).get("can_level_up", false)):
+			return true
+	return false
+
+
+func _on_leader_name_pressed(summary: Dictionary) -> void:
+	_open_leader_detail_screen(summary)
+
+
+func _open_leader_detail_screen(summary: Dictionary) -> void:
+	var leader_id := str(summary.get("leader_id", ""))
+	if leader_id.is_empty():
+		return
+	_selected_leader_id = leader_id
+	var tree := get_tree()
+	if tree != null and tree.root != null:
+		LeaderDetailScreen.open(tree.root, leader_id)
+	else:
+		LeaderDetailScreen.open(self, leader_id)
 
 
 func _row_label(text: String, min_width: int) -> Label:
@@ -339,15 +392,8 @@ func _format_traits_row(summary: Dictionary) -> String:
 
 
 func _on_details_pressed(summary: Dictionary) -> void:
-	_selected_leader_id = str(summary.get("leader_id", ""))
-	if _selected_leader_id.is_empty():
-		return
-
-	var tree := get_tree()
-	if tree != null and tree.root != null:
-		LeaderDetailScreen.open(tree.root, _selected_leader_id)
-
-	detail_label.text = "Name: %s\n(Open character sheet for traits & level-up.)" % summary.get("name", "")
+	_open_leader_detail_screen(summary)
+	detail_label.text = "Name: %s\n(Character sheet opened.)" % summary.get("name", "")
 	_populate_trait_detail(summary)
 
 
