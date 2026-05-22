@@ -47,6 +47,10 @@ const XP_PASSIVE_ASSIGNED_IDLE := 1
 const XP_PASSIVE_TRAINING := 4
 const XP_PASSIVE_IN_COMBAT := 12
 const XP_PASSIVE_AT_WAR_BONUS := 2
+const XP_COMBAT_BATTLE_BASE := 12
+const XP_COMBAT_MAJOR_VICTORY_BONUS := 60
+const XP_COMBAT_HEROIC_DEFENSE_BONUS := 80
+const XP_COMBAT_HIGH_RISK_SUCCESS_BONUS := 40
 const XP_COST_BY_RARITY: Dictionary = {
 	"common": 100,
 	"notable": 200,
@@ -997,13 +1001,83 @@ func get_passive_xp_for_leader(leader: Leader) -> int:
 
 
 func process_passive_xp() -> void:
+	process_weekly_leader_xp()
+
+
+# ============================================
+# XP SYSTEM - Combat & passive gain (weekly tick)
+# ============================================
+
+func calculate_combat_xp_from_result(battle_result: Dictionary) -> int:
+	var xp := XP_COMBAT_BATTLE_BASE
+	if bool(battle_result.get("is_major_victory", false)):
+		xp += XP_COMBAT_MAJOR_VICTORY_BONUS
+	elif bool(battle_result.get("is_heroic_defense", false)):
+		xp += XP_COMBAT_HEROIC_DEFENSE_BONUS
+	if bool(battle_result.get("was_high_risk", false)) and bool(battle_result.get("success", false)):
+		xp += XP_COMBAT_HIGH_RISK_SUCCESS_BONUS
+	var intensity := float(battle_result.get("intensity", 1.0))
+	xp = int(float(xp) * clampf(intensity, 0.25, 4.0))
+	return maxi(xp, 1)
+
+
+func award_combat_xp(leader_id: String, battle_result: Dictionary = {}) -> void:
+	if leader_id.is_empty():
+		return
+	var leader: Leader = leaders.get(leader_id) as Leader
+	if leader == null or not leader.is_available_for_command():
+		return
+	if leader.is_injured:
+		return
+	var amount := calculate_combat_xp_from_result(battle_result)
+	award_xp_to_leader(leader_id, amount, "combat")
+
+
+func process_weekly_leader_xp() -> void:
 	for leader_id in leaders.keys():
 		var leader: Leader = leaders.get(leader_id) as Leader
-		if leader == null:
+		if leader == null or not leader.is_available_for_command():
 			continue
-		var xp := get_passive_xp_for_leader(leader)
-		if xp > 0:
-			award_xp_to_leader(leader_id, xp, "passive")
+		if leader.assigned_army_id.is_empty():
+			continue
+
+		var formation := get_formation(leader.assigned_army_id)
+		if formation == null:
+			continue
+
+		var xp_to_gain := XP_PASSIVE_ASSIGNED_IDLE
+		if formation.is_training or leader.duty_post == "training":
+			xp_to_gain = XP_PASSIVE_TRAINING
+		elif formation.is_in_combat:
+			xp_to_gain = XP_PASSIVE_IN_COMBAT
+
+		if bool(countries_at_war.get(leader.country_tag, false)):
+			xp_to_gain += XP_PASSIVE_AT_WAR_BONUS
+
+		if xp_to_gain > 0:
+			award_xp_to_leader(leader_id, xp_to_gain, "passive")
+
+
+func award_battle_xp_to_participants(
+	attacker_leader_id: String,
+	defender_leader_id: String,
+	battle_result: Dictionary = {},
+) -> void:
+	if not attacker_leader_id.is_empty():
+		award_combat_xp(attacker_leader_id, battle_result)
+	var defender_result := battle_result.duplicate()
+	if not defender_leader_id.is_empty():
+		# Defenders gain slightly less baseline pressure unless heroic defense.
+		if not bool(defender_result.get("is_heroic_defense", false)):
+			defender_result["intensity"] = float(defender_result.get("intensity", 1.0)) * 0.85
+		award_combat_xp(defender_leader_id, defender_result)
+
+
+func get_leader_id_for_army(army_or_formation_id: String) -> String:
+	var leader: Leader = get_leader_for_army(army_or_formation_id)
+	if leader == null:
+		return ""
+	return leader.leader_id
 
 
 func set_country_at_war(country_tag: String, at_war: bool) -> void:

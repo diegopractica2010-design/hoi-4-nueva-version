@@ -836,6 +836,15 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] spend_experience")
 		return false
 
+	var combat_xp := LeaderManager.calculate_combat_xp_from_result({"is_major_victory": true})
+	if combat_xp < 12 + 60:
+		print("  [FAIL] major victory combat XP: ", combat_xp)
+		return false
+	LeaderManager.award_combat_xp("usa_patton_test", {"is_major_victory": true, "success": true})
+	if patton.battles_fought < 2:
+		print("  [FAIL] award_combat_xp should increment battles_fought")
+		return false
+
 	patton.add_trait_unchecked("bold", 1)
 	var bold_cost := LeaderManager.get_trait_level_up_cost(patton, "bold")
 	if bold_cost <= 0:

@@ -44,6 +44,25 @@ XP should feel **earned** and scale with risk and impact. A leader who sits in a
 
 This keeps progression **meaningful but not trivial**. A leader who sees consistent frontline combat over 1–2 years should be able to meaningfully improve traits.
 
+### Implementation (Phase A–B)
+
+```gdscript
+# After battle resolves
+var result := {
+    "is_major_victory": true,
+    "was_high_risk": false,
+    "success": true,
+    "intensity": 1.0,
+}
+CombatResolver.resolve_battle_aftermath(attacker_army_id, defender_army_id, result)
+
+# Weekly/daily game tick
+LeaderManager.process_weekly_leader_xp()  # uses formation.is_training / is_in_combat
+```
+
+Combat XP base: **12** + bonuses (major victory +60, heroic defense +80, high-risk success +40).  
+Set `formation.is_training` / `formation.is_in_combat` before `process_weekly_leader_xp()`.
+
 ---
 
 ## 3. XP Spending

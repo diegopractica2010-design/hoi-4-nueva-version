@@ -55,21 +55,60 @@ func resolve_combat_experience(
 	attacker_army_id: String = "",
 	defender_army_id: String = "",
 	intensity: float = 1.0,
+	battle_result: Dictionary = {},
+) -> Dictionary:
+	return resolve_battle_aftermath(attacker_army_id, defender_army_id, battle_result, intensity)
+
+
+## Awards combat XP, rolls leader casualties, returns summary for UI/debug.
+func resolve_battle_aftermath(
+	attacker_army_id: String = "",
+	defender_army_id: String = "",
+	battle_result: Dictionary = {},
+	intensity: float = 1.0,
 ) -> Dictionary:
 	var results := {
 		"attacker_casualty": {},
 		"defender_casualty": {},
+		"attacker_xp": 0,
+		"defender_xp": 0,
 	}
 	if typeof(LeaderManager) == TYPE_NIL:
 		return results
+
+	var xp_context := battle_result.duplicate()
+	if not xp_context.has("intensity"):
+		xp_context["intensity"] = intensity
+
+	var attacker_leader_id := LeaderManager.get_leader_id_for_army(attacker_army_id)
+	var defender_leader_id := LeaderManager.get_leader_id_for_army(defender_army_id)
+
+	if not xp_context.is_empty() or attacker_leader_id != "" or defender_leader_id != "":
+		LeaderManager.award_battle_xp_to_participants(
+			attacker_leader_id,
+			defender_leader_id,
+			xp_context,
+		)
+		if attacker_leader_id != "":
+			results["attacker_xp"] = LeaderManager.calculate_combat_xp_from_result(xp_context)
+		if defender_leader_id != "":
+			var defender_ctx := xp_context.duplicate()
+			if not bool(defender_ctx.get("is_heroic_defense", false)):
+				defender_ctx["intensity"] = float(defender_ctx.get("intensity", 1.0)) * 0.85
+			results["defender_xp"] = LeaderManager.calculate_combat_xp_from_result(defender_ctx)
+	elif not attacker_army_id.is_empty() or not defender_army_id.is_empty():
+		# Legacy fallback when no battle_result dict is provided.
+		if not attacker_army_id.is_empty():
+			LeaderManager.award_combat_experience_for_army(attacker_army_id, intensity)
+		if not defender_army_id.is_empty():
+			LeaderManager.award_combat_experience_for_army(defender_army_id, intensity * 0.65)
+
 	if not attacker_army_id.is_empty():
-		LeaderManager.award_combat_experience_for_army(attacker_army_id, intensity)
 		results["attacker_casualty"] = LeaderManager.roll_combat_battle_casualty(
 			attacker_army_id,
 			intensity,
 		)
 	if not defender_army_id.is_empty():
-		LeaderManager.award_combat_experience_for_army(defender_army_id, intensity * 0.65)
 		results["defender_casualty"] = LeaderManager.roll_combat_battle_casualty(
 			defender_army_id,
 			intensity * 0.65,
