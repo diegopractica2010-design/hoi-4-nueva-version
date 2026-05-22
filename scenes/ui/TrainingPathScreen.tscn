@@ -47,6 +47,11 @@ theme_override_constants/separation = 4
 layout_mode = 2
 text = "DOCTRINE TRAINING PATHS"
 
+[node name="CurrentPathLabel" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Current School: None"
+
 [node name="HeaderRow" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/Header"]
 layout_mode = 2
 theme_override_constants/separation = 20
@@ -60,7 +65,7 @@ text = "Leader Name"
 layout_mode = 2
 text = "XP Available: 0"
 
-[node name="HeaderCloseButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Header/HeaderRow"]
+[node name="CloseButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Header/HeaderRow"]
 custom_minimum_size = Vector2(72, 32)
 layout_mode = 2
 text = "Close"
@@ -87,14 +92,3 @@ clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 14
-
-[node name="Footer" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 44)
-layout_mode = 2
-alignment = 2
-
-[node name="CloseButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Footer"]
-custom_minimum_size = Vector2(120, 36)
-layout_mode = 2
-mouse_filter = 0
-text = "Close"

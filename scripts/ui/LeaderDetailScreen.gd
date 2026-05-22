@@ -67,6 +67,8 @@ func _ready() -> void:
 
 	_apply_theme()
 	if training_paths_btn:
+		training_paths_btn.custom_minimum_size = Vector2(170, 26)
+		training_paths_btn.text = "Doctrine Paths"
 		training_paths_btn.pressed.connect(_on_training_paths_pressed)
 	close_button.pressed.connect(_on_close_pressed)
 	if not LeaderManager.trait_leveled.is_connected(_on_trait_leveled):
@@ -210,7 +212,9 @@ func _get_training_path_indicator() -> Label:
 
 func _update_header() -> void:
 	name_label.text = current_leader.name
-	name_label.add_theme_font_size_override("font_size", 22)
+	name_label.add_theme_font_size_override("font_size", 20)
+	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	age_assignment_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
 	var age := 0
 	if typeof(LeaderManager) != TYPE_NIL:

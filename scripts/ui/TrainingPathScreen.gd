@@ -4,10 +4,14 @@ extends DraggablePanel
 
 const XP_HIGHLIGHT_COLOR := Color(0.4, 0.95, 0.6)
 const ACTIVE_PATH_COLOR := Color(0.45, 0.85, 1.0)
+const SWITCH_BUTTON_COLOR := Color(1.0, 0.7, 0.4)
 
 @export var leader_id: String = ""
 
 @onready var screen_title_label: Label = $ContentPanel/MarginContainer/VBoxContainer/Header/TitleLabel
+@onready var current_path_label: Label = (
+	$ContentPanel/MarginContainer/VBoxContainer/Header/CurrentPathLabel
+)
 @onready var leader_name_label: Label = (
 	$ContentPanel/MarginContainer/VBoxContainer/Header/HeaderRow/LeaderNameLabel
 )
@@ -17,9 +21,8 @@ const ACTIVE_PATH_COLOR := Color(0.45, 0.85, 1.0)
 @onready var paths_list: VBoxContainer = (
 	$ContentPanel/MarginContainer/VBoxContainer/AvailablePathsSection/PathsScroll/PathsList
 )
-@onready var close_button: Button = $ContentPanel/MarginContainer/VBoxContainer/Footer/CloseButton
-@onready var header_close_button: Button = (
-	$ContentPanel/MarginContainer/VBoxContainer/Header/HeaderRow/HeaderCloseButton
+@onready var close_button: Button = (
+	$ContentPanel/MarginContainer/VBoxContainer/Header/HeaderRow/CloseButton
 )
 @onready var _section_title: Label = (
 	$ContentPanel/MarginContainer/VBoxContainer/AvailablePathsSection/SectionTitle
@@ -60,7 +63,10 @@ func _ready() -> void:
 		return
 
 	_apply_theme()
-	_connect_close_buttons()
+	if close_button:
+		close_button.mouse_filter = Control.MOUSE_FILTER_STOP
+		close_button.pressed.connect(_on_close_pressed)
+		RetrowaveTheme.style_secondary_button(close_button)
 	if not LeaderManager.training_path_invested.is_connected(_on_training_path_invested):
 		LeaderManager.training_path_invested.connect(_on_training_path_invested)
 	if not LeaderManager.training_path_switched.is_connected(_on_training_path_switched):
@@ -75,25 +81,6 @@ func _exit_tree() -> void:
 		LeaderManager.training_path_invested.disconnect(_on_training_path_invested)
 	if LeaderManager.training_path_switched.is_connected(_on_training_path_switched):
 		LeaderManager.training_path_switched.disconnect(_on_training_path_switched)
-
-
-func _connect_close_buttons() -> void:
-	for btn in [close_button, header_close_button]:
-		if btn == null:
-			continue
-		btn.mouse_filter = Control.MOUSE_FILTER_STOP
-		if btn.pressed.is_connected(_on_close_pressed):
-			btn.pressed.disconnect(_on_close_pressed)
-		btn.pressed.connect(_on_close_pressed)
-		RetrowaveTheme.style_secondary_button(btn)
-
-	var fallback := get_node_or_null(
-		"ContentPanel/MarginContainer/VBoxContainer/Footer/CloseButton"
-	) as Button
-	if fallback != null and (close_button == null or fallback != close_button):
-		fallback.mouse_filter = Control.MOUSE_FILTER_STOP
-		if not fallback.pressed.is_connected(_on_close_pressed):
-			fallback.pressed.connect(_on_close_pressed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -125,6 +112,7 @@ func refresh_screen() -> void:
 	leader_name_label.text = current_leader.name
 	current_xp_label.text = "XP Available: %d" % current_leader.experience
 	current_xp_label.add_theme_color_override("font_color", XP_HIGHLIGHT_COLOR)
+	_update_current_path_header()
 	_populate_available_paths()
 
 
@@ -138,10 +126,28 @@ func _apply_theme() -> void:
 	RetrowaveTheme.style_body_label(current_xp_label)
 	if close_button:
 		RetrowaveTheme.style_secondary_button(close_button)
-	if header_close_button:
-		RetrowaveTheme.style_secondary_button(header_close_button)
 	_section_title.add_theme_font_size_override("font_size", 14)
 	_section_title.add_theme_color_override("font_color", RetrowaveTheme.CYAN)
+	if current_path_label:
+		current_path_label.add_theme_font_size_override("font_size", 15)
+		RetrowaveTheme.style_body_label(current_path_label)
+
+
+func _update_current_path_header() -> void:
+	if current_path_label == null or current_leader == null:
+		return
+	if current_leader.training_path_id.is_empty():
+		current_path_label.text = "Current School: None (choose a path below)"
+		current_path_label.modulate = Color(0.6, 0.6, 0.6)
+		return
+	var path_data := LeaderManager.get_training_path_definition(current_leader.training_path_id)
+	var path_name := str(path_data.get("name", current_leader.training_path_id))
+	current_path_label.text = "Current School: %s  —  Level %d / %d" % [
+		path_name,
+		current_leader.training_path_level,
+		LeaderManager.get_training_path_max_level(current_leader.training_path_id),
+	]
+	current_path_label.modulate = ACTIVE_PATH_COLOR
 
 
 func _style_content_panel() -> void:
@@ -229,36 +235,40 @@ func _create_path_row(path: Dictionary) -> PanelContainer:
 		next_label.modulate = XP_HIGHLIGHT_COLOR
 		vbox.add_child(next_label)
 
-	var invest_cost := LeaderManager.get_training_path_level_cost(
-		current_level if is_active else 0
-	)
-	var invest_btn := Button.new()
-	if current_level >= max_level:
-		invest_btn.text = "Max Level Reached"
-		invest_btn.disabled = true
-	else:
-		var verb := "Invest"
-		if not is_active and current_leader.has_training_path():
-			verb = "Adopt & Invest"
-		invest_btn.text = "%s %d XP" % [verb, invest_cost]
-		invest_btn.disabled = not LeaderManager.can_invest_training_path(leader_id, path_id)
-		invest_btn.pressed.connect(_on_invest_pressed.bind(path_id, invest_cost))
-	if invest_btn.disabled and current_level < max_level:
-		invest_btn.tooltip_text = "Requires %d XP" % invest_cost
-	RetrowaveTheme.style_primary_button(invest_btn)
-	vbox.add_child(invest_btn)
+	var action_btn := Button.new()
+	var has_school := current_leader.has_training_path()
 
-	if (
-		current_leader.has_training_path()
-		and not is_active
-		and LeaderManager.can_switch_training_path(leader_id, path_id)
-	):
+	if current_level >= max_level and is_active:
+		action_btn.text = "Max Level Reached"
+		action_btn.disabled = true
+		RetrowaveTheme.style_primary_button(action_btn)
+	elif is_active:
+		var invest_cost := LeaderManager.get_training_path_level_cost(current_level)
+		action_btn.text = "Invest %d XP" % invest_cost
+		action_btn.disabled = not LeaderManager.can_invest_training_path(leader_id, path_id)
+		action_btn.pressed.connect(_on_invest_pressed.bind(path_id, invest_cost))
+		if action_btn.disabled:
+			action_btn.tooltip_text = "Requires %d XP" % invest_cost
+		RetrowaveTheme.style_primary_button(action_btn)
+	elif has_school:
 		var switch_cost := LeaderManager.get_training_path_switch_cost(leader_id, path_id)
-		var switch_btn := Button.new()
-		switch_btn.text = "Switch School (%d XP)" % switch_cost
-		switch_btn.pressed.connect(_on_switch_pressed.bind(path_id))
-		RetrowaveTheme.style_secondary_button(switch_btn)
-		vbox.add_child(switch_btn)
+		action_btn.text = "Switch (%d XP)" % switch_cost
+		action_btn.disabled = not LeaderManager.can_switch_training_path(leader_id, path_id)
+		action_btn.pressed.connect(_on_switch_pressed.bind(path_id))
+		if action_btn.disabled:
+			action_btn.tooltip_text = "Requires %d XP to switch" % switch_cost
+		RetrowaveTheme.style_secondary_button(action_btn)
+		action_btn.modulate = SWITCH_BUTTON_COLOR
+	else:
+		var adopt_cost := LeaderManager.get_training_path_level_cost(0)
+		action_btn.text = "Adopt Path (%d XP)" % adopt_cost
+		action_btn.disabled = not LeaderManager.can_invest_training_path(leader_id, path_id)
+		action_btn.pressed.connect(_on_invest_pressed.bind(path_id, adopt_cost))
+		if action_btn.disabled:
+			action_btn.tooltip_text = "Requires %d XP" % adopt_cost
+		RetrowaveTheme.style_primary_button(action_btn)
+
+	vbox.add_child(action_btn)
 
 	return panel
 
@@ -272,10 +282,7 @@ func _format_effects(effects: Dictionary) -> String:
 	return formatted
 
 
-func _on_invest_pressed(path_id: String, cost: int) -> void:
-	if current_leader.experience < cost:
-		push_warning("Not enough XP to invest in training path.")
-		return
+func _on_invest_pressed(path_id: String, _cost: int = 0) -> void:
 	if LeaderManager.invest_xp_in_training_path(leader_id, path_id):
 		refresh_screen()
 	else:

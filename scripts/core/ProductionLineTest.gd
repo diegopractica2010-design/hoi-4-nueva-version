@@ -1056,6 +1056,13 @@ static func _test_leader_manager() -> bool:
 	var modern_usa: Leader = LeaderManager.get_leader("usa_richardson_2026")
 	if modern_usa == null:
 		print("  [FAIL] 2026 USA commander usa_richardson_2026 not loaded")
+	var cjcs: Leader = LeaderManager.get_leader("usa_chairman_joint_chiefs_2026")
+	if cjcs == null:
+		print("  [FAIL] 2026 USA CJCS usa_chairman_joint_chiefs_2026 not loaded")
+	if LeaderManager.get_leader("usa_navy_chief_2026") == null:
+		print("  [FAIL] 2026 USA Navy chief usa_navy_chief_2026 not loaded")
+	if LeaderManager.get_leader("usa_air_force_chief_2026") == null:
+		print("  [FAIL] 2026 USA Air Force chief usa_air_force_chief_2026 not loaded")
 		return false
 	if LeaderManager.get_leader_age(modern_usa) < 40 or LeaderManager.get_leader_age(modern_usa) > 65:
 		print("  [FAIL] 2026 leader age out of range: ", LeaderManager.get_leader_age(modern_usa))

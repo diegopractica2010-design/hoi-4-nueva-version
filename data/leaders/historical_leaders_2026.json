@@ -3,6 +3,106 @@
   "description": "Modern roster for 2026 only. Each nation should have army, navy, and air leadership.",
   "leaders": [
     {
+      "leader_id": "usa_chairman_joint_chiefs_2026",
+      "name": "Gen. Dan \"RASIN\" Caine",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 8,
+      "organization_skill": 9,
+      "logistics_skill": 8,
+      "planning_skill": 9,
+      "initiative_skill": 8,
+      "experience": 480,
+      "battles_fought": 12,
+      "trait_levels": {
+        "combined_arms_master": 3,
+        "logistics_wizard": 2,
+        "political_general": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "usa_army_chief_2026",
+      "name": "Gen. James \"J.T.\" Thompson",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 8,
+      "defense_skill": 7,
+      "organization_skill": 8,
+      "logistics_skill": 6,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 310,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 2,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "usa_navy_chief_2026",
+      "name": "Adm. Elena Vargas",
+      "country_tag": "USA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 8,
+      "logistics_skill": 8,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 290,
+      "battles_fought": 9,
+      "trait_levels": {
+        "carrier_admiral": 2,
+        "methodical": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "usa_air_force_chief_2026",
+      "name": "Gen. Marcus Hale",
+      "country_tag": "USA",
+      "leader_type": "air_marshal",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 8,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 9,
+      "experience": 340,
+      "battles_fought": 11,
+      "trait_levels": {
+        "aggressive": 2,
+        "methodical": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "usa_deputy_army_2026",
+      "name": "Lt. Gen. Sophia Reyes",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 8,
+      "experience": 180,
+      "battles_fought": 6,
+      "trait_levels": {
+        "combined_arms_master": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2025
+    },
+    {
       "leader_id": "usa_richardson_2026",
       "name": "Richard Cole Richardson",
       "country_tag": "USA",
@@ -43,28 +143,28 @@
       "start_year": 2020
     },
     {
-      "leader_id": "usa_hartley_2026",
-      "name": "James Hartley",
+      "leader_id": "usa_raizin_cain_2026",
+      "name": "Raizin Cain",
       "country_tag": "USA",
       "leader_type": "general",
-      "attack_skill": 8,
+      "attack_skill": 9,
       "defense_skill": 6,
       "organization_skill": 7,
       "logistics_skill": 6,
       "planning_skill": 7,
-      "initiative_skill": 8,
-      "experience": 640,
-      "battles_fought": 16,
+      "initiative_skill": 9,
+      "experience": 710,
+      "battles_fought": 24,
       "trait_levels": {
-        "tank_leader": 2,
-        "aggressive": 2
+        "tank_leader": 3,
+        "aggressive": 3
       },
-      "birth_year": 1978,
-      "start_year": 2023
+      "birth_year": 1975,
+      "start_year": 2022
     },
     {
       "leader_id": "usa_whitmore_2026",
-      "name": "Sarah K. Whitmore",
+      "name": "Adm. Sarah K. Whitmore",
       "country_tag": "USA",
       "leader_type": "admiral",
       "attack_skill": 7,
@@ -73,18 +173,38 @@
       "logistics_skill": 7,
       "planning_skill": 8,
       "initiative_skill": 7,
-      "experience": 610,
-      "battles_fought": 20,
+      "experience": 650,
+      "battles_fought": 22,
       "trait_levels": {
         "carrier_admiral": 3,
         "cautious": 1
       },
-      "birth_year": 1974,
-      "start_year": 2021
+      "birth_year": 1972,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "usa_monroe_2026",
+      "name": "Adm. Keisha R. Monroe",
+      "country_tag": "USA",
+      "leader_type": "admiral",
+      "attack_skill": 8,
+      "defense_skill": 7,
+      "organization_skill": 9,
+      "logistics_skill": 8,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 690,
+      "battles_fought": 19,
+      "trait_levels": {
+        "sea_wolf": 2,
+        "methodical": 2
+      },
+      "birth_year": 1970,
+      "start_year": 2024
     },
     {
       "leader_id": "usa_chen_2026",
-      "name": "Marcus Chen",
+      "name": "Gen. Marcus Chen",
       "country_tag": "USA",
       "leader_type": "air_marshal",
       "attack_skill": 7,
@@ -2320,7 +2440,7 @@
     },
     {
       "leader_id": "usa_gen2_2026",
-      "name": "USA Deputy Army Command",
+      "name": "Lt. Gen. David Nash (III Corps)",
       "country_tag": "USA",
       "leader_type": "general",
       "attack_skill": 6,
@@ -2340,7 +2460,7 @@
     },
     {
       "leader_id": "usa_nav2_2026",
-      "name": "USA Deputy Fleet Command",
+      "name": "RAdm. Derek Holloway",
       "country_tag": "USA",
       "leader_type": "admiral",
       "attack_skill": 6,
@@ -2360,7 +2480,7 @@
     },
     {
       "leader_id": "usa_air2_2026",
-      "name": "USA Deputy Air Command",
+      "name": "Lt. Gen. Aisha Porter",
       "country_tag": "USA",
       "leader_type": "air_marshal",
       "attack_skill": 6,
