@@ -27,13 +27,15 @@ extends DraggablePanel
 	$MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn/AvailableHeaderRow
 )
 @onready var available_leaders_list: VBoxContainer = (
-	$MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn/AvailableLeadersList/AvailableLeadersContent
+	$MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn/AvailableLeadersList/AvailableLeadersContent
 )
 @onready var formations_content: VBoxContainer = (
-	$MarginContainer/VBoxContainer/MainArea/FormationsWithoutLeader/FormationsList/FormationsContent
+	$MarginContainer/VBoxContainer/MainArea/ListsColumn/FormationsWithoutLeader/FormationsList/FormationsContent
 )
 @onready var detail_panel: PanelContainer = $MarginContainer/VBoxContainer/MainArea/DetailPanel
-@onready var detail_label: Label = $MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailLabel
+@onready var detail_label: Label = (
+	$MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox/DetailLabel
+)
 
 var current_data: LeaderScreenData
 var _detail_traits_box: VBoxContainer
@@ -85,31 +87,22 @@ func _apply_screen_theme() -> void:
 	RetrowaveTheme.style_summary_metric(captured_leaders_label, RetrowaveTheme.MAGENTA)
 	RetrowaveTheme.style_title($MarginContainer/VBoxContainer/NationalPositionsSection/SectionTitle)
 	RetrowaveTheme.style_title(
-		$MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn/AvailableLeadersTitle,
+		$MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn/AvailableLeadersTitle,
 	)
 	RetrowaveTheme.style_title(
-		$MarginContainer/VBoxContainer/MainArea/FormationsWithoutLeader/FormationsTitle,
+		$MarginContainer/VBoxContainer/MainArea/ListsColumn/FormationsWithoutLeader/FormationsTitle,
 	)
 	RetrowaveTheme.style_detail_panel(detail_panel)
 	RetrowaveTheme.style_detail_label(detail_label)
 
 
 func _setup_detail_panel() -> void:
-	if detail_panel.get_node_or_null("DetailVBox") != null:
-		_detail_traits_box = detail_panel.get_node("DetailVBox/DetailTraitsVBox") as VBoxContainer
-		return
-
-	var vbox := VBoxContainer.new()
-	vbox.name = "DetailVBox"
-	vbox.add_theme_constant_override("separation", 8)
-	detail_panel.remove_child(detail_label)
-	detail_panel.add_child(vbox)
-	vbox.add_child(detail_label)
-
-	_detail_traits_box = VBoxContainer.new()
-	_detail_traits_box.name = "DetailTraitsVBox"
-	_detail_traits_box.add_theme_constant_override("separation", 4)
-	vbox.add_child(_detail_traits_box)
+	_detail_traits_box = (
+		detail_panel.get_node_or_null("DetailMargin/DetailScroll/DetailVBox/DetailTraitsVBox")
+		as VBoxContainer
+	)
+	if _detail_traits_box == null:
+		push_warning("LeaderAssignmentScreen: DetailTraitsVBox missing from scene")
 
 
 func _setup_headers() -> void:
@@ -336,6 +329,7 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 func _style_leader_name_button(button: Button) -> void:
 	button.add_theme_color_override("font_color", RetrowaveTheme.CYAN)
 	button.add_theme_color_override("font_hover_color", RetrowaveTheme.MAGENTA)
+	button.add_theme_color_override("font_pressed_color", RetrowaveTheme.MAGENTA)
 	button.add_theme_font_size_override("font_size", 14)
 	button.focus_mode = Control.FOCUS_NONE
 

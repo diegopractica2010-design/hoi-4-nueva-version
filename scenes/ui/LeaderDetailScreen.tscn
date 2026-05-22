@@ -100,7 +100,7 @@ layout_mode = 2
 text = "LEVEL UP TRAITS"
 
 [node name="LevelUpScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/LevelUpSection"]
-custom_minimum_size = Vector2(0, 88)
+custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 
 [node name="LevelUpList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/LevelUpSection/LevelUpScroll"]

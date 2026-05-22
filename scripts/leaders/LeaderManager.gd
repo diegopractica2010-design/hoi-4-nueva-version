@@ -470,9 +470,15 @@ func set_current_year(year: int) -> void:
 
 
 func get_leader_age(leader: Leader) -> int:
-	if leader == null:
+	if leader == null or leader.birth_year <= 0:
 		return 0
-	return maxi(current_year - leader.birth_year, 18)
+	var age := current_year - leader.birth_year
+	# Historical WW-era leaders in a modern scenario year (e.g. 2026 roster from 1936 data).
+	if age > 90 and leader.start_year > leader.birth_year:
+		age = leader.start_year - leader.birth_year
+	if leader.end_year > 0 and leader.end_year < current_year:
+		age = mini(age, leader.end_year - leader.birth_year)
+	return clampi(age, 18, 90)
 
 
 func get_pool_leader_count(country_tag: String = "") -> int:

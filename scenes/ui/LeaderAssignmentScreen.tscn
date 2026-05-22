@@ -3,16 +3,24 @@
 [ext_resource type="Script" path="res://scripts/ui/LeaderAssignmentScreen.gd" id="1_screen"]
 
 [node name="LeaderAssignmentScreen" type="Control"]
-layout_mode = 0
-offset_left = 200.0
-offset_top = 80.0
-offset_right = 1300.0
-offset_bottom = 780.0
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = -340.0
+offset_right = 550.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 0
 script = ExtResource("1_screen")
 country_tag = "GER"
 
 [node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,11 +30,11 @@ mouse_filter = 2
 color = Color(0.058824, 0.058824, 0.117647, 1)
 
 [node name="TitleBar" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 1100.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
 offset_bottom = 40.0
+grow_horizontal = 2
 mouse_filter = 0
 theme_override_constants/separation = 12
 
@@ -40,15 +48,17 @@ layout_mode = 2
 text = "Close"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_left = 0.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_top = 40.0
-offset_right = 1100.0
-offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
+theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -91,53 +101,83 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 14
 
-[node name="AvailableLeadersColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea"]
+[node name="ListsColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_constants/separation = 10
+
+[node name="AvailableLeadersColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 theme_override_constants/separation = 6
 
-[node name="AvailableLeadersTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn"]
+[node name="AvailableLeadersTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn"]
 layout_mode = 2
 text = "Available Leaders"
 
-[node name="AvailableHeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn"]
+[node name="AvailableHeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="AvailableLeadersList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn"]
+[node name="AvailableLeadersList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 2
 
-[node name="AvailableLeadersContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn/AvailableLeadersList"]
+[node name="AvailableLeadersContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn/AvailableLeadersList"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
-[node name="FormationsWithoutLeader" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea"]
+[node name="FormationsWithoutLeader" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn"]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="FormationsTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/FormationsWithoutLeader"]
+[node name="FormationsTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/FormationsWithoutLeader"]
 layout_mode = 2
 text = "Formations Without Leader"
 
-[node name="FormationsList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/FormationsWithoutLeader"]
+[node name="FormationsList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/FormationsWithoutLeader"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FormationsContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/FormationsWithoutLeader/FormationsList"]
+[node name="FormationsContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/FormationsWithoutLeader/FormationsList"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
 [node name="DetailPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainArea"]
 layout_mode = 2
-custom_minimum_size = Vector2(280, 0)
+size_flags_vertical = 3
+custom_minimum_size = Vector2(300, 0)
 
-[node name="DetailLabel" type="Label" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel"]
+[node name="DetailMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel"]
 layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="DetailScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DetailVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="DetailLabel" type="Label" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Select a leader for details."
-autowrap_mode = 2
+autowrap_mode = 3
+
+[node name="DetailTraitsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4

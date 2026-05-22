@@ -113,14 +113,17 @@ func _update_header() -> void:
 	name_label.text = current_leader.name
 	name_label.add_theme_font_size_override("font_size", 22)
 
+	var age := 0
+	if typeof(LeaderManager) != TYPE_NIL:
+		age = LeaderManager.get_leader_age(current_leader)
+	elif current_leader.birth_year > 0:
+		age = maxi(1936 - current_leader.birth_year, 0)
+
 	var assignment_text := "Unassigned"
 	if not current_leader.assigned_army_id.is_empty():
 		assignment_text = current_leader.assigned_army_id
 
-	age_assignment_label.text = "Age: %d   |   Assignment: %s" % [
-		LeaderManager.get_leader_age(current_leader),
-		assignment_text,
-	]
+	age_assignment_label.text = "Age: %d   |   Assignment: %s" % [age, assignment_text]
 
 	skills_label.text = "Atk %d  Def %d  Log %d  Plan %d  Init %d" % [
 		current_leader.attack_skill,
@@ -187,29 +190,63 @@ func _populate_level_up_options() -> void:
 func _create_level_up_row(trait_entry: Dictionary) -> HBoxContainer:
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 12)
+	hbox.custom_minimum_size = Vector2(0, 48)
 
-	var name_lbl := Label.new()
-	name_lbl.text = "%s (Level %d → %d)" % [
-		trait_entry.get("name", trait_entry.get("trait_id", "")),
-		int(trait_entry.get("level", 1)),
-		int(trait_entry.get("level", 1)) + 1,
+	var trait_id: String = str(trait_entry.get("trait_id", ""))
+	var level := int(trait_entry.get("level", 1))
+
+	var info_vbox := VBoxContainer.new()
+	info_vbox.add_theme_constant_override("separation", 2)
+	info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	var name_label := Label.new()
+	name_label.text = "%s (Level %d → %d)" % [
+		trait_entry.get("name", trait_id),
+		level,
+		level + 1,
 	]
-	name_lbl.custom_minimum_size = Vector2(260, 0)
-	RetrowaveTheme.style_row_label(name_lbl)
-	hbox.add_child(name_lbl)
+	name_label.add_theme_font_size_override("font_size", 14)
+	RetrowaveTheme.style_column_header(name_label)
+	info_vbox.add_child(name_label)
 
-	var cost_lbl := Label.new()
-	cost_lbl.text = "%d XP" % int(trait_entry.get("level_up_cost", 0))
-	cost_lbl.modulate = XP_HIGHLIGHT_COLOR
-	hbox.add_child(cost_lbl)
+	var current_effects: Dictionary = trait_entry.get("effects", {}) as Dictionary
+	if not current_effects.is_empty():
+		var current_label := Label.new()
+		current_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		current_label.text = "Current: " + _format_trait_effects(current_effects)
+		current_label.add_theme_font_size_override("font_size", 11)
+		current_label.modulate = Color(0.75, 0.75, 0.75)
+		info_vbox.add_child(current_label)
+
+	var next_effects := _get_next_level_effects(trait_id, level)
+	if not next_effects.is_empty():
+		var next_label := Label.new()
+		next_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		next_label.text = "Next Level: " + _format_trait_effects(next_effects)
+		next_label.add_theme_font_size_override("font_size", 11)
+		next_label.modulate = XP_HIGHLIGHT_COLOR
+		info_vbox.add_child(next_label)
+
+	hbox.add_child(info_vbox)
+
+	var action_vbox := VBoxContainer.new()
+	action_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+
+	var cost_label := Label.new()
+	cost_label.text = "%d XP" % int(trait_entry.get("level_up_cost", 0))
+	cost_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	cost_label.modulate = XP_HIGHLIGHT_COLOR
+	action_vbox.add_child(cost_label)
 
 	var level_btn := Button.new()
 	level_btn.text = "Level Up"
+	level_btn.custom_minimum_size = Vector2(90, 28)
 	RetrowaveTheme.style_primary_button(level_btn)
 	level_btn.disabled = current_leader.experience < int(trait_entry.get("level_up_cost", 0))
-	level_btn.pressed.connect(_on_level_up_pressed.bind(str(trait_entry.get("trait_id", ""))))
-	hbox.add_child(level_btn)
+	level_btn.pressed.connect(_on_level_up_pressed.bind(trait_id))
+	action_vbox.add_child(level_btn)
 
+	hbox.add_child(action_vbox)
 	return hbox
 
 
@@ -271,6 +308,13 @@ func _add_note_label(container: VBoxContainer, text: String) -> void:
 	note.modulate = Color(0.7, 0.7, 0.75)
 	RetrowaveTheme.style_body_label(note)
 	container.add_child(note)
+
+
+## Effects the trait would have at current_level + 1 (preview before spending XP).
+func _get_next_level_effects(trait_id: String, current_level: int) -> Dictionary:
+	if trait_id.is_empty() or typeof(LeaderManager) == TYPE_NIL:
+		return {}
+	return LeaderManager.get_trait_effects_at_level(trait_id, current_level + 1)
 
 
 func _format_trait_effects(effects: Dictionary) -> String:
