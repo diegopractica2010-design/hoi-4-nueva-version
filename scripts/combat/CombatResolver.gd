@@ -84,18 +84,19 @@ func resolve_battle_aftermath(
 	var defender_leader_id := LeaderManager.get_leader_id_for_army(defender_army_id)
 
 	if not xp_context.is_empty() or attacker_leader_id != "" or defender_leader_id != "":
-		LeaderManager.award_battle_xp_to_participants(
-			attacker_leader_id,
-			defender_leader_id,
-			xp_context,
-		)
+		var normalized := _normalize_battle_result(xp_context, intensity)
+		award_xp_from_combat(attacker_leader_id, defender_leader_id, normalized)
 		if attacker_leader_id != "":
-			results["attacker_xp"] = LeaderManager.calculate_combat_xp_from_result(xp_context)
+			results["attacker_xp"] = _total_combat_xp_for_leader(attacker_leader_id, normalized, 1.0)
 		if defender_leader_id != "":
-			var defender_ctx := xp_context.duplicate()
-			if not bool(defender_ctx.get("is_heroic_defense", false)):
-				defender_ctx["intensity"] = float(defender_ctx.get("intensity", 1.0)) * 0.85
-			results["defender_xp"] = LeaderManager.calculate_combat_xp_from_result(defender_ctx)
+			var defender_scale := 1.0
+			if str(normalized.get("outcome", "")) != "heroic_defense":
+				defender_scale = 0.85
+			results["defender_xp"] = _total_combat_xp_for_leader(
+				defender_leader_id,
+				normalized,
+				defender_scale,
+			)
 	elif not attacker_army_id.is_empty() or not defender_army_id.is_empty():
 		# Legacy fallback when no battle_result dict is provided.
 		if not attacker_army_id.is_empty():
@@ -160,3 +161,123 @@ func _find_scenario_loader() -> ScenarioLoader:
 		return null
 	var loader_node: Node = tree.root.find_child("ScenarioLoader", true, false)
 	return loader_node as ScenarioLoader
+
+
+# ============================================
+# XP SYSTEM - Combat Integration
+# ============================================
+
+## Awards XP to leaders after a battle has resolved. Call after combat is finalized.
+func award_xp_from_combat(
+	attacker_leader_id: String,
+	defender_leader_id: String,
+	battle_result: Dictionary,
+) -> void:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+
+	if not attacker_leader_id.is_empty():
+		_apply_combat_xp_to_leader(attacker_leader_id, battle_result, 1.0)
+
+	if not defender_leader_id.is_empty():
+		var defender_scale := 1.0
+		if str(battle_result.get("outcome", "")) != "heroic_defense":
+			defender_scale = 0.85
+		_apply_combat_xp_to_leader(defender_leader_id, battle_result, defender_scale)
+
+
+func _apply_combat_xp_to_leader(
+	leader_id: String,
+	battle_result: Dictionary,
+	scale: float = 1.0,
+) -> int:
+	var xp_data := _calculate_combat_xp(battle_result, leader_id)
+	var total := int(xp_data.get("total_xp", 12))
+	total = maxi(int(float(total) * clampf(scale, 0.25, 4.0)), 1)
+	xp_data["total_xp"] = total
+	LeaderManager.award_combat_xp(leader_id, xp_data)
+	return total
+
+
+func _total_combat_xp_for_leader(
+	leader_id: String,
+	battle_result: Dictionary,
+	scale: float = 1.0,
+) -> int:
+	var xp_data := _calculate_combat_xp(battle_result, leader_id)
+	var total := int(xp_data.get("total_xp", 12))
+	return maxi(int(float(total) * clampf(scale, 0.25, 4.0)), 1)
+
+
+## Calculates how much XP should be awarded based on battle outcome.
+func _calculate_combat_xp(battle_result: Dictionary, leader_id: String = "") -> Dictionary:
+	var base_xp := 12
+	var bonus := 0
+
+	var outcome: String = str(battle_result.get("outcome", "defeat"))
+
+	match outcome:
+		"major_victory":
+			bonus = 60
+		"heroic_defense":
+			bonus = 80
+		"high_risk_success":
+			bonus = 40
+		"minor_victory", "delay_success":
+			bonus = 20
+		"defeat":
+			bonus = 0
+		"crushing_defeat":
+			bonus = 0
+
+	var battle_scale: float = float(battle_result.get("battle_scale", 1.0))
+	bonus = int(float(bonus) * clampf(battle_scale, 0.25, 4.0))
+
+	var defeat_bonus := 0
+	if outcome in ["defeat", "crushing_defeat"] and not leader_id.is_empty():
+		defeat_bonus = _get_defeat_learning_bonus(leader_id)
+
+	return {
+		"base_xp": base_xp,
+		"bonus_xp": bonus,
+		"defeat_learning_bonus": defeat_bonus,
+		"total_xp": base_xp + bonus + defeat_bonus,
+	}
+
+
+## Trait-based bonus XP when a leader fights through a defeat.
+func _get_defeat_learning_bonus(leader_id: String) -> int:
+	if leader_id.is_empty() or typeof(LeaderManager) == TYPE_NIL:
+		return 0
+
+	var leader := LeaderManager.get_leader(leader_id)
+	if leader == null:
+		return 0
+
+	var bonus := 0
+	if int(leader.trait_levels.get("methodical", 0)) > 0:
+		bonus += 8
+	if int(leader.trait_levels.get("iron_will", 0)) > 0:
+		bonus += 10
+	if int(leader.trait_levels.get("cautious", 0)) > 0:
+		bonus += 6
+	return bonus
+
+
+func _normalize_battle_result(battle_result: Dictionary, intensity: float = 1.0) -> Dictionary:
+	var result := battle_result.duplicate()
+	if not result.has("intensity"):
+		result["intensity"] = intensity
+	if result.has("outcome"):
+		return result
+	if bool(result.get("is_major_victory", false)):
+		result["outcome"] = "major_victory"
+	elif bool(result.get("is_heroic_defense", false)):
+		result["outcome"] = "heroic_defense"
+	elif bool(result.get("was_high_risk", false)) and bool(result.get("success", false)):
+		result["outcome"] = "high_risk_success"
+	elif bool(result.get("success", false)):
+		result["outcome"] = "minor_victory"
+	else:
+		result["outcome"] = "defeat"
+	return result

@@ -10,6 +10,7 @@ signal leader_retired(leader_id: String)
 signal leader_introduced(leader_id: String)
 signal game_year_advanced(year: int)
 signal leader_experience_gained(leader_id: String, amount: int, source: String)
+signal trait_leveled(leader_id: String, trait_id: String, new_level: int)
 
 const POSITION_CHIEF_OF_ARMY := "chief_of_army"
 const POSITION_CHIEF_OF_NAVY := "chief_of_navy"
@@ -1029,7 +1030,9 @@ func award_combat_xp(leader_id: String, battle_result: Dictionary = {}) -> void:
 		return
 	if leader.is_injured:
 		return
-	var amount := calculate_combat_xp_from_result(battle_result)
+	var amount := int(battle_result.get("total_xp", 0))
+	if amount <= 0:
+		amount = calculate_combat_xp_from_result(battle_result)
 	award_xp_to_leader(leader_id, amount, "combat")
 
 
@@ -1094,6 +1097,171 @@ func award_high_risk_operation_xp(leader_id: String, bonus: int = 45) -> void:
 	award_xp_to_leader(leader_id, clampi(bonus, 30, 80), "high_risk_operation")
 
 
+# ============================================
+# XP SYSTEM - Trait Leveling
+# ============================================
+
+## Returns the current level of a trait for a leader (0 if they don't have it).
+func get_trait_level(leader_id: String, trait_id: String) -> int:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return 0
+	return leader.get_trait_level(trait_id)
+
+
+## Trait definition lookup (traits.json via LeaderManager cache).
+func get_trait_data(trait_id: String) -> Dictionary:
+	return get_trait_definition(trait_id)
+
+
+## XP cost to advance from current_level to current_level + 1.
+func get_trait_level_cost(current_level: int) -> int:
+	match current_level:
+		0: return 100
+		1: return 150
+		2: return 250
+		_: return 300
+
+
+func can_level_trait(leader_id: String, trait_id: String) -> bool:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return false
+
+	var trait_data := get_trait_data(trait_id)
+	if trait_data.is_empty():
+		return false
+
+	var current_level := get_trait_level(leader_id, trait_id)
+	var max_level := int(trait_data.get("max_level", 3))
+	if current_level >= max_level:
+		return false
+
+	if not can_add_trait(leader, trait_id, 1):
+		return false
+
+	var cost := get_trait_level_cost(current_level)
+	return leader.has_enough_experience(cost)
+
+
+## Levels up a trait by spending XP. Returns true if at least one level was gained.
+func level_trait(leader_id: String, trait_id: String, levels: int = 1) -> bool:
+	var gained := 0
+	for _i in maxi(levels, 0):
+		if not _level_trait_once(leader_id, trait_id):
+			break
+		gained += 1
+	return gained > 0
+
+
+func _level_trait_once(leader_id: String, trait_id: String) -> bool:
+	if not can_level_trait(leader_id, trait_id):
+		return false
+
+	var leader := get_leader(leader_id)
+	var current_level := get_trait_level(leader_id, trait_id)
+	var cost := get_trait_level_cost(current_level)
+
+	if not leader.spend_experience(cost):
+		return false
+
+	if not try_add_trait_to_leader(leader, trait_id, 1):
+		return false
+
+	var new_level := get_trait_level(leader_id, trait_id)
+	print("%s leveled %s to level %d" % [leader.name, trait_id, new_level])
+	emit_signal("trait_leveled", leader_id, trait_id, new_level)
+	return true
+
+
+# ============================================
+# LEADER DISPLAY HELPERS
+# ============================================
+
+## UI-friendly trait rows for a leader (character sheet, assignment panel, etc.).
+func get_leader_trait_display_data(leader_id: String) -> Array[Dictionary]:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return []
+
+	var display_data: Array[Dictionary] = []
+	for trait_id in leader.trait_levels.keys():
+		var tid := str(trait_id)
+		var level := int(leader.trait_levels[tid])
+		var trait_data := get_trait_data(tid)
+		var effects := get_trait_effects_at_level(tid, level)
+		var can_level := can_level_trait(leader_id, tid)
+		display_data.append({
+			"trait_id": tid,
+			"id": tid,
+			"name": str(trait_data.get("name", tid)),
+			"level": level,
+			"max_level": get_trait_max_level(tid),
+			"roman": ROMAN_LEVELS[mini(level, ROMAN_LEVELS.size() - 1)],
+			"rarity": str(trait_data.get("rarity", "common")),
+			"description": str(trait_data.get("description", "")),
+			"effects": effects,
+			"effects_text": format_trait_effects_text(effects),
+			"can_level_up": can_level,
+			"level_up_cost": get_trait_level_cost(level) if can_level else 0,
+		})
+	return display_data
+
+
+# ============================================
+# TRAIT AVAILABILITY & UNLOCK HELPERS
+# ============================================
+
+const POTENTIAL_TRAIT_CANDIDATES: Array[String] = [
+	"tank_leader",
+	"logistics_wizard",
+	"combined_arms_master",
+	"mountain_specialist",
+	"artillery_expert",
+]
+
+
+## Traits the leader does not have yet but could potentially unlock (UI preview).
+func get_potential_traits_for_leader(leader_id: String) -> Array[Dictionary]:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return []
+
+	var potential: Array[Dictionary] = []
+	for trait_id in POTENTIAL_TRAIT_CANDIDATES:
+		if leader.has_trait(trait_id) or leader.trait_levels.has(trait_id):
+			continue
+
+		var trait_data := get_trait_data(trait_id)
+		if trait_data.is_empty():
+			continue
+
+		potential.append({
+			"trait_id": trait_id,
+			"name": str(trait_data.get("name", trait_id)),
+			"rarity": str(trait_data.get("rarity", "common")),
+			"unlock_reason": _get_unlock_reason(leader_id, trait_id),
+			"can_unlock_now": false,
+		})
+	return potential
+
+
+func _get_unlock_reason(_leader_id: String, trait_id: String) -> String:
+	match trait_id:
+		"tank_leader":
+			return "Requires Armor Doctrine or significant time commanding armored units"
+		"logistics_wizard":
+			return "Requires Logistics focus or extended supply management experience"
+		"combined_arms_master":
+			return "Requires Combined Arms Doctrine"
+		"mountain_specialist":
+			return "Requires significant time operating in mountainous terrain"
+		"artillery_expert":
+			return "Requires Artillery Doctrine or prolonged artillery coordination"
+		_:
+			return "Locked behind doctrine, focus, or experience"
+
+
 # === Experience, traits, injury, capture, promotion ===
 
 func award_battle_experience(leader_id: String, amount: int = 25, count_as_battle: bool = true) -> void:
@@ -1114,12 +1282,9 @@ func award_combat_experience_for_army(army_id: String, intensity: float = 1.0) -
 func get_trait_level_up_cost(leader: Leader, trait_id: String) -> int:
 	if leader == null or trait_id.is_empty():
 		return 0
-	var rarity := get_trait_rarity(trait_id)
-	var base_cost := int(XP_COST_BY_RARITY.get(rarity, 100))
-	var target_level := 1
-	if leader.has_trait(trait_id):
-		target_level = mini(leader.get_trait_level(trait_id) + 1, get_trait_max_level(trait_id))
-	return base_cost * target_level
+	if get_trait_definition(trait_id).is_empty():
+		return 0
+	return get_trait_level_cost(leader.get_trait_level(trait_id))
 
 
 func can_spend_xp_on_trait(leader: Leader, trait_id: String) -> Dictionary:
@@ -1128,30 +1293,29 @@ func can_spend_xp_on_trait(leader: Leader, trait_id: String) -> Dictionary:
 	if get_trait_definition(trait_id).is_empty():
 		return {"ok": false, "reason": "unknown_trait"}
 	var cost := get_trait_level_up_cost(leader, trait_id)
-	if not leader.has_enough_experience(cost):
-		return {"ok": false, "reason": "insufficient_xp", "cost": cost}
+	if leader.get_trait_level(trait_id) >= get_trait_max_level(trait_id):
+		return {"ok": false, "reason": "max_level", "cost": cost}
 	if not can_add_trait(leader, trait_id, 1):
 		return {"ok": false, "reason": "blocked", "cost": cost}
+	if not leader.has_enough_experience(cost):
+		return {"ok": false, "reason": "insufficient_xp", "cost": cost}
 	return {"ok": true, "cost": cost}
 
 
 func spend_xp_on_trait(leader_id: String, trait_id: String) -> Dictionary:
-	var leader: Leader = leaders.get(leader_id) as Leader
+	var leader: Leader = get_leader(leader_id)
 	var check := can_spend_xp_on_trait(leader, trait_id)
 	if not bool(check.get("ok", false)):
 		return {"success": false, "reason": str(check.get("reason", "blocked"))}
 
 	var cost := int(check.get("cost", 0))
-	if not try_add_trait_to_leader(leader, trait_id, 1):
+	if not level_trait(leader_id, trait_id, 1):
 		return {"success": false, "reason": "failed"}
-	if not leader.spend_experience(cost):
-		return {"success": false, "reason": "insufficient_xp"}
-	invalidate_leader_cache(leader.country_tag)
 	return {
 		"success": true,
 		"cost": cost,
 		"trait_id": trait_id,
-		"new_level": leader.get_trait_level(trait_id),
+		"new_level": get_trait_level(leader_id, trait_id),
 	}
 
 
@@ -1159,25 +1323,8 @@ func get_trait_display_list(leader: Leader) -> Array:
 	if leader == null:
 		return []
 	var rows: Array = []
-	for trait_id in leader.traits:
-		var level := leader.get_trait_level(trait_id)
-		var def := get_trait_definition(trait_id)
-		var display_name := str(def.get("name", trait_id))
-		var roman := ROMAN_LEVELS[mini(level, ROMAN_LEVELS.size() - 1)]
-		var max_level := get_trait_max_level(trait_id)
-		var effects := get_trait_effects_at_level(trait_id, level)
-		rows.append({
-			"id": trait_id,
-			"name": display_name,
-			"level": level,
-			"max_level": max_level,
-			"roman": roman,
-			"rarity": get_trait_rarity(trait_id),
-			"description": str(def.get("description", "")),
-			"effects_text": format_trait_effects_text(effects),
-			"can_level_up": can_add_trait(leader, trait_id, 1),
-			"level_up_cost": get_trait_level_up_cost(leader, trait_id),
-		})
+	for entry in get_leader_trait_display_data(leader.leader_id):
+		rows.append(entry)
 	return rows
 
 
@@ -1418,13 +1565,6 @@ func try_add_trait_to_leader(leader: Leader, trait_id: String, level: int = 1) -
 		leader.add_trait_unchecked(trait_id, clampi(level, 1, get_trait_max_level(trait_id)))
 	invalidate_leader_cache(leader.country_tag)
 	return true
-
-
-func level_trait(leader_id: String, trait_id: String, levels: int = 1) -> bool:
-	var leader: Leader = leaders.get(leader_id) as Leader
-	if leader == null:
-		return false
-	return try_add_trait_to_leader(leader, trait_id, levels)
 
 
 func _load_trait_definitions() -> void:

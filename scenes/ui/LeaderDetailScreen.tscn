@@ -1,0 +1,140 @@
+[gd_scene load_steps=2 format=3 uid="uid://leaderdetailscreen01"]
+
+[ext_resource type="Script" path="res://scripts/ui/LeaderDetailScreen.gd" id="1_screen"]
+
+[node name="LeaderDetailScreen" type="Control"]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 80.0
+offset_right = 960.0
+offset_bottom = 840.0
+mouse_filter = 0
+script = ExtResource("1_screen")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.058824, 0.117647, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Portrait" type="TextureRect" parent="MarginContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InfoVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/Header/InfoVBox"]
+layout_mode = 2
+text = "Leader Name"
+
+[node name="AgeAssignmentLabel" type="Label" parent="MarginContainer/VBoxContainer/Header/InfoVBox"]
+layout_mode = 2
+text = "Age: —   |   Assignment: Unassigned"
+
+[node name="SkillsLabel" type="Label" parent="MarginContainer/VBoxContainer/Header/InfoVBox"]
+layout_mode = 2
+text = "Atk —  Def —  Log —  Plan —  Init —"
+
+[node name="XPLabel" type="Label" parent="MarginContainer/VBoxContainer/Header/InfoVBox"]
+layout_mode = 2
+text = "XP: 0"
+
+[node name="SeparatorHeader" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CurrentTraitsSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="SectionHeader" type="Label" parent="MarginContainer/VBoxContainer/CurrentTraitsSection"]
+layout_mode = 2
+text = "CURRENT TRAITS"
+
+[node name="TraitsScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/CurrentTraitsSection"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TraitsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CurrentTraitsSection/TraitsScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="SeparatorLevelUp" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LevelUpSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SectionHeader" type="Label" parent="MarginContainer/VBoxContainer/LevelUpSection"]
+layout_mode = 2
+text = "LEVEL UP TRAITS"
+
+[node name="LevelUpScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/LevelUpSection"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+
+[node name="LevelUpList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/LevelUpSection/LevelUpScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="SeparatorPotential" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PotentialTraitsSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SectionHeader" type="Label" parent="MarginContainer/VBoxContainer/PotentialTraitsSection"]
+layout_mode = 2
+text = "POTENTIAL TRAITS (LOCKED)"
+
+[node name="PotentialScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/PotentialTraitsSection"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+
+[node name="PotentialTraitsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PotentialTraitsSection/PotentialScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="SeparatorFooter" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Footer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer/Footer"]
+layout_mode = 2
+text = "Close"

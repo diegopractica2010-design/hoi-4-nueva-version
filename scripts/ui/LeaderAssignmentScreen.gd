@@ -340,20 +340,14 @@ func _format_traits_row(summary: Dictionary) -> String:
 
 func _on_details_pressed(summary: Dictionary) -> void:
 	_selected_leader_id = str(summary.get("leader_id", ""))
-	var text := "Name: %s\n" % summary.get("name", "")
-	text += "Type: %s\n" % summary.get("leader_type_name", summary.get("leader_type", ""))
-	text += "Atk %d | Def %d | Log %d | Plan %d | Init %d\n" % [
-		int(summary.get("attack_skill", 0)),
-		int(summary.get("defense_skill", 0)),
-		int(summary.get("logistics_skill", 0)),
-		int(summary.get("planning_skill", 0)),
-		int(summary.get("initiative_skill", 0)),
-	]
-	text += "XP: %d | Battles: %d\n" % [
-		int(summary.get("experience", 0)),
-		int(summary.get("battles_fought", 0)),
-	]
-	detail_label.text = text
+	if _selected_leader_id.is_empty():
+		return
+
+	var tree := get_tree()
+	if tree != null and tree.root != null:
+		LeaderDetailScreen.open(tree.root, _selected_leader_id)
+
+	detail_label.text = "Name: %s\n(Open character sheet for traits & level-up.)" % summary.get("name", "")
 	_populate_trait_detail(summary)
 
 

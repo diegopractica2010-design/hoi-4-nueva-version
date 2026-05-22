@@ -846,17 +846,34 @@ static func _test_leader_manager() -> bool:
 		return false
 
 	patton.add_trait_unchecked("bold", 1)
-	var bold_cost := LeaderManager.get_trait_level_up_cost(patton, "bold")
-	if bold_cost <= 0:
-		print("  [FAIL] trait level-up cost missing")
+	if LeaderManager.get_trait_level_cost(1) != 150:
+		print("  [FAIL] get_trait_level_cost(1) should be 150")
 		return false
-	patton.experience = bold_cost + 50
-	var spend_result: Dictionary = LeaderManager.spend_xp_on_trait("usa_patton_test", "bold")
-	if not bool(spend_result.get("success", false)):
-		print("  [FAIL] spend_xp_on_trait: ", spend_result)
+	var bold_cost := LeaderManager.get_trait_level_up_cost(patton, "bold")
+	if bold_cost != 150:
+		print("  [FAIL] trait level-up cost at level 1 should be 150: ", bold_cost)
+		return false
+	if LeaderManager.can_level_trait("usa_patton_test", "bold"):
+		pass
+	else:
+		print("  [FAIL] can_level_trait should be false without XP")
+		return false
+	patton.experience = bold_cost + 350
+	if not LeaderManager.can_level_trait("usa_patton_test", "bold"):
+		print("  [FAIL] can_level_trait should be true with enough XP")
+		return false
+	if not LeaderManager.level_trait("usa_patton_test", "bold"):
+		print("  [FAIL] level_trait")
 		return false
 	if patton.get_trait_level("bold") < 2:
 		print("  [FAIL] bold trait should be level 2: ", patton.get_trait_level("bold"))
+		return false
+	var spend_result: Dictionary = LeaderManager.spend_xp_on_trait("usa_patton_test", "bold")
+	if not bool(spend_result.get("success", false)):
+		print("  [FAIL] spend_xp_on_trait level 2→3: ", spend_result)
+		return false
+	if patton.get_trait_level("bold") < 3:
+		print("  [FAIL] bold trait should be level 3: ", patton.get_trait_level("bold"))
 		return false
 
 	patton.attack_skill = 9
