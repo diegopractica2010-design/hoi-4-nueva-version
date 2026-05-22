@@ -66,6 +66,11 @@ text = "Atk —  Def —  Log —  Plan —  Init —"
 layout_mode = 2
 text = "XP: 0"
 
+[node name="TrainingPathsButton" type="Button" parent="MarginContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+text = "Doctrine Training Paths"
+
 [node name="SeparatorHeader" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 

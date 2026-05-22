@@ -1,9 +1,31 @@
 {
+  "infiltration_tactics": {
+    "name": "Infiltration Tactics",
+    "doctrine_requirement": "infiltration",
+    "max_level": 3,
+    "description": "Focuses on small unit infiltration, bypassing strongpoints, and rapid exploitation.",
+    "effects_by_level": {
+      "1": { "initiative": 1, "planning": 1 },
+      "2": { "initiative": 2, "planning": 2, "breakthrough": 0.05 },
+      "3": { "initiative": 3, "planning": 3, "breakthrough": 0.10 }
+    }
+  },
+  "stormtrooper_doctrine": {
+    "name": "Stormtrooper Doctrine",
+    "doctrine_requirement": "stormtrooper",
+    "max_level": 3,
+    "description": "Emphasizes shock troops, close coordination with artillery, and aggressive assault tactics.",
+    "effects_by_level": {
+      "1": { "attack": 1, "breakthrough": 0.05 },
+      "2": { "attack": 2, "breakthrough": 0.10 },
+      "3": { "attack": 3, "breakthrough": 0.15, "organization_recovery": 0.05 }
+    }
+  },
   "school_of_maneuver": {
     "name": "School of Maneuver",
     "doctrine_requirement": "mobile_warfare",
     "max_level": 3,
-    "description": "Focuses on speed, exploitation, and aggressive maneuvering.",
+    "description": "Prioritizes speed, deep exploitation, and bypassing enemy strongpoints.",
     "effects_by_level": {
       "1": { "initiative": 1, "movement_speed": 0.05 },
       "2": { "initiative": 2, "movement_speed": 0.10, "breakthrough": 0.05 },
@@ -14,7 +36,7 @@
     "name": "School of Layered Defense",
     "doctrine_requirement": "mass_assault",
     "max_level": 3,
-    "description": "Emphasizes resilience, organization, and defensive depth.",
+    "description": "Emphasizes defensive depth, resilience, and wearing down the attacker.",
     "effects_by_level": {
       "1": { "defense": 1, "organization_recovery": 0.05 },
       "2": { "defense": 2, "organization_recovery": 0.10, "supply_consumption": -0.05 },
@@ -25,11 +47,44 @@
     "name": "Combined Arms School",
     "doctrine_requirement": "combined_arms",
     "max_level": 3,
-    "description": "Improves coordination between different unit types.",
+    "description": "Improves coordination between infantry, armor, artillery, and air support.",
     "effects_by_level": {
       "1": { "combined_arms_sync": 0.05 },
       "2": { "combined_arms_sync": 0.10, "planning": 1 },
       "3": { "combined_arms_sync": 0.15, "planning": 2 }
+    }
+  },
+  "network_centric_warfare": {
+    "name": "Network-Centric Warfare",
+    "doctrine_requirement": "network_centric",
+    "max_level": 3,
+    "description": "Leverages information dominance, real-time coordination, and precision engagement.",
+    "effects_by_level": {
+      "1": { "planning": 1, "initiative": 1 },
+      "2": { "planning": 2, "initiative": 2 },
+      "3": { "planning": 3, "initiative": 3, "combined_arms_sync": 0.08 }
+    }
+  },
+  "precision_strike_doctrine": {
+    "name": "Precision Strike Doctrine",
+    "doctrine_requirement": "precision_strike",
+    "max_level": 3,
+    "description": "Focuses on high-accuracy strikes and minimizing collateral damage.",
+    "effects_by_level": {
+      "1": { "attack": 1 },
+      "2": { "attack": 2, "planning": 1 },
+      "3": { "attack": 3, "planning": 2, "supply_consumption": -0.05 }
+    }
+  },
+  "drone_swarm_coordination": {
+    "name": "Drone Swarm Coordination",
+    "doctrine_requirement": "drone_warfare",
+    "max_level": 3,
+    "description": "Specializes in commanding and coordinating large numbers of unmanned systems.",
+    "effects_by_level": {
+      "1": { "initiative": 1 },
+      "2": { "initiative": 2, "combined_arms_sync": 0.05 },
+      "3": { "initiative": 3, "combined_arms_sync": 0.10, "attack": 1 }
     }
   }
 }

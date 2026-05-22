@@ -34,8 +34,7 @@ const NATIONAL_POSITION_CHANGE_COST: Dictionary = {
 const TRAITS_PATH := "res://data/leaders/traits.json"
 const LEGACY_TRAITS_PATH := "res://data/leaders/leader_traits.json"
 const TRAINING_PATHS_PATH := "res://data/leaders/doctrine_training_paths.json"
-const TRAINING_PATH_BASE_SWITCH_COST := 250
-const TRAINING_PATH_SWITCH_COST_PER_LEVEL := 125
+const TRAINING_PATH_SWITCH_COST := 500
 const HISTORICAL_LEADERS_1936_PATH := "res://data/leaders/historical_leaders_1936.json"
 const HISTORICAL_LEADERS_1918_PATH := "res://data/leaders/historical_leaders_1918.json"
 const SCENARIO_LEADER_PATHS: Dictionary = {
@@ -814,6 +813,7 @@ func get_leader_summary(leader_id: String) -> Dictionary:
 		"trait_levels": leader.trait_levels.duplicate(),
 		"training_path_id": leader.training_path_id,
 		"training_path_level": leader.training_path_level,
+		"previous_training_path_id": leader.previous_training_path_id,
 		"training_path_display": get_leader_training_path_summary(leader_id),
 		"trait_display": get_trait_display_list(leader),
 		"experience": leader.experience,
@@ -1195,12 +1195,117 @@ func _level_trait_once(leader_id: String, trait_id: String) -> bool:
 # ============================================
 # DOCTRINE TRAINING PATHS
 # ============================================
+## One primary path per leader (training_path_id + training_path_level on Leader).
+## Future: optional training_paths: Dictionary or trait-gated second path.
+
+
+## Returns all training paths the leader is eligible for.
+func get_available_training_paths(leader_id: String) -> Array[Dictionary]:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return []
+
+	var available: Array[Dictionary] = []
+	var all_paths := _load_training_paths()
+
+	for path_id in all_paths.keys():
+		var path_data: Dictionary = all_paths[path_id] as Dictionary
+		var requirement: String = str(path_data.get("doctrine_requirement", ""))
+		if not _country_has_doctrine(leader.country_tag, requirement):
+			continue
+
+		var pid := str(path_id)
+		var current_level := (
+			leader.training_path_level if leader.training_path_id == pid else 0
+		)
+		available.append({
+			"path_id": pid,
+			"name": str(path_data.get("name", pid)),
+			"current_level": current_level,
+			"max_level": int(path_data.get("max_level", 3)),
+			"description": str(path_data.get("description", "")),
+			"effects": _get_training_path_effects(pid, current_level),
+			"next_level_effects": _get_training_path_effects(pid, current_level + 1),
+			"is_active": leader.training_path_id == pid,
+		})
+
+	return available
+
+
+## Returns the current level of a training path for a leader.
+func get_leader_training_path_level(leader_id: String, path_id: String) -> int:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return 0
+	if leader.training_path_id == path_id:
+		return leader.training_path_level
+	return 0
+
+
+## Invest XP into a training path (sets it as the leader's active path).
+func invest_xp_in_training_path(leader_id: String, path_id: String) -> bool:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return false
+
+	var current_level := get_leader_training_path_level(leader_id, path_id)
+	var path_data := _get_training_path_data(path_id)
+	if path_data.is_empty():
+		return false
+	if current_level >= int(path_data.get("max_level", 3)):
+		return false
+	if not _country_has_doctrine(leader.country_tag, str(path_data.get("doctrine_requirement", ""))):
+		return false
+
+	var cost := get_training_path_level_cost(current_level)
+	if leader.experience < cost:
+		return false
+	if not leader.spend_experience(cost):
+		return false
+
+	var new_level := mini(current_level + 1, int(path_data.get("max_level", 3)))
+	leader.set_training_path(path_id, new_level)
+	invalidate_leader_cache(leader.country_tag)
+	emit_signal("training_path_invested", leader_id, path_id, new_level)
+	return true
+
+
+## Switch to a different training path (expensive).
+func switch_training_path(leader_id: String, new_path_id: String) -> bool:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return false
+
+	var path_data := _get_training_path_data(new_path_id)
+	if path_data.is_empty():
+		return false
+	if not _country_has_doctrine(leader.country_tag, str(path_data.get("doctrine_requirement", ""))):
+		return false
+	if leader.training_path_id == new_path_id:
+		return false
+
+	var switch_cost := TRAINING_PATH_SWITCH_COST
+	if leader.experience < switch_cost:
+		return false
+	if not leader.spend_experience(switch_cost):
+		return false
+
+	var old_path_id := leader.training_path_id
+	leader.set_training_path(new_path_id, 1)
+	invalidate_leader_cache(leader.country_tag)
+	emit_signal("training_path_switched", leader_id, old_path_id, new_path_id)
+	return true
+
+
+func leader_has_training_path(leader_id: String) -> bool:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return false
+	return leader.has_training_path()
+
 
 func get_training_path_definition(path_id: String) -> Dictionary:
-	var key := str(path_id)
-	if training_path_definitions.has(key):
-		return training_path_definitions[key] as Dictionary
-	return {}
+	return _get_training_path_data(path_id)
 
 
 func get_training_path_max_level(path_id: String) -> int:
@@ -1216,35 +1321,177 @@ func get_training_path_doctrine_requirement(path_id: String) -> String:
 
 
 func get_training_path_effects_at_level(path_id: String, level: int) -> Dictionary:
-	var def := get_training_path_definition(path_id)
-	if def.is_empty() or level <= 0:
+	return _get_training_path_effects(path_id, level)
+
+
+func get_leader_training_path_effects(leader: Leader) -> Dictionary:
+	if leader == null or not leader.has_training_path():
 		return {}
-	var by_level: Variant = def.get("effects_by_level", {})
-	if typeof(by_level) != TYPE_DICTIONARY:
+	return get_training_path_effects_at_level(leader.training_path_id, leader.training_path_level)
+
+
+func get_training_path_level_cost(current_level: int) -> int:
+	return 150 + (maxi(current_level, 0) * 100)
+
+
+func get_training_path_switch_cost(_leader_id: String, _new_path_id: String) -> int:
+	return TRAINING_PATH_SWITCH_COST
+
+
+func can_invest_training_path(leader_id: String, path_id: String) -> bool:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return false
+	var current_level := get_leader_training_path_level(leader_id, path_id)
+	var path_data := _get_training_path_data(path_id)
+	if path_data.is_empty() or current_level >= int(path_data.get("max_level", 3)):
+		return false
+	if not _country_has_doctrine(leader.country_tag, str(path_data.get("doctrine_requirement", ""))):
+		return false
+	return leader.experience >= get_training_path_level_cost(current_level)
+
+
+func can_switch_training_path(leader_id: String, new_path_id: String) -> bool:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return false
+	if leader.training_path_id == new_path_id:
+		return false
+	if not _get_training_path_data(new_path_id):
+		return false
+	if not _country_has_doctrine(
+		leader.country_tag, get_training_path_doctrine_requirement(new_path_id)
+	):
+		return false
+	return leader_has_training_path(leader_id) and leader.experience >= TRAINING_PATH_SWITCH_COST
+
+
+func get_leader_training_path_state(leader_id: String) -> Dictionary:
+	var leader := get_leader(leader_id)
+	if leader == null:
+		return {"path_id": "", "level": 0}
+	return {
+		"path_id": leader.training_path_id,
+		"level": leader.training_path_level,
+		"previous_path_id": leader.previous_training_path_id,
+	}
+
+
+func get_available_training_paths_for_leader(leader_id: String) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	for entry in get_available_training_paths(leader_id):
+		var pid := str(entry.get("path_id", ""))
+		var current_level := int(entry.get("current_level", 0))
+		var max_level := int(entry.get("max_level", 3))
+		var is_active := bool(entry.get("is_active", false))
+		var row: Dictionary = entry.duplicate()
+		row.merge({
+			"doctrine_requirement": get_training_path_doctrine_requirement(pid),
+			"doctrine_unlocked": true,
+			"is_current": is_active,
+			"effects_text": format_trait_effects_text(entry.get("effects", {})),
+			"can_invest": can_invest_training_path(leader_id, pid),
+			"invest_cost": get_training_path_level_cost(
+				current_level if is_active else 0
+			),
+			"can_switch": can_switch_training_path(leader_id, pid) and not is_active,
+			"switch_cost": TRAINING_PATH_SWITCH_COST,
+			"at_max_level": is_active and current_level >= max_level,
+		})
+		rows.append(row)
+	return rows
+
+
+func get_leader_training_path_summary(leader_id: String) -> Dictionary:
+	var leader := get_leader(leader_id)
+	if leader == null or not leader.has_training_path():
+		return {
+			"path_id": "",
+			"level": 0,
+			"name": "",
+			"effects": {},
+			"effects_text": "",
+		}
+
+	var def := get_training_path_definition(leader.training_path_id)
+	var effects := get_leader_training_path_effects(leader)
+	return {
+		"path_id": leader.training_path_id,
+		"level": leader.training_path_level,
+		"name": str(def.get("name", leader.training_path_id)),
+		"description": str(def.get("description", "")),
+		"max_level": get_training_path_max_level(leader.training_path_id),
+		"effects": effects,
+		"effects_text": format_trait_effects_text(effects),
+		"can_invest": can_invest_training_path(leader_id, leader.training_path_id),
+		"invest_cost": get_training_path_level_cost(leader.training_path_level),
+		"switch_cost_preview": TRAINING_PATH_SWITCH_COST,
+		"previous_path_id": leader.previous_training_path_id,
+	}
+
+
+func _load_training_paths() -> Dictionary:
+	if not training_path_definitions.is_empty():
+		return training_path_definitions
+
+	var json_path := TRAINING_PATHS_PATH
+	if not FileAccess.file_exists(json_path):
+		push_error("Doctrine training paths file not found: " + json_path)
 		return {}
-	var clamped_level := clampi(level, 1, get_training_path_max_level(path_id))
-	var level_key := str(clamped_level)
-	if not (by_level as Dictionary).has(level_key):
+
+	var file := FileAccess.open(json_path, FileAccess.READ)
+	if file == null:
+		push_error("Could not open doctrine training paths file: " + json_path)
 		return {}
-	var effects: Variant = (by_level as Dictionary)[level_key]
+
+	var json := JSON.new()
+	var error := json.parse(file.get_as_text())
+	file.close()
+	if error != OK:
+		push_error("Failed to parse doctrine_training_paths.json: " + json.get_error_message())
+		return {}
+
+	var data: Variant = json.get_data()
+	if typeof(data) != TYPE_DICTIONARY:
+		push_error("doctrine_training_paths.json root must be a dictionary")
+		return {}
+
+	training_path_definitions = data as Dictionary
+	return training_path_definitions
+
+
+func _get_training_path_data(path_id: String) -> Dictionary:
+	var paths := _load_training_paths()
+	var key := str(path_id)
+	if paths.has(key):
+		return paths[key] as Dictionary
+	return {}
+
+
+func _get_training_path_effects(path_id: String, level: int) -> Dictionary:
+	if level <= 0:
+		return {}
+	var path_data := _get_training_path_data(path_id)
+	var effects_by_level: Variant = path_data.get("effects_by_level", {})
+	if typeof(effects_by_level) != TYPE_DICTIONARY:
+		return {}
+	var level_key := str(clampi(level, 1, get_training_path_max_level(path_id)))
+	if not (effects_by_level as Dictionary).has(level_key):
+		return {}
+	var effects: Variant = (effects_by_level as Dictionary)[level_key]
 	if typeof(effects) != TYPE_DICTIONARY:
 		return {}
 	return (effects as Dictionary).duplicate()
 
 
-func get_leader_training_path_effects(leader: Leader) -> Dictionary:
-	if leader == null or leader.training_path_id.is_empty():
-		return {}
-	return get_training_path_effects_at_level(leader.training_path_id, leader.training_path_level)
+func _country_has_doctrine(country_tag: String, doctrine_id: String) -> bool:
+	if str(doctrine_id).is_empty():
+		return true
+	return country_has_military_doctrine(country_tag, doctrine_id)
 
 
-## XP cost to advance training path from current_level to current_level + 1.
-func get_training_path_level_cost(current_level: int) -> int:
-	match current_level:
-		0: return 125
-		1: return 175
-		2: return 250
-		_: return 300
+func _load_training_path_definitions() -> void:
+	_load_training_paths()
 
 
 func get_country_military_doctrines(country_tag: String) -> Array[String]:
@@ -1283,220 +1530,7 @@ func country_has_military_doctrine(country_tag: String, doctrine_id: String) -> 
 func leader_meets_training_path_doctrine(leader: Leader, path_id: String) -> bool:
 	if leader == null:
 		return false
-	var required := get_training_path_doctrine_requirement(path_id)
-	if required.is_empty():
-		return true
-	return country_has_military_doctrine(leader.country_tag, required)
-
-
-func get_leader_training_path_level(leader_id: String) -> Dictionary:
-	var leader := get_leader(leader_id)
-	if leader == null:
-		return {"path_id": "", "level": 0}
-	return {
-		"path_id": leader.training_path_id,
-		"level": leader.training_path_level,
-	}
-
-
-func get_training_path_switch_cost(leader_id: String, new_path_id: String) -> int:
-	var leader := get_leader(leader_id)
-	if leader == null:
-		return 0
-	if get_training_path_definition(new_path_id).is_empty():
-		return 0
-	if leader.training_path_id.is_empty() or leader.training_path_level <= 0:
-		return 0
-	if leader.training_path_id == new_path_id:
-		return 0
-	return TRAINING_PATH_BASE_SWITCH_COST + (
-		leader.training_path_level * TRAINING_PATH_SWITCH_COST_PER_LEVEL
-	)
-
-
-func can_invest_training_path(leader_id: String, path_id: String) -> bool:
-	var leader := get_leader(leader_id)
-	if leader == null:
-		return false
-	if get_training_path_definition(path_id).is_empty():
-		return false
-	if not leader_meets_training_path_doctrine(leader, path_id):
-		return false
-
-	if not leader.training_path_id.is_empty() and leader.training_path_id != path_id:
-		return false
-
-	var current_level := leader.training_path_level
-	if not leader.training_path_id.is_empty():
-		current_level = leader.training_path_level
-	elif leader.training_path_id.is_empty():
-		current_level = 0
-
-	if current_level >= get_training_path_max_level(path_id):
-		return false
-
-	var cost := get_training_path_level_cost(current_level)
-	return leader.has_enough_experience(cost)
-
-
-func can_switch_training_path(leader_id: String, new_path_id: String) -> bool:
-	var leader := get_leader(leader_id)
-	if leader == null:
-		return false
-	if get_training_path_definition(new_path_id).is_empty():
-		return false
-	if not leader_meets_training_path_doctrine(leader, new_path_id):
-		return false
-	if leader.training_path_id == new_path_id:
-		return false
-	if leader.training_path_id.is_empty() or leader.training_path_level <= 0:
-		return false
-	var cost := get_training_path_switch_cost(leader_id, new_path_id)
-	return leader.has_enough_experience(cost)
-
-
-func invest_xp_in_training_path(leader_id: String, path_id: String) -> bool:
-	if not can_invest_training_path(leader_id, path_id):
-		return false
-
-	var leader := get_leader(leader_id)
-	var current_level := leader.training_path_level
-	if leader.training_path_id.is_empty():
-		current_level = 0
-
-	var cost := get_training_path_level_cost(current_level)
-	if not leader.spend_experience(cost):
-		return false
-
-	if leader.training_path_id.is_empty():
-		leader.training_path_id = path_id
-	leader.training_path_level = mini(current_level + 1, get_training_path_max_level(path_id))
-	invalidate_leader_cache(leader.country_tag)
-
-	var def := get_training_path_definition(path_id)
-	print(
-		"%s invested in %s (level %d)" % [
-			leader.name,
-			def.get("name", path_id),
-			leader.training_path_level,
-		]
-	)
-	emit_signal("training_path_invested", leader_id, path_id, leader.training_path_level)
-	return true
-
-
-func switch_training_path(leader_id: String, new_path_id: String) -> bool:
-	if not can_switch_training_path(leader_id, new_path_id):
-		return false
-
-	var leader := get_leader(leader_id)
-	var old_path_id := leader.training_path_id
-	var cost := get_training_path_switch_cost(leader_id, new_path_id)
-	if not leader.spend_experience(cost):
-		return false
-
-	leader.training_path_id = new_path_id
-	leader.training_path_level = 0
-	invalidate_leader_cache(leader.country_tag)
-
-	print(
-		"%s switched training path %s -> %s (cost %d XP)" % [
-			leader.name,
-			old_path_id,
-			new_path_id,
-			cost,
-		]
-	)
-	emit_signal("training_path_switched", leader_id, old_path_id, new_path_id)
-	return true
-
-
-func get_available_training_paths_for_leader(leader_id: String) -> Array[Dictionary]:
-	var leader := get_leader(leader_id)
-	if leader == null:
-		return []
-
-	var rows: Array[Dictionary] = []
-	for path_id in training_path_definitions.keys():
-		var pid := str(path_id)
-		var def := get_training_path_definition(pid)
-		if def.is_empty():
-			continue
-
-		var doctrine_req := get_training_path_doctrine_requirement(pid)
-		var doctrine_unlocked := leader_meets_training_path_doctrine(leader, pid)
-		var is_current := leader.training_path_id == pid
-		var current_level := leader.training_path_level if is_current else 0
-		var max_level := get_training_path_max_level(pid)
-		var at_max := is_current and current_level >= max_level
-		var on_this_path := leader.training_path_id.is_empty() or is_current
-		var invest_cost := get_training_path_level_cost(current_level if is_current else 0)
-		var can_invest := on_this_path and not at_max and can_invest_training_path(leader_id, pid)
-
-		var switch_cost := get_training_path_switch_cost(leader_id, pid)
-		var can_switch := (
-			doctrine_unlocked
-			and not is_current
-			and not leader.training_path_id.is_empty()
-			and leader.training_path_level > 0
-			and can_switch_training_path(leader_id, pid)
-		)
-
-		rows.append({
-			"path_id": pid,
-			"name": str(def.get("name", pid)),
-			"description": str(def.get("description", "")),
-			"doctrine_requirement": doctrine_req,
-			"doctrine_unlocked": doctrine_unlocked,
-			"max_level": max_level,
-			"is_current": is_current,
-			"current_level": current_level,
-			"effects": get_training_path_effects_at_level(pid, current_level),
-			"effects_text": format_trait_effects_text(
-				get_training_path_effects_at_level(pid, current_level)
-			),
-			"next_level_effects": get_training_path_effects_at_level(pid, current_level + 1),
-			"can_invest": can_invest,
-			"invest_cost": invest_cost if (is_current or leader.training_path_id.is_empty()) else get_training_path_level_cost(0),
-			"can_switch": can_switch,
-			"switch_cost": switch_cost,
-			"at_max_level": at_max,
-		})
-	return rows
-
-
-func get_leader_training_path_summary(leader_id: String) -> Dictionary:
-	var leader := get_leader(leader_id)
-	if leader == null:
-		return {}
-
-	if leader.training_path_id.is_empty():
-		return {
-			"path_id": "",
-			"level": 0,
-			"name": "",
-			"effects": {},
-			"effects_text": "",
-		}
-
-	var def := get_training_path_definition(leader.training_path_id)
-	var effects := get_leader_training_path_effects(leader)
-	return {
-		"path_id": leader.training_path_id,
-		"level": leader.training_path_level,
-		"name": str(def.get("name", leader.training_path_id)),
-		"description": str(def.get("description", "")),
-		"max_level": get_training_path_max_level(leader.training_path_id),
-		"effects": effects,
-		"effects_text": format_trait_effects_text(effects),
-		"can_invest": can_invest_training_path(leader_id, leader.training_path_id),
-		"invest_cost": get_training_path_level_cost(leader.training_path_level),
-		"switch_cost_preview": TRAINING_PATH_BASE_SWITCH_COST,
-	}
-
-
-func _load_training_path_definitions() -> void:
-	training_path_definitions = _read_trait_json_file(TRAINING_PATHS_PATH)
+	return _country_has_doctrine(leader.country_tag, get_training_path_doctrine_requirement(path_id))
 
 
 # ============================================

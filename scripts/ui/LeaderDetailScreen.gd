@@ -23,6 +23,7 @@ const XP_HIGHLIGHT_COLOR := Color(0.4, 0.9, 0.6)
 @onready var potential_traits_list: VBoxContainer = (
 	$MarginContainer/VBoxContainer/PotentialTraitsSection/PotentialScroll/PotentialTraitsList
 )
+@onready var training_paths_btn: Button = $MarginContainer/VBoxContainer/Header/TrainingPathsButton
 @onready var close_button: Button = $MarginContainer/VBoxContainer/Footer/CloseButton
 
 @onready var _section_headers: Array[Label] = [
@@ -64,15 +65,27 @@ func _ready() -> void:
 		return
 
 	_apply_theme()
+	if training_paths_btn:
+		training_paths_btn.pressed.connect(_on_training_paths_pressed)
 	close_button.pressed.connect(_on_close_pressed)
 	if not LeaderManager.trait_leveled.is_connected(_on_trait_leveled):
 		LeaderManager.trait_leveled.connect(_on_trait_leveled)
+	if not LeaderManager.training_path_invested.is_connected(_on_training_path_invested):
+		LeaderManager.training_path_invested.connect(_on_training_path_invested)
+	if not LeaderManager.training_path_switched.is_connected(_on_training_path_switched):
+		LeaderManager.training_path_switched.connect(_on_training_path_switched)
 	refresh_screen()
 
 
 func _exit_tree() -> void:
-	if typeof(LeaderManager) != TYPE_NIL and LeaderManager.trait_leveled.is_connected(_on_trait_leveled):
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	if LeaderManager.trait_leveled.is_connected(_on_trait_leveled):
 		LeaderManager.trait_leveled.disconnect(_on_trait_leveled)
+	if LeaderManager.training_path_invested.is_connected(_on_training_path_invested):
+		LeaderManager.training_path_invested.disconnect(_on_training_path_invested)
+	if LeaderManager.training_path_switched.is_connected(_on_training_path_switched):
+		LeaderManager.training_path_switched.disconnect(_on_training_path_switched)
 
 
 func _on_close_pressed() -> void:
@@ -84,6 +97,27 @@ func _on_trait_leveled(leveled_leader_id: String, _trait_id: String, _new_level:
 		refresh_screen()
 
 
+func _on_training_path_invested(changed_leader_id: String, _path_id: String, _new_level: int) -> void:
+	if changed_leader_id == leader_id:
+		refresh_screen()
+
+
+func _on_training_path_switched(changed_leader_id: String, _old_path_id: String, _new_path_id: String) -> void:
+	if changed_leader_id == leader_id:
+		refresh_screen()
+
+
+func _on_training_paths_pressed() -> void:
+	var training_screen: TrainingPathScreen = (
+		preload("res://scenes/ui/TrainingPathScreen.tscn").instantiate() as TrainingPathScreen
+	)
+	if training_screen == null:
+		return
+	training_screen.leader_id = leader_id
+	training_screen.z_index = 101
+	add_child(training_screen)
+
+
 func refresh_screen() -> void:
 	if current_leader == null:
 		current_leader = LeaderManager.get_leader(leader_id)
@@ -93,6 +127,7 @@ func refresh_screen() -> void:
 	_populate_current_traits()
 	_populate_level_up_options()
 	_populate_potential_traits()
+	_update_training_button_visibility()
 
 
 func _apply_theme() -> void:
@@ -100,6 +135,8 @@ func _apply_theme() -> void:
 	RetrowaveTheme.style_title(name_label, RetrowaveTheme.CYAN)
 	RetrowaveTheme.style_body_label(age_assignment_label)
 	RetrowaveTheme.style_body_label(skills_label)
+	if training_paths_btn:
+		RetrowaveTheme.style_primary_button(training_paths_btn)
 	RetrowaveTheme.style_secondary_button(close_button)
 	for header in _section_headers:
 		_style_section_header(header)
@@ -121,6 +158,13 @@ func _style_level_up_section() -> void:
 	style.set_corner_radius_all(6)
 	style.set_content_margin_all(10)
 	level_up_section.add_theme_stylebox_override("panel", style)
+
+
+func _update_training_button_visibility() -> void:
+	if training_paths_btn == null:
+		return
+	var available_paths := LeaderManager.get_available_training_paths(leader_id)
+	training_paths_btn.visible = available_paths.size() > 0
 
 
 func _update_header() -> void:

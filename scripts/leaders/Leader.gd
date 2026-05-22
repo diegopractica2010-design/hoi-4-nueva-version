@@ -39,9 +39,10 @@ extends Resource
 
 var trait_levels: Dictionary = {}  # trait_id -> level
 
-## Doctrine training path (one active school per leader; level 0 = enrolled, not yet invested).
+# === Doctrine Training Paths ===
 @export var training_path_id: String = ""
 @export var training_path_level: int = 0
+@export var previous_training_path_id: String = ""
 
 
 func add_experience(amount: int, source: String = "", count_as_battle: bool = false) -> void:
@@ -200,3 +201,30 @@ func get_terrain_modifier(terrain: String) -> float:
 			bonus += _effect_float("naval_combat")
 
 	return bonus
+
+
+# === Training Path Helpers ===
+
+func has_training_path() -> bool:
+	return training_path_id != "" and training_path_level > 0
+
+
+func get_training_path_level() -> int:
+	return training_path_level
+
+
+func set_training_path(path_id: String, level: int) -> void:
+	if level > 0:
+		if training_path_id != path_id:
+			previous_training_path_id = training_path_id
+		training_path_id = path_id
+		training_path_level = level
+	else:
+		if not training_path_id.is_empty():
+			previous_training_path_id = training_path_id
+		training_path_id = ""
+		training_path_level = 0
+
+
+func clear_training_path() -> void:
+	set_training_path("", 0)

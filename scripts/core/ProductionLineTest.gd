@@ -887,8 +887,13 @@ static func _test_leader_manager() -> bool:
 	if LeaderManager.get_training_path_definition("school_of_maneuver").is_empty():
 		print("  [FAIL] doctrine training path definitions not loaded")
 		return false
-	patton.training_path_id = ""
-	patton.training_path_level = 0
+	if LeaderManager.training_path_definitions.size() < 8:
+		print(
+			"  [FAIL] expected 8 training paths, got ",
+			LeaderManager.training_path_definitions.size(),
+		)
+		return false
+	patton.clear_training_path()
 	patton.experience = 500
 	LeaderManager.set_country_military_doctrine("USA", "mobile_warfare", true)
 	if LeaderManager.can_invest_training_path("usa_patton_test", "school_of_maneuver"):
@@ -919,7 +924,7 @@ static func _test_leader_manager() -> bool:
 		"school_of_layered_defense",
 	)
 	if switch_cost != 500:
-		print("  [FAIL] training path switch cost at level 2: ", switch_cost)
+		print("  [FAIL] training path switch cost: ", switch_cost)
 		return false
 	patton.experience = 600
 	if LeaderManager.can_switch_training_path("usa_patton_test", "school_of_layered_defense"):
@@ -931,7 +936,7 @@ static func _test_leader_manager() -> bool:
 		return false
 	if (
 		patton.training_path_id != "school_of_layered_defense"
-		or patton.training_path_level != 0
+		or patton.training_path_level != 1
 	):
 		print(
 			"  [FAIL] after switch path=",
@@ -940,12 +945,16 @@ static func _test_leader_manager() -> bool:
 			patton.training_path_level,
 		)
 		return false
-	if not LeaderManager.invest_xp_in_training_path("usa_patton_test", "school_of_layered_defense"):
-		print("  [FAIL] invest after switch")
+	if patton.previous_training_path_id != "school_of_maneuver":
+		print("  [FAIL] previous_training_path_id after switch: ", patton.previous_training_path_id)
 		return false
 	var available: Array = LeaderManager.get_available_training_paths_for_leader("usa_patton_test")
 	if available.is_empty():
 		print("  [FAIL] available training paths empty")
+		return false
+	var doctrine_paths: Array = LeaderManager.get_available_training_paths("usa_patton_test")
+	if doctrine_paths.size() < 2:
+		print("  [FAIL] get_available_training_paths should list unlocked doctrines: ", doctrine_paths)
 		return false
 	LeaderManager.set_country_military_doctrine("USA", "mobile_warfare", false)
 	LeaderManager.set_country_military_doctrine("USA", "mass_assault", false)
