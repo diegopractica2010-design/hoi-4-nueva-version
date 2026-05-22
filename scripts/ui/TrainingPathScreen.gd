@@ -131,7 +131,7 @@ func _populate_available_paths() -> void:
 	var available_paths := LeaderManager.get_available_training_paths(leader_id)
 	if available_paths.is_empty():
 		var empty_note := Label.new()
-		empty_note.text = "No training paths available. Unlock military doctrines for this country first."
+		empty_note.text = "No training paths available for this leader."
 		empty_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		empty_note.modulate = Color(0.65, 0.65, 0.65)
 		RetrowaveTheme.style_body_label(empty_note)

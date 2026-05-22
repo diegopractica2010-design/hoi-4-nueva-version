@@ -49,14 +49,15 @@ const NATIONAL_POSITIONS: Array[Dictionary] = [
 ]
 
 const HEADER_SPECS: Array[Dictionary] = [
-	{"text": "Name", "width": 180},
-	{"text": "Type", "width": 120},
-	{"text": "Skills", "width": 140},
-	{"text": "Traits", "width": 180},
-	{"text": "XP", "width": 56},
+	{"text": "Name", "width": 168},
+	{"text": "Status", "width": 88},
+	{"text": "Type", "width": 72},
+	{"text": "Skills", "width": 128},
+	{"text": "Traits", "width": 150},
+	{"text": "XP", "width": 48},
 	{"text": "", "width": 0, "expand": true},
-	{"text": "Assign", "width": 90},
-	{"text": "Details", "width": 90},
+	{"text": "Assign", "width": 80},
+	{"text": "Details", "width": 80},
 ]
 const ROW_HEIGHT := 36
 
@@ -212,13 +213,35 @@ func _create_national_position_card(
 	RetrowaveTheme.style_row_label(leader_name)
 	vbox.add_child(leader_name)
 
+	var btn_row := HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 6)
+	btn_row.alignment = BoxContainer.ALIGNMENT_CENTER
+
 	var change_btn := Button.new()
 	change_btn.text = "Change"
 	RetrowaveTheme.style_secondary_button(change_btn)
 	change_btn.pressed.connect(_on_change_national_position.bind(position_key))
-	vbox.add_child(change_btn)
+	btn_row.add_child(change_btn)
+
+	if leader != null:
+		var details_btn := Button.new()
+		details_btn.text = "Details"
+		RetrowaveTheme.style_secondary_button(details_btn)
+		details_btn.pressed.connect(
+			_on_national_position_details_pressed.bind(leader.leader_id)
+		)
+		btn_row.add_child(details_btn)
+
+	vbox.add_child(btn_row)
 
 	return panel
+
+
+func _on_national_position_details_pressed(leader_id: String) -> void:
+	var summary := LeaderManager.get_leader_summary(leader_id)
+	if summary.is_empty():
+		return
+	_open_leader_detail_screen(summary)
 
 
 func _on_change_national_position(position_key: String) -> void:
@@ -243,8 +266,6 @@ func _populate_available_leaders() -> void:
 		return
 
 	for leader_summary in current_data.leaders:
-		if not str(leader_summary.get("assigned_army_id", "")).is_empty():
-			continue
 		if bool(leader_summary.get("is_captured", false)):
 			continue
 		if bool(leader_summary.get("is_injured", false)):
@@ -295,14 +316,17 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 	name_btn.text = leader_name
 	name_btn.flat = true
 	name_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	name_btn.custom_minimum_size = Vector2(180, 0)
+	name_btn.custom_minimum_size = Vector2(168, 0)
+	name_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_btn.clip_text = true
 	_style_leader_name_button(name_btn)
 	name_btn.pressed.connect(_on_leader_name_pressed.bind(summary))
 	hbox.add_child(name_btn)
 
+	hbox.add_child(_row_label(_format_leader_status(summary), 88))
+
 	var type_name: String = str(summary.get("leader_type_name", summary.get("leader_type", "")))
-	hbox.add_child(_row_label(type_name.capitalize(), 120))
+	hbox.add_child(_row_label(type_name.capitalize(), 72))
 	hbox.add_child(
 		_row_label(
 			"A:%d  D:%d  L:%d  P:%d" % [
@@ -311,14 +335,14 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 				int(summary.get("logistics_skill", 0)),
 				int(summary.get("planning_skill", 0)),
 			],
-			140,
+			128,
 		)
 	)
-	hbox.add_child(_row_label(_format_traits_row(summary), 180))
+	hbox.add_child(_row_label(_format_traits_row(summary), 150))
 
 	var xp_label := Label.new()
 	xp_label.text = str(int(summary.get("experience", 0)))
-	xp_label.custom_minimum_size = Vector2(56, 0)
+	xp_label.custom_minimum_size = Vector2(48, 0)
 	xp_label.clip_text = true
 	xp_label.add_theme_color_override("font_color", RetrowaveTheme.SUCCESS)
 	RetrowaveTheme.style_row_label(xp_label)
@@ -330,14 +354,18 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 
 	var assign_btn := Button.new()
 	assign_btn.text = "Assign"
-	assign_btn.custom_minimum_size = Vector2(90, 0)
+	assign_btn.custom_minimum_size = Vector2(80, 0)
 	RetrowaveTheme.style_primary_button(assign_btn)
+	var is_assigned := not str(summary.get("assigned_army_id", "")).is_empty()
+	assign_btn.disabled = is_assigned
+	if is_assigned:
+		assign_btn.text = "Assigned"
 	assign_btn.pressed.connect(_on_assign_pressed.bind(summary))
 	hbox.add_child(assign_btn)
 
 	var details_btn := Button.new()
 	details_btn.text = "Details"
-	details_btn.custom_minimum_size = Vector2(90, 0)
+	details_btn.custom_minimum_size = Vector2(80, 0)
 	RetrowaveTheme.style_secondary_button(details_btn)
 	details_btn.pressed.connect(_on_details_pressed.bind(summary))
 	hbox.add_child(details_btn)
@@ -385,6 +413,21 @@ func _row_label(text: String, min_width: int) -> Label:
 	label.clip_text = true
 	RetrowaveTheme.style_row_label(label)
 	return label
+
+
+func _format_leader_status(summary: Dictionary) -> String:
+	var leader_id := str(summary.get("leader_id", ""))
+	if leader_id.is_empty():
+		return "—"
+	for entry in NATIONAL_POSITIONS:
+		var position_key: String = str(entry.get("key", ""))
+		var posted: Leader = LeaderManager.get_country_position_leader(country_tag, position_key)
+		if posted != null and posted.leader_id == leader_id:
+			return "National"
+	var assigned := str(summary.get("assigned_army_id", ""))
+	if not assigned.is_empty():
+		return "Army"
+	return "Free"
 
 
 func _format_traits_row(summary: Dictionary) -> String:

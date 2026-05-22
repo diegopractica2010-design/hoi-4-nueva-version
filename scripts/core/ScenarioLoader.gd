@@ -309,6 +309,7 @@ func _load_scenario_leaders(scenario_name: String, start_year: int) -> void:
 	if typeof(LeaderManager) == TYPE_NIL:
 		return
 	var loaded := LeaderManager.load_leaders_for_scenario(scenario_name, start_year)
+	_unlock_training_doctrines_for_test_play()
 	print(
 		"✅ Scenario leaders loaded (%s, %d): %d active, %d pooled"
 		% [
@@ -318,6 +319,24 @@ func _load_scenario_leaders(scenario_name: String, start_year: int) -> void:
 			LeaderManager.get_pool_leader_count(),
 		]
 	)
+
+
+func _unlock_training_doctrines_for_test_play() -> void:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	var doctrine_ids: Array[String] = [
+		"mobile_warfare",
+		"mass_assault",
+		"combined_arms",
+		"infiltration",
+		"stormtrooper",
+		"network_centric",
+		"precision_strike",
+		"drone_warfare",
+	]
+	for country_tag in ["USA", "GER"]:
+		for doctrine_id in doctrine_ids:
+			LeaderManager.set_country_military_doctrine(country_tag, doctrine_id, true)
 
 
 func _spawn_scenario_formations(scenario_name: String) -> void:

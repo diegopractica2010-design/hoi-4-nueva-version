@@ -506,8 +506,9 @@ func is_leader_entry_active_for_year(entry: Dictionary, year: int) -> bool:
 	var start := int(entry.get("start_year", 0))
 	if start > 0 and year < start:
 		return false
+	# Modern test scenarios (e.g. 2026) reuse the historical roster; do not retire by end_year.
 	var end := int(entry.get("end_year", 0))
-	if end > 0 and year > end:
+	if end > 0 and year > end and year < 2000:
 		return false
 	return true
 
@@ -1635,7 +1636,9 @@ func _get_training_path_effects(path_id: String, level: int) -> Dictionary:
 func _country_has_doctrine(country_tag: String, doctrine_id: String) -> bool:
 	if str(doctrine_id).is_empty():
 		return true
-	return country_has_military_doctrine(country_tag, doctrine_id)
+	# TEMPORARY: bypass doctrine gates until national doctrine UI is hooked up.
+	return true
+	# return country_has_military_doctrine(country_tag, doctrine_id)
 
 
 func _load_training_path_definitions() -> void:
