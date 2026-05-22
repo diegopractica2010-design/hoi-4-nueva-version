@@ -24,7 +24,7 @@ extends DraggablePanel
 	$MarginContainer/VBoxContainer/NationalPositionsSection/PositionsContainer
 )
 @onready var available_header_row: HBoxContainer = (
-	$MarginContainer/VBoxContainer/MainArea/AvailableLeadersColumn/AvailableHeaderRow
+	$MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn/AvailableHeaderRow
 )
 @onready var available_leaders_list: VBoxContainer = (
 	$MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn/AvailableLeadersList/AvailableLeadersContent
@@ -65,11 +65,22 @@ func _ready() -> void:
 	add_to_group("leader_screen")
 	drag_handle = $TitleBar
 	super._ready()
+	_apply_content_margins()
 	_setup_detail_panel()
 	_apply_screen_theme()
 	_setup_headers()
 	close_button.pressed.connect(_on_close_pressed)
 	refresh_screen()
+
+
+func _apply_content_margins() -> void:
+	var margin := get_node_or_null("MarginContainer") as MarginContainer
+	if margin == null:
+		return
+	margin.add_theme_constant_override("margin_left", 20)
+	margin.add_theme_constant_override("margin_right", 20)
+	margin.add_theme_constant_override("margin_top", 12)
+	margin.add_theme_constant_override("margin_bottom", 12)
 
 
 func _on_close_pressed() -> void:
@@ -106,6 +117,14 @@ func _setup_detail_panel() -> void:
 
 
 func _setup_headers() -> void:
+	if available_header_row == null:
+		available_header_row = get_node_or_null(
+			"MarginContainer/VBoxContainer/MainArea/ListsColumn/AvailableLeadersColumn/AvailableHeaderRow"
+		) as HBoxContainer
+	if available_header_row == null:
+		push_warning("LeaderAssignmentScreen: AvailableHeaderRow not found")
+		return
+
 	for child in available_header_row.get_children():
 		child.queue_free()
 

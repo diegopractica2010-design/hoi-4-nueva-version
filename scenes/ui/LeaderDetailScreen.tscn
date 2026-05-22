@@ -91,19 +91,22 @@ theme_override_constants/separation = 10
 [node name="SeparatorLevelUp" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="LevelUpSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="LevelUpSection" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LevelUpInner" type="VBoxContainer" parent="MarginContainer/VBoxContainer/LevelUpSection"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="SectionHeader" type="Label" parent="MarginContainer/VBoxContainer/LevelUpSection"]
+[node name="SectionHeader" type="Label" parent="MarginContainer/VBoxContainer/LevelUpSection/LevelUpInner"]
 layout_mode = 2
 text = "LEVEL UP TRAITS"
 
-[node name="LevelUpScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/LevelUpSection"]
-custom_minimum_size = Vector2(0, 140)
+[node name="LevelUpScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/LevelUpSection/LevelUpInner"]
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
-[node name="LevelUpList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/LevelUpSection/LevelUpScroll"]
+[node name="LevelUpList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/LevelUpSection/LevelUpInner/LevelUpScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8

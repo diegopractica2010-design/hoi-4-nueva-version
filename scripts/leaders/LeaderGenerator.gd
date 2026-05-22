@@ -43,6 +43,8 @@ static func create_leader_from_data(leader_data: Dictionary) -> Leader:
 	leader.duty_post = str(leader_data.get("duty_post", "active"))
 
 	_apply_traits_from_data(leader, leader_data)
+	leader.training_path_id = str(leader_data.get("training_path_id", ""))
+	leader.training_path_level = clampi(int(leader_data.get("training_path_level", 0)), 0, 3)
 	return leader
 
 

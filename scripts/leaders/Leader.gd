@@ -39,6 +39,10 @@ extends Resource
 
 var trait_levels: Dictionary = {}  # trait_id -> level
 
+## Doctrine training path (one active school per leader; level 0 = enrolled, not yet invested).
+@export var training_path_id: String = ""
+@export var training_path_level: int = 0
+
 
 func add_experience(amount: int, source: String = "", count_as_battle: bool = false) -> void:
 	if amount <= 0:

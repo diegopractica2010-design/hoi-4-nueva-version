@@ -16,8 +16,9 @@ const XP_HIGHLIGHT_COLOR := Color(0.4, 0.9, 0.6)
 @onready var current_traits_list: VBoxContainer = (
 	$MarginContainer/VBoxContainer/CurrentTraitsSection/TraitsScroll/TraitsList
 )
+@onready var level_up_section: PanelContainer = $MarginContainer/VBoxContainer/LevelUpSection
 @onready var level_up_list: VBoxContainer = (
-	$MarginContainer/VBoxContainer/LevelUpSection/LevelUpScroll/LevelUpList
+	$MarginContainer/VBoxContainer/LevelUpSection/LevelUpInner/LevelUpScroll/LevelUpList
 )
 @onready var potential_traits_list: VBoxContainer = (
 	$MarginContainer/VBoxContainer/PotentialTraitsSection/PotentialScroll/PotentialTraitsList
@@ -26,7 +27,7 @@ const XP_HIGHLIGHT_COLOR := Color(0.4, 0.9, 0.6)
 
 @onready var _section_headers: Array[Label] = [
 	$MarginContainer/VBoxContainer/CurrentTraitsSection/SectionHeader,
-	$MarginContainer/VBoxContainer/LevelUpSection/SectionHeader,
+	$MarginContainer/VBoxContainer/LevelUpSection/LevelUpInner/SectionHeader,
 	$MarginContainer/VBoxContainer/PotentialTraitsSection/SectionHeader,
 ]
 
@@ -102,11 +103,24 @@ func _apply_theme() -> void:
 	RetrowaveTheme.style_secondary_button(close_button)
 	for header in _section_headers:
 		_style_section_header(header)
+	_style_level_up_section()
 
 
 func _style_section_header(label: Label) -> void:
 	label.add_theme_font_size_override("font_size", 14)
 	label.add_theme_color_override("font_color", RetrowaveTheme.CYAN)
+
+
+func _style_level_up_section() -> void:
+	if level_up_section == null:
+		return
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.12, 0.16, 0.22)
+	style.border_color = Color(0.3, 0.7, 0.9, 0.3)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(6)
+	style.set_content_margin_all(10)
+	level_up_section.add_theme_stylebox_override("panel", style)
 
 
 func _update_header() -> void:
@@ -149,7 +163,8 @@ func _populate_current_traits() -> void:
 
 	for trait_entry in traits_data:
 		var vbox := VBoxContainer.new()
-		vbox.add_theme_constant_override("separation", 2)
+		vbox.add_theme_constant_override("separation", 4)
+		vbox.custom_minimum_size = Vector2(0, 52)
 
 		var header := Label.new()
 		header.text = "%s %s  —  Level %d" % [
@@ -165,9 +180,9 @@ func _populate_current_traits() -> void:
 		if not effects.is_empty():
 			var effects_label := Label.new()
 			effects_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			effects_label.text = _format_trait_effects(effects)
+			effects_label.text = _format_trait_effects_clean(effects)
 			effects_label.add_theme_font_size_override("font_size", 12)
-			effects_label.modulate = Color(0.75, 0.75, 0.75)
+			effects_label.modulate = Color(0.8, 0.8, 0.8)
 			vbox.add_child(effects_label)
 
 		current_traits_list.add_child(vbox)
@@ -176,24 +191,41 @@ func _populate_current_traits() -> void:
 func _populate_level_up_options() -> void:
 	_clear_children(level_up_list)
 
+	var xp_header := Label.new()
+	xp_header.text = "You have %d XP available to spend" % current_leader.experience
+	xp_header.add_theme_font_size_override("font_size", 14)
+	xp_header.modulate = Color(0.4, 0.95, 0.6)
+	xp_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	level_up_list.add_child(xp_header)
+
+	var spacer := Control.new()
+	spacer.custom_minimum_size = Vector2(0, 8)
+	level_up_list.add_child(spacer)
+
 	var traits_data := LeaderManager.get_leader_trait_display_data(leader_id)
-	var any_option := false
+	var has_options := false
 	for trait_entry in traits_data:
 		if bool(trait_entry.get("can_level_up", false)):
-			any_option = true
+			has_options = true
 			level_up_list.add_child(_create_level_up_row(trait_entry))
 
-	if not any_option:
-		_add_note_label(level_up_list, "No traits available to level up.")
+	if not has_options:
+		var no_options := Label.new()
+		no_options.text = "No traits can be leveled up right now."
+		no_options.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		no_options.modulate = Color(0.6, 0.6, 0.6)
+		RetrowaveTheme.style_body_label(no_options)
+		level_up_list.add_child(no_options)
 
 
 func _create_level_up_row(trait_entry: Dictionary) -> HBoxContainer:
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 12)
-	hbox.custom_minimum_size = Vector2(0, 48)
+	hbox.custom_minimum_size = Vector2(0, 52)
 
 	var trait_id: String = str(trait_entry.get("trait_id", ""))
 	var level := int(trait_entry.get("level", 1))
+	var next_effects := _get_next_level_effects(trait_id, level)
 
 	var info_vbox := VBoxContainer.new()
 	info_vbox.add_theme_constant_override("separation", 2)
@@ -213,16 +245,15 @@ func _create_level_up_row(trait_entry: Dictionary) -> HBoxContainer:
 	if not current_effects.is_empty():
 		var current_label := Label.new()
 		current_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		current_label.text = "Current: " + _format_trait_effects(current_effects)
+		current_label.text = "Current: " + _format_trait_effects_clean(current_effects)
 		current_label.add_theme_font_size_override("font_size", 11)
-		current_label.modulate = Color(0.75, 0.75, 0.75)
+		current_label.modulate = Color(0.7, 0.7, 0.7)
 		info_vbox.add_child(current_label)
 
-	var next_effects := _get_next_level_effects(trait_id, level)
 	if not next_effects.is_empty():
 		var next_label := Label.new()
 		next_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		next_label.text = "Next Level: " + _format_trait_effects(next_effects)
+		next_label.text = "Next Level: " + _format_trait_effects_clean(next_effects)
 		next_label.add_theme_font_size_override("font_size", 11)
 		next_label.modulate = XP_HIGHLIGHT_COLOR
 		info_vbox.add_child(next_label)
@@ -241,6 +272,7 @@ func _create_level_up_row(trait_entry: Dictionary) -> HBoxContainer:
 	var level_btn := Button.new()
 	level_btn.text = "Level Up"
 	level_btn.custom_minimum_size = Vector2(90, 28)
+	level_btn.tooltip_text = _build_level_up_tooltip(trait_entry, next_effects)
 	RetrowaveTheme.style_primary_button(level_btn)
 	level_btn.disabled = current_leader.experience < int(trait_entry.get("level_up_cost", 0))
 	level_btn.pressed.connect(_on_level_up_pressed.bind(trait_id))
@@ -310,6 +342,16 @@ func _add_note_label(container: VBoxContainer, text: String) -> void:
 	container.add_child(note)
 
 
+func _build_level_up_tooltip(trait_entry: Dictionary, next_effects: Dictionary) -> String:
+	var trait_name := str(trait_entry.get("name", trait_entry.get("trait_id", "")))
+	var level := int(trait_entry.get("level", 1))
+	var cost := int(trait_entry.get("level_up_cost", 0))
+	if next_effects.is_empty():
+		return "%s: Level %d → %d\nCost: %d XP" % [trait_name, level, level + 1, cost]
+	var bonus := _format_trait_effects_clean(next_effects).replace("→  ", "").strip_edges()
+	return "Next Level Bonus:\n%s\n\nCost: %d XP" % [bonus, cost]
+
+
 ## Effects the trait would have at current_level + 1 (preview before spending XP).
 func _get_next_level_effects(trait_id: String, current_level: int) -> Dictionary:
 	if trait_id.is_empty() or typeof(LeaderManager) == TYPE_NIL:
@@ -317,20 +359,20 @@ func _get_next_level_effects(trait_id: String, current_level: int) -> Dictionary
 	return LeaderManager.get_trait_effects_at_level(trait_id, current_level + 1)
 
 
-func _format_trait_effects(effects: Dictionary) -> String:
+func _format_trait_effects_clean(effects: Dictionary) -> String:
 	if effects.is_empty():
 		return ""
 
 	var parts: Array[String] = []
 	for key in effects.keys():
-		var formatted := _format_effect_key(str(key), effects[key])
-		if not formatted.is_empty():
-			parts.append(formatted)
+		var text := _format_single_effect(str(key), effects[key])
+		if not text.is_empty():
+			parts.append(text)
 
-	return "→  " + "   |   ".join(parts)
+	return "→  " + "   •   ".join(parts)
 
 
-func _format_effect_key(key: String, value: Variant) -> String:
+func _format_single_effect(key: String, value: Variant) -> String:
 	var num := float(value)
 	match key:
 		"attack":
@@ -346,13 +388,16 @@ func _format_effect_key(key: String, value: Variant) -> String:
 		"organization":
 			return "%+d Organization" % int(num) if num != 0.0 else ""
 		"supply_consumption":
-			if num < 0.0:
-				return "%d%% Supply Use" % int(num * 100.0)
-			return "+%d%% Supply Use" % int(num * 100.0)
+			var percent := int(num * 100.0)
+			if percent < 0:
+				return "%d%% Supply Use" % percent
+			return "+%d%% Supply Use" % percent
 		"breakthrough":
 			return "%+.0f%% Breakthrough" % (num * 100.0)
 		"armor_attack":
 			return "%+.0f%% Armor Attack" % (num * 100.0)
+		"combined_arms_sync":
+			return "%+.0f%% Combined Arms Sync" % (num * 100.0)
 		"desert_attack":
 			return "%+.0f%% Desert Attack" % (num * 100.0)
 		"desert_defense":
@@ -363,3 +408,7 @@ func _format_effect_key(key: String, value: Variant) -> String:
 			return "%+.0f%% Casualties" % (num * 100.0)
 		_:
 			return "%s: %s" % [key.replace("_", " ").capitalize(), str(value)]
+
+
+func _format_trait_effects(effects: Dictionary) -> String:
+	return _format_trait_effects_clean(effects)

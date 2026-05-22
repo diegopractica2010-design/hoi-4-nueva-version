@@ -884,6 +884,72 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] promote should cap at 10: ", patton.attack_skill)
 		return false
 
+	if LeaderManager.get_training_path_definition("school_of_maneuver").is_empty():
+		print("  [FAIL] doctrine training path definitions not loaded")
+		return false
+	patton.training_path_id = ""
+	patton.training_path_level = 0
+	patton.experience = 500
+	LeaderManager.set_country_military_doctrine("USA", "mobile_warfare", true)
+	if LeaderManager.can_invest_training_path("usa_patton_test", "school_of_maneuver"):
+		pass
+	else:
+		print("  [FAIL] should be able to invest with doctrine + XP")
+		return false
+	if not LeaderManager.invest_xp_in_training_path("usa_patton_test", "school_of_maneuver"):
+		print("  [FAIL] invest training path level 1")
+		return false
+	if patton.training_path_id != "school_of_maneuver" or patton.training_path_level != 1:
+		print(
+			"  [FAIL] training path after invest: ",
+			patton.training_path_id,
+			patton.training_path_level,
+		)
+		return false
+	var path_effects: Dictionary = LeaderManager.get_leader_training_path_effects(patton)
+	if int(path_effects.get("initiative", 0)) < 1:
+		print("  [FAIL] maneuver school level 1 initiative: ", path_effects)
+		return false
+	if not LeaderManager.invest_xp_in_training_path("usa_patton_test", "school_of_maneuver"):
+		print("  [FAIL] invest training path level 2")
+		return false
+	LeaderManager.set_country_military_doctrine("USA", "mass_assault", true)
+	var switch_cost := LeaderManager.get_training_path_switch_cost(
+		"usa_patton_test",
+		"school_of_layered_defense",
+	)
+	if switch_cost != 500:
+		print("  [FAIL] training path switch cost at level 2: ", switch_cost)
+		return false
+	patton.experience = 600
+	if LeaderManager.can_switch_training_path("usa_patton_test", "school_of_layered_defense"):
+		print("  [FAIL] switch should fail without enough XP (need ", switch_cost, ")")
+		return false
+	patton.experience = switch_cost + 200
+	if not LeaderManager.switch_training_path("usa_patton_test", "school_of_layered_defense"):
+		print("  [FAIL] switch training path")
+		return false
+	if (
+		patton.training_path_id != "school_of_layered_defense"
+		or patton.training_path_level != 0
+	):
+		print(
+			"  [FAIL] after switch path=",
+			patton.training_path_id,
+			" level=",
+			patton.training_path_level,
+		)
+		return false
+	if not LeaderManager.invest_xp_in_training_path("usa_patton_test", "school_of_layered_defense"):
+		print("  [FAIL] invest after switch")
+		return false
+	var available: Array = LeaderManager.get_available_training_paths_for_leader("usa_patton_test")
+	if available.is_empty():
+		print("  [FAIL] available training paths empty")
+		return false
+	LeaderManager.set_country_military_doctrine("USA", "mobile_warfare", false)
+	LeaderManager.set_country_military_doctrine("USA", "mass_assault", false)
+
 	LeaderManager.leaders.erase("usa_patton_test")
 	if LeaderManager.country_positions.has("USA"):
 		(LeaderManager.country_positions["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)
