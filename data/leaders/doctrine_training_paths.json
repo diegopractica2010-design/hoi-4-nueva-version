@@ -86,5 +86,93 @@
       "2": { "initiative": 2, "combined_arms_sync": 0.05 },
       "3": { "initiative": 3, "combined_arms_sync": 0.10, "attack": 1 }
     }
+  },
+  "staff_college_tradition": {
+    "name": "Staff College Tradition",
+    "doctrine_requirement": "",
+    "max_level": 3,
+    "description": "Broad command staff training available without a national doctrine gate (testing).",
+    "effects_by_level": {
+      "1": { "planning": 1, "organization_recovery": 0.03 },
+      "2": { "planning": 2, "organization_recovery": 0.06 },
+      "3": { "planning": 3, "organization_recovery": 0.10, "initiative": 1 }
+    }
+  },
+  "logistics_mastery_track": {
+    "name": "Logistics Mastery Track",
+    "doctrine_requirement": "",
+    "max_level": 3,
+    "description": "Supply, sustainment, and reinforcement focus for any leader (testing).",
+    "effects_by_level": {
+      "1": { "supply_consumption": -0.03, "reinforcement_speed": 0.05 },
+      "2": { "supply_consumption": -0.06, "reinforcement_speed": 0.10 },
+      "3": { "supply_consumption": -0.10, "reinforcement_speed": 0.15, "attrition_reduction": 0.05 }
+    }
+  },
+  "expeditionary_command": {
+    "name": "Expeditionary Command",
+    "doctrine_requirement": "",
+    "max_level": 3,
+    "description": "Joint expeditionary operations and rapid theater entry (testing).",
+    "effects_by_level": {
+      "1": { "initiative": 1, "attack": 1 },
+      "2": { "initiative": 2, "attack": 1, "breakthrough": 0.05 },
+      "3": { "initiative": 2, "attack": 2, "breakthrough": 0.08, "combined_arms_sync": 0.05 }
+    }
+  },
+  "fortification_specialist": {
+    "name": "Fortification Specialist",
+    "doctrine_requirement": "",
+    "max_level": 3,
+    "description": "Engineering-minded defensive warfare without doctrine prerequisites (testing).",
+    "effects_by_level": {
+      "1": { "defense": 1, "organization_recovery": 0.04 },
+      "2": { "defense": 2, "organization_recovery": 0.08, "supply_consumption": -0.03 },
+      "3": { "defense": 3, "organization_recovery": 0.12, "supply_consumption": -0.06 }
+    }
+  },
+  "rapid_deployment_command": {
+    "name": "Rapid Deployment Command",
+    "doctrine_requirement": "",
+    "max_level": 3,
+    "description": "Airborne and rapid-reaction command skills (testing).",
+    "effects_by_level": {
+      "1": { "initiative": 1, "reinforcement_speed": 0.08 },
+      "2": { "initiative": 2, "reinforcement_speed": 0.12, "breakthrough": 0.04 },
+      "3": { "initiative": 3, "reinforcement_speed": 0.18, "breakthrough": 0.08 }
+    }
+  },
+  "joint_fire_coordination": {
+    "name": "Joint Fire Coordination",
+    "doctrine_requirement": "",
+    "max_level": 3,
+    "description": "Artillery and air-ground fire coordination school (testing).",
+    "effects_by_level": {
+      "1": { "attack": 1, "planning": 1 },
+      "2": { "attack": 2, "planning": 1, "combined_arms_sync": 0.05 },
+      "3": { "attack": 3, "planning": 2, "combined_arms_sync": 0.10 }
+    }
+  },
+  "reconnaissance_first": {
+    "name": "Reconnaissance First",
+    "doctrine_requirement": "",
+    "max_level": 3,
+    "description": "ISR-led operations and initiative through information (testing).",
+    "effects_by_level": {
+      "1": { "initiative": 1, "planning": 1 },
+      "2": { "initiative": 2, "planning": 2 },
+      "3": { "initiative": 3, "planning": 2, "breakthrough": 0.06 }
+    }
+  },
+  "reserve_management_school": {
+    "name": "Reserve Management School",
+    "doctrine_requirement": "",
+    "max_level": 3,
+    "description": "Casualty control and operational recovery between battles (testing).",
+    "effects_by_level": {
+      "1": { "attrition_reduction": 0.04, "organization_recovery": 0.05 },
+      "2": { "attrition_reduction": 0.07, "organization_recovery": 0.10 },
+      "3": { "attrition_reduction": 0.10, "organization_recovery": 0.15, "reinforcement_speed": 0.08 }
+    }
   }
 }

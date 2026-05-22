@@ -38,10 +38,19 @@ const TRAINING_PATH_SWITCH_COST_BASE := 400
 const TRAINING_PATH_SWITCH_COST_PER_LEVEL := 150
 const HISTORICAL_LEADERS_1936_PATH := "res://data/leaders/historical_leaders_1936.json"
 const HISTORICAL_LEADERS_1918_PATH := "res://data/leaders/historical_leaders_1918.json"
+const HISTORICAL_LEADERS_2026_PATH := "res://data/leaders/historical_leaders_2026.json"
 const SCENARIO_LEADER_PATHS: Dictionary = {
 	"1918": HISTORICAL_LEADERS_1918_PATH,
 	"1936": HISTORICAL_LEADERS_1936_PATH,
+	"2026": HISTORICAL_LEADERS_2026_PATH,
 }
+## Earlier-era rosters merged forward; later files override same leader_id. 2026 is isolated.
+const SCENARIO_LEADER_ROSTER_CHAIN: Dictionary = {
+	"1918": [HISTORICAL_LEADERS_1918_PATH],
+	"1936": [HISTORICAL_LEADERS_1918_PATH, HISTORICAL_LEADERS_1936_PATH],
+	"2026": [HISTORICAL_LEADERS_2026_PATH],
+}
+const MODERN_LEADER_MIN_BIRTH_YEAR := 1950
 const MAX_SKILL := 10
 const MAX_TRAITS_PER_LEADER := 6
 const MAX_LEGENDARY_TRAITS := 2
@@ -506,9 +515,8 @@ func is_leader_entry_active_for_year(entry: Dictionary, year: int) -> bool:
 	var start := int(entry.get("start_year", 0))
 	if start > 0 and year < start:
 		return false
-	# Modern test scenarios (e.g. 2026) reuse the historical roster; do not retire by end_year.
 	var end := int(entry.get("end_year", 0))
-	if end > 0 and year > end and year < 2000:
+	if end > 0 and year > end:
 		return false
 	return true
 
@@ -2100,30 +2108,132 @@ func _read_trait_json_file(path: String) -> Dictionary:
 	return parsed as Dictionary
 
 
-func get_leaders_path_for_scenario(scenario_name: String) -> String:
+func get_leader_roster_paths_for_scenario(scenario_name: String) -> Array[String]:
 	var key := scenario_name.strip_edges().to_lower()
-	if SCENARIO_LEADER_PATHS.has(key):
-		return str(SCENARIO_LEADER_PATHS[key])
-	if ResourceLoader.exists("res://data/leaders/historical_leaders_%s.json" % key):
-		return "res://data/leaders/historical_leaders_%s.json" % key
-	return HISTORICAL_LEADERS_1936_PATH
+	if SCENARIO_LEADER_ROSTER_CHAIN.has(key):
+		var paths: Array[String] = []
+		for roster_path in SCENARIO_LEADER_ROSTER_CHAIN[key] as Array:
+			paths.append(str(roster_path))
+		return paths
+	var candidate := "res://data/leaders/historical_leaders_%s.json" % key
+	if ResourceLoader.exists(candidate):
+		return [candidate]
+	push_warning(
+		"LeaderManager: no roster file for scenario '%s' (expected %s)"
+		% [scenario_name, candidate]
+	)
+	return []
+
+
+func get_leaders_path_for_scenario(scenario_name: String) -> String:
+	var paths := get_leader_roster_paths_for_scenario(scenario_name)
+	if paths.is_empty():
+		return ""
+	return paths[paths.size() - 1]
 
 
 func load_leaders_for_scenario(scenario_name: String, start_year: int = -1) -> int:
 	if start_year > 0:
 		set_current_year(start_year)
-	var path := get_leaders_path_for_scenario(scenario_name)
-	return reload_leaders_from_json(path, current_year)
+	var paths := get_leader_roster_paths_for_scenario(scenario_name)
+	return reload_leaders_from_roster_paths(paths, current_year)
 
 
 func reload_leaders_from_json(path: String, as_of_year: int = -1) -> int:
+	if path.is_empty():
+		return reload_leaders_from_roster_paths([], as_of_year)
+	return reload_leaders_from_roster_paths([path], as_of_year)
+
+
+func reload_leaders_from_roster_paths(paths: Array[String], as_of_year: int = -1) -> int:
 	leaders.clear()
 	leader_pool.clear()
 	pending_retirements.clear()
 	country_positions.clear()
 	clear_all_leader_caches()
 	var year := as_of_year if as_of_year > 0 else current_year
-	return load_historical_leaders(path, year)
+	if paths.is_empty():
+		_historical_leaders_source_path = ""
+		print("LeaderManager: cleared roster (no leaders file for this scenario)")
+		return 0
+
+	var merged_entries: Dictionary = {}
+	for path in paths:
+		if path.is_empty() or not FileAccess.file_exists(path):
+			push_warning("Leader roster file not found: %s" % path)
+			continue
+		for entry in _load_leader_entries_from_path(path):
+			if typeof(entry) != TYPE_DICTIONARY:
+				continue
+			var entry_dict := entry as Dictionary
+			var leader_id := str(entry_dict.get("leader_id", ""))
+			if leader_id.is_empty():
+				continue
+			merged_entries[leader_id] = entry_dict.duplicate(true)
+
+	if _roster_paths_are_modern_isolated(paths):
+		for leader_id in merged_entries.keys():
+			if not _leader_entry_valid_for_modern_roster(merged_entries[leader_id]):
+				push_warning(
+					"LeaderManager: dropped non-modern entry '%s' from 2026 roster"
+					% leader_id
+				)
+				merged_entries.erase(leader_id)
+
+	_historical_leaders_source_path = ", ".join(paths)
+	var loaded := 0
+	var pooled := 0
+	for entry_dict in merged_entries.values():
+		var leader_id := str(entry_dict.get("leader_id", ""))
+		if not is_leader_entry_active_for_year(entry_dict, year):
+			leader_pool[leader_id] = entry_dict
+			pooled += 1
+			continue
+		var leader := _leader_from_dict(entry_dict)
+		if leader == null:
+			continue
+		register_leader(leader)
+		loaded += 1
+
+	print(
+		"Loaded %d leaders (%d in pool) from [%s] for year %d"
+		% [loaded, pooled, _historical_leaders_source_path, year]
+	)
+	return loaded
+
+
+func _roster_paths_are_modern_isolated(paths: Array[String]) -> bool:
+	return paths.size() == 1 and str(paths[0]) == HISTORICAL_LEADERS_2026_PATH
+
+
+func _leader_entry_valid_for_modern_roster(entry: Dictionary) -> bool:
+	var birth_year := int(entry.get("birth_year", 0))
+	if birth_year > 0 and birth_year < MODERN_LEADER_MIN_BIRTH_YEAR:
+		return false
+	var leader_id := str(entry.get("leader_id", ""))
+	if leader_id.ends_with("_2026"):
+		return true
+	return birth_year >= MODERN_LEADER_MIN_BIRTH_YEAR
+
+
+func _load_leader_entries_from_path(path: String) -> Array:
+	if not FileAccess.file_exists(path):
+		return []
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return []
+	var json_text := file.get_as_text()
+	file.close()
+	var json := JSON.new()
+	if json.parse(json_text) != OK:
+		push_warning(
+			"Failed to parse leader roster JSON %s: %s" % [path, json.get_error_message()]
+		)
+		return []
+	var data: Variant = json.get_data()
+	if typeof(data) != TYPE_DICTIONARY:
+		return []
+	return _historical_leader_entries_from_data(data as Dictionary)
 
 
 func load_leaders_from_json(path: String) -> int:
@@ -2136,58 +2246,7 @@ func load_historical_leaders(
 	path: String = HISTORICAL_LEADERS_1936_PATH,
 	as_of_year: int = -1,
 ) -> int:
-	if not FileAccess.file_exists(path):
-		push_warning("Historical leaders file not found: %s" % path)
-		return 0
-
-	var file := FileAccess.open(path, FileAccess.READ)
-	if file == null:
-		push_warning("Historical leaders file could not be opened: %s" % path)
-		return 0
-
-	var json_text := file.get_as_text()
-	file.close()
-
-	var json := JSON.new()
-	var error := json.parse(json_text)
-	if error != OK:
-		push_warning(
-			"Failed to parse historical leaders JSON: %s" % json.get_error_message()
-		)
-		return 0
-
-	var data: Variant = json.get_data()
-	if typeof(data) != TYPE_DICTIONARY:
-		push_warning("Historical leaders JSON root must be a dictionary")
-		return 0
-
-	_historical_leaders_source_path = path
-	var year := as_of_year if as_of_year > 0 else current_year
-	var entries: Array = _historical_leader_entries_from_data(data as Dictionary)
-	var loaded := 0
-	var pooled := 0
-	for entry in entries:
-		if typeof(entry) != TYPE_DICTIONARY:
-			continue
-		var entry_dict := entry as Dictionary
-		var leader_id := str(entry_dict.get("leader_id", ""))
-		if leader_id.is_empty():
-			continue
-		if not is_leader_entry_active_for_year(entry_dict, year):
-			leader_pool[leader_id] = entry_dict.duplicate(true)
-			pooled += 1
-			continue
-		var leader := _leader_from_dict(entry_dict)
-		if leader == null:
-			continue
-		register_leader(leader)
-		loaded += 1
-
-	print(
-		"Loaded %d leaders (%d in pool) from %s for year %d"
-		% [loaded, pooled, path, year]
-	)
-	return loaded
+	return reload_leaders_from_roster_paths([path], as_of_year)
 
 
 func _historical_leader_entries_from_data(data: Dictionary) -> Array:

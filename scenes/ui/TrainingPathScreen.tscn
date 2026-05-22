@@ -7,7 +7,7 @@ layout_mode = 0
 offset_left = 400.0
 offset_top = 90.0
 offset_right = 940.0
-offset_bottom = 740.0
+offset_bottom = 780.0
 mouse_filter = 0
 script = ExtResource("1_screen")
 
@@ -26,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="ContentPanel"]
 layout_mode = 2
@@ -60,6 +60,11 @@ text = "Leader Name"
 layout_mode = 2
 text = "XP Available: 0"
 
+[node name="HeaderCloseButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Header/HeaderRow"]
+custom_minimum_size = Vector2(72, 32)
+layout_mode = 2
+text = "Close"
+
 [node name="SeparatorHeader" type="HSeparator" parent="ContentPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -73,9 +78,10 @@ layout_mode = 2
 text = "Available Training Paths"
 
 [node name="PathsScroll" type="ScrollContainer" parent="ContentPanel/MarginContainer/VBoxContainer/AvailablePathsSection"]
-custom_minimum_size = Vector2(0, 500)
+custom_minimum_size = Vector2(0, 380)
 layout_mode = 2
 size_flags_vertical = 3
+clip_contents = true
 
 [node name="PathsList" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/AvailablePathsSection/PathsScroll"]
 layout_mode = 2
@@ -83,9 +89,12 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 14
 
 [node name="Footer" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 alignment = 2
 
 [node name="CloseButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Footer"]
+custom_minimum_size = Vector2(120, 36)
 layout_mode = 2
+mouse_filter = 0
 text = "Close"

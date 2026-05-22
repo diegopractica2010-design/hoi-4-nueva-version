@@ -109,14 +109,7 @@ func _on_training_path_switched(changed_leader_id: String, _old_path_id: String,
 
 
 func _on_training_paths_pressed() -> void:
-	var training_screen: TrainingPathScreen = (
-		preload("res://scenes/ui/TrainingPathScreen.tscn").instantiate() as TrainingPathScreen
-	)
-	if training_screen == null:
-		return
-	training_screen.leader_id = leader_id
-	training_screen.z_index = 101
-	add_child(training_screen)
+	TrainingPathScreen.open(self, leader_id)
 
 
 func refresh_screen() -> void:

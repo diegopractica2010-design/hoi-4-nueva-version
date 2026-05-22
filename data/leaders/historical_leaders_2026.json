@@ -1,0 +1,4244 @@
+{
+  "scenario": "2026",
+  "description": "Modern roster for 2026 only. Each nation should have army, navy, and air leadership.",
+  "leaders": [
+    {
+      "leader_id": "usa_richardson_2026",
+      "name": "Richard Cole Richardson",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 8,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 680,
+      "battles_fought": 18,
+      "trait_levels": {
+        "combined_arms_master": 2,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "usa_mendez_2026",
+      "name": "Elena Mendez",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 8,
+      "organization_skill": 8,
+      "logistics_skill": 9,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 720,
+      "battles_fought": 22,
+      "trait_levels": {
+        "logistics_wizard": 3,
+        "cautious": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "usa_hartley_2026",
+      "name": "James Hartley",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 8,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 8,
+      "experience": 640,
+      "battles_fought": 16,
+      "trait_levels": {
+        "tank_leader": 2,
+        "aggressive": 2
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "usa_whitmore_2026",
+      "name": "Sarah K. Whitmore",
+      "country_tag": "USA",
+      "leader_type": "admiral",
+      "attack_skill": 7,
+      "defense_skill": 8,
+      "organization_skill": 8,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 610,
+      "battles_fought": 20,
+      "trait_levels": {
+        "carrier_admiral": 3,
+        "cautious": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "usa_chen_2026",
+      "name": "Marcus Chen",
+      "country_tag": "USA",
+      "leader_type": "air_marshal",
+      "attack_skill": 7,
+      "defense_skill": 5,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 540,
+      "battles_fought": 14,
+      "trait_levels": {
+        "aggressive": 2,
+        "methodical": 1
+      },
+      "birth_year": 1980,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "ger_weber_2026",
+      "name": "Klaus Weber",
+      "country_tag": "GER",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 590,
+      "battles_fought": 15,
+      "trait_levels": {
+        "methodical": 2,
+        "combined_arms_master": 2
+      },
+      "birth_year": 1971,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "ger_schmidt_2026",
+      "name": "Anna Schmidt",
+      "country_tag": "GER",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 8,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 520,
+      "battles_fought": 12,
+      "trait_levels": {
+        "sea_wolf": 2,
+        "blockade_runner": 2
+      },
+      "birth_year": 1975,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "ger_hoffmann_2026",
+      "name": "Felix Hoffmann",
+      "country_tag": "GER",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 480,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "cautious": 2
+      },
+      "birth_year": 1979,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "rus_volkov_2026",
+      "name": "Dmitri Volkov",
+      "country_tag": "RUS",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 8,
+      "organization_skill": 8,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 650,
+      "battles_fought": 24,
+      "trait_levels": {
+        "iron_will": 2,
+        "methodical": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "rus_orlova_2026",
+      "name": "Natalia Orlova",
+      "country_tag": "RUS",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 500,
+      "battles_fought": 14,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 2
+      },
+      "birth_year": 1973,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "chn_liu_2026",
+      "name": "Liu Wei",
+      "country_tag": "CHN",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 8,
+      "logistics_skill": 8,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 600,
+      "battles_fought": 19,
+      "trait_levels": {
+        "methodical": 2,
+        "logistics_wizard": 2
+      },
+      "birth_year": 1973,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "chn_wang_2026",
+      "name": "Wang Jun",
+      "country_tag": "CHN",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 520,
+      "battles_fought": 12,
+      "trait_levels": {
+        "blockade_runner": 2,
+        "cautious": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "eng_taylor_2026",
+      "name": "Oliver Taylor",
+      "country_tag": "ENG",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 8,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 560,
+      "battles_fought": 17,
+      "trait_levels": {
+        "cautious": 2,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "eng_frost_2026",
+      "name": "Helen Frost",
+      "country_tag": "ENG",
+      "leader_type": "admiral",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 8,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 540,
+      "battles_fought": 15,
+      "trait_levels": {
+        "carrier_admiral": 2,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "fra_dupont_2026",
+      "name": "Jean Dupont",
+      "country_tag": "FRA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 520,
+      "battles_fought": 14,
+      "trait_levels": {
+        "methodical": 2,
+        "charismatic": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "fra_martin_2026",
+      "name": "Claire Martin",
+      "country_tag": "FRA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 460,
+      "battles_fought": 11,
+      "trait_levels": {
+        "cautious": 2,
+        "methodical": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "jap_sato_2026",
+      "name": "Kenji Sato",
+      "country_tag": "JAP",
+      "leader_type": "admiral",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 580,
+      "battles_fought": 16,
+      "trait_levels": {
+        "carrier_admiral": 2,
+        "cautious": 2
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "jap_tanaka_2026",
+      "name": "Yuki Tanaka",
+      "country_tag": "JAP",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 8,
+      "experience": 550,
+      "battles_fought": 13,
+      "trait_levels": {
+        "methodical": 1,
+        "bold": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "ind_sharma_2026",
+      "name": "Arjun Sharma",
+      "country_tag": "IND",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 8,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 480,
+      "battles_fought": 12,
+      "trait_levels": {
+        "logistics_wizard": 2,
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "isr_cohen_2026",
+      "name": "David Cohen",
+      "country_tag": "ISR",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 620,
+      "battles_fought": 20,
+      "trait_levels": {
+        "bold": 2,
+        "aggressive": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "irn_rezaei_2026",
+      "name": "Hassan Rezaei",
+      "country_tag": "IRN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 440,
+      "battles_fought": 10,
+      "trait_levels": {
+        "mountain_specialist": 2,
+        "cautious": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "kor_park_2026",
+      "name": "Park Min-ho",
+      "country_tag": "KOR",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 500,
+      "battles_fought": 11,
+      "trait_levels": {
+        "methodical": 2,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "pol_kowalski_2026",
+      "name": "Jan Kowalski",
+      "country_tag": "POL",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 460,
+      "battles_fought": 9,
+      "trait_levels": {
+        "iron_will": 1,
+        "methodical": 2
+      },
+      "birth_year": 1975,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "ukr_shevchenko_2026",
+      "name": "Oleksandr Shevchenko",
+      "country_tag": "UKR",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 580,
+      "battles_fought": 22,
+      "trait_levels": {
+        "iron_will": 2,
+        "morale_builder": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "tur_yilmaz_2026",
+      "name": "Mehmet Yılmaz",
+      "country_tag": "TUR",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 470,
+      "battles_fought": 10,
+      "trait_levels": {
+        "mountain_specialist": 2
+      },
+      "birth_year": 1972,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "sau_al_rashid_2026",
+      "name": "Faisal al-Rashid",
+      "country_tag": "SAU",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 8,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 420,
+      "battles_fought": 8,
+      "trait_levels": {
+        "logistics_wizard": 2
+      },
+      "birth_year": 1976,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "ita_rossi_2026",
+      "name": "Marco Rossi",
+      "country_tag": "ITA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 490,
+      "battles_fought": 11,
+      "trait_levels": {
+        "combined_arms_master": 1,
+        "cautious": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "spa_garcia_2026",
+      "name": "Carlos García",
+      "country_tag": "SPA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 9,
+      "trait_levels": {
+        "cautious": 2
+      },
+      "birth_year": 1974,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "bra_silva_2026",
+      "name": "Rafael Silva",
+      "country_tag": "BRA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 430,
+      "battles_fought": 8,
+      "trait_levels": {
+        "jungle_panther": 1,
+        "logistics_wizard": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "mex_herrera_2026",
+      "name": "Miguel Herrera",
+      "country_tag": "MEX",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 7,
+      "experience": 400,
+      "battles_fought": 7,
+      "trait_levels": {
+        "aggressive": 1,
+        "bold": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "can_fraser_2026",
+      "name": "Laura Fraser",
+      "country_tag": "CAN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 440,
+      "battles_fought": 9,
+      "trait_levels": {
+        "methodical": 2,
+        "arctic_bear": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "nor_hansen_2026",
+      "name": "Erik Hansen",
+      "country_tag": "NOR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 420,
+      "battles_fought": 8,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "arctic_bear": 2
+      },
+      "birth_year": 1973,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "aus_mitchell_2026",
+      "name": "James Mitchell",
+      "country_tag": "AUS",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "jungle_panther": 2
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "rus_air_cmd_2026",
+      "name": "RUS Air Command 0",
+      "country_tag": "RUS",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 424,
+      "battles_fought": 17,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "chn_air_cmd_2026",
+      "name": "CHN Air Command 0",
+      "country_tag": "CHN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 693,
+      "battles_fought": 16,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "eng_air_cmd_2026",
+      "name": "ENG Air Command 0",
+      "country_tag": "ENG",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 523,
+      "battles_fought": 11,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "fra_nav_cmd_2026",
+      "name": "FRA Fleet Command 0",
+      "country_tag": "FRA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 517,
+      "battles_fought": 20,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "jap_air_cmd_2026",
+      "name": "JAP Air Command 0",
+      "country_tag": "JAP",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 519,
+      "battles_fought": 22,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "ind_nav_cmd_2026",
+      "name": "IND Fleet Command 0",
+      "country_tag": "IND",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 625,
+      "battles_fought": 8,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "ind_air_cmd_2026",
+      "name": "IND Air Command 0",
+      "country_tag": "IND",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 605,
+      "battles_fought": 18,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "isr_nav_cmd_2026",
+      "name": "ISR Fleet Command 0",
+      "country_tag": "ISR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 408,
+      "battles_fought": 16,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "isr_air_cmd_2026",
+      "name": "ISR Air Command 0",
+      "country_tag": "ISR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 402,
+      "battles_fought": 10,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "irn_nav_cmd_2026",
+      "name": "IRN Fleet Command 0",
+      "country_tag": "IRN",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 544,
+      "battles_fought": 17,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "irn_air_cmd_2026",
+      "name": "IRN Air Command 0",
+      "country_tag": "IRN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 575,
+      "battles_fought": 18,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "kor_nav_cmd_2026",
+      "name": "KOR Fleet Command 0",
+      "country_tag": "KOR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 651,
+      "battles_fought": 19,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "kor_air_cmd_2026",
+      "name": "KOR Air Command 0",
+      "country_tag": "KOR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 636,
+      "battles_fought": 19,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "mex_nav_cmd_2026",
+      "name": "MEX Fleet Command 0",
+      "country_tag": "MEX",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 697,
+      "battles_fought": 20,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "mex_air_cmd_2026",
+      "name": "MEX Air Command 0",
+      "country_tag": "MEX",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 645,
+      "battles_fought": 13,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "bra_nav_cmd_2026",
+      "name": "BRA Fleet Command 0",
+      "country_tag": "BRA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 676,
+      "battles_fought": 14,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "bra_air_cmd_2026",
+      "name": "BRA Air Command 0",
+      "country_tag": "BRA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 637,
+      "battles_fought": 20,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "ita_nav_cmd_2026",
+      "name": "ITA Fleet Command 0",
+      "country_tag": "ITA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 657,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "ita_air_cmd_2026",
+      "name": "ITA Air Command 0",
+      "country_tag": "ITA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 644,
+      "battles_fought": 12,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "spa_nav_cmd_2026",
+      "name": "SPA Fleet Command 0",
+      "country_tag": "SPA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 584,
+      "battles_fought": 12,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "spa_air_cmd_2026",
+      "name": "SPA Air Command 0",
+      "country_tag": "SPA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 497,
+      "battles_fought": 15,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "tur_nav_cmd_2026",
+      "name": "TUR Fleet Command 0",
+      "country_tag": "TUR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 503,
+      "battles_fought": 21,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "tur_air_cmd_2026",
+      "name": "TUR Air Command 0",
+      "country_tag": "TUR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 699,
+      "battles_fought": 22,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "sau_nav_cmd_2026",
+      "name": "SAU Fleet Command 0",
+      "country_tag": "SAU",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 443,
+      "battles_fought": 21,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "sau_air_cmd_2026",
+      "name": "SAU Air Command 0",
+      "country_tag": "SAU",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 598,
+      "battles_fought": 11,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "pol_nav_cmd_2026",
+      "name": "POL Fleet Command 0",
+      "country_tag": "POL",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 400,
+      "battles_fought": 8,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "pol_air_cmd_2026",
+      "name": "POL Air Command 0",
+      "country_tag": "POL",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 676,
+      "battles_fought": 14,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "ukr_nav_cmd_2026",
+      "name": "UKR Fleet Command 0",
+      "country_tag": "UKR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 506,
+      "battles_fought": 9,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "ukr_air_cmd_2026",
+      "name": "UKR Air Command 0",
+      "country_tag": "UKR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 546,
+      "battles_fought": 19,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "can_nav_cmd_2026",
+      "name": "CAN Fleet Command 0",
+      "country_tag": "CAN",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 637,
+      "battles_fought": 20,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "can_air_cmd_2026",
+      "name": "CAN Air Command 0",
+      "country_tag": "CAN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 429,
+      "battles_fought": 22,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "nor_gen_cmd_2026",
+      "name": "NOR Army Command 0",
+      "country_tag": "NOR",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 422,
+      "battles_fought": 15,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "nor_air_cmd_2026",
+      "name": "NOR Air Command 0",
+      "country_tag": "NOR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 591,
+      "battles_fought": 19,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "aus_nav_cmd_2026",
+      "name": "AUS Fleet Command 0",
+      "country_tag": "AUS",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 683,
+      "battles_fought": 21,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "aus_air_cmd_2026",
+      "name": "AUS Air Command 0",
+      "country_tag": "AUS",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 504,
+      "battles_fought": 22,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "aze_gen_cmd_2026",
+      "name": "AZE Army Command 0",
+      "country_tag": "AZE",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 566,
+      "battles_fought": 9,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "aze_nav_cmd_2026",
+      "name": "AZE Fleet Command 0",
+      "country_tag": "AZE",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 547,
+      "battles_fought": 20,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "aze_air_cmd_2026",
+      "name": "AZE Air Command 0",
+      "country_tag": "AZE",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 613,
+      "battles_fought": 11,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "irq_gen_cmd_2026",
+      "name": "IRQ Army Command 0",
+      "country_tag": "IRQ",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 564,
+      "battles_fought": 22,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "irq_nav_cmd_2026",
+      "name": "IRQ Fleet Command 0",
+      "country_tag": "IRQ",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 501,
+      "battles_fought": 19,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "irq_air_cmd_2026",
+      "name": "IRQ Air Command 0",
+      "country_tag": "IRQ",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 520,
+      "battles_fought": 8,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "syr_gen_cmd_2026",
+      "name": "SYR Army Command 0",
+      "country_tag": "SYR",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 497,
+      "battles_fought": 15,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "syr_nav_cmd_2026",
+      "name": "SYR Fleet Command 0",
+      "country_tag": "SYR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 403,
+      "battles_fought": 11,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "syr_air_cmd_2026",
+      "name": "SYR Air Command 0",
+      "country_tag": "SYR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 624,
+      "battles_fought": 22,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "nga_gen_cmd_2026",
+      "name": "NGA Army Command 0",
+      "country_tag": "NGA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 405,
+      "battles_fought": 13,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "nga_nav_cmd_2026",
+      "name": "NGA Fleet Command 0",
+      "country_tag": "NGA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 671,
+      "battles_fought": 9,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "nga_air_cmd_2026",
+      "name": "NGA Air Command 0",
+      "country_tag": "NGA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 504,
+      "battles_fought": 22,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "col_gen_cmd_2026",
+      "name": "COL Army Command 0",
+      "country_tag": "COL",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 535,
+      "battles_fought": 8,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "col_nav_cmd_2026",
+      "name": "COL Fleet Command 0",
+      "country_tag": "COL",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 496,
+      "battles_fought": 14,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "col_air_cmd_2026",
+      "name": "COL Air Command 0",
+      "country_tag": "COL",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 678,
+      "battles_fought": 16,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "sgp_gen_cmd_2026",
+      "name": "SGP Army Command 0",
+      "country_tag": "SGP",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 436,
+      "battles_fought": 14,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "sgp_nav_cmd_2026",
+      "name": "SGP Fleet Command 0",
+      "country_tag": "SGP",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 412,
+      "battles_fought": 20,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "sgp_air_cmd_2026",
+      "name": "SGP Air Command 0",
+      "country_tag": "SGP",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 625,
+      "battles_fought": 8,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "mys_gen_cmd_2026",
+      "name": "MYS Army Command 0",
+      "country_tag": "MYS",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 518,
+      "battles_fought": 21,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "mys_nav_cmd_2026",
+      "name": "MYS Fleet Command 0",
+      "country_tag": "MYS",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 609,
+      "battles_fought": 22,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "mys_air_cmd_2026",
+      "name": "MYS Air Command 0",
+      "country_tag": "MYS",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 652,
+      "battles_fought": 20,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1969,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "tha_gen_cmd_2026",
+      "name": "THA Army Command 0",
+      "country_tag": "THA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 458,
+      "battles_fought": 21,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "tha_nav_cmd_2026",
+      "name": "THA Fleet Command 0",
+      "country_tag": "THA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 470,
+      "battles_fought": 18,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "tha_air_cmd_2026",
+      "name": "THA Air Command 0",
+      "country_tag": "THA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 658,
+      "battles_fought": 11,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "nzl_gen_cmd_2026",
+      "name": "NZL Army Command 0",
+      "country_tag": "NZL",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 622,
+      "battles_fought": 20,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "nzl_nav_cmd_2026",
+      "name": "NZL Fleet Command 0",
+      "country_tag": "NZL",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 605,
+      "battles_fought": 18,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "nzl_air_cmd_2026",
+      "name": "NZL Air Command 0",
+      "country_tag": "NZL",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 484,
+      "battles_fought": 17,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1968,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "isl_gen_cmd_2026",
+      "name": "ISL Army Command 0",
+      "country_tag": "ISL",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 426,
+      "battles_fought": 19,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "isl_nav_cmd_2026",
+      "name": "ISL Fleet Command 0",
+      "country_tag": "ISL",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 447,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "isl_air_cmd_2026",
+      "name": "ISL Air Command 0",
+      "country_tag": "ISL",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 661,
+      "battles_fought": 14,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "pan_gen_cmd_2026",
+      "name": "PAN Army Command 0",
+      "country_tag": "PAN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 638,
+      "battles_fought": 21,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "pan_nav_cmd_2026",
+      "name": "PAN Fleet Command 0",
+      "country_tag": "PAN",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 693,
+      "battles_fought": 16,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "pan_air_cmd_2026",
+      "name": "PAN Air Command 0",
+      "country_tag": "PAN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 523,
+      "battles_fought": 11,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1970,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "grl_gen_cmd_2026",
+      "name": "GRL Army Command 0",
+      "country_tag": "GRL",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 682,
+      "battles_fought": 20,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "grl_nav_cmd_2026",
+      "name": "GRL Fleet Command 0",
+      "country_tag": "GRL",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 620,
+      "battles_fought": 18,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "grl_air_cmd_2026",
+      "name": "GRL Air Command 0",
+      "country_tag": "GRL",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 666,
+      "battles_fought": 19,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "fin_gen_cmd_2026",
+      "name": "FIN Army Command 0",
+      "country_tag": "FIN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 610,
+      "battles_fought": 8,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "fin_nav_cmd_2026",
+      "name": "FIN Fleet Command 0",
+      "country_tag": "FIN",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 639,
+      "battles_fought": 22,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "fin_air_cmd_2026",
+      "name": "FIN Air Command 0",
+      "country_tag": "FIN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 480,
+      "battles_fought": 13,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "dnk_gen_cmd_2026",
+      "name": "DNK Army Command 0",
+      "country_tag": "DNK",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 497,
+      "battles_fought": 15,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "dnk_nav_cmd_2026",
+      "name": "DNK Fleet Command 0",
+      "country_tag": "DNK",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 445,
+      "battles_fought": 8,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "dnk_air_cmd_2026",
+      "name": "DNK Air Command 0",
+      "country_tag": "DNK",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 631,
+      "battles_fought": 14,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "swe_gen_cmd_2026",
+      "name": "SWE Army Command 0",
+      "country_tag": "SWE",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 552,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2018
+    },
+    {
+      "leader_id": "swe_nav_cmd_2026",
+      "name": "SWE Fleet Command 0",
+      "country_tag": "SWE",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 662,
+      "battles_fought": 15,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "swe_air_cmd_2026",
+      "name": "SWE Air Command 0",
+      "country_tag": "SWE",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 429,
+      "battles_fought": 22,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "idn_gen_cmd_2026",
+      "name": "IDN Army Command 0",
+      "country_tag": "IDN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 469,
+      "battles_fought": 17,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "idn_nav_cmd_2026",
+      "name": "IDN Fleet Command 0",
+      "country_tag": "IDN",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 413,
+      "battles_fought": 21,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "idn_air_cmd_2026",
+      "name": "IDN Air Command 0",
+      "country_tag": "IDN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 674,
+      "battles_fought": 12,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "usa_gen2_2026",
+      "name": "USA Deputy Army Command",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "usa_nav2_2026",
+      "name": "USA Deputy Fleet Command",
+      "country_tag": "USA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "usa_air2_2026",
+      "name": "USA Deputy Air Command",
+      "country_tag": "USA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "ger_gen2_2026",
+      "name": "GER Deputy Army Command",
+      "country_tag": "GER",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "ger_nav2_2026",
+      "name": "GER Deputy Fleet Command",
+      "country_tag": "GER",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "ger_air2_2026",
+      "name": "GER Deputy Air Command",
+      "country_tag": "GER",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "rus_gen2_2026",
+      "name": "RUS Deputy Army Command",
+      "country_tag": "RUS",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "rus_nav2_2026",
+      "name": "RUS Deputy Fleet Command",
+      "country_tag": "RUS",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "rus_air2_2026",
+      "name": "RUS Deputy Air Command",
+      "country_tag": "RUS",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "chn_gen2_2026",
+      "name": "CHN Deputy Army Command",
+      "country_tag": "CHN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "chn_nav2_2026",
+      "name": "CHN Deputy Fleet Command",
+      "country_tag": "CHN",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "chn_air2_2026",
+      "name": "CHN Deputy Air Command",
+      "country_tag": "CHN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "eng_gen2_2026",
+      "name": "ENG Deputy Army Command",
+      "country_tag": "ENG",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "eng_nav2_2026",
+      "name": "ENG Deputy Fleet Command",
+      "country_tag": "ENG",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "eng_air2_2026",
+      "name": "ENG Deputy Air Command",
+      "country_tag": "ENG",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "fra_gen2_2026",
+      "name": "FRA Deputy Army Command",
+      "country_tag": "FRA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "fra_nav2_2026",
+      "name": "FRA Deputy Fleet Command",
+      "country_tag": "FRA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "fra_air2_2026",
+      "name": "FRA Deputy Air Command",
+      "country_tag": "FRA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "jap_gen2_2026",
+      "name": "JAP Deputy Army Command",
+      "country_tag": "JAP",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 1,
+        "combined_arms_master": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "jap_nav2_2026",
+      "name": "JAP Deputy Fleet Command",
+      "country_tag": "JAP",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "jap_air2_2026",
+      "name": "JAP Deputy Air Command",
+      "country_tag": "JAP",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 450,
+      "battles_fought": 10,
+      "trait_levels": {
+        "aggressive": 1,
+        "methodical": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2025
+    },
+    {
+      "leader_id": "usa_space_2026",
+      "name": "Victoria Lane",
+      "country_tag": "USA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 5,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 520,
+      "battles_fought": 10,
+      "trait_levels": {
+        "methodical": 2
+      },
+      "birth_year": 1979,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "ind_navy_2026",
+      "name": "Priya Nair",
+      "country_tag": "IND",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 480,
+      "battles_fought": 11,
+      "trait_levels": {
+        "cautious": 1,
+        "blockade_runner": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "ind_air_2026",
+      "name": "Vikram Reddy",
+      "country_tag": "IND",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 460,
+      "battles_fought": 10,
+      "trait_levels": {
+        "combined_arms_master": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "kor_navy_2026",
+      "name": "Kim Ji-yoon",
+      "country_tag": "KOR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 500,
+      "battles_fought": 12,
+      "trait_levels": {
+        "carrier_admiral": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "kor_air_2026",
+      "name": "Lee Sung-min",
+      "country_tag": "KOR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 440,
+      "battles_fought": 9,
+      "trait_levels": {
+        "methodical": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "chn_air_2026",
+      "name": "Zhang Lei",
+      "country_tag": "CHN",
+      "leader_type": "air_marshal",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 540,
+      "battles_fought": 14,
+      "trait_levels": {
+        "methodical": 2
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "fra_navy_2026",
+      "name": "Marie Laurent",
+      "country_tag": "FRA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 8,
+      "initiative_skill": 6,
+      "experience": 500,
+      "battles_fought": 13,
+      "trait_levels": {
+        "cautious": 2
+      },
+      "birth_year": 1971,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "jap_air_2026",
+      "name": "Hana Mori",
+      "country_tag": "JAP",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 470,
+      "battles_fought": 10,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "pol_air_2026",
+      "name": "Piotr Wisniewski",
+      "country_tag": "POL",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 420,
+      "battles_fought": 8,
+      "trait_levels": {
+        "iron_will": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "pol_navy_2026",
+      "name": "Zofia Nowak",
+      "country_tag": "POL",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 440,
+      "battles_fought": 9,
+      "trait_levels": {
+        "sea_wolf": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "ukr_navy_2026",
+      "name": "Iryna Bondarenko",
+      "country_tag": "UKR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 480,
+      "battles_fought": 14,
+      "trait_levels": {
+        "iron_will": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "ukr_air_2026",
+      "name": "Andriy Melnyk",
+      "country_tag": "UKR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 450,
+      "battles_fought": 11,
+      "trait_levels": {
+        "morale_builder": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "tur_air_2026",
+      "name": "Emre Kaya",
+      "country_tag": "TUR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 400,
+      "battles_fought": 9,
+      "trait_levels": {
+        "mountain_specialist": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "tur_navy_2026",
+      "name": "Ayse Demir",
+      "country_tag": "TUR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 430,
+      "battles_fought": 10,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "sau_air_2026",
+      "name": "Khalid al-Farsi",
+      "country_tag": "SAU",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 380,
+      "battles_fought": 8,
+      "trait_levels": {
+        "logistics_wizard": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "sau_navy_2026",
+      "name": "Noura al-Saud",
+      "country_tag": "SAU",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 8,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 400,
+      "battles_fought": 8,
+      "trait_levels": {
+        "blockade_runner": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "spa_navy_2026",
+      "name": "Elena Navarro",
+      "country_tag": "SPA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 420,
+      "battles_fought": 9,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "spa_air_2026",
+      "name": "Pablo Ruiz",
+      "country_tag": "SPA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 400,
+      "battles_fought": 8,
+      "trait_levels": {
+        "methodical": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "bra_navy_2026",
+      "name": "Ana Costa",
+      "country_tag": "BRA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 410,
+      "battles_fought": 9,
+      "trait_levels": {
+        "jungle_panther": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "bra_air_2026",
+      "name": "Felipe Rocha",
+      "country_tag": "BRA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 7,
+      "experience": 390,
+      "battles_fought": 8,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "mex_air_2026",
+      "name": "Diego Flores",
+      "country_tag": "MEX",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 7,
+      "experience": 360,
+      "battles_fought": 7,
+      "trait_levels": {
+        "aggressive": 1
+      },
+      "birth_year": 1980,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "mex_navy_2026",
+      "name": "Carmen Vela",
+      "country_tag": "MEX",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 340,
+      "battles_fought": 7,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "can_air_2026",
+      "name": "Sophie Labelle",
+      "country_tag": "CAN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 400,
+      "battles_fought": 8,
+      "trait_levels": {
+        "arctic_bear": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "can_navy_2026",
+      "name": "Michael Tremblay",
+      "country_tag": "CAN",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 420,
+      "battles_fought": 9,
+      "trait_levels": {
+        "cautious": 2
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "aus_navy_2026",
+      "name": "Rebecca Shaw",
+      "country_tag": "AUS",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 430,
+      "battles_fought": 10,
+      "trait_levels": {
+        "sea_wolf": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "aus_air_2026",
+      "name": "David O'Connor",
+      "country_tag": "AUS",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 410,
+      "battles_fought": 9,
+      "trait_levels": {
+        "jungle_panther": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "nor_air_2026",
+      "name": "Lars Nygaard",
+      "country_tag": "NOR",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 380,
+      "battles_fought": 8,
+      "trait_levels": {
+        "arctic_bear": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "isr_navy_2026",
+      "name": "Yael Navon",
+      "country_tag": "ISR",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 500,
+      "battles_fought": 12,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1971,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "isr_air_2026",
+      "name": "Eitan Barak",
+      "country_tag": "ISR",
+      "leader_type": "air_marshal",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 520,
+      "battles_fought": 14,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "irn_air_2026",
+      "name": "Amir Hosseini",
+      "country_tag": "IRN",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 380,
+      "battles_fought": 9,
+      "trait_levels": {
+        "mountain_specialist": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "irn_navy_2026",
+      "name": "Farah Karimi",
+      "country_tag": "IRN",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 360,
+      "battles_fought": 8,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "aze_gen_2026",
+      "name": "Ilham Mammadov",
+      "country_tag": "AZE",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 360,
+      "battles_fought": 8,
+      "trait_levels": {
+        "mountain_specialist": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "aze_nav_2026",
+      "name": "Rashad Hasanov",
+      "country_tag": "AZE",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 300,
+      "battles_fought": 6,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "aze_air_2026",
+      "name": "Leyla Aliyeva",
+      "country_tag": "AZE",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 280,
+      "battles_fought": 5,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1980,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "irq_gen_2026",
+      "name": "Tariq al-Maliki",
+      "country_tag": "IRQ",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 400,
+      "battles_fought": 12,
+      "trait_levels": {
+        "desert_fox": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "irq_nav_2026",
+      "name": "Sara al-Basri",
+      "country_tag": "IRQ",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 280,
+      "battles_fought": 6,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "irq_air_2026",
+      "name": "Hassan al-Rawi",
+      "country_tag": "IRQ",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 260,
+      "battles_fought": 5,
+      "trait_levels": {
+        "aggressive": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "syr_gen_2026",
+      "name": "Khaled Mansour",
+      "country_tag": "SYR",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 320,
+      "battles_fought": 10,
+      "trait_levels": {
+        "ruthless": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2019
+    },
+    {
+      "leader_id": "syr_nav_2026",
+      "name": "Nadia Haddad",
+      "country_tag": "SYR",
+      "leader_type": "admiral",
+      "attack_skill": 4,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 240,
+      "battles_fought": 5,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "syr_air_2026",
+      "name": "Omar Faris",
+      "country_tag": "SYR",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 4,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 6,
+      "experience": 220,
+      "battles_fought": 4,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1981,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "nga_gen_2026",
+      "name": "Chidi Okonkwo",
+      "country_tag": "NGA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 5,
+      "initiative_skill": 6,
+      "experience": 340,
+      "battles_fought": 9,
+      "trait_levels": {
+        "jungle_panther": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "nga_nav_2026",
+      "name": "Amara Diallo",
+      "country_tag": "NGA",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 260,
+      "battles_fought": 5,
+      "trait_levels": {
+        "blockade_runner": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "nga_air_2026",
+      "name": "Emeka Nwosu",
+      "country_tag": "NGA",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 6,
+      "experience": 240,
+      "battles_fought": 4,
+      "trait_levels": {
+        "aggressive": 1
+      },
+      "birth_year": 1980,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "col_gen_2026",
+      "name": "Andres Molina",
+      "country_tag": "COL",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 360,
+      "battles_fought": 8,
+      "trait_levels": {
+        "jungle_panther": 2
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "col_nav_2026",
+      "name": "Valentina Rios",
+      "country_tag": "COL",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 300,
+      "battles_fought": 6,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "col_air_2026",
+      "name": "Camilo Restrepo",
+      "country_tag": "COL",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 280,
+      "battles_fought": 5,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "sgp_gen_2026",
+      "name": "Wei Ming Tan",
+      "country_tag": "SGP",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 8,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 420,
+      "battles_fought": 8,
+      "trait_levels": {
+        "logistics_wizard": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "sgp_nav_2026",
+      "name": "Mei Lin Koh",
+      "country_tag": "SGP",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 400,
+      "battles_fought": 7,
+      "trait_levels": {
+        "blockade_runner": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "sgp_air_2026",
+      "name": "Raj Patel",
+      "country_tag": "SGP",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 380,
+      "battles_fought": 6,
+      "trait_levels": {
+        "methodical": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "mys_gen_2026",
+      "name": "Ahmad Razak",
+      "country_tag": "MYS",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 380,
+      "battles_fought": 9,
+      "trait_levels": {
+        "jungle_panther": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "mys_nav_2026",
+      "name": "Siti Aminah",
+      "country_tag": "MYS",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 320,
+      "battles_fought": 6,
+      "trait_levels": {
+        "sea_wolf": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "mys_air_2026",
+      "name": "Hafiz Ibrahim",
+      "country_tag": "MYS",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 300,
+      "battles_fought": 5,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "tha_gen_2026",
+      "name": "Somchai Prasert",
+      "country_tag": "THA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 360,
+      "battles_fought": 8,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1973,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "tha_nav_2026",
+      "name": "Siriporn Chai",
+      "country_tag": "THA",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 300,
+      "battles_fought": 6,
+      "trait_levels": {
+        "blockade_runner": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "tha_air_2026",
+      "name": "Anan Wong",
+      "country_tag": "THA",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 280,
+      "battles_fought": 5,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "nzl_gen_2026",
+      "name": "Jack Morrison",
+      "country_tag": "NZL",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 380,
+      "battles_fought": 8,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "nzl_nav_2026",
+      "name": "Kate Wilson",
+      "country_tag": "NZL",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 320,
+      "battles_fought": 6,
+      "trait_levels": {
+        "sea_wolf": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "nzl_air_2026",
+      "name": "Ryan Cooper",
+      "country_tag": "NZL",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 300,
+      "battles_fought": 5,
+      "trait_levels": {
+        "methodical": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "fin_gen_2026",
+      "name": "Mikko Korhonen",
+      "country_tag": "FIN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 400,
+      "battles_fought": 10,
+      "trait_levels": {
+        "arctic_bear": 2
+      },
+      "birth_year": 1971,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "fin_nav_2026",
+      "name": "Aino Virtanen",
+      "country_tag": "FIN",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 360,
+      "battles_fought": 8,
+      "trait_levels": {
+        "arctic_bear": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "fin_air_2026",
+      "name": "Jukka Nieminen",
+      "country_tag": "FIN",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 320,
+      "battles_fought": 6,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "dnk_gen_2026",
+      "name": "Lars Pedersen",
+      "country_tag": "DNK",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 400,
+      "battles_fought": 9,
+      "trait_levels": {
+        "methodical": 1
+      },
+      "birth_year": 1972,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "dnk_nav_2026",
+      "name": "Mette Hansen",
+      "country_tag": "DNK",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 340,
+      "battles_fought": 7,
+      "trait_levels": {
+        "blockade_runner": 1
+      },
+      "birth_year": 1975,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "dnk_air_2026",
+      "name": "Soren Nielsen",
+      "country_tag": "DNK",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 300,
+      "battles_fought": 5,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "swe_gen_2026",
+      "name": "Erik Lindstrom",
+      "country_tag": "SWE",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 410,
+      "battles_fought": 9,
+      "trait_levels": {
+        "cautious": 2
+      },
+      "birth_year": 1970,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "swe_nav_2026",
+      "name": "Astrid Berg",
+      "country_tag": "SWE",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 350,
+      "battles_fought": 7,
+      "trait_levels": {
+        "sea_wolf": 1
+      },
+      "birth_year": 1974,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "swe_air_2026",
+      "name": "Johan Ekstrom",
+      "country_tag": "SWE",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 310,
+      "battles_fought": 6,
+      "trait_levels": {
+        "methodical": 1
+      },
+      "birth_year": 1977,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "idn_gen_2026",
+      "name": "Budi Santoso",
+      "country_tag": "IDN",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 380,
+      "battles_fought": 10,
+      "trait_levels": {
+        "jungle_panther": 2
+      },
+      "birth_year": 1973,
+      "start_year": 2020
+    },
+    {
+      "leader_id": "idn_nav_2026",
+      "name": "Dewi Lestari",
+      "country_tag": "IDN",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 320,
+      "battles_fought": 7,
+      "trait_levels": {
+        "blockade_runner": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "idn_air_2026",
+      "name": "Agus Wijaya",
+      "country_tag": "IDN",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 290,
+      "battles_fought": 5,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "isl_gen_2026",
+      "name": "Gunnar Thorsson",
+      "country_tag": "ISL",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 280,
+      "battles_fought": 5,
+      "trait_levels": {
+        "arctic_bear": 2
+      },
+      "birth_year": 1975,
+      "start_year": 2021
+    },
+    {
+      "leader_id": "isl_nav_2026",
+      "name": "Helga Sigurdsson",
+      "country_tag": "ISL",
+      "leader_type": "admiral",
+      "attack_skill": 4,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 240,
+      "battles_fought": 4,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "isl_air_2026",
+      "name": "Bjorn Olafsson",
+      "country_tag": "ISL",
+      "leader_type": "air_marshal",
+      "attack_skill": 4,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 6,
+      "experience": 220,
+      "battles_fought": 4,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1980,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "pan_gen_2026",
+      "name": "Roberto Vega",
+      "country_tag": "PAN",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 6,
+      "experience": 300,
+      "battles_fought": 6,
+      "trait_levels": {
+        "jungle_panther": 1
+      },
+      "birth_year": 1976,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "pan_nav_2026",
+      "name": "Maria Delgado",
+      "country_tag": "PAN",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 260,
+      "battles_fought": 5,
+      "trait_levels": {
+        "blockade_runner": 1
+      },
+      "birth_year": 1978,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "pan_air_2026",
+      "name": "Carlos Mendez",
+      "country_tag": "PAN",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 4,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 6,
+      "experience": 240,
+      "battles_fought": 4,
+      "trait_levels": {
+        "aggressive": 1
+      },
+      "birth_year": 1981,
+      "start_year": 2024
+    },
+    {
+      "leader_id": "grl_gen_2026",
+      "name": "Minik Petersen",
+      "country_tag": "GRL",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 220,
+      "battles_fought": 4,
+      "trait_levels": {
+        "arctic_bear": 2
+      },
+      "birth_year": 1977,
+      "start_year": 2022
+    },
+    {
+      "leader_id": "grl_nav_2026",
+      "name": "Nuka Jensen",
+      "country_tag": "GRL",
+      "leader_type": "admiral",
+      "attack_skill": 4,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 200,
+      "battles_fought": 3,
+      "trait_levels": {
+        "arctic_bear": 1
+      },
+      "birth_year": 1979,
+      "start_year": 2023
+    },
+    {
+      "leader_id": "grl_air_2026",
+      "name": "Inuk Larsen",
+      "country_tag": "GRL",
+      "leader_type": "air_marshal",
+      "attack_skill": 4,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 180,
+      "battles_fought": 3,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1982,
+      "start_year": 2025
+    }
+  ]
+}

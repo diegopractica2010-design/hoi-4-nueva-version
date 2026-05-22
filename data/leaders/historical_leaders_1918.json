@@ -1,4 +1,6 @@
 {
+  "scenario": "1918",
+  "description": "WW1 roster for 1918. Merged into 1936 when veterans remain in service by start/end year.",
   "leaders": [
     {
       "leader_id": "ger_hindenburg",
@@ -112,7 +114,7 @@
     },
     {
       "leader_id": "fra_petain",
-      "name": "Philippe P\u00e9tain",
+      "name": "Philippe Pétain",
       "country_tag": "FRA",
       "leader_type": "general",
       "attack_skill": 5,
@@ -525,7 +527,7 @@
     },
     {
       "leader_id": "jap_kato",
-      "name": "Kat\u014d Tomosabur\u014d",
+      "name": "Katō Tomosaburō",
       "country_tag": "JAP",
       "leader_type": "admiral",
       "attack_skill": 7,
@@ -589,7 +591,7 @@
     },
     {
       "leader_id": "tur_cevat",
-      "name": "Cevat \u00c7obanl\u0131",
+      "name": "Cevat Çobanlı",
       "country_tag": "TUR",
       "leader_type": "general",
       "attack_skill": 6,
@@ -633,7 +635,7 @@
     },
     {
       "leader_id": "pol_pilsudski",
-      "name": "J\u00f3zef Pi\u0142sudski",
+      "name": "Józef Piłsudski",
       "country_tag": "POL",
       "leader_type": "general",
       "attack_skill": 8,
@@ -654,7 +656,7 @@
     },
     {
       "leader_id": "pol_haller",
-      "name": "J\u00f3zef Haller",
+      "name": "Józef Haller",
       "country_tag": "POL",
       "leader_type": "general",
       "attack_skill": 6,
@@ -676,7 +678,7 @@
     },
     {
       "leader_id": "pol_sikorski",
-      "name": "W\u0142adys\u0142aw Sikorski",
+      "name": "Władysław Sikorski",
       "country_tag": "POL",
       "leader_type": "general",
       "attack_skill": 6,
@@ -761,7 +763,7 @@
     },
     {
       "leader_id": "fin_osterman",
-      "name": "Karl Oskar \u00d6sterman",
+      "name": "Karl Oskar Österman",
       "country_tag": "FIN",
       "leader_type": "general",
       "attack_skill": 5,
@@ -866,7 +868,7 @@
     },
     {
       "leader_id": "dnk_host",
-      "name": "Georg H\u00f8st",
+      "name": "Georg Høst",
       "country_tag": "DNK",
       "leader_type": "admiral",
       "attack_skill": 5,
@@ -1183,7 +1185,7 @@
     },
     {
       "leader_id": "bra_fernandes",
-      "name": "Ant\u00f4nio Fernandes",
+      "name": "Antônio Fernandes",
       "country_tag": "BRA",
       "leader_type": "admiral",
       "attack_skill": 4,
@@ -1204,7 +1206,7 @@
     },
     {
       "leader_id": "mex_obregon",
-      "name": "\u00c1lvaro Obreg\u00f3n",
+      "name": "Álvaro Obregón",
       "country_tag": "MEX",
       "leader_type": "general",
       "attack_skill": 7,
@@ -1226,7 +1228,7 @@
     },
     {
       "leader_id": "mex_gonzalez",
-      "name": "Pablo Gonz\u00e1lez",
+      "name": "Pablo González",
       "country_tag": "MEX",
       "leader_type": "general",
       "attack_skill": 5,
@@ -1503,7 +1505,7 @@
     },
     {
       "leader_id": "syr_de_castelnau",
-      "name": "No\u00ebl de Castelnau",
+      "name": "Noël de Castelnau",
       "country_tag": "SYR",
       "leader_type": "general",
       "attack_skill": 6,
@@ -1524,7 +1526,7 @@
     },
     {
       "leader_id": "isl_jonsson",
-      "name": "J\u00f3n J\u00f3nsson",
+      "name": "Jón Jónsson",
       "country_tag": "ISL",
       "leader_type": "general",
       "attack_skill": 4,
@@ -1563,6 +1565,1239 @@
       "birth_year": 1879,
       "start_year": 1918,
       "end_year": 1930
+    },
+    {
+      "leader_id": "sov_kolchak_1918",
+      "name": "Alexander Kolchak",
+      "country_tag": "SOV",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 520,
+      "battles_fought": 18,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 2
+      },
+      "birth_year": 1874,
+      "start_year": 1918,
+      "end_year": 1920
+    },
+    {
+      "leader_id": "sov_alksnis_1918",
+      "name": "Yakov Alksnis",
+      "country_tag": "SOV",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 380,
+      "battles_fought": 10,
+      "trait_levels": {
+        "bold": 1,
+        "aggressive": 1
+      },
+      "birth_year": 1897,
+      "start_year": 1918,
+      "end_year": 1938
+    },
+    {
+      "leader_id": "ger_bolten_1918",
+      "name": "Ludwig von Bolten",
+      "country_tag": "GER",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 420,
+      "battles_fought": 14,
+      "trait_levels": {
+        "methodical": 2,
+        "artillery_expert": 1
+      },
+      "birth_year": 1880,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "usa_march_1918",
+      "name": "Peyton C. March",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 560,
+      "battles_fought": 22,
+      "trait_levels": {
+        "logistics_wizard": 2,
+        "methodical": 1
+      },
+      "birth_year": 1864,
+      "start_year": 1918,
+      "end_year": 1924
+    },
+    {
+      "leader_id": "usa_benson_1918",
+      "name": "William S. Benson",
+      "country_tag": "USA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 5,
+      "experience": 500,
+      "battles_fought": 18,
+      "trait_levels": {
+        "blockade_runner": 2,
+        "cautious": 1
+      },
+      "birth_year": 1855,
+      "start_year": 1917,
+      "end_year": 1922
+    },
+    {
+      "leader_id": "eng_rawlinson_1918",
+      "name": "Henry Rawlinson",
+      "country_tag": "ENG",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 620,
+      "battles_fought": 28,
+      "trait_levels": {
+        "methodical": 2,
+        "artillery_expert": 1
+      },
+      "birth_year": 1864,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "eng_keyes_1918",
+      "name": "Roger Keyes",
+      "country_tag": "ENG",
+      "leader_type": "admiral",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 540,
+      "battles_fought": 20,
+      "trait_levels": {
+        "bold": 2,
+        "sea_wolf": 1
+      },
+      "birth_year": 1872,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "fra_guillaumat_1918",
+      "name": "Louis Franchet d'Espèrey",
+      "country_tag": "FRA",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 640,
+      "battles_fought": 30,
+      "trait_levels": {
+        "aggressive": 2,
+        "bold": 1
+      },
+      "birth_year": 1856,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "fra_gouraud_1918",
+      "name": "Henri Gouraud",
+      "country_tag": "FRA",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 580,
+      "battles_fought": 26,
+      "trait_levels": {
+        "mountain_specialist": 2,
+        "iron_will": 1
+      },
+      "birth_year": 1867,
+      "start_year": 1915
+    },
+    {
+      "leader_id": "ita_thaon_revel_1918",
+      "name": "Thaon di Revel",
+      "country_tag": "ITA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 5,
+      "experience": 500,
+      "battles_fought": 20,
+      "trait_levels": {
+        "cautious": 2,
+        "blockade_runner": 1
+      },
+      "birth_year": 1855,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "ita_arma_di_1918",
+      "name": "Giulio Douhet",
+      "country_tag": "ITA",
+      "leader_type": "air_marshal",
+      "attack_skill": 6,
+      "defense_skill": 4,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 7,
+      "initiative_skill": 7,
+      "experience": 440,
+      "battles_fought": 12,
+      "trait_levels": {
+        "bold": 2,
+        "arrogant": 1
+      },
+      "birth_year": 1869,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "jap_kato_kanji_1918",
+      "name": "Kato Kanji",
+      "country_tag": "JAP",
+      "leader_type": "admiral",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 560,
+      "battles_fought": 22,
+      "trait_levels": {
+        "cautious": 2,
+        "methodical": 1
+      },
+      "birth_year": 1870,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "pol_dowbor_1918",
+      "name": "Jozef Dowbor-Musnicki",
+      "country_tag": "POL",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 480,
+      "battles_fought": 16,
+      "trait_levels": {
+        "methodical": 1,
+        "cautious": 2
+      },
+      "birth_year": 1867,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "pol_pilsudski_air_1918",
+      "name": "Kazimierz Lesniak",
+      "country_tag": "POL",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 320,
+      "battles_fought": 8,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1890,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "fin_engberg_1918",
+      "name": "Carl von Engeström",
+      "country_tag": "FIN",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 360,
+      "battles_fought": 10,
+      "trait_levels": {
+        "arctic_bear": 2,
+        "cautious": 1
+      },
+      "birth_year": 1875,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "tur_cakmak_1918",
+      "name": "Fevzi Cakmak",
+      "country_tag": "TUR",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 520,
+      "battles_fought": 20,
+      "trait_levels": {
+        "mountain_specialist": 2,
+        "iron_will": 1
+      },
+      "birth_year": 1876,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "tur_recep_1918",
+      "name": "Recep Peker",
+      "country_tag": "TUR",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 340,
+      "battles_fought": 10,
+      "trait_levels": {
+        "cautious": 2
+      },
+      "birth_year": 1889,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "nld_beatty_style_1918",
+      "name": "Cornelis van der Veer",
+      "country_tag": "NLD",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 400,
+      "battles_fought": 12,
+      "trait_levels": {
+        "blockade_runner": 2
+      },
+      "birth_year": 1868,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "nld_air_1918",
+      "name": "Henri Walaardt",
+      "country_tag": "NLD",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 280,
+      "battles_fought": 6,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1888,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "can_air_1918",
+      "name": "Arthur Kellermann",
+      "country_tag": "CAN",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 300,
+      "battles_fought": 8,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1892,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "can_navy_1918",
+      "name": "Frederick Williams",
+      "country_tag": "CAN",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 320,
+      "battles_fought": 10,
+      "trait_levels": {
+        "cautious": 2
+      },
+      "birth_year": 1870,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "aus_birdwood_1918",
+      "name": "William Birdwood",
+      "country_tag": "AUS",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 540,
+      "battles_fought": 24,
+      "trait_levels": {
+        "morale_builder": 2,
+        "cautious": 1
+      },
+      "birth_year": 1865,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "aus_air_1918",
+      "name": "Richard Williams",
+      "country_tag": "AUS",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 7,
+      "experience": 350,
+      "battles_fought": 10,
+      "trait_levels": {
+        "bold": 1,
+        "aggressive": 1
+      },
+      "birth_year": 1890,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "saf_smuts_1918",
+      "name": "Jan Smuts",
+      "country_tag": "SAF",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 500,
+      "battles_fought": 18,
+      "trait_levels": {
+        "charismatic": 2,
+        "methodical": 1
+      },
+      "birth_year": 1870,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "saf_navy_1918",
+      "name": "George Hodges",
+      "country_tag": "SAF",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 280,
+      "battles_fought": 8,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1875,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "nor_navy_1918",
+      "name": "Hakon Offerdal",
+      "country_tag": "NOR",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 300,
+      "battles_fought": 8,
+      "trait_levels": {
+        "arctic_bear": 2
+      },
+      "birth_year": 1878,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "swe_navy_1918",
+      "name": "Henrik Ring",
+      "country_tag": "SWE",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 310,
+      "battles_fought": 8,
+      "trait_levels": {
+        "cautious": 2,
+        "blockade_runner": 1
+      },
+      "birth_year": 1872,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "dnk_navy_1918",
+      "name": "Henrik Kauffmann",
+      "country_tag": "DNK",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 290,
+      "battles_fought": 8,
+      "trait_levels": {
+        "cautious": 2
+      },
+      "birth_year": 1888,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "irn_navy_1918",
+      "name": "Gholam Ali Bayandor",
+      "country_tag": "IRN",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 6,
+      "planning_skill": 5,
+      "initiative_skill": 5,
+      "experience": 260,
+      "battles_fought": 6,
+      "trait_levels": {
+        "cautious": 1
+      },
+      "birth_year": 1880,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "egy_air_1918",
+      "name": "Salim Pasha",
+      "country_tag": "EGY",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 4,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 6,
+      "experience": 240,
+      "battles_fought": 6,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1890,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "arg_nav_1918",
+      "name": "ARG Fleet Commander",
+      "country_tag": "ARG",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 318,
+      "battles_fought": 24,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1860,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "arg_air_1918",
+      "name": "ARG Aviation Commander",
+      "country_tag": "ARG",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 465,
+      "battles_fought": 11,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1864,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "aus_nav_1918",
+      "name": "AUS Fleet Commander",
+      "country_tag": "AUS",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 309,
+      "battles_fought": 15,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1868,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "bra_air_1918",
+      "name": "BRA Aviation Commander",
+      "country_tag": "BRA",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 354,
+      "battles_fought": 20,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1882,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "chl_air_1918",
+      "name": "CHL Aviation Commander",
+      "country_tag": "CHL",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 387,
+      "battles_fought": 13,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1869,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "dnk_air_1918",
+      "name": "DNK Aviation Commander",
+      "country_tag": "DNK",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 382,
+      "battles_fought": 8,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1883,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "egy_nav_1918",
+      "name": "EGY Fleet Commander",
+      "country_tag": "EGY",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 538,
+      "battles_fought": 24,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1866,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "fin_air_1918",
+      "name": "FIN Aviation Commander",
+      "country_tag": "FIN",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 411,
+      "battles_fought": 17,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1878,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "fra_air_1918",
+      "name": "FRA Aviation Commander",
+      "country_tag": "FRA",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 639,
+      "battles_fought": 25,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1874,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "grl_nav_1918",
+      "name": "GRL Fleet Commander",
+      "country_tag": "GRL",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 477,
+      "battles_fought": 23,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1874,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "grl_air_1918",
+      "name": "GRL Aviation Commander",
+      "country_tag": "GRL",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 363,
+      "battles_fought": 9,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1860,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "irn_air_1918",
+      "name": "IRN Aviation Commander",
+      "country_tag": "IRN",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 497,
+      "battles_fought": 23,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1875,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "isl_nav_1918",
+      "name": "ISL Fleet Commander",
+      "country_tag": "ISL",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 415,
+      "battles_fought": 21,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1872,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "isl_air_1918",
+      "name": "ISL Aviation Commander",
+      "country_tag": "ISL",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 346,
+      "battles_fought": 12,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1865,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "isr_nav_1918",
+      "name": "ISR Fleet Commander",
+      "country_tag": "ISR",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 318,
+      "battles_fought": 24,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1860,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "isr_air_1918",
+      "name": "ISR Aviation Commander",
+      "country_tag": "ISR",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 319,
+      "battles_fought": 25,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1873,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "mex_nav_1918",
+      "name": "MEX Fleet Commander",
+      "country_tag": "MEX",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 641,
+      "battles_fought": 7,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1868,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "mex_air_1918",
+      "name": "MEX Aviation Commander",
+      "country_tag": "MEX",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 344,
+      "battles_fought": 10,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1865,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "nga_nav_1918",
+      "name": "NGA Fleet Commander",
+      "country_tag": "NGA",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 563,
+      "battles_fought": 9,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1881,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "nga_air_1918",
+      "name": "NGA Aviation Commander",
+      "country_tag": "NGA",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 316,
+      "battles_fought": 22,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1871,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "nor_air_1918",
+      "name": "NOR Aviation Commander",
+      "country_tag": "NOR",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 493,
+      "battles_fought": 19,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1871,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "nzl_nav_1918",
+      "name": "NZL Fleet Commander",
+      "country_tag": "NZL",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 532,
+      "battles_fought": 18,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1876,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "nzl_air_1918",
+      "name": "NZL Aviation Commander",
+      "country_tag": "NZL",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 342,
+      "battles_fought": 8,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1861,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "pal_nav_1918",
+      "name": "PAL Fleet Commander",
+      "country_tag": "PAL",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 434,
+      "battles_fought": 20,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1871,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "pal_air_1918",
+      "name": "PAL Aviation Commander",
+      "country_tag": "PAL",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 507,
+      "battles_fought": 13,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1860,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "pol_nav_1918",
+      "name": "POL Fleet Commander",
+      "country_tag": "POL",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 532,
+      "battles_fought": 18,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1863,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "saf_air_1918",
+      "name": "SAF Aviation Commander",
+      "country_tag": "SAF",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 676,
+      "battles_fought": 22,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1861,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "swe_air_1918",
+      "name": "SWE Aviation Commander",
+      "country_tag": "SWE",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 488,
+      "battles_fought": 14,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1865,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "syr_nav_1918",
+      "name": "SYR Fleet Commander",
+      "country_tag": "SYR",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 547,
+      "battles_fought": 13,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1863,
+      "start_year": 1919
+    },
+    {
+      "leader_id": "syr_air_1918",
+      "name": "SYR Aviation Commander",
+      "country_tag": "SYR",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 380,
+      "battles_fought": 6,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1880,
+      "start_year": 1916
+    },
+    {
+      "leader_id": "tur_air_1918",
+      "name": "TUR Aviation Commander",
+      "country_tag": "TUR",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 337,
+      "battles_fought": 23,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1866,
+      "start_year": 1917
+    },
+    {
+      "leader_id": "ukr_nav_1918",
+      "name": "UKR Fleet Commander",
+      "country_tag": "UKR",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 662,
+      "battles_fought": 8,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "cautious": 1
+      },
+      "birth_year": 1861,
+      "start_year": 1918
+    },
+    {
+      "leader_id": "ukr_air_1918",
+      "name": "UKR Aviation Commander",
+      "country_tag": "UKR",
+      "leader_type": "air_marshal",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 567,
+      "battles_fought": 13,
+      "trait_levels": {
+        "bold": 1
+      },
+      "birth_year": 1876,
+      "start_year": 1919
     }
   ]
 }

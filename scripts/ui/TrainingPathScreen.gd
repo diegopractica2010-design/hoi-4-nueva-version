@@ -18,6 +18,9 @@ const ACTIVE_PATH_COLOR := Color(0.45, 0.85, 1.0)
 	$ContentPanel/MarginContainer/VBoxContainer/AvailablePathsSection/PathsScroll/PathsList
 )
 @onready var close_button: Button = $ContentPanel/MarginContainer/VBoxContainer/Footer/CloseButton
+@onready var header_close_button: Button = (
+	$ContentPanel/MarginContainer/VBoxContainer/Header/HeaderRow/HeaderCloseButton
+)
 @onready var _section_title: Label = (
 	$ContentPanel/MarginContainer/VBoxContainer/AvailablePathsSection/SectionTitle
 )
@@ -37,6 +40,7 @@ static func open(parent: Node, id: String) -> TrainingPathScreen:
 	screen.leader_id = id
 	screen.z_index = 101
 	parent.add_child(screen)
+	screen.refresh_screen()
 	return screen
 
 
@@ -56,7 +60,7 @@ func _ready() -> void:
 		return
 
 	_apply_theme()
-	close_button.pressed.connect(_on_close_pressed)
+	_connect_close_buttons()
 	if not LeaderManager.training_path_invested.is_connected(_on_training_path_invested):
 		LeaderManager.training_path_invested.connect(_on_training_path_invested)
 	if not LeaderManager.training_path_switched.is_connected(_on_training_path_switched):
@@ -71,6 +75,31 @@ func _exit_tree() -> void:
 		LeaderManager.training_path_invested.disconnect(_on_training_path_invested)
 	if LeaderManager.training_path_switched.is_connected(_on_training_path_switched):
 		LeaderManager.training_path_switched.disconnect(_on_training_path_switched)
+
+
+func _connect_close_buttons() -> void:
+	for btn in [close_button, header_close_button]:
+		if btn == null:
+			continue
+		btn.mouse_filter = Control.MOUSE_FILTER_STOP
+		if btn.pressed.is_connected(_on_close_pressed):
+			btn.pressed.disconnect(_on_close_pressed)
+		btn.pressed.connect(_on_close_pressed)
+		RetrowaveTheme.style_secondary_button(btn)
+
+	var fallback := get_node_or_null(
+		"ContentPanel/MarginContainer/VBoxContainer/Footer/CloseButton"
+	) as Button
+	if fallback != null and (close_button == null or fallback != close_button):
+		fallback.mouse_filter = Control.MOUSE_FILTER_STOP
+		if not fallback.pressed.is_connected(_on_close_pressed):
+			fallback.pressed.connect(_on_close_pressed)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		_on_close_pressed()
+		get_viewport().set_input_as_handled()
 
 
 func _on_close_pressed() -> void:
@@ -107,7 +136,10 @@ func _apply_theme() -> void:
 	RetrowaveTheme.style_body_label(leader_name_label)
 	current_xp_label.add_theme_font_size_override("font_size", 17)
 	RetrowaveTheme.style_body_label(current_xp_label)
-	RetrowaveTheme.style_secondary_button(close_button)
+	if close_button:
+		RetrowaveTheme.style_secondary_button(close_button)
+	if header_close_button:
+		RetrowaveTheme.style_secondary_button(header_close_button)
 	_section_title.add_theme_font_size_override("font_size", 14)
 	_section_title.add_theme_color_override("font_color", RetrowaveTheme.CYAN)
 

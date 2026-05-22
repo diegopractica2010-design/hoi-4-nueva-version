@@ -929,9 +929,9 @@ static func _test_leader_manager() -> bool:
 	if LeaderManager.get_training_path_definition("school_of_maneuver").is_empty():
 		print("  [FAIL] doctrine training path definitions not loaded")
 		return false
-	if LeaderManager.training_path_definitions.size() < 8:
+	if LeaderManager.training_path_definitions.size() < 14:
 		print(
-			"  [FAIL] expected 8 training paths, got ",
+			"  [FAIL] expected at least 14 training paths, got ",
 			LeaderManager.training_path_definitions.size(),
 		)
 		return false
@@ -1040,9 +1040,45 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] 1918 Pershing not loaded")
 		return false
 
-	LeaderManager.load_historical_leaders(LeaderManager.HISTORICAL_LEADERS_1936_PATH, 1936)
+	var loaded_2026 := LeaderManager.load_leaders_for_scenario("2026", 2026)
+	if loaded_2026 < 80:
+		print("  [FAIL] 2026 scenario leaders load count: ", loaded_2026)
+		return false
+	if LeaderManager.get_leader("usa_patton") != null:
+		print("  [FAIL] Patton must not appear in 2026 scenario roster")
+		return false
+	if LeaderManager.get_leader("ger_rommel") != null:
+		print("  [FAIL] Rommel must not appear in 2026 scenario roster")
+		return false
+	if LeaderManager.get_leader("tur_kemal") != null:
+		print("  [FAIL] WW1 veteran tur_kemal must not appear in 2026 roster")
+		return false
+	var modern_usa: Leader = LeaderManager.get_leader("usa_richardson_2026")
+	if modern_usa == null:
+		print("  [FAIL] 2026 USA commander usa_richardson_2026 not loaded")
+		return false
+	if LeaderManager.get_leader_age(modern_usa) < 40 or LeaderManager.get_leader_age(modern_usa) > 65:
+		print("  [FAIL] 2026 leader age out of range: ", LeaderManager.get_leader_age(modern_usa))
+		return false
+
+	var loaded_1936 := LeaderManager.load_leaders_for_scenario("1936", 1936)
+	if loaded_1936 < 60:
+		print("  [FAIL] 1936 merged roster load count: ", loaded_1936)
+		return false
+	if LeaderManager.get_leader("usa_patton") == null:
+		print("  [FAIL] Patton should be active at 1936 scenario start")
+		return false
 	if LeaderManager.get_leader("ger_guderian") != null:
-		print("  [FAIL] Guderian should be in pool until 1939, not active in 1936")
+		print("  [FAIL] Guderian should be pooled until 1939 at 1936 start")
+		return false
+	if LeaderManager.get_leader("tur_kemal") == null:
+		print("  [FAIL] 1936 should include WW1 veteran tur_kemal from 1918 roster")
+		return false
+	if LeaderManager.get_leader("usa_pershing") != null:
+		print("  [FAIL] Pershing should not be active in 1936 (ended 1924)")
+		return false
+	if LeaderManager.get_leader("fin_mannerheim") == null:
+		print("  [FAIL] Mannerheim should be active in 1936 merged roster")
 		return false
 	if not LeaderManager.leader_pool.has("ger_guderian"):
 		print("  [FAIL] Guderian missing from 1936 leader pool")
@@ -1055,8 +1091,12 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] Guderian not introduced in 1939")
 		return false
 
-	var death_chance := LeaderManager.get_yearly_death_chance(LeaderManager.get_leader("ger_hindenburg"))
-	var retire_chance := LeaderManager.get_yearly_retirement_chance(LeaderManager.get_leader("ger_hindenburg"))
+	var mannerheim_1936 := LeaderManager.get_leader("fin_mannerheim")
+	if mannerheim_1936 == null:
+		print("  [FAIL] Mannerheim missing for mortality checks")
+		return false
+	var death_chance := LeaderManager.get_yearly_death_chance(mannerheim_1936)
+	var retire_chance := LeaderManager.get_yearly_retirement_chance(mannerheim_1936)
 	if death_chance <= 0.0 or retire_chance <= 0.0:
 		print("  [FAIL] mortality chances for elderly leader: ", death_chance, retire_chance)
 		return false
