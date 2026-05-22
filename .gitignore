@@ -1,19 +1,76 @@
-# Godot 4+ specific ignores
+# ==========================================
+# Epochs of Ascendancy - Godot 4 Project
+# ==========================================
+
+# Godot 4
 .godot/
-.nomedia
-
-# Godot-specific ignores
-.import/
-export.cfg
-export_credentials.cfg
+*.import
+export_presets.cfg
+*.uid                    # Godot UID cache files (causes merge conflicts)
 *.tmp
+*.temp
 
-# Imported translations (automatically generated from CSV files)
-*.translation
+# Godot exports / builds
+export/
+build/
+dist/
+*.pck
+*.zip
+*.exe
+*.app
+*.apk
+*.aab
 
-# Mono-specific ignores
-.mono/
-data_*/
-mono_crash.*.json
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+dist/
+build/
 
-/android/
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+logs/
+*.bak
+*.old
+
+# Tools / Generators cache
+tools/__pycache__/
+tools/*.pyc
+
+# Large binary files (optional but recommended)
+*.png~                # Godot import temp files
+*.wav~
+*.ogg~
+
+# Misc
+*.tmp
+*.temp
+*.cache
