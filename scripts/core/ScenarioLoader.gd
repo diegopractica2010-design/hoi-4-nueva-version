@@ -335,7 +335,7 @@ func _spawn_scenario_formations(scenario_name: String) -> void:
 	)
 
 
-func _get_formation_spawn_countries(scenario_name: String) -> Array[String]:
+func _get_formation_spawn_countries(_scenario_name: String) -> Array[String]:
 	var tags: Array[String] = []
 	for tag in countries.keys():
 		tags.append(str(tag))

@@ -103,14 +103,14 @@ static func open_for_leader(target_leader_id: String) -> RetirementOfferPopup:
 		push_warning("RetirementOfferPopup.tscn not found")
 		return null
 
-	var popup: RetirementOfferPopup = scene.instantiate() as RetirementOfferPopup
-	if popup == null:
+	var retirement_popup: RetirementOfferPopup = scene.instantiate() as RetirementOfferPopup
+	if retirement_popup == null:
 		return null
 
-	popup.leader_id = target_leader_id
+	retirement_popup.leader_id = target_leader_id
 	var tree := Engine.get_main_loop() as SceneTree
 	if tree == null or tree.root == null:
-		popup.queue_free()
+		retirement_popup.queue_free()
 		return null
-	tree.root.add_child(popup)
-	return popup
+	tree.root.add_child(retirement_popup)
+	return retirement_popup

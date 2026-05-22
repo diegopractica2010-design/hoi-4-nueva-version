@@ -203,7 +203,7 @@ static func _populate_timing(
 	plan: SupplyRoutePlan,
 	mode: String,
 	provinces: Dictionary,
-	adjacency: AdjacencySystem,
+	_adjacency: AdjacencySystem,
 	hubs: Dictionary,
 	rules: SupplyRules,
 	owner_tag: String,

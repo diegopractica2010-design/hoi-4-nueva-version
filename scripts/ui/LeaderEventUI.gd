@@ -152,30 +152,30 @@ func _on_retirement_popup_completed(resolved_leader_id: String, outcome: String)
 
 
 func _on_leader_died(leader_id: String, cause: String) -> void:
-	var name := _leader_display_name(leader_id)
+	var leader_name := _leader_display_name(leader_id)
 	var cause_text := cause.replace("_", " ")
 	post_news(
-		"%s Killed in Action" % name if cause != "natural" else "%s Has Died" % name,
-		"%s is no longer with us (%s)." % [name, cause_text],
+		"%s Killed in Action" % leader_name if cause != "natural" else "%s Has Died" % leader_name,
+		"%s is no longer with us (%s)." % [leader_name, cause_text],
 		"death",
 	)
 
 
 func _on_leader_captured(leader_id: String, cause: String) -> void:
-	var name := _leader_display_name(leader_id)
+	var leader_name := _leader_display_name(leader_id)
 	post_news(
-		"%s Captured" % name,
-		"%s has been captured (%s)." % [name, cause.replace("_", " ")],
+		"%s Captured" % leader_name,
+		"%s has been captured (%s)." % [leader_name, cause.replace("_", " ")],
 		"capture",
 	)
 
 
 func _on_leader_introduced(leader_id: String) -> void:
-	var name := _leader_display_name(leader_id)
+	var leader_name := _leader_display_name(leader_id)
 	post_news(
-		"New Commander: %s" % name,
+		"New Commander: %s" % leader_name,
 		"%s has entered national command in %d."
-		% [name, LeaderManager.get_current_year()],
+		% [leader_name, LeaderManager.get_current_year()],
 		"intro",
 	)
 
