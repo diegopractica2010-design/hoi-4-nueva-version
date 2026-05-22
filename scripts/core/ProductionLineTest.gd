@@ -819,9 +819,21 @@ static func _test_leader_manager() -> bool:
 	LeaderManager.leaders.erase(generated.leader_id)
 
 	var exp_before := patton.experience
-	LeaderManager.award_battle_experience("usa_patton_test", 50)
-	if patton.experience != exp_before + 50 or patton.battles_fought < 1:
-		print("  [FAIL] battle experience: exp=", patton.experience, " battles=", patton.battles_fought)
+	var total_before := patton.total_experience_earned
+	LeaderManager.award_xp_to_leader("usa_patton_test", 50, "combat")
+	if patton.experience != exp_before + 50 or patton.total_experience_earned != total_before + 50:
+		print(
+			"  [FAIL] award_xp_to_leader: exp=",
+			patton.experience,
+			" total=",
+			patton.total_experience_earned,
+		)
+		return false
+	if patton.battles_fought < 1 or patton.last_xp_source != "combat":
+		print("  [FAIL] combat XP should count as battle: ", patton.battles_fought, patton.last_xp_source)
+		return false
+	if not patton.spend_experience(10) or patton.get_experience() != exp_before + 40:
+		print("  [FAIL] spend_experience")
 		return false
 
 	patton.add_trait_unchecked("bold", 1)

@@ -9,6 +9,7 @@ signal leader_retirement_offered(leader_id: String)
 signal leader_retired(leader_id: String)
 signal leader_introduced(leader_id: String)
 signal game_year_advanced(year: int)
+signal leader_experience_gained(leader_id: String, amount: int, source: String)
 
 const POSITION_CHIEF_OF_ARMY := "chief_of_army"
 const POSITION_CHIEF_OF_NAVY := "chief_of_navy"
@@ -41,6 +42,11 @@ const MAX_LEGENDARY_TRAITS := 2
 const RARITY_LEGENDARY := "legendary"
 const XP_BASE_COMBAT := 25
 const XP_COMBAT_MULTIPLIER := 2.75
+## Passive XP per process_passive_xp() call (scaled to weekly rates in XP_SYSTEM_DESIGN.md).
+const XP_PASSIVE_ASSIGNED_IDLE := 1
+const XP_PASSIVE_TRAINING := 4
+const XP_PASSIVE_IN_COMBAT := 12
+const XP_PASSIVE_AT_WAR_BONUS := 2
 const XP_COST_BY_RARITY: Dictionary = {
 	"common": 100,
 	"notable": 200,
@@ -80,6 +86,7 @@ var _historical_leaders_source_path: String = ""
 ## Per-country morale bonuses from honored retirements (stub until national UI exists).
 var national_prestige: Dictionary = {}  # country_tag -> float
 var national_unity: Dictionary = {}  # country_tag -> float
+var countries_at_war: Dictionary = {}  # country_tag -> bool (stub for +2 wartime XP)
 
 # === Screen data caching ===
 var _leader_screen_cache: Dictionary = {}  # country_tag -> LeaderScreenData
@@ -787,6 +794,8 @@ func get_leader_summary(leader_id: String) -> Dictionary:
 		"trait_levels": leader.trait_levels.duplicate(),
 		"trait_display": get_trait_display_list(leader),
 		"experience": leader.experience,
+		"total_experience_earned": leader.total_experience_earned,
+		"last_xp_source": leader.last_xp_source,
 		"battles_fought": leader.battles_fought,
 		"birth_year": leader.birth_year,
 		"start_year": leader.start_year,
@@ -940,15 +949,82 @@ func _append_leader_to_group(group_dict: Dictionary, key: String, summary: Dicti
 	(group_dict[key] as Array).append(summary)
 
 
+# === XP system ===
+
+func award_xp_to_leader(leader_id: String, amount: int, source: String = "") -> void:
+	if amount <= 0:
+		return
+	var leader: Leader = leaders.get(leader_id) as Leader
+	if leader == null or not leader.is_available_for_command():
+		return
+	var count_as_battle := source == "combat" or source == "battle"
+	leader.add_experience(amount, source, count_as_battle)
+	leader_experience_gained.emit(leader_id, amount, source)
+	if count_as_battle:
+		_check_for_trait_gain(leader)
+	invalidate_leader_cache(leader.country_tag)
+
+
+func award_xp_to_formation_leaders(formation_id: String, amount: int, source: String = "") -> void:
+	if formation_id.is_empty() or amount <= 0:
+		return
+	var formation := get_formation(formation_id)
+	if formation == null or not formation.has_leader():
+		return
+	award_xp_to_leader(formation.leader_id, amount, source)
+
+
+func get_passive_xp_for_leader(leader: Leader) -> int:
+	if leader == null or not leader.is_available_for_command():
+		return 0
+	if leader.assigned_army_id.is_empty():
+		return 0
+
+	var formation := get_formation(leader.assigned_army_id)
+	if formation == null:
+		return 0
+
+	var xp := XP_PASSIVE_ASSIGNED_IDLE
+	if formation.is_training or leader.duty_post == "training":
+		xp = XP_PASSIVE_TRAINING
+	elif formation.is_in_combat:
+		xp = XP_PASSIVE_IN_COMBAT
+
+	if bool(countries_at_war.get(leader.country_tag, false)):
+		xp += XP_PASSIVE_AT_WAR_BONUS
+
+	return xp
+
+
+func process_passive_xp() -> void:
+	for leader_id in leaders.keys():
+		var leader: Leader = leaders.get(leader_id) as Leader
+		if leader == null:
+			continue
+		var xp := get_passive_xp_for_leader(leader)
+		if xp > 0:
+			award_xp_to_leader(leader_id, xp, "passive")
+
+
+func set_country_at_war(country_tag: String, at_war: bool) -> void:
+	if country_tag.is_empty():
+		return
+	countries_at_war[country_tag] = at_war
+
+
+func award_major_victory_xp(leader_id: String, bonus: int = 60) -> void:
+	award_xp_to_leader(leader_id, clampi(bonus, 30, 150), "major_victory")
+
+
+func award_high_risk_operation_xp(leader_id: String, bonus: int = 45) -> void:
+	award_xp_to_leader(leader_id, clampi(bonus, 30, 80), "high_risk_operation")
+
+
 # === Experience, traits, injury, capture, promotion ===
 
 func award_battle_experience(leader_id: String, amount: int = 25, count_as_battle: bool = true) -> void:
-	var leader: Leader = leaders.get(leader_id) as Leader
-	if leader == null:
-		return
-	leader.add_experience(amount, count_as_battle)
-	_check_for_trait_gain(leader)
-	invalidate_leader_cache(leader.country_tag)
+	var source := "combat" if count_as_battle else "battle"
+	award_xp_to_leader(leader_id, amount, source)
 
 
 func award_combat_experience_for_army(army_id: String, intensity: float = 1.0) -> void:
@@ -978,7 +1054,7 @@ func can_spend_xp_on_trait(leader: Leader, trait_id: String) -> Dictionary:
 	if get_trait_definition(trait_id).is_empty():
 		return {"ok": false, "reason": "unknown_trait"}
 	var cost := get_trait_level_up_cost(leader, trait_id)
-	if leader.experience < cost:
+	if not leader.has_enough_experience(cost):
 		return {"ok": false, "reason": "insufficient_xp", "cost": cost}
 	if not can_add_trait(leader, trait_id, 1):
 		return {"ok": false, "reason": "blocked", "cost": cost}
@@ -994,7 +1070,8 @@ func spend_xp_on_trait(leader_id: String, trait_id: String) -> Dictionary:
 	var cost := int(check.get("cost", 0))
 	if not try_add_trait_to_leader(leader, trait_id, 1):
 		return {"success": false, "reason": "failed"}
-	leader.experience -= cost
+	if not leader.spend_experience(cost):
+		return {"success": false, "reason": "insufficient_xp"}
 	invalidate_leader_cache(leader.country_tag)
 	return {
 		"success": true,

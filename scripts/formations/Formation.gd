@@ -27,6 +27,8 @@ const CATEGORY_SPACE := "space"
 @export var country_tag: String = ""
 @export var leader_id: String = ""
 @export var parent_formation_id: String = ""
+@export var is_training: bool = false
+@export var is_in_combat: bool = false
 
 var assigned_leader: Leader = null
 

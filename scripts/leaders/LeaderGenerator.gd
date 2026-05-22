@@ -28,6 +28,9 @@ static func create_leader_from_data(leader_data: Dictionary) -> Leader:
 	leader.initiative_skill = clampi(int(leader_data.get("initiative_skill", 5)), 0, 10)
 
 	leader.experience = int(leader_data.get("experience", 0))
+	leader.total_experience_earned = int(
+		leader_data.get("total_experience_earned", leader.experience)
+	)
 	leader.battles_fought = int(leader_data.get("battles_fought", 0))
 	leader.is_injured = bool(leader_data.get("is_injured", false))
 	leader.is_captured = bool(leader_data.get("is_captured", false))

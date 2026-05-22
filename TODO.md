@@ -9,6 +9,7 @@
 - Probability-based yearly mortality + retirement (no fixed death dates)
 - Combat death split: **0.03%** per battle / **~30%** death-or-capture on formation destroyed
 - `RetirementOfferPopup` + `LeaderEventUI` news toasts
+- XP Phase A: `award_xp_to_leader`, passive XP rates, `spend_experience` (see `docs/XP_SYSTEM_DESIGN.md`)
 - XP gain from combat + spend-to-level traits (basic)
 - Leader Assignment screen with trait levels and detail panel
 

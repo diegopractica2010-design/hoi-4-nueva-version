@@ -16,8 +16,12 @@ extends Resource
 @export var initiative_skill: int = 3
 
 @export var traits: Array[String] = []
+# === XP & progression ===
 @export var experience: int = 0
+@export var total_experience_earned: int = 0
 @export var battles_fought: int = 0
+@export var last_xp_gain_time: int = 0
+@export var last_xp_source: String = ""
 @export var is_injured: bool = false
 @export var is_captured: bool = false
 @export var is_retired: bool = false
@@ -36,10 +40,33 @@ extends Resource
 var trait_levels: Dictionary = {}  # trait_id -> level
 
 
-func add_experience(amount: int, count_as_battle: bool = true) -> void:
-	experience += maxi(amount, 0)
+func add_experience(amount: int, source: String = "", count_as_battle: bool = false) -> void:
+	if amount <= 0:
+		return
+	experience += amount
+	total_experience_earned += amount
+	last_xp_gain_time = Time.get_unix_time_from_system()
+	if not source.is_empty():
+		last_xp_source = source
 	if count_as_battle:
 		battles_fought += 1
+
+
+func get_experience() -> int:
+	return experience
+
+
+func has_enough_experience(cost: int) -> bool:
+	return experience >= cost
+
+
+func spend_experience(cost: int) -> bool:
+	if cost <= 0:
+		return true
+	if experience < cost:
+		return false
+	experience -= cost
+	return true
 
 
 func add_trait_unchecked(trait_id: String, level: int = 1) -> void:
