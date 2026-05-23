@@ -1017,6 +1017,27 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] supply path should lower consumption: ", boosted)
 		return false
 
+	var daily_supply := LeaderManager.apply_supply_consumption_for_leader(10.0, "usa_patton_test")
+	if daily_supply >= 10.0:
+		print("  [FAIL] daily supply should be reduced by layered defense: ", daily_supply)
+		return false
+	if daily_supply < 0.1:
+		print("  [FAIL] daily supply floor violated: ", daily_supply)
+		return false
+
+	patton.set_training_path("logistics_mastery_track", 3)
+	var logistics_mods := LeaderManager.get_leader_training_path_supply_modifiers("usa_patton_test")
+	if not logistics_mods.has("attrition_reduction"):
+		print("  [FAIL] logistics track should grant attrition_reduction: ", logistics_mods)
+		return false
+	var reduced_attrition := LeaderManager.apply_attrition_for_leader(100.0, "usa_patton_test")
+	if reduced_attrition >= 100.0:
+		print("  [FAIL] attrition_reduction should lower attrition: ", reduced_attrition)
+		return false
+	if LeaderManager.apply_reinforcement_rate_for_leader(1.0, "usa_patton_test") <= 1.0:
+		print("  [FAIL] reinforcement_speed should boost rate: ", logistics_mods)
+		return false
+
 	LeaderManager.leaders.erase("usa_patton_test")
 	if LeaderManager.country_positions.has("USA"):
 		(LeaderManager.country_positions["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)

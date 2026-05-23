@@ -62,8 +62,33 @@ func get_effective_combat_power(
 
 
 # ============================================
-# TRAINING PATH INTEGRATION
+# TRAINING PATH - COMBAT INTEGRATION
 # ============================================
+
+## Applies training path combat bonuses to a leader's core combat stat dictionary (additive).
+func apply_training_path_combat_bonuses(leader_id: String, stats: Dictionary) -> Dictionary:
+	if leader_id.is_empty() or typeof(LeaderManager) == TYPE_NIL:
+		return stats
+
+	var modifiers := LeaderManager.get_leader_training_path_combat_modifiers(leader_id)
+	if modifiers.is_empty():
+		return stats
+
+	var modified_stats := stats.duplicate()
+
+	if modifiers.has("attack") and modified_stats.has("attack"):
+		modified_stats["attack"] = float(modified_stats["attack"]) + float(modifiers["attack"])
+	if modifiers.has("defense") and modified_stats.has("defense"):
+		modified_stats["defense"] = float(modified_stats["defense"]) + float(modifiers["defense"])
+	if modifiers.has("initiative") and modified_stats.has("initiative"):
+		modified_stats["initiative"] = float(modified_stats["initiative"]) + float(modifiers["initiative"])
+	if modifiers.has("breakthrough") and modified_stats.has("breakthrough"):
+		modified_stats["breakthrough"] = float(modified_stats["breakthrough"]) + float(modifiers["breakthrough"])
+	if modifiers.has("planning") and modified_stats.has("planning"):
+		modified_stats["planning"] = float(modified_stats["planning"]) + float(modifiers["planning"])
+
+	return modified_stats
+
 
 ## Applies training path bonuses to division combat stats (before trait-based leader modifiers).
 func apply_training_path_modifiers(leader_id: String, base_stats: Dictionary) -> Dictionary:
@@ -74,7 +99,7 @@ func apply_training_path_modifiers(leader_id: String, base_stats: Dictionary) ->
 	if modifiers.is_empty():
 		return base_stats
 
-	var modified := base_stats.duplicate()
+	var modified := apply_training_path_combat_bonuses(leader_id, base_stats)
 	var soft_bonus := 0.0
 	var hard_bonus := 0.0
 
@@ -82,28 +107,23 @@ func apply_training_path_modifiers(leader_id: String, base_stats: Dictionary) ->
 		var attack_levels := float(modifiers["attack"])
 		soft_bonus += attack_levels * 1.5
 		hard_bonus += attack_levels * 0.9
-		modified["attack"] = float(modified.get("attack", 0.0)) + attack_levels
 
 	if modifiers.has("defense"):
 		var defense_levels := float(modifiers["defense"])
-		modified["defense"] = float(modified.get("defense", 0.0)) + defense_levels
 		modified["organization"] = float(modified.get("organization", 1.0)) + defense_levels * 0.05
 
 	if modifiers.has("initiative"):
 		var init_levels := float(modifiers["initiative"])
-		modified["initiative"] = float(modified.get("initiative", 0.0)) + init_levels
 		modified["readiness"] = float(modified.get("readiness", 1.0)) + init_levels * 0.04
 
 	if modifiers.has("planning"):
 		var plan_levels := float(modifiers["planning"])
-		modified["planning"] = float(modified.get("planning", 0.0)) + plan_levels
 		modified["readiness"] = float(modified.get("readiness", 1.0)) + plan_levels * 0.03
 
 	if modifiers.has("breakthrough"):
 		var breakthrough := float(modifiers["breakthrough"])
 		soft_bonus += breakthrough * 8.0
 		hard_bonus += breakthrough * 5.0
-		modified["breakthrough"] = float(modified.get("breakthrough", 0.0)) + breakthrough
 
 	if modifiers.has("combined_arms_sync"):
 		var sync := float(modifiers["combined_arms_sync"])

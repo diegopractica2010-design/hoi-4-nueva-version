@@ -181,19 +181,18 @@ func _get_base_supply_consumption(formation_id: String) -> float:
 func calculate_daily_supply_consumption(formation_id: String) -> float:
 	var base_consumption := _get_base_supply_consumption(formation_id)
 	if typeof(LeaderManager) == TYPE_NIL:
-		return base_consumption
+		return maxf(base_consumption, 0.1)
 
+	var leader_id := ""
 	var formation := get_formation(formation_id)
 	if formation != null and formation.has_leader():
-		return LeaderManager.apply_supply_consumption_for_leader(
-			base_consumption,
-			formation.leader_id,
-		)
+		leader_id = formation.leader_id
+	elif not formation_id.is_empty():
+		leader_id = LeaderManager.resolve_leader_id_for_formation(formation_id)
 
-	var leader_id := LeaderManager.resolve_leader_id_for_formation(formation_id)
 	if not leader_id.is_empty():
 		return LeaderManager.apply_supply_consumption_for_leader(base_consumption, leader_id)
-	return base_consumption
+	return maxf(base_consumption, 0.1)
 
 
 func get_attrition_cargo_summary(_leader_id: String = "") -> Dictionary:

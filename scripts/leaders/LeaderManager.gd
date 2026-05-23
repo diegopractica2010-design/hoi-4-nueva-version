@@ -1383,6 +1383,16 @@ func get_leader_training_path_combat_modifiers(leader_id: String) -> Dictionary:
 	return modifiers
 
 
+## Final combat stats for a leader after training path bonuses (delegates to CombatResolver).
+func get_leader_final_combat_stats(leader_id: String, base_stats: Dictionary) -> Dictionary:
+	if leader_id.is_empty():
+		return base_stats.duplicate()
+	var resolver := CombatResolver.new()
+	var stats := resolver.apply_training_path_combat_bonuses(leader_id, base_stats)
+	resolver.free()
+	return stats
+
+
 # ============================================
 # TRAINING PATH - SUPPLY & LOGISTICS MODIFIERS
 # ============================================
@@ -1401,13 +1411,13 @@ func get_leader_training_path_supply_modifiers(leader_id: String) -> Dictionary:
 
 	var modifiers: Dictionary = {}
 	if effects.has("supply_consumption"):
-		modifiers["supply_consumption"] = effects["supply_consumption"]
+		modifiers["supply_consumption"] = float(effects["supply_consumption"])
 	if effects.has("organization_recovery"):
-		modifiers["organization_recovery"] = effects["organization_recovery"]
+		modifiers["organization_recovery"] = float(effects["organization_recovery"])
 	if effects.has("reinforcement_speed"):
-		modifiers["reinforcement_speed"] = effects["reinforcement_speed"]
+		modifiers["reinforcement_speed"] = float(effects["reinforcement_speed"])
 	if effects.has("attrition_reduction"):
-		modifiers["attrition_reduction"] = effects["attrition_reduction"]
+		modifiers["attrition_reduction"] = float(effects["attrition_reduction"])
 	return modifiers
 
 
@@ -1421,10 +1431,11 @@ func resolve_leader_id_for_formation(formation_id: String) -> String:
 
 
 func apply_supply_consumption_for_leader(base_consumption: float, leader_id: String) -> float:
+	var consumption := base_consumption
 	var modifiers := get_leader_training_path_supply_modifiers(leader_id)
 	if modifiers.has("supply_consumption"):
-		return base_consumption * (1.0 + float(modifiers["supply_consumption"]))
-	return base_consumption
+		consumption *= 1.0 + float(modifiers["supply_consumption"])
+	return maxf(consumption, 0.1)
 
 
 func apply_attrition_for_leader(base_attrition: float, leader_id: String) -> float:
