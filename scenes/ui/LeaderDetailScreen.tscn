@@ -142,6 +142,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
+[node name="TrainingPathBonuses" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 4
+
 [node name="SeparatorFooter" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 

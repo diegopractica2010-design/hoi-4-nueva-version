@@ -185,6 +185,115 @@ func _populate_national_positions() -> void:
 		var card: Control = _create_national_position_card(display_name, position_key, leader)
 		national_positions_container.add_child(card)
 
+	var officer_training_card := _create_officer_training_card()
+	national_positions_container.add_child(officer_training_card)
+
+
+func _create_officer_training_card() -> Control:
+	var training_leader := LeaderManager.get_officer_training_leader(country_tag)
+	var quality_info := LeaderManager.get_officer_training_quality_display(country_tag)
+
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size = Vector2(180, 130)
+	RetrowaveTheme.style_detail_panel(panel)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 4)
+	panel.add_child(vbox)
+
+	var title := Label.new()
+	title.text = "Officer Training"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 14)
+	RetrowaveTheme.style_column_header(title)
+	vbox.add_child(title)
+
+	var leader_name := Label.new()
+	leader_name.text = training_leader.name if training_leader != null else "Unassigned"
+	leader_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	leader_name.add_theme_font_size_override("font_size", 13)
+	RetrowaveTheme.style_row_label(leader_name)
+	vbox.add_child(leader_name)
+
+	var quality_label := Label.new()
+	quality_label.text = str(quality_info.get("text", "Poor (0%)"))
+	quality_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	quality_label.add_theme_font_size_override("font_size", 12)
+	quality_label.modulate = quality_info.get("color", Color.WHITE)
+	vbox.add_child(quality_label)
+
+	var status_label := Label.new()
+	status_label.text = LeaderManager.get_officer_training_status_text(country_tag)
+	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	status_label.add_theme_font_size_override("font_size", 10)
+	status_label.modulate = Color(0.65, 0.65, 0.65)
+	vbox.add_child(status_label)
+
+	var btn_row := HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 6)
+	btn_row.alignment = BoxContainer.ALIGNMENT_CENTER
+
+	var change_btn := Button.new()
+	change_btn.text = "Assign" if training_leader == null else "Change"
+	change_btn.custom_minimum_size = Vector2(70, 24)
+	RetrowaveTheme.style_secondary_button(change_btn)
+	change_btn.pressed.connect(_on_assign_officer_training_pressed)
+	btn_row.add_child(change_btn)
+
+	var generate_btn := Button.new()
+	generate_btn.text = "Generate Cadet"
+	generate_btn.custom_minimum_size = Vector2(95, 24)
+	RetrowaveTheme.style_primary_button(generate_btn)
+	generate_btn.pressed.connect(_on_generate_cadet_pressed)
+	btn_row.add_child(generate_btn)
+
+	vbox.add_child(btn_row)
+
+	if training_leader != null:
+		var details_row := HBoxContainer.new()
+		details_row.alignment = BoxContainer.ALIGNMENT_CENTER
+		var details_btn := Button.new()
+		details_btn.text = "Mentor Details"
+		RetrowaveTheme.style_secondary_button(details_btn)
+		details_btn.pressed.connect(
+			_on_national_position_details_pressed.bind(training_leader.leader_id)
+		)
+		details_row.add_child(details_btn)
+		vbox.add_child(details_row)
+
+	return panel
+
+
+func _on_generate_cadet_pressed() -> void:
+	var new_leader := LeaderManager.generate_and_register_leader_from_training(country_tag)
+	if new_leader == null:
+		if typeof(LeaderEventUI) != TYPE_NIL:
+			LeaderEventUI.post_news(
+				"Officer Training",
+				"Could not generate a new officer.",
+				"military",
+			)
+		return
+
+	var branch_label := new_leader.leader_type.replace("_", " ").capitalize()
+	if typeof(LeaderEventUI) != TYPE_NIL:
+		LeaderEventUI.post_news(
+			"Officer Graduated",
+			"%s joined the roster as %s." % [new_leader.name, branch_label],
+			"military",
+		)
+	refresh_screen()
+
+
+func _on_assign_officer_training_pressed() -> void:
+	LeaderPickerPopup.open_picker(
+		func(picker: LeaderPickerPopup) -> void:
+			picker.country_tag = country_tag
+			picker.position_key = LeaderManager.POSITION_OFFICER_TRAINING
+			picker.dialog_title = "Assign Officer Training Command",
+	)
+
 
 func _create_national_position_card(
 	display_name: String,

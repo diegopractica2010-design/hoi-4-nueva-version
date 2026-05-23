@@ -27,6 +27,7 @@ func _connect_leader_signals() -> void:
 	LeaderManager.leader_died.connect(_on_leader_died)
 	LeaderManager.leader_captured.connect(_on_leader_captured)
 	LeaderManager.leader_introduced.connect(_on_leader_introduced)
+	LeaderManager.officer_training_quality_notice.connect(_on_officer_training_quality_notice)
 
 
 func _ensure_toast_layer() -> void:
@@ -178,6 +179,26 @@ func _on_leader_introduced(leader_id: String) -> void:
 		% [leader_name, LeaderManager.get_current_year()],
 		"intro",
 	)
+
+
+func _on_officer_training_quality_notice(
+	country_tag: String,
+	message: String,
+	severity: String,
+) -> void:
+	var title := "Officer Training — %s" % country_tag
+	var category := "training"
+	match severity:
+		"success":
+			title = "Training Excellence — %s" % country_tag
+			category = "training_success"
+		"warning":
+			title = "Training Warning — %s" % country_tag
+			category = "training_warning"
+		"critical":
+			title = "Training Crisis — %s" % country_tag
+			category = "training_critical"
+	post_news(title, message, category)
 
 
 func _leader_display_name(leader_id: String) -> String:

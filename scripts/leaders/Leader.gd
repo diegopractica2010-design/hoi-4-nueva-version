@@ -37,6 +37,9 @@ extends Resource
 ## Set when player asks a retiring leader to stay; bumps risk next yearly check.
 @export var stayed_past_retirement: bool = false
 
+# === Officer Training Assignment ===
+@export var is_in_officer_training: bool = false
+
 var trait_levels: Dictionary = {}  # trait_id -> level
 
 # === Doctrine Training Paths ===
@@ -96,7 +99,16 @@ func has_trait(trait_id: String) -> bool:
 
 
 func is_available_for_command() -> bool:
-	return not is_deceased and not is_retired and not is_captured
+	return (
+		not is_deceased
+		and not is_retired
+		and not is_captured
+		and not is_in_officer_training
+	)
+
+
+func is_assigned_to_training() -> bool:
+	return is_in_officer_training
 
 
 func is_in_combat_role() -> bool:

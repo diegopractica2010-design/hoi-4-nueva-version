@@ -166,6 +166,8 @@ func _populate_available_paths() -> void:
 	for child in paths_list.get_children():
 		child.queue_free()
 
+	paths_list.add_theme_constant_override("separation", 10)
+
 	var available_paths := LeaderManager.get_available_training_paths(leader_id)
 	if available_paths.is_empty():
 		var empty_note := Label.new()
@@ -176,8 +178,17 @@ func _populate_available_paths() -> void:
 		paths_list.add_child(empty_note)
 		return
 
+	available_paths.sort_custom(_sort_training_path_rows)
 	for path_entry in available_paths:
 		paths_list.add_child(_create_path_row(path_entry))
+
+
+func _sort_training_path_rows(a: Dictionary, b: Dictionary) -> bool:
+	var a_active := bool(a.get("is_active", false))
+	var b_active := bool(b.get("is_active", false))
+	if a_active != b_active:
+		return a_active
+	return str(a.get("name", "")) < str(b.get("name", ""))
 
 
 func _create_path_row(path: Dictionary) -> PanelContainer:
@@ -194,47 +205,79 @@ func _create_path_row(path: Dictionary) -> PanelContainer:
 
 	var vbox := VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 6)
-	vbox.custom_minimum_size = Vector2(0, 110)
+	vbox.custom_minimum_size = Vector2(0, 120)
 	panel.add_child(vbox)
 
-	var path_name := str(path.get("name", path.get("path_id", "")))
 	var path_id := str(path.get("path_id", ""))
 	var current_level := int(path.get("current_level", 0))
 	var max_level := int(path.get("max_level", 3))
 
+	_append_path_header(vbox, path, is_active, current_level, max_level)
+	_append_path_description(vbox, str(path.get("description", "")))
+
+	var effects: Dictionary = path.get("effects", {})
+	if not effects.is_empty():
+		_append_path_effect_line(vbox, "Current: ", effects, Color(0.78, 0.78, 0.82))
+
+	var next_effects: Dictionary = path.get("next_level_effects", {})
+	if not next_effects.is_empty() and current_level < max_level:
+		_append_path_effect_line(vbox, "Next Level: ", next_effects, XP_HIGHLIGHT_COLOR)
+
+	var separator := HSeparator.new()
+	separator.modulate = Color(1.0, 1.0, 1.0, 0.15)
+	vbox.add_child(separator)
+
+	vbox.add_child(_build_path_action_button(path_id, is_active, current_level, max_level))
+
+	return panel
+
+
+func _append_path_header(
+	vbox: VBoxContainer,
+	path: Dictionary,
+	is_active: bool,
+	current_level: int,
+	max_level: int,
+) -> void:
+	var path_name := str(path.get("name", path.get("path_id", "")))
+	var status := " (Active)" if is_active else ""
 	var header := Label.new()
-	var active_tag := "  • ACTIVE" if is_active else ""
-	header.text = "%s%s  —  Level %d / %d" % [path_name, active_tag, current_level, max_level]
+	header.text = "%s  —  Level %d / %d%s" % [path_name, current_level, max_level, status]
 	header.add_theme_font_size_override("font_size", 16)
 	if is_active:
 		header.add_theme_color_override("font_color", ACTIVE_PATH_COLOR)
 	vbox.add_child(header)
 
+
+func _append_path_description(vbox: VBoxContainer, description: String) -> void:
 	var desc := Label.new()
-	desc.text = str(path.get("description", ""))
+	desc.text = description
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.add_theme_font_size_override("font_size", 12)
 	desc.modulate = Color(0.75, 0.75, 0.75)
 	vbox.add_child(desc)
 
-	var effects: Dictionary = path.get("effects", {})
-	if not effects.is_empty():
-		var effects_label := Label.new()
-		effects_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		effects_label.text = "Current Bonuses: " + _format_effects(effects)
-		effects_label.add_theme_font_size_override("font_size", 11)
-		effects_label.modulate = Color(0.78, 0.78, 0.82)
-		vbox.add_child(effects_label)
 
-	var next_effects: Dictionary = path.get("next_level_effects", {})
-	if not next_effects.is_empty() and current_level < max_level:
-		var next_label := Label.new()
-		next_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		next_label.text = "Next Level: " + _format_effects(next_effects)
-		next_label.add_theme_font_size_override("font_size", 11)
-		next_label.modulate = XP_HIGHLIGHT_COLOR
-		vbox.add_child(next_label)
+func _append_path_effect_line(
+	vbox: VBoxContainer,
+	prefix: String,
+	effects: Dictionary,
+	line_color: Color,
+) -> void:
+	var label := Label.new()
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.text = prefix + _format_effects(effects)
+	label.add_theme_font_size_override("font_size", 11)
+	label.modulate = line_color
+	vbox.add_child(label)
 
+
+func _build_path_action_button(
+	path_id: String,
+	is_active: bool,
+	current_level: int,
+	max_level: int,
+) -> Button:
 	var action_btn := Button.new()
 	var has_school := current_leader.has_training_path()
 
@@ -268,9 +311,7 @@ func _create_path_row(path: Dictionary) -> PanelContainer:
 			action_btn.tooltip_text = "Requires %d XP" % adopt_cost
 		RetrowaveTheme.style_primary_button(action_btn)
 
-	vbox.add_child(action_btn)
-
-	return panel
+	return action_btn
 
 
 func _format_effects(effects: Dictionary) -> String:

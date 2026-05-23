@@ -1038,6 +1038,84 @@ static func _test_leader_manager() -> bool:
 		print("  [FAIL] reinforcement_speed should boost rate: ", logistics_mods)
 		return false
 
+	var suitability := LeaderManager.get_officer_training_suitability("usa_patton_test")
+	if suitability < 40:
+		print("  [FAIL] Patton should be a viable training mentor: ", suitability)
+		return false
+	var base_suitability := suitability
+	LeaderManager.try_add_trait_to_leader(patton, "reckless", 1)
+	if LeaderManager.get_officer_training_suitability("usa_patton_test") >= base_suitability:
+		print("  [FAIL] reckless trait should lower training suitability")
+		return false
+
+	if not LeaderManager.assign_leader_to_officer_training("usa_patton_test"):
+		print("  [FAIL] assign_leader_to_officer_training")
+		return false
+	if LeaderManager.get_officer_training_leader("USA") != patton:
+		print("  [FAIL] get_officer_training_leader should return Patton")
+		return false
+	var usa_positions: Dictionary = LeaderManager.country_positions.get("USA", {}) as Dictionary
+	if str(usa_positions.get(LeaderManager.POSITION_OFFICER_TRAINING, "")) != "usa_patton_test":
+		print("  [FAIL] officer training not stored in national positions")
+		return false
+	if not patton.is_assigned_to_training() or patton.duty_post != "training":
+		print("  [FAIL] officer training flags not set on mentor")
+		return false
+	if patton.is_available_for_command():
+		print("  [FAIL] mentor should not be available for field command while training")
+		return false
+
+	var cadet := LeaderManager.generate_and_register_leader_from_training("USA")
+	if cadet == null:
+		print("  [FAIL] generate_and_register_leader_from_training")
+		return false
+	if cadet.leader_type not in ["general", "admiral", "air_marshal", "field_marshal"]:
+		print("  [FAIL] cadet leader_type invalid: ", cadet.leader_type)
+		return false
+	if cadet.name.contains("Cadet") or cadet.name.contains("Commander"):
+		print("  [FAIL] cadet should use roster-style name: ", cadet.name)
+		return false
+	if cadet.experience < 30:
+		print("  [FAIL] mentored cadet should receive baseline XP: ", cadet.experience)
+		return false
+
+	LeaderManager.officer_training_quality["USA"] = 75.0
+	var quality_cadet := LeaderManager.generate_new_leader_from_training("USA")
+	if quality_cadet.experience < 85:
+		print("  [FAIL] high training quality should boost cadet XP: ", quality_cadet.experience)
+		return false
+	if quality_cadet.planning_skill < 7:
+		print("  [FAIL] high training quality should boost planning skill: ", quality_cadet.planning_skill)
+		return false
+
+	LeaderManager.advance_officer_training_progress("USA")
+	if LeaderManager.get_officer_training_quality("USA") <= 0.0:
+		print("  [FAIL] advance_officer_training_progress should increase quality")
+		return false
+
+	LeaderManager.officer_training_quality["USA"] = 74.0
+	LeaderManager.advance_officer_training_progress("USA")
+	if LeaderManager.get_officer_training_quality("USA") < 75.0:
+		print("  [FAIL] training should reach excellent threshold")
+		return false
+
+	LeaderManager.try_add_trait_to_leader(patton, "reckless", 1)
+	var flaw_cadet := LeaderManager.generate_new_leader_from_training("USA")
+	var forced_flaw := false
+	for _i in 20:
+		if flaw_cadet != null and flaw_cadet.has_trait("reckless"):
+			forced_flaw = true
+			break
+		flaw_cadet = LeaderManager.generate_new_leader_from_training("USA")
+	if not forced_flaw:
+		print("  [FAIL] officer training should sometimes inherit mentor flaws")
+		return false
+	LeaderManager.unassign_officer_training_leader()
+	if patton.is_in_officer_training:
+		print("  [FAIL] unassign_officer_training_leader")
+		return false
+	LeaderManager.leaders.erase(cadet.leader_id)
+
 	LeaderManager.leaders.erase("usa_patton_test")
 	if LeaderManager.country_positions.has("USA"):
 		(LeaderManager.country_positions["USA"] as Dictionary).erase(LeaderManager.POSITION_CHIEF_OF_ARMY)

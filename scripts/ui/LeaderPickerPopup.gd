@@ -102,7 +102,18 @@ func _load_leaders() -> void:
 
 	var eligible_count := 0
 	for leader in leaders:
-		if leader.is_injured or leader.is_captured:
+		if leader.is_injured or leader.is_captured or leader.is_retired or leader.is_deceased:
+			continue
+		if (
+			leader.is_in_officer_training
+			and position_key != LeaderManager.POSITION_OFFICER_TRAINING
+		):
+			continue
+		if (
+			position_key == LeaderManager.POSITION_OFFICER_TRAINING
+			and not leader.is_available_for_command()
+			and not leader.is_in_officer_training
+		):
 			continue
 		if valid_types.size() > 0 and not valid_types.has(leader.leader_type):
 			continue
@@ -115,7 +126,16 @@ func _load_leaders() -> void:
 		)
 
 	print("LeaderPickerPopup: eligible after filter: %d" % eligible_count)
-	_eligible_leader_ids.sort()
+	if position_key == LeaderManager.POSITION_OFFICER_TRAINING:
+		_eligible_leader_ids.sort_custom(
+			func(a: String, b: String) -> bool:
+				return (
+					LeaderManager.get_officer_training_suitability(a)
+					> LeaderManager.get_officer_training_suitability(b)
+				)
+		)
+	else:
+		_eligible_leader_ids.sort()
 	_populate_list("")
 
 
@@ -146,12 +166,22 @@ func _populate_list(search_text: String) -> void:
 		):
 			continue
 
-		var suffix := ""
-		if not leader.assigned_army_id.is_empty():
-			suffix = " (assigned)"
-		var item_index := leader_list.add_item(
-			"%s (%s)%s" % [leader.name, leader.leader_type, suffix]
-		)
+		var item_text := ""
+		if position_key == LeaderManager.POSITION_OFFICER_TRAINING:
+			var suitability := LeaderManager.get_officer_training_suitability(leader_id)
+			var type_label := leader.leader_type.replace("_", " ").capitalize()
+			item_text = "%s (%s)  —  Suitability: %d%%" % [
+				leader.name,
+				type_label,
+				suitability,
+			]
+		else:
+			var suffix := ""
+			if not leader.assigned_army_id.is_empty():
+				suffix = " (assigned)"
+			item_text = "%s (%s)%s" % [leader.name, leader.leader_type, suffix]
+
+		var item_index := leader_list.add_item(item_text)
 		leader_list.set_item_metadata(item_index, leader_id)
 
 
@@ -192,7 +222,17 @@ func _on_confirm_pressed() -> void:
 			push_warning("Cannot assign position: %s" % check.get("reason", "unknown"))
 			return
 
-		if LeaderManager.set_country_position(country_tag, position_key, selected_leader_id, false):
+		var assigned := false
+		if position_key == LeaderManager.POSITION_OFFICER_TRAINING:
+			assigned = LeaderManager.set_officer_training_leader(country_tag, selected_leader_id)
+		else:
+			assigned = LeaderManager.set_country_position(
+				country_tag,
+				position_key,
+				selected_leader_id,
+				false,
+			)
+		if assigned:
 			_refresh_leader_screen()
 	else:
 		leader_selected.emit(selected_leader_id)

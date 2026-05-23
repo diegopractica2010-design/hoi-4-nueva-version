@@ -41,6 +41,7 @@ static func create_leader_from_data(leader_data: Dictionary) -> Leader:
 	leader.end_year = int(leader_data.get("end_year", 0))
 	leader.health = clampf(float(leader_data.get("health", 1.0)), 0.1, 1.0)
 	leader.duty_post = str(leader_data.get("duty_post", "active"))
+	leader.is_in_officer_training = bool(leader_data.get("is_in_officer_training", false))
 
 	_apply_traits_from_data(leader, leader_data)
 	leader.training_path_id = str(leader_data.get("training_path_id", ""))

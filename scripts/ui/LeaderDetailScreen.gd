@@ -3,6 +3,7 @@ class_name LeaderDetailScreen
 extends DraggablePanel
 
 const XP_HIGHLIGHT_COLOR := Color(0.4, 0.9, 0.6)
+const TRAINING_PATH_BONUS_COLOR := Color(0.4, 0.85, 0.95)
 
 @export var leader_id: String = ""
 
@@ -25,6 +26,9 @@ const XP_HIGHLIGHT_COLOR := Color(0.4, 0.9, 0.6)
 	$MarginContainer/VBoxContainer/PotentialTraitsSection/PotentialScroll/PotentialTraitsList
 )
 @onready var training_paths_btn: Button = $MarginContainer/VBoxContainer/Header/TrainingPathsButton
+@onready var training_path_bonuses: VBoxContainer = (
+	$MarginContainer/VBoxContainer/TrainingPathBonuses
+)
 @onready var close_button: Button = $MarginContainer/VBoxContainer/Footer/CloseButton
 
 @onready var _section_headers: Array[Label] = [
@@ -125,6 +129,7 @@ func refresh_screen() -> void:
 	_populate_potential_traits()
 	_update_training_button_visibility()
 	_update_training_path_indicator()
+	_update_training_path_bonuses()
 
 
 func _apply_theme() -> void:
@@ -184,7 +189,85 @@ func _update_training_path_indicator() -> void:
 		current_leader.training_path_level,
 	]
 	indicator.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	indicator.modulate = Color(0.4, 0.85, 0.95)
+	indicator.modulate = TRAINING_PATH_BONUS_COLOR
+
+
+func _update_training_path_bonuses() -> void:
+	var bonus_container := _get_training_path_bonuses_container()
+	if bonus_container == null:
+		return
+
+	for child in bonus_container.get_children():
+		child.queue_free()
+
+	if current_leader == null or current_leader.training_path_id.is_empty():
+		bonus_container.visible = false
+		return
+
+	var path_data := LeaderManager.get_training_path_definition(current_leader.training_path_id)
+	if path_data.is_empty():
+		bonus_container.visible = false
+		return
+
+	bonus_container.visible = true
+
+	var header := Label.new()
+	header.text = "Current Specialization Bonuses (%s Lv.%d)" % [
+		str(path_data.get("name", current_leader.training_path_id)),
+		current_leader.training_path_level,
+	]
+	header.add_theme_font_size_override("font_size", 14)
+	header.add_theme_color_override("font_color", TRAINING_PATH_BONUS_COLOR)
+	header.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	bonus_container.add_child(header)
+
+	var effects := LeaderManager.get_leader_training_path_effects(current_leader)
+	if effects.is_empty():
+		var none_label := Label.new()
+		none_label.text = "No active bonuses"
+		none_label.modulate = Color(0.6, 0.6, 0.6)
+		RetrowaveTheme.style_body_label(none_label)
+		bonus_container.add_child(none_label)
+		return
+
+	for effect_key in effects.keys():
+		var key := str(effect_key)
+		var value: float = float(effects[effect_key])
+		var line := Label.new()
+		var formatted := LeaderManager.format_trait_effects_text({key: value})
+		line.text = "• %s" % formatted if not formatted.is_empty() else "• %s" % key
+		line.add_theme_font_size_override("font_size", 12)
+		line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		RetrowaveTheme.style_body_label(line)
+		bonus_container.add_child(line)
+
+
+func _get_training_path_bonuses_container() -> VBoxContainer:
+	if training_path_bonuses != null:
+		return training_path_bonuses
+	var existing := get_node_or_null(
+		"MarginContainer/VBoxContainer/TrainingPathBonuses"
+	) as VBoxContainer
+	if existing != null:
+		training_path_bonuses = existing
+		return existing
+
+	var main_vbox := get_node_or_null("MarginContainer/VBoxContainer") as VBoxContainer
+	if main_vbox == null:
+		return null
+
+	var container := VBoxContainer.new()
+	container.name = "TrainingPathBonuses"
+	container.add_theme_constant_override("separation", 4)
+	container.visible = false
+	var footer_sep := main_vbox.get_node_or_null("SeparatorFooter")
+	if footer_sep != null:
+		main_vbox.add_child(container)
+		main_vbox.move_child(container, footer_sep.get_index())
+	else:
+		main_vbox.add_child(container)
+	training_path_bonuses = container
+	return container
 
 
 func _get_training_path_indicator() -> Label:
