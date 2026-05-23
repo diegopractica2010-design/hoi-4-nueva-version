@@ -1,25 +1,32 @@
 # Epochs of Ascendancy — TODO / Future Systems
 
-## Leader System — Current Status (May 21, 2026)
+## Leader & Training Systems
 
-**Completed:**
-- Leveled traits (I–III) with rarity + exclusivity (`data/leaders/traits.json`)
-- Historical leaders (1918 + 1936) with `trait_levels`, skills, initiative
-- Timeline gating (`birth_year`, `start_year`, `end_year`) + `leader_pool`
-- Probability-based yearly mortality + retirement (no fixed death dates)
-- Combat death split: **0.03%** per battle / **~30%** death-or-capture on formation destroyed
-- `RetirementOfferPopup` + `LeaderEventUI` news toasts
-- XP Phase A: `award_xp_to_leader`, passive XP rates, `spend_experience` (see `docs/XP_SYSTEM_DESIGN.md`)
-- XP gain from combat + spend-to-level traits (basic)
-- Leader Assignment screen with trait levels and detail panel
+### Completed
+- Leveled traits with XP spending (I–III, rarity, exclusivity in `data/leaders/traits.json`)
+- Historical leaders (1918 + 1936 + 2026) with timeline gating and scenario loading
+- Doctrine Training Paths (invest + switch, `TrainingPathScreen`)
+- Officer Training backend (quality progression, cadet generation, trait inheritance risk)
+- Training path combat & supply modifier helpers on `LeaderManager`
+- Leader Detail Screen with trait levels, effects, and next-level preview
+- Officer Training national position card with **Generate Cadet** button
+- `RetirementOfferPopup` + `LeaderEventUI` news toasts (including training quality notices)
 
-**Next priorities:**
-- Officer Training national position + mentoring / trait inheritance
+### Outstanding
+- Wire training path bonuses into actual combat resolution (helpers exist; full battle loop)
+- Improve Officer Training UI (quality bar, richer cadet-generation feedback)
+- Tech/focus gating for Admiral and Air Marshal cadets (doctrine placeholders in place)
+- Path switching cost preview in `TrainingPathScreen` before confirm
+- Political Alignment + Hidden Traits system
 - Leader replacement picker after death/retirement (auto fallback + player choice)
 - Full news feed panel (history beyond toasts)
 - Earned trait triggers (terrain, campaigns)
-- Doctrine/focus-gated trait introductions
 - Field Marshal tier + multi-formation command
+- Full integration of training bonuses into `SupplyManager` and attrition systems
+
+---
+
+## Leader System — Legacy Notes (May 18, 2026)
 
 ---
 
@@ -28,16 +35,15 @@
 **Date:** May 2026
 
 **Recently Completed:**
-- Phase A–C leader system: traits, historical rosters, timeline, mortality, combat risk
-- `RetirementOfferPopup` + `LeaderEventUI` autoload
-- 73 WWI + 10 WWII historical commanders with `trait_levels`
+- Officer Training Command (mentor, quality, Generate Cadet UI)
+- Training path UI polish + combat/supply modifier wiring (helpers)
 
 **Good Place to Resume:**
-- Officer Training national position
+- Combat resolver: apply training path bonuses in battle
 - Leader replacement picker after death/retirement
 - Wire `resolve_formation_destroyed()` into formation elimination code
 
-**Last Updated:** May 21, 2026
+**Last Updated:** May 18, 2026
 
 ## Core Systems (High Priority)
 
@@ -67,8 +73,7 @@
 
 ## Leader System
 
-- Proper per-country/culture name lists for generated leaders.
-- Officer Training Program national position (mentoring, trait pass-down).
+- Proper per-country/culture name lists for generated leaders (USA/GER/ENG pools started).
 - Replacement picker UI after death/retirement.
 - Earned trait triggers (terrain time, encirclements, etc.).
 - Promotion paths and Field Marshal multi-formation command.
