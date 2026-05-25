@@ -251,13 +251,35 @@ When a leader fails the yearly retirement roll, the player sees:
 
 Signals and UI: `LeaderEventUI` autoload, `leader_retirement_offered`, news toasts. See `docs/LEADER_TIMELINE_AND_MORTALITY.md`.
 
-### Replacement (planned)
+### Replacement (implemented — MVP)
 
-Hybrid model: automatic interim commander, then player picks a permanent replacement from eligible leaders (HOI4-style, type-filtered).
+When a leader is removed (`_remove_leader`), `LeaderManager` enqueues one request per vacated formation command and national position. `LeaderEventUI` shows `LeaderReplacementPickerPopup` (queued after retirement popups) with:
 
-### Officer Training Program (planned)
+- **Assign Recommended** — highest-scored eligible leader (skills + XP; officer-training suitability for that role)
+- **Assign Selected** — manual pick from filtered list
+- **Leave Vacant** / **Decide Later**
 
-National position: assign a veteran to train officers — bonus XP for new leaders, chance to pass one trait at level I to mentees.
+Signals: `leader_replacement_needed`, `leader_replacement_resolved`.
+
+- **Player countries** (`LeaderManager.player_country_tag`): popup via `LeaderEventUI`; pending count on Leader Assignment screen.
+- **AI countries**: auto-assign best candidate or leave vacant immediately (no popup).
+- **Formation destroyed (captured leader)**: if the formation still exists leaderless, enqueue a formation replacement.
+- **Single candidate**: player countries may skip the picker when only one eligible leader matches the auto-pick.
+
+### Officer Training Program (Implemented)
+
+See the dedicated approved design plan:
+`~/.grok/sessions/.../plan.md` (Officer Training National Position section).
+
+**Summary of ratified design**:
+- Prestigious national position (`officer_training`) for a General/Field Marshal mentor.
+- Per-country training quality (0–100) that grows with mentor skill + suitability and decays when unassigned.
+- "Generate Cadet" action produces new leaders with quality-scaled skills and mentor trait inheritance (positive traits favored at high quality; flaw risk reduced).
+- Real strategic costs: assignment carries Stability + Prestige cost + 6-month cooldown; cadet generation uses annual quality-scaled quota (2–6).
+- Long-term effects at Excellent quality (≥75): +15% starting XP for graduates + hook for reduced replacement troop unreliability.
+- "mentor" Rare trait added; living leaders can earn it.
+
+The original lightweight "planned" description has been superseded by the richer, fully prototyped system now being hardened.
 
 ---
 
@@ -274,7 +296,95 @@ Traits should modify real gameplay systems you already have:
 
 ---
 
-## 9. Phased Implementation Roadmap
+## 9. Status Effects & Temporary Modifiers (Debuffs / Buffs)
+
+A growing number of systems need **temporary, time-limited changes** to leader, formation, or national stats. Officer Training debuffs, combat injuries, doctrine temporary bonuses, national spirits, and future event-driven effects all fall into this category.
+
+Without a centralized approach, each system will invent its own ad-hoc solution for duration tracking, stacking, saving, and UI display. A shared status effect system keeps behavior consistent and maintainable.
+
+### Core Principles
+
+- **Storage & Serialization**: Effects must be simple dictionaries that survive save/load without complex object graphs.
+- **Expiration**: Primarily time-based (months or years), with optional event-based early removal.
+- **Visibility**: The player should always be able to understand *why* a leader or nation has modified stats.
+- **Composability**: Multiple effects should combine cleanly (additive by default; multiplicative when explicitly marked).
+- **Source Tracking**: Every effect should know where it came from (`source`) so the game can intelligently remove, refresh, or display it.
+- **Priority / Layering**: Some effects should be stronger or override others (e.g. a major national crisis overriding a minor training debuff).
+
+### Recommended Data Model
+
+```gdscript
+{
+    "effect_id": "officer_training_mentor_change_debuff",   # Unique identifier
+    "source": "officer_training",                          # "officer_training", "combat_injury", "national_focus", "event", etc.
+    "source_id": "some_mentor_leader_id",                  # Optional: the specific leader, focus, or event that created it
+    "display_name": "Mentor Change Recovery",
+    "description": "Officer training program is recovering from a recent change in leadership.",
+    "is_debuff": true,
+    "modifiers": {
+        "training_quality_growth": 0.5,                    # Multiplicative in this case
+        "prestige_gain_from_retirement": -0.2
+    },
+    "duration_months": 6,
+    "remaining_months": 4,
+    "priority": 10,                                        # Higher = applied later / more important in UI
+    "refresh_behavior": "extend",                          # "extend", "replace", "stack", "ignore"
+    "ui_category": "leadership"                            # "combat", "leadership", "national", "injury", etc.
+}
+```
+
+### Where Effects Should Be Stored
+
+| Scope       | Example Storage Location          | Typical Effects                              |
+|-------------|-----------------------------------|----------------------------------------------|
+| **Leader**  | `Leader.status_effects: Array[Dictionary]` | Personal training debuffs, earned temporary traits, injury recovery |
+| **Formation** | `Formation.status_effects`      | Combat fatigue, supply interdiction penalties, recent victory bonuses |
+| **Country** | `GameData.country_status_effects` or a dedicated `NationalSpiritManager` | National spirits, policy effects, major event consequences |
+
+LeaderManager (or a new lightweight `StatusEffectManager` autoload) should provide helpers:
+- `apply_effect(target, effect_data)`
+- `tick_effects(target, months_passed)`
+- `remove_effect(target, effect_id)`
+- `get_active_modifiers(target)` — returns a combined dictionary ready for use by combat/supply/production systems
+
+### UI Display Standards
+
+**Color Coding (Retrowave theme consistent):**
+- **Debuffs**: Orange / Amber (`RetrowaveTheme.WARNING`)
+- **Buffs**: Cyan / Light Blue (`Color(0.4, 0.85, 0.95)`)
+- **Neutral / Recovery**: Muted gray or pale yellow
+
+**Display Locations:**
+- Leader Detail Screen: New "Active Effects" section below traits (with tooltips)
+- Leader Assignment Screen: Compact indicator on the Officer Training card and leader list entries
+- National Overview (future): Dedicated panel for country-level effects
+- Tooltips everywhere: Full `display_name`, `description`, remaining duration, and exact mechanical impact
+
+**Visual Treatment:**
+- Small icon or colored dot next to the affected entity when possible
+- In lists: append a short suffix such as `(-3 Prestige, 4 mo)` or a warning icon
+- Expiration should produce a news toast (via `LeaderEventUI` or a general event bus)
+
+### Notification Approach
+
+- Leader-scoped effects → continue using the existing `LeaderEventUI` autoload and news toast system.
+- Country-scoped effects → either extend `LeaderEventUI` with a `post_national_event()` method or create a lightweight `StatusEffectEventUI` that follows the same pattern.
+- Always include `effect_id` and `source` in the notification payload so the UI can offer "Remove" or "Investigate" actions later.
+
+### Future Expansion Plans
+
+- **Stacking Rules**: Define clear policy per `effect_id` (refresh duration, take the strongest, add stacks with diminishing returns, etc.).
+- **National Spirits as First-Class Effects**: Major policies and crises become status effects with long durations and powerful modifiers.
+- **Visual Polish**: Once art is available, each `ui_category` can have a distinct icon set.
+- **Player Agency**: Allow certain high-cost actions or focuses to deliberately remove or suppress specific debuffs.
+- **AI Awareness**: AI countries should evaluate active effects when making strategic decisions (especially severe debuffs).
+- **Event-Driven Triggers**: Some effects can fire additional events when they expire or reach certain thresholds (e.g. "Training Crisis" when debuff duration ends at very low quality).
+
+This system should be introduced incrementally — starting with the Officer Training debuff as the first real user — then gradually migrated to other temporary modifiers as they are implemented.
+
+---
+
+## 10. Phased Implementation Roadmap
 
 | Phase | Focus                                      | Player-Visible Win                              | Priority |
 |-------|--------------------------------------------|--------------------------------------------------|----------|
@@ -288,7 +398,7 @@ Traits should modify real gameplay systems you already have:
 
 ---
 
-## 10. Starter Trait List (First Pass)
+## 11. Starter Trait List (First Pass)
 
 **Combat Style:** Aggressive (I–III), Cautious (I–III), Bold, Methodical, Reckless (−), Ruthless
 
@@ -308,7 +418,7 @@ Traits should modify real gameplay systems you already have:
 
 ---
 
-## 11. Open Questions & Future Expansion
+## 12. Open Questions & Future Expansion
 
 - Should some Legendary traits have **unique visual effects** or special events tied to them?
 - Do we want a small number of **Leader Abilities** (active cooldown abilities) in addition to passive traits? (Phase 3+)

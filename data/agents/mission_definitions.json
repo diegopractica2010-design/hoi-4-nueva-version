@@ -1,0 +1,297 @@
+{
+  "gather_economic_intel": {
+    "id": "gather_economic_intel",
+    "name": "Gather Economic Intelligence",
+    "category": "intelligence",
+    "description": "Infiltrate economic ministries and corporations to assess industrial output, resource stockpiles, and upcoming projects.",
+    "base_success_chance": 0.65,
+    "duration_months": 4,
+    "detection_risk": 0.25,
+    "skill_requirement": "intelligence",
+    "min_skill_level": 3,
+    "outcomes": {
+      "success": {
+        "intel_type": "economic",
+        "prestige_gain": 2,
+        "description": "Valuable economic data obtained."
+      },
+      "partial": {
+        "intel_type": "economic",
+        "prestige_gain": 1,
+        "description": "Some useful economic information recovered."
+      },
+      "failure": {
+        "description": "The operation failed to yield meaningful intelligence."
+      }
+    }
+  },
+  "assess_military_readiness": {
+    "id": "assess_military_readiness",
+    "name": "Assess Military Readiness",
+    "category": "intelligence",
+    "description": "Monitor troop movements, training exercises, and supply depots to evaluate military preparedness.",
+    "base_success_chance": 0.55,
+    "duration_months": 5,
+    "detection_risk": 0.35,
+    "skill_requirement": "intelligence",
+    "min_skill_level": 4,
+    "outcomes": {
+      "success": {
+        "intel_type": "military",
+        "prestige_gain": 3,
+        "description": "Detailed assessment of enemy military readiness completed."
+      },
+      "partial": {
+        "intel_type": "military",
+        "prestige_gain": 1,
+        "description": "Limited military intelligence obtained."
+      },
+      "failure": {
+        "description": "Failed to gather reliable military intelligence."
+      }
+    }
+  },
+  "sabotage_factory": {
+    "id": "sabotage_factory",
+    "name": "Sabotage Industrial Production",
+    "category": "sabotage",
+    "description": "Infiltrate key factories and delay or damage production lines.",
+    "base_success_chance": 0.50,
+    "duration_months": 3,
+    "detection_risk": 0.40,
+    "skill_requirement": "sabotage",
+    "min_skill_level": 3,
+    "outcomes": {
+      "success": {
+        "effect": "production_delay",
+        "magnitude": 0.25,
+        "prestige_gain": 4,
+        "description": "Significant disruption to industrial output achieved."
+      },
+      "partial": {
+        "effect": "production_delay",
+        "magnitude": 0.10,
+        "prestige_gain": 2,
+        "description": "Minor delays inflicted on production."
+      },
+      "failure": {
+        "description": "Sabotage attempt was unsuccessful."
+      }
+    }
+  },
+  "disrupt_supply": {
+    "id": "disrupt_supply",
+    "name": "Disrupt Supply Convoys",
+    "category": "sabotage",
+    "description": "Target logistics networks and transportation infrastructure.",
+    "base_success_chance": 0.45,
+    "duration_months": 4,
+    "detection_risk": 0.45,
+    "skill_requirement": "sabotage",
+    "min_skill_level": 4,
+    "outcomes": {
+      "success": {
+        "effect": "supply_disruption",
+        "magnitude": 0.20,
+        "prestige_gain": 5,
+        "description": "Enemy supply lines were successfully harassed."
+      },
+      "partial": {
+        "effect": "supply_disruption",
+        "magnitude": 0.08,
+        "prestige_gain": 2,
+        "description": "Limited disruption to enemy logistics."
+      },
+      "failure": {
+        "description": "The operation was detected and neutralized."
+      }
+    }
+  },
+  "influence_propaganda": {
+    "id": "influence_propaganda",
+    "name": "Run Influence Campaign",
+    "category": "influence",
+    "description": "Spread propaganda and support opposition groups within the target nation.",
+    "base_success_chance": 0.60,
+    "duration_months": 6,
+    "detection_risk": 0.20,
+    "skill_requirement": "influence",
+    "min_skill_level": 3,
+    "outcomes": {
+      "success": {
+        "effect": "stability_damage",
+        "magnitude": 5.0,
+        "prestige_gain": 3,
+        "description": "Opposition movements gained significant traction."
+      },
+      "partial": {
+        "effect": "stability_damage",
+        "magnitude": 2.0,
+        "prestige_gain": 1,
+        "description": "Minor increase in internal dissent."
+      },
+      "failure": {
+        "description": "The influence operation had little effect."
+      }
+    }
+  },
+  "corrupt_officials": {
+    "id": "corrupt_officials",
+    "name": "Corrupt Key Officials",
+    "category": "influence",
+    "description": "Bribe or compromise mid-to-high level government and military officials.",
+    "base_success_chance": 0.40,
+    "duration_months": 5,
+    "detection_risk": 0.50,
+    "skill_requirement": "influence",
+    "min_skill_level": 5,
+    "outcomes": {
+      "success": {
+        "effect": "temporary_intel_bonus",
+        "magnitude": 15,
+        "prestige_gain": 6,
+        "description": "Valuable contacts established inside the target government."
+      },
+      "partial": {
+        "prestige_gain": 2,
+        "description": "Some officials were successfully compromised."
+      },
+      "failure": {
+        "description": "The corruption attempt was rebuffed or exposed."
+      }
+    }
+  },
+  "steal_research": {
+    "id": "steal_research",
+    "name": "Steal Research Documents",
+    "category": "technology",
+    "description": "Infiltrate research laboratories and acquire technical documents.",
+    "base_success_chance": 0.48,
+    "duration_months": 4,
+    "detection_risk": 0.38,
+    "skill_requirement": "technology",
+    "min_skill_level": 4,
+    "outcomes": {
+      "success": {
+        "effect": "research_progress",
+        "magnitude": 120,
+        "prestige_gain": 5,
+        "description": "Important technical documents were exfiltrated."
+      },
+      "partial": {
+        "effect": "research_progress",
+        "magnitude": 50,
+        "prestige_gain": 2,
+        "description": "Some useful research material was obtained."
+      },
+      "failure": {
+        "description": "The technology theft operation failed."
+      }
+    }
+  },
+  "infiltrate_research_lab": {
+    "id": "infiltrate_research_lab",
+    "name": "Infiltrate Research Facility",
+    "category": "technology",
+    "description": "Plant an agent inside a high-security research complex for long-term intelligence.",
+    "base_success_chance": 0.35,
+    "duration_months": 6,
+    "detection_risk": 0.55,
+    "skill_requirement": "technology",
+    "min_skill_level": 5,
+    "outcomes": {
+      "success": {
+        "effect": "long_term_tech_intel",
+        "prestige_gain": 8,
+        "description": "Agent successfully embedded in the research facility."
+      },
+      "partial": {
+        "prestige_gain": 3,
+        "description": "Partial access to the facility was achieved."
+      },
+      "failure": {
+        "description": "The infiltration attempt was detected."
+      }
+    }
+  },
+  "counter_intel_sweep": {
+    "id": "counter_intel_sweep",
+    "name": "Counter-Intelligence Sweep",
+    "category": "counter_intelligence",
+    "description": "Hunt for enemy agents and disrupt ongoing espionage operations in your own territory.",
+    "base_success_chance": 0.55,
+    "duration_months": 3,
+    "detection_risk": 0.15,
+    "skill_requirement": "counter_intelligence",
+    "min_skill_level": 3,
+    "outcomes": {
+      "success": {
+        "effect": "enemy_agent_disruption",
+        "magnitude": 2,
+        "prestige_gain": 3,
+        "description": "Several enemy networks were rolled up."
+      },
+      "partial": {
+        "effect": "enemy_agent_disruption",
+        "magnitude": 1,
+        "prestige_gain": 1,
+        "description": "Some hostile activity was suppressed."
+      },
+      "failure": {
+        "description": "The sweep turned up little of value."
+      }
+    }
+  },
+  "double_agent_recruitment": {
+    "id": "double_agent_recruitment",
+    "name": "Turn Enemy Agents",
+    "category": "counter_intelligence",
+    "description": "Identify and flip enemy operatives operating inside your borders.",
+    "base_success_chance": 0.40,
+    "duration_months": 5,
+    "detection_risk": 0.30,
+    "skill_requirement": "counter_intelligence",
+    "min_skill_level": 5,
+    "outcomes": {
+      "success": {
+        "effect": "enemy_intel_degradation",
+        "magnitude": 15,
+        "prestige_gain": 5,
+        "description": "Enemy intelligence networks suffered major setbacks."
+      },
+      "partial": {
+        "prestige_gain": 2,
+        "description": "Limited success in turning hostile assets."
+      },
+      "failure": {
+        "description": "The operation backfired and exposed friendly assets."
+      }
+    }
+  },
+  "secure_research_facility": {
+    "id": "secure_research_facility",
+    "name": "Harden Research Security",
+    "category": "counter_intelligence",
+    "description": "Tighten security around sensitive research programs to prevent technology theft.",
+    "base_success_chance": 0.50,
+    "duration_months": 4,
+    "detection_risk": 0.20,
+    "skill_requirement": "counter_intelligence",
+    "min_skill_level": 4,
+    "outcomes": {
+      "success": {
+        "effect": "tech_theft_protection",
+        "magnitude": 1,
+        "prestige_gain": 2,
+        "description": "Research facilities are now significantly harder to penetrate."
+      },
+      "partial": {
+        "prestige_gain": 1,
+        "description": "Some improvements to research security were made."
+      },
+      "failure": {
+        "description": "The security review was largely ineffective."
+      }
+    }
+  }
+}

@@ -40,6 +40,7 @@ extends DraggablePanel
 var current_data: LeaderScreenData
 var _detail_traits_box: VBoxContainer
 var _selected_leader_id: String = ""
+var _pending_replacements_button: Button
 
 const NATIONAL_POSITIONS: Array[Dictionary] = [
 	{"key": LeaderManager.POSITION_CHIEF_OF_ARMY, "label": "Chief of Army"},
@@ -71,6 +72,8 @@ func _ready() -> void:
 	_apply_screen_theme()
 	_setup_headers()
 	close_button.pressed.connect(_on_close_pressed)
+	_setup_pending_replacements_badge()
+	_connect_leader_replacement_signals()
 	refresh_screen()
 
 
@@ -92,7 +95,7 @@ func _apply_screen_theme() -> void:
 	RetrowaveTheme.style_production_screen(self)
 	RetrowaveTheme.style_title(title_label, RetrowaveTheme.CYAN)
 	RetrowaveTheme.style_secondary_button(close_button)
-	title_label.text = "Leader Assignment — %s" % country_tag
+	_apply_screen_title()
 	RetrowaveTheme.style_summary_metric(total_leaders_label)
 	RetrowaveTheme.style_summary_metric(available_leaders_label, RetrowaveTheme.SUCCESS)
 	RetrowaveTheme.style_summary_metric(injured_leaders_label, RetrowaveTheme.WARNING)
@@ -148,9 +151,103 @@ func _setup_headers() -> void:
 func refresh_screen() -> void:
 	current_data = LeaderManager.get_leader_screen_data(country_tag, false)
 	_update_summary_bar()
+	_update_pending_replacements_badge()
 	_populate_national_positions()
 	_populate_available_leaders()
 	_populate_unassigned_formations()
+
+
+func _setup_pending_replacements_badge() -> void:
+	var summary_bar := total_leaders_label.get_parent() as HBoxContainer
+	if summary_bar == null:
+		return
+
+	_pending_replacements_button = Button.new()
+	_pending_replacements_button.visible = false
+	_pending_replacements_button.text = "Replacements (0)"
+	_pending_replacements_button.tooltip_text = (
+		"Command vacancies awaiting your decision. Click to resolve the next one."
+	)
+	RetrowaveTheme.style_primary_button(_pending_replacements_button)
+	_pending_replacements_button.pressed.connect(_on_pending_replacements_pressed)
+	summary_bar.add_child(_pending_replacements_button)
+
+
+func _connect_leader_replacement_signals() -> void:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	if not LeaderManager.leader_replacement_needed.is_connected(_on_leader_replacement_queue_changed):
+		LeaderManager.leader_replacement_needed.connect(_on_leader_replacement_queue_changed)
+	if not LeaderManager.leader_replacement_resolved.is_connected(_on_leader_replacement_queue_changed):
+		LeaderManager.leader_replacement_resolved.connect(_on_leader_replacement_queue_changed)
+
+
+func _exit_tree() -> void:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	if LeaderManager.leader_replacement_needed.is_connected(_on_leader_replacement_queue_changed):
+		LeaderManager.leader_replacement_needed.disconnect(_on_leader_replacement_queue_changed)
+	if LeaderManager.leader_replacement_resolved.is_connected(_on_leader_replacement_queue_changed):
+		LeaderManager.leader_replacement_resolved.disconnect(_on_leader_replacement_queue_changed)
+
+
+func _on_leader_replacement_queue_changed(
+	_arg1: Variant = null,
+	_arg2: Variant = null,
+	_arg3: Variant = null,
+) -> void:
+	if not is_inside_tree():
+		return
+	var event_country := ""
+	if _arg1 is Dictionary:
+		event_country = str((_arg1 as Dictionary).get("country_tag", ""))
+	if event_country.is_empty() or event_country == country_tag:
+		_update_pending_replacements_badge()
+
+
+func _update_pending_replacements_badge() -> void:
+	if _pending_replacements_button == null:
+		return
+	if not LeaderManager.is_player_country(country_tag):
+		_pending_replacements_button.visible = false
+		_apply_screen_title()
+		return
+
+	var pending_count := LeaderManager.get_pending_replacement_count(country_tag)
+	_pending_replacements_button.visible = pending_count > 0
+	if pending_count > 0:
+		_pending_replacements_button.text = "Replacements (%d)" % pending_count
+		_pending_replacements_button.modulate = RetrowaveTheme.WARNING
+	else:
+		_pending_replacements_button.modulate = Color.WHITE
+	_apply_screen_title()
+
+
+func _apply_screen_title() -> void:
+	var base := "Leader Assignment — %s" % country_tag
+	if (
+		LeaderManager.is_player_country(country_tag)
+		and LeaderManager.get_pending_replacement_count(country_tag) > 0
+	):
+		title_label.text = "%s  •  %d replacement(s) pending" % [
+			base,
+			LeaderManager.get_pending_replacement_count(country_tag),
+		]
+		title_label.modulate = RetrowaveTheme.WARNING
+	else:
+		title_label.text = base
+		title_label.modulate = Color.WHITE
+
+
+func _on_pending_replacements_pressed() -> void:
+	var pending := LeaderManager.get_pending_leader_replacements(country_tag)
+	if pending.is_empty():
+		_update_pending_replacements_badge()
+		return
+	var request_id := str(pending[0].get("request_id", ""))
+	if request_id.is_empty():
+		return
+	LeaderReplacementPickerPopup.open_for_request(request_id)
 
 
 func _update_summary_bar() -> void:
@@ -192,9 +289,11 @@ func _populate_national_positions() -> void:
 func _create_officer_training_card() -> Control:
 	var training_leader := LeaderManager.get_officer_training_leader(country_tag)
 	var quality_info := LeaderManager.get_officer_training_quality_display(country_tag)
+	var debuff_months := LeaderManager.get_officer_training_debuff_months(country_tag)
+	var cadet_cost := LeaderManager.get_officer_training_cadet_prestige_cost()
 
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(185, 135)
+	panel.custom_minimum_size = Vector2(185, 155)  # Increased height to fit debuff info
 	RetrowaveTheme.style_detail_panel(panel)
 
 	var vbox := VBoxContainer.new()
@@ -227,8 +326,22 @@ func _create_officer_training_card() -> Control:
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status_label.add_theme_font_size_override("font_size", 10)
-	status_label.modulate = Color(0.65, 0.65, 0.65)
+
+	# Highlight status in warning color when recovering from mentor change
+	if debuff_months > 0:
+		status_label.modulate = RetrowaveTheme.WARNING
+	else:
+		status_label.modulate = Color(0.65, 0.65, 0.65)
 	vbox.add_child(status_label)
+
+	# Show temporary debuff / recovery state prominently
+	if debuff_months > 0:
+		var debuff_label := Label.new()
+		debuff_label.text = "Recovering from mentor change (%d mo)" % debuff_months
+		debuff_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		debuff_label.add_theme_font_size_override("font_size", 9)
+		debuff_label.modulate = RetrowaveTheme.WARNING
+		vbox.add_child(debuff_label)
 
 	var hbox := HBoxContainer.new()
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -242,8 +355,9 @@ func _create_officer_training_card() -> Control:
 	hbox.add_child(change_btn)
 
 	var generate_btn := Button.new()
-	generate_btn.text = "Generate Cadet"
-	generate_btn.custom_minimum_size = Vector2(95, 24)
+	# Show the Prestige cost directly on the button
+	generate_btn.text = "Generate Cadet (-%d Prestige)" % int(cadet_cost)
+	generate_btn.custom_minimum_size = Vector2(140, 24)
 	RetrowaveTheme.style_primary_button(generate_btn)
 	generate_btn.pressed.connect(_on_generate_cadet_pressed)
 	hbox.add_child(generate_btn)
@@ -254,10 +368,11 @@ func _create_officer_training_card() -> Control:
 
 
 func _on_generate_cadet_pressed() -> void:
-	var new_leader := LeaderManager.generate_new_leader_from_training(country_tag)
+	# Use the proper entry point so per-cadet Prestige cost is applied
+	var new_leader := LeaderManager.generate_and_register_leader_from_training(country_tag)
 	if new_leader == null:
 		return
-	LeaderManager.register_leader(new_leader)
+
 	if typeof(LeaderEventUI) != TYPE_NIL:
 		var branch_label := new_leader.leader_type.replace("_", " ").capitalize()
 		LeaderEventUI.post_news(

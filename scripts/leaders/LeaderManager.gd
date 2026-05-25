@@ -14,12 +14,21 @@ signal trait_leveled(leader_id: String, trait_id: String, new_level: int)
 signal training_path_invested(leader_id: String, path_id: String, new_level: int)
 signal training_path_switched(leader_id: String, old_path_id: String, new_path_id: String)
 signal officer_training_quality_notice(country_tag: String, message: String, severity: String)
+signal leader_replacement_needed(request: Dictionary)
+signal leader_replacement_resolved(request_id: String, new_leader_id: String, left_vacant: bool)
+
+const REPLACEMENT_CONTEXT_FORMATION := "formation_commander"
+const REPLACEMENT_CONTEXT_NATIONAL_POSITION := "national_position"
+## When only one eligible candidate matches the auto-pick, assign immediately (player countries).
+const REPLACEMENT_INSTANT_SINGLE_CANDIDATE := true
 
 const POSITION_CHIEF_OF_ARMY := "chief_of_army"
 const POSITION_CHIEF_OF_NAVY := "chief_of_navy"
 const POSITION_CHIEF_OF_AIR_FORCE := "chief_of_air_force"
 const POSITION_CHIEF_OF_SPACE_FORCE := "chief_of_space_force"
 const POSITION_OFFICER_TRAINING := "officer_training"
+## Legacy constants (kept for reference / compatibility; actual runtime values are in the
+## OFFICER_TRAINING_* tuning block below and the functions that use them).
 const OFFICER_TRAINING_POSITIVE_TRAIT_INHERIT_CHANCE := 0.30
 const OFFICER_TRAINING_NEGATIVE_TRAIT_INHERIT_CHANCE := 0.45
 const OFFICER_TRAINING_FLAW_TRAIT_IDS: Array[String] = [
@@ -29,6 +38,49 @@ const OFFICER_TRAINING_FLAW_TRAIT_IDS: Array[String] = [
 	"butcher",
 	"slow_planner",
 ]
+
+## Officer Training tuning constants (extracted for balance, clarity, and future moddability)
+## These control quality progression, inheritance chances, and milestone thresholds.
+const OFFICER_TRAINING_DECAY_PER_MONTH := 3.0
+const OFFICER_TRAINING_BASE_GAIN := 2.5
+const OFFICER_TRAINING_SKILL_BONUS_MULTIPLIER := 0.15
+const OFFICER_TRAINING_LONG_TENURE_MONTHS := 24
+const OFFICER_TRAINING_LONG_TENURE_MULTIPLIER := 0.6
+const OFFICER_TRAINING_MENTOR_BONUS_MULTIPLIER := 0.15
+const OFFICER_TRAINING_POSITIVE_BASE_CHANCE := 0.28
+const OFFICER_TRAINING_POSITIVE_QUALITY_DIVISOR := 400.0
+const OFFICER_TRAINING_NEGATIVE_BASE_CHANCE := 0.42
+const OFFICER_TRAINING_NEGATIVE_QUALITY_DIVISOR := 300.0
+const OFFICER_TRAINING_EXCELLENT_THRESHOLD := 75.0
+const OFFICER_TRAINING_WARNING_THRESHOLD := 30.0
+const OFFICER_TRAINING_CRISIS_THRESHOLD := 10.0
+
+# Mentor change / death behavior (per user direction May 2026)
+const OFFICER_TRAINING_MENTOR_CHANGE_DEBUFF_MONTHS := 6
+const OFFICER_TRAINING_MENTOR_CHANGE_DEBUFF_MULTIPLIER := 0.5   # growth rate during penalty period
+const OFFICER_TRAINING_DEATH_DEBUFF_PERCENT := 15.0             # immediate % quality loss on mentor death
+
+# Cadet generation costs (Phase 1-2)
+# Per user direction: Prestige only for cadet generation (Stability reserved for more serious events like death/capture).
+const OFFICER_TRAINING_CADET_PRESTIGE_COST := 3.0   # Small but noticeable prestige cost per generated cadet
+
+## Very simple cost application for national positions (Officer Training first).
+## Deducts prestige where we have tracking; logs other costs for now.
+func _apply_national_position_cost(country_tag: String, cost: Dictionary) -> void:
+	if cost.is_empty():
+		return
+	var tag := country_tag.strip_edges().to_upper()
+
+	var prestige_cost := float(cost.get("prestige", 0.0))
+	if prestige_cost > 0.0:
+		var current := float(national_prestige.get(tag, 50.0))
+		national_prestige[tag] = maxf(current - prestige_cost, 0.0)
+		print("Applied %.1f prestige cost for national position change in %s" % [prestige_cost, tag])
+
+	var stability_cost := float(cost.get("stability", 0.0))
+	if stability_cost > 0.0:
+		# Stability system not fully wired yet — log for future integration
+		print("Would apply %.1f stability cost for national position change in %s (pending full resource system)" % [stability_cost, tag])
 const NATIONAL_POSITIONS: Array[String] = [
 	POSITION_CHIEF_OF_ARMY,
 	POSITION_CHIEF_OF_NAVY,
@@ -108,6 +160,9 @@ const AGE_MORTALITY_BRACKETS: Array[Dictionary] = [
 var leaders: Dictionary = {}  # leader_id -> Leader
 var leader_pool: Dictionary = {}  # leader_id -> Dictionary (not yet available by year)
 var pending_retirements: Array[String] = []
+var pending_leader_replacements: Array[Dictionary] = []
+## Human player country — replacement popups and pending badge only apply here.
+var player_country_tag: String = "USA"
 var formations: Dictionary = {}  # formation_id -> Formation
 var country_positions: Dictionary = {}  # country_tag -> { position_id -> leader_id }
 var trait_definitions: Dictionary = {}
@@ -125,12 +180,15 @@ var countries_at_war: Dictionary = {}  # country_tag -> bool (stub for +2 wartim
 var officer_training_quality: Dictionary = {}  # country_tag -> float 0–100
 var officer_training_leader_id: Dictionary = {}  # country_tag -> leader_id
 var months_in_training: Dictionary = {}  # country_tag -> int
+var officer_training_debuff_months: Dictionary = {}  # country_tag -> int (months of reduced growth after mentor change)
 
 # === Screen data caching ===
 var _leader_screen_cache: Dictionary = {}  # country_tag -> LeaderScreenData
 
 
 func _ready() -> void:
+	if typeof(SupplyManager) != TYPE_NIL and not SupplyManager.player_tag.is_empty():
+		player_country_tag = SupplyManager.player_tag
 	_load_trait_definitions()
 	_load_training_path_definitions()
 	set_current_year(1936)
@@ -630,6 +688,9 @@ func handle_formation_destroyed(formation_id: String) -> Dictionary:
 		return {"type": "none", "leader_id": ""}
 
 	var leader_id := leader.leader_id
+	var vacant_formation_id := formation_id
+	if vacant_formation_id.is_empty():
+		vacant_formation_id = leader.assigned_army_id
 	var fate_chance := get_formation_destroyed_fate_chance(leader)
 	if randf() >= fate_chance:
 		return {"type": "survived", "leader_id": leader_id, "chance": fate_chance}
@@ -646,6 +707,16 @@ func handle_formation_destroyed(formation_id: String) -> Dictionary:
 			"cause": "formation_destroyed",
 			"chance": fate_chance,
 		}
+
+	# Leader survives as POW; formation may still exist and need a new commander.
+	if not vacant_formation_id.is_empty():
+		_enqueue_formation_command_vacancy(
+			leader.country_tag,
+			vacant_formation_id,
+			leader_id,
+			leader.name,
+			"formation_destroyed",
+		)
 
 	leader.is_captured = true
 	print("%s has been captured after their command was destroyed!" % leader.name)
@@ -810,9 +881,13 @@ func _remove_leader(leader_id: String, cause: String, is_death: bool) -> void:
 	var leader: Leader = leaders.get(leader_id) as Leader
 	if leader == null:
 		return
+	_enqueue_leader_replacement_requests(leader, cause)
 	_unassign_leader_from_current_formation(leader)
 	_clear_leader_from_national_positions(leader_id)
+
 	if is_death:
+		# Special handling for Officer Training mentor death (per user direction)
+		_apply_officer_training_death_debuff(leader.country_tag)
 		leader.is_deceased = true
 		print("%s has died (%s)." % [leader.name, cause])
 	else:
@@ -820,6 +895,393 @@ func _remove_leader(leader_id: String, cause: String, is_death: bool) -> void:
 		print("%s has retired." % leader.name)
 	leaders.erase(leader_id)
 	invalidate_leader_cache(leader.country_tag)
+
+
+# ============================================
+# LEADER REPLACEMENT (vacancy queue + auto-fallback)
+# ============================================
+
+func set_player_country_tag(tag: String) -> void:
+	player_country_tag = tag.strip_edges().to_upper()
+	if typeof(SupplyManager) != TYPE_NIL:
+		SupplyManager.player_tag = player_country_tag
+
+
+func get_player_country_tag() -> String:
+	if not player_country_tag.is_empty():
+		return player_country_tag
+	if typeof(SupplyManager) != TYPE_NIL and not SupplyManager.player_tag.is_empty():
+		return SupplyManager.player_tag
+	return "USA"
+
+
+func is_player_country(country_tag: String) -> bool:
+	return country_tag.strip_edges().to_upper() == get_player_country_tag()
+
+
+func get_pending_replacement_count(country_tag: String = "") -> int:
+	return get_pending_leader_replacements(country_tag).size()
+
+
+func get_pending_leader_replacements(country_tag: String = "") -> Array[Dictionary]:
+	_prune_stale_leader_replacement_requests()
+	if country_tag.is_empty():
+		return pending_leader_replacements.duplicate()
+	var filtered: Array[Dictionary] = []
+	for request in pending_leader_replacements:
+		if str(request.get("country_tag", "")) == country_tag:
+			filtered.append(request.duplicate())
+	return filtered
+
+
+func _prune_stale_leader_replacement_requests() -> void:
+	for i in range(pending_leader_replacements.size() - 1, -1, -1):
+		var request: Dictionary = pending_leader_replacements[i]
+		if not _is_replacement_request_still_valid(request):
+			pending_leader_replacements.remove_at(i)
+
+
+func get_leader_replacement_request(request_id: String) -> Dictionary:
+	for request in pending_leader_replacements:
+		if str(request.get("request_id", "")) == request_id:
+			return request.duplicate()
+	return {}
+
+
+func dismiss_leader_replacement(request_id: String) -> void:
+	_remove_leader_replacement_request(request_id)
+
+
+func get_replacement_candidates(request: Dictionary) -> Array[Dictionary]:
+	var country := str(request.get("country_tag", ""))
+	var valid_types: Array = request.get("valid_leader_types", []) as Array
+	var context := str(request.get("context", ""))
+	var target_id := str(request.get("target_id", ""))
+	var recommended_id := str(request.get("recommended_leader_id", ""))
+
+	var rows: Array[Dictionary] = []
+	for leader in get_leaders_for_country(country):
+		if leader == null or not _is_leader_eligible_replacement(leader, valid_types, context):
+			continue
+		var score := _score_replacement_candidate(leader, context, target_id)
+		rows.append({
+			"leader_id": leader.leader_id,
+			"name": leader.name,
+			"leader_type": leader.leader_type,
+			"experience": leader.experience,
+			"score": score,
+			"is_recommended": leader.leader_id == recommended_id,
+		})
+
+	rows.sort_custom(
+		func(a: Dictionary, b: Dictionary) -> bool:
+			if bool(a.get("is_recommended", false)) != bool(b.get("is_recommended", false)):
+				return bool(a.get("is_recommended", false))
+			return int(a.get("score", 0)) > int(b.get("score", 0))
+	)
+	return rows
+
+
+func pick_auto_replacement_leader(request: Dictionary) -> String:
+	return str(request.get("recommended_leader_id", ""))
+
+
+func apply_auto_replacement(request_id: String) -> bool:
+	var request := get_leader_replacement_request(request_id)
+	if request.is_empty():
+		return false
+	var leader_id := pick_auto_replacement_leader(request)
+	if leader_id.is_empty():
+		return false
+	return resolve_leader_replacement(request_id, leader_id, false)
+
+
+## Player-only: skip the picker when there is exactly one strong candidate (the auto-pick).
+func try_instant_player_replacement(request: Dictionary) -> bool:
+	if not REPLACEMENT_INSTANT_SINGLE_CANDIDATE:
+		return false
+	if not is_player_country(str(request.get("country_tag", ""))):
+		return false
+	var candidates := get_replacement_candidates(request)
+	if candidates.size() != 1:
+		return false
+	var row: Dictionary = candidates[0]
+	if not bool(row.get("is_recommended", false)):
+		return false
+	var request_id := str(request.get("request_id", ""))
+	if request_id.is_empty():
+		return false
+	return resolve_leader_replacement(request_id, str(row.get("leader_id", "")), false)
+
+
+func resolve_leader_replacement(
+	request_id: String,
+	new_leader_id: String,
+	leave_vacant: bool = false,
+) -> bool:
+	var request := get_leader_replacement_request(request_id)
+	if request.is_empty():
+		return false
+
+	if leave_vacant:
+		_remove_leader_replacement_request(request_id)
+		leader_replacement_resolved.emit(request_id, "", true)
+		return true
+
+	if new_leader_id.is_empty():
+		return false
+
+	var country := str(request.get("country_tag", ""))
+	var context := str(request.get("context", ""))
+	var target_id := str(request.get("target_id", ""))
+	var applied := false
+
+	match context:
+		REPLACEMENT_CONTEXT_FORMATION:
+			applied = assign_leader_to_formation(new_leader_id, target_id)
+		REPLACEMENT_CONTEXT_NATIONAL_POSITION:
+			if target_id == POSITION_OFFICER_TRAINING:
+				applied = set_officer_training_leader(country, new_leader_id)
+			else:
+				applied = set_country_position(country, target_id, new_leader_id, false)
+
+	if not applied:
+		return false
+
+	_remove_leader_replacement_request(request_id)
+	leader_replacement_resolved.emit(request_id, new_leader_id, false)
+	return true
+
+
+func _enqueue_leader_replacement_requests(leader: Leader, cause: String) -> void:
+	if leader == null:
+		return
+
+	var country_tag := leader.country_tag
+	var departed_id := leader.leader_id
+	var departed_name := leader.name
+
+	if not leader.assigned_army_id.is_empty():
+		_enqueue_formation_command_vacancy(
+			country_tag,
+			leader.assigned_army_id,
+			departed_id,
+			departed_name,
+			cause,
+		)
+
+	if not country_positions.has(country_tag):
+		return
+
+	var positions: Dictionary = country_positions[country_tag] as Dictionary
+	for position_key in positions.keys():
+		if str(positions[position_key]) != departed_id:
+			continue
+		var position_id := str(position_key)
+		var position_request := _build_replacement_request(
+			country_tag,
+			REPLACEMENT_CONTEXT_NATIONAL_POSITION,
+			position_id,
+			_position_display_label(position_id),
+			departed_id,
+			departed_name,
+			cause,
+			get_valid_leader_types_for_position(position_id),
+		)
+		_push_leader_replacement_request(position_request)
+
+
+func _build_replacement_request(
+	country_tag: String,
+	context: String,
+	target_id: String,
+	target_label: String,
+	departed_leader_id: String,
+	departed_leader_name: String,
+	cause: String,
+	valid_leader_types: Array[String],
+) -> Dictionary:
+	var draft := {
+		"request_id": "%s_%s_%d" % [context, target_id, Time.get_unix_time_from_system()],
+		"country_tag": country_tag,
+		"context": context,
+		"target_id": target_id,
+		"target_label": target_label,
+		"departed_leader_id": departed_leader_id,
+		"departed_leader_name": departed_leader_name,
+		"departure_cause": cause,
+		"valid_leader_types": valid_leader_types.duplicate(),
+		"recommended_leader_id": "",
+	}
+	draft["recommended_leader_id"] = _pick_auto_replacement_leader_id(draft)
+	return draft
+
+
+func _enqueue_formation_command_vacancy(
+	country_tag: String,
+	formation_id: String,
+	departed_leader_id: String,
+	departed_leader_name: String,
+	cause: String,
+) -> void:
+	var formation := get_formation(formation_id)
+	if formation == null or formation.has_leader():
+		return
+
+	var formation_label := formation_id
+	var valid_types: Array[String] = ["general", "field_marshal"]
+	if formation != null:
+		formation_label = formation.name
+		valid_types = _valid_leader_types_for_formation(formation)
+
+	var formation_request := _build_replacement_request(
+		country_tag,
+		REPLACEMENT_CONTEXT_FORMATION,
+		formation_id,
+		formation_label,
+		departed_leader_id,
+		departed_leader_name,
+		cause,
+		valid_types,
+	)
+	_push_leader_replacement_request(formation_request)
+
+
+func _push_leader_replacement_request(request: Dictionary) -> void:
+	if request.is_empty():
+		return
+	if not _is_replacement_request_still_valid(request):
+		return
+
+	pending_leader_replacements.append(request)
+
+	if is_player_country(str(request.get("country_tag", ""))):
+		if try_instant_player_replacement(request):
+			return
+		leader_replacement_needed.emit(request.duplicate())
+	else:
+		_auto_resolve_replacement_for_ai(str(request.get("request_id", "")))
+
+
+func _is_replacement_request_still_valid(request: Dictionary) -> bool:
+	var context := str(request.get("context", ""))
+	var country_tag := str(request.get("country_tag", ""))
+	var target_id := str(request.get("target_id", ""))
+
+	match context:
+		REPLACEMENT_CONTEXT_FORMATION:
+			var formation := get_formation(target_id)
+			if formation == null:
+				return false
+			return not formation.has_leader()
+		REPLACEMENT_CONTEXT_NATIONAL_POSITION:
+			if not country_positions.has(country_tag):
+				return true
+			var positions: Dictionary = country_positions[country_tag] as Dictionary
+			return not positions.has(target_id) or str(positions.get(target_id, "")).is_empty()
+		_:
+			return true
+
+
+func _auto_resolve_replacement_for_ai(request_id: String) -> void:
+	if request_id.is_empty():
+		return
+	if not apply_auto_replacement(request_id):
+		resolve_leader_replacement(request_id, "", true)
+
+
+func _remove_leader_replacement_request(request_id: String) -> void:
+	for i in range(pending_leader_replacements.size() - 1, -1, -1):
+		if str(pending_leader_replacements[i].get("request_id", "")) == request_id:
+			pending_leader_replacements.remove_at(i)
+			return
+
+
+func _pick_auto_replacement_leader_id(request: Dictionary) -> String:
+	var country := str(request.get("country_tag", ""))
+	var valid_types: Array = request.get("valid_leader_types", []) as Array
+	var context := str(request.get("context", ""))
+	var target_id := str(request.get("target_id", ""))
+
+	var best_id := ""
+	var best_score := -1
+	for leader in get_leaders_for_country(country):
+		if leader == null or not _is_leader_eligible_replacement(leader, valid_types, context):
+			continue
+		var score := _score_replacement_candidate(leader, context, target_id)
+		if score > best_score:
+			best_score = score
+			best_id = leader.leader_id
+	return best_id
+
+
+func _is_leader_eligible_replacement(
+	leader: Leader,
+	valid_types: Array,
+	context: String,
+) -> bool:
+	if leader == null:
+		return false
+	if not leader.is_available_for_command():
+		return false
+	if leader.is_injured or leader.is_captured or leader.is_retired or leader.is_deceased:
+		return false
+	if leader.is_in_officer_training and context != REPLACEMENT_CONTEXT_NATIONAL_POSITION:
+		return false
+	if valid_types.size() > 0 and not valid_types.has(leader.leader_type):
+		return false
+	if context == REPLACEMENT_CONTEXT_FORMATION and not leader.assigned_army_id.is_empty():
+		return false
+	if context == REPLACEMENT_CONTEXT_NATIONAL_POSITION and not leader.assigned_army_id.is_empty():
+		return false
+	return true
+
+
+func _score_replacement_candidate(leader: Leader, context: String, target_id: String) -> int:
+	var score := (
+		leader.attack_skill
+		+ leader.defense_skill
+		+ leader.planning_skill
+		+ leader.initiative_skill
+		+ int(leader.experience / 50.0)
+	)
+	if context == REPLACEMENT_CONTEXT_NATIONAL_POSITION:
+		score += leader.logistics_skill + leader.organization_skill
+		if target_id == POSITION_OFFICER_TRAINING:
+			score += int(
+				get_officer_training_suitability(leader.leader_id) * 0.15
+			)
+	return score
+
+
+func _valid_leader_types_for_formation(formation: Formation) -> Array[String]:
+	if formation == null:
+		return ["general", "field_marshal"]
+	match formation.formation_type:
+		Formation.TYPE_FLEET, Formation.TYPE_TASK_FORCE, Formation.TYPE_SHIP:
+			return ["admiral"]
+		Formation.TYPE_AIR_WING, Formation.TYPE_AIR_SQUADRON, Formation.TYPE_AIR_GROUP:
+			return ["air_marshal"]
+		Formation.TYPE_SPACE_WING, Formation.TYPE_ORBITAL_GROUP:
+			return ["space_commander"]
+		_:
+			return ["general", "field_marshal"]
+
+
+func _position_display_label(position_key: String) -> String:
+	match position_key:
+		POSITION_CHIEF_OF_ARMY:
+			return "Chief of Army"
+		POSITION_CHIEF_OF_NAVY:
+			return "Chief of Navy"
+		POSITION_CHIEF_OF_AIR_FORCE:
+			return "Chief of Air Force"
+		POSITION_CHIEF_OF_SPACE_FORCE:
+			return "Chief of Space Force"
+		POSITION_OFFICER_TRAINING:
+			return "Officer Training Command"
+		_:
+			return position_key.replace("_", " ").capitalize()
 
 
 func _clear_leader_from_national_positions(leader_id: String) -> void:
@@ -834,6 +1296,26 @@ func _clear_leader_from_national_positions(leader_id: String) -> void:
 				if leader.duty_post == "training":
 					leader.duty_post = "active"
 			positions.erase(position_key)
+
+
+## Applies the 15% quality debuff when the Officer Training mentor dies (per approved plan).
+func _apply_officer_training_death_debuff(country_tag: String) -> void:
+	var tag := country_tag.strip_edges().to_upper()
+	var current := get_officer_training_quality(tag)
+	if current <= 0.0:
+		return
+
+	var loss := current * (OFFICER_TRAINING_DEATH_DEBUFF_PERCENT / 100.0)
+	var new_quality := maxf(current - loss, 0.0)
+	officer_training_quality[tag] = new_quality
+
+	# Also start a fresh debuff period so the program feels the loss for a while
+	officer_training_debuff_months[tag] = max(
+		int(officer_training_debuff_months.get(tag, 0)),
+		OFFICER_TRAINING_MENTOR_CHANGE_DEBUFF_MONTHS
+	)
+
+	print("Officer Training program for %s suffered a %.0f%% quality debuff due to mentor death." % [tag, OFFICER_TRAINING_DEATH_DEBUFF_PERCENT])
 
 
 func get_armies_without_leader(_country_tag: String) -> Array[String]:
@@ -2031,7 +2513,7 @@ func create_and_register_new_leader(country_tag: String, leader_type: String = "
 # ============================================
 
 ## Assigns a leader to the Officer Training national position for a country.
-func set_officer_training_leader(country_tag: String, leader_id: String) -> bool:
+func set_officer_training_leader(country_tag: String, leader_id: String, apply_cost: bool = true) -> bool:
 	var tag := country_tag.strip_edges().to_upper()
 	var leader := get_leader(leader_id)
 	if leader == null:
@@ -2047,8 +2529,9 @@ func set_officer_training_leader(country_tag: String, leader_id: String) -> bool
 
 	var prior_mentor_id := str(officer_training_leader_id.get(tag, ""))
 	if not prior_mentor_id.is_empty() and prior_mentor_id != leader_id:
-		officer_training_quality[tag] = 0.0
-		months_in_training[tag] = 0
+		# New behavior (May 2026): temporary debuff instead of hard reset to 0
+		officer_training_debuff_months[tag] = OFFICER_TRAINING_MENTOR_CHANGE_DEBUFF_MONTHS
+		# months_in_training is intentionally left alone so long-tenure penalty doesn't reset unfairly
 		var previous_mentor := get_leader(prior_mentor_id)
 		if previous_mentor != null:
 			previous_mentor.is_in_officer_training = false
@@ -2057,6 +2540,11 @@ func set_officer_training_leader(country_tag: String, leader_id: String) -> bool
 
 	unassign_leader_from_army(leader_id)
 	_clear_leader_from_national_positions(leader_id)
+
+	if apply_cost:
+		var cost_check := can_assign_national_position(tag, POSITION_OFFICER_TRAINING, leader_id)
+		var cost: Dictionary = cost_check.get("cost", {})
+		_apply_national_position_cost(tag, cost)
 
 	if not country_positions.has(tag):
 		country_positions[tag] = {}
@@ -2099,6 +2587,7 @@ func clear_officer_training_leader(country_tag: String) -> void:
 		positions.erase(POSITION_OFFICER_TRAINING)
 	officer_training_leader_id.erase(tag)
 	months_in_training.erase(tag)
+	officer_training_debuff_months.erase(tag)
 	invalidate_leader_cache(tag)
 
 
@@ -2136,6 +2625,18 @@ func get_officer_training_months(country_tag: String) -> int:
 	return maxi(int(months_in_training.get(tag, 0)), 0)
 
 
+## Returns remaining months of reduced growth debuff after a recent mentor change or death.
+func get_officer_training_debuff_months(country_tag: String) -> int:
+	var tag := country_tag.strip_edges().to_upper()
+	return maxi(int(officer_training_debuff_months.get(tag, 0)), 0)
+
+
+## Returns the Prestige cost to generate one cadet via Officer Training.
+## (Stability is deliberately not used for cadet generation.)
+func get_officer_training_cadet_prestige_cost() -> float:
+	return OFFICER_TRAINING_CADET_PRESTIGE_COST
+
+
 # ============================================
 # OFFICER TRAINING - UI HELPERS
 # ============================================
@@ -2169,8 +2670,14 @@ func get_officer_training_quality_display(country_tag: String) -> Dictionary:
 ## Short flavor text describing current training effectiveness.
 func get_officer_training_status_text(country_tag: String) -> String:
 	var quality := get_officer_training_quality(country_tag)
+	var debuff_months := get_officer_training_debuff_months(country_tag)
+
 	if get_officer_training_leader(country_tag) == null:
 		return "No mentor assigned — program idle."
+
+	if debuff_months > 0:
+		return "Program recovering from recent mentor change (%d months)." % debuff_months
+
 	if quality < 20.0:
 		return "Training program is struggling."
 	if quality < 45.0:
@@ -2233,8 +2740,16 @@ func _advance_officer_training_progress_for_country(country_tag: String) -> void
 	var previous_quality := get_officer_training_quality(country_tag)
 	var training_leader := get_officer_training_leader(country_tag)
 
+	# Decrement any active debuff
+	if officer_training_debuff_months.has(country_tag):
+		var remaining := int(officer_training_debuff_months[country_tag]) - 1
+		if remaining <= 0:
+			officer_training_debuff_months.erase(country_tag)
+		else:
+			officer_training_debuff_months[country_tag] = remaining
+
 	if training_leader == null:
-		var decayed := maxf(previous_quality - 3.0, 0.0)
+		var decayed := maxf(previous_quality - OFFICER_TRAINING_DECAY_PER_MONTH, 0.0)
 		officer_training_quality[country_tag] = decayed
 		_check_training_quality_changes(country_tag, previous_quality, decayed)
 		return
@@ -2248,9 +2763,13 @@ func _advance_officer_training_progress_for_country(country_tag: String) -> void
 	months_in_training[country_tag] = months
 
 	var skill_bonus := float(training_leader.planning_skill + training_leader.logistics_skill) * 0.5
-	var gain := 2.5 + (skill_bonus * 0.15)
-	if months > 24:
-		gain *= 0.6
+	var gain := OFFICER_TRAINING_BASE_GAIN + (skill_bonus * OFFICER_TRAINING_SKILL_BONUS_MULTIPLIER)
+	if months > OFFICER_TRAINING_LONG_TENURE_MONTHS:
+		gain *= OFFICER_TRAINING_LONG_TENURE_MULTIPLIER
+
+	# Apply temporary debuff from recent mentor change (per user direction)
+	if officer_training_debuff_months.has(country_tag) and int(officer_training_debuff_months[country_tag]) > 0:
+		gain *= OFFICER_TRAINING_MENTOR_CHANGE_DEBUFF_MULTIPLIER
 
 	var current_quality := clampf(previous_quality + gain, 0.0, 100.0)
 	officer_training_quality[country_tag] = current_quality
@@ -2265,15 +2784,15 @@ func _check_training_quality_changes(
 	if is_equal_approx(previous, current):
 		return
 
-	if current >= 75.0 and previous < 75.0:
+	if current >= OFFICER_TRAINING_EXCELLENT_THRESHOLD and previous < OFFICER_TRAINING_EXCELLENT_THRESHOLD:
 		var msg := "%s officer training has reached Excellent quality." % country_tag
 		print(msg)
 		officer_training_quality_notice.emit(country_tag, msg, "success")
-	elif current < 30.0 and previous >= 30.0:
+	elif current < OFFICER_TRAINING_WARNING_THRESHOLD and previous >= OFFICER_TRAINING_WARNING_THRESHOLD:
 		var msg := "%s officer training quality has dropped significantly." % country_tag
 		print(msg)
 		officer_training_quality_notice.emit(country_tag, msg, "warning")
-	elif current < 10.0 and previous >= 10.0:
+	elif current < OFFICER_TRAINING_CRISIS_THRESHOLD and previous >= OFFICER_TRAINING_CRISIS_THRESHOLD:
 		var msg := "%s officer training program is in crisis." % country_tag
 		print(msg)
 		officer_training_quality_notice.emit(country_tag, msg, "critical")
@@ -2312,7 +2831,7 @@ func _get_effective_officer_training_quality(country_tag: String, mentor: Leader
 	var program_quality := get_officer_training_quality(country_tag)
 	if mentor == null:
 		return program_quality
-	var mentor_bonus := float(get_officer_training_suitability(mentor.leader_id)) * 0.15
+	var mentor_bonus := float(get_officer_training_suitability(mentor.leader_id)) * OFFICER_TRAINING_MENTOR_BONUS_MULTIPLIER
 	return clampf(program_quality + mentor_bonus, 0.0, 100.0)
 
 
@@ -2347,6 +2866,10 @@ func _country_has_air_technology(country_tag: String) -> bool:
 
 
 func _generate_officer_cadet_name(country_tag: String, leader_type: String) -> String:
+	# Officer cadet name pools — quick win expansion (Phase 0).
+	# TODO: Proper per-country/culture name lists for generated leaders (see project TODO.md).
+	# Current implementation is intentionally small and hardcoded; will be replaced by data-driven
+	# cultural name system in a later pass (Phase 3+).
 	var pools: Dictionary = {
 		"USA": {
 			"general": [
@@ -2354,29 +2877,77 @@ func _generate_officer_cadet_name(country_tag: String, leader_type: String) -> S
 				"Sophia Ramirez",
 				"Marcus Hale",
 				"Jordan Pierce",
+				"Nathaniel Voss",
+				"Lila Chen",
+				"Benjamin Rook",
+				"Harper Kline",
 			],
 			"admiral": [
 				"Sarah Whitmore",
 				"Derek Holloway",
 				"Keisha Monroe",
 				"Ryan Caldwell",
+				"Gabriel Soto",
+				"Naomi Everett",
 			],
 			"air_marshal": [
 				"Marcus Chen",
 				"Aisha Porter",
 				"Victoria Lane",
 				"Tyler Nguyen",
+				"Damien Hale",
+				"Priya Solis",
 			],
 		},
 		"GER": {
-			"general": ["Klaus Weber", "Hans Richter", "Elena Brandt", "Felix Kruger"],
-			"admiral": ["Ingrid Holtz", "Jonas Meier", "Clara Seidel", "Lukas Brenner"],
-			"air_marshal": ["Stefan Vogel", "Mira Engel", "Tobias Kern", "Nina Falk"],
+			"general": [
+				"Klaus Weber",
+				"Hans Richter",
+				"Elena Brandt",
+				"Felix Kruger",
+				"Matthias Lang",
+				"Greta Hoffmann",
+				"Otto Steiner",
+			],
+			"admiral": [
+				"Ingrid Holtz",
+				"Jonas Meier",
+				"Clara Seidel",
+				"Lukas Brenner",
+				"Helga Voss",
+			],
+			"air_marshal": [
+				"Stefan Vogel",
+				"Mira Engel",
+				"Tobias Kern",
+				"Nina Falk",
+				"Reinhard Koch",
+			],
 		},
 		"ENG": {
-			"general": ["Oliver Ashford", "Charlotte Reid", "Thomas Greer", "Amelia Shaw"],
-			"admiral": ["Harriet Lang", "William Croft", "Eleanor Marsh", "James Holt"],
-			"air_marshal": ["Lucas Finch", "Grace Palmer", "Henry Vale", "Isla Monroe"],
+			"general": [
+				"Oliver Ashford",
+				"Charlotte Reid",
+				"Thomas Greer",
+				"Amelia Shaw",
+				"Henry Talbot",
+				"Evelyn Moore",
+				"James Whitaker",
+			],
+			"admiral": [
+				"Harriet Lang",
+				"William Croft",
+				"Eleanor Marsh",
+				"James Holt",
+				"Arthur Penrose",
+			],
+			"air_marshal": [
+				"Lucas Finch",
+				"Grace Palmer",
+				"Henry Vale",
+				"Isla Monroe",
+				"Sebastian Cole",
+			],
 		},
 	}
 
@@ -2449,14 +3020,14 @@ func _apply_officer_cadet_trait_inheritance(
 	if mentor.trait_levels.is_empty():
 		return
 
-	var positive_chance := 0.28 + (effective_quality / 400.0)
+	var positive_chance := OFFICER_TRAINING_POSITIVE_BASE_CHANCE + (effective_quality / OFFICER_TRAINING_POSITIVE_QUALITY_DIVISOR)
 	if randf() < positive_chance:
 		var positive_traits := _get_positive_traits(mentor)
 		if not positive_traits.is_empty():
 			var trait_id := str(positive_traits[randi() % positive_traits.size()])
 			try_add_trait_to_leader(cadet, trait_id, 1)
 
-	var negative_chance := 0.42 - (effective_quality / 300.0)
+	var negative_chance := OFFICER_TRAINING_NEGATIVE_BASE_CHANCE - (effective_quality / OFFICER_TRAINING_NEGATIVE_QUALITY_DIVISOR)
 	if randf() < negative_chance:
 		var negative_traits := _get_negative_traits(mentor)
 		if not negative_traits.is_empty():
@@ -2493,10 +3064,22 @@ func _is_officer_training_flaw_trait(trait_id: String) -> bool:
 
 
 ## Generates and registers a mentored officer for the given country.
+## Applies the per-cadet Prestige cost (Stability is intentionally not used here).
 func generate_and_register_leader_from_training(
 	country_tag: String,
 	leader_type: String = "general",
 ) -> Leader:
+	var tag := country_tag.strip_edges().to_upper()
+
+	# Apply small Prestige cost for cadet generation (Prestige only, per direction)
+	var prestige_cost := OFFICER_TRAINING_CADET_PRESTIGE_COST
+	if prestige_cost > 0.0:
+		var current_prestige := float(national_prestige.get(tag, 50.0))
+		national_prestige[tag] = maxf(current_prestige - prestige_cost, 0.0)
+		print("Generated cadet for %s — applied %.1f Prestige cost (remaining: %.1f)" % [
+			tag, prestige_cost, float(national_prestige.get(tag, 0.0))
+		])
+
 	var new_leader := generate_new_leader_from_training(country_tag, leader_type)
 	if new_leader == null or new_leader.leader_id.is_empty():
 		return null
@@ -2677,7 +3260,12 @@ func reload_leaders_from_roster_paths(paths: Array[String], as_of_year: int = -1
 	leaders.clear()
 	leader_pool.clear()
 	pending_retirements.clear()
+	pending_leader_replacements.clear()
 	country_positions.clear()
+	officer_training_quality.clear()
+	officer_training_leader_id.clear()
+	months_in_training.clear()
+	officer_training_debuff_months.clear()
 	clear_all_leader_caches()
 	var year := as_of_year if as_of_year > 0 else current_year
 	if paths.is_empty():

@@ -130,6 +130,7 @@ func _update_resources() -> void:
 
 func _on_production_pressed() -> void:
 	_close_screen("LeaderAssignmentScreen")
+	_close_screen("AgentAssignmentScreen")
 	_toggle_screen(
 		"ProductionAssignmentScreen",
 		"res://scenes/ui/ProductionAssignmentScreen.tscn",
@@ -142,6 +143,7 @@ func _on_production_pressed() -> void:
 
 func _on_leaders_pressed() -> void:
 	_close_screen("ProductionAssignmentScreen")
+	_close_screen("AgentAssignmentScreen")
 	_toggle_screen(
 		"LeaderAssignmentScreen",
 		"res://scenes/ui/LeaderAssignmentScreen.tscn",
@@ -149,6 +151,8 @@ func _on_leaders_pressed() -> void:
 			var screen := scene as LeaderAssignmentScreen
 			if screen != null:
 				screen.country_tag = player_country_tag
+				if typeof(LeaderManager) != TYPE_NIL:
+					LeaderManager.set_player_country_tag(player_country_tag)
 	)
 
 
@@ -161,12 +165,24 @@ func _on_diplomacy_pressed() -> void:
 
 
 func _on_agents_pressed() -> void:
-	print("Open Agents Screen (TODO)")
+	_close_screen("ProductionAssignmentScreen")
+	_close_screen("LeaderAssignmentScreen")
+	_toggle_screen(
+		"AgentAssignmentScreen",
+		"res://scenes/ui/AgentAssignmentScreen.tscn",
+		func(scene: Node) -> void:
+			var screen := scene as AgentAssignmentScreen
+			if screen != null:
+				screen.country_tag = player_country_tag
+				if typeof(LeaderManager) != TYPE_NIL:
+					LeaderManager.set_player_country_tag(player_country_tag)
+	)
 
 
 func _on_map_pressed() -> void:
 	_close_screen("ProductionAssignmentScreen")
 	_close_screen("LeaderAssignmentScreen")
+	_close_screen("AgentAssignmentScreen")
 
 
 func _close_screen(screen_name: String) -> void:

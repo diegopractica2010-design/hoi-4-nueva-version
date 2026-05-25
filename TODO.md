@@ -11,6 +11,7 @@
 - Leader Detail Screen with trait levels, effects, and next-level preview
 - Officer Training national position card with **Generate Cadet** button
 - `RetirementOfferPopup` + `LeaderEventUI` news toasts (including training quality notices)
+- Leader Replacement Picker (vacancy queue, auto-fallback scoring, `LeaderReplacementPickerPopup`)
 
 ### Outstanding
 - Wire training path bonuses into actual combat resolution (helpers exist; full battle loop)
@@ -18,7 +19,8 @@
 - Tech/focus gating for Admiral and Air Marshal cadets (doctrine placeholders in place)
 - Path switching cost preview in `TrainingPathScreen` before confirm
 - Political Alignment + Hidden Traits system
-- Leader replacement picker after death/retirement (auto fallback + player choice)
+- ~~Pending-replacement badge on Leader Assignment screen~~ (done)
+- ~~Player-country filtering for replacement popups (AI auto-resolve)~~ (done)
 - Full news feed panel (history beyond toasts)
 - Earned trait triggers (terrain, campaigns)
 - Field Marshal tier + multi-formation command

@@ -1,0 +1,277 @@
+[gd_scene load_steps=2 format=3 uid="uid://agentassignscreen01"]
+
+[ext_resource type="Script" path="res://scripts/ui/AgentAssignmentScreen.gd" id="1_screen"]
+
+[node name="AgentAssignmentScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -700.0
+offset_top = -380.0
+offset_right = 700.0
+offset_bottom = 380.0
+clip_contents = true
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_screen")
+country_tag = "USA"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.058824, 0.117647, 1)
+
+[node name="TitleBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 0
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="TitleBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Agents"
+
+[node name="CloseButton" type="Button" parent="TitleBar"]
+layout_mode = 2
+text = "Close"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopSummaryBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="TotalAgentsLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
+layout_mode = 2
+text = "Total Agents: 0"
+
+[node name="AvailableAgentsLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
+layout_mode = 2
+text = "Available: 0"
+
+[node name="OnMissionLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
+layout_mode = 2
+text = "On Mission: 0"
+
+[node name="CompromisedLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
+layout_mode = 2
+text = "Compromised: 0"
+
+[node name="InactiveLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
+layout_mode = 2
+text = "Lost: 0"
+
+[node name="RecruitButton" type="Button" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
+layout_mode = 2
+text = "Recruit Agent"
+
+[node name="MainArea" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 14
+
+[node name="ListsColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_constants/separation = 10
+
+[node name="AgentsColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.2
+theme_override_constants/separation = 6
+
+[node name="AgentsTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AgentsColumn"]
+layout_mode = 2
+text = "Agent Roster"
+
+[node name="RosterFilterRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AgentsColumn"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RosterFilterLabel" type="Label" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AgentsColumn/RosterFilterRow"]
+layout_mode = 2
+text = "Show:"
+
+[node name="RosterFilter" type="OptionButton" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AgentsColumn/RosterFilterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AgentsHeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AgentsColumn"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AgentsList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AgentsColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+clip_contents = true
+
+[node name="AgentsContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/AgentsColumn/AgentsList"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="TargetsColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="TargetsTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/TargetsColumn"]
+layout_mode = 2
+text = "Target Countries"
+
+[node name="TargetsList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/TargetsColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TargetsContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/ListsColumn/TargetsColumn/TargetsList"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="IntelColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea"]
+layout_mode = 2
+custom_minimum_size = Vector2(228, 0)
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="IntelTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn"]
+layout_mode = 2
+text = "Intel Reports"
+
+[node name="IntelReportsList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 0
+horizontal_scroll_mode = 0
+
+[node name="IntelReportsContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn/IntelReportsList"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="RecentOpsTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn"]
+layout_mode = 2
+text = "Recent Operations"
+
+[node name="RecentOperationsList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="RecentOperationsContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn/RecentOperationsList"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="DetailPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainArea"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.4
+custom_minimum_size = Vector2(300, 0)
+
+[node name="DetailMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="DetailScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DetailVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="DetailLabel" type="Label" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Select an agent and target country."
+autowrap_mode = 3
+
+[node name="AgentStateBanner" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AgentStateMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox/AgentStateBanner"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="AgentStateLabel" type="Label" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox/AgentStateBanner/AgentStateMargin"]
+layout_mode = 2
+autowrap_mode = 3
+text = ""
+
+[node name="HistoryTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+text = "Agent Record"
+
+[node name="HistoryList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="MissionsTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+text = "Available Missions"
+
+[node name="MissionFilterRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MissionFilterLabel" type="Label" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox/MissionFilterRow"]
+layout_mode = 2
+text = "Category:"
+
+[node name="MissionCategoryFilter" type="OptionButton" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox/MissionFilterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MissionsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="AssignMissionButton" type="Button" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+text = "Assign Mission..."

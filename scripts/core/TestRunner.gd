@@ -43,6 +43,8 @@ func _ready() -> void:
 		print("Supply network ready (toggle overlay with L)")
 
 	_configure_top_info_bar(player_tag)
+	if typeof(LeaderManager) != TYPE_NIL:
+		LeaderManager.set_player_country_tag(player_tag)
 
 
 func _resolve_player_tag() -> String:

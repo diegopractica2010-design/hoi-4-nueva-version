@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=3 uid="uid://leaderreplacementpicker01"]
+
+[ext_resource type="Script" path="res://scripts/ui/LeaderReplacementPickerPopup.gd" id="1_popup"]
+
+[node name="LeaderReplacementPickerPopup" type="Window"]
+title = "Choose Replacement"
+initial_position = 1
+size = Vector2i(520, 560)
+script = ExtResource("1_popup")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.058824, 0.117647, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Choose Replacement"
+
+[node name="ContextLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Vacancy details"
+
+[node name="RecommendedLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Recommended: —"
+
+[node name="SearchEdit" type="LineEdit" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Search candidates..."
+
+[node name="LeaderList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="AutoButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Assign Recommended"
+
+[node name="ConfirmButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Assign Selected"
+
+[node name="VacantButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+layout_mode = 2
+text = "Leave Vacant"
+
+[node name="LaterButton" type="Button" parent="MarginContainer/VBoxContainer/ActionRow"]
+layout_mode = 2
+text = "Decide Later"

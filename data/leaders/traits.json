@@ -246,6 +246,19 @@
       "2": { "unit_reliability_gain": 0.04, "division_experience_gain": 0.03 }
     }
   },
+  "mentor": {
+    "name": "Mentor",
+    "description": "Exceptional at developing the next generation of officers. Dramatically improves suitability for the Officer Training national position and provides a small bonus to training program quality growth.",
+    "category": "personality",
+    "max_level": 2,
+    "rarity": "rare",
+    "acquisition": ["earned", "event"],
+    "exclusive_with": [],
+    "effects_by_level": {
+      "1": { "officer_training_suitability": 25 },
+      "2": { "officer_training_suitability": 40, "training_quality_growth": 0.8 }
+    }
+  },
   "iron_will": {
     "name": "Iron Will",
     "description": "Holds the line against overwhelming odds.",

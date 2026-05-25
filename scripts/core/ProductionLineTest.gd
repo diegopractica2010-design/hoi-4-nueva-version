@@ -782,6 +782,108 @@ static func _test_leader_manager() -> bool:
 	if LeaderManager.get_leader_for_army("third_army_test") != patton:
 		print("  [FAIL] army leader lookup")
 		return false
+
+	var marshall := Leader.new()
+	marshall.leader_id = "usa_marshall_test"
+	marshall.name = "George C. Marshall"
+	marshall.country_tag = "USA"
+	marshall.leader_type = "general"
+	marshall.attack_skill = 6
+	marshall.defense_skill = 6
+	marshall.planning_skill = 7
+	marshall.initiative_skill = 5
+	LeaderManager.register_leader(marshall)
+	LeaderManager.pending_leader_replacements.clear()
+	LeaderManager.pending_retirements.append("usa_patton_test")
+	if not LeaderManager.resolve_retirement("usa_patton_test", true, false):
+		print("  [FAIL] resolve_retirement for replacement test")
+		return false
+	var formation_request: Dictionary = {}
+	for req in LeaderManager.get_pending_leader_replacements("USA"):
+		if str(req.get("target_id", "")) == "third_army_test":
+			formation_request = req
+	if formation_request.is_empty():
+		print("  [FAIL] retiring field commander should enqueue formation replacement")
+		return false
+	var replacement_request_id := str(formation_request.get("request_id", ""))
+	if replacement_request_id.is_empty():
+		print("  [FAIL] formation replacement missing request_id")
+		return false
+	if not LeaderManager.resolve_leader_replacement(replacement_request_id, "usa_marshall_test"):
+		print("  [FAIL] resolve_leader_replacement for Third Army")
+		return false
+	if LeaderManager.get_leader_for_army("third_army_test") != marshall:
+		print("  [FAIL] replacement leader should command Third Army")
+		return false
+	LeaderManager.pending_leader_replacements.clear()
+	LeaderManager.leaders.erase("usa_marshall_test")
+
+	# AI countries auto-resolve vacancies without leaving player pending decisions.
+	LeaderManager.set_player_country_tag("USA")
+	LeaderManager.register_division_formations_for_country("GER")
+	var ger_formations := LeaderManager.get_available_formations("GER")
+	if ger_formations.is_empty():
+		print("  [FAIL] need GER formation for AI replacement test")
+		return false
+	var ger_formation_id := str(ger_formations[0].get("formation_id", ""))
+	var ger_vacancy := Leader.new()
+	ger_vacancy.leader_id = "ger_auto_repl_test"
+	ger_vacancy.name = "GER Auto Repl"
+	ger_vacancy.country_tag = "GER"
+	ger_vacancy.leader_type = "general"
+	LeaderManager.register_leader(ger_vacancy)
+	if not LeaderManager.assign_leader_to_army("ger_auto_repl_test", ger_formation_id):
+		print("  [FAIL] could not assign GER leader for AI replacement test")
+		return false
+	var ai_pending_before := LeaderManager.get_pending_replacement_count("GER")
+	LeaderManager.pending_retirements.append("ger_auto_repl_test")
+	if not LeaderManager.resolve_retirement("ger_auto_repl_test", true, false):
+		print("  [FAIL] GER resolve_retirement for AI replacement test")
+		return false
+	if LeaderManager.get_pending_replacement_count("GER") > ai_pending_before:
+		print("  [FAIL] AI country should not keep pending replacement requests")
+		return false
+	LeaderManager.pending_leader_replacements.clear()
+
+	# Captured commander: formation still exists leaderless → enqueue replacement.
+	LeaderManager.set_player_country_tag("USA")
+	var got_capture_vacancy := false
+	for _attempt in 60:
+		var pow_leader := Leader.new()
+		pow_leader.leader_id = "usa_pow_test"
+		pow_leader.name = "POW Candidate"
+		pow_leader.country_tag = "USA"
+		pow_leader.leader_type = "general"
+		LeaderManager.register_leader(pow_leader)
+		if not LeaderManager.assign_leader_to_army("usa_pow_test", "third_army_test"):
+			print("  [FAIL] assign leader for formation_destroyed capture test")
+			return false
+		LeaderManager.pending_leader_replacements.clear()
+		var captured_result := LeaderManager.handle_formation_destroyed("third_army_test")
+		if str(captured_result.get("type", "")) == "captured":
+			got_capture_vacancy = LeaderManager.get_pending_replacement_count("USA") >= 1
+			break
+		LeaderManager.leaders.erase("usa_pow_test")
+	if not got_capture_vacancy:
+		print("  [FAIL] captured commander should leave Third Army vacancy for player")
+		return false
+	LeaderManager.pending_leader_replacements.clear()
+	LeaderManager.leaders.erase("usa_pow_test")
+
+	patton = Leader.new()
+	patton.leader_id = "usa_patton_test"
+	patton.name = "George S. Patton"
+	patton.country_tag = "USA"
+	patton.leader_type = "general"
+	patton.attack_skill = 4
+	patton.defense_skill = 2
+	patton.organization_skill = 3
+	patton.traits = ["aggressive", "logistics_wizard"]
+	LeaderManager.register_leader(patton)
+	if not LeaderManager.assign_leader_to_army("usa_patton_test", "third_army_test"):
+		print("  [FAIL] could not reassign Patton after replacement test")
+		return false
+
 	if patton.get_attack_modifier() <= 0.07:
 		print("  [FAIL] leader attack modifier too low: ", patton.get_attack_modifier())
 		return false

@@ -11,6 +11,8 @@ const TOAST_DURATION_SEC := 6.0
 var news_history: Array[Dictionary] = []
 var _retirement_queue: Array[String] = []
 var _active_retirement_popup: RetirementOfferPopup = null
+var _replacement_queue: Array[String] = []
+var _active_replacement_popup: LeaderReplacementPickerPopup = null
 var _toast_layer: CanvasLayer
 var _toast_container: VBoxContainer
 
@@ -24,6 +26,7 @@ func _connect_leader_signals() -> void:
 	if typeof(LeaderManager) == TYPE_NIL:
 		return
 	LeaderManager.leader_retirement_offered.connect(_on_retirement_offered)
+	LeaderManager.leader_replacement_needed.connect(_on_leader_replacement_needed)
 	LeaderManager.leader_died.connect(_on_leader_died)
 	LeaderManager.leader_captured.connect(_on_leader_captured)
 	LeaderManager.leader_introduced.connect(_on_leader_introduced)
@@ -150,6 +153,62 @@ func _on_retirement_popup_completed(resolved_leader_id: String, outcome: String)
 				"retirement",
 			)
 	_try_show_next_retirement()
+	_try_show_next_replacement()
+
+
+func _on_leader_replacement_needed(request: Dictionary) -> void:
+	# Only player countries emit this signal (AI vacancies auto-resolve in LeaderManager).
+	var request_id := str(request.get("request_id", ""))
+	var country_tag := str(request.get("country_tag", ""))
+	if request_id.is_empty() or not LeaderManager.is_player_country(country_tag):
+		return
+	if request_id not in _replacement_queue:
+		_replacement_queue.append(request_id)
+	_try_show_next_replacement()
+
+
+func _try_show_next_replacement() -> void:
+	if _active_retirement_popup != null and is_instance_valid(_active_retirement_popup):
+		return
+	if _active_replacement_popup != null and is_instance_valid(_active_replacement_popup):
+		return
+	if _replacement_queue.is_empty():
+		return
+
+	var next_id: String = _replacement_queue[0]
+	_replacement_queue.remove_at(0)
+	if LeaderManager.get_leader_replacement_request(next_id).is_empty():
+		_try_show_next_replacement()
+		return
+
+	var popup := LeaderReplacementPickerPopup.open_for_request(next_id)
+	if popup == null:
+		return
+	_active_replacement_popup = popup
+	popup.replacement_completed.connect(_on_replacement_popup_completed)
+
+
+func _on_replacement_popup_completed(
+	request: Dictionary,
+	new_leader_id: String,
+	left_vacant: bool,
+) -> void:
+	_active_replacement_popup = null
+	var vacancy_label := str(request.get("target_label", "command"))
+	if left_vacant:
+		post_news(
+			"Command Vacant",
+			"%s remains without a permanent commander for now." % vacancy_label,
+			"military",
+		)
+	elif not new_leader_id.is_empty():
+		var new_name := _leader_display_name(new_leader_id)
+		post_news(
+			"New Commander Assigned",
+			"%s now leads %s." % [new_name, vacancy_label],
+			"military",
+		)
+	_try_show_next_replacement()
 
 
 func _on_leader_died(leader_id: String, cause: String) -> void:

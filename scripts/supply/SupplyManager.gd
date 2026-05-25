@@ -133,6 +133,7 @@ func clear_force_registry() -> void:
 
 func refresh_intel_from_forces() -> void:
 	SupplyIntelBridge.refresh_manager(self, player_tag, force_registry, provinces, hubs, rules)
+	_apply_agent_intelligence_modifiers()
 
 
 func set_enemy_presence(province_id: int, presence: Dictionary) -> void:
@@ -143,6 +144,39 @@ func set_enemy_presence(province_id: int, presence: Dictionary) -> void:
 
 func get_enemy_presence() -> Dictionary:
 	return get_meta("enemy_presence") if has_meta("enemy_presence") else {}
+
+
+func _apply_agent_intelligence_modifiers() -> void:
+	if typeof(AgentManager) == TYPE_NIL:
+		return
+
+	var presence: Dictionary = get_enemy_presence()
+	if presence.is_empty():
+		return
+
+	var military_mod := AgentManager.get_intelligence_modifier(player_tag, "military")
+	var economic_mod := AgentManager.get_intelligence_modifier(player_tag, "economic")
+	var intel_mod := minf(military_mod, economic_mod)
+
+	if intel_mod >= 0.99:
+		return  # No meaningful bonus
+
+	for pid in presence.keys():
+		var p: Dictionary = presence[pid] as Dictionary
+		if typeof(p) != TYPE_DICTIONARY:
+			continue
+
+		# Agent intel reduces the perceived threat of enemy forces
+		if p.has("enemy_brigade_equiv"):
+			p["enemy_brigade_equiv"] = float(p["enemy_brigade_equiv"]) * intel_mod
+		if p.has("enemy_air_superiority"):
+			p["enemy_air_superiority"] = float(p["enemy_air_superiority"]) * intel_mod
+
+		# Economic intel can slightly reduce perceived naval/port threats
+		if economic_mod < 1.0 and p.has("enemy_naval_at_port"):
+			if bool(p["enemy_naval_at_port"]):
+				# With good economic intel we are less surprised by naval interdiction
+				p["naval_threat_reduced_by_intel"] = true
 
 
 func record_attrition(

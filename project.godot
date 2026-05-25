@@ -23,6 +23,8 @@ ProductionManager="*res://scripts/autoload/ProductionManager.gd"
 SupplyManager="*res://scripts/supply/SupplyManager.gd"
 LeaderManager="*res://scripts/leaders/LeaderManager.gd"
 LeaderEventUI="*res://scripts/ui/LeaderEventUI.gd"
+AgentManager="*res://scripts/agents/AgentManager.gd"
+NationalModifierManager="*res://scripts/national/NationalModifierManager.gd"
 
 [display]
 
