@@ -79,6 +79,7 @@
   - Combat (deeper — division base stats + interdiction/attrition side)
 - Explicit first-class support for `attrition_reduction` and `interdiction_resistance` across spirits + temporary effects
 - Daily simulation loop strengthened (TimeManager-driven): repair/counter-intel path via clear_daily_sabotage_effects now called from counter-intel mission outcomes; per-province supply disruption now uses persistent `sabotage_level` on ProvinceDepotState for targeted throughput reduction (decays daily, clearable); ProductionManager wired to game_day_advanced (unified daily consumers: Supply + Agents + Repair + Production); light const tuning + docs.
+- Expanded Save/Load (SaveLoadManager): now also persists ProductionManager (lines progress/retooling/stockpiles), FactoryManager (full Factory resources + province mapping), LeaderManager (leaders + assignments + officer training + national positions + pending), and scenario metadata. Basic autosave on year change (to "autosave" slot). Code-driven Save Manager popup (F6 or via Save button) with list + Load/Delete actions using list_saves/delete_save/rename_save. Enhanced robustness (version migration stub, detailed save/load with errors, better guards). TopInfoBar Save button now quicksaves + opens manager; F5/F9 still fast paths. Full contract docs + updated header. Production/Leader/ScenarioLoader gained get/apply helpers.
 
 **Good Place to Resume:**
 - Combat resolver: apply training path bonuses in battle

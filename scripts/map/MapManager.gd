@@ -6,9 +6,18 @@
 ##   var p := MapManager.get_province(42)
 ##   var fx := MapManager.get_province_effects(42, "GER")
 ##   var resist := fx.get_effective_interdiction_resistance()
+##
+## Note: MapManager is an autoload singleton (no class_name on purpose to keep the GDScript analyzer happy).
 
-class_name MapManager
 extends Node
+
+# NOTE: We intentionally do NOT declare `class_name MapManager`.
+# This script is registered as an autoload singleton named "MapManager".
+# Using class_name on an autoload causes Godot's GDScript analyzer to emit
+# "Class 'MapManager' hides an autoload singleton" + errors when calling its methods
+# (has_method, get_province, get_province_effects, etc.) from static context.
+#
+# Removing class_name makes the static analyzer happy while runtime behavior is unchanged.
 
 signal scenario_map_ready()
 signal provinces_loaded(province_count: int)
@@ -16,15 +25,16 @@ signal province_hovered(province_id: int)
 signal province_selected(province_id: int)
 signal province_data_changed(province_id: int, what_changed: String)  # e.g. "owner", "development", "effects"
 
-var _provinces: Dictionary = {}           # id -> Province
+var _provinces: Dictionary[int, Province] = {}           # id -> Province
 var _geometry: Dictionary = {}            # id -> {points, label_anchor, ...}
 var _adjacency: AdjacencySystem = null
-var _countries: Dictionary = {}           # tag -> Country or Dictionary
+var _countries: Dictionary[String, Variant] = {}           # tag -> Country or Dictionary
 
 var _is_initialized: bool = false
 
 # Cached for fast queries and picking
-var _centroids: Dictionary = {}           # id -> Vector2 (world/map space)
+var _centroids: Dictionary[int, Vector2] = {}   # id -> Vector2 (world/map space)
+var _province_bounds: Dictionary[int, Rect2] = {}  # id -> AABB in map space
 var _world_bounds: Rect2 = Rect2()        # rough axis-aligned bounds of all provinces
 
 # Optional high-performance picker (created on demand or by MapRenderer)
@@ -204,7 +214,8 @@ func get_provinces_in_rect(world_rect: Rect2, margin: float = 0.0) -> Array[int]
 	var expanded := world_rect.grow(margin)
 	var result: Array[int] = []
 
-	for pid in _provinces.keys():
+	for pid_var in _provinces.keys():
+		var pid := int(pid_var)
 		var c: Vector2 = _centroids.get(pid, Vector2.INF)
 		if c != Vector2.INF and expanded.has_point(c):
 			result.append(int(pid))
@@ -232,12 +243,13 @@ func get_province_at_world_pos(world_pos: Vector2, use_pick_grid: bool = true) -
 	# Fallback: brute force among centroids (acceptable while < 150 provinces)
 	var best := -1
 	var best_d := INF
-	for pid in _centroids.keys():
-		var c: Vector2 = _centroids[pid]
+	for pid_var in _centroids.keys():
+		var pid := int(pid_var)
+		var c: Vector2 = _centroids.get(pid, Vector2.ZERO)
 		var d := world_pos.distance_squared_to(c)
 		if d < best_d:
 			best_d = d
-			best = int(pid)
+			best = pid
 	return best
 
 ## Convenience for MapRenderer / UI (converts screen mouse pos using the current Camera2D).
@@ -254,9 +266,10 @@ func get_nearest_provinces(world_pos: Vector2, count: int = 5) -> Array[int]:
 
 	# Brute fallback
 	var scored: Array = []
-	for pid in _centroids.keys():
-		var c: Vector2 = _centroids[pid]
-		scored.append({"id": int(pid), "dist2": world_pos.distance_squared_to(c)})
+	for pid_var in _centroids.keys():
+		var pid := int(pid_var)
+		var c: Vector2 = _centroids.get(pid, Vector2.ZERO)
+		scored.append({"id": pid, "dist2": world_pos.distance_squared_to(c)})
 	scored.sort_custom(func(a, b): return a["dist2"] < b["dist2"])
 
 	var out: Array[int] = []
@@ -292,24 +305,25 @@ func get_provinces_by_terrain(terrain: String) -> Array[int]:
 	return result
 
 ## Quick bounds + centroid helpers for culling / camera logic
-func get_centroids_in_rect(rect: Rect2) -> Dictionary:
-	var out := {}
-	for pid in _centroids.keys():
-		var c := _centroids[pid]
+func get_centroids_in_rect(rect: Rect2) -> Dictionary[int, Vector2]:
+	var out: Dictionary[int, Vector2] = {}
+	for pid_var in _centroids.keys():
+		var pid := int(pid_var)
+		var c: Vector2 = _centroids.get(pid, Vector2.ZERO)
 		if rect.has_point(c):
-			out[int(pid)] = c
+			out[pid] = c
 	return out
 
 ## Convenience bundle for overlay layers (Agent, Conflict, Supply tint, etc.)
 ## Returns common data needed by most overlays without multiple calls.
-func get_overlay_data_for_province(province_id: int, country_tag: String = "") -> Dictionary:
-	var p := get_province(province_id)
+func get_overlay_data_for_province(province_id: int, country_tag: String = "") -> Dictionary[String, Variant]:
+	var p: Province = get_province(province_id)
 	if p == null:
 		return {}
 	var tag := country_tag
 	if tag.is_empty():
 		tag = p.controller_tag if not p.controller_tag.is_empty() else p.owner_tag
-	var fx := get_province_effects(province_id, tag)
+	var fx: ProvinceEffects = get_province_effects(province_id, tag)
 	return {
 		"province": p,
 		"centroid": get_province_centroid(province_id),
@@ -332,7 +346,7 @@ func get_contested_provinces(country_tag: String = "") -> Dictionary:
 		if p == null:
 			continue
 		if p.owner_tag != p.controller_tag and not p.controller_tag.is_empty():
-			var data := get_overlay_data_for_province(int(pid), country_tag)
+			var data: Dictionary = get_overlay_data_for_province(int(pid), country_tag)
 			if not data.is_empty():
 				result[int(pid)] = {
 					"owner": p.owner_tag,
@@ -482,7 +496,8 @@ func advance_daily_infrastructure_repair() -> void:
 		if rate <= 0.0:
 			continue
 
-		var new_infra := min(50, p.infrastructure + rate)  # soft cap at 50 for MVP
+		var current_infra: float = float(p.infrastructure)
+		var new_infra: float = minf(50.0, current_infra + rate)  # soft cap at 50 for MVP
 		if int(new_infra) > p.infrastructure:
 			update_province_infrastructure(int(pid), int(new_infra))
 
@@ -521,7 +536,7 @@ func _clear_internal_caches() -> void:
 	_geometry.clear()
 	_countries.clear()
 	_centroids.clear()
-	_province_bounds.clear() if "_province_bounds" in self else null
+	_province_bounds.clear()
 	_world_bounds = Rect2()
 	_adjacency = null
 	if pick_grid != null:
@@ -530,6 +545,7 @@ func _clear_internal_caches() -> void:
 
 func _recompute_centroids_and_bounds() -> void:
 	_centroids.clear()
+	_province_bounds.clear()
 	var min_v := Vector2(INF, INF)
 	var max_v := Vector2(-INF, -INF)
 	var has_any := false
@@ -552,6 +568,10 @@ func _recompute_centroids_and_bounds() -> void:
 				c = points[0]
 
 		_centroids[pid] = c
+		if points.size() >= 1:
+			_province_bounds[pid] = _aabb_from_points(points)
+		else:
+			_province_bounds[pid] = Rect2(c, Vector2.ZERO)
 
 		if not has_any:
 			min_v = c
@@ -567,6 +587,20 @@ func _recompute_centroids_and_bounds() -> void:
 		_world_bounds = Rect2(min_v, max_v - min_v)
 	else:
 		_world_bounds = Rect2()
+
+func _aabb_from_points(points: PackedVector2Array) -> Rect2:
+	if points.is_empty():
+		return Rect2()
+	var min_v := points[0]
+	var max_v := points[0]
+	for i in range(1, points.size()):
+		var p := points[i]
+		min_v.x = minf(min_v.x, p.x)
+		min_v.y = minf(min_v.y, p.y)
+		max_v.x = maxf(max_v.x, p.x)
+		max_v.y = maxf(max_v.y, p.y)
+	return Rect2(min_v, max_v - min_v)
+
 
 func _compute_centroid(points: PackedVector2Array) -> Vector2:
 	# Copied & adapted from MapRenderer._calculate_centroid for self-containment

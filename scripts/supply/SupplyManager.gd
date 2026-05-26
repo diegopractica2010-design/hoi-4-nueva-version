@@ -8,9 +8,9 @@ signal overlay_toggled(visible: bool)
 signal depot_stock_changed(province_id: int, stockpile: float)
 
 var rules: SupplyRules = null
-var hubs: Dictionary = {}
-var depot_states: Dictionary = {}
-var provinces: Dictionary = {}
+var hubs: Dictionary[int, ProvinceSupplyHub] = {}
+var depot_states: Dictionary[int, ProvinceDepotState] = {}
+var provinces: Dictionary[int, Province] = {}
 var adjacency: AdjacencySystem = null
 var player_tag: String = "USA"
 
@@ -19,10 +19,10 @@ var force_registry: CombatPresenceRegistry = CombatPresenceRegistry.new()
 var attrition_ledger: AttritionReplenishmentLedger = AttritionReplenishmentLedger.new()
 var division_templates: DivisionTemplateLoader = DivisionTemplateLoader.new()
 
-var _countries: Dictionary = {}
+var _countries: Dictionary[String, Variant] = {}
 var _city_layer: Dictionary = {}
-var _routes: Dictionary = {}
-var _default_routes: Dictionary = {}
+var _routes: Dictionary[String, SupplyRoutePlan] = {}
+var _default_routes: Dictionary[String, SupplyRoutePlan] = {}
 var overlay_visible: bool = false
 var routing_mode_override: String = ""
 var active_cargo: SupplyCargoProfile = null
@@ -32,12 +32,12 @@ var active_cargo: SupplyCargoProfile = null
 
 func _get_effects_safe(pid: int, tag: String) -> ProvinceEffects:
 	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province_effects"):
-		var fx := MapManager.get_province_effects(pid, tag)
+		var fx: ProvinceEffects = MapManager.get_province_effects(pid, tag)
 		if fx != null:
 			return fx
 	var p: Province = null
 	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
-		p = MapManager.get_province(pid)
+		p = MapManager.get_province(pid) as Province
 	if p == null:
 		var loader := get_node_or_null("/root/ScenarioLoader")
 		if loader != null and loader.has_method("get_province"):
@@ -208,8 +208,8 @@ func _apply_agent_intelligence_modifiers() -> void:
 	if presence.is_empty():
 		return
 
-	var military_mod := AgentManager.get_intelligence_modifier(player_tag, "military")
-	var economic_mod := AgentManager.get_intelligence_modifier(player_tag, "economic")
+	var military_mod: float = AgentManager.get_intelligence_modifier(player_tag, "military")
+	var economic_mod: float = AgentManager.get_intelligence_modifier(player_tag, "economic")
 	var intel_mod := minf(military_mod, economic_mod)
 
 	if intel_mod >= 0.99:
@@ -427,7 +427,7 @@ func _generate_local_supply_from_development(days: float) -> void:
 		# Prefer centralized MapManager for province access
 		var province: Province = null
 		if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
-			province = MapManager.get_province(int(pid))
+			province = MapManager.get_province(int(pid)) as Province
 		if province == null:
 			var loader := get_node_or_null("/root/ScenarioLoader")
 			if loader != null and loader.has_method("get_province"):
@@ -449,7 +449,7 @@ func _generate_local_supply_from_development(days: float) -> void:
 
 		# Targeted daily sabotage from active supply_disruption networks in this specific province
 		if typeof(AgentManager) != TYPE_NIL:
-			var disruption := AgentManager.get_supply_disruption_in_province(int(pid))
+			var disruption: float = AgentManager.get_supply_disruption_in_province(int(pid))
 			if disruption > 0.0:
 				var penalty := clampf(disruption * 0.25, 0.0, 0.6)  # up to 60% reduction from strong network
 				daily_gen *= (1.0 - penalty)

@@ -38,7 +38,7 @@ static func get_current_date_dict() -> Dictionary:
 static func format_calendar_date(year: int, month: int, day: int, short_month: bool = false) -> String:
 	var m := clampi(month, 1, 12)
 	var d := clampi(day, 1, 31)
-	var month_name := MONTH_SHORT[m - 1] if short_month else MONTH_NAMES[m - 1]
+	var month_name: String = MONTH_SHORT[m - 1] if short_month else MONTH_NAMES[m - 1]
 	return "%d %s %d" % [d, month_name, year]
 
 

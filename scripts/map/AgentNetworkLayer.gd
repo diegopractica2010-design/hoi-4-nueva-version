@@ -316,6 +316,9 @@ func _draw_network_ring(
 		_draw_pressure_glyph(center, radius, focus, activity_pulse or pressure_focus, today_hit)
 		if province_id >= 0:
 			_draw_pressure_status_bars(center, radius, province_id, focus)
+	if today_hit:
+		var tick_col := Color(1.0, 0.92, 0.7, 0.85 + ambient_wave * 0.1)
+		draw_circle(center + Vector2(0.0, radius + 3.0), 2.6, tick_col, true)
 
 	if double_ring_for_strong_low_pressure and strength > 0.82 and pressure < 0.35:
 		draw_arc(center, radius * 0.6, 0.0, TAU, 40, Color(col, col.a * 0.5), width * 0.65, true)

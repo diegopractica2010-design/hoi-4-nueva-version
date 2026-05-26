@@ -35,9 +35,9 @@ var min_cell_radius: int = 1
 var max_cell_radius: int = 3
 
 ## Data
-var _grid: Dictionary = {}                    # Vector2i -> Array[int] (province ids in that cell)
-var _centroids: Dictionary = {}               # id -> Vector2 (world/map space)
-var _province_bounds: Dictionary = {}         # id -> Rect2 (rough AABB for quick reject, optional)
+var _grid: Dictionary[Vector2i, Array] = {}               # Vector2i -> Array[int] (province ids in that cell)
+var _centroids: Dictionary[int, Vector2] = {}               # id -> Vector2 (world/map space)
+var _province_bounds: Dictionary[int, Rect2] = {}           # id -> Rect2 (rough AABB for quick reject, optional)
 var _all_ids: Array[int] = []
 
 var _min_cell: Vector2i = Vector2i(0, 0)
@@ -47,7 +47,7 @@ var _is_built: bool = false
 ## --- Build ---
 
 ## centroids: Dictionary[int, Vector2]   (province_id -> centroid in the same coordinate space as the map polygons)
-func build(centroids: Dictionary, p_cell_size: float = 64.0) -> void:
+func build(centroids: Dictionary[int, Vector2], p_cell_size: float = 64.0) -> void:
 	clear()
 
 	cell_size = maxf(16.0, p_cell_size)
@@ -58,7 +58,7 @@ func build(centroids: Dictionary, p_cell_size: float = 64.0) -> void:
 
 	for pid_var in centroids.keys():
 		var pid := int(pid_var)
-		var c: Vector2 = centroids[pid_var]
+		var c: Vector2 = centroids.get(pid, Vector2.ZERO)
 		_centroids[pid] = c
 		_all_ids.append(pid)
 

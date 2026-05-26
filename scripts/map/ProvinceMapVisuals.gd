@@ -28,6 +28,8 @@ const OUTLINE_SELECT_CONTESTED_GLOW := Color(0.85, 0.25, 0.35, 0.32)
 const OUTLINE_AGENT := Color(0.72, 0.52, 1.0, 0.9)
 const OUTLINE_AGENT_GLOW := Color(0.45, 0.28, 0.75, 0.28)
 const OUTLINE_DUAL := Color(0.95, 0.52, 0.82, 0.92)
+const OUTLINE_DUAL_DISRUPT := Color(0.98, 0.55, 0.62, 0.94)
+const OUTLINE_DUAL_SABOTAGE := Color(0.98, 0.48, 0.68, 0.94)
 const OUTLINE_DUAL_GLOW := Color(0.7, 0.28, 0.55, 0.32)
 const FILL_DUAL := Color(0.92, 0.48, 0.72, 1.0)
 

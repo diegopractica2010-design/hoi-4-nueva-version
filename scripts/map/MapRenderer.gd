@@ -71,14 +71,14 @@ var _is_middle_dragging := false
 var _middle_drag_start := Vector2.ZERO
 var _last_mouse_pos := Vector2.ZERO
 
-var provinces: Dictionary = {}
+var provinces: Dictionary[int, Province] = {}
 var geometry: Dictionary = {}
-var countries: Dictionary = {}
+var countries: Dictionary[String, Variant] = {}
 var adjacency: AdjacencySystem
 
-var province_nodes: Dictionary = {}
-var province_centroids: Dictionary = {}
-var _province_name_labels: Dictionary = {}
+var province_nodes: Dictionary[int, Node2D] = {}
+var province_centroids: Dictionary[int, Vector2] = {}
+var _province_name_labels: Dictionary[int, Label] = {}
 var current_hover: Node2D = null
 var _hover_province: Province = null
 var hover_tooltip: ProvinceHoverTooltip = null
@@ -95,7 +95,7 @@ const _CANDIDATE_FILL_TINT := ProvinceMapVisuals.FILL_COMPARE_CANDIDATE
 const _CONFLICT_FILL_TINT := ProvinceMapVisuals.FILL_CONFLICT
 const _AGENT_FILL_TINT := ProvinceMapVisuals.FILL_AGENT
 
-var _supply_role_by_province: Dictionary = {}
+var _supply_role_by_province: Dictionary[int, String] = {}
 var _compare_candidate_ids: Array[int] = []
 var _supply_legend_panel: PanelContainer = null
 var _compare_hint_label: Label = null
@@ -1330,11 +1330,13 @@ func _hover_outline_colors(province_id: int) -> Dictionary:
 		var dual_base := ProvinceMapVisuals.OUTLINE_DUAL
 		match ProvinceInsight.agent_pressure_focus_kind(hp):
 			"disrupt":
-				dual_base = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT, 0.42)
-				dual_lerp = 0.18 if ProvinceInsight.agent_applies_daily_pressure(hp) else dual_lerp
+				dual_base = ProvinceMapVisuals.OUTLINE_DUAL_DISRUPT
+				dual_lerp = 0.16 if ProvinceInsight.agent_applies_daily_pressure(hp) else dual_lerp
 			"sabotage":
-				dual_base = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE, 0.4)
-				dual_lerp = 0.18 if ProvinceInsight.agent_applies_daily_pressure(hp) else dual_lerp
+				dual_base = ProvinceMapVisuals.OUTLINE_DUAL_SABOTAGE
+				dual_lerp = 0.16 if ProvinceInsight.agent_applies_daily_pressure(hp) else dual_lerp
+		if ProvinceInsight.agent_has_today_pressure_tick(hp):
+			dual_lerp = maxf(0.12, dual_lerp - 0.06)
 		colors["color"] = dual_base.lerp(ProvinceMapVisuals.OUTLINE_HOVER, dual_lerp)
 		colors["glow"] = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
 	elif agent:
@@ -1347,6 +1349,8 @@ func _hover_outline_colors(province_id: int) -> Dictionary:
 		elif pressure_kind == "sabotage":
 			agent_outline = ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE
 			agent_lerp = 0.24 if ProvinceInsight.agent_applies_daily_pressure(hp) else agent_lerp
+		if ProvinceInsight.agent_has_today_pressure_tick(hp):
+			agent_lerp = maxf(0.18, agent_lerp - 0.08)
 		colors["color"] = agent_outline.lerp(ProvinceMapVisuals.OUTLINE_HOVER, agent_lerp)
 		colors["glow"] = ProvinceMapVisuals.OUTLINE_AGENT_GLOW
 	elif contested:
@@ -1363,6 +1367,8 @@ func _set_hover_outline(province_id: int, visible: bool) -> void:
 		var width := 2.8 if province_id == selected_province_id else 2.5
 		if provinces.has(province_id):
 			var hp: Province = provinces[province_id] as Province
+			if ProvinceInsight.agent_has_today_pressure_tick(hp):
+				width += 0.3
 			if (
 				ProvinceInsight.is_province_contested(hp)
 				and ProvinceInsight.has_active_agent_network(hp)
@@ -1370,6 +1376,8 @@ func _set_hover_outline(province_id: int, visible: bool) -> void:
 				width += 0.35
 				if province_id == selected_province_id:
 					width += 0.2
+				if ProvinceInsight.agent_applies_daily_pressure(hp):
+					width += 0.15
 		var oc: Dictionary = _hover_outline_colors(province_id)
 		ProvinceMapVisuals.ensure_polished_outline(
 			node,
@@ -1402,9 +1410,9 @@ func _set_selection_outline(province_id: int, visible: bool) -> void:
 				var dual_sel := ProvinceMapVisuals.OUTLINE_DUAL
 				match ProvinceInsight.agent_pressure_focus_kind(sp):
 					"disrupt":
-						dual_sel = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT, 0.38)
+						dual_sel = ProvinceMapVisuals.OUTLINE_DUAL_DISRUPT
 					"sabotage":
-						dual_sel = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE, 0.36)
+						dual_sel = ProvinceMapVisuals.OUTLINE_DUAL_SABOTAGE
 				sel_col = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.35)
 				sel_glow = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
 			elif contested:
@@ -1560,6 +1568,13 @@ func _update_outline_pulse() -> void:
 					ProvinceInsight.is_province_contested(hp)
 					and ProvinceInsight.has_active_agent_network(hp)
 				)
+				if ProvinceInsight.agent_has_today_pressure_tick(hp):
+					hover_w += 0.35
+					pulse_amp += 0.12
+					pulse_speed += 0.6
+				elif ProvinceInsight.agent_applies_daily_pressure(hp):
+					hover_w += 0.2
+					pulse_amp += 0.06
 				if dual_hover:
 					hover_w += 0.25
 					pulse_amp += 0.08
@@ -1590,16 +1605,22 @@ func _update_outline_pulse() -> void:
 					var dual_sel := ProvinceMapVisuals.OUTLINE_DUAL
 					match ProvinceInsight.agent_pressure_focus_kind(sp):
 						"disrupt":
-							dual_sel = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT, 0.38)
+							dual_sel = ProvinceMapVisuals.OUTLINE_DUAL_DISRUPT
 						"sabotage":
-							dual_sel = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE, 0.36)
+							dual_sel = ProvinceMapVisuals.OUTLINE_DUAL_SABOTAGE
 					sel_col = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.35)
 					sel_glow = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
 				elif contested:
 					sel_col = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED
 					sel_glow = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED_GLOW
 				elif agent:
-					sel_col = ProvinceMapVisuals.OUTLINE_AGENT.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.5)
+					var agent_sel := ProvinceMapVisuals.OUTLINE_AGENT
+					match ProvinceInsight.agent_pressure_focus_kind(sp):
+						"disrupt":
+							agent_sel = ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT
+						"sabotage":
+							agent_sel = ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE
+					sel_col = agent_sel.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.5)
 					sel_glow = ProvinceMapVisuals.OUTLINE_AGENT_GLOW
 			ProvinceMapVisuals.apply_pulse_to_polished(
 				sel_node,

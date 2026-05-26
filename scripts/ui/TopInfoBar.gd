@@ -274,11 +274,23 @@ func _toggle_screen(screen_name: String, scene_path: String, configure: Callable
 
 
 func _on_save_pressed() -> void:
-	print("Save Game (TODO)")
+	if typeof(SaveLoadManager) != TYPE_NIL:
+		# Quick save + open manager for full control (list, delete, load other slots)
+		SaveLoadManager.quicksave()
+		_show_save_manager_popup()
+	else:
+		print("SaveLoadManager not available")
 
 
 func _on_load_pressed() -> void:
-	print("Load Game (TODO)")
+	if typeof(SaveLoadManager) != TYPE_NIL:
+		var ok := SaveLoadManager.load_game("quicksave")
+		print("Load Game ← quicksave.json: %s" % ("OK" if ok else "FAILED"))
+		# Force a UI refresh after load (date, resources, etc.)
+		_update_date_time()
+		_update_resources()
+	else:
+		print("SaveLoadManager not available")
 
 
 func _on_settings_pressed() -> void:
@@ -287,3 +299,104 @@ func _on_settings_pressed() -> void:
 
 func _on_help_pressed() -> void:
 	print("Open Help (TODO)")
+
+
+## Basic in-code Save Manager popup (F6 or via Save button enhancement).
+## Lists saves from SaveLoadManager.list_saves(), with Load / Delete actions.
+## Rename is available via SaveLoadManager.rename_save() from console/script for now.
+## This gives immediate usable UX without requiring a dedicated .tscn yet.
+func _show_save_manager_popup() -> void:
+	if typeof(SaveLoadManager) == TYPE_NIL:
+		print("SaveLoadManager not ready")
+		return
+
+	# Remove any previous instance
+	var existing := get_tree().root.get_node_or_null("SaveManagerPopup")
+	if existing != null:
+		existing.queue_free()
+
+	var panel := Panel.new()
+	panel.name = "SaveManagerPopup"
+	panel.size = Vector2(520, 380)
+	panel.position = Vector2(200, 120)
+	panel.z_index = 100
+
+	# Simple styling (reuses theme if possible)
+	if has_node("/root/RetrowaveTheme"):
+		# best effort
+		pass
+
+	var vbox := VBoxContainer.new()
+	vbox.size = panel.size - Vector2(20, 20)
+	vbox.position = Vector2(10, 10)
+	panel.add_child(vbox)
+
+	var title := Label.new()
+	title.text = "Save Manager (F6 to close, click actions)"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title)
+
+	var saves := SaveLoadManager.list_saves()
+	if saves.is_empty():
+		var l := Label.new()
+		l.text = "No saves yet. Use F5 / Save button to create 'quicksave' or 'autosave'."
+		vbox.add_child(l)
+	else:
+		for s in saves:
+			var h := HBoxContainer.new()
+			var slot_label := Label.new()
+			var meta := s.get("metadata", {}) as Dictionary
+			var ts := str(meta.get("timestamp", ""))
+			slot_label.text = "%s  (%s)" % [s.get("slot", "?"), ts.substr(0, 16) if ts.length() > 16 else ts]
+			slot_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			h.add_child(slot_label)
+
+			var load_btn := Button.new()
+			load_btn.text = "Load"
+			load_btn.pressed.connect(func():
+				SaveLoadManager.load_game(s.get("slot", ""))
+				_update_date_time()
+				_update_resources()
+				panel.queue_free()
+			)
+			h.add_child(load_btn)
+
+			var del_btn := Button.new()
+			del_btn.text = "Delete"
+			del_btn.pressed.connect(func():
+				SaveLoadManager.delete_save(s.get("slot", ""))
+				panel.queue_free()
+				_show_save_manager_popup()  # refresh
+			)
+			h.add_child(del_btn)
+
+			vbox.add_child(h)
+
+	var close_btn := Button.new()
+	close_btn.text = "Close (F6)"
+	close_btn.pressed.connect(func(): panel.queue_free())
+	vbox.add_child(close_btn)
+
+	get_tree().root.add_child(panel)
+	print("Save Manager popup opened (%d saves)" % saves.size())
+
+
+## Dev convenience keybinds (F5 = quicksave, F9 = quickload).
+## These are intentionally loud in the console so you know the save/load cycle fired.
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_F5:
+			if typeof(SaveLoadManager) != TYPE_NIL:
+				SaveLoadManager.quicksave()
+				print("F5 QuickSave triggered")
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_F9:
+			if typeof(SaveLoadManager) != TYPE_NIL:
+				SaveLoadManager.quickload()
+				_update_date_time()
+				_update_resources()
+				print("F9 QuickLoad triggered")
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_F6:
+			_show_save_manager_popup()
+			get_viewport().set_input_as_handled()

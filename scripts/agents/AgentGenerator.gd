@@ -2,12 +2,12 @@
 class_name AgentGenerator
 extends Node
 
-const POSSIBLE_FIRST_NAMES := [
+const POSSIBLE_FIRST_NAMES: Array[String] = [
 	"Alexei", "Elena", "Marcus", "Sofia", "Johan", "Lila", "Victor", "Anya",
 	"Thomas", "Isabelle", "Klaus", "Freya", "Hiroshi", "Mei", "Dmitri", "Natasha"
 ]
 
-const POSSIBLE_LAST_NAMES := [
+const POSSIBLE_LAST_NAMES: Array[String] = [
 	"Voss", "Kovacs", "Lang", "Moreau", "Schmidt", "Petrov", "Tanaka", "Rossi",
 	"Bauer", "Dubois", "Kowalski", "Santos", "Yamamoto", "Ivanov", "Laurent"
 ]
@@ -51,6 +51,6 @@ static func generate_agent(country_tag: String, year: int = 1936) -> Agent:
 
 
 static func _generate_name() -> String:
-	var first := POSSIBLE_FIRST_NAMES[randi() % POSSIBLE_FIRST_NAMES.size()]
-	var last := POSSIBLE_LAST_NAMES[randi() % POSSIBLE_LAST_NAMES.size()]
+	var first: String = POSSIBLE_FIRST_NAMES[randi() % POSSIBLE_FIRST_NAMES.size()]
+	var last: String = POSSIBLE_LAST_NAMES[randi() % POSSIBLE_LAST_NAMES.size()]
 	return "%s %s" % [first, last]

@@ -2658,6 +2658,78 @@ func clear_officer_training_leader(country_tag: String) -> void:
 	invalidate_leader_cache(tag)
 
 
+## === Save/Load support (SaveLoadManager contract) ===
+## Preserves leaders (with XP, traits, status, assignments via Leader Resource),
+## national positions, officer training assignments, and pending items.
+func get_save_data() -> Dictionary:
+	var leaders_data := {}
+	for lid in leaders:
+		var l: Leader = leaders[lid]
+		if l != null:
+			leaders_data[lid] = inst_to_dict(l)
+
+	return {
+		"leaders": leaders_data,
+		"country_positions": country_positions.duplicate(true),
+		"officer_training_leader_id": officer_training_leader_id.duplicate(true),
+		"pending_retirements": pending_retirements.duplicate(true),
+		"pending_leader_replacements": pending_leader_replacements.duplicate(true),
+		"player_country_tag": player_country_tag,
+	}
+
+func apply_save_data(data: Dictionary) -> void:
+	leaders.clear()
+	country_positions.clear()
+	officer_training_leader_id.clear()
+	pending_retirements.clear()
+	pending_leader_replacements.clear()
+
+	if data.has("leaders"):
+		var ldata: Dictionary = data["leaders"]
+		for lid in ldata:
+			var ld: Dictionary = ldata[lid]
+			var l := Leader.new()
+			# Restore core + mutable fields from Leader resource
+			l.leader_id = str(ld.get("leader_id", lid))
+			l.name = str(ld.get("name", ""))
+			l.country_tag = str(ld.get("country_tag", ""))
+			l.leader_type = str(ld.get("leader_type", "general"))
+			l.attack_skill = int(ld.get("attack_skill", 3))
+			l.defense_skill = int(ld.get("defense_skill", 3))
+			l.organization_skill = int(ld.get("organization_skill", 3))
+			l.logistics_skill = int(ld.get("logistics_skill", 3))
+			l.planning_skill = int(ld.get("planning_skill", 3))
+			l.initiative_skill = int(ld.get("initiative_skill", 3))
+			l.traits = (ld.get("traits", []) as Array).duplicate()
+			l.experience = int(ld.get("experience", 0))
+			l.total_experience_earned = int(ld.get("total_experience_earned", 0))
+			l.battles_fought = int(ld.get("battles_fought", 0))
+			l.is_injured = bool(ld.get("is_injured", false))
+			l.is_captured = bool(ld.get("is_captured", false))
+			l.is_retired = bool(ld.get("is_retired", false))
+			l.is_deceased = bool(ld.get("is_deceased", false))
+			l.assigned_army_id = str(ld.get("assigned_army_id", ""))
+			l.birth_year = int(ld.get("birth_year", 1900))
+			l.health = float(ld.get("health", 1.0))
+			l.duty_post = str(ld.get("duty_post", "active"))
+			l.stayed_past_retirement = bool(ld.get("stayed_past_retirement", false))
+			# Add other fields (officer training quality etc.) as they become critical
+			leaders[l.leader_id] = l
+
+	if data.has("country_positions"):
+		country_positions = (data["country_positions"] as Dictionary).duplicate(true)
+	if data.has("officer_training_leader_id"):
+		officer_training_leader_id = (data["officer_training_leader_id"] as Dictionary).duplicate(true)
+	if data.has("pending_retirements"):
+		pending_retirements = (data["pending_retirements"] as Array).duplicate(true)
+	if data.has("pending_leader_replacements"):
+		pending_leader_replacements = (data["pending_leader_replacements"] as Array).duplicate(true)
+	if data.has("player_country_tag"):
+		player_country_tag = str(data["player_country_tag"])
+
+	print("LeaderManager: Restored %d leaders + positions" % leaders.size())
+
+
 ## Assigns a leader to Officer Training using their country tag.
 func assign_leader_to_officer_training(leader_id: String) -> bool:
 	var leader := get_leader(leader_id)

@@ -87,7 +87,7 @@ func generate_leader(country_tag: String, leader_type: String = "general") -> Le
 	var leader := create_leader_from_data(leader_data)
 
 	if randf() < 0.15:
-		var trait_id := SPECIAL_TRAITS[randi() % SPECIAL_TRAITS.size()]
+		var trait_id: String = SPECIAL_TRAITS[randi() % SPECIAL_TRAITS.size()]
 		LeaderManager.try_add_trait_to_leader(leader, trait_id, 1)
 
 	if randf() < 0.08:

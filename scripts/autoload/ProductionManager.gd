@@ -1481,6 +1481,79 @@ func get_design_production_info(design_id: String) -> Dictionary:
 	}
 
 
+## === Save/Load support (SaveLoadManager contract) ===
+## Captures national production state + per-line runtime (progress, retooling, shortages).
+## Factory-specific state (damage, efficiency, assigned lines) lives in FactoryManager/Factory resources.
+func get_save_data() -> Dictionary:
+	var lines_data := {}
+	for line_id in _lines:
+		var line: ProductionLine = _lines[line_id]
+		if line == null:
+			continue
+		lines_data[line_id] = {
+			"design_id": line.design_id,
+			"progress": line.progress,
+			"completed_count": line.completed_count,
+			"design_production_cost": line.design_production_cost,
+			"daily_resource_cost": line.daily_resource_cost.duplicate(true),
+			"resource_shortage_penalty": line.resource_shortage_penalty,
+			"shortage_reliability_multiplier": line.shortage_reliability_multiplier,
+			"retooling_days_remaining": line.retooling_days_remaining,
+			"production_progress": line.production_progress,
+			"current_template_id": line.current_template_id,
+			"factory_id": line.factory_id,
+		}
+
+	return {
+		"production_stance": production_stance,
+		"national_stockpile": national_stockpile.duplicate(true),
+		"national_equipment_stockpile": national_equipment_stockpile.duplicate(true),
+		"unit_equipment_stock": _unit_equipment_stock.duplicate(true),
+		"active_modifiers": _active_modifiers.duplicate(true),
+		"lines": lines_data,
+		# family experience, priority etc. can be added later if they prove important
+	}
+
+func apply_save_data(data: Dictionary) -> void:
+	if data.has("production_stance"):
+		production_stance = str(data["production_stance"])
+	if data.has("national_stockpile"):
+		national_stockpile = (data["national_stockpile"] as Dictionary).duplicate(true)
+	if data.has("national_equipment_stockpile"):
+		national_equipment_stockpile = (data["national_equipment_stockpile"] as Dictionary).duplicate(true)
+	if data.has("unit_equipment_stock"):
+		_unit_equipment_stock = (data["unit_equipment_stock"] as Dictionary).duplicate(true)
+	if data.has("active_modifiers"):
+		_active_modifiers = (data["active_modifiers"] as Dictionary).duplicate(true)
+
+	if data.has("lines"):
+		var lines_data: Dictionary = data["lines"]
+		for line_id in lines_data:
+			var ld: Dictionary = lines_data[line_id]
+			var line := get_line(line_id)
+			if line == null:
+				line = create_line(line_id)  # ensure it exists
+			if line != null:
+				line.design_id = str(ld.get("design_id", ""))
+				line.progress = float(ld.get("progress", 0.0))
+				line.completed_count = int(ld.get("completed_count", 0))
+				if ld.has("design_production_cost"):
+					line.design_production_cost = float(ld["design_production_cost"])
+				if ld.has("daily_resource_cost"):
+					line.daily_resource_cost = (ld["daily_resource_cost"] as Dictionary).duplicate(true)
+				line.resource_shortage_penalty = float(ld.get("resource_shortage_penalty", 1.0))
+				line.shortage_reliability_multiplier = float(ld.get("shortage_reliability_multiplier", 1.0))
+				line.retooling_days_remaining = float(ld.get("retooling_days_remaining", 0.0))
+				line.production_progress = float(ld.get("production_progress", 0.0))
+				line.current_template_id = str(ld.get("current_template_id", ""))
+				# factory_id usually set at creation; restore if present
+				if ld.has("factory_id"):
+					line.factory_id = int(ld["factory_id"])
+
+	invalidate_all_caches()
+	print("ProductionManager: Save data applied (%d lines)" % (data.get("lines", {}).size() if data.has("lines") else 0))
+
+
 ## Game loop entry point: one day of national production (supply hooks can chain here later).
 func daily_production_tick() -> void:
 	advance_production(1.0)

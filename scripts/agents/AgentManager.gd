@@ -21,18 +21,21 @@ const DEFAULT_TARGET_COUNTRY_TAGS: Array[String] = [
 
 ## Daily network sabotage tuning (light but strategic pressure).
 ## BASE/MAX control the scale of national debuffs + depot sabotage_level accumulation.
-## DURATION controls how long the temporary national modifier lingers (repair + counter-intel must work within this window).
-## Tuned 2026-04 for better "meaningful daily agent pressure" while remaining low enough that
-## constant pressure (or bombing) produces lasting but recoverable hindrance, not instant collapse.
+## DURATION is used as the "months" value when applying short-lived national debuffs via NMM.
+##   While a supply_disruption network is active it re-applies/refresh the effect daily (keeps debuff up).
+##   When the network is removed (counter-intel or dismantled), the last-applied effect lingers up to this many
+##   "NMM months" (decayed only on monthly ticks). Not a true 4-day timer — see clear_daily_sabotage_effects for instant relief.
+## Tuned 2026-04/05 for meaningful daily pressure without instant collapse.
 const DAILY_NETWORK_SABOTAGE_BASE := 0.028
 const DAILY_NETWORK_SABOTAGE_MAX := 0.12
 const DAILY_NETWORK_SABOTAGE_DURATION_DAYS := 4
 
-var agents: Dictionary = {}                    # country_tag -> Array[Agent]
-var networks: Dictionary = {}                    # province_id (int) -> AgentNetwork
+var agents: Dictionary[String, Array] = {}                    # country_tag -> Array[Agent]
+var networks: Dictionary[int, AgentNetwork] = {}                    # province_id (int) -> AgentNetwork
 var mission_definitions: Dictionary = {}
 
 var _current_year: int = 1936
+var _last_year_ticked: int = -1              # Dedup guard: both TM and Leader year signals may fire during clock migration
 var _agent_screen_cache: Dictionary = {}       # country_tag -> AgentScreenData
 
 
@@ -60,14 +63,18 @@ func _ready() -> void:
 
 
 func _on_game_year_advanced(year: int) -> void:
+	if year == _last_year_ticked:
+		return
+	_last_year_ticked = year
 	set_current_year(year)
 	_release_expired_compromised_agents()
-	# Advance missions by 12 months per year for MVP
+	# Advance missions by 12 months per year for MVP (research/mission cadence is still yearly-batched).
+	# Daily network growth + sabotage is handled separately via game_day_advanced (preferred path).
 	advance_missions(12)
 
 func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
-	# Daily updates for persistent agent networks (makes them feel alive on the map).
-	# This is the new primary path for network progression (replacing pure yearly updates).
+	# Daily updates for persistent agent networks + real sabotage effects (supply/infra).
+	# Primary path (TimeManager central clock). Legacy monthly/yearly paths still exist for missions.
 	advance_networks_daily()
 
 
@@ -80,7 +87,7 @@ func _load_mission_definitions() -> void:
 	var json_text := file.get_as_text()
 	file.close()
 
-	var parsed := JSON.parse_string(json_text)
+	var parsed: Variant = JSON.parse_string(json_text)
 	if typeof(parsed) == TYPE_DICTIONARY:
 		mission_definitions = parsed
 	else:
@@ -257,16 +264,16 @@ func _apply_mission_outcome(agent: Agent, mission: Dictionary, outcome: String, 
 		if typeof(NationalModifierManager) != TYPE_NIL:
 			NationalModifierManager.apply_influence_effect(
 				country,
-				prestige_change = float(prestige),
-				duration_months = 24,
-				source = "agent_mission",
-				source_detail = mission_name,
+				0.0,                    # stability_change
+				float(prestige),        # prestige_change
+				24,                     # duration_months
+				"agent_mission",        # source
+				mission_name            # source_detail
 			)
 		else:
-			# Fallback to legacy national_prestige tracking
-			var current := float(national_prestige.get(country, 50.0))
-			national_prestige[country] = current + prestige
-			print("  -> %s gained +%d Prestige from %s (legacy tracking)" % [country, prestige, mission_name])
+			# Legacy national_prestige tracking has been removed.
+			# NationalModifierManager is now the single source of truth for prestige/influence.
+			push_warning("AgentManager: Prestige gain skipped — legacy national_prestige fallback is no longer supported.")
 
 	# === Real Effect Application ===
 	var effect := str(result.get("effect", ""))
@@ -379,10 +386,10 @@ func advance_networks(months: int = 1) -> void:
 		# Perform the network's focus action
 		_process_network_action(net, months)
 
-## Lightweight daily update for agent networks.
-## Called by the central TimeManager via game_day_advanced.
-## Much smaller increments than the monthly version for smoother, more alive-feeling progression.
-## This is the preferred path for daily simulation (see TimeManager signal usage docs).
+## Lightweight daily update for agent networks + province sabotage effects.
+## Called by the central TimeManager via game_day_advanced (the preferred integration point).
+## Much smaller increments than the legacy monthly version for smooth map presence.
+## NOTE: advance_networks(months) legacy path (from missions/year) still grows networks but does not apply sabotage "teeth".
 func advance_networks_daily() -> void:
 	for province_id in networks.keys():
 		var net: AgentNetwork = networks[province_id]
@@ -511,31 +518,34 @@ func _process_network_action_daily(net: AgentNetwork) -> String:
 
 ## Applies small, scaled daily province-level effects for active networks (new in this session).
 ##
-## Daily "teeth" for agent networks driven by TimeManager.game_day_advanced:
+## Daily "teeth" for agent networks driven by TimeManager.game_day_advanced (primary path):
 ##
 ## 1. supply_disruption focus:
-##    - Short (DAILY_..._DURATION_DAYS) temporary national debuff via NationalModifierManager.
-##    - Direct per-province sabotage on ProvinceDepotState: stockpile hit + accumulation of
-##      `sabotage_level` (0-0.9). This produces *targeted* multi-day throughput reduction in
-##      pull_outflow (up to ~55% penalty) + slow decay in Supply daily tick. Clearable instantly
-##      via counter-intel.
-##    - SupplyManager also applies generation penalty via get_supply_disruption_in_province.
+##    - Refreshes a temporary national debuff (via NMM, tagged with DAILY_..._DURATION_DAYS as "months" units).
+##      Refreshed every day while network lives → constant pressure. When network dies, lingers until
+##      NMM monthly decay or explicit clear_daily_sabotage_effects (counter-intel).
+##    - Direct per-province sabotage on ProvinceDepotState: immediate stockpile hit + accumulation of
+##      `sabotage_level` (0-0.9). Produces *targeted* multi-day throughput reduction in pull_outflow
+##      (up to ~55% penalty) + slow daily decay (0.13) in SupplyManager. Clearable instantly via counter-intel.
+##    - SupplyManager daily gen also applies a generation penalty via get_supply_disruption_in_province().
 ##
 ## 2. infrastructure_sabotage focus:
 ##    - Small daily chipping of infrastructure (affects movement cost + future supply gen).
-##    - Recovers via automatic daily repair in MapManager (low base rate so pressure matters).
+##    - Recovers via automatic daily repair in MapManager (low base 0.08 + pride + stability bonuses).
 ##
-## Effects refresh daily while network active. province_data_changed emitted for reactivity.
+## Effects refresh daily while network active. province_data_changed emitted for reactivity (map tints/rings update).
 ##
 ## Repair / counter-play:
-## - Automatic slow infra repair (MapManager, low base 0.08 + infra pride + stability/infra_repair keys).
-## - clear_daily_sabotage_effects(province_id) removes national debuff + zeros depot sabotage_level.
-## - Counter-intel missions (e.g. "Counter-Intelligence Sweep" success) now *actively call it* for
-##   enemy networks in your territory, weakening them + clearing effects (real response to daily pressure).
-## - ProductionManager is now also driven by TimeManager.game_day_advanced (unified daily loop).
+## - Automatic slow infra repair (MapManager daily).
+## - clear_daily_sabotage_effects(province_id) removes the NMM debuff + zeros depot sabotage_level immediately.
+## - Counter-intel missions actively call it for enemy networks in your territory (real response to daily pressure).
+## - ProductionManager + Supply + Map + AgentNetworkLayer all wired to the same TimeManager.game_day_advanced.
+##
+## NOTE: The legacy monthly advance_networks() path (still called from advance_missions/yearly) does growth
+## and focus actions but NO sabotage application (TODOs remain). Daily is the source of truth for "teeth".
+## Dual growth on year boundary is mitigated by last_year_ticked guards + daily being the smooth path.
 ##
 ## Scaling: DAILY_NETWORK_SABOTAGE_BASE/MAX + effectiveness. See consts at top for tuning.
-## Integrates with existing systems (Supply depot/throughput, NMM, Map repair, AgentNetworkLayer).
 func _apply_daily_network_province_effects(net: AgentNetwork) -> String:
 	if net == null or not net.is_active():
 		return ""
@@ -592,7 +602,7 @@ func _apply_daily_network_province_effects(net: AgentNetwork) -> String:
 					var damage := int(0.5 + effectiveness * 0.35)
 					if damage > 0 and p.infrastructure > 0:
 						damaged = true
-					var new_infra := max(0, p.infrastructure - damage)
+					var new_infra: int = max(0, p.infrastructure - damage)
 					MapManager.update_province_infrastructure(pid, new_infra)
 
 				MapManager.notify_province_changed(pid, "infrastructure")
@@ -696,9 +706,10 @@ func get_eligible_missions_for_agent(
 
 	rows.sort_custom(
 		func(a: Dictionary, b: Dictionary) -> bool:
-			var cat_cmp := str(a.get("category", "")).compare_to(str(b.get("category", "")))
-			if cat_cmp != 0:
-				return cat_cmp < 0
+			var cat_a := str(a.get("category", ""))
+			var cat_b := str(b.get("category", ""))
+			if cat_a != cat_b:
+				return cat_a < cat_b
 			return float(b.get("success_chance", 0.0)) < float(a.get("success_chance", 0.0))
 	)
 	return rows
@@ -1117,7 +1128,10 @@ func _apply_production_delay(agent: Agent, mission: Dictionary, outcome: String,
 	var sabotage_skill := agent.get_skill("sabotage")
 
 	# Calculate effective magnitude and duration based on skill + success level
-	var (final_magnitude, duration_months, is_critical) := _calculate_sabotage_effect(base_magnitude, sabotage_skill, outcome, agent)
+	var sabotage_result: Array = _calculate_sabotage_effect(base_magnitude, sabotage_skill, outcome, agent)
+	var final_magnitude: float = sabotage_result[0]
+	var duration_months: int = sabotage_result[1]
+	var is_critical: bool = sabotage_result[2]
 
 	print("  [EFFECT] %s suffers sabotage-induced production disruption (magnitude: %.2f, duration: %d mo, critical: %s)" % [
 		target_country, final_magnitude, duration_months, is_critical
@@ -1169,7 +1183,10 @@ func _apply_supply_disruption(agent: Agent, mission: Dictionary, outcome: String
 	var target_country := agent.country_tag
 	var sabotage_skill := agent.get_skill("sabotage")
 
-	var (final_magnitude, duration_months, is_critical) := _calculate_sabotage_effect(base_magnitude, sabotage_skill, outcome, agent)
+	var sabotage_result: Array = _calculate_sabotage_effect(base_magnitude, sabotage_skill, outcome, agent)
+	var final_magnitude: float = sabotage_result[0]
+	var duration_months: int = sabotage_result[1]
+	var is_critical: bool = sabotage_result[2]
 
 	print("  [EFFECT] %s supply lines disrupted by sabotage (magnitude: %.2f, duration: %d mo, critical: %s)" % [
 		target_country, final_magnitude, duration_months, is_critical
@@ -1290,10 +1307,11 @@ func _apply_stability_damage(target_country: String, magnitude: float) -> void:
 	if typeof(NationalModifierManager) != TYPE_NIL:
 		NationalModifierManager.apply_influence_effect(
 			target_country,
-			stability_change = -magnitude,
-			duration_months = 12,
-			source = "agent_mission",
-			source_detail = "Influence operation",
+			-magnitude,             # stability_change
+			0.0,                    # prestige_change
+			12,                     # duration_months
+			"agent_mission",        # source
+			"Influence operation"   # source_detail
 		)
 	else:
 		print("  [EFFECT] %s internal stability damaged by %.1f (Influence) — NationalModifierManager not available" % [target_country, magnitude])

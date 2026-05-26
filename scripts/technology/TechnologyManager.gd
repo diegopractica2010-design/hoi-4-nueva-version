@@ -56,6 +56,7 @@ var _gated_unit_designs: Dictionary = {}
 var _gated_production_categories: Dictionary = {}
 
 var _current_year: int = 1936
+var _last_year_ticked: int = -1  # Dedup guard: TM + Leader year signals both connected during transition
 var _unlock_registry := TechnologyUnlockRegistry.new()
 
 
@@ -85,6 +86,9 @@ func _ready() -> void:
 
 
 func _on_game_year_advanced(year: int) -> void:
+	if year == _last_year_ticked:
+		return
+	_last_year_ticked = year
 	set_current_year(year)
 	advance_research(DAYS_PER_YEAR)
 
@@ -1421,6 +1425,30 @@ func _merge_starting_entry(defaults: Dictionary, override: Dictionary) -> Dictio
 		else:
 			out[key] = value
 	return out
+
+
+## === Save/Load support (SaveLoadManager extensibility contract) ===
+## Returns the full mutable per-country research state. Trees and unlock registry
+## are data-driven and rebuilt on _ready / apply.
+func get_save_data() -> Dictionary:
+	return {
+		"country_state": country_state.duplicate(true),
+		# _current_year is usually driven by TimeManager; include for robustness
+		"current_year": _current_year,
+	}
+
+## Replaces research state and rebuilds derived indices. Call after scenario is loaded.
+func apply_save_data(data: Dictionary) -> void:
+	if data.has("country_state"):
+		country_state = (data["country_state"] as Dictionary).duplicate(true)
+	if data.has("current_year"):
+		_current_year = int(data["current_year"])
+
+	_rebuild_unlock_indices()
+
+	# Notify listeners so TechnologyScreen, map context, etc. refresh
+	for tag in country_state.keys():
+		research_state_changed.emit(str(tag))
 
 
 func _apply_country_starting_entry(country_tag: String, entry: Dictionary) -> void:

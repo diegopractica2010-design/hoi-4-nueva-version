@@ -353,19 +353,20 @@ func get_combat_width_for_battle(
 	var dev_bonus := (float(attacker_dev) + float(defender_dev)) * 0.015
 	width *= (1.0 + dev_bonus)
 
-	if loader != null:
-		var prov_mod := 1.0
-		var mod_count := 0
-		if loader.provinces.has(attacker_province_id):
-			prov_mod *= (loader.provinces[attacker_province_id] as Province).get_combat_width_modifier()
-			mod_count += 1
-		if loader.provinces.has(defender_province_id):
-			prov_mod *= (loader.provinces[defender_province_id] as Province).get_combat_width_modifier()
-			mod_count += 1
-		if mod_count == 2:
-			width *= sqrt(prov_mod)
-		elif mod_count == 1:
-			width *= prov_mod
+	# Apply per-province combat width modifiers (infrastructure/development effects)
+	# Uses already-fetched attacker/defender Provinces (prefer MapManager path)
+	var prov_mod := 1.0
+	var mod_count := 0
+	if attacker != null:
+		prov_mod *= attacker.get_combat_width_modifier()
+		mod_count += 1
+	if defender != null:
+		prov_mod *= defender.get_combat_width_modifier()
+		mod_count += 1
+	if mod_count == 2:
+		width *= sqrt(prov_mod)
+	elif mod_count == 1:
+		width *= prov_mod
 
 	return width
 
@@ -380,8 +381,8 @@ func get_province_battle_preview(attacker: Province, defender: Province) -> Dict
 func _find_scenario_loader() -> ScenarioLoader:
 	# Preferred path: go through MapManager (centralized, no tree walks)
 	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
-		# MapManager doesn't expose the full loader, but we can still return null here
-		# and let callers use the new MapManager paths. Keep legacy for width calc.
+		# MapManager doesn't expose the full legacy ScenarioLoader object.
+		# Callers should prefer the MapManager / ProvinceEffects paths.
 		pass
 
 	var tree := Engine.get_main_loop()

@@ -99,7 +99,7 @@ static func build_inspector_full_bbcode(
 	if not compare_hdr.is_empty():
 		lines.append(compare_hdr)
 		lines.append("")
-	var pressure_inspector := build_agent_pressure_headline_bbcode(province)
+	var pressure_inspector := build_province_pressure_section_bbcode(province, true)
 	if not pressure_inspector.is_empty():
 		lines.append(pressure_inspector)
 	var dual_glance := build_dual_situation_glance_bbcode(province)
@@ -333,9 +333,17 @@ static func build_tooltip_mode_chip_for_state(
 	elif has_agent_network:
 		situation_icon = "◎" + pressure_suffix
 	if supply_overlay and not situation_icon.is_empty():
-		tokens.append("%s📦 Supply · %s[/color]" % [COLOR_EFFECTIVE, situation_icon])
+		var press_hint := ""
+		if not pressure_suffix.is_empty():
+			press_hint = " · %s" % ("supply" if pressure_suffix == "⛟" else "infra")
+		tokens.append("%s📦 L · %s%s[/color]" % [COLOR_EFFECTIVE, situation_icon, press_hint])
 	elif supply_overlay:
 		tokens.append("%s📦 Supply (L)[/color]" % COLOR_EFFECTIVE)
+	elif not pressure_suffix.is_empty() and province != null:
+		tokens.append(
+			"%s%s %s pressure[/color]"
+			% [COLOR_WARN, pressure_suffix, "Supply" if pressure_suffix == "⛟" else "Infra"]
+		)
 	elif situation_icon == "⚑◎":
 		tokens.append("%s⚑◎ Contested + agent[/color]" % COLOR_WARN)
 	elif situation_icon == "⚑":
@@ -349,9 +357,23 @@ static func build_tooltip_mode_chip_for_state(
 	if not supply_role.is_empty() and tokens.size() < max_tokens:
 		tokens.append("%s%s[/color]" % [COLOR_MUTED, _supply_role_label(supply_role)])
 	if supply_overlay and tokens.size() < max_tokens:
-		var date_compact := GameDateDisplay.format_map_date_compact()
-		if not date_compact.is_empty():
-			tokens.append("%s📅 %s[/color]" % [COLOR_MUTED, date_compact])
+		var skip_date := (
+			province != null
+			and (
+				agent_applies_daily_pressure(province)
+				or agent_has_today_pressure_tick(province)
+			)
+		)
+		if not skip_date:
+			var date_compact := GameDateDisplay.format_map_date_compact()
+			if not date_compact.is_empty():
+				tokens.append("%s📅 %s[/color]" % [COLOR_MUTED, date_compact])
+	elif (
+		province != null
+		and agent_has_today_pressure_tick(province)
+		and tokens.size() < max_tokens
+	):
+		tokens.append("%s◎ TODAY[/color]" % COLOR_WARN)
 	if tokens.is_empty():
 		return ""
 	if tokens.size() <= max_tokens:
@@ -455,7 +477,7 @@ static func build_layers_symbol_key_bbcode(
 	var n_dual := dual_situation_count if dual_situation_count >= 0 else count_dual_situation_provinces()
 	if n_contested <= 0 and n_agent <= 0 and not supply_overlay_active:
 		return ""
-	var key := "[color=#8899aa]▨ contested · ◎ agent · ⛟/⚙ = daily pressure (tint + glyph)"
+	var key := "[color=#8899aa]▨ contested · ◎ agent · ⛟/⚙ pressure (tint · bars · tooltip)"
 	if supply_overlay_active:
 		key += " · ● L fill"
 	if n_dual > 0:
@@ -536,7 +558,14 @@ static func build_supply_multi_overlay_block_bbcode(
 	)
 	if counts.is_empty():
 		return "%s📦 Supply overlay (L)[/color]" % COLOR_EFFECTIVE
-	return "%s📦 L[/color] · %s" % [COLOR_EFFECTIVE, counts]
+	var header := "%s📦 L[/color] · %s" % [COLOR_EFFECTIVE, counts]
+	if (
+		not player_tag.is_empty()
+		and MapTechnologyContext.has_support_radio_bonuses(player_tag)
+		and (contested_count > 0 or agent_network_count > 0)
+	):
+		header += "\n%s📡 Support/Radio — planning/recon on your routes (hover owned provinces).[/color]" % COLOR_TECH
+	return header
 
 
 static func build_map_supply_mode_hint_plain(
@@ -594,12 +623,16 @@ static func build_province_situation_tags(province: Province) -> String:
 		var dual_badge := ""
 		if agent_applies_daily_pressure(province):
 			dual_badge = "⛟" if agent_pressure_focus_kind(province) == "disrupt" else "⚙"
+			if agent_has_today_pressure_tick(province):
+				dual_badge += "·"
 		tags.append("%s⚑◎%s[/color]" % [COLOR_WARN, dual_badge])
 	elif is_province_contested(province):
 		tags.append("%s⚑[/color]" % COLOR_WARN)
 	elif has_active_agent_network(province):
 		if agent_applies_daily_pressure(province):
 			var badge := "⛟" if agent_pressure_focus_kind(province) == "disrupt" else "⚙"
+			if agent_has_today_pressure_tick(province):
+				badge += "·"
 			tags.append("%s◎%s[/color]" % [COLOR_WARN, badge])
 		else:
 			tags.append("%s◎[/color]" % COLOR_NATIONAL)
@@ -766,12 +799,6 @@ static func build_supply_legend_bbcode(
 		lines.append(
 			"%s⚑◎ %d: blended outline · hover tooltip accent · %s▨ stripes + %s◎ rings[/color]"
 			% [COLOR_WARN, n_dual, COLOR_WARN, COLOR_NATIONAL]
-		)
-	var pressure_frag := build_agent_pressure_legend_fragment(player_tag)
-	if multi_overlay and not pressure_frag.is_empty():
-		lines.append(
-			"%sHover pressure province:[/color] %s  [color=#8899aa]tooltip shows repair + depot[/color]"
-			% [COLOR_MUTED, pressure_frag]
 		)
 	if not date_footer.is_empty():
 		lines.append(date_footer)
@@ -1212,6 +1239,50 @@ static func build_agent_pressure_headline_bbcode(province: Province) -> String:
 			return ""
 
 
+## Organized block for tooltips / inspector (headline + today + recovery).
+static func build_province_pressure_section_bbcode(
+	province: Province,
+	include_headline: bool = true,
+) -> String:
+	if province == null or not (
+		agent_applies_daily_pressure(province)
+		or agent_has_daily_activity(province)
+	):
+		return ""
+	var lines: PackedStringArray = []
+	if include_headline:
+		var head := build_agent_pressure_headline_bbcode(province)
+		if not head.is_empty():
+			lines.append(head)
+	var activity := build_agent_daily_activity_bbcode(province, not include_headline)
+	if not activity.is_empty():
+		lines.append(activity)
+	var recovery := build_province_pressure_recovery_bbcode(province)
+	if not recovery.is_empty():
+		lines.append(recovery)
+	if lines.is_empty():
+		return ""
+	return "\n".join(lines)
+
+
+static func build_province_radio_overlay_line_bbcode(province: Province, country_tag: String) -> String:
+	if province == null or country_tag.is_empty():
+		return ""
+	if not MapTechnologyContext.has_support_radio_bonuses(country_tag):
+		return ""
+	if not _province_matches_country(province, country_tag):
+		return ""
+	var compact := MapTechnologyContext.build_support_radio_compact_chip(country_tag)
+	if compact.is_empty():
+		return ""
+	var routes := MapTechnologyContext.build_support_route_summary_plain(country_tag)
+	if routes.is_empty():
+		return "%s📡 This province benefits from Support/Radio (%s).[/color]" % [
+			COLOR_TECH, compact,
+		]
+	return "%s📡 Support/Radio here: %s · %s[/color]" % [COLOR_TECH, compact, routes]
+
+
 static func agent_pressure_focus_kind(province: Province) -> String:
 	var net := get_active_agent_network(province)
 	if net == null:
@@ -1416,9 +1487,6 @@ static func build_inspector_agent_section(province: Province) -> String:
 		return ""
 	var lines: PackedStringArray = []
 	lines.append("%s── Agent network ──[/color]" % COLOR_HEADER)
-	var pressure_head := build_agent_pressure_headline_bbcode(province)
-	if not pressure_head.is_empty():
-		lines.append(pressure_head)
 	lines.append(build_agent_glance_bbcode(province))
 	var p_tag := country_tag_for_province(province)
 	if _province_matches_country(province, p_tag):
@@ -1431,12 +1499,12 @@ static func build_inspector_agent_section(province: Province) -> String:
 			"%sEnemy pressure %.0f%% shrinks the ring (contested control / neighbors).[/color]"
 			% [COLOR_MUTED, pressure * 100.0]
 		)
-	var activity := build_agent_daily_activity_bbcode(province, pressure_head.is_empty())
-	if not activity.is_empty():
-		lines.append(activity)
-	var recovery := build_province_pressure_recovery_bbcode(province)
-	if not recovery.is_empty():
-		lines.append(recovery)
+	var pressure_sec := build_province_pressure_section_bbcode(province, true)
+	if not pressure_sec.is_empty():
+		lines.append(pressure_sec)
+	var radio_line := build_province_radio_overlay_line_bbcode(province, p_tag)
+	if not radio_line.is_empty():
+		lines.append(radio_line)
 	lines.append(
 		"%sMap: ring size = effectiveness; ⛟/⚙ glyphs = daily pressure; rings pulse each day.[/color]"
 		% COLOR_MUTED
@@ -1590,22 +1658,18 @@ static func build_inspector_situation_section(province: Province) -> String:
 	var lines: PackedStringArray = []
 	if contested and agent:
 		lines.append("%s── Situation: contested + agent ──[/color]" % COLOR_HEADER)
-		var pressure_head := build_agent_pressure_headline_bbcode(province)
-		if not pressure_head.is_empty():
-			lines.append(pressure_head)
+		var p_tag := country_tag_for_province(province)
+		var pressure_sec := build_province_pressure_section_bbcode(province, true)
+		if not pressure_sec.is_empty():
+			lines.append(pressure_sec)
 		lines.append(build_conflict_status_bbcode(province))
 		lines.append(build_agent_glance_bbcode(province))
-		var skip_ongoing := not build_agent_pressure_headline_bbcode(province).is_empty()
-		var agent_activity := build_agent_daily_activity_bbcode(province, not skip_ongoing)
-		if not agent_activity.is_empty():
-			lines.append(agent_activity)
-		var recovery := build_province_pressure_recovery_bbcode(province)
-		if not recovery.is_empty():
-			lines.append(recovery)
+		var radio_line := build_province_radio_overlay_line_bbcode(province, p_tag)
+		if not radio_line.is_empty():
+			lines.append(radio_line)
 		var nat_badge := build_national_sources_badge(province)
 		if not nat_badge.is_empty():
 			lines.append("%sNational (same view): %s[/color]" % [COLOR_MUTED, nat_badge])
-		var p_tag := country_tag_for_province(province)
 		if _province_matches_country(province, p_tag):
 			var support := MapTechnologyContext.build_support_radio_inspector_block(p_tag)
 			if not support.is_empty():
@@ -1686,9 +1750,9 @@ static func format_report_tooltip(report: Dictionary) -> String:
 	if not tags.is_empty():
 		title += " " + tags
 	lines.append(title)
-	var pressure_head := build_agent_pressure_headline_bbcode(p)
-	if not pressure_head.is_empty():
-		lines.append(pressure_head)
+	var pressure_sec := build_province_pressure_section_bbcode(p, true)
+	if not pressure_sec.is_empty():
+		lines.append(pressure_sec)
 	var banner := build_tooltip_context_banner(report)
 	if not banner.is_empty():
 		lines.append(banner)
@@ -1696,13 +1760,8 @@ static func format_report_tooltip(report: Dictionary) -> String:
 	var dual := build_dual_situation_glance_bbcode(p)
 	if not dual.is_empty():
 		lines.append(dual)
-	var agent_daily := build_agent_daily_activity_bbcode(p, pressure_head.is_empty())
-	if not agent_daily.is_empty():
-		lines.append(agent_daily)
-	var recovery := build_province_pressure_recovery_bbcode(p)
-	if not recovery.is_empty():
-		lines.append(recovery)
 	var tag := str(report.get("country_tag", ""))
+	var radio_overlay := build_province_radio_overlay_line_bbcode(p, tag)
 	var nat_line := build_national_situation_one_liner(p, pe)
 	if not nat_line.is_empty():
 		lines.append(nat_line)
@@ -1710,8 +1769,10 @@ static func format_report_tooltip(report: Dictionary) -> String:
 	var omit_support_in_glance := (
 		MapTechnologyContext.has_support_radio_bonuses(tag)
 		and province_benefits_country(p, tag)
-		and (not nat_line.is_empty() or dual_has_support)
+		and (not nat_line.is_empty() or dual_has_support or not radio_overlay.is_empty())
 	)
+	if not radio_overlay.is_empty() and omit_support_in_glance:
+		lines.append(radio_overlay)
 	var glance := build_province_glance_bbcode(p, pe, 4, not dual.is_empty(), omit_support_in_glance)
 	if not glance.is_empty():
 		lines.append(glance)

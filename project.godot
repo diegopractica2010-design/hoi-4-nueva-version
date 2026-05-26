@@ -29,6 +29,7 @@ NationalModifierManager="*res://scripts/national/NationalModifierManager.gd"
 NationalSpiritManager="*res://scripts/national/NationalSpiritManager.gd"
 MapManager="*res://scripts/map/MapManager.gd"
 TechnologyManager="*res://scripts/technology/TechnologyManager.gd"
+SaveLoadManager="*res://scripts/autoload/SaveLoadManager.gd"
 
 [display]
 

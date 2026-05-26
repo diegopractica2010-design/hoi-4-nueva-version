@@ -12,10 +12,13 @@ signal national_modifier_expired(country_tag: String, effect_id: String)
 var country_modifiers: Dictionary = {}  # country_tag -> Array[Dictionary]
 
 var _current_year: int = 1936
+var _last_year_ticked: int = -1  # Dedup guard for year signal (TM + Leader both may fire during migration)
 
 
 func _ready() -> void:
-	# Prefer central TimeManager for monthly (and yearly) ticks
+	# Prefer central TimeManager for monthly (and yearly) ticks.
+	# Decay of temp modifiers is driven by game_month_advanced (1 per month).
+	# game_year_advanced is connected for year sync / legacy fan-out only (no batch tick).
 	if typeof(TimeManager) != TYPE_NIL:
 		if not TimeManager.game_month_advanced.is_connected(_on_game_month_advanced):
 			TimeManager.game_month_advanced.connect(_on_game_month_advanced)
@@ -27,8 +30,12 @@ func _ready() -> void:
 
 
 func _on_game_year_advanced(year: int) -> void:
+	if year == _last_year_ticked:
+		return
+	_last_year_ticked = year
 	set_current_year(year)
-	tick_modifiers(12)  # Advance one year worth of modifiers (for backward compat / full refresh)
+	# Yearly boundary sync only (no decay work here — monthly signal drives tick_modifiers(1) x12).
+	# Guard prevents double execution if both TimeManager and LeaderManager year signals fire.
 
 func _on_game_month_advanced(year: int, month: int) -> void:
 	set_current_year(year)

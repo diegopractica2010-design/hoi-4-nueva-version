@@ -18,7 +18,13 @@ var province_projects_by_id: Dictionary = {}
 ## Built when a scenario is loaded; used by MapRenderer.initialize and pathfinding helpers.
 var adjacency_system: AdjacencySystem
 
+## Current/last loaded scenario name (for SaveLoadManager metadata and validation).
+var current_scenario_name: String = ""
+
 signal scenario_loaded()
+
+func get_current_scenario_name() -> String:
+	return current_scenario_name
 
 func _ready():
 	load_province_geometry()
@@ -218,6 +224,8 @@ func load_scenario(scenario_name: String) -> bool:
 	if not file:
 		push_warning("Could not open scenario file: " + file_path)
 		return false
+
+	current_scenario_name = scenario_name
 	var json = JSON.new()
 	var parse_result = json.parse(file.get_as_text())
 	file.close()

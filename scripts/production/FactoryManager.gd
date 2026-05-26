@@ -275,3 +275,59 @@ func _invalidate_production_cache_for_owner(owner_tag: String) -> void:
 	var production_mgr := get_node_or_null("/root/ProductionManager")
 	if production_mgr != null and production_mgr.has_method("invalidate_production_cache"):
 		production_mgr.invalidate_production_cache(owner_tag)
+
+
+## === Save/Load support (SaveLoadManager contract) ===
+## Serializes factory instances (many @export fields: damage, owner, retooling, assigned lines)
+## and the province mapping. Uses similar pattern to Agent/Leader resources.
+func get_save_data() -> Dictionary:
+	var facs := {}
+	for fid in factories:
+		var f: Factory = factories[fid]
+		if f == null:
+			continue
+		facs[str(fid)] = inst_to_dict(f)  # captures all @export + some runtime
+
+	return {
+		"factories": facs,
+		"province_to_factories": province_to_factories.duplicate(true),
+	}
+
+func apply_save_data(data: Dictionary) -> void:
+	factories.clear()
+	province_to_factories.clear()
+
+	if data.has("factories"):
+		var facs: Dictionary = data["factories"]
+		for fid_str in facs:
+			var fd: Dictionary = facs[fid_str]
+			var f := Factory.new()
+			# Restore key fields (inst_to_dict roundtrips most @export)
+			f.factory_id = int(fd.get("factory_id", 0))
+			f.province_id = int(fd.get("province_id", 0))
+			f.owner_tag = str(fd.get("owner_tag", ""))
+			f.is_seized = bool(fd.get("is_seized", false))
+			f.current_damage = float(fd.get("current_damage", 0.0))
+			f.repair_progress = float(fd.get("repair_progress", 0.0))
+			f.is_annexed = bool(fd.get("is_annexed", false))
+			f.assigned_lines = (fd.get("assigned_lines", []) as Array).duplicate()
+			f.max_production_lines = int(fd.get("max_production_lines", 1))
+			f.factory_type = str(fd.get("factory_type", "standard"))
+			f.current_production_design = str(fd.get("current_production_design", ""))
+			f.is_retooling = bool(fd.get("is_retooling", false))
+			f.retooling_progress = float(fd.get("retooling_progress", 0.0))
+			f.retooling_required = float(fd.get("retooling_required", 0.0))
+			f.previous_design = str(fd.get("previous_design", ""))
+			# runtime efficiencies if present
+			if fd.has("current_efficiency"):
+				f.current_efficiency = float(fd["current_efficiency"])
+			if fd.has("base_retained_efficiency"):
+				f.base_retained_efficiency = float(fd["base_retained_efficiency"])
+
+			if f.factory_id != 0:
+				factories[f.factory_id] = f
+
+	if data.has("province_to_factories"):
+		province_to_factories = (data["province_to_factories"] as Dictionary).duplicate(true)
+
+	print("FactoryManager: Restored %d factories" % factories.size())
