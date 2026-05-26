@@ -9,6 +9,9 @@ func get_effective_combat_power(
 	unit_id: String = "",
 	army_id: String = "",
 	terrain: String = "plains",
+	province_id: int = -1,
+	province_dev: int = -1,
+	province_infra: int = -1,
 ) -> Dictionary:
 	var base_stats := ProductionManager.get_division_final_combat_stats(division_template_id, unit_id)
 
@@ -46,18 +49,59 @@ func get_effective_combat_power(
 		final_soft += terrain_bonus * 8.0
 		final_hard += terrain_bonus * 5.0
 
-	# Province infrastructure & development effects (Deeper Combat integration)
-	# In full battle context we pass actual provinces. For now we use a reasonable default bonus
-	# based on the fact that most fighting happens in developed areas.
-	var province_dev_bonus := 0.0
-	if terrain != "plains" and terrain != "desert":
-		province_dev_bonus = 0.08   # Rough proxy for average development helping org in non-open terrain
+	# Province infrastructure & development effects (Deeper Combat integration - Phase 1 item 2)
+	# Prefer passed dev/infra, then lookup by province_id via ScenarioLoader, else light proxy.
+	var prov_dev := province_dev
+	var prov_infra := province_infra
+	var province_for_effects: Province = null
+	if prov_dev < 0 or prov_infra < 0:
+		var loader := _find_scenario_loader()
+		if loader != null and province_id >= 0 and loader.provinces.has(province_id):
+			var p: Province = loader.provinces[province_id]
+			province_for_effects = p
+			if prov_dev < 0:
+				prov_dev = p.development_level
+			if prov_infra < 0:
+				prov_infra = p.infrastructure
+			if terrain.is_empty() or terrain == "plains":
+				terrain = p.terrain if p.terrain != "" else terrain
 
-	final_org += province_dev_bonus * 4.0
-	final_readiness += province_dev_bonus * 2.0
+	if prov_dev < 0:
+		prov_dev = 0
+	if prov_infra < 0:
+		prov_infra = 0
 
-	# Note: When this is called from actual battle resolution with province IDs,
-	# we should pull the real development_level and apply get_organization_recovery_modifier() etc.
+	# Use Province getter or ProvinceEffects for accurate org/recovery/readiness in this province
+	var org_mod := 1.0
+	var attrition_mod := 1.0
+	if province_for_effects != null and typeof(ProvinceEffects) != TYPE_NIL:
+		# Country tag optional for national layer; empty falls back to pure province dev/infra
+		var owner_tag := ""
+		if typeof(LeaderManager) != TYPE_NIL and not army_id.is_empty():
+			var lid := LeaderManager.get_leader_id_for_army(army_id)
+			if lid != "" and LeaderManager.leaders.has(lid):
+				owner_tag = LeaderManager.leaders[lid].country_tag
+		var pe := ProvinceEffects.for_country_province(province_for_effects, owner_tag)
+		org_mod = pe.get_effective_organization_recovery()
+		attrition_mod = pe.get_effective_attrition_multiplier()
+	elif province_for_effects != null:
+		org_mod = province_for_effects.get_organization_recovery_modifier()
+		attrition_mod = province_for_effects.get_attrition_modifier()
+	else:
+		# Fallback: scale from raw dev/infra (matches Province.gd formulas lightly)
+		org_mod = 0.6 + (float(prov_infra) * 0.025) + (float(prov_dev) * 0.015)
+		attrition_mod = maxf(0.6, 1.0 - (float(prov_dev) * 0.015))
+
+	# Apply: higher org_mod = better recovery/readiness; lower attrition_mod = less org/readiness loss
+	final_org += (org_mod - 1.0) * 6.0
+	final_readiness += (org_mod - 1.0) * 3.0
+	# Attrition in province reduces effective readiness/org (defensive penalty in bad terrain)
+	if attrition_mod < 1.0:
+		final_readiness *= attrition_mod
+		final_org *= lerp(1.0, attrition_mod, 0.6)
+
+	# Note: For full battle resolution paths (resolve_battle_aftermath etc.), pass province_id/dev
+	# so casualty rolls and post-battle org can also respect province stats via similar getters.
 
 	var national_combat := {}
 
@@ -192,15 +236,18 @@ func resolve_combat_experience(
 	intensity: float = 1.0,
 	battle_result: Dictionary = {},
 ) -> Dictionary:
-	return resolve_battle_aftermath(attacker_army_id, defender_army_id, battle_result, intensity)
+	return resolve_battle_aftermath(attacker_army_id, defender_army_id, battle_result, intensity, -1, -1)
 
 
 ## Awards combat XP, rolls leader casualties, returns summary for UI/debug.
+## Phase 1: province_* ids allow accurate org/casualty scaling via dev/infra (no more pure proxy).
 func resolve_battle_aftermath(
 	attacker_army_id: String = "",
 	defender_army_id: String = "",
 	battle_result: Dictionary = {},
 	intensity: float = 1.0,
+	attacker_province_id: int = -1,
+	defender_province_id: int = -1,
 ) -> Dictionary:
 	var results := {
 		"attacker_casualty": {},
@@ -239,15 +286,19 @@ func resolve_battle_aftermath(
 		if not defender_army_id.is_empty():
 			LeaderManager.award_combat_experience_for_army(defender_army_id, intensity * 0.65)
 
+	# Province dev/infra affects casualty rates (high dev = lower losses, better recovery)
+	var attacker_casualty_mult := _get_province_casualty_multiplier(attacker_province_id)
+	var defender_casualty_mult := _get_province_casualty_multiplier(defender_province_id)
+
 	if not attacker_army_id.is_empty():
 		results["attacker_casualty"] = LeaderManager.roll_combat_battle_casualty(
 			attacker_army_id,
-			intensity,
+			intensity * attacker_casualty_mult,
 		)
 	if not defender_army_id.is_empty():
 		results["defender_casualty"] = LeaderManager.roll_combat_battle_casualty(
 			defender_army_id,
-			intensity * 0.65,
+			intensity * 0.65 * defender_casualty_mult,
 		)
 	return results
 
@@ -326,6 +377,28 @@ func _find_scenario_loader() -> ScenarioLoader:
 		return null
 	var loader_node: Node = tree.root.find_child("ScenarioLoader", true, false)
 	return loader_node as ScenarioLoader
+
+
+## Returns casualty multiplier from province dev (high dev/infra = lower casualties due to better med/logistics).
+## >1.0 means higher losses (bad province), <1.0 means reduced losses (good province).
+func _get_province_casualty_multiplier(province_id: int) -> float:
+	if province_id < 0:
+		return 1.0
+	var loader := _find_scenario_loader()
+	if loader == null or not loader.provinces.has(province_id):
+		return 1.0
+	var p: Province = loader.provinces[province_id]
+	# Reuse attrition_modifier logic (higher dev = lower mult) + slight infra help
+	var dev := float(clampi(p.development_level, 0, 50))
+	var infra := float(clampi(p.infrastructure, 0, 50))
+	var base := maxf(0.65, 1.0 - (dev * 0.018) + (infra * 0.005))
+	# Also respect ProvinceEffects national layer if present (e.g. medic spirits, agent sabotage on infra)
+	if typeof(ProvinceEffects) != TYPE_NIL:
+		var pe := ProvinceEffects.for_country_province(p, p.controller_tag if p.controller_tag != "" else p.owner_tag)
+		var eff_attr := pe.get_effective_attrition_multiplier()
+		# Lower attrition_mult province => lower casualties
+		base = lerp(base, eff_attr, 0.5)
+	return clampf(base, 0.55, 1.35)
 
 
 # ============================================

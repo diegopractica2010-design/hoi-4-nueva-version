@@ -580,6 +580,9 @@ static func _test_combat_resolver(design_data: DesignDataLoader) -> bool:
 				"",
 				"panzer_army_africa_test",
 				"desert",
+				-1,  # province_id (optional for dev lookup)
+				5,   # province_dev example (Phase 1: real dev now used for org/readiness)
+				3,   # province_infra
 			)
 			rommel.assigned_army_id = ""
 			if str(led_power.get("leader_name", "")) != "Erwin Rommel":

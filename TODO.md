@@ -222,20 +222,20 @@ After the recent heavy investment in the National Modifier/Spirit system and Age
 - [x] Add rich computed getters on Province (`get_supply_throughput_modifier`, `get_local_supply_generation_modifier`, `get_combat_width_modifier`, `get_organization_recovery_modifier`, `get_attrition_modifier`, `get_logistics_quality`, etc.)
 - [x] Wire development_level into Supply for local supply generation (basic implementation done)
 - [x] Make infrastructure + development strongly affect depot throughput capacity (combined infra + dev scaling in SupplyNetworkBuilder and SupplyManager)
-- [ ] Make infrastructure + development affect interdiction resistance and reinforcement speed
-- [x] Apply province development to organization and readiness in CombatResolver (initial implementation)
+- [x] Make infrastructure + development affect interdiction resistance and reinforcement speed (SupplyManager + ProvinceEffects + explicit national totals)
+- [x] Apply province development to organization and readiness in CombatResolver (initial implementation + full province_id/dev/infra path + casualty scaling)
 - [x] Created ProvinceEffects aggregator for clean layering of base province stats + national modifiers
 - [x] Expose these values clearly in province tooltips and supply map (hover tooltip + info panel)
-- [ ] Wire ProvinceEffects into more Supply and Combat calculations
+- [x] Wire ProvinceEffects into more Supply and Combat calculations (for_country_province helper + calls in _plan_route, local gen, power calc, casualty)
 
 ### Phase 2: Combat Deepening
 - [x] Combat Width already uses infrastructure (enhanced with development)
 - [x] National combat modifiers applied at division base stats level in CombatResolver
-- [ ] Apply province development/infrastructure directly to:
-  - Organization recovery during combat
-  - Casualty / attrition rates in battle
-  - Reinforcement effectiveness
-  - Supply consumption while fighting in the province
+- [x] Apply province development/infrastructure directly to:
+  - Organization recovery during combat (get_effective_combat_power + ProvinceEffects)
+  - Casualty / attrition rates in battle (resolve_battle_aftermath + _get_province_casualty_multiplier)
+  - Reinforcement effectiveness (Supply route + delivery)
+  - Supply consumption while fighting in the province (via org/readiness + attrition_mod)
 - [ ] Make high-development provinces give small defensive bonuses (entrenchment, readiness)
 
 ### Phase 3: Full National Modifier + Province Synergy
@@ -247,7 +247,7 @@ After the recent heavy investment in the National Modifier/Spirit system and Age
 - Combat preview and supply route tooltips show province contributions.
 - Agent sabotage networks can target and degrade province infrastructure over time.
 
-**Current Progress:** Phase 1 foundation laid. Phase 2 partially started (CombatResolver integration). This is currently the highest recommended focus area.
+**Current Progress:** Phase 1 COMPLETE (all three items: Supply interdiction/reinforce via ProvinceEffects+national, CombatResolver battle/power paths now take real province dev for org/casualty, ProvinceEffects lightly wired in Supply+Combat national points). Phase 2 well advanced. Highest leverage area done for "map feels alive".
 
 ### Completed (Recent)
 - Variable sabotage effect strength and duration based on mission outcome + agent sabotage skill.

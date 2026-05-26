@@ -27,6 +27,9 @@ var overlay_visible: bool = false
 var routing_mode_override: String = ""
 var active_cargo: SupplyCargoProfile = null
 
+# ProvinceEffects wiring note (Phase 1): use ProvinceEffects.for_country_province(prov, tag)
+# for combined dev/infra + national spirits/temp modifiers in Supply calcs.
+
 var _pending_waypoints: Array[int] = []
 var _reroute_source_id: int = -1
 var _reroute_target_id: int = -1
@@ -323,7 +326,12 @@ func advance_supply_day(days: float = 1.0) -> void:
 			ship_tons = src.throughput_capacity * days * 0.25
 		ship_tons += attrition_tons / maxf(float(_routes.size()), 1.0)
 		var pulled := src.pull_outflow(ship_tons)
-		var overflow := dst.apply_inflow(pulled * (1.0 - plan.interdiction_chance))
+		# Apply interdiction + reinforcement speed (Phase 1): high dev/infra + national = more arrives
+		var delivery := 1.0 - plan.interdiction_chance
+		var reinf_bonus := clampf((plan.reinforcement_modifier - 1.0) * 0.6, 0.0, 0.35)
+		delivery = clampf(delivery * (1.0 + reinf_bonus), 0.2, 1.15)
+		var inflow := pulled * delivery
+		var overflow := dst.apply_inflow(inflow)
 		if overflow > 0.0 and src != null:
 			src.apply_inflow(overflow * 0.5)
 		depot_stock_changed.emit(dst.province_id, dst.stockpile)
@@ -395,30 +403,20 @@ func _generate_local_supply_from_development(days: float) -> void:
 		if province == null:
 			continue
 
+		# Use ProvinceEffects when available (dev + national modifiers for local supply)
 		var local_gen := province.get_local_supply_generation_modifier()
+		if typeof(ProvinceEffects) != TYPE_NIL:
+			var pe := ProvinceEffects.for_country_province(province, _ctrl(province))
+			local_gen = pe.get_effective_local_supply_generation()
 		if local_gen <= 0.0:
 			continue
 
-		# Base local supply generation scaled by development
+		# Base local supply generation scaled by development + effects
 		var daily_gen := 40.0 * local_gen * days
 		state.apply_inflow(daily_gen)
 
-	var lines := PackedStringArray()
-	var ranked: Array = []
-	for pid_var in depot_states:
-		var state: ProvinceDepotState = depot_states[pid_var]
-		ranked.append([state.stockpile, state.province_id, state])
-	ranked.sort_custom(func(a, b): return a[0] > b[0])
-	for i in mini(ranked.size(), limit):
-		var row: Array = ranked[i]
-		var s: ProvinceDepotState = row[2]
-		lines.append(
-			"P%d: %.0f/%.0f t (%.0f t/day)" % [
-				s.province_id, s.stockpile, s.storage_capacity, s.throughput_capacity,
-			],
-		)
-	return lines
-
+	# Note: stray menu-ranking code was previously inserted here by accident (removed in Phase 1 verify).
+	# _generate is fire-and-forget; depot menu uses its own ranking in get_depot_menu_lines.
 
 func toggle_overlay() -> void:
 	overlay_visible = not overlay_visible
@@ -470,46 +468,57 @@ func _plan_route(
 	plan.interdiction_chance = float(inter.get("chance", 0.0))
 	plan.interdiction_breakdown = inter.get("breakdown", {})
 
-	# === Phase 1: Province Infrastructure + Development + National Modifiers for Interdiction ===
-	var province_resistance := _calculate_route_interdiction_resistance(plan.province_path, player_tag)
-
-	var national_resistance := 0.0
+	# === Phase 1: Use ProvinceEffects (or direct getters) + national totals for interdiction resistance ===
+	# Province dev/infra + explicit interdiction_resistance from spirits + temp modifiers
+	var route_resist := _calculate_route_interdiction_resistance(plan.province_path, player_tag)
+	var nat_interdiction := 0.0
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		nat_interdiction += NationalSpiritManager.get_total_interdiction_resistance_modifier(player_tag)
 	if typeof(NationalModifierManager) != TYPE_NIL:
 		var temp := NationalModifierManager.get_supply_modifiers(player_tag)
-		national_resistance += float(temp.get("interdiction_resistance", 0.0))
-	if typeof(NationalSpiritManager) != TYPE_NIL:
-		var spirit := NationalSpiritManager.get_spirit_supply_modifiers(player_tag)
-		national_resistance += float(spirit.get("interdiction_resistance", 0.0))
+		nat_interdiction += float(temp.get("interdiction_resistance", 0.0))
 
-	# Combine province quality with national modifiers
-	var total_resistance := province_resistance + national_resistance
-	if total_resistance > 0.0:
-		var reduction := clampf(total_resistance * 0.7, 0.0, 0.55)
+	var total_interdiction_resist := route_resist + nat_interdiction
+	plan.avg_interdiction_resistance = 1.0 + total_interdiction_resist
+	if total_interdiction_resist > 0.0:
+		var reduction := clampf(total_interdiction_resist * 0.65, 0.0, 0.60)
 		plan.interdiction_chance *= (1.0 - reduction)
+
+	# === Reinforcement speed from ProvinceEffects / getters + national ===
+	var route_reinforce := _calculate_route_reinforcement_modifier(plan.province_path, player_tag)
+	var nat_reinforce := 0.0
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		# Pull from combat spirits too (training paths / spirits expose it)
+		var spirit_combat := NationalSpiritManager.get_spirit_combat_modifiers(player_tag)
+		nat_reinforce += float(spirit_combat.get("reinforcement_speed", 0.0))
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var temp_c := NationalModifierManager.get_combat_modifiers(player_tag)
+		nat_reinforce += float(temp_c.get("reinforcement_speed", 0.0))
+		var temp_s := NationalModifierManager.get_supply_modifiers(player_tag)
+		nat_reinforce += float(temp_s.get("reinforcement_speed", 0.0))
+
+	plan.reinforcement_modifier = maxf(0.6, 1.0 + route_reinforce + nat_reinforce)
 
 	var attrition := get_attrition_cargo_summary()
 	plan.cargo_tons_per_day = maxf(plan.cargo_tons_per_day, float(attrition.get("total_tons", 0.0)))
 
-	# === Deeper: National modifiers reduce effective attrition on routes ===
+	# === National + province attrition_reduction (prefer explicit totals) ===
 	var attrition_res := 0.0
-
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		attrition_res += NationalSpiritManager.get_total_attrition_reduction_modifier(player_tag)
 	if typeof(NationalModifierManager) != TYPE_NIL:
 		var temp := NationalModifierManager.get_supply_modifiers(player_tag)
 		attrition_res += float(temp.get("attrition_reduction", 0.0))
 
-	if typeof(NationalSpiritManager) != TYPE_NIL:
-		var spirit := NationalSpiritManager.get_spirit_supply_modifiers(player_tag)
-		attrition_res += float(spirit.get("attrition_reduction", 0.0))
-
 	if attrition_res > 0.0:
-		var reduction := clampf(attrition_res * 0.6, 0.0, 0.4)
+		var reduction := clampf(attrition_res * 0.55, 0.0, 0.45)
 		plan.cargo_tons_per_day *= (1.0 - reduction)
 	else:
-		# Fallback proxy
+		# Fallback proxy via supply consumption (legacy)
 		if typeof(NationalSpiritManager) != TYPE_NIL and player_tag != "":
 			var nat_attr_mod := NationalSpiritManager.get_total_supply_consumption_modifier(player_tag)
 			if nat_attr_mod < 0.0:
-				var reduction := clampf(-nat_attr_mod * 0.4, 0.0, 0.3)
+				var reduction := clampf(-nat_attr_mod * 0.35, 0.0, 0.28)
 				plan.cargo_tons_per_day *= (1.0 - reduction)
 
 	return plan
@@ -527,7 +536,41 @@ func _calculate_route_interdiction_resistance(path: Array, player_tag: String) -
 		var province: Province = provinces[pid]
 		if _ctrl(province) != player_tag:
 			continue
-		total += maxf(0.0, province.get_interdiction_resistance_modifier() - 1.0)
+		# Light ProvinceEffects wiring (item 3): prefer it when available for combined layers
+		var resist := 1.0
+		if typeof(ProvinceEffects) != TYPE_NIL:
+			var pe := ProvinceEffects.for_country_province(province, player_tag)
+			resist = pe.get_effective_interdiction_resistance()
+		else:
+			resist = province.get_interdiction_resistance_modifier()
+		total += maxf(0.0, resist - 1.0)
+		count += 1
+	if count == 0:
+		return 0.0
+	return total / float(count)
+
+
+## Average friendly-path reinforcement speed modifier (dev/infra + national).
+## Used to make high-infra/dev provinces deliver replacements and supplies faster / more effectively.
+func _calculate_route_reinforcement_modifier(path: Array, player_tag: String) -> float:
+	if path.is_empty() or player_tag.is_empty():
+		return 0.0
+	var total := 0.0
+	var count := 0
+	for pid_var in path:
+		var pid := int(pid_var)
+		if not provinces.has(pid):
+			continue
+		var province: Province = provinces[pid]
+		if _ctrl(province) != player_tag:
+			continue
+		var reinf := 1.0
+		if typeof(ProvinceEffects) != TYPE_NIL:
+			var pe := ProvinceEffects.for_country_province(province, player_tag)
+			reinf = pe.get_effective_reinforcement_speed()
+		else:
+			reinf = province.get_reinforcement_speed_modifier()
+		total += maxf(0.0, reinf - 1.0)
 		count += 1
 	if count == 0:
 		return 0.0
