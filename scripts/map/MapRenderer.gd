@@ -1475,7 +1475,13 @@ func _apply_agent_pressure_base_tint(col: Color, province: Province) -> Color:
 	var tint := ProvinceInsight.get_agent_pressure_fill_tint(province)
 	if tint.a <= 0.0:
 		return col
-	return col.lerp(tint, strength)
+	col = col.lerp(tint, strength)
+	if (
+		ProvinceInsight.agent_pressure_focus_kind(province) == "sabotage"
+		and province.infrastructure <= 12
+	):
+		col = col.lerp(ProvinceMapVisuals.FILL_AGENT_SABOTAGE, 0.04)
+	return col
 
 
 func _apply_hover_fill(province_id: int, active: bool) -> void:

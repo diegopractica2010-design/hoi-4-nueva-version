@@ -419,6 +419,11 @@ func _generate_local_supply_from_development(days: float) -> void:
 		if state == null:
 			continue
 
+		# Decay per-province sabotage state from agent networks (targeted supply disruption lingers but fades)
+		# Counter-intel sweeps (via clear_daily_sabotage_effects) or time + repair pressure can clear it faster.
+		if state.sabotage_level > 0.0:
+			state.sabotage_level = maxf(0.0, state.sabotage_level - 0.13)
+
 		# Prefer centralized MapManager for province access
 		var province: Province = null
 		if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):

@@ -1,5 +1,37 @@
 # Epochs of Ascendancy — TODO / Future Systems
 
+**Current snapshot:** [docs/CURRENT_STATE.md](docs/CURRENT_STATE.md) · **Testing:** [docs/TESTING_PLAN.md](docs/TESTING_PLAN.md)
+
+---
+
+## High Priority (Next 1–2 Weeks)
+
+- [ ] Save / Load foundation (`TimeManager` + key province/agent/research state)
+- [ ] Map Build Eligibility (real `MapTechnologyContext` functionality)
+- [ ] Complete Repair System (Engineer presence + Stability bonuses)
+- [ ] Wire more systems to daily/monthly ticks (Production refinement, etc.)
+- [ ] Structured testing plan + basic test harness expansion (see `docs/TESTING_PLAN.md`)
+
+## Medium Priority
+
+- [ ] Expand Technology beyond Support/Radio (at least one more small tree)
+- [ ] Modernize Top Bar + create basic pause/main menu
+- [x] Improve daily agent pressure visuals and feedback (May 2026 — ongoing polish)
+- [ ] Add more daily province-level effects or counters
+
+## Recently Completed (May 25, 2026)
+
+- Daily ticks now drive Supply + Agent Networks + Production + infra repair
+- Agent networks apply real daily supply disruption + infrastructure sabotage
+- Repair + counter-intel path (`clear_daily_sabotage_effects`) implemented
+- Per-province depot `sabotage_level` for targeted supply disruption (decays / clearable)
+- Multi-overlay map visuals improved (contested + agent + supply + pressure tints)
+- Map tooltips/inspector: pressure headlines, TODAY activity, repair/depot recovery lines
+- Support/Radio Technology tree delivers visible gameplay impact on routes
+- `TimeManager` drives yearly/monthly/daily progression; `TopInfoBar` date/speed wired
+
+---
+
 ## Leader & Training Systems
 
 ### Completed
@@ -46,6 +78,7 @@
   - Supply (strong — consumption, interdiction resistance, attrition reduction)
   - Combat (deeper — division base stats + interdiction/attrition side)
 - Explicit first-class support for `attrition_reduction` and `interdiction_resistance` across spirits + temporary effects
+- Daily simulation loop strengthened (TimeManager-driven): repair/counter-intel path via clear_daily_sabotage_effects now called from counter-intel mission outcomes; per-province supply disruption now uses persistent `sabotage_level` on ProvinceDepotState for targeted throughput reduction (decays daily, clearable); ProductionManager wired to game_day_advanced (unified daily consumers: Supply + Agents + Repair + Production); light const tuning + docs.
 
 **Good Place to Resume:**
 - Combat resolver: apply training path bonuses in battle

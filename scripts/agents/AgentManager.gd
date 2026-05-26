@@ -19,10 +19,14 @@ const DEFAULT_TARGET_COUNTRY_TAGS: Array[String] = [
 	"USA", "GER", "ENG", "FRA", "SOV", "JAP", "ITA", "CHI",
 ]
 
-## Daily network sabotage tuning (light pressure, not destruction)
-const DAILY_NETWORK_SABOTAGE_BASE := 0.022
-const DAILY_NETWORK_SABOTAGE_MAX := 0.10
-const DAILY_NETWORK_SABOTAGE_DURATION_DAYS := 3
+## Daily network sabotage tuning (light but strategic pressure).
+## BASE/MAX control the scale of national debuffs + depot sabotage_level accumulation.
+## DURATION controls how long the temporary national modifier lingers (repair + counter-intel must work within this window).
+## Tuned 2026-04 for better "meaningful daily agent pressure" while remaining low enough that
+## constant pressure (or bombing) produces lasting but recoverable hindrance, not instant collapse.
+const DAILY_NETWORK_SABOTAGE_BASE := 0.028
+const DAILY_NETWORK_SABOTAGE_MAX := 0.12
+const DAILY_NETWORK_SABOTAGE_DURATION_DAYS := 4
 
 var agents: Dictionary = {}                    # country_tag -> Array[Agent]
 var networks: Dictionary = {}                    # province_id (int) -> AgentNetwork
@@ -510,37 +514,28 @@ func _process_network_action_daily(net: AgentNetwork) -> String:
 ## Daily "teeth" for agent networks driven by TimeManager.game_day_advanced:
 ##
 ## 1. supply_disruption focus:
-##    - Short (DAILY_NETWORK_SABOTAGE_DURATION_DAYS) temporary national debuff via
-##      NationalModifierManager (supply_consumption + attrition for the controlling country).
-##    - Direct per-province sabotage on the specific ProvinceDepotState:
-##      reduces stockpile + temporarily lowers throughput_capacity.
-##    - Additionally, SupplyManager._generate_local_supply_from_development uses
-##      AgentManager.get_supply_disruption_in_province(pid) to reduce that province's
-##      daily local supply *generation* (truly localized effect).
+##    - Short (DAILY_..._DURATION_DAYS) temporary national debuff via NationalModifierManager.
+##    - Direct per-province sabotage on ProvinceDepotState: stockpile hit + accumulation of
+##      `sabotage_level` (0-0.9). This produces *targeted* multi-day throughput reduction in
+##      pull_outflow (up to ~55% penalty) + slow decay in Supply daily tick. Clearable instantly
+##      via counter-intel.
+##    - SupplyManager also applies generation penalty via get_supply_disruption_in_province.
 ##
 ## 2. infrastructure_sabotage focus:
-##    - Small daily chipping of the province's infrastructure level via
-##      MapManager.update_province_infrastructure (permanent until repaired).
-##    - Directly increases movement cost (Province.get_movement_cost) and reduces
-##      future local supply generation (via ProvinceEffects + dev/infra factors).
+##    - Small daily chipping of infrastructure (affects movement cost + future supply gen).
+##    - Recovers via automatic daily repair in MapManager (low base rate so pressure matters).
 ##
-## Effects are deliberately small + cumulative (gradual partisan pressure, not decisive strikes).
-## They refresh daily while the network remains active.
-## province_data_changed (or "infrastructure"/"effects") is emitted so AgentNetworkLayer,
-## ProvinceInsight, Supply overlays, and movement calcs react.
+## Effects refresh daily while network active. province_data_changed emitted for reactivity.
 ##
-## Repair system (see MapManager.advance_daily_infrastructure_repair, driven by TimeManager):
-## Provinces automatically repair infrastructure at a low base rate (~0.08 + self-reinforcing
-## bonus from current infrastructure level = "pride in maintaining good local infrastructure").
-## This rate is intentionally low so that constant daily agent pressure (or bombing campaigns)
-## can produce net degradation, hindering factories, supply, and movement.
-## Future: further modulated by stability (national pride), engineer formations present in
-## the province, technology, and national focuses. Counter-intel operations help by catching
-## and dismantling networks before they do too much damage.
+## Repair / counter-play:
+## - Automatic slow infra repair (MapManager, low base 0.08 + infra pride + stability/infra_repair keys).
+## - clear_daily_sabotage_effects(province_id) removes national debuff + zeros depot sabotage_level.
+## - Counter-intel missions (e.g. "Counter-Intelligence Sweep" success) now *actively call it* for
+##   enemy networks in your territory, weakening them + clearing effects (real response to daily pressure).
+## - ProductionManager is now also driven by TimeManager.game_day_advanced (unified daily loop).
 ##
-## Scaling uses DAILY_NETWORK_SABOTAGE_BASE / MAX + net.get_effectiveness().
-## See the three DAILY_NETWORK_SABOTAGE_* constants near the top of this file for easy tuning.
-## This integrates cleanly with existing systems (no new effect types required).
+## Scaling: DAILY_NETWORK_SABOTAGE_BASE/MAX + effectiveness. See consts at top for tuning.
+## Integrates with existing systems (Supply depot/throughput, NMM, Map repair, AgentNetworkLayer).
 func _apply_daily_network_province_effects(net: AgentNetwork) -> String:
 	if net == null or not net.is_active():
 		return ""
@@ -570,16 +565,18 @@ func _apply_daily_network_province_effects(net: AgentNetwork) -> String:
 				}
 				NationalModifierManager.apply_national_effect(net.controlling_country, effect)
 
-			# Direct per-province sabotage on the local depot (stock + throughput reduction for the day)
+			# Direct per-province sabotage on the local depot: stock hit + persistent "sabotaged" state.
+			# sabotage_level provides targeted, multi-day throughput reduction (see ProvinceDepotState.pull_outflow
+			# and SupplyManager daily advance for decay). Clearable via counter-intel.
 			if typeof(SupplyManager) != TYPE_NIL:
 				var depot = SupplyManager.depot_states.get(pid)
 				if depot != null:
 					var sabotage := 8.0 * effectiveness
-					# Hit stockpile (immediate loss)
-					depot.current_stock = max(0.0, depot.current_stock - sabotage * 0.3)
-					# Temporarily reduce throughput (simulates damaged logistics for the day)
-					if depot.throughput_capacity > 0:
-						depot.throughput_capacity = max(depot.throughput_capacity * 0.85, depot.throughput_capacity - sabotage * 0.1)
+					# Hit stockpile (immediate loss) — use correct field name
+					depot.stockpile = max(0.0, depot.stockpile - sabotage * 0.3)
+					# Accumulate sabotaged state for ongoing targeted throughput penalty (more meaningful than one-frame temp hit)
+					var add_level := clampf(0.10 + effectiveness * 0.22, 0.05, 0.55)
+					depot.sabotage_level = clampf(depot.sabotage_level + add_level, 0.0, 0.9)
 
 			if typeof(MapManager) != TYPE_NIL:
 				MapManager.notify_province_changed(pid, "effects")
@@ -1417,8 +1414,51 @@ func consume_intel(country_tag: String, intel_type: String, amount: int) -> bool
 # === Counter-Intelligence Effect Helpers ===
 
 func _apply_enemy_agent_disruption(target_country: String, magnitude: float) -> void:
-	print("  [COUNTER-INTEL] %s had %d enemy agent networks disrupted" % [target_country, int(magnitude)])
-	# Future: Could reduce active enemy agents or add temporary detection bonuses
+	var tag := target_country.strip_edges().to_upper()
+	var disrupted := 0
+	var cleared_effects := 0
+
+	# Real counter-play: enemy networks operating inside (or against) the target's territory
+	# are weakened, and their active daily sabotage effects are immediately cleared.
+	# This is the basic "repair / counter-intel path" — successful sweeps give direct relief
+	# from supply disruption debuffs and hurt the source networks.
+	for pid in networks.keys():
+		var net: AgentNetwork = networks[pid]
+		if net == null or not net.is_active():
+			continue
+		if net.controlling_country == tag:
+			continue  # own network, not enemy
+
+		# Check if network is operating in target's territory (owner or controller)
+		var in_target_territory := false
+		if typeof(MapManager) != TYPE_NIL:
+			var p := MapManager.get_province(int(pid))
+			if p != null:
+				var owner := p.owner_tag.strip_edges().to_upper()
+				var controller := p.controller_tag.strip_edges().to_upper()
+				if owner == tag or controller == tag:
+					in_target_territory = true
+		else:
+			# Fallback: treat any foreign-controlled network as potential target for sweep
+			in_target_territory = true
+
+		if not in_target_territory:
+			continue
+
+		# Weaken the enemy network (scaled by sweep magnitude)
+		var weaken := 0.65 if magnitude >= 2.0 else 0.78
+		net.strength = maxf(3.0, net.strength * weaken)
+		net.local_operatives = max(0, net.local_operatives - int(magnitude) - 1)
+		net.detection_risk_accumulated += 0.6 + (magnitude * 0.2)
+
+		# Immediate repair: clear the daily sabotage effects (removes national debuff for this province)
+		if typeof(MapManager) != TYPE_NIL:
+			MapManager.clear_daily_sabotage_effects(int(pid))
+			cleared_effects += 1
+
+		disrupted += 1
+
+	print("  [COUNTER-INTEL] %s sweep: disrupted %d enemy networks, cleared effects in %d provinces (mag %.1f)" % [tag, disrupted, cleared_effects, magnitude])
 
 
 func _degrade_enemy_intel(actor_country: String, magnitude: float) -> void:

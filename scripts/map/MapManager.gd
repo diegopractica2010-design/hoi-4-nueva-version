@@ -437,6 +437,8 @@ func notify_province_changed(province_id: int, what: String) -> void:
 ## Clears active daily sabotage effects for a province (used by counter-intel operations).
 ## Removes temporary supply disruption debuffs associated with this province.
 ## Infrastructure damage is "repaired" via the normal slow repair rate (not instantly cleared).
+## Called by AgentManager counter-intel mission outcomes (e.g. successful "Counter-Intelligence Sweep")
+## to give players (and AI) an active response tool against daily agent pressure.
 func clear_daily_sabotage_effects(province_id: int) -> void:
 	var p: Province = get_province(province_id)
 	if p == null or typeof(NationalModifierManager) == TYPE_NIL:
@@ -450,8 +452,14 @@ func clear_daily_sabotage_effects(province_id: int) -> void:
 	var effect_id := "agent_net_supply_%d" % province_id
 	NationalModifierManager.remove_effect(tag, effect_id)
 
-	# Note: We could also clear any "infrastructure_sabotage" markers here if we add them later.
-	# For now, infrastructure recovers through the automatic repair system.
+	# Also clear per-depot sabotage state (targeted supply disruption). This is the direct
+	# "repair" response when counter-intel succeeds — removes lingering throughput penalties.
+	if typeof(SupplyManager) != TYPE_NIL:
+		var depot = SupplyManager.depot_states.get(province_id)
+		if depot != null:
+			depot.sabotage_level = 0.0
+
+	# Note: infrastructure recovers through the automatic repair system (see get_infrastructure_repair_rate).
 
 	notify_province_changed(province_id, "effects")
 

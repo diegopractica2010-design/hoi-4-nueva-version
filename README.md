@@ -85,6 +85,14 @@ Production lines feed these designs. Key equipment categories include infantry g
 
 ---
 
+## Development & Testing (May 2026)
+
+- **Current state:** [docs/CURRENT_STATE.md](docs/CURRENT_STATE.md)
+- **Testing plan:** [docs/TESTING_PLAN.md](docs/TESTING_PLAN.md) (Time, daily agent pressure, Support/Radio, multi-overlay map)
+- **Roadmap / tasks:** [TODO.md](TODO.md)
+
+---
+
 ## Systems Overview
 
 - **Province & Map System** — Geography, resources, special features, dynamic state

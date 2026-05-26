@@ -159,6 +159,7 @@ func _draw() -> void:
 			activity_note,
 			pressure_focus,
 			today_hit,
+			pid,
 		)
 		if pressure_focus:
 			_ambient_pressure_active = true
@@ -178,6 +179,30 @@ func _enemy_pressure(province_id: int, owner: String, controller: String) -> flo
 		if str(ndata.get("owner", "")) != str(ndata.get("controller", "")):
 			pressure += 0.12
 	return clampf(pressure, 0.0, 1.0)
+
+
+func _draw_pressure_status_bars(center: Vector2, radius: float, province_id: int, focus: String) -> void:
+	if typeof(MapManager) == TYPE_NIL:
+		return
+	var p: Province = MapManager.get_province(province_id) as Province
+	if p == null:
+		return
+	var bar_w := 16.0
+	var bar_h := 3.0
+	var pos := center + Vector2(-bar_w * 0.5, radius + 5.0)
+	if focus == "infrastructure_sabotage":
+		draw_rect(Rect2(pos, Vector2(bar_w, bar_h)), Color(0.12, 0.1, 0.14, 0.8), true)
+		var t := clampf(float(p.infrastructure) / 50.0, 0.0, 1.0)
+		var fill_col := Color(0.4, 0.92, 0.55) if p.infrastructure > 20 else Color(1.0, 0.52, 0.32)
+		draw_rect(Rect2(pos, Vector2(bar_w * t, bar_h)), Color(fill_col, 0.92), true)
+	elif focus == "supply_disruption" and typeof(SupplyManager) != TYPE_NIL:
+		var depot = SupplyManager.depot_states.get(province_id)
+		if depot == null:
+			return
+		draw_rect(Rect2(pos, Vector2(bar_w, bar_h)), Color(0.1, 0.14, 0.12, 0.8), true)
+		var fill := clampf(depot.fill_ratio(), 0.0, 1.0)
+		var depot_col := Color(0.35, 0.95, 0.72) if fill >= 0.5 else Color(1.0, 0.62, 0.32)
+		draw_rect(Rect2(pos, Vector2(bar_w * fill, bar_h)), Color(depot_col, 0.9), true)
 
 
 func _draw_pressure_glyph(
@@ -222,6 +247,7 @@ func _draw_network_ring(
 	activity_note: String = "",
 	pressure_focus: bool = false,
 	today_hit: bool = false,
+	province_id: int = -1,
 ) -> void:
 	var ambient_t := Time.get_ticks_msec() * 0.001
 	var ambient_wave := 0.5 + 0.5 * sin(ambient_t * 2.8) if pressure_focus else 0.0
@@ -288,6 +314,8 @@ func _draw_network_ring(
 
 	if pressure_focus:
 		_draw_pressure_glyph(center, radius, focus, activity_pulse or pressure_focus, today_hit)
+		if province_id >= 0:
+			_draw_pressure_status_bars(center, radius, province_id, focus)
 
 	if double_ring_for_strong_low_pressure and strength > 0.82 and pressure < 0.35:
 		draw_arc(center, radius * 0.6, 0.0, TAU, 40, Color(col, col.a * 0.5), width * 0.65, true)

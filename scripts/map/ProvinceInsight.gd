@@ -767,6 +767,12 @@ static func build_supply_legend_bbcode(
 			"%s⚑◎ %d: blended outline · hover tooltip accent · %s▨ stripes + %s◎ rings[/color]"
 			% [COLOR_WARN, n_dual, COLOR_WARN, COLOR_NATIONAL]
 		)
+	var pressure_frag := build_agent_pressure_legend_fragment(player_tag)
+	if multi_overlay and not pressure_frag.is_empty():
+		lines.append(
+			"%sHover pressure province:[/color] %s  [color=#8899aa]tooltip shows repair + depot[/color]"
+			% [COLOR_MUTED, pressure_frag]
+		)
 	if not date_footer.is_empty():
 		lines.append(date_footer)
 	var tech_legend := str(MapTechnologyContext.get_build_mode_preview(player_tag).get("legend_line", ""))
@@ -814,6 +820,10 @@ static func build_supply_legend_bbcode(
 				if agent_applies_daily_pressure(hp):
 					ab = "⛟" if agent_pressure_focus_kind(hp) == "disrupt" else "⚙"
 				hover_line += " · %s◎%s agent[/color]" % [COLOR_NATIONAL, ab]
+			if agent_applies_daily_pressure(hp):
+				var compact_rec := build_province_pressure_recovery_compact(hp)
+				if not compact_rec.is_empty():
+					hover_line += " · %s%s[/color]" % [COLOR_WARN, compact_rec]
 		hover_line += "[/color]"
 		lines.append(hover_line)
 	return "\n".join(lines)
@@ -1088,7 +1098,106 @@ static func get_agent_pressure_fill_strength(province: Province, supply_overlay_
 	var strength := 0.1 if supply_overlay_active else 0.06
 	if agent_has_today_pressure_tick(province):
 		strength += 0.035
+	if (
+		agent_pressure_focus_kind(province) == "sabotage"
+		and province != null
+		and province.infrastructure <= 20
+	):
+		strength += 0.03
 	return strength
+
+
+static func build_province_infra_repair_bbcode(province: Province) -> String:
+	if province == null or typeof(MapManager) == TYPE_NIL:
+		return ""
+	var rate := MapManager.get_infrastructure_repair_rate(province.id)
+	if rate <= 0.0:
+		return ""
+	var infra := province.infrastructure
+	var accent := COLOR_MUTED
+	if infra <= 15 or (
+		agent_applies_daily_pressure(province)
+		and agent_pressure_focus_kind(province) == "sabotage"
+	):
+		accent = COLOR_WARN
+	var line := "%s⚙ Infra %d · +%.2f/day auto-repair[/color]" % [accent, infra, rate]
+	if infra < 50:
+		var days := int(ceil(float(50 - infra) / rate))
+		if days > 0 and days < 500:
+			line += (
+				"\n%s~%d days to infra 50 if sabotage stops[/color]"
+				% [COLOR_MUTED, days]
+			)
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var bonus := NationalModifierManager.get_national_modifier(
+			province.owner_tag, "infrastructure_repair",
+		)
+		if bonus > 0.001:
+			line += "\n%s+%.0f%% repair speed (national tech/focus)[/color]" % [
+				COLOR_TECH, bonus * 100.0,
+			]
+	return line
+
+
+static func build_supply_pressure_recovery_bbcode(province: Province) -> String:
+	if province == null or agent_pressure_focus_kind(province) != "disrupt":
+		return ""
+	var fill := depot_fill_ratio(province.id)
+	if fill < 0.0:
+		return (
+			"%s⛟ Supply pressure: national debuff + local depot hits each day.[/color]"
+			% COLOR_WARN
+		)
+	var pct := int(round(fill * 100.0))
+	var depot_note := "%s⛟ Depot %d%% — daily agent drain; refills via routes & local generation.[/color]" % [
+		COLOR_WARN if fill < 0.4 else COLOR_MUTED, pct,
+	]
+	var tag := country_tag_for_province(province)
+	if _province_matches_country(province, tag) and MapTechnologyContext.has_support_radio_bonuses(tag):
+		var routes := MapTechnologyContext.build_support_route_summary_plain(tag)
+		if not routes.is_empty():
+			depot_note += "\n%s📡 %s helps recovery on your routes.[/color]" % [COLOR_TECH, routes]
+	return depot_note
+
+
+static func build_province_pressure_recovery_bbcode(province: Province) -> String:
+	if province == null:
+		return ""
+	var parts: PackedStringArray = []
+	var kind := agent_pressure_focus_kind(province)
+	if kind == "sabotage" or (
+		agent_applies_daily_pressure(province) and province.infrastructure < 50
+	):
+		var infra_line := build_province_infra_repair_bbcode(province)
+		if not infra_line.is_empty():
+			parts.append(infra_line)
+	if kind == "disrupt":
+		var supply_line := build_supply_pressure_recovery_bbcode(province)
+		if not supply_line.is_empty():
+			parts.append(supply_line)
+	if parts.is_empty():
+		return ""
+	return "\n".join(parts)
+
+
+static func build_province_pressure_recovery_compact(province: Province) -> String:
+	if province == null or typeof(MapManager) == TYPE_NIL:
+		return ""
+	if not agent_applies_daily_pressure(province):
+		return ""
+	var bits: PackedStringArray = []
+	var kind := agent_pressure_focus_kind(province)
+	if kind == "disrupt":
+		var fill := depot_fill_ratio(province.id)
+		if fill >= 0.0:
+			bits.append("depot %d%%" % int(round(fill * 100.0)))
+		bits.append("⛟ drain")
+	if kind == "sabotage" or province.infrastructure < 50:
+		var rate := MapManager.get_infrastructure_repair_rate(province.id)
+		bits.append("infra %d" % province.infrastructure)
+		if rate > 0.0:
+			bits.append("+%.2f/d" % rate)
+	return " · ".join(bits)
 
 
 static func build_agent_pressure_headline_bbcode(province: Province) -> String:
@@ -1215,7 +1324,15 @@ static func build_agent_daily_effect_detail_bbcode(province: Province) -> String
 			% [COLOR_MUTED, pct]
 		)
 	if net.last_daily_effect == "infrastructure_sabotage":
-		return "%sToday's effect: infrastructure chipped (movement & supply)[/color]" % COLOR_MUTED
+		var extra := ""
+		if typeof(MapManager) != TYPE_NIL and province != null:
+			var rate := MapManager.get_infrastructure_repair_rate(province.id)
+			if rate > 0.0:
+				extra = " · auto-repair +%.2f/day" % rate
+		return (
+			"%sToday's effect: infrastructure chipped (movement & supply)%s[/color]"
+			% [COLOR_MUTED, extra]
+		)
 	return ""
 
 
@@ -1317,6 +1434,9 @@ static func build_inspector_agent_section(province: Province) -> String:
 	var activity := build_agent_daily_activity_bbcode(province, pressure_head.is_empty())
 	if not activity.is_empty():
 		lines.append(activity)
+	var recovery := build_province_pressure_recovery_bbcode(province)
+	if not recovery.is_empty():
+		lines.append(recovery)
 	lines.append(
 		"%sMap: ring size = effectiveness; ⛟/⚙ glyphs = daily pressure; rings pulse each day.[/color]"
 		% COLOR_MUTED
@@ -1443,9 +1563,14 @@ static func build_dual_situation_glance_bbcode(province: Province) -> String:
 		agent_bit = " · ◎ %s%s str %.0f" % [badge, str(net.focus).replace("_", " "), net.strength]
 		if not net.last_daily_note.strip_edges().is_empty():
 			agent_bit += " · %s" % _agent_daily_note_label(net.last_daily_note)
+	var repair_hint := ""
+	if agent_applies_daily_pressure(province) and typeof(MapManager) != TYPE_NIL:
+		var rate := MapManager.get_infrastructure_repair_rate(province.id)
+		if agent_pressure_focus_kind(province) == "sabotage" and rate > 0.0:
+			repair_hint = " · repair +%.2f/d" % rate
 	var line := (
-		"%s⚑◎ %s holds %s (owner %s)%s[/color]"
-		% [COLOR_WARN, ctrl, province.name, owner, agent_bit]
+		"%s⚑◎ %s holds %s (owner %s)%s%s[/color]"
+		% [COLOR_WARN, ctrl, province.name, owner, agent_bit, repair_hint]
 	)
 	var tag := country_tag_for_province(province)
 	if _province_matches_country(province, tag):
@@ -1474,6 +1599,9 @@ static func build_inspector_situation_section(province: Province) -> String:
 		var agent_activity := build_agent_daily_activity_bbcode(province, not skip_ongoing)
 		if not agent_activity.is_empty():
 			lines.append(agent_activity)
+		var recovery := build_province_pressure_recovery_bbcode(province)
+		if not recovery.is_empty():
+			lines.append(recovery)
 		var nat_badge := build_national_sources_badge(province)
 		if not nat_badge.is_empty():
 			lines.append("%sNational (same view): %s[/color]" % [COLOR_MUTED, nat_badge])
@@ -1571,6 +1699,9 @@ static func format_report_tooltip(report: Dictionary) -> String:
 	var agent_daily := build_agent_daily_activity_bbcode(p, pressure_head.is_empty())
 	if not agent_daily.is_empty():
 		lines.append(agent_daily)
+	var recovery := build_province_pressure_recovery_bbcode(p)
+	if not recovery.is_empty():
+		lines.append(recovery)
 	var tag := str(report.get("country_tag", ""))
 	var nat_line := build_national_situation_one_liner(p, pe)
 	if not nat_line.is_empty():

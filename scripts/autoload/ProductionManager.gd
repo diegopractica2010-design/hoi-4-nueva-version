@@ -59,6 +59,13 @@ func _ready() -> void:
 	if not production_completed.is_connected(_on_production_completed):
 		production_completed.connect(_on_production_completed)
 
+	# Wire to central TimeManager daily tick so production simulation is part of the unified
+	# daily loop (alongside Supply, Agent networks, and infrastructure repair).
+	# This strengthens the daily simulation without changing existing manual tick paths.
+	if typeof(TimeManager) != TYPE_NIL:
+		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
+			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
+
 
 func _get_base_daily_points() -> float:
 	return ProductionCostCalculator.get_base_daily_points()
@@ -1477,6 +1484,12 @@ func get_design_production_info(design_id: String) -> Dictionary:
 ## Game loop entry point: one day of national production (supply hooks can chain here later).
 func daily_production_tick() -> void:
 	advance_production(1.0)
+
+
+## Listener for central TimeManager daily tick (wired in _ready).
+## Keeps production in sync with the rest of the daily simulation loop (Supply/Agents/Repair).
+func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
+	daily_production_tick()
 
 
 func advance_production(days: float) -> void:
