@@ -368,8 +368,9 @@ static func build_tooltip_mode_chip_for_state(
 			var date_compact := GameDateDisplay.format_map_date_compact()
 			if not date_compact.is_empty():
 				tokens.append("%s📅 %s[/color]" % [COLOR_MUTED, date_compact])
-	elif (
-		province != null
+	if (
+		not supply_overlay
+		and province != null
 		and agent_has_today_pressure_tick(province)
 		and tokens.size() < max_tokens
 	):

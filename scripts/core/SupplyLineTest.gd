@@ -147,7 +147,7 @@ static func _test_intel_from_forces(loader: ScenarioLoader) -> bool:
 	var manager_script: GDScript = load("res://scripts/supply/SupplyManager.gd")
 	var manager: Node = manager_script.new()
 	manager.rules = rules
-	manager.provinces = loader.provinces
+	manager.provinces = MapScenarioData.coerce_provinces(loader.provinces)
 	manager.hubs = SupplyNetworkBuilder.build(
 		loader.provinces, loader.countries, loader.get_city_layer(), [], rules,
 	)

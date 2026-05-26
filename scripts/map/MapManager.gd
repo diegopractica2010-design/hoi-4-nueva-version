@@ -79,10 +79,10 @@ func initialize_from_map_data(map_data: MapScenarioData) -> void:
 	# Clear previous state for clean reloads
 	_clear_internal_caches()
 
-	_provinces = map_data.provinces.duplicate(true) if map_data.provinces else {}
+	_provinces = MapScenarioData.coerce_provinces(map_data.provinces)
 	_geometry = map_data.geometry.duplicate(true) if map_data.geometry else {}
 	_adjacency = map_data.adjacency_system
-	_countries = map_data.countries.duplicate(true) if map_data.countries else {}
+	_countries = MapScenarioData.coerce_countries(map_data.countries)
 
 	_is_initialized = _provinces.size() > 0
 
@@ -101,7 +101,7 @@ func has_province_data() -> bool:
 func get_province(province_id: int) -> Province:
 	return _provinces.get(province_id)
 
-func get_all_provinces() -> Dictionary:
+func get_all_provinces() -> Dictionary[int, Province]:
 	return _provinces
 
 func get_province_geometry(province_id: int) -> Dictionary:
@@ -319,7 +319,8 @@ func get_centroids_in_rect(rect: Rect2) -> Dictionary[int, Vector2]:
 func get_overlay_data_for_province(province_id: int, country_tag: String = "") -> Dictionary[String, Variant]:
 	var p: Province = get_province(province_id)
 	if p == null:
-		return {}
+		var empty: Dictionary[String, Variant] = {}
+		return empty
 	var tag := country_tag
 	if tag.is_empty():
 		tag = p.controller_tag if not p.controller_tag.is_empty() else p.owner_tag

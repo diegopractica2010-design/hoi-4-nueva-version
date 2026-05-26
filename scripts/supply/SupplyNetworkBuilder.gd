@@ -10,12 +10,12 @@ static func build(
 	city_layer: Dictionary,
 	player_depot_ids: Array[int],
 	rules: SupplyRules,
-) -> Dictionary:
-	var hubs: Dictionary = {}
+) -> Dictionary[int, ProvinceSupplyHub]:
+	var hubs: Dictionary[int, ProvinceSupplyHub] = {}
 	var capitals := _capital_by_tag(countries)
 
 	for pid_var in provinces:
-		var province: Province = provinces[pid_var]
+		var province: Province = provinces[pid_var] as Province
 		if province == null:
 			continue
 		var hub := _hub_from_province(province, city_layer, capitals, player_depot_ids, rules)

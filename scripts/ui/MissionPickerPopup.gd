@@ -175,11 +175,14 @@ func _on_search_changed(new_text: String) -> void:
 		if typeof(row) != TYPE_DICTIONARY:
 			continue
 		var mission_row := row as Dictionary
-		var haystack := "%s %s %s" % [
-			mission_row.get("name", ""),
-			mission_row.get("mission_id", ""),
-			mission_row.get("category", ""),
-		].to_lower()
+		var haystack := (
+			"%s %s %s"
+			% [
+				str(mission_row.get("name", "")),
+				str(mission_row.get("mission_id", "")),
+				str(mission_row.get("category", "")),
+			]
+		).to_lower()
 		if needle.is_empty() or needle in haystack:
 			_filtered_rows.append(mission_row)
 	_populate_list(new_text)

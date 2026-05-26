@@ -70,8 +70,8 @@ func build_network(
 	p_adjacency: AdjacencySystem,
 	tag: String = "",
 ) -> void:
-	provinces = p_provinces
-	_countries = p_countries
+	provinces = MapScenarioData.coerce_provinces(p_provinces)
+	_countries = MapScenarioData.coerce_countries(p_countries)
 	_city_layer = city_layer
 	adjacency = p_adjacency
 	if not tag.is_empty():

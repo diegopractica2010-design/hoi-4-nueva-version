@@ -229,9 +229,10 @@ func _connect_agent_signals() -> void:
 		"agent_captured",
 		"agent_killed",
 	]:
-		var sig := AgentManager.get(sig_name)
-		if sig is Signal and not sig.is_connected(_on_agent_state_changed):
-			sig.connect(_on_agent_state_changed)
+		if AgentManager.has_signal(sig_name) and not AgentManager.is_connected(
+			sig_name, _on_agent_state_changed
+		):
+			AgentManager.connect(sig_name, _on_agent_state_changed)
 
 
 func _exit_tree() -> void:
@@ -244,9 +245,8 @@ func _exit_tree() -> void:
 		"agent_captured",
 		"agent_killed",
 	]:
-		var sig := AgentManager.get(sig_name)
-		if sig is Signal and sig.is_connected(_on_agent_state_changed):
-			sig.disconnect(_on_agent_state_changed)
+		if AgentManager.is_connected(sig_name, _on_agent_state_changed):
+			AgentManager.disconnect(sig_name, _on_agent_state_changed)
 
 
 func _on_agent_state_changed(_a: Variant = null, _b: Variant = null, _c: Variant = null) -> void:
@@ -979,7 +979,7 @@ func _add_detail_mission_progress(summary: Dictionary) -> void:
 	RetrowaveTheme.style_body_label(label)
 	label.add_theme_color_override("font_color", RetrowaveTheme.CYAN)
 	_detail_progress_row.add_child(label)
-	var insert_idx := history_list.get_index(detail_label) + 1
+	var insert_idx: int = detail_label.get_index() + 1
 	scroll_vbox.add_child(_detail_progress_row)
 	scroll_vbox.move_child(_detail_progress_row, insert_idx)
 

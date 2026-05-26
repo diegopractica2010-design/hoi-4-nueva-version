@@ -17,7 +17,7 @@ extends Node2D
 @export var info_logistics: Label
 @export var info_combat: Label
 @export var info_modifiers: RichTextLabel
-@export var info_national: RichTextLabel
+@export var info_national: Label
 @export var btn_national_spirits: Button
 @export var btn_close: Button
 
@@ -286,7 +286,7 @@ func _setup_inspector_extras() -> void:
 	if info_modifiers == null:
 		info_modifiers = get_node_or_null("UI/InfoPanel/InfoContent/RichTextModifiers") as RichTextLabel
 	if info_national == null:
-		info_national = get_node_or_null("UI/InfoPanel/InfoContent/LabelNational") as Label
+		info_national = get_node_or_null("UI/InfoPanel/InfoContent/LabelNationalHeader") as Label
 	if info_modifiers:
 		info_modifiers.bbcode_enabled = true
 		info_modifiers.fit_content = false
@@ -332,8 +332,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province_at_world_pos"):
 			pid = MapManager.get_province_at_world_pos(world_pos, true)
 		if pid >= 0 and provinces.has(pid):
-			var resolved_province := provinces[pid]
-			var resolved_node := province_nodes.get(pid)
+			var resolved_province: Province = provinces[pid] as Province
+			var resolved_node: Node2D = _province_node(pid)
 			if supply_mode and _handle_supply_province_click(resolved_province):
 				_select_province(resolved_province, resolved_node)
 				get_viewport().set_input_as_handled()
@@ -459,10 +459,10 @@ func _refresh_province_detail_visibility() -> void:
 
 
 func initialize(p_provinces: Dictionary, p_geometry: Dictionary, p_adjacency: AdjacencySystem, p_countries: Dictionary = {}):
-	provinces = p_provinces
+	provinces = MapScenarioData.coerce_provinces(p_provinces)
 	geometry = p_geometry
 	adjacency = p_adjacency
-	countries = p_countries
+	countries = MapScenarioData.coerce_countries(p_countries)
 	render_provinces()
 
 
@@ -984,7 +984,7 @@ func get_active_overlay_layers() -> Array[String]:
 	var names: Array[String] = []
 	if container == null:
 		return names
-	var excluded := {"SupplyMapLayer", "ProvinceContainers"}
+	var excluded: Array[String] = ["SupplyMapLayer", "ProvinceContainers"]
 	for child in container.get_children():
 		if child is Node2D:
 			var n := child.name
@@ -1209,7 +1209,7 @@ func _update_supply_menu(plan: SupplyRoutePlan, reroute_mode: bool) -> void:
 	var extra := ""
 	for line in sm.get_depot_menu_lines(5):
 		extra += line + "\n"
-	var pid := sm.get_selected_province_id()
+	var pid: int = SupplyManager.get_selected_province_id()
 	var province: Province = provinces.get(pid) as Province if provinces.has(pid) else null
 	supply_overlay_panel.show_supply_state(
 		plan, depot, attrition, reroute_mode, province, sm.player_tag, extra.strip_edges(),
@@ -1736,8 +1736,8 @@ func _set_compare_preview_outline(province_id: int, visible: bool) -> void:
 		ProvinceMapVisuals.hide_polished_outline(node, ProvinceMapVisuals.NODE_COMPARE)
 
 
-func _supply_highlight_roles() -> Dictionary:
-	var roles: Dictionary = {}
+func _supply_highlight_roles() -> Dictionary[int, String]:
+	var roles: Dictionary[int, String] = {}
 	if not supply_mode:
 		return roles
 	var sm := _supply_manager()
@@ -1746,12 +1746,12 @@ func _supply_highlight_roles() -> Dictionary:
 			roles[int(pid)] = "hub"  # overwritten below if on route / preview / selected
 	if sm == null:
 		return roles
-	var selected := sm.get_selected_province_id()
+	var selected: int = SupplyManager.get_selected_province_id()
 	if selected < 0:
 		selected = selected_province_id
 	if selected >= 0:
 		roles[selected] = "active"
-	var preview_pids: Dictionary = {}
+	var preview_pids: Dictionary[int, bool] = {}
 	if _supply_reroute_active:
 		var preview: SupplyRoutePlan = sm.preview_player_route()
 		if preview != null and preview.path_length() > 0:

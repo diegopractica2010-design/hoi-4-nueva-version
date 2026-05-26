@@ -102,14 +102,35 @@ static func count_active_networks(provinces: Dictionary = {}, country_tag: Strin
 	return total
 
 
+## Viewport bounds in map/world space (same coordinates as MapManager centroids).
+func _get_camera_world_rect() -> Rect2:
+	var vp := get_viewport()
+	if vp == null:
+		return Rect2()
+	var cam := vp.get_camera_2d()
+	if cam == null:
+		return Rect2()
+	var screen_rect := vp.get_visible_rect()
+	var inv := cam.get_canvas_transform().affine_inverse()
+	var p0: Vector2 = inv * screen_rect.position
+	var p1: Vector2 = inv * (screen_rect.position + Vector2(screen_rect.size.x, 0.0))
+	var p2: Vector2 = inv * (screen_rect.position + screen_rect.size)
+	var p3: Vector2 = inv * (screen_rect.position + Vector2(0.0, screen_rect.size.y))
+	var min_x: float = minf(minf(p0.x, p1.x), minf(p2.x, p3.x))
+	var max_x: float = maxf(maxf(p0.x, p1.x), maxf(p2.x, p3.x))
+	var min_y: float = minf(minf(p0.y, p1.y), minf(p2.y, p3.y))
+	var max_y: float = maxf(maxf(p0.y, p1.y), maxf(p2.y, p3.y))
+	return Rect2(min_x, min_y, max_x - min_x, max_y - min_y)
+
+
 func _draw() -> void:
 	if typeof(MapManager) == TYPE_NIL or typeof(AgentManager) == TYPE_NIL:
 		return
 
-	var visible_rect := _get_camera_world_rect()
-	var visible_pids: Array = []
+	var visible_rect: Rect2 = _get_camera_world_rect()
+	var visible_pids: Array[int] = []
 	if visible_rect.has_area():
-		visible_pids = MapManager.get_provinces_in_rect(visible_rect.grow(80.0)) as Array
+		visible_pids = MapManager.get_provinces_in_rect(visible_rect.grow(80.0))
 
 	var tag_filter := target_country.strip_edges().to_upper()
 	var networks: Array[AgentNetwork] = []

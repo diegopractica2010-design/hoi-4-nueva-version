@@ -298,12 +298,15 @@ func _selected_category_filter() -> String:
 func _matches_search(row: Dictionary, needle: String, is_temporary: bool) -> bool:
 	if needle.is_empty():
 		return true
-	var haystack := "%s %s %s %s" % [
-		row.get("name", ""),
-		row.get("description", ""),
-		row.get("source_label", ""),
-		row.get("category", ""),
-	].to_lower()
+	var haystack := (
+		"%s %s %s %s"
+		% [
+			str(row.get("name", "")),
+			str(row.get("description", "")),
+			str(row.get("source_label", "")),
+			str(row.get("category", "")),
+		]
+	).to_lower()
 	for line in row.get("modifier_lines", []) as Array:
 		haystack += " " + str(line).to_lower()
 	if is_temporary:

@@ -204,7 +204,7 @@ static func build_province_production_tech_bbcode(province: Province, country_ta
 	for factory in factories:
 		if factory == null:
 			continue
-		var tid := str(factory.current_template_id).strip_edges()
+		var tid := str(factory.current_production_design).strip_edges()
 		if tid.is_empty():
 			continue
 		var gate: Dictionary = TechnologyManager.get_design_availability(tag, tid)
