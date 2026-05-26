@@ -1,0 +1,260 @@
+[gd_scene load_steps=3 format=3 uid="uid://technologyscreen01"]
+
+[ext_resource type="Script" path="res://scripts/ui/TechnologyScreen.gd" id="1_screen"]
+[ext_resource type="PackedScene" uid="uid://technologygraphview1" path="res://scenes/ui/TechnologyGraphView.tscn" id="2_graph"]
+
+[node name="TechnologyScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -520.0
+offset_top = -340.0
+offset_right = 520.0
+offset_bottom = 340.0
+clip_contents = true
+script = ExtResource("1_screen")
+country_tag = "USA"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.058824, 0.117647, 1)
+
+[node name="TitleBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="TitleBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Technology"
+
+[node name="CloseButton" type="Button" parent="TitleBar"]
+layout_mode = 2
+text = "Close"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SummaryBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="SlotsLabel" type="Label" parent="MarginContainer/VBoxContainer/SummaryBar"]
+layout_mode = 2
+text = "Slots: 0/2"
+
+[node name="RpLabel" type="Label" parent="MarginContainer/VBoxContainer/SummaryBar"]
+layout_mode = 2
+text = "RP/day: 1.0"
+
+[node name="YearLabel" type="Label" parent="MarginContainer/VBoxContainer/SummaryBar"]
+layout_mode = 2
+text = "Year: 1936"
+
+[node name="AvailableLabel" type="Label" parent="MarginContainer/VBoxContainer/SummaryBar"]
+layout_mode = 2
+text = "Available: 0"
+
+[node name="CompletedLabel" type="Label" parent="MarginContainer/VBoxContainer/SummaryBar"]
+layout_mode = 2
+text = "Done: 0"
+
+[node name="CompromisedLabel" type="Label" parent="MarginContainer/VBoxContainer/SummaryBar"]
+layout_mode = 2
+text = "Compromised: 0"
+
+[node name="ActiveBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ActiveTitle" type="Label" parent="MarginContainer/VBoxContainer/ActiveBar"]
+layout_mode = 2
+text = "Active:"
+
+[node name="ActiveResearchLabel" type="Label" parent="MarginContainer/VBoxContainer/ActiveBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 3
+text = "—"
+
+[node name="AgentBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AgentSummaryLabel" type="Label" parent="MarginContainer/VBoxContainer/AgentBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 3
+text = "Espionage: —"
+
+[node name="OpenAgentsButton" type="Button" parent="MarginContainer/VBoxContainer/AgentBar"]
+layout_mode = 2
+text = "Open Agents"
+
+[node name="ToolRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="DomainFilter" type="OptionButton" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 0)
+
+[node name="ViewModeFilter" type="OptionButton" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 0)
+
+[node name="EraLabel" type="Label" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+text = "Era:"
+
+[node name="EraSlider" type="HSlider" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 8.0
+step = 1.0
+value = 0.0
+tick_count = 9
+ticks_on_borders = true
+
+[node name="EraValueLabel" type="Label" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 0)
+text = "All eras"
+
+[node name="ResetViewButton" type="Button" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+text = "Reset view"
+
+[node name="BodyRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="MainColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BodyRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.25
+theme_override_constants/separation = 8
+
+[node name="ListScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResearchList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn/ListScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="TechnologyGraphView" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn" instance=ExtResource("2_graph")]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DoctrinePanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DoctrineMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn/DoctrinePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="DoctrineVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn/DoctrinePanel/DoctrineMargin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="DoctrineHeader" type="Label" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn/DoctrinePanel/DoctrineMargin/DoctrineVBox"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Leader training paths"
+
+[node name="DoctrineXpLabel" type="Label" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn/DoctrinePanel/DoctrineMargin/DoctrineVBox"]
+layout_mode = 2
+text = "National Doctrine XP: 0"
+
+[node name="OpenTrainingButton" type="Button" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn/DoctrinePanel/DoctrineMargin/DoctrineVBox"]
+layout_mode = 2
+text = "Open Leader Training Paths"
+
+[node name="DoctrineScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn/DoctrinePanel/DoctrineMargin/DoctrineVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DoctrineList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BodyRow/MainColumn/DoctrinePanel/DoctrineMargin/DoctrineVBox/DoctrineScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="InspectorPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/BodyRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+
+[node name="InspectorMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/BodyRow/InspectorPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="InspectorVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BodyRow/InspectorPanel/InspectorMargin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="InspectorTitle" type="Label" parent="MarginContainer/VBoxContainer/BodyRow/InspectorPanel/InspectorMargin/InspectorVBox"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Select a technology"
+
+[node name="InspectorBody" type="Label" parent="MarginContainer/VBoxContainer/BodyRow/InspectorPanel/InspectorMargin/InspectorVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+autowrap_mode = 3
+text = ""
+
+[node name="InspectorActions" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BodyRow/InspectorPanel/InspectorMargin/InspectorVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ResearchButton" type="Button" parent="MarginContainer/VBoxContainer/BodyRow/InspectorPanel/InspectorMargin/InspectorVBox/InspectorActions"]
+layout_mode = 2
+text = "Start Research"
+
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/BodyRow/InspectorPanel/InspectorMargin/InspectorVBox/InspectorActions"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="FooterLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Graph: pan (middle-drag), zoom (wheel). Doctrines use leader XP after research unlocks eligibility."

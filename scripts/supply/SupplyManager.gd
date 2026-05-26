@@ -211,9 +211,14 @@ func _get_base_supply_consumption(formation_id: String) -> float:
 	return float(stats.get("supply_consumption", 1.0))
 
 
-## Daily supply use for a formation, including training-path supply_consumption modifiers.
+## Daily supply use for a formation, including training-path supply_consumption modifiers
+## and national spirit / temporary modifier effects.
 func calculate_daily_supply_consumption(formation_id: String) -> float:
 	var base_consumption := _get_base_supply_consumption(formation_id)
+
+	# Apply national spirit + temporary modifier effects
+	base_consumption = _apply_national_supply_modifiers(formation_id, base_consumption)
+
 	if typeof(LeaderManager) == TYPE_NIL:
 		return maxf(base_consumption, 0.1)
 
@@ -227,6 +232,31 @@ func calculate_daily_supply_consumption(formation_id: String) -> float:
 	if not leader_id.is_empty():
 		return LeaderManager.apply_supply_consumption_for_leader(base_consumption, leader_id)
 	return maxf(base_consumption, 0.1)
+
+
+func _apply_national_supply_modifiers(formation_id: String, base_consumption: float) -> float:
+	# Try to determine the owning country of the formation
+	var owner_tag := ""
+	var formation := get_formation(formation_id)
+	if formation != null:
+		if "country_tag" in formation and not formation.country_tag.is_empty():
+			owner_tag = formation.country_tag
+
+	if owner_tag.is_empty():
+		return base_consumption
+
+	# Get combined national supply modifiers (spirits + temporary effects)
+	var supply_mod := 0.0
+
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		supply_mod += NationalSpiritManager.get_total_supply_consumption_modifier(owner_tag)
+
+	if supply_mod == 0.0:
+		return base_consumption
+
+	# Apply as multiplicative modifier (negative value = lower consumption = beneficial)
+	var multiplier := 1.0 + supply_mod
+	return maxf(base_consumption * multiplier, 0.05)
 
 
 func get_attrition_cargo_summary(_leader_id: String = "") -> Dictionary:
@@ -244,6 +274,10 @@ func get_attrition_cargo_summary(_leader_id: String = "") -> Dictionary:
 func advance_supply_day(days: float = 1.0) -> void:
 	if days <= 0.0:
 		return
+
+	# === Province Infrastructure & Development: Local Supply Generation ===
+	_generate_local_supply_from_development(days)
+
 	var attrition := get_attrition_cargo_summary()
 	var attrition_tons := float(attrition.get("total_tons", 0.0)) * days
 	for key in _routes:
@@ -313,7 +347,32 @@ func get_all_routes() -> Array:
 	return _routes.values()
 
 
-func get_depot_menu_lines(limit: int = 6) -> PackedStringArray:
+func _generate_local_supply_from_development(days: float) -> void:
+	if days <= 0.0 or typeof(Province) == TYPE_NIL:
+		return
+
+	for pid in depot_states.keys():
+		var state: ProvinceDepotState = depot_states[pid]
+		if state == null:
+			continue
+
+		# We need province data — try to get it from the scenario loader if available
+		var province: Province = null
+		var loader := get_node_or_null("/root/ScenarioLoader")
+		if loader != null and loader.has_method("get_province"):
+			province = loader.call("get_province", pid)
+
+		if province == null:
+			continue
+
+		var local_gen := province.get_local_supply_generation_modifier()
+		if local_gen <= 0.0:
+			continue
+
+		# Base local supply generation scaled by development
+		var daily_gen := 40.0 * local_gen * days
+		state.apply_inflow(daily_gen)
+
 	var lines := PackedStringArray()
 	var ranked: Array = []
 	for pid_var in depot_states:
@@ -380,8 +439,54 @@ func _plan_route(
 	)
 	plan.interdiction_chance = float(inter.get("chance", 0.0))
 	plan.interdiction_breakdown = inter.get("breakdown", {})
+
+	# === Deeper Integration: National modifiers affect interdiction resistance ===
+	var interdiction_resistance := 0.0
+
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var temp := NationalModifierManager.get_supply_modifiers(player_tag)
+		interdiction_resistance += float(temp.get("interdiction_resistance", 0.0))
+
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		var spirit := NationalSpiritManager.get_spirit_supply_modifiers(player_tag)
+		interdiction_resistance += float(spirit.get("interdiction_resistance", 0.0))
+
+	if interdiction_resistance > 0.0:
+		var reduction := clampf(interdiction_resistance * 0.8, 0.0, 0.5)
+		plan.interdiction_chance *= (1.0 - reduction)
+	else:
+		# Fallback to general logistics quality
+		if typeof(NationalSpiritManager) != TYPE_NIL:
+			var nat_mod := NationalSpiritManager.get_total_supply_consumption_modifier(player_tag)
+			if nat_mod < 0.0:
+				var reduction := clampf(-nat_mod * 0.6, 0.0, 0.4)
+				plan.interdiction_chance *= (1.0 - reduction)
+
 	var attrition := get_attrition_cargo_summary()
 	plan.cargo_tons_per_day = maxf(plan.cargo_tons_per_day, float(attrition.get("total_tons", 0.0)))
+
+	# === Deeper: National modifiers reduce effective attrition on routes ===
+	var attrition_res := 0.0
+
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var temp := NationalModifierManager.get_supply_modifiers(player_tag)
+		attrition_res += float(temp.get("attrition_reduction", 0.0))
+
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		var spirit := NationalSpiritManager.get_spirit_supply_modifiers(player_tag)
+		attrition_res += float(spirit.get("attrition_reduction", 0.0))
+
+	if attrition_res > 0.0:
+		var reduction := clampf(attrition_res * 0.6, 0.0, 0.4)
+		plan.cargo_tons_per_day *= (1.0 - reduction)
+	else:
+		# Fallback proxy
+		if typeof(NationalSpiritManager) != TYPE_NIL and player_tag != "":
+			var nat_attr_mod := NationalSpiritManager.get_total_supply_consumption_modifier(player_tag)
+			if nat_attr_mod < 0.0:
+				var reduction := clampf(-nat_attr_mod * 0.4, 0.0, 0.3)
+				plan.cargo_tons_per_day *= (1.0 - reduction)
+
 	return plan
 
 

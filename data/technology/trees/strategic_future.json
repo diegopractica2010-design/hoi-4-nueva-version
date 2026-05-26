@@ -1,0 +1,113 @@
+{
+  "quantum_sensing": {
+    "id": "quantum_sensing",
+    "name": "Quantum Battlefield Sensing",
+    "domain": "strategic_future",
+    "tree_id": "strategic_future",
+    "node_kind": "research",
+    "column": 0,
+    "row": 0,
+    "tier": 1,
+    "era_min": 2038,
+    "era_max": 2055,
+    "epoch": "far_future",
+    "prerequisites": ["network_centric_study"],
+    "research": {
+      "base_cost_days": 160,
+      "category": "strategic",
+      "ahead_of_time_penalty_per_year": 0.18,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "modifier", "stat": "reconnaissance", "value": 0.12 }
+    ],
+    "ui": {
+      "short_effect": "+12% reconnaissance from quantum ISR",
+      "flavor": "Entangled sensors and AI fusion collapse the fog of war."
+    }
+  },
+  "fusion_grid": {
+    "id": "fusion_grid",
+    "name": "Fusion Industrial Grid",
+    "domain": "strategic_future",
+    "tree_id": "strategic_future",
+    "node_kind": "project",
+    "column": 1,
+    "row": 0,
+    "tier": 2,
+    "era_min": 2042,
+    "era_max": 2055,
+    "epoch": "far_future",
+    "prerequisites": ["quantum_sensing"],
+    "research": {
+      "base_cost_days": 280,
+      "category": "strategic",
+      "ahead_of_time_penalty_per_year": 0.2,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "modifier", "stat": "factory_output", "value": 0.15 },
+      { "type": "rule_flag", "flag": "fusion_power_industry" }
+    ],
+    "ui": {
+      "short_effect": "Megaproject: +15% factory output",
+      "flavor": "Commercial fusion feeds giga-factories and orbital logistics."
+    }
+  },
+  "orbital_shipyard_program": {
+    "id": "orbital_shipyard_program",
+    "name": "Orbital Shipyard Program",
+    "domain": "strategic_future",
+    "tree_id": "strategic_future",
+    "node_kind": "project",
+    "column": 2,
+    "row": 0,
+    "tier": 3,
+    "era_min": 2045,
+    "era_max": 2055,
+    "epoch": "far_future",
+    "prerequisites": ["fusion_grid"],
+    "research": {
+      "base_cost_days": 320,
+      "category": "strategic",
+      "ahead_of_time_penalty_per_year": 0.22,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "rule_flag", "flag": "allow_orbital_shipyard_conversion" },
+      { "type": "modifier", "stat": "production_speed", "value": 0.1 }
+    ],
+    "ui": {
+      "short_effect": "Megaproject: orbital yards & faster production",
+      "flavor": "Zero-g assembly lines for frigates and strategic lift."
+    }
+  },
+  "agi_battle_management": {
+    "id": "agi_battle_management",
+    "name": "AGI Battle Management",
+    "domain": "strategic_future",
+    "tree_id": "strategic_future",
+    "node_kind": "project",
+    "column": 3,
+    "row": 0,
+    "tier": 4,
+    "era_min": 2048,
+    "era_max": 2055,
+    "epoch": "far_future",
+    "prerequisites": ["orbital_shipyard_program"],
+    "research": {
+      "base_cost_days": 360,
+      "category": "strategic",
+      "ahead_of_time_penalty_per_year": 0.25,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "doctrine_key", "key": "drone_warfare" },
+      { "type": "modifier", "stat": "initiative", "value": 2.0 }
+    ],
+    "ui": {
+      "short_effect": "Megaproject: Drone Warfare school + initiative",
+      "flavor": "Autonomous swarms and machine-speed command eclipse human OODA loops."
+    }
+  }
+}

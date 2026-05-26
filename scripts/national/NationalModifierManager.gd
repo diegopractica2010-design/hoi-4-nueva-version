@@ -152,10 +152,137 @@ func clear_all_modifiers() -> void:
 	country_modifiers.clear()
 
 
+## Returns a dictionary of production-relevant modifiers for a country.
+## This aggregates all active temporary effects and can be extended for stability baseline later.
+func get_production_modifiers(country_tag: String) -> Dictionary:
+	var tag := country_tag.strip_edges().to_upper()
+	var result := {
+		"output_multiplier": 1.0,
+		"reliability_multiplier": 1.0,
+		"retooling_days_multiplier": 1.0,
+		"cost_multiplier": 1.0,
+	}
+
+	if typeof(TechnologyManager) != TYPE_NIL:
+		var tech_mods := TechnologyManager.get_technology_modifiers(tag)
+		for key in tech_mods.keys():
+			var val := float(tech_mods[key])
+			match key:
+				"production_speed", "factory_output", "output_multiplier":
+					result["output_multiplier"] *= (1.0 + val)
+				"reliability":
+					result["reliability_multiplier"] *= (1.0 + val)
+				"retooling_time", "retooling_days_multiplier":
+					result["retooling_days_multiplier"] *= (1.0 + val)
+				"production_cost", "cost_multiplier":
+					result["cost_multiplier"] *= (1.0 + val)
+
+	if not country_modifiers.has(tag):
+		return result
+
+	for effect in country_modifiers[tag] as Array:
+		var mods: Dictionary = effect.get("modifiers", {})
+		for key in mods.keys():
+			var val := float(mods[key])
+			match key:
+				"production_speed", "factory_output", "output_multiplier":
+					result["output_multiplier"] *= (1.0 + val)
+				"reliability":
+					result["reliability_multiplier"] *= (1.0 + val)
+				"retooling_time", "retooling_days_multiplier":
+					result["retooling_days_multiplier"] *= (1.0 + val)
+				"production_cost", "cost_multiplier":
+					result["cost_multiplier"] *= (1.0 + val)
+				"stability":
+					# Simple stability effect: negative stability reduces output
+					if val < 0:
+						var penalty := clampf(absf(val) * 0.01, 0.0, 0.25)  # 1% per stability point, capped
+						result["output_multiplier"] *= (1.0 - penalty)
+
+	return result
+
+
+## Returns combat-relevant modifiers for a country (army_org, defence, planning, etc.).
+func get_combat_modifiers(country_tag: String) -> Dictionary:
+	var tag := country_tag.strip_edges().to_upper()
+	var result := {
+		"army_org_factor": 0.0,
+		"defence_factor": 0.0,
+		"planning_speed": 0.0,
+		"manpower_factor": 0.0,
+		"attack_factor": 0.0,
+		"reconnaissance": 0.0,
+		"encryption": 0.0,
+		"attrition_reduction": 0.0,
+		"interdiction_resistance": 0.0,
+	}
+
+	if not country_modifiers.has(tag):
+		return result
+
+	for effect in country_modifiers[tag] as Array:
+		var mods: Dictionary = effect.get("modifiers", {})
+		for key in mods.keys():
+			var val := float(mods[key])
+			if key in result:
+				result[key] += val
+
+	if typeof(TechnologyManager) != TYPE_NIL:
+		var tech_mods := TechnologyManager.get_technology_modifiers(tag)
+		for key in tech_mods.keys():
+			var val := float(tech_mods[key])
+			if key in result:
+				result[key] += val
+			else:
+				result[key] = val
+
+	return result
+
+
+## Returns supply-relevant modifiers for a country (primarily supply_consumption).
+func get_supply_modifiers(country_tag: String) -> Dictionary:
+	var tag := country_tag.strip_edges().to_upper()
+	var result := {
+		"supply_consumption": 0.0,   # additive to multiplier (negative = better)
+		"attrition_reduction": 0.0,  # positive = reduces attrition (good)
+		"interdiction_resistance": 0.0, # positive = reduces interdiction chance (good)
+	}
+
+	if not country_modifiers.has(tag):
+		return result
+
+	for effect in country_modifiers[tag] as Array:
+		var mods: Dictionary = effect.get("modifiers", {})
+		for key in mods.keys():
+			var val := float(mods[key])
+			match key:
+				"supply_consumption", "supply_use", "logistics":
+					result["supply_consumption"] += val
+				"attrition_reduction", "attrition":
+					result["attrition_reduction"] += val
+				"interdiction_resistance", "interdiction_reduction", "logistics_security":
+					result["interdiction_resistance"] += val
+				"stability":
+					# Negative stability increases supply consumption (worse logistics)
+					if val < 0:
+						result["supply_consumption"] += absf(val) * 0.005   # 0.5% extra consumption per stability point
+						# Also slightly hurts attrition resistance
+						result["attrition_reduction"] -= absf(val) * 0.003
+
+	return result
+
+
 # === Convenience Helpers ===
 
 ## Quick way for Influence-type effects to apply stability and/or prestige changes.
-func apply_influence_effect(country_tag: String, stability_change: float = 0.0, prestige_change: float = 0.0, duration_months: int = 12, source: String = "influence") -> String:
+func apply_influence_effect(
+	country_tag: String,
+	stability_change: float = 0.0,
+	prestige_change: float = 0.0,
+	duration_months: int = 12,
+	source: String = "influence",
+	source_detail: String = "",
+) -> String:
 	var tag := country_tag.strip_edges().to_upper()
 	var modifiers := {}
 	if stability_change != 0.0:
@@ -168,10 +295,11 @@ func apply_influence_effect(country_tag: String, stability_change: float = 0.0, 
 
 	var effect := {
 		"source": source,
+		"source_detail": source_detail.strip_edges(),
 		"modifiers": modifiers,
 		"duration_months": duration_months,
 		"remaining_months": duration_months,
-		"is_debuff": stability_change < 0.0 or prestige_change < 0.0
+		"is_debuff": stability_change < 0.0 or prestige_change < 0.0,
 	}
 
 	apply_national_effect(tag, effect)

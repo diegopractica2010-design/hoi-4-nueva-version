@@ -97,6 +97,49 @@ func _resolved_feature_key(feature: String) -> String:
 			return sk
 	return ""
 
+# ============================================
+# Gameplay Effect Getters (Deeper Combat + Supply Integration)
+# ============================================
+
+## Returns a multiplier for supply depot/throughput capacity based on infrastructure.
+func get_supply_throughput_modifier() -> float:
+	var infra := float(clampi(infrastructure, 0, 50))
+	return 0.5 + (infra * 0.04)   # level 1 ≈ 0.54, level 10 ≈ 0.9, level 25 ≈ 1.5
+
+## Returns a modifier for how much local supply a high-development province can generate.
+func get_local_supply_generation_modifier() -> float:
+	var dev := float(clampi(development_level, 0, 50))
+	return maxf(0.0, (dev - 3) * 0.03)   # Only developed provinces generate local supply
+
+## Returns a multiplier for combat width contribution from this province.
+func get_combat_width_modifier() -> float:
+	var infra := float(clampi(infrastructure, 0, 50))
+	var dev := float(clampi(development_level, 0, 50))
+	return (0.7 + infra * 0.02) * (0.9 + dev * 0.01)
+
+## Returns a modifier for organization recovery and entrenchment speed in this province.
+func get_organization_recovery_modifier() -> float:
+	var infra := float(clampi(infrastructure, 0, 50))
+	var dev := float(clampi(development_level, 0, 50))
+	return 0.6 + (infra * 0.025) + (dev * 0.015)
+
+## Returns a modifier for reinforcement and replacement speed into this province.
+func get_reinforcement_speed_modifier() -> float:
+	var infra := float(clampi(infrastructure, 0, 50))
+	return 0.4 + (infra * 0.04)
+
+## Returns a modifier for how much attrition is suffered when fighting in / moving through this province.
+func get_attrition_modifier() -> float:
+	var dev := float(clampi(development_level, 0, 50))
+	# Higher development = better roads, hospitals, logistics = less attrition
+	return maxf(0.6, 1.0 - (dev * 0.015))
+
+## Returns a combined "logistics quality" score for this province (used by supply & agents).
+func get_logistics_quality() -> float:
+	var infra := float(clampi(infrastructure, 0, 50))
+	var dev := float(clampi(development_level, 0, 50))
+	return (infra * 0.6) + (dev * 0.4)   # 0–100 scale roughly
+
 
 func _base_terrain_movement_multiplier() -> float:
 	match str(terrain).to_lower():

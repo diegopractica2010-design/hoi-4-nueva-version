@@ -1,0 +1,52 @@
+{
+  "scenario": "1936",
+  "defaults": {
+    "completed": ["basic_machine_tools"],
+    "research_slots": 2
+  },
+  "countries": {
+    "USA": {
+      "completed": [
+        "radio_i",
+        "land_doctrine_i",
+        "tank_plant_i",
+        "port_shipyard_i",
+        "airframe_1918",
+        "airframe_1936"
+      ],
+      "research_slots": 3
+    },
+    "GER": {
+      "completed": ["radio_i", "land_doctrine_i", "mobile_warfare_study", "tank_plant_i"],
+      "research_slots": 3
+    },
+    "ENG": {
+      "completed": ["radio_i", "land_doctrine_i", "port_shipyard_i", "patrol_frigate_1936"],
+      "research_slots": 3
+    },
+    "FRA": {
+      "completed": ["radio_i", "land_doctrine_i", "tank_plant_i"],
+      "research_slots": 3
+    },
+    "SOV": {
+      "completed": ["land_doctrine_i", "mobile_warfare_study", "tank_plant_i"],
+      "research_slots": 3
+    },
+    "JAP": {
+      "completed": ["land_doctrine_i", "port_shipyard_i", "patrol_frigate_1936"],
+      "research_slots": 3
+    },
+    "ITA": {
+      "completed": ["radio_i", "land_doctrine_i", "port_shipyard_i"],
+      "research_slots": 2
+    },
+    "POL": {
+      "completed": ["land_doctrine_i"],
+      "research_slots": 2
+    },
+    "CAN": {
+      "completed": ["radio_i", "port_shipyard_i"],
+      "research_slots": 2
+    }
+  }
+}

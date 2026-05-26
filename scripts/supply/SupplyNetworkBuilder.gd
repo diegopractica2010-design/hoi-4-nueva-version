@@ -50,6 +50,7 @@ static func _hub_from_province(
 	hub.province_id = province.id
 	hub.owner_tag = province.controller_tag if not province.controller_tag.is_empty() else province.owner_tag
 	hub.infrastructure = province.infrastructure
+	hub.development_level = province.development_level
 
 	var cap_rules := rules.get_block("depot_capacity")
 	var port_lvl := 0

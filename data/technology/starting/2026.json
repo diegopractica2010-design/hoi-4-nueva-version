@@ -1,0 +1,109 @@
+{
+  "scenario": "2026",
+  "defaults": {
+    "completed": ["basic_machine_tools", "radio_i"],
+    "research_slots": 2
+  },
+  "countries": {
+    "USA": {
+      "completed": [
+        "radio_ii",
+        "radio_iii",
+        "land_doctrine_i",
+        "mobile_warfare_study",
+        "network_centric_study",
+        "tank_plant_i",
+        "medium_tank_ii",
+        "modern_mbt_program",
+        "port_shipyard_i",
+        "patrol_frigate_1936",
+        "multirole_frigate_2026",
+        "airframe_1918",
+        "airframe_1936",
+        "airframe_2026",
+        "quantum_sensing"
+      ],
+      "research_slots": 4
+    },
+    "CHN": {
+      "completed": [
+        "land_doctrine_i",
+        "mobile_warfare_study",
+        "network_centric_study",
+        "tank_plant_i",
+        "medium_tank_ii",
+        "airframe_1918",
+        "airframe_1936",
+        "airframe_2026"
+      ],
+      "research_slots": 3
+    },
+    "RUS": {
+      "completed": [
+        "land_doctrine_i",
+        "mobile_warfare_study",
+        "tank_plant_i",
+        "medium_tank_ii",
+        "port_shipyard_i",
+        "patrol_frigate_1936",
+        "multirole_frigate_2026"
+      ],
+      "research_slots": 3
+    },
+    "GER": {
+      "completed": [
+        "radio_ii",
+        "land_doctrine_i",
+        "mobile_warfare_study",
+        "network_centric_study",
+        "tank_plant_i",
+        "medium_tank_ii",
+        "port_shipyard_i",
+        "patrol_frigate_1936",
+        "airframe_1918",
+        "airframe_1936",
+        "airframe_2026",
+        "multirole_frigate_2026"
+      ],
+      "research_slots": 3
+    },
+    "ENG": {
+      "completed": [
+        "radio_ii",
+        "land_doctrine_i",
+        "network_centric_study",
+        "port_shipyard_i",
+        "patrol_frigate_1936",
+        "multirole_frigate_2026",
+        "airframe_1918",
+        "airframe_1936",
+        "airframe_2026"
+      ],
+      "research_slots": 3
+    },
+    "JAP": {
+      "completed": [
+        "land_doctrine_i",
+        "network_centric_study",
+        "port_shipyard_i",
+        "patrol_frigate_1936",
+        "multirole_frigate_2026",
+        "airframe_1918",
+        "airframe_1936",
+        "airframe_2026"
+      ],
+      "research_slots": 3
+    },
+    "ISR": {
+      "completed": [
+        "land_doctrine_i",
+        "mobile_warfare_study",
+        "network_centric_study",
+        "airframe_1918",
+        "airframe_1936",
+        "airframe_2026"
+      ],
+      "research_slots": 3
+    }
+  }
+}

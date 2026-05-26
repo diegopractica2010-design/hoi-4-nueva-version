@@ -36,18 +36,48 @@
 
 **Date:** May 2026
 
-**Recently Completed:**
+**Recently Completed (Major Integration Push):**
 - Officer Training Command (mentor, quality, Generate Cadet UI)
 - Training path UI polish + combat/supply modifier wiring (helpers)
+- Full NationalModifierManager with explicit `attrition_reduction` and `interdiction_resistance` keys
+- Deep Agent System: variable effects by skill/outcome, critical successes with announcements, persistent province networks / operative rings foundation
+- National modifier system wired into:
+  - Production (solid — output, reliability, retooling)
+  - Supply (strong — consumption, interdiction resistance, attrition reduction)
+  - Combat (deeper — division base stats + interdiction/attrition side)
+- Explicit first-class support for `attrition_reduction` and `interdiction_resistance` across spirits + temporary effects
 
 **Good Place to Resume:**
 - Combat resolver: apply training path bonuses in battle
 - Leader replacement picker after death/retirement
 - Wire `resolve_formation_destroyed()` into formation elimination code
+- Continue Combat integration (more national effects on actual battle resolution)
+- Rich province-based Agent Networks (recruitment, enemy pressure scaling, detection)
 
-**Last Updated:** May 18, 2026
+**Last Updated:** Late May 2026 (post major national modifier + agent effects integration)
 
-## Core Systems (High Priority)
+## Recommended Next Priority Systems (May 2026 Assessment)
+
+After the recent heavy investment in the National Modifier/Spirit system and Agent effects, here is the current recommended order for maximum game feel and integration:
+
+1. **Deeper Combat Integration** (Highest immediate leverage)
+   - Full wiring of national combat modifiers into actual battle resolution (soft/hard attack, org, width, casualties, etc.).
+   - Make spirits and agent effects visibly change combat outcomes.
+
+2. **Rich Agent / Espionage Networks** (High value, high fun)
+   - Province-based persistent operative rings (as documented in the Agent section below).
+   - Recruitment of locals, scaling with skill, detection risk from enemy units + enemy agents, real province-level effects.
+
+3. **Technology System** (Foundation for mid-to-late game)
+   - Already has good scaffold. Next is deeper agent interaction (tech theft/protection) and doctrine integration.
+
+4. **Province Infrastructure & Development** (Enables many other systems)
+   - Currently very placeholder. Needed for combat width, supply, factory efficiency, movement, etc.
+
+5. **Diplomacy + National Focuses** (Big strategic layer)
+   - Will naturally feed into the NationalModifierManager.
+
+### Current Session State (Last Worked On)
 
 ### National Position Costs (Chiefs of Staff)
 - Changing `chief_of_army`, `chief_of_navy`, `chief_of_air_force`, or `chief_of_space_force` should have a real cost (Stability, Prestige, Political Power, or cooldown).
@@ -89,6 +119,58 @@
 - How supply interdiction affects combat over time.
 - Wire more leader and equipment modifiers into actual combat calculations.
 
+## National Spirits & Technology (Scaffold — May 2026)
+
+### Completed (scaffold)
+- `NationalSpiritManager` + `data/national/spirit_definitions.json` (per-country spirits)
+- `NationalSpiritsScreen` (permanent spirits + temporary effects from `NationalModifierManager`)
+- `NationalModifierDisplay` — modifier tooltips and formatted value rows
+- National Spirits UI: view/category filters, search, duration bars, detail panel, hover tooltips
+- Agent screen **National Effects** chips + tooltips on roster, targets, intel, operations, missions
+- Visibility polish: feedback hint bar, title attention states, mission progress bars, outcome badges, View Agent from ops log, detection risk labels
+- National Spirits: filter status line, debuff count in summary, agent-operation source tally
+- **Technology:** Phase A + B — research UI, `support_radio` + `industry_foundations` trees, production gates, research toasts
+- `TechnologyScreen` list + domain filter + inspector + start/cancel research
+- Design picker padlocks (`Requires: Medium Tank II`); `ProductionManager` / shipyard conversion gated
+- TopInfoBar **Technology** button opens research screen
+- Doctrine model: research slots for equipment/support; leaders + Doctrine XP for levels; agents on R&D only
+
+### Outstanding
+- Wire spirit modifiers more deeply into Combat (full battle resolution) and leader systems
+- National focus / event sources for temporary effects
+- Diplomacy screen
+- Rich persistent province-based Agent Networks (see "Agent & Espionage System" section below)
+
+### Recently Completed (Major)
+- Solid Supply integration: `calculate_daily_supply_consumption` now respects both permanent spirits and temporary national modifiers (including stability effects on consumption).
+- Added convenient `get_total_supply_consumption_modifier()`, `get_total_attrition_reduction_modifier()`, and `get_total_interdiction_resistance_modifier()` on NationalSpiritManager.
+- Deeper Combat integration:
+  - National combat modifiers now applied at division/base stats level inside CombatResolver (before leader bonuses).
+  - Interdiction chance on supply routes reduced by national logistics/attrition modifiers.
+  - Attrition cargo demand on routes lightly reduced by national modifiers.
+- Added explicit first-class support for `attrition_reduction` and `interdiction_resistance` keys across NationalModifierManager and NationalSpiritManager.
+- These keys are now properly read from both permanent spirits and temporary effects and applied in Supply (interdiction chance + attrition cargo demand).
+- NationalModifierManager fully implemented with clean querying and ticking.
+
+## Technology System (planned — see docs/TECHNOLOGY_SYSTEM_DESIGN.md)
+
+### Approved direction
+- HOI4++ UX: domains, research slots, graph + list views, era bands 1900–2050+
+- Single `TechnologyNode` JSON template; unlock registry into production/units/factories/doctrines
+- `strategic_future` domain (Terra Invicta–style megaprojects)
+- Agent missions steal/accelerate/protect specific tech nodes
+
+### Implementation phases (summary)
+- Phase A: schema + TechnologyManager + list UI + one tree slice — **done**
+- Phase B: production/design unlock wiring — **done**
+- Phase C: graph view + doctrine tab + era slider — **done**
+- Phase D: agent tech theft, compromised UI, Technology ↔ Agents links — **done**
+- Phase D: agent integration on tech screen
+- Phase E: scenario starting tech + era trees (`land/air/naval_equipment`, `strategic_future`) — **done**
+- Phase F: polish (compare tool, queue UI, …)
+
+---
+
 ## UI & Screen Systems
 
 ### Screen Data Caching
@@ -106,6 +188,70 @@
 ## Production & Economy
 
 - Improve long-term usage of real scenario data in `ScenarioFactorySpawner`.
+
+---
+
+## Agent & Espionage System
+
+### Outstanding
+- Visuals & UX for sabotage effects: special icons, distinct alert styling, and prominent critical success toasts in the news feed (currently on hold — graphics work deferred).
+
+### Rich Operative Ring / Resistance Network Vision (Deferred — High Value, Recommended Next Big System)
+- Move beyond one-off timed missions toward persistent province-based "rings" or "cells".
+- Agents can be assigned to provinces to **establish and run networks** that recruit local operatives over time.
+- Networks have levels/strength that grow with activity and can be given focuses:
+  - Intelligence Gathering (low risk, generates localized intel)
+  - Supply Disruption (harass convoys, reduce throughput in province)
+  - Infrastructure Sabotage (damage rails/bridges, increase movement costs)
+  - Influence / Partisan Recruitment
+- Effectiveness scaled down by:
+  - Number and quality of enemy divisions in/adjacent to the province
+  - Enemy counter-intelligence agents operating in the region
+- Networks can be detected and rolled up (strength loss, operative casualties, lead agent compromised/captured).
+- Goal: Meaningful asymmetric impact and intelligence without being stronger than actual combat formations.
+- Should feel like real WWII resistance / SOE / OSS operations (Free French style rings, etc.).
+- Both the current timed-mission system and this richer persistent network system should coexist.
+
+**Status:** Backend foundation started (AgentNetwork class + basic ticking in AgentManager). Needs enemy pressure wiring + real province-level effects. High priority recommendation after deeper Combat.
+
+---
+
+## Deeper Combat + Province Infrastructure — Concrete Phased Plan
+
+### Phase 1: Province as a First-Class Gameplay Object (Current Focus)
+- [x] Add rich computed getters on Province (`get_supply_throughput_modifier`, `get_local_supply_generation_modifier`, `get_combat_width_modifier`, `get_organization_recovery_modifier`, `get_attrition_modifier`, `get_logistics_quality`, etc.)
+- [x] Wire development_level into Supply for local supply generation (basic implementation done)
+- [ ] Make infrastructure + development strongly affect:
+  - Depot throughput capacity
+  - Interdiction resistance
+  - Reinforcement speed into the province
+- [ ] Expose these values clearly in province tooltips and supply map
+
+### Phase 2: Combat Deepening
+- [x] Combat Width already uses infrastructure (enhanced with development)
+- [x] National combat modifiers applied at division base stats level in CombatResolver
+- [ ] Apply province development/infrastructure directly to:
+  - Organization recovery during combat
+  - Casualty / attrition rates in battle
+  - Reinforcement effectiveness
+  - Supply consumption while fighting in the province
+- [ ] Make high-development provinces give small defensive bonuses (entrenchment, readiness)
+
+### Phase 3: Full National Modifier + Province Synergy
+- Make temporary national modifiers (especially from agents) able to temporarily degrade or boost province infrastructure/development.
+- Allow spirits to give province-type bonuses (e.g., "Mountain Warfare Spirit" improves combat in mountains).
+
+### Phase 4: Feedback & Polish
+- Province tooltip shows current effective modifiers (infra/dev + national spirits + temporary effects).
+- Combat preview and supply route tooltips show province contributions.
+- Agent sabotage networks can target and degrade province infrastructure over time.
+
+**Current Progress:** Phase 1 foundation laid. Phase 2 partially started (CombatResolver integration). This is currently the highest recommended focus area.
+
+### Completed (Recent)
+- Variable sabotage effect strength and duration based on mission outcome + agent sabotage skill.
+- Rare critical success chance on sabotage missions that causes significantly stronger + longer-lasting debuffs.
+- Critical sabotage success now generates a player-facing news announcement.
 - Create proper Supply production system from provinces (capital as main source + limited local production in large cities).
 
 ## Notes
@@ -113,3 +259,42 @@
 - Map, graphics, province visuals, and unit models are intentionally deprioritized for now.
 - Focus remains on building solid backend systems and data structures first.
 - Keep complexity layered: surface information should be simple and clear; deeper math and modifiers should be accessible but not forced on the player.
+
+---
+
+## Overall Progress Summary & Next System Recommendation (Late May 2026)
+
+### Major Systems Status
+
+**Strong / Mature:**
+- Leader System (including Officer Training + national positions)
+- Agent / Espionage System (timed missions + foundation for rich persistent networks)
+- National Modifier / Spirit System (full backend + explicit keys + solid wiring)
+
+**Good Integration:**
+- Production (national modifiers fully active)
+- Supply (consumption + interdiction + attrition)
+- Combat (light-to-medium: national bonuses, division stats, interdiction/attrition)
+
+**Still Early / High Leverage:**
+- Province Infrastructure & Development
+- Full Combat resolution (terrain, weather, width, actual battle math)
+- Technology System (good scaffold, needs deeper gameplay loops)
+- Diplomacy + National Focuses
+
+### Recommended Next Major Focus
+
+**Primary Recommendation: Deeper Combat Integration + Province Infrastructure**
+
+**Why this over everything else right now?**
+- The National Modifier system is now powerful, but its effects are still somewhat "invisible" in actual battles.
+- Making national spirits and agent operations visibly change combat outcomes would be the single highest "wow, this matters" moment for the game.
+- Province Infrastructure is the missing foundation that would make Combat Width, Supply, movement, and factory efficiency all feel meaningful at the same time.
+- These two areas would immediately make the Agent and National Spirit work from the last several weeks feel complete and high-impact.
+
+Secondary options (if you want a change of pace):
+1. Rich persistent Agent Networks (the resistance ring vision) — very high fun factor.
+2. Push the Technology system to a playable vertical slice.
+3. Start the Diplomacy / National Focus layer (feeds the modifier system).
+
+Current recommendation stands at **Combat depth + Province Infrastructure** as the next big coordinated push.

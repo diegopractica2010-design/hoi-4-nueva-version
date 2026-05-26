@@ -25,6 +25,8 @@ LeaderManager="*res://scripts/leaders/LeaderManager.gd"
 LeaderEventUI="*res://scripts/ui/LeaderEventUI.gd"
 AgentManager="*res://scripts/agents/AgentManager.gd"
 NationalModifierManager="*res://scripts/national/NationalModifierManager.gd"
+NationalSpiritManager="*res://scripts/national/NationalSpiritManager.gd"
+TechnologyManager="*res://scripts/technology/TechnologyManager.gd"
 
 [display]
 

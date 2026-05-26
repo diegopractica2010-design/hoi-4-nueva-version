@@ -10,6 +10,7 @@ var port_level: int = 0
 var airport_level: int = 0
 var spaceport_level: int = 0
 var infrastructure: int = 0
+var development_level: int = 1
 var industry_slots: int = 0
 var storage_capacity: float = 0.0
 var is_player_depot: bool = false

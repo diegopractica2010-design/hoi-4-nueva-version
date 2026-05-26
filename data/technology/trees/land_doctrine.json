@@ -1,0 +1,86 @@
+{
+  "land_doctrine_i": {
+    "id": "land_doctrine_i",
+    "name": "Land Doctrine Fundamentals",
+    "domain": "land_doctrine",
+    "tree_id": "land_doctrine_core",
+    "node_kind": "doctrine",
+    "column": 0,
+    "row": 0,
+    "tier": 1,
+    "era_min": 1914,
+    "era_max": 1955,
+    "epoch": "industrial_war",
+    "prerequisites": [],
+    "research": {
+      "base_cost_days": 50,
+      "category": "land_doctrine",
+      "ahead_of_time_penalty_per_year": 0.08,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "doctrine_key", "key": "infiltration" },
+      { "type": "doctrine_key", "key": "stormtrooper" }
+    ],
+    "ui": {
+      "short_effect": "Unlocks Infiltration & Stormtrooper schools",
+      "flavor": "Staff colleges codify breakthrough tactics for the next war."
+    }
+  },
+  "mobile_warfare_study": {
+    "id": "mobile_warfare_study",
+    "name": "Mobile Warfare Study",
+    "domain": "land_doctrine",
+    "tree_id": "land_doctrine_core",
+    "node_kind": "doctrine",
+    "column": 1,
+    "row": 0,
+    "tier": 2,
+    "era_min": 1936,
+    "era_max": 1970,
+    "epoch": "industrial_war",
+    "prerequisites": ["land_doctrine_i"],
+    "research": {
+      "base_cost_days": 65,
+      "category": "land_doctrine",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "doctrine_key", "key": "mobile_warfare" },
+      { "type": "doctrine_key", "key": "mass_assault" }
+    ],
+    "ui": {
+      "short_effect": "School of Maneuver & Layered Defense paths",
+      "flavor": "Deep battle and elastic defense enter doctrine manuals."
+    }
+  },
+  "network_centric_study": {
+    "id": "network_centric_study",
+    "name": "Network-Centric Study",
+    "domain": "land_doctrine",
+    "tree_id": "land_doctrine_core",
+    "node_kind": "doctrine",
+    "column": 2,
+    "row": 0,
+    "tier": 3,
+    "era_min": 1990,
+    "era_max": 2040,
+    "epoch": "information",
+    "prerequisites": ["mobile_warfare_study"],
+    "research": {
+      "base_cost_days": 80,
+      "category": "land_doctrine",
+      "ahead_of_time_penalty_per_year": 0.12,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "doctrine_key", "key": "network_centric" },
+      { "type": "doctrine_key", "key": "precision_strike" }
+    ],
+    "ui": {
+      "short_effect": "Information-era leader training paths",
+      "flavor": "C4ISR integration reshapes command and joint fires."
+    }
+  }
+}

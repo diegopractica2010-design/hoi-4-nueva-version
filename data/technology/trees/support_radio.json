@@ -1,0 +1,94 @@
+{
+  "radio_i": {
+    "id": "radio_i",
+    "name": "Radio Detection",
+    "domain": "support",
+    "tree_id": "support_electronics",
+    "node_kind": "research",
+    "column": 0,
+    "row": 0,
+    "tier": 1,
+    "era_min": 1910,
+    "era_max": 1945,
+    "epoch": "interwar",
+    "prerequisites": [],
+    "mutually_exclusive_with": [],
+    "research": {
+      "base_cost_days": 70,
+      "category": "electronics",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "modifier", "stat": "reconnaissance", "value": 0.05 },
+      { "type": "doctrine_key", "key": "combined_arms" }
+    ],
+    "agent": { "theft_target": true, "intel_domain": "technology" },
+    "ui": {
+      "short_effect": "Improves recon and unlocks Combined Arms doctrine study",
+      "flavor": "Crystal radios and early direction finding reshape the battlefield."
+    }
+  },
+  "radio_ii": {
+    "id": "radio_ii",
+    "name": "Radio Networks",
+    "domain": "support",
+    "tree_id": "support_electronics",
+    "node_kind": "research",
+    "column": 0,
+    "row": 1,
+    "tier": 2,
+    "era_min": 1936,
+    "era_max": 1960,
+    "epoch": "industrial_war",
+    "prerequisites": ["radio_i"],
+    "research": {
+      "base_cost_days": 90,
+      "category": "electronics",
+      "ahead_of_time_penalty_per_year": 0.12,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "modifier", "stat": "planning_speed", "value": 0.08 },
+      { "type": "division_capability", "capability": "motorized_logistics" }
+    ],
+    "agent": { "theft_target": true, "intel_domain": "technology" },
+    "ui": {
+      "short_effect": "Faster planning; motorized logistics divisions",
+      "flavor": "Net-centric command at division level becomes doctrine."
+    }
+  },
+  "radio_iii": {
+    "id": "radio_iii",
+    "name": "Encrypted Networks",
+    "domain": "support",
+    "tree_id": "support_electronics",
+    "node_kind": "research",
+    "column": 0,
+    "row": 2,
+    "tier": 3,
+    "era_min": 1942,
+    "era_max": 1980,
+    "epoch": "industrial_war",
+    "prerequisites": ["radio_ii"],
+    "research": {
+      "base_cost_days": 110,
+      "category": "electronics",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "modifier", "stat": "encryption", "value": 1.0 },
+      { "type": "agent_mission", "mission_id": "infiltrate_research_lab" }
+    ],
+    "agent": {
+      "theft_target": true,
+      "intel_domain": "technology",
+      "counter_intel_node": "secure_research_facility"
+    },
+    "ui": {
+      "short_effect": "Stronger encryption; unlocks deep infiltration missions",
+      "flavor": "Rotors and one-time pads delay enemy signals intelligence."
+    }
+  }
+}

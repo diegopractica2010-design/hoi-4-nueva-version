@@ -537,7 +537,60 @@ func get_national_bonuses(country_tag: String) -> Dictionary:
 	if chief_air != null:
 		bonuses["air_support"] = float(bonuses["air_support"]) + chief_air.get_attack_modifier() * 0.6
 
+	# === Light National Spirit / Modifier Integration (Combat) ===
+	# This is a light pass — full deep integration can come later.
+	var national_combat := _get_combined_national_combat_modifiers(country_tag)
+	bonuses["army_organization"] = float(bonuses["army_organization"]) + float(national_combat.get("army_org_factor", 0.0))
+	bonuses["planning_speed"] = float(bonuses["planning_speed"]) + float(national_combat.get("planning_speed", 0.0))
+
 	return bonuses
+
+
+func get_national_combat_modifiers(country_tag: String) -> Dictionary:
+	"""Public helper: combined combat modifiers from national spirits + temporary national effects."""
+	var result := {
+		"army_org_factor": 0.0,
+		"defence_factor": 0.0,
+		"planning_speed": 0.0,
+		"attack_factor": 0.0,
+		"manpower_factor": 0.0,
+	}
+
+	if country_tag.is_empty():
+		return result
+
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		var spirit := NationalSpiritManager.get_spirit_combat_modifiers(country_tag)
+		for k in result.keys():
+			result[k] = float(result[k]) + float(spirit.get(k, 0.0))
+
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var temp := NationalModifierManager.get_combat_modifiers(country_tag)
+		for k in result.keys():
+			result[k] = float(result[k]) + float(temp.get(k, 0.0))
+
+	return result
+
+
+func _get_combined_national_combat_modifiers(country_tag: String) -> Dictionary:
+	var result := {
+		"army_org_factor": 0.0,
+		"defence_factor": 0.0,
+		"planning_speed": 0.0,
+		"attack_factor": 0.0,
+	}
+
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		var spirit_mods := NationalSpiritManager.get_spirit_combat_modifiers(country_tag)
+		for key in result.keys():
+			result[key] = float(result[key]) + float(spirit_mods.get(key, 0.0))
+
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var temp_mods := NationalModifierManager.get_combat_modifiers(country_tag)
+		for key in result.keys():
+			result[key] = float(result[key]) + float(temp_mods.get(key, 0.0))
+
+	return result
 
 
 func get_leaders_for_country(country_tag: String) -> Array[Leader]:
@@ -2176,9 +2229,9 @@ func _get_training_path_effects(path_id: String, level: int) -> Dictionary:
 func _country_has_doctrine(country_tag: String, doctrine_id: String) -> bool:
 	if str(doctrine_id).is_empty():
 		return true
-	# TEMPORARY: bypass doctrine gates until national doctrine UI is hooked up.
-	return true
-	# return country_has_military_doctrine(country_tag, doctrine_id)
+	if typeof(TechnologyManager) != TYPE_NIL:
+		return TechnologyManager.is_doctrine_key_unlocked(country_tag, doctrine_id)
+	return country_has_military_doctrine(country_tag, doctrine_id)
 
 
 func _load_training_path_definitions() -> void:

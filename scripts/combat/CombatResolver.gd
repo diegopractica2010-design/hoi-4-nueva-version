@@ -15,6 +15,11 @@ func get_effective_combat_power(
 	if base_stats.is_empty():
 		return {}
 
+	# === Deeper Combat Integration: Apply national modifiers at division/base stats level ===
+	if leader != null and typeof(LeaderManager) != TYPE_NIL:
+		var nat_mods := LeaderManager.get_national_combat_modifiers(leader.country_tag)
+		base_stats = _apply_national_combat_modifiers_to_base_stats(base_stats, nat_mods)
+
 	var leader: Leader = null
 	var leader_id := ""
 	var terrain_bonus := 0.0
@@ -42,6 +47,36 @@ func get_effective_combat_power(
 		final_soft += terrain_bonus * 8.0
 		final_hard += terrain_bonus * 5.0
 
+	# Province infrastructure & development effects (Deeper Combat integration)
+	if typeof(Province) != TYPE_NIL:
+		# We don't have direct province access here easily, but when called from battle context we can improve this later.
+		# For now, we apply a small development bonus to organization if high-dev provinces are involved (future improvement).
+		pass
+
+	var national_combat := {}
+
+	# === Light National Spirit / Temporary Modifier Integration (Combat) ===
+	# One step further from the national_bonuses integration in LeaderManager.
+	if leader != null and typeof(LeaderManager) != TYPE_NIL:
+		national_combat = LeaderManager.get_national_combat_modifiers(leader.country_tag)
+
+		# Apply organization bonus from national spirits/modifiers
+		var org_bonus := float(national_combat.get("army_org_factor", 0.0))
+		if org_bonus != 0.0:
+			final_org += org_bonus * 5.0   # Scale to match other combat stat units
+
+		# Apply attack bonus (if present)
+		var attack_bonus := float(national_combat.get("attack_factor", 0.0))
+		if attack_bonus != 0.0:
+			final_soft += attack_bonus * 8.0
+			final_hard += attack_bonus * 5.0
+
+		# Apply defence bonus (maps to readiness/org in this context)
+		var def_bonus := float(national_combat.get("defence_factor", 0.0))
+		if def_bonus != 0.0:
+			final_readiness += def_bonus * 3.0
+			final_org += def_bonus * 2.0
+
 	var training_path_bonus := float(combat_stats.get("training_path_soft_bonus", 0.0))
 
 	return {
@@ -58,6 +93,7 @@ func get_effective_combat_power(
 		"training_path_modifiers": combat_stats.get("training_path_modifiers", {}),
 		"terrain": terrain,
 		"terrain_bonus_applied": terrain_bonus,
+		"national_combat_modifiers": national_combat if leader != null else {},
 	}
 
 
@@ -224,6 +260,8 @@ func get_combat_width_for_battle(
 ) -> float:
 	var attacker_infra := 2
 	var defender_infra := 2
+	var attacker_dev := 1
+	var defender_dev := 1
 	var battle_terrain := terrain
 
 	var loader := _find_scenario_loader()
@@ -231,11 +269,13 @@ func get_combat_width_for_battle(
 		if loader.provinces.has(attacker_province_id):
 			var attacker: Province = loader.provinces[attacker_province_id]
 			attacker_infra = attacker.infrastructure
+			attacker_dev = attacker.development_level
 			if battle_terrain.is_empty():
 				battle_terrain = attacker.terrain
 		if loader.provinces.has(defender_province_id):
 			var defender: Province = loader.provinces[defender_province_id]
 			defender_infra = defender.infrastructure
+			defender_dev = defender.development_level
 			if battle_terrain.is_empty():
 				battle_terrain = defender.terrain
 
@@ -245,6 +285,11 @@ func get_combat_width_for_battle(
 	var calculator := CombatWidthCalculator.new()
 	var width := calculator.get_effective_combat_width(attacker_infra, defender_infra, battle_terrain)
 	calculator.free()
+
+	# Development level gives a small bonus to effective combat width (better C3, roads, etc.)
+	var dev_bonus := (float(attacker_dev) + float(defender_dev)) * 0.015
+	width *= (1.0 + dev_bonus)
+
 	return width
 
 
@@ -374,3 +419,40 @@ func _normalize_battle_result(battle_result: Dictionary, intensity: float = 1.0)
 	else:
 		result["outcome"] = "defeat"
 	return result
+
+
+## Applies national combat modifiers (from spirits + temporary effects) to base division stats.
+## This is the deeper integration at the division info level.
+func _apply_national_combat_modifiers_to_base_stats(stats: Dictionary, nat_mods: Dictionary) -> Dictionary:
+	if nat_mods.is_empty() or stats.is_empty():
+		return stats
+
+	var modified := stats.duplicate()
+
+	# Apply attack / soft / hard bonuses
+	var attack_mod := float(nat_mods.get("attack_factor", 0.0))
+	if attack_mod != 0.0:
+		if modified.has("soft_attack"):
+			modified["soft_attack"] = float(modified["soft_attack"]) * (1.0 + attack_mod * 0.5)
+		if modified.has("hard_attack"):
+			modified["hard_attack"] = float(modified["hard_attack"]) * (1.0 + attack_mod * 0.5)
+
+	# Apply defence / readiness / org
+	var def_mod := float(nat_mods.get("defence_factor", 0.0))
+	if def_mod != 0.0:
+		if modified.has("readiness"):
+			modified["readiness"] = float(modified["readiness"]) * (1.0 + def_mod)
+		if modified.has("organization"):
+			modified["organization"] = float(modified["organization"]) * (1.0 + def_mod * 0.5)
+
+	# Army org factor (often from spirits)
+	var org_mod := float(nat_mods.get("army_org_factor", 0.0))
+	if org_mod != 0.0 and modified.has("organization"):
+		modified["organization"] = float(modified["organization"]) * (1.0 + org_mod)
+
+	# Manpower / replacement related
+	var mp_mod := float(nat_mods.get("manpower_factor", 0.0))
+	if mp_mod != 0.0 and modified.has("manpower"):
+		modified["manpower"] = float(modified["manpower"]) * (1.0 + mp_mod)
+
+	return modified

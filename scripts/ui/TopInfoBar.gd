@@ -128,9 +128,17 @@ func _update_resources() -> void:
 	rubber_label.text = "Rubber: %.0f" % float(stockpile.get("rubber", 0.0))
 
 
-func _on_production_pressed() -> void:
+func _close_overlay_screens() -> void:
+	_close_screen("ProductionAssignmentScreen")
 	_close_screen("LeaderAssignmentScreen")
 	_close_screen("AgentAssignmentScreen")
+	_close_screen("NationalSpiritsScreen")
+	_close_screen("TechnologyScreen")
+
+
+func _on_production_pressed() -> void:
+	_close_overlay_screens()
+	_close_screen("ProductionAssignmentScreen")
 	_toggle_screen(
 		"ProductionAssignmentScreen",
 		"res://scenes/ui/ProductionAssignmentScreen.tscn",
@@ -142,8 +150,8 @@ func _on_production_pressed() -> void:
 
 
 func _on_leaders_pressed() -> void:
-	_close_screen("ProductionAssignmentScreen")
-	_close_screen("AgentAssignmentScreen")
+	_close_overlay_screens()
+	_close_screen("LeaderAssignmentScreen")
 	_toggle_screen(
 		"LeaderAssignmentScreen",
 		"res://scenes/ui/LeaderAssignmentScreen.tscn",
@@ -157,7 +165,15 @@ func _on_leaders_pressed() -> void:
 
 
 func _on_technology_pressed() -> void:
-	print("Open Technology Screen (TODO)")
+	_close_overlay_screens()
+	_toggle_screen(
+		"TechnologyScreen",
+		"res://scenes/ui/TechnologyScreen.tscn",
+		func(scene: Node) -> void:
+			var screen := scene as TechnologyScreen
+			if screen != null:
+				screen.country_tag = player_country_tag
+	)
 
 
 func _on_diplomacy_pressed() -> void:
@@ -165,8 +181,8 @@ func _on_diplomacy_pressed() -> void:
 
 
 func _on_agents_pressed() -> void:
-	_close_screen("ProductionAssignmentScreen")
-	_close_screen("LeaderAssignmentScreen")
+	_close_overlay_screens()
+	_close_screen("AgentAssignmentScreen")
 	_toggle_screen(
 		"AgentAssignmentScreen",
 		"res://scenes/ui/AgentAssignmentScreen.tscn",
@@ -180,9 +196,7 @@ func _on_agents_pressed() -> void:
 
 
 func _on_map_pressed() -> void:
-	_close_screen("ProductionAssignmentScreen")
-	_close_screen("LeaderAssignmentScreen")
-	_close_screen("AgentAssignmentScreen")
+	_close_overlay_screens()
 
 
 func _close_screen(screen_name: String) -> void:

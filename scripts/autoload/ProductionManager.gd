@@ -178,6 +178,23 @@ func set_line_template(line_id: String, template_id: String) -> Dictionary:
 	if line == null:
 		return {"success": false, "error": "unknown_line"}
 
+	var owner_tag := ""
+	var fac_for_gate: Factory = null
+	if factory_manager != null and line.factory_id > 0:
+		fac_for_gate = factory_manager.get_factory(line.factory_id)
+		if fac_for_gate != null:
+			owner_tag = fac_for_gate.owner_tag
+	if typeof(TechnologyManager) != TYPE_NIL and not owner_tag.is_empty():
+		var gate := TechnologyManager.factory_can_build_design(owner_tag, fac_for_gate, template_id)
+		if not bool(gate.get("allowed", true)):
+			var detail: Dictionary = gate.get("detail", {}) as Dictionary
+			return {
+				"success": false,
+				"error": str(gate.get("error", "tech_locked")),
+				"lock_reason": str(detail.get("reason", "Technology required")),
+				"tech_id": str(detail.get("tech_id", "")),
+			}
+
 	if not _naval_production_allowed(line, template_id):
 		return {"success": false, "error": "naval_requires_shipyard_port"}
 
@@ -857,6 +874,19 @@ func _resolve_modifiers_for_line(line: ProductionLine) -> ProductionModifiers:
 	for modifier_id in _active_modifiers:
 		mods.absorb(_active_modifiers[modifier_id])
 
+	# === National Spirit + Temporary Modifier Integration (Option B) ===
+	var owner_tag := _get_line_owner_tag(line)
+	if not owner_tag.is_empty():
+		var national_mods := _get_national_production_modifiers(owner_tag)
+		if national_mods.get("output_multiplier", 1.0) != 1.0:
+			mods.output_multiplier *= float(national_mods["output_multiplier"])
+		if national_mods.get("reliability_multiplier", 1.0) != 1.0:
+			mods.reliability_multiplier *= float(national_mods["reliability_multiplier"])
+		if national_mods.get("retooling_days_multiplier", 1.0) != 1.0:
+			mods.retooling_days_multiplier *= float(national_mods["retooling_days_multiplier"])
+		if national_mods.get("cost_multiplier", 1.0) != 1.0:
+			mods.cost_multiplier *= float(national_mods["cost_multiplier"])
+
 	var template := line.get_current_template()
 	if template != null and not template.design_family.is_empty():
 		mods.design_family_output_bonus = _compute_family_output_bonus(template.design_family)
@@ -916,6 +946,45 @@ func _same_family_retool_discount(previous_template_id: String, new_template_id:
 func _template_design_family(template_id: String) -> String:
 	var template := GameData.design_data.get_template(template_id)
 	return template.design_family if template != null else ""
+
+
+func _get_line_owner_tag(line: ProductionLine) -> String:
+	if line == null or line.factory_id == 0 or typeof(FactoryManager) == TYPE_NIL:
+		return ""
+	var factory := FactoryManager.get_factory(line.factory_id)
+	if factory == null:
+		return ""
+	return factory.owner_tag
+
+
+func _get_national_production_modifiers(country_tag: String) -> Dictionary:
+	var result := {
+		"output_multiplier": 1.0,
+		"reliability_multiplier": 1.0,
+		"retooling_days_multiplier": 1.0,
+		"cost_multiplier": 1.0,
+	}
+
+	if country_tag.is_empty():
+		return result
+
+	# Permanent spirits
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		var spirit_mods := NationalSpiritManager.get_spirit_production_modifiers(country_tag)
+		result["output_multiplier"] *= float(spirit_mods.get("output_multiplier", 1.0))
+		result["reliability_multiplier"] *= float(spirit_mods.get("reliability_multiplier", 1.0))
+		result["retooling_days_multiplier"] *= float(spirit_mods.get("retooling_days_multiplier", 1.0))
+		result["cost_multiplier"] *= float(spirit_mods.get("cost_multiplier", 1.0))
+
+	# Temporary modifiers (including stability effects)
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var temp_mods := NationalModifierManager.get_production_modifiers(country_tag)
+		result["output_multiplier"] *= float(temp_mods.get("output_multiplier", 1.0))
+		result["reliability_multiplier"] *= float(temp_mods.get("reliability_multiplier", 1.0))
+		result["retooling_days_multiplier"] *= float(temp_mods.get("retooling_days_multiplier", 1.0))
+		result["cost_multiplier"] *= float(temp_mods.get("cost_multiplier", 1.0))
+
+	return result
 
 
 func _on_line_unit_completed(
@@ -1294,6 +1363,20 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 	var old_design: String = factory.current_production_design
 	if old_design == new_design_id:
 		return true
+
+	if typeof(TechnologyManager) != TYPE_NIL:
+		var gate := TechnologyManager.factory_can_build_design(
+			factory.owner_tag,
+			factory,
+			new_design_id,
+		)
+		if not bool(gate.get("allowed", true)):
+			var detail: Dictionary = gate.get("detail", {}) as Dictionary
+			push_warning(
+				"ProductionManager: factory %d blocked on '%s' — %s"
+				% [factory_id, new_design_id, detail.get("reason", gate.get("error", ""))]
+			)
+			return false
 
 	if ProductionNavalRules.is_naval_design(new_design_id):
 		if not ProductionNavalRules.factory_can_build_naval(factory):

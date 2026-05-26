@@ -20,6 +20,7 @@ const DEFAULT_TARGET_COUNTRY_TAGS: Array[String] = [
 ]
 
 var agents: Dictionary = {}                    # country_tag -> Array[Agent]
+var networks: Dictionary = {}                    # province_id (int) -> AgentNetwork
 var mission_definitions: Dictionary = {}
 
 var _current_year: int = 1936
@@ -90,6 +91,7 @@ func assign_agent_to_mission(
 	agent_id: String,
 	mission_id: String,
 	target_tag: String = "",
+	target_tech_id: String = "",
 ) -> bool:
 	var agent := get_agent(agent_id)
 	if agent == null or not agent.is_available():
@@ -108,22 +110,43 @@ func assign_agent_to_mission(
 		return false
 
 	var target := target_tag.strip_edges().to_upper()
-	if target.is_empty() or target == agent.country_tag:
+	var allow_home := _mission_allows_home_target(mission)
+	if target.is_empty() and allow_home:
+		target = agent.country_tag
+	if target.is_empty() or (target == agent.country_tag and not allow_home):
 		push_warning("AgentManager: Invalid mission target '%s'" % target_tag)
 		return false
 
+	var tech_target := target_tech_id.strip_edges()
+	if typeof(TechnologyManager) != TYPE_NIL:
+		if TechnologyManager.mission_requires_tech_target(mission_id) and tech_target.is_empty():
+			push_warning("AgentManager: Mission '%s' requires a technology target" % mission_id)
+			return false
+	else:
+		if mission_id == "steal_research" and tech_target.is_empty():
+			push_warning("AgentManager: steal_research requires target_tech_id")
+			return false
+
 	agent.assigned_target_tag = target
+	agent.assigned_target_tech_id = tech_target
 	agent.current_mission_id = mission_id
 	agent.mission_progress = 0.0
 	agent.status = "on_mission"
 
 	invalidate_agent_cache(agent.country_tag)
 	agent_assigned_to_mission.emit(agent_id, mission_id)
+	var tech_note := ""
+	if not tech_target.is_empty() and typeof(TechnologyManager) != TYPE_NIL:
+		tech_note = " → %s" % TechnologyManager.get_tech_display_name(tech_target)
 	print(
-		"Agent %s assigned to %s against %s"
-		% [agent.name, mission.get("name", mission_id), target]
+		"Agent %s assigned to %s against %s%s"
+		% [agent.name, mission.get("name", mission_id), target, tech_note]
 	)
 	return true
+
+
+func _mission_allows_home_target(mission: Dictionary) -> bool:
+	return bool(mission.get("allow_self_target", false))
 
 
 func advance_missions(months: int = 1) -> void:
@@ -137,6 +160,9 @@ func advance_missions(months: int = 1) -> void:
 
 			if agent.mission_progress >= 1.0:
 				_resolve_mission(agent)
+
+	# Advance persistent province networks
+	advance_networks(months)
 
 
 func _resolve_mission(agent: Agent) -> void:
@@ -196,8 +222,9 @@ func _apply_mission_outcome(agent: Agent, mission: Dictionary, outcome: String, 
 			NationalModifierManager.apply_influence_effect(
 				country,
 				prestige_change = float(prestige),
-				duration_months = 24,  # Prestige effects linger longer
-				source = "agent_mission"
+				duration_months = 24,
+				source = "agent_mission",
+				source_detail = mission_name,
 			)
 		else:
 			# Fallback to legacy national_prestige tracking
@@ -210,14 +237,16 @@ func _apply_mission_outcome(agent: Agent, mission: Dictionary, outcome: String, 
 	var magnitude := float(result.get("magnitude", 0.0))
 
 	match effect:
-		"production_delay", "supply_disruption":
-			_apply_production_delay(country, magnitude)
+		"production_delay":
+			_apply_production_delay(agent, mission, outcome, magnitude)
+		"supply_disruption":
+			_apply_supply_disruption(agent, mission, outcome, magnitude)
 		"stability_damage":
 			_apply_stability_damage(country, magnitude)
 		"research_progress":
-			_apply_research_theft(country, magnitude)
+			_apply_research_theft(agent, mission, outcome, magnitude, detected)
 		"long_term_tech_intel":
-			_establish_long_term_intel(country, "technology")
+			_establish_long_term_tech_intel(agent, mission, outcome)
 		"temporary_intel_bonus":
 			_apply_intel_bonus(country, magnitude)
 		"enemy_agent_disruption":
@@ -225,7 +254,7 @@ func _apply_mission_outcome(agent: Agent, mission: Dictionary, outcome: String, 
 		"enemy_intel_degradation":
 			_degrade_enemy_intel(country, magnitude)
 		"tech_theft_protection":
-			_apply_tech_protection(country, magnitude)
+			_apply_tech_protection(agent, mission, magnitude)
 
 	# Intelligence missions populate intel cache
 	var intel_type := str(result.get("intel_type", ""))
@@ -255,9 +284,133 @@ func get_mission_definition(mission_id: String) -> Dictionary:
 	return mission_definitions.get(mission_id, {}).duplicate(true)
 
 
+# === Province Network / Resistance Ring System ===
+
+func get_network(province_id: int) -> AgentNetwork:
+	return networks.get(province_id) as AgentNetwork
+
+
+func get_networks_for_country(country_tag: String) -> Array[AgentNetwork]:
+	var tag := country_tag.strip_edges().to_upper()
+	var result: Array[AgentNetwork] = []
+	for net in networks.values():
+		if net is AgentNetwork and net.controlling_country == tag:
+			result.append(net)
+	return result
+
+
+func establish_network(lead_agent_id: String, province_id: int, focus: String = "intelligence") -> bool:
+	var agent := get_agent(lead_agent_id)
+	if agent == null or not agent.is_available():
+		return false
+
+	if networks.has(province_id):
+		print("AgentManager: Network already exists in province %d" % province_id)
+		return false
+
+	var net := AgentNetwork.new()
+	net.network_id = "%s_net_%d" % [agent.country_tag.to_lower(), province_id]
+	net.province_id = province_id
+	net.controlling_country = agent.country_tag
+	net.lead_agent_id = lead_agent_id
+	net.focus = focus
+	net.strength = 15.0 + (agent.get_skill("intelligence") * 2.5)
+	net.local_operatives = 2
+
+	networks[province_id] = net
+
+	# Assign the agent to running this network
+	agent.status = "on_mission"
+	agent.current_mission_id = "network_lead"
+	agent.assigned_province_id = province_id   # We may need to add this field to Agent later
+
+	print("AgentManager: %s established a %s network in province %d" % [agent.name, focus, province_id])
+	return true
+
+
+func advance_networks(months: int = 1) -> void:
+	for province_id in networks.keys():
+		var net: AgentNetwork = networks[province_id]
+		if net == null or not net.is_active():
+			continue
+
+		# Grow the network slowly over time (recruiting locals)
+		var growth := 1.5 + (randf() * 1.5)
+		net.strength = clampf(net.strength + growth * months, 0.0, 100.0)
+		if randf() < 0.35 * months:
+			net.local_operatives += 1
+
+		# Perform the network's focus action
+		_process_network_action(net, months)
+
+
+func _process_network_action(net: AgentNetwork, months: int) -> void:
+	var lead := get_agent(net.lead_agent_id)
+	if lead == null:
+		return
+
+	var enemy_pressure := _estimate_enemy_pressure(net.province_id)
+
+	# Effectiveness reduced by enemy presence and counter-intel
+	var effectiveness := net.get_effectiveness() * (1.0 - enemy_pressure * 0.6)
+	effectiveness = clampf(effectiveness, 0.1, 1.8)
+
+	var detection_chance := 0.12 * enemy_pressure
+
+	match net.focus:
+		"intelligence":
+			if randf() < 0.7 * months:
+				var intel := int(4 + effectiveness * 6)
+				net.total_intel_gathered += intel
+				print("Network in province %d gathered %d intel (effectiveness: %.2f)" % [net.province_id, intel, effectiveness])
+
+		"supply_disruption":
+			var disruption := effectiveness * 0.08 * months
+			net.total_disruption_caused += disruption
+			# TODO: Apply actual province-level supply penalty here (reduce throughput, increase interdiction in this province)
+			print("Network in province %d disrupted supply by %.2f (effectiveness: %.2f)" % [net.province_id, disruption, effectiveness])
+
+		"infrastructure_sabotage":
+			# Future: damage infrastructure or increase movement cost in province
+			pass
+
+	# Detection roll
+	if randf() < detection_chance * months:
+		_handle_network_detection(net)
+
+
+func _estimate_enemy_pressure(province_id: int) -> float:
+	# Placeholder - in a full implementation this would query CombatPresenceRegistry / ProvinceForceReport
+	# For now return a random value between 0.1 and 0.8 to simulate enemy presence
+	return randf_range(0.15, 0.75)
+
+
+func _handle_network_detection(net: AgentNetwork) -> void:
+	var lead := get_agent(net.lead_agent_id)
+	if lead == null:
+		return
+
+	net.strength *= 0.6
+	net.local_operatives = max(0, net.local_operatives - 2)
+
+	var roll := randf()
+	if roll < 0.25:
+		lead.status = "captured"
+		print("Network in province %d was compromised — lead agent %s captured!" % [net.province_id, lead.name])
+	elif roll < 0.55:
+		net.strength *= 0.5
+		print("Network in province %d suffered major losses from detection." % net.province_id)
+	else:
+		print("Network in province %d was detected but survived with reduced strength." % net.province_id)
+
+	if net.strength < 8.0:
+		networks.erase(net.province_id)
+		print("Network in province %d has been dismantled." % net.province_id)
+
+
 func get_target_countries_for(country_tag: String) -> Array[String]:
 	var owner := country_tag.strip_edges().to_upper()
-	var targets: Array[String] = []
+	var targets: Array[String] = [owner]
 	for tag in DEFAULT_TARGET_COUNTRY_TAGS:
 		if tag != owner:
 			targets.append(tag)
@@ -360,6 +513,8 @@ func _build_agent_screen_data(country_tag: String) -> AgentScreenData:
 	data.mission_categories = get_mission_categories()
 	data.intel_reports = get_intel_reports(country_tag)
 	data.recent_operations = get_recent_operations(country_tag, RECENT_OPERATIONS_UI_LIMIT)
+	if typeof(NationalSpiritManager) != TYPE_NIL:
+		data.national_effects = NationalSpiritManager.get_national_effects_snippet(country_tag, 5)
 	return data
 
 
@@ -380,6 +535,7 @@ func _agent_to_summary(agent: Agent) -> Dictionary:
 
 	var summary := {
 		"agent_id": agent.agent_id,
+		"country_tag": agent.country_tag,
 		"name": agent.name,
 		"status": agent.status,
 		"status_group": agent.get_status_group(),
@@ -396,6 +552,12 @@ func _agent_to_summary(agent: Agent) -> Dictionary:
 			% [agent.intelligence, agent.sabotage, agent.influence, agent.technology]
 		),
 		"assigned_target_tag": agent.assigned_target_tag,
+		"assigned_target_tech_id": agent.assigned_target_tech_id,
+		"assigned_target_tech_name": (
+			TechnologyManager.get_tech_display_name(agent.assigned_target_tech_id)
+			if typeof(TechnologyManager) != TYPE_NIL and not agent.assigned_target_tech_id.is_empty()
+			else ""
+		),
 		"current_mission_id": agent.current_mission_id,
 		"mission_name": mission_name,
 		"mission_category": mission_category,
@@ -451,6 +613,7 @@ func clear_all_agents() -> void:
 
 func _reset_agent_after_mission(agent: Agent) -> void:
 	agent.assigned_target_tag = ""
+	agent.assigned_target_tech_id = ""
 	agent.current_mission_id = ""
 	agent.mission_progress = 0.0
 	if agent.status not in ["compromised", "captured", "killed"]:
@@ -519,9 +682,16 @@ func get_recent_operations(country_tag: String, limit: int = RECENT_OPERATIONS_U
 			ops.append({
 				"sort_key": float(_current_year) + 0.99,
 				"year": _current_year,
+				"agent_id": agent.agent_id,
 				"agent_name": agent.name,
 				"mission_name": str(mission.get("name", agent.current_mission_id)),
 				"target_tag": agent.assigned_target_tag,
+				"target_tech_id": agent.assigned_target_tech_id,
+				"target_tech_name": (
+					TechnologyManager.get_tech_display_name(agent.assigned_target_tech_id)
+					if typeof(TechnologyManager) != TYPE_NIL and not agent.assigned_target_tech_id.is_empty()
+					else ""
+				),
 				"outcome": "in_progress",
 				"detected": false,
 				"progress": agent.mission_progress,
@@ -537,6 +707,8 @@ func get_recent_operations(country_tag: String, limit: int = RECENT_OPERATIONS_U
 			var entry := (entry_variant as Dictionary).duplicate()
 			if not entry.has("agent_name"):
 				entry["agent_name"] = agent.name
+			if not entry.has("agent_id"):
+				entry["agent_id"] = agent.agent_id
 			entry["sort_key"] = float(entry.get("year", _current_year))
 			ops.append(entry)
 
@@ -565,16 +737,32 @@ func _append_mission_history(
 	var target_tag := agent.assigned_target_tag
 	var fate := _agent_fate_after_mission(agent)
 
+	var impact_text := AgentMissionImpact.describe_mission_outcome(mission, outcome)
+	if (
+		not agent.assigned_target_tech_id.is_empty()
+		and typeof(TechnologyManager) != TYPE_NIL
+	):
+		impact_text += " · Target: %s" % TechnologyManager.get_tech_display_name(
+			agent.assigned_target_tech_id
+		)
+
 	var entry := {
 		"year": _current_year,
+		"agent_id": agent.agent_id,
 		"mission_id": mission_id,
 		"mission_name": str(mission.get("name", mission_id)),
 		"category": str(mission.get("category", "")),
 		"target_tag": target_tag,
+		"target_tech_id": agent.assigned_target_tech_id,
+		"target_tech_name": (
+			TechnologyManager.get_tech_display_name(agent.assigned_target_tech_id)
+			if typeof(TechnologyManager) != TYPE_NIL and not agent.assigned_target_tech_id.is_empty()
+			else ""
+		),
 		"outcome": outcome,
 		"detected": detected,
 		"agent_name": agent.name,
-		"impact_text": AgentMissionImpact.describe_mission_outcome(mission, outcome),
+		"impact_text": impact_text,
 		"agent_fate": fate,
 		"status_line": _format_history_status_line(outcome, detected, fate),
 		"sort_key": float(_current_year),
@@ -684,15 +872,39 @@ func _intel_tier_label(value: int) -> String:
 
 # === Effect Application Helpers (MVP) ===
 
-func _apply_production_delay(target_country: String, magnitude: float) -> void:
-	print("  [EFFECT] %s suffers sabotage-induced production disruption (magnitude: %.2f)" % [target_country, magnitude])
+func _apply_production_delay(agent: Agent, mission: Dictionary, outcome: String, base_magnitude: float) -> void:
+	var target_country := agent.country_tag
+	var sabotage_skill := agent.get_skill("sabotage")
 
+	# Calculate effective magnitude and duration based on skill + success level
+	var (final_magnitude, duration_months, is_critical) := _calculate_sabotage_effect(base_magnitude, sabotage_skill, outcome, agent)
+
+	print("  [EFFECT] %s suffers sabotage-induced production disruption (magnitude: %.2f, duration: %d mo, critical: %s)" % [
+		target_country, final_magnitude, duration_months, is_critical
+	])
+
+	if is_critical and typeof(LeaderEventUI) != TYPE_NIL:
+		LeaderEventUI.post_news(
+			"Critical Sabotage Success",
+			"%s's operatives have dealt a devastating blow to %s industry. Production and logistics have been severely disrupted." % [
+				agent.country_tag, target_country
+			],
+			"sabotage"
+		)
+
+	# Apply the (possibly critical) temporary debuff
+	_apply_sabotage_production_debuff(target_country, final_magnitude, duration_months, is_critical)
+
+	# Immediate factory damage (stronger on critical success)
 	if typeof(FactoryManager) == TYPE_NIL:
 		return
 
-	# Find factories belonging to the target country and apply damage
+	var damage_multiplier := 1.0
+	if is_critical:
+		damage_multiplier = 2.2   # Much heavier immediate damage on crit
+
 	var damaged := 0
-	var damage_amount := clampf(magnitude * 35.0, 10.0, 60.0)  # Scale to reasonable damage values
+	var damage_amount := clampf(final_magnitude * 35.0 * damage_multiplier, 15.0, 120.0)
 
 	for fid in FactoryManager.factories.keys():
 		var factory = FactoryManager.get_factory(fid)
@@ -700,17 +912,138 @@ func _apply_production_delay(target_country: String, magnitude: float) -> void:
 			continue
 		if factory.owner_tag != target_country:
 			continue
-		if randf() < 0.35:  # Only damage some of the factories
+		if randf() < (0.45 if is_critical else 0.35):
 			FactoryManager.apply_damage_to_factory(fid, damage_amount)
 			damaged += 1
-			if damaged >= 2:  # Limit impact per mission for MVP
+			if damaged >= (3 if is_critical else 2):
 				break
 
 	if damaged > 0:
-		print("    -> Damaged %d factories belonging to %s" % [damaged, target_country])
+		var msg := "    -> Damaged %d factories belonging to %s" % [damaged, target_country]
+		if is_critical:
+			msg += " (CRITICAL SABOTAGE)"
+		print(msg)
 
 
-# Supply disruption now routes through the production delay handler for MVP simplicity.
+func _apply_supply_disruption(agent: Agent, mission: Dictionary, outcome: String, base_magnitude: float) -> void:
+	var target_country := agent.country_tag
+	var sabotage_skill := agent.get_skill("sabotage")
+
+	var (final_magnitude, duration_months, is_critical) := _calculate_sabotage_effect(base_magnitude, sabotage_skill, outcome, agent)
+
+	print("  [EFFECT] %s supply lines disrupted by sabotage (magnitude: %.2f, duration: %d mo, critical: %s)" % [
+		target_country, final_magnitude, duration_months, is_critical
+	])
+
+	if is_critical and typeof(LeaderEventUI) != TYPE_NIL:
+		LeaderEventUI.post_news(
+			"Critical Sabotage Success",
+			"%s agents have crippled %s supply infrastructure in a major operation." % [
+				agent.country_tag, target_country
+			],
+			"sabotage"
+		)
+
+	_apply_sabotage_supply_debuff(target_country, final_magnitude, duration_months, is_critical)
+
+
+# === Deeper Sabotage Calculation & Helpers ===
+
+## Calculates final magnitude, duration, and whether this was a critical success.
+## Returns: (final_magnitude, duration_months, is_critical)
+func _calculate_sabotage_effect(base_magnitude: float, sabotage_skill: int, outcome: String, agent: Agent) -> Array:
+	var magnitude := base_magnitude
+	var duration := 8
+	var is_critical := false
+
+	# Success level modifier
+	if outcome == "success":
+		magnitude *= 1.0
+		duration = 9
+	elif outcome == "partial":
+		magnitude *= 0.65
+		duration = 5
+	else:
+		magnitude *= 0.4
+		duration = 3
+
+	# Agent skill scaling (skill 1-10)
+	var skill_factor := 0.7 + (float(sabotage_skill) * 0.045)   # 0.745 → 1.15
+	magnitude *= skill_factor
+	duration = int(duration * (0.8 + float(sabotage_skill) * 0.04))
+
+	# Critical success roll (rare, higher with skilled agents on full success)
+	if outcome == "success":
+		var crit_chance := 0.07 + (float(sabotage_skill) * 0.008)   # 7% base + up to +8%
+		crit_chance = clampf(crit_chance, 0.07, 0.16)
+
+		if randf() < crit_chance:
+			is_critical = true
+			magnitude *= 1.85
+			duration = max(duration + 10, 18)
+
+	return [magnitude, duration, is_critical]
+
+
+func _apply_sabotage_production_debuff(target_country: String, magnitude: float, duration_months: int, is_critical: bool = false) -> void:
+	if typeof(NationalModifierManager) == TYPE_NIL:
+		print("    -> (No NationalModifierManager) Sabotage would have applied production debuff")
+		return
+
+	var penalty := clampf(magnitude, 0.05, 0.38)  # up to ~38% on crit
+
+	var source_detail := "Industrial sabotage"
+	if is_critical:
+		source_detail = "Critical industrial sabotage"
+
+	var effect := {
+		"source": "agent_sabotage",
+		"source_detail": source_detail,
+		"modifiers": {
+			"output_multiplier": -penalty,
+			"production_speed": -penalty * 0.6
+		},
+		"duration_months": duration_months,
+		"remaining_months": duration_months,
+		"is_debuff": true
+	}
+
+	NationalModifierManager.apply_national_effect(target_country, effect)
+
+	var msg := "    -> Applied temporary production debuff to %s (%.0f%% for %d months)" % [target_country, penalty * 100, duration_months]
+	if is_critical:
+		msg += " [CRITICAL]"
+	print(msg)
+
+
+func _apply_sabotage_supply_debuff(target_country: String, magnitude: float, duration_months: int, is_critical: bool = false) -> void:
+	if typeof(NationalModifierManager) == TYPE_NIL:
+		print("    -> (No NationalModifierManager) Sabotage would have applied supply debuff")
+		return
+
+	var penalty := clampf(magnitude * 0.9, 0.04, 0.28)
+
+	var source_detail := "Logistics sabotage"
+	if is_critical:
+		source_detail = "Critical logistics sabotage"
+
+	var effect := {
+		"source": "agent_sabotage",
+		"source_detail": source_detail,
+		"modifiers": {
+			"supply_consumption": +penalty
+		},
+		"duration_months": duration_months,
+		"remaining_months": duration_months,
+		"is_debuff": true
+	}
+
+	NationalModifierManager.apply_national_effect(target_country, effect)
+
+	var msg := "    -> Applied temporary supply consumption debuff to %s (+%.0f%% for %d months)" % [target_country, penalty * 100, duration_months]
+	if is_critical:
+		msg += " [CRITICAL]"
+	print(msg)
 
 
 func _apply_stability_damage(target_country: String, magnitude: float) -> void:
@@ -719,19 +1052,64 @@ func _apply_stability_damage(target_country: String, magnitude: float) -> void:
 			target_country,
 			stability_change = -magnitude,
 			duration_months = 12,
-			source = "agent_influence"
+			source = "agent_mission",
+			source_detail = "Influence operation",
 		)
 	else:
 		print("  [EFFECT] %s internal stability damaged by %.1f (Influence) — NationalModifierManager not available" % [target_country, magnitude])
 
 
-func _apply_research_theft(actor_country: String, magnitude: float) -> void:
-	print("  [EFFECT] %s stole %.0f research progress via technology mission" % [actor_country, magnitude])
-	# Future: Give research progress to actor_country's tech tree
+func _apply_research_theft(
+	agent: Agent,
+	mission: Dictionary,
+	outcome: String,
+	magnitude: float,
+	detected: bool,
+) -> void:
+	if typeof(TechnologyManager) == TYPE_NIL:
+		print(
+			"  [EFFECT] %s stole %.0f research progress (TechnologyManager unavailable)"
+			% [agent.country_tag, magnitude]
+		)
+		return
+	var scale := 1.0 if outcome == "success" else 0.45 if outcome == "partial" else 0.0
+	if scale <= 0.0:
+		return
+	var result: Dictionary = TechnologyManager.apply_research_theft_from_mission(
+		agent.country_tag,
+		agent.assigned_target_tag,
+		agent.assigned_target_tech_id,
+		magnitude * scale,
+		detected,
+		str(mission.get("name", "")),
+	)
+	print(
+		"  [EFFECT] %s stole %.0f days on '%s' from %s (victim lost %.0f, compromised: %s)"
+		% [
+			agent.country_tag,
+			float(result.get("actor_days_applied", 0.0)),
+			result.get("tech_name", ""),
+			agent.assigned_target_tag,
+			float(result.get("victim_days_lost", 0.0)),
+			result.get("compromised", false),
+		]
+	)
 
 
-func _establish_long_term_intel(actor_country: String, domain: String) -> void:
-	print("  [EFFECT] %s established long-term %s intelligence source" % [actor_country, domain])
+func _establish_long_term_tech_intel(agent: Agent, mission: Dictionary, outcome: String) -> void:
+	if outcome == "failure":
+		return
+	var bonus := 0.15 if outcome == "success" else 0.06
+	if typeof(TechnologyManager) != TYPE_NIL:
+		TechnologyManager.apply_tech_intel_bonus(
+			agent.country_tag,
+			bonus,
+			str(mission.get("name", "")),
+		)
+	print(
+		"  [EFFECT] %s established long-term technology intel (+%.0f RP/day)"
+		% [agent.country_tag, bonus]
+	)
 
 
 func _apply_intel_bonus(actor_country: String, magnitude: float) -> void:
@@ -807,5 +1185,15 @@ func _degrade_enemy_intel(actor_country: String, magnitude: float) -> void:
 	print("  [COUNTER-INTEL] %s successfully degraded enemy intelligence by %d" % [actor_country, int(magnitude)])
 
 
-func _apply_tech_protection(actor_country: String, magnitude: float) -> void:
-	print("  [COUNTER-INTEL] %s research facilities are now better protected against theft" % actor_country)
+func _apply_tech_protection(agent: Agent, mission: Dictionary, magnitude: float) -> void:
+	var years := int(magnitude) if int(magnitude) > 0 else 3
+	if typeof(TechnologyManager) != TYPE_NIL:
+		TechnologyManager.apply_tech_theft_protection(
+			agent.country_tag,
+			years,
+			str(mission.get("name", "")),
+		)
+	print(
+		"  [COUNTER-INTEL] %s research protected until %d"
+		% [agent.country_tag, _current_year + years]
+	)

@@ -1,0 +1,116 @@
+{
+  "basic_machine_tools": {
+    "id": "basic_machine_tools",
+    "name": "Basic Machine Tools",
+    "domain": "industry",
+    "tree_id": "industry_foundations",
+    "node_kind": "research",
+    "column": 0,
+    "row": 0,
+    "tier": 1,
+    "era_min": 1910,
+    "era_max": 1950,
+    "epoch": "interwar",
+    "prerequisites": [],
+    "research": {
+      "base_cost_days": 60,
+      "category": "industry",
+      "ahead_of_time_penalty_per_year": 0.08,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "modifier", "stat": "factory_output", "value": 0.05 }
+    ],
+    "ui": {
+      "short_effect": "+5% factory output",
+      "flavor": "Standardized tooling and jigs accelerate military industry."
+    }
+  },
+  "tank_plant_i": {
+    "id": "tank_plant_i",
+    "name": "Tank Plant Engineering",
+    "domain": "industry",
+    "tree_id": "industry_foundations",
+    "node_kind": "research",
+    "column": 1,
+    "row": 0,
+    "tier": 2,
+    "era_min": 1930,
+    "era_max": 1965,
+    "epoch": "industrial_war",
+    "prerequisites": ["basic_machine_tools"],
+    "research": {
+      "base_cost_days": 80,
+      "category": "industry",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "factory_type", "factory_type": "tank_plant" },
+      { "type": "unit_design", "template_ids": ["usa_armor_1936"] },
+      { "type": "production_category", "category": "light_tank", "min_factory_type": "tank_plant" }
+    ],
+    "ui": {
+      "short_effect": "Tank plants; M2A2 light tank design",
+      "flavor": "Dedicated armor assembly lines and light tank blueprints."
+    }
+  },
+  "medium_tank_ii": {
+    "id": "medium_tank_ii",
+    "name": "Medium Tank II",
+    "domain": "land_equipment",
+    "tree_id": "industry_foundations",
+    "node_kind": "research",
+    "column": 2,
+    "row": 0,
+    "tier": 3,
+    "era_min": 1938,
+    "era_max": 1970,
+    "epoch": "industrial_war",
+    "prerequisites": ["tank_plant_i"],
+    "research": {
+      "base_cost_days": 100,
+      "category": "armor",
+      "ahead_of_time_penalty_per_year": 0.12,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["m4_sherman_medium"] },
+      { "type": "production_category", "category": "medium_tank", "min_factory_type": "tank_plant" }
+    ],
+    "ui": {
+      "short_effect": "M4 Sherman medium tank design",
+      "flavor": "Welded hulls and improved suspension for the armored spearhead."
+    }
+  },
+  "port_shipyard_i": {
+    "id": "port_shipyard_i",
+    "name": "Port Shipyard Methods",
+    "domain": "industry",
+    "tree_id": "industry_foundations",
+    "node_kind": "research",
+    "column": 1,
+    "row": 1,
+    "tier": 2,
+    "era_min": 1914,
+    "era_max": 1960,
+    "epoch": "interwar",
+    "prerequisites": ["basic_machine_tools"],
+    "research": {
+      "base_cost_days": 85,
+      "category": "industry",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "rule_flag", "flag": "allow_port_shipyard_conversion" },
+      { "type": "factory_type", "factory_type": "shipyard" },
+      { "type": "unit_design", "template_ids": ["wickes_class_destroyer"] },
+      { "type": "production_category", "category": "destroyer", "min_factory_type": "shipyard" }
+    ],
+    "ui": {
+      "short_effect": "Convert factories to port shipyards; Wickes-class DD",
+      "flavor": "Slipways, dry docks, and modular naval construction at coastal ports."
+    }
+  }
+}

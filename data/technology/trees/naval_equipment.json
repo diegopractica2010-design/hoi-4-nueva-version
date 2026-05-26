@@ -1,0 +1,110 @@
+{
+  "destroyer_1918": {
+    "id": "destroyer_1918",
+    "name": "Destroyer Escorts 1918",
+    "domain": "naval_equipment",
+    "tree_id": "naval_equipment",
+    "node_kind": "research",
+    "column": 0,
+    "row": 0,
+    "tier": 1,
+    "era_min": 1916,
+    "era_max": 1935,
+    "epoch": "pre_war",
+    "prerequisites": ["port_shipyard_i"],
+    "research": {
+      "base_cost_days": 75,
+      "category": "naval",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["wickes_class_dd_1918"] }
+    ],
+    "ui": {
+      "short_effect": "Wickes-class destroyer (1918 fit)",
+      "flavor": "Mass-produced flush-deckers for convoy escort and ASW."
+    }
+  },
+  "patrol_frigate_1918": {
+    "id": "patrol_frigate_1918",
+    "name": "Patrol Frigates 1918",
+    "domain": "naval_equipment",
+    "tree_id": "naval_equipment",
+    "node_kind": "research",
+    "column": 0,
+    "row": 1,
+    "tier": 1,
+    "era_min": 1914,
+    "era_max": 1935,
+    "epoch": "pre_war",
+    "prerequisites": ["port_shipyard_i"],
+    "research": {
+      "base_cost_days": 70,
+      "category": "naval",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["usa_frigate_1918"] }
+    ],
+    "ui": {
+      "short_effect": "Coastal patrol frigate designs",
+      "flavor": "Gunboat diplomacy and harbor defense in the age of dreadnoughts."
+    }
+  },
+  "patrol_frigate_1936": {
+    "id": "patrol_frigate_1936",
+    "name": "Ocean Escorts 1936",
+    "domain": "naval_equipment",
+    "tree_id": "naval_equipment",
+    "node_kind": "research",
+    "column": 1,
+    "row": 0,
+    "tier": 2,
+    "era_min": 1934,
+    "era_max": 1965,
+    "epoch": "industrial_war",
+    "prerequisites": ["port_shipyard_i"],
+    "research": {
+      "base_cost_days": 95,
+      "category": "naval",
+      "ahead_of_time_penalty_per_year": 0.12,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["usa_frigate_1936"] }
+    ],
+    "ui": {
+      "short_effect": "Pre-war destroyer leader / frigate lineage",
+      "flavor": "Long-range escorts for trade protection and fleet screening."
+    }
+  },
+  "multirole_frigate_2026": {
+    "id": "multirole_frigate_2026",
+    "name": "Multirole Surface Combatants",
+    "domain": "naval_equipment",
+    "tree_id": "naval_equipment",
+    "node_kind": "research",
+    "column": 2,
+    "row": 0,
+    "tier": 4,
+    "era_min": 2015,
+    "era_max": 2050,
+    "epoch": "near_future",
+    "prerequisites": ["patrol_frigate_1936"],
+    "research": {
+      "base_cost_days": 120,
+      "category": "naval",
+      "ahead_of_time_penalty_per_year": 0.14,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["usa_frigate_2026"] }
+    ],
+    "ui": {
+      "short_effect": "Arleigh Burke–class guided-missile destroyer line",
+      "flavor": "AEGIS, VLS, and integrated air defense for blue-water fleets."
+    }
+  }
+}

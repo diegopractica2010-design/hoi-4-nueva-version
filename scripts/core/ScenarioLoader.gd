@@ -283,6 +283,7 @@ func load_scenario(scenario_name: String) -> bool:
 	_spawn_scenario_factories(scenario_name)
 	var scenario_year := _parse_scenario_start_year(data)
 	_load_scenario_leaders(scenario_name, scenario_year)
+	_apply_scenario_starting_technology(scenario_name, scenario_year)
 	_spawn_scenario_formations(scenario_name)
 	var production_mgr := get_node_or_null("/root/ProductionManager")
 	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
@@ -309,7 +310,6 @@ func _load_scenario_leaders(scenario_name: String, start_year: int) -> void:
 	if typeof(LeaderManager) == TYPE_NIL:
 		return
 	var loaded := LeaderManager.load_leaders_for_scenario(scenario_name, start_year)
-	_unlock_training_doctrines_for_test_play()
 	print(
 		"✅ Scenario leaders loaded (%s, %d): %d active, %d pooled"
 		% [
@@ -321,22 +321,13 @@ func _load_scenario_leaders(scenario_name: String, start_year: int) -> void:
 	)
 
 
-func _unlock_training_doctrines_for_test_play() -> void:
-	if typeof(LeaderManager) == TYPE_NIL:
+func _apply_scenario_starting_technology(scenario_name: String, start_year: int) -> void:
+	if typeof(TechnologyManager) == TYPE_NIL:
 		return
-	var doctrine_ids: Array[String] = [
-		"mobile_warfare",
-		"mass_assault",
-		"combined_arms",
-		"infiltration",
-		"stormtrooper",
-		"network_centric",
-		"precision_strike",
-		"drone_warfare",
-	]
-	for country_tag in ["USA", "GER"]:
-		for doctrine_id in doctrine_ids:
-			LeaderManager.set_country_military_doctrine(country_tag, doctrine_id, true)
+	var tags: Array[String] = []
+	for tag in countries.keys():
+		tags.append(str(tag))
+	TechnologyManager.apply_scenario_starting_tech(scenario_name, tags, start_year)
 
 
 func _spawn_scenario_formations(scenario_name: String) -> void:

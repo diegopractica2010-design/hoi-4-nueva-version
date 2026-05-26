@@ -41,6 +41,7 @@ var current_data: LeaderScreenData
 var _detail_traits_box: VBoxContainer
 var _selected_leader_id: String = ""
 var _pending_replacements_button: Button
+var _national_spirits_button: Button
 
 const NATIONAL_POSITIONS: Array[Dictionary] = [
 	{"key": LeaderManager.POSITION_CHIEF_OF_ARMY, "label": "Chief of Army"},
@@ -73,6 +74,7 @@ func _ready() -> void:
 	_setup_headers()
 	close_button.pressed.connect(_on_close_pressed)
 	_setup_pending_replacements_badge()
+	_setup_national_spirits_button()
 	_connect_leader_replacement_signals()
 	refresh_screen()
 
@@ -155,6 +157,36 @@ func refresh_screen() -> void:
 	_populate_national_positions()
 	_populate_available_leaders()
 	_populate_unassigned_formations()
+
+
+func _setup_national_spirits_button() -> void:
+	var summary_bar := total_leaders_label.get_parent() as HBoxContainer
+	if summary_bar == null:
+		return
+
+	_national_spirits_button = Button.new()
+	_national_spirits_button.text = "National Spirits"
+	_national_spirits_button.tooltip_text = "View national spirits and temporary modifiers."
+	RetrowaveTheme.style_secondary_button(_national_spirits_button)
+	_national_spirits_button.pressed.connect(_on_national_spirits_pressed)
+	summary_bar.add_child(_national_spirits_button)
+
+
+func _on_national_spirits_pressed() -> void:
+	var existing := get_tree().root.get_node_or_null("NationalSpiritsScreen")
+	if existing != null:
+		existing.queue_free()
+		return
+
+	var packed: PackedScene = load("res://scenes/ui/NationalSpiritsScreen.tscn")
+	if packed == null:
+		return
+	var screen: NationalSpiritsScreen = packed.instantiate() as NationalSpiritsScreen
+	if screen == null:
+		return
+	screen.country_tag = country_tag
+	screen.name = "NationalSpiritsScreen"
+	get_tree().root.add_child(screen)
 
 
 func _setup_pending_replacements_badge() -> void:

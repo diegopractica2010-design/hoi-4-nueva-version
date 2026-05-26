@@ -1,0 +1,57 @@
+{
+  "american_industrial_heritage": {
+    "id": "american_industrial_heritage",
+    "name": "Industrial Heritage",
+    "description": "A deep manufacturing base and logistical know-how support sustained wartime production.",
+    "category": "economic",
+    "countries": ["USA"],
+    "modifiers": {
+      "production_speed": 0.05,
+      "factory_output": 0.03
+    }
+  },
+  "german_general_staff": {
+    "id": "german_general_staff",
+    "name": "Prussian General Staff Tradition",
+    "description": "Professional officer corps and operational planning culture improve army coordination.",
+    "category": "military",
+    "countries": ["GER"],
+    "modifiers": {
+      "army_org_factor": 0.05,
+      "planning_speed": 0.08
+    }
+  },
+  "british_empire_trade": {
+    "id": "british_empire_trade",
+    "name": "Empire Trade Networks",
+    "description": "Global shipping lanes and colonial resources ease supply strain.",
+    "category": "economic",
+    "countries": ["ENG"],
+    "modifiers": {
+      "supply_consumption": -0.04,
+      "trade_opinion": 10
+    }
+  },
+  "soviet_mass_mobilization": {
+    "id": "soviet_mass_mobilization",
+    "name": "Mass Mobilization",
+    "description": "The state can absorb casualties and replace losses faster than rivals expect.",
+    "category": "military",
+    "countries": ["SOV"],
+    "modifiers": {
+      "manpower_factor": 0.1,
+      "training_time": -0.05
+    }
+  },
+  "japanese_warrior_spirit": {
+    "id": "japanese_warrior_spirit",
+    "name": "Warrior Spirit",
+    "description": "Fervent ideology stiffens resolve in defensive fighting.",
+    "category": "ideology",
+    "countries": ["JAP"],
+    "modifiers": {
+      "defence_factor": 0.06,
+      "surrender_limit": 0.05
+    }
+  }
+}

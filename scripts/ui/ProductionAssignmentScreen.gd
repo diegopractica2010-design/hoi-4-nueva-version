@@ -189,6 +189,8 @@ func _create_factory_row(summary: Dictionary) -> HBoxContainer:
 	var design_text: String = summary.get("current_design", "")
 	if design_text.is_empty():
 		design_text = "(idle)"
+	else:
+		design_text = _format_design_label(design_text)
 	hbox.add_child(_row_label(design_text, 200))
 
 	var efficiency := float(summary.get("efficiency", 0.0))
@@ -231,6 +233,15 @@ func _row_label(text: String, min_width: int) -> Label:
 	return label
 
 
+func _format_design_label(design_id: String) -> String:
+	if typeof(TechnologyManager) == TYPE_NIL:
+		return design_id
+	var availability: Dictionary = TechnologyManager.get_design_availability(country_tag, design_id)
+	if bool(availability.get("available", true)):
+		return design_id
+	return "%s 🔒" % design_id
+
+
 func _efficiency_color(efficiency: float) -> Color:
 	if efficiency >= 0.8:
 		return RetrowaveTheme.SUCCESS
@@ -248,7 +259,16 @@ func _on_details_pressed(summary: Dictionary) -> void:
 	text += "Province: %s\n" % summary.get("province_id", "?")
 	text += "Type: %s\n" % summary.get("factory_type", "unknown")
 	text += "Status: %s\n" % summary.get("status", "unknown")
+	if not design.is_empty() and design != "(idle)":
+		design = _format_design_label(design)
 	text += "Current Design: %s\n" % design
+	if typeof(TechnologyManager) != TYPE_NIL and design != "(idle)":
+		var avail: Dictionary = TechnologyManager.get_design_availability(
+			country_tag,
+			str(summary.get("current_design", "")),
+		)
+		if not bool(avail.get("available", true)):
+			text += "%s\n" % avail.get("reason", "")
 	text += "Efficiency: %.1f%%\n" % (float(summary.get("efficiency", 0.0)) * 100.0)
 	text += "Retooling: %s\n" % ("Yes" if summary.get("is_retooling", false) else "No")
 	text += "Lines: %d / %d\n" % [

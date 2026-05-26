@@ -93,6 +93,11 @@ text = "Lost: 0"
 layout_mode = 2
 text = "Recruit Agent"
 
+[node name="FeedbackHint" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Select an agent and target country to plan operations."
+
 [node name="MainArea" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -181,12 +186,20 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
+[node name="NationalEffectsTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn"]
+layout_mode = 2
+text = "National Effects"
+
+[node name="NationalEffectsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
 [node name="RecentOpsTitle" type="Label" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn"]
 layout_mode = 2
 text = "Recent Operations"
 
 [node name="RecentOperationsList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/IntelColumn"]
-custom_minimum_size = Vector2(0, 160)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -275,3 +288,7 @@ theme_override_constants/separation = 4
 [node name="AssignMissionButton" type="Button" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
 layout_mode = 2
 text = "Assign Mission..."
+
+[node name="OpenTechnologyButton" type="Button" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailMargin/DetailScroll/DetailVBox"]
+layout_mode = 2
+text = "Open Technology Screen"

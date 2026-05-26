@@ -1,0 +1,40 @@
+{
+  "scenario": "1918",
+  "defaults": {
+    "completed": ["basic_machine_tools"],
+    "research_slots": 2
+  },
+  "countries": {
+    "USA": {
+      "completed": [
+        "radio_i",
+        "land_doctrine_i",
+        "port_shipyard_i",
+        "destroyer_1918",
+        "airframe_1918",
+        "light_armor_1918"
+      ],
+      "research_slots": 3
+    },
+    "GER": {
+      "completed": ["radio_i", "land_doctrine_i", "port_shipyard_i", "destroyer_1918"],
+      "research_slots": 3
+    },
+    "ENG": {
+      "completed": ["radio_i", "land_doctrine_i", "port_shipyard_i", "destroyer_1918", "patrol_frigate_1918"],
+      "research_slots": 3
+    },
+    "FRA": {
+      "completed": ["radio_i", "land_doctrine_i"],
+      "research_slots": 2
+    },
+    "SOV": {
+      "completed": ["land_doctrine_i"],
+      "research_slots": 2
+    },
+    "JAP": {
+      "completed": ["land_doctrine_i", "port_shipyard_i", "patrol_frigate_1918"],
+      "research_slots": 2
+    }
+  }
+}

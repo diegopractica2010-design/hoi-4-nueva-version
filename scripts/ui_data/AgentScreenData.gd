@@ -15,3 +15,4 @@ extends Resource
 @export var mission_categories: Array[String] = []
 @export var intel_reports: Array[Dictionary] = []
 @export var recent_operations: Array[Dictionary] = []
+@export var national_effects: Array[Dictionary] = []

@@ -245,22 +245,56 @@ func _on_confirm_pressed() -> void:
 	if selected_mission_id.is_empty():
 		return
 
-	if not AgentManager.assign_agent_to_mission(agent_id, selected_mission_id, target_tag):
-		push_warning("Could not assign mission %s" % selected_mission_id)
+	if typeof(TechnologyManager) != TYPE_NIL and TechnologyManager.mission_requires_tech_target(
+		selected_mission_id
+	):
+		var actor_tag := country_tag
+		var agent := AgentManager.get_agent(agent_id)
+		if agent != null:
+			actor_tag = agent.country_tag
+		TechnologyMissionTargetPopup.open_picker(
+			func(picker: TechnologyMissionTargetPopup) -> void:
+				picker.actor_country = actor_tag
+				picker.victim_country = target_tag
+				picker.agent_id = agent_id
+				picker.mission_id = selected_mission_id
+				picker.target_selected.connect(
+					_on_tech_target_picked.bind(selected_mission_id),
+					CONNECT_ONE_SHOT,
+				),
+		)
 		return
 
-	mission_assigned.emit(agent_id, selected_mission_id, target_tag)
+	_finalize_mission_assignment(selected_mission_id, "")
+
+
+func _on_tech_target_picked(tech_id: String, mission_id: String) -> void:
+	_finalize_mission_assignment(mission_id, tech_id)
+
+
+func _finalize_mission_assignment(mission_id: String, tech_id: String) -> void:
+	if not AgentManager.assign_agent_to_mission(agent_id, mission_id, target_tag, tech_id):
+		push_warning("Could not assign mission %s" % mission_id)
+		return
+
+	mission_assigned.emit(agent_id, mission_id, target_tag)
 	_refresh_agent_screen()
 
 	if typeof(LeaderEventUI) != TYPE_NIL:
-		var mission := AgentManager.get_mission_definition(selected_mission_id)
+		var mission := AgentManager.get_mission_definition(mission_id)
 		var agent_name := str(AgentManager.get_agent_summary(agent_id).get("name", agent_id))
+		var extra := ""
+		if not tech_id.is_empty() and typeof(TechnologyManager) != TYPE_NIL:
+			extra = " targeting %s." % TechnologyManager.get_tech_display_name(tech_id)
+		else:
+			extra = "."
 		LeaderEventUI.post_news(
 			"Mission Assigned",
-			"%s began %s in %s." % [
+			"%s began %s in %s%s" % [
 				agent_name,
-				mission.get("name", selected_mission_id),
+				mission.get("name", mission_id),
 				target_tag,
+				extra,
 			],
 			"espionage",
 		)

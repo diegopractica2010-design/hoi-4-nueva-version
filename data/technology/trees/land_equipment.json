@@ -1,0 +1,57 @@
+{
+  "light_armor_1918": {
+    "id": "light_armor_1918",
+    "name": "Light Armor 1918",
+    "domain": "land_equipment",
+    "tree_id": "land_equipment",
+    "node_kind": "research",
+    "column": 0,
+    "row": 0,
+    "tier": 1,
+    "era_min": 1916,
+    "era_max": 1935,
+    "epoch": "pre_war",
+    "prerequisites": ["basic_machine_tools"],
+    "research": {
+      "base_cost_days": 70,
+      "category": "armor",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["usa_armor_1918"] }
+    ],
+    "ui": {
+      "short_effect": "M1917 light tank family",
+      "flavor": "First mass-produced armor for the American Expeditionary Forces."
+    }
+  },
+  "modern_mbt_program": {
+    "id": "modern_mbt_program",
+    "name": "Next-Generation MBT Program",
+    "domain": "land_equipment",
+    "tree_id": "land_equipment",
+    "node_kind": "research",
+    "column": 2,
+    "row": 0,
+    "tier": 4,
+    "era_min": 2020,
+    "era_max": 2050,
+    "epoch": "near_future",
+    "prerequisites": ["medium_tank_ii"],
+    "research": {
+      "base_cost_days": 140,
+      "category": "armor",
+      "ahead_of_time_penalty_per_year": 0.15,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["usa_mbt_2026"] },
+      { "type": "production_category", "category": "main_battle_tank", "min_factory_type": "tank_plant" }
+    ],
+    "ui": {
+      "short_effect": "M1A2 SEPv3+ main battle tank design",
+      "flavor": "Composite armor, active protection, and networked fire control for peer conflict."
+    }
+  }
+}

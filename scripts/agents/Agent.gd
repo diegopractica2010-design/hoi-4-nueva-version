@@ -19,7 +19,9 @@ extends Resource
 @export var status: String = "available"   # available, on_mission, compromised, captured, killed, retired
 
 var compromised_until_year: int = 0  # Used when status == "compromised"
+var assigned_province_id: int = 0    # Used when the agent is running a province network
 @export var assigned_target_tag: String = ""
+@export var assigned_target_tech_id: String = ""
 @export var current_mission_id: String = ""
 @export var mission_progress: float = 0.0  # 0.0 to 1.0
 

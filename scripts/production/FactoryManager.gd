@@ -210,6 +210,13 @@ func convert_factory_to_shipyard(factory_id: int, levels: int = 4) -> bool:
 	var factory: Factory = get_factory(factory_id)
 	if factory == null:
 		return false
+	if typeof(TechnologyManager) != TYPE_NIL:
+		if not TechnologyManager.can_convert_factory_to_shipyard(factory.owner_tag):
+			push_warning(
+				"FactoryManager: %s needs Port Shipyard Methods research to convert factory %d"
+				% [factory.owner_tag, factory_id]
+			)
+			return false
 	if not province_has_port(factory.province_id):
 		push_warning(
 			"FactoryManager: cannot convert factory %d to shipyard (province %d has no port)"

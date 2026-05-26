@@ -1,0 +1,83 @@
+{
+  "airframe_1918": {
+    "id": "airframe_1918",
+    "name": "Biplane Airframes",
+    "domain": "air_equipment",
+    "tree_id": "air_equipment",
+    "node_kind": "research",
+    "column": 0,
+    "row": 0,
+    "tier": 1,
+    "era_min": 1914,
+    "era_max": 1930,
+    "epoch": "pre_war",
+    "prerequisites": ["basic_machine_tools"],
+    "research": {
+      "base_cost_days": 65,
+      "category": "air",
+      "ahead_of_time_penalty_per_year": 0.1,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["usa_fighter_1918"] }
+    ],
+    "ui": {
+      "short_effect": "SPAD / Curtiss pursuit designs",
+      "flavor": "Fabric-covered wings and rotary engines dominate the skies over the Western Front."
+    }
+  },
+  "airframe_1936": {
+    "id": "airframe_1936",
+    "name": "Monoplane Fighters",
+    "domain": "air_equipment",
+    "tree_id": "air_equipment",
+    "node_kind": "research",
+    "column": 1,
+    "row": 0,
+    "tier": 2,
+    "era_min": 1934,
+    "era_max": 1955,
+    "epoch": "industrial_war",
+    "prerequisites": ["airframe_1918"],
+    "research": {
+      "base_cost_days": 90,
+      "category": "air",
+      "ahead_of_time_penalty_per_year": 0.12,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["usa_fighter_1936"] }
+    ],
+    "ui": {
+      "short_effect": "P-36 / early P-40 pursuit line",
+      "flavor": "All-metal monoplanes with retractable gear enter squadron service."
+    }
+  },
+  "airframe_2026": {
+    "id": "airframe_2026",
+    "name": "5th-Generation Air Dominance",
+    "domain": "air_equipment",
+    "tree_id": "air_equipment",
+    "node_kind": "research",
+    "column": 2,
+    "row": 0,
+    "tier": 4,
+    "era_min": 2018,
+    "era_max": 2050,
+    "epoch": "near_future",
+    "prerequisites": ["airframe_1936"],
+    "research": {
+      "base_cost_days": 130,
+      "category": "air",
+      "ahead_of_time_penalty_per_year": 0.14,
+      "repeatable": false
+    },
+    "unlocks": [
+      { "type": "unit_design", "template_ids": ["usa_fighter_2026"] }
+    ],
+    "ui": {
+      "short_effect": "F-35A Lightning II production clearance",
+      "flavor": "Stealth, sensor fusion, and multi-role strike in contested airspace."
+    }
+  }
+}
