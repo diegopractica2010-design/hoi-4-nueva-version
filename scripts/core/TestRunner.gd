@@ -49,7 +49,6 @@ func _ready() -> void:
 			sm.advance_supply_day(1.0)
 		print("Supply network ready (toggle overlay with L)")
 
-	var mm := get_node_or_null("/root/MapManager")
 	if mm != null and mm.has_method("has_province_data") and mm.has_province_data():
 		print("✅ MapManager ready with %d provinces (ProvinceEffects now centralized)" % mm.get_province_count())
 
