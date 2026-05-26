@@ -240,6 +240,14 @@ func load_game(slot_name: String = DEFAULT_SLOT) -> bool:
 
 ## === INTERNAL GATHER / APPLY ===
 
+func _find_scenario_loader() -> ScenarioLoader:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null:
+		return null
+	var loader_node: Node = tree.root.find_child("ScenarioLoader", true, false)
+	return loader_node as ScenarioLoader
+
+
 func _gather_save_data() -> Dictionary:
 	var data := {
 		"save_version": SAVE_VERSION,
@@ -297,11 +305,9 @@ func _gather_save_data() -> Dictionary:
 
 	# --- Scenario metadata ---
 	var scenario_name := ""
-	if ScenarioLoader != null:
-		if ScenarioLoader.has_method("get_current_scenario_name"):
-			scenario_name = ScenarioLoader.get_current_scenario_name()
-		else:
-			scenario_name = ScenarioLoader.get("current_scenario_name", "")
+	var loader := _find_scenario_loader()
+	if loader != null:
+		scenario_name = loader.get_current_scenario_name()
 	data["metadata"]["scenario_id"] = scenario_name
 
 	# --- Production + Factories ---
