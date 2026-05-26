@@ -140,6 +140,14 @@ func get_logistics_quality() -> float:
 	var dev := float(clampi(development_level, 0, 50))
 	return (infra * 0.6) + (dev * 0.4)   # 0–100 scale roughly
 
+## Returns a modifier for how resistant supply moving through this province is to interdiction.
+## Higher development/infra = better roads, camouflage, local support = harder to interdict.
+func get_interdiction_resistance_modifier() -> float:
+	var infra := float(clampi(infrastructure, 0, 50))
+	var dev := float(clampi(development_level, 0, 50))
+	# Base 1.0, up to ~1.6 for max infra+dev
+	return 1.0 + (infra * 0.008) + (dev * 0.012)
+
 
 func _base_terrain_movement_multiplier() -> float:
 	match str(terrain).to_lower():

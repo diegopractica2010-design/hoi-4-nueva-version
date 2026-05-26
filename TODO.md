@@ -221,11 +221,12 @@ After the recent heavy investment in the National Modifier/Spirit system and Age
 ### Phase 1: Province as a First-Class Gameplay Object (Current Focus)
 - [x] Add rich computed getters on Province (`get_supply_throughput_modifier`, `get_local_supply_generation_modifier`, `get_combat_width_modifier`, `get_organization_recovery_modifier`, `get_attrition_modifier`, `get_logistics_quality`, etc.)
 - [x] Wire development_level into Supply for local supply generation (basic implementation done)
-- [ ] Make infrastructure + development strongly affect:
-  - Depot throughput capacity
-  - Interdiction resistance
-  - Reinforcement speed into the province
-- [ ] Expose these values clearly in province tooltips and supply map
+- [x] Make infrastructure + development strongly affect depot throughput capacity (combined infra + dev scaling in SupplyNetworkBuilder and SupplyManager)
+- [ ] Make infrastructure + development affect interdiction resistance and reinforcement speed
+- [x] Apply province development to organization and readiness in CombatResolver (initial implementation)
+- [x] Created ProvinceEffects aggregator for clean layering of base province stats + national modifiers
+- [x] Expose these values clearly in province tooltips and supply map (hover tooltip + info panel)
+- [ ] Wire ProvinceEffects into more Supply and Combat calculations
 
 ### Phase 2: Combat Deepening
 - [x] Combat Width already uses infrastructure (enhanced with development)

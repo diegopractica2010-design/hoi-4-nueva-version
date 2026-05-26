@@ -67,15 +67,45 @@ func _init_depot_states() -> void:
 		var hub: ProvinceSupplyHub = hubs[pid_var]
 		var throughput_rules := rules.get_block("throughput")
 		var state := ProvinceDepotState.new(hub.province_id, hub.storage_capacity)
-		state.throughput_capacity = hub.storage_capacity * float(
-			throughput_rules.get("capacity_fraction_per_day", 0.15),
-		)
+
+		# Base throughput fraction
+		var base_fraction := float(throughput_rules.get("capacity_fraction_per_day", 0.15))
+
+		# Infrastructure + Development now have strong combined effect on throughput
+		# High development provinces act as logistics hubs
+		var infra_factor := 0.8 + (float(hub.infrastructure) * 0.04)
+		var dev_factor := 0.7 + (float(hub.development_level) * 0.06)   # Stronger dev scaling
+
+		state.throughput_capacity = hub.storage_capacity * base_fraction * infra_factor * dev_factor
 		state.stockpile = hub.storage_capacity * float(throughput_rules.get("initial_fill_ratio", 0.65))
 		depot_states[hub.province_id] = state
 
 
 func get_depot_state(province_id: int) -> ProvinceDepotState:
 	return depot_states.get(province_id)
+
+
+func get_depot_menu_lines(limit: int = 5) -> Array[String]:
+	var lines: Array[String] = []
+	var ranked: Array = []
+	for pid_var in depot_states.keys():
+		var depot: ProvinceDepotState = depot_states[pid_var]
+		if depot == null:
+			continue
+		ranked.append({"id": int(pid_var), "fill": depot.fill_ratio(), "stock": depot.stockpile})
+	ranked.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return float(a.get("fill", 0.0)) > float(b.get("fill", 0.0))
+	)
+	for entry in ranked.slice(0, maxi(limit, 0)):
+		var pid := int(entry.get("id", -1))
+		var pname := str(pid)
+		if provinces.has(pid):
+			pname = (provinces[pid] as Province).name
+		lines.append(
+			"%s: %d%% (%.0f t stored)"
+			% [pname, int(round(float(entry.get("fill", 0.0)) * 100.0)), float(entry.get("stock", 0.0))]
+		)
+	return lines
 
 
 func get_capital_hub_id() -> int:
@@ -440,27 +470,22 @@ func _plan_route(
 	plan.interdiction_chance = float(inter.get("chance", 0.0))
 	plan.interdiction_breakdown = inter.get("breakdown", {})
 
-	# === Deeper Integration: National modifiers affect interdiction resistance ===
-	var interdiction_resistance := 0.0
+	# === Phase 1: Province Infrastructure + Development + National Modifiers for Interdiction ===
+	var province_resistance := _calculate_route_interdiction_resistance(plan.province_path, player_tag)
 
+	var national_resistance := 0.0
 	if typeof(NationalModifierManager) != TYPE_NIL:
 		var temp := NationalModifierManager.get_supply_modifiers(player_tag)
-		interdiction_resistance += float(temp.get("interdiction_resistance", 0.0))
-
+		national_resistance += float(temp.get("interdiction_resistance", 0.0))
 	if typeof(NationalSpiritManager) != TYPE_NIL:
 		var spirit := NationalSpiritManager.get_spirit_supply_modifiers(player_tag)
-		interdiction_resistance += float(spirit.get("interdiction_resistance", 0.0))
+		national_resistance += float(spirit.get("interdiction_resistance", 0.0))
 
-	if interdiction_resistance > 0.0:
-		var reduction := clampf(interdiction_resistance * 0.8, 0.0, 0.5)
+	# Combine province quality with national modifiers
+	var total_resistance := province_resistance + national_resistance
+	if total_resistance > 0.0:
+		var reduction := clampf(total_resistance * 0.7, 0.0, 0.55)
 		plan.interdiction_chance *= (1.0 - reduction)
-	else:
-		# Fallback to general logistics quality
-		if typeof(NationalSpiritManager) != TYPE_NIL:
-			var nat_mod := NationalSpiritManager.get_total_supply_consumption_modifier(player_tag)
-			if nat_mod < 0.0:
-				var reduction := clampf(-nat_mod * 0.6, 0.0, 0.4)
-				plan.interdiction_chance *= (1.0 - reduction)
 
 	var attrition := get_attrition_cargo_summary()
 	plan.cargo_tons_per_day = maxf(plan.cargo_tons_per_day, float(attrition.get("total_tons", 0.0)))
@@ -488,6 +513,25 @@ func _plan_route(
 				plan.cargo_tons_per_day *= (1.0 - reduction)
 
 	return plan
+
+
+func _calculate_route_interdiction_resistance(path: Array, player_tag: String) -> float:
+	if path.is_empty() or player_tag.is_empty():
+		return 0.0
+	var total := 0.0
+	var count := 0
+	for pid_var in path:
+		var pid := int(pid_var)
+		if not provinces.has(pid):
+			continue
+		var province: Province = provinces[pid]
+		if _ctrl(province) != player_tag:
+			continue
+		total += maxf(0.0, province.get_interdiction_resistance_modifier() - 1.0)
+		count += 1
+	if count == 0:
+		return 0.0
+	return total / float(count)
 
 
 func _rebuild_default_routes() -> void:

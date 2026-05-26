@@ -15,11 +15,6 @@ func get_effective_combat_power(
 	if base_stats.is_empty():
 		return {}
 
-	# === Deeper Combat Integration: Apply national modifiers at division/base stats level ===
-	if leader != null and typeof(LeaderManager) != TYPE_NIL:
-		var nat_mods := LeaderManager.get_national_combat_modifiers(leader.country_tag)
-		base_stats = _apply_national_combat_modifiers_to_base_stats(base_stats, nat_mods)
-
 	var leader: Leader = null
 	var leader_id := ""
 	var terrain_bonus := 0.0
@@ -27,6 +22,10 @@ func get_effective_combat_power(
 		leader = LeaderManager.get_leader_for_army(army_id)
 		if leader != null:
 			leader_id = leader.leader_id
+
+	if leader != null and typeof(LeaderManager) != TYPE_NIL:
+		var nat_mods := LeaderManager.get_national_combat_modifiers(leader.country_tag)
+		base_stats = _apply_national_combat_modifiers_to_base_stats(base_stats, nat_mods)
 
 	var combat_stats := base_stats
 	if not leader_id.is_empty():
@@ -48,10 +47,17 @@ func get_effective_combat_power(
 		final_hard += terrain_bonus * 5.0
 
 	# Province infrastructure & development effects (Deeper Combat integration)
-	if typeof(Province) != TYPE_NIL:
-		# We don't have direct province access here easily, but when called from battle context we can improve this later.
-		# For now, we apply a small development bonus to organization if high-dev provinces are involved (future improvement).
-		pass
+	# In full battle context we pass actual provinces. For now we use a reasonable default bonus
+	# based on the fact that most fighting happens in developed areas.
+	var province_dev_bonus := 0.0
+	if terrain != "plains" and terrain != "desert":
+		province_dev_bonus = 0.08   # Rough proxy for average development helping org in non-open terrain
+
+	final_org += province_dev_bonus * 4.0
+	final_readiness += province_dev_bonus * 2.0
+
+	# Note: When this is called from actual battle resolution with province IDs,
+	# we should pull the real development_level and apply get_organization_recovery_modifier() etc.
 
 	var national_combat := {}
 
@@ -290,7 +296,28 @@ func get_combat_width_for_battle(
 	var dev_bonus := (float(attacker_dev) + float(defender_dev)) * 0.015
 	width *= (1.0 + dev_bonus)
 
+	if loader != null:
+		var prov_mod := 1.0
+		var mod_count := 0
+		if loader.provinces.has(attacker_province_id):
+			prov_mod *= (loader.provinces[attacker_province_id] as Province).get_combat_width_modifier()
+			mod_count += 1
+		if loader.provinces.has(defender_province_id):
+			prov_mod *= (loader.provinces[defender_province_id] as Province).get_combat_width_modifier()
+			mod_count += 1
+		if mod_count == 2:
+			width *= sqrt(prov_mod)
+		elif mod_count == 1:
+			width *= prov_mod
+
 	return width
+
+
+## UI-friendly battle location summary (rules width + province getters).
+func get_province_battle_preview(attacker: Province, defender: Province) -> Dictionary:
+	if attacker == null or defender == null:
+		return {}
+	return ProvinceInsight.get_battle_preview(attacker, defender)
 
 
 func _find_scenario_loader() -> ScenarioLoader:

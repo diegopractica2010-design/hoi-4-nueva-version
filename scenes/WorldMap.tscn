@@ -43,6 +43,8 @@ info_dev = NodePath("UI/InfoPanel/InfoContent/LabelDev")
 info_resources = NodePath("UI/InfoPanel/InfoContent/LabelResources")
 info_core = NodePath("UI/InfoPanel/InfoContent/LabelCore")
 info_special = NodePath("UI/InfoPanel/InfoContent/LabelSpecial")
+info_logistics = NodePath("UI/InfoPanel/InfoContent/LabelLogistics")
+info_combat = NodePath("UI/InfoPanel/InfoContent/LabelCombat")
 btn_close = NodePath("UI/InfoPanel/BtnClose")
 
 [node name="CameraInput" type="Node2D" parent="." unique_id=900010001]
@@ -63,8 +65,8 @@ layer = 20
 visible = false
 offset_left = 40.0
 offset_top = 40.0
-offset_right = 380.0
-offset_bottom = 430.0
+offset_right = 420.0
+offset_bottom = 560.0
 mouse_filter = 0
 theme = SubResource("Theme_ej7nn")
 theme_override_styles/panel = SubResource("StyleBoxFlat_fgl0d")
@@ -73,8 +75,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_fgl0d")
 layout_mode = 0
 offset_left = 16.0
 offset_top = 34.0
-offset_right = 316.0
-offset_bottom = 181.0
+offset_right = 356.0
+offset_bottom = 500.0
 pivot_offset = Vector2(-16, -32)
 theme_override_constants/separation = 8
 
@@ -122,6 +124,18 @@ autowrap_mode = 3
 [node name="LabelSpecial" type="Label" parent="UI/InfoPanel/InfoContent" unique_id=1151884655]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+autowrap_mode = 3
+
+[node name="LabelLogistics" type="Label" parent="UI/InfoPanel/InfoContent"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+
+[node name="LabelCombat" type="Label" parent="UI/InfoPanel/InfoContent"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
 [node name="BtnClose" type="Button" parent="UI/InfoPanel" unique_id=713871471]

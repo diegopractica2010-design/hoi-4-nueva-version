@@ -55,6 +55,10 @@ func _get_infrastructure_modifier(level: int) -> float:
 	return float((infra_block as Dictionary).get(key, 1.0))
 
 
+func get_terrain_width_modifier(terrain: String) -> float:
+	return _get_terrain_modifier(terrain)
+
+
 func _get_terrain_modifier(terrain: String) -> float:
 	var terrain_block: Variant = rules.get("terrain_modifiers", {})
 	if typeof(terrain_block) != TYPE_DICTIONARY:

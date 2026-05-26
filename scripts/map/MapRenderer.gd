@@ -14,6 +14,8 @@ extends Node2D
 @export var info_resources: Label
 @export var info_core: Label
 @export var info_special: Label
+@export var info_logistics: Label
+@export var info_combat: Label
 @export var btn_close: Button
 
 #region Province names (visible at lower zoom when enabled)
@@ -60,7 +62,8 @@ var province_nodes: Dictionary = {}
 var province_centroids: Dictionary = {}
 var _province_name_labels: Dictionary = {}
 var current_hover: Node2D = null
-var hover_label: Label = null
+var _hover_province: Province = null
+var hover_tooltip: ProvinceHoverTooltip = null
 
 var selected_province_id: int = -1
 var _selection_highlight: Polygon2D = null
@@ -93,8 +96,18 @@ func _ready():
 	else:
 		push_warning("MapRenderer: MapCamera node missing!")
 
+	_setup_hover_tooltip()
 	set_process(true)
 	print("MapRenderer _ready() completed")
+
+
+func _setup_hover_tooltip() -> void:
+	var ui := get_node_or_null("UI")
+	if ui == null:
+		return
+	hover_tooltip = ProvinceHoverTooltip.new()
+	hover_tooltip.name = "ProvinceHoverTooltip"
+	ui.add_child(hover_tooltip)
 
 
 func _input(event: InputEvent) -> void:
@@ -128,8 +141,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	_refresh_province_detail_visibility()
 
-	if hover_label and hover_label.visible and current_hover and hover_name_follow_mouse:
-		hover_label.position = get_local_mouse_position() + Vector2(14, -18)
+	if hover_tooltip and hover_tooltip.visible and _hover_province != null and hover_name_follow_mouse:
+		_refresh_hover_tooltip(_hover_province)
 
 	_handle_camera_input(delta)
 
@@ -447,6 +460,10 @@ func _select_province(province: Province, node: Node2D) -> void:
 	_clear_selection()
 
 	selected_province_id = province.id
+	if info_panel != null and info_panel.visible:
+		show_info_panel(province)
+	if _hover_province != null:
+		_refresh_hover_tooltip(_hover_province)
 
 	var poly: Polygon2D = node.get_child(0) as Polygon2D
 	if poly:
@@ -459,42 +476,44 @@ func _select_province(province: Province, node: Node2D) -> void:
 
 func _on_mouse_entered(node: Node2D, province: Province):
 	current_hover = node
+	_hover_province = province
 	node.scale = Vector2(1.05, 1.05)
 	if show_hover_province_name:
-		_show_hover_label(node, province)
+		_refresh_hover_tooltip(province)
 
 
 func _on_mouse_exited(node: Node2D):
 	if current_hover == node:
 		node.scale = Vector2.ONE
 		current_hover = null
-		_hide_hover_label()
+		_hover_province = null
+		_hide_hover_tooltip()
 
 
-func _show_hover_label(node: Node2D, province: Province):
-	if hover_label == null:
-		hover_label = Label.new()
-		hover_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		hover_label.add_theme_font_size_override("font_size", 14)
-		hover_label.add_theme_color_override("font_color", Color.WHITE)
-		hover_label.add_theme_color_override("font_shadow_color", Color.BLACK)
-		add_child(hover_label)
-
-	hover_label.text = province.name
-
-	if hover_name_follow_mouse:
-		hover_label.position = get_local_mouse_position() + Vector2(14, -18)
-	elif province_centroids.has(province.id):
-		var center: Vector2 = province_centroids[province.id] as Vector2
-		hover_label.position = to_local(node.to_global(center)) + Vector2(0, -22)
-	else:
-		hover_label.position = get_local_mouse_position() + Vector2(12, -20)
-	hover_label.visible = true
+func _refresh_hover_tooltip(province: Province) -> void:
+	if hover_tooltip == null or province == null:
+		return
+	var counterpart := _battle_counterpart_for_hover(province)
+	var text := ProvinceInsight.build_hover_tooltip(
+		province, selected_province_id, counterpart,
+	)
+	var mouse := get_viewport().get_mouse_position()
+	hover_tooltip.show_text(text, mouse, get_viewport().get_visible_rect().size)
 
 
-func _hide_hover_label():
-	if hover_label:
-		hover_label.visible = false
+func _battle_counterpart_for_hover(province: Province) -> Province:
+	if selected_province_id < 0 or selected_province_id == province.id:
+		return null
+	if adjacency == null or not adjacency.are_adjacent(province.id, selected_province_id):
+		return null
+	if not provinces.has(selected_province_id):
+		return null
+	return provinces[selected_province_id] as Province
+
+
+func _hide_hover_tooltip() -> void:
+	if hover_tooltip:
+		hover_tooltip.hide_tooltip()
 
 
 # ====================== INFO PANEL ======================
@@ -509,6 +528,10 @@ func show_info_panel(province: Province):
 	info_terrain.text = "Terrain: " + province.terrain.capitalize()
 	info_factories.text = "Factories: %d" % province.factories
 	info_dev.text = "Development: %d" % province.development_level
+	if info_logistics != null:
+		info_logistics.text = ProvinceInsight.build_info_logistics_text(province)
+	if info_combat != null:
+		info_combat.text = ProvinceInsight.build_info_combat_text(province, selected_province_id)
 
 	var res_text := "Resources: "
 	if province.resources.size() > 0:

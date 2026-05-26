@@ -111,4 +111,10 @@ static func _compute_capacity(hub: ProvinceSupplyHub, cap_rules: Dictionary) -> 
 	cap += float(hub.airport_level) * float(cap_rules.get("airport_per_level", 6000.0))
 	cap += float(hub.spaceport_level) * float(cap_rules.get("spaceport_per_level", 12000.0))
 	cap += float(hub.industry_slots) * float(cap_rules.get("city_industry_slot", 350.0))
+
+	# Development + Infrastructure now give significant combined depot capacity
+	# This makes high-dev provinces much more valuable as logistics bases
+	cap += float(hub.infrastructure) * 250.0
+	cap += float(hub.development_level) * 800.0   # Much stronger development scaling
+
 	return cap
