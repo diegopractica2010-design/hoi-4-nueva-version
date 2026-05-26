@@ -99,6 +99,12 @@ var _supply_role_by_province: Dictionary = {}
 var _compare_candidate_ids: Array[int] = []
 var _supply_legend_panel: PanelContainer = null
 var _compare_hint_label: Label = null
+var _legend_tracked_year: int = -1
+var _legend_tracked_month: int = -1
+var _legend_tracked_day: int = -1
+var _map_time_pulse_bbcode: String = ""
+var _map_time_pulse_kind: String = ""
+var _map_time_pulse_until_msec: int = 0
 
 #region Supply overlay
 @export var supply_overlay_panel: SupplyMenuPanel
@@ -141,8 +147,119 @@ func _ready():
 
 	_setup_hover_tooltip()
 	_setup_inspector_extras()
+	_connect_time_manager_signals()
+	_init_legend_calendar_tracking()
 	set_process(true)
 	print("MapRenderer _ready() completed")
+
+
+func _init_legend_calendar_tracking() -> void:
+	if typeof(TimeManager) == TYPE_NIL:
+		return
+	_legend_tracked_year = TimeManager.get_current_year()
+	_legend_tracked_month = TimeManager.get_current_month()
+	_legend_tracked_day = TimeManager.get_current_day()
+
+
+func _connect_time_manager_signals() -> void:
+	if typeof(TimeManager) == TYPE_NIL:
+		return
+	if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced_legend):
+		TimeManager.game_day_advanced.connect(_on_game_day_advanced_legend)
+	if not TimeManager.game_month_advanced.is_connected(_on_time_advanced_refresh_legend):
+		TimeManager.game_month_advanced.connect(_on_time_advanced_refresh_legend)
+	if not TimeManager.game_year_advanced.is_connected(_on_time_advanced_refresh_legend):
+		TimeManager.game_year_advanced.connect(_on_time_advanced_refresh_legend)
+
+
+func _on_game_day_advanced_legend(year: int, month: int, day: int) -> void:
+	if _legend_tracked_day < 0:
+		_legend_tracked_day = day
+		_legend_tracked_month = month
+		_legend_tracked_year = year
+		return
+	if day != _legend_tracked_day or month != _legend_tracked_month or year != _legend_tracked_year:
+		_try_set_map_time_pulse(
+			GameDateDisplay.build_map_time_pulse_bbcode("day", year, month, day),
+			"day",
+			2200,
+		)
+	_legend_tracked_day = day
+	_legend_tracked_month = month
+	_legend_tracked_year = year
+	_refresh_map_time_ui()
+
+
+func _on_time_advanced_refresh_legend(_a: Variant = null, _b: Variant = null) -> void:
+	_note_time_boundary_for_legend(_b != null)
+	_refresh_map_time_ui()
+
+
+func _note_time_boundary_for_legend(is_month_signal: bool) -> void:
+	if typeof(TimeManager) == TYPE_NIL:
+		return
+	var cur_y := TimeManager.get_current_year()
+	var cur_m := TimeManager.get_current_month()
+	var cur_d := TimeManager.get_current_day()
+	if _legend_tracked_year < 0:
+		_legend_tracked_year = cur_y
+		_legend_tracked_month = cur_m
+		_legend_tracked_day = cur_d
+		return
+	if cur_y > _legend_tracked_year:
+		_try_set_map_time_pulse(
+			GameDateDisplay.build_map_time_pulse_bbcode("year", cur_y, cur_m, cur_d),
+			"year",
+			5000,
+		)
+	elif is_month_signal and cur_m != _legend_tracked_month:
+		_try_set_map_time_pulse(
+			GameDateDisplay.build_map_time_pulse_bbcode("month", cur_y, cur_m, cur_d),
+			"month",
+			5000,
+		)
+	_legend_tracked_year = cur_y
+	_legend_tracked_month = cur_m
+	_legend_tracked_day = cur_d
+
+
+func _try_set_map_time_pulse(bbcode: String, kind: String, duration_msec: int) -> void:
+	if bbcode.is_empty():
+		return
+	var new_prio := GameDateDisplay.time_pulse_priority(kind)
+	if not _map_time_pulse_bbcode.is_empty() and Time.get_ticks_msec() <= _map_time_pulse_until_msec:
+		var cur_prio := GameDateDisplay.time_pulse_priority(_map_time_pulse_kind)
+		if cur_prio >= new_prio:
+			return
+	_map_time_pulse_bbcode = bbcode
+	_map_time_pulse_kind = kind
+	_map_time_pulse_until_msec = Time.get_ticks_msec() + duration_msec
+
+
+func _refresh_map_time_ui() -> void:
+	if supply_mode:
+		_update_supply_legend_text()
+	if _hover_province != null and hover_tooltip != null and hover_tooltip.visible:
+		_refresh_hover_tooltip(_hover_province)
+
+
+func _get_active_map_time_pulse_bbcode() -> String:
+	if _map_time_pulse_bbcode.is_empty():
+		return ""
+	if Time.get_ticks_msec() > _map_time_pulse_until_msec:
+		return ""
+	return _map_time_pulse_bbcode
+
+
+func _expire_map_time_pulse_if_needed() -> void:
+	if _map_time_pulse_bbcode.is_empty():
+		return
+	if Time.get_ticks_msec() <= _map_time_pulse_until_msec:
+		return
+	_map_time_pulse_bbcode = ""
+	_map_time_pulse_kind = ""
+	if supply_mode:
+		_update_supply_legend_text()
 
 
 func _setup_inspector_extras() -> void:
@@ -220,6 +337,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	_expire_map_time_pulse_if_needed()
+
 	_refresh_province_detail_visibility()
 
 	if hover_tooltip and hover_tooltip.visible and _hover_province != null and hover_name_follow_mouse:
@@ -648,6 +767,11 @@ func _refresh_hover_tooltip(province: Province) -> void:
 		and not p_tag.is_empty()
 		and TechnologyManager.get_active_research_count(p_tag) > 0
 	)
+	var has_radio := (
+		not p_tag.is_empty()
+		and ProvinceInsight.province_benefits_country(province, p_tag)
+		and MapTechnologyContext.has_support_radio_bonuses(p_tag)
+	)
 	var text := ProvinceInsight.build_hover_tooltip(
 		province, selected_province_id, counterpart, supply_mode, hover_role,
 		is_candidate, contested, has_agent,
@@ -655,6 +779,9 @@ func _refresh_hover_tooltip(province: Province) -> void:
 	var mouse := get_viewport().get_mouse_position()
 	var compare_active := counterpart != null
 	var selected_accent := selected_province_id == province.id
+	var dual := contested and has_agent
+	var agent_activity := has_agent and ProvinceInsight.agent_has_daily_activity(province)
+	var agent_pressure := ProvinceInsight.agent_pressure_focus_kind(province) if has_agent else ""
 	hover_tooltip.show_text(
 		text,
 		mouse,
@@ -664,10 +791,13 @@ func _refresh_hover_tooltip(province: Province) -> void:
 		compare_active,
 		selected_accent,
 		is_candidate,
-		contested and not compare_active and not (contested and has_agent),
-		has_agent and not compare_active and not (contested and has_agent),
-		has_tech and not compare_active and not has_agent and not contested,
-		contested and has_agent and not compare_active,
+		contested and not compare_active,
+		has_agent and not compare_active,
+		has_tech and not compare_active,
+		has_radio and not compare_active and not has_tech,
+		dual and not compare_active,
+		agent_activity,
+		agent_pressure,
 	)
 	_set_conflict_highlight(province.id if ProvinceInsight.is_province_contested(province) else -1)
 	_set_agent_highlight(province.id if ProvinceInsight.has_active_agent_network(province) else -1)
@@ -1177,10 +1307,20 @@ func _hover_outline_colors(province_id: int) -> Dictionary:
 	var contested := ProvinceInsight.is_province_contested(hp)
 	var agent := ProvinceInsight.has_active_agent_network(hp)
 	if contested and agent:
-		colors["color"] = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_HOVER, 0.28)
+		var dual_lerp := 0.22 if supply_mode else 0.28
+		colors["color"] = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_HOVER, dual_lerp)
 		colors["glow"] = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
 	elif agent:
-		colors["color"] = ProvinceMapVisuals.OUTLINE_AGENT.lerp(ProvinceMapVisuals.OUTLINE_HOVER, 0.38)
+		var agent_lerp := 0.28 if ProvinceInsight.agent_has_daily_activity(hp) else 0.38
+		var pressure_kind := ProvinceInsight.agent_pressure_focus_kind(hp)
+		var agent_outline := ProvinceMapVisuals.OUTLINE_AGENT
+		if pressure_kind == "disrupt":
+			agent_outline = ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT
+			agent_lerp = 0.24 if ProvinceInsight.agent_applies_daily_pressure(hp) else agent_lerp
+		elif pressure_kind == "sabotage":
+			agent_outline = ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE
+			agent_lerp = 0.24 if ProvinceInsight.agent_applies_daily_pressure(hp) else agent_lerp
+		colors["color"] = agent_outline.lerp(ProvinceMapVisuals.OUTLINE_HOVER, agent_lerp)
 		colors["glow"] = ProvinceMapVisuals.OUTLINE_AGENT_GLOW
 	elif contested:
 		colors["color"] = ProvinceMapVisuals.OUTLINE_CONFLICT.lerp(ProvinceMapVisuals.OUTLINE_HOVER, 0.42)
@@ -1201,6 +1341,8 @@ func _set_hover_outline(province_id: int, visible: bool) -> void:
 				and ProvinceInsight.has_active_agent_network(hp)
 			):
 				width += 0.35
+				if province_id == selected_province_id:
+					width += 0.2
 		var oc: Dictionary = _hover_outline_colors(province_id)
 		ProvinceMapVisuals.ensure_polished_outline(
 			node,
@@ -1312,10 +1454,25 @@ func _apply_hover_fill(province_id: int, active: bool) -> void:
 	var contested := ProvinceInsight.is_province_contested(province)
 	var agent := ProvinceInsight.has_active_agent_network(province)
 	if contested and agent:
-		var dual_strength := 0.18 if supply_mode else 0.14
+		var dual_strength := 0.14
+		if supply_mode:
+			dual_strength = 0.2
+		if province_id == selected_province_id:
+			dual_strength += 0.04
 		col = col.lerp(ProvinceMapVisuals.FILL_DUAL, dual_strength)
 	elif agent:
-		col = col.lerp(_AGENT_FILL_TINT, 0.08)
+		var agent_tint := _AGENT_FILL_TINT
+		match ProvinceInsight.agent_pressure_focus_kind(province):
+			"disrupt":
+				agent_tint = ProvinceMapVisuals.FILL_AGENT_DISRUPT
+			"sabotage":
+				agent_tint = ProvinceMapVisuals.FILL_AGENT_SABOTAGE
+		var fill_strength := 0.08
+		if ProvinceInsight.agent_applies_daily_pressure(province):
+			fill_strength = 0.13
+		if ProvinceInsight.agent_has_daily_activity(province):
+			fill_strength += 0.03
+		col = col.lerp(agent_tint, fill_strength)
 	elif contested:
 		col = col.lerp(_CONFLICT_FILL_TINT, 0.09)
 	poly.color = col.lerp(_HOVER_FILL_TINT, boost)
@@ -1619,6 +1776,7 @@ func _update_supply_legend_text() -> void:
 		var contested_n := ProvinceInsight.count_contested_provinces(provinces)
 		var agent_n := ProvinceInsight.count_agent_networks(provinces, _player_tag())
 		var dual_n := ProvinceInsight.count_dual_situation_provinces(provinces)
+		var pulse := _get_active_map_time_pulse_bbcode()
 		_supply_overlay_legend.text = ProvinceInsight.build_supply_legend_bbcode(
 			selected_province_id,
 			_compare_candidate_ids.size(),
@@ -1628,8 +1786,29 @@ func _update_supply_legend_text() -> void:
 			agent_n,
 			_player_tag(),
 			dual_n,
+			pulse,
+			_map_time_pulse_kind,
 		)
+		_apply_supply_legend_time_pulse_style(not pulse.is_empty(), _map_time_pulse_kind)
 	_update_compare_hint_label()
+
+
+func _apply_supply_legend_time_pulse_style(pulse_active: bool, pulse_kind: String = "") -> void:
+	if _supply_legend_panel == null:
+		return
+	var style := _supply_legend_panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if style == null:
+		return
+	if not pulse_active:
+		style.border_color = Color(0.35, 0.55, 0.85, 0.75)
+	elif pulse_kind == "year":
+		style.border_color = Color(0.45, 0.82, 1.0, 0.95)
+	elif pulse_kind == "month":
+		style.border_color = Color(0.55, 0.72, 0.92, 0.9)
+	elif pulse_kind == "day":
+		style.border_color = Color(0.42, 0.52, 0.68, 0.82)
+	else:
+		style.border_color = Color(0.55, 0.72, 0.92, 0.9)
 
 
 func _update_compare_hint_label() -> void:
@@ -1654,7 +1833,13 @@ func _update_compare_hint_label() -> void:
 	var show_conflict := contested_n > 0 and not supply_mode and not show_compare
 	var show_agent := agent_n > 0 and not supply_mode and not show_compare and not show_conflict
 	var show_supply_compare := selected_province_id >= 0 and supply_mode
-	var show_supply_overlays := supply_mode and not show_supply_compare and (contested_n > 0 or agent_n > 0)
+	var p_tag := _player_tag()
+	var has_radio := MapTechnologyContext.has_support_radio_bonuses(p_tag)
+	var show_supply_overlays := (
+		supply_mode
+		and not show_supply_compare
+		and (contested_n > 0 or agent_n > 0 or has_radio)
+	)
 	_compare_hint_label.visible = (
 		show_compare or show_conflict or show_agent or show_supply_compare or show_supply_overlays
 	)
@@ -1665,13 +1850,13 @@ func _update_compare_hint_label() -> void:
 			selected_province_id, _compare_candidate_ids.size(), hid, hover_cand,
 		)
 		var overlay := ProvinceInsight.build_map_supply_mode_hint_plain(
-			contested_n, agent_n, dual_n, selected_province_id,
+			contested_n, agent_n, dual_n, selected_province_id, p_tag,
 		)
 		_compare_hint_label.text = base + "  |  " + overlay if not overlay.is_empty() else base
 		_compare_hint_label.add_theme_color_override("font_color", Color(1.0, 0.75, 0.45))
 	elif show_supply_overlays:
 		_compare_hint_label.text = ProvinceInsight.build_map_supply_mode_hint_plain(
-			contested_n, agent_n, dual_n, -1,
+			contested_n, agent_n, dual_n, -1, p_tag,
 		)
 		_compare_hint_label.add_theme_color_override("font_color", Color(0.55, 0.92, 0.78))
 	elif show_compare:
@@ -1685,7 +1870,7 @@ func _update_compare_hint_label() -> void:
 		_compare_hint_label.add_theme_color_override("font_color", Color(1.0, 0.55, 0.55))
 	elif show_agent:
 		_compare_hint_label.text = (
-			"◎ %d agent network%s — purple rings on map · hover for details"
+			"◎ %d agent network%s — rings pulse daily · hover for strength & today's activity"
 			% [agent_n, "s" if agent_n != 1 else ""]
 		)
 		_compare_hint_label.add_theme_color_override("font_color", Color(0.72, 0.55, 1.0))

@@ -36,9 +36,17 @@ var is_paused: bool = false
 func _ready() -> void:
 	_apply_theme()
 	_connect_buttons()
+	_sync_pause_from_time_manager()
 	_update_speed_buttons()
 	_update_date_time()
 	_update_resources()
+	if typeof(TimeManager) != TYPE_NIL:
+		if not TimeManager.game_year_advanced.is_connected(_on_game_year_advanced):
+			TimeManager.game_year_advanced.connect(_on_game_year_advanced)
+		if not TimeManager.game_month_advanced.is_connected(_on_game_month_advanced):
+			TimeManager.game_month_advanced.connect(_on_game_month_advanced)
+		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
+			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
 
 	var timer := Timer.new()
 	timer.wait_time = 1.0
@@ -88,6 +96,10 @@ func _connect_buttons() -> void:
 
 
 func _on_tick() -> void:
+	# Drive simulation from real time when not paused
+	if typeof(TimeManager) != TYPE_NIL:
+		TimeManager.advance_real_time(1.0)   # 1 real second → scaled game days
+
 	_update_date_time()
 	_update_resources()
 
@@ -96,7 +108,9 @@ func _set_game_speed(speed: int) -> void:
 	current_speed = clampi(speed, 1, 4)
 	is_paused = false
 	Engine.time_scale = float(current_speed)
+	_sync_time_manager_controls()
 	_update_speed_buttons()
+	_update_date_time()
 
 
 func _update_speed_buttons() -> void:
@@ -112,12 +126,47 @@ func _update_speed_buttons() -> void:
 func _on_pause_pressed() -> void:
 	is_paused = not is_paused
 	Engine.time_scale = 0.0 if is_paused else float(current_speed)
+	_sync_time_manager_controls()
 	_update_speed_buttons()
+	_update_date_time()
+
+
+func _on_game_year_advanced(_year: int) -> void:
+	_update_date_time()
+
+
+func _on_game_month_advanced(_year: int, _month: int) -> void:
+	_update_date_time()
+	_update_resources()
+
+
+func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
+	_update_date_time()
+
+
+func _sync_pause_from_time_manager() -> void:
+	if typeof(TimeManager) == TYPE_NIL:
+		return
+	is_paused = TimeManager.is_paused()
+
+
+func _sync_time_manager_controls() -> void:
+	if typeof(TimeManager) == TYPE_NIL:
+		return
+	TimeManager.set_paused(is_paused)
+	TimeManager.set_time_scale(float(current_speed) if not is_paused else 0.0)
 
 
 func _update_date_time() -> void:
-	# Placeholder until a game calendar system exists.
-	date_time_label.text = "15 June 1939  •  14:32"
+	date_time_label.text = GameDateDisplay.format_top_bar_line(true)
+	var tip := GameDateDisplay.format_top_bar_tooltip()
+	date_time_label.tooltip_text = tip
+	pause_button.tooltip_text = "Pause / resume simulation\n\n" + tip if not tip.is_empty() else "Pause / resume simulation"
+	if is_paused:
+		date_time_label.modulate = RetrowaveTheme.MAGENTA
+		pause_button.tooltip_text = "Resume simulation\n\n" + tip if not tip.is_empty() else "Resume simulation"
+	else:
+		date_time_label.modulate = Color.WHITE
 
 
 func _update_resources() -> void:

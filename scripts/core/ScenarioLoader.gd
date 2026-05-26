@@ -282,6 +282,11 @@ func load_scenario(scenario_name: String) -> bool:
 	_infer_port_access_for_all(provinces)
 	_spawn_scenario_factories(scenario_name)
 	var scenario_year := _parse_scenario_start_year(data)
+	var start_date_str := str(data.get("start_date", "1936-01-01"))
+	# New central clock (non-breaking: we still pass year to legacy systems for now)
+	if typeof(TimeManager) != TYPE_NIL:
+		TimeManager.initialize_from_scenario_start_date(start_date_str)
+
 	_load_scenario_leaders(scenario_name, scenario_year)
 	_apply_scenario_starting_technology(scenario_name, scenario_year)
 	_spawn_scenario_formations(scenario_name)

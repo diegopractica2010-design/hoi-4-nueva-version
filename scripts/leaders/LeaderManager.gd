@@ -621,11 +621,18 @@ func get_available_leaders(country_tag: String) -> Array[Leader]:
 
 
 func get_current_year() -> int:
+	# During transition, prefer the central TimeManager when present.
+	if typeof(TimeManager) != TYPE_NIL:
+		return TimeManager.get_current_year()
 	return current_year
 
 
 func set_current_year(year: int) -> void:
 	current_year = maxi(year, 1)
+	# Migration note: TimeManager is now the intended single source of truth for date.
+	# Other systems should prefer TimeManager.get_current_year() / get_current_date().
+	# LeaderManager still owns the detailed yearly simulation (mortality, officer training)
+	# for the time being; future work will move more of the tick loop into TimeManager.
 
 
 func get_leader_age(leader: Leader) -> int:
@@ -895,7 +902,14 @@ func get_national_unity(country_tag: String) -> float:
 
 
 func advance_game_year() -> Dictionary:
+	# This method now contains the heavy yearly simulation (officer training, leader events, mortality).
+	# It is primarily called by TimeManager when a year boundary is crossed.
 	current_year += 1
+
+	# Keep TimeManager in sync (in case this was called manually for testing)
+	if typeof(TimeManager) != TYPE_NIL:
+		TimeManager.sync_year_from_external(current_year)
+
 	for _month in 12:
 		advance_officer_training_progress()
 	var introduced := introduce_eligible_leaders_for_year(current_year)

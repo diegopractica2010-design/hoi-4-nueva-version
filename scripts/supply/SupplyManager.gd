@@ -57,6 +57,11 @@ func _ready() -> void:
 	division_templates.load_all()
 	active_cargo = SupplyCargoProfile.general_supplies(500.0)
 
+	# Connect to central daily clock
+	if typeof(TimeManager) != TYPE_NIL:
+		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
+			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
+
 
 func build_network(
 	p_provinces: Dictionary,
@@ -320,6 +325,10 @@ func get_attrition_cargo_summary(_leader_id: String = "") -> Dictionary:
 	)
 
 
+func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
+	# Daily supply simulation driven by central TimeManager
+	advance_supply_day(1.0)
+
 func advance_supply_day(days: float = 1.0) -> void:
 	if days <= 0.0:
 		return
@@ -432,6 +441,14 @@ func _generate_local_supply_from_development(days: float) -> void:
 
 		# Base local supply generation scaled by development + effects
 		var daily_gen := 40.0 * local_gen * days
+
+		# Targeted daily sabotage from active supply_disruption networks in this specific province
+		if typeof(AgentManager) != TYPE_NIL:
+			var disruption := AgentManager.get_supply_disruption_in_province(int(pid))
+			if disruption > 0.0:
+				var penalty := clampf(disruption * 0.25, 0.0, 0.6)  # up to 60% reduction from strong network
+				daily_gen *= (1.0 - penalty)
+
 		state.apply_inflow(daily_gen)
 
 	# Note: stray menu-ranking code was previously inserted here by accident (removed in Phase 1 verify).

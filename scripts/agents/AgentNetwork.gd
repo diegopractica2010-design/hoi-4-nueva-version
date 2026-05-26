@@ -20,6 +20,11 @@ extends Resource
 
 var total_intel_gathered: int = 0
 var total_disruption_caused: float = 0.0
+## Set by AgentManager after each daily tick (growth, recruit, focus action, detection).
+var last_daily_note: String = ""
+## Ongoing daily province effect from focus (supply_disruption / infrastructure_sabotage).
+var last_daily_effect: String = ""
+var last_daily_effect_scalar: float = 0.0
 
 func get_effectiveness() -> float:
 	# Base effectiveness from strength + operatives

@@ -64,10 +64,23 @@ func _ready() -> void:
 	_rebuild_unlock_indices()
 	if not research_completed.is_connected(_on_research_completed_toast):
 		research_completed.connect(_on_research_completed_toast)
-	if typeof(LeaderManager) != TYPE_NIL:
+
+	# Prefer central TimeManager when available (migration path toward single source of truth).
+	if typeof(TimeManager) != TYPE_NIL:
+		_current_year = TimeManager.get_current_year()
+	elif typeof(LeaderManager) != TYPE_NIL:
 		_current_year = LeaderManager.get_current_year()
+
+	# Primary listener: TimeManager (central clock)
+	if typeof(TimeManager) != TYPE_NIL:
+		if not TimeManager.game_year_advanced.is_connected(_on_game_year_advanced):
+			TimeManager.game_year_advanced.connect(_on_game_year_advanced)
+
+	# Backward-compat listener during transition
+	if typeof(LeaderManager) != TYPE_NIL:
 		if not LeaderManager.game_year_advanced.is_connected(_on_game_year_advanced):
 			LeaderManager.game_year_advanced.connect(_on_game_year_advanced)
+
 	print("TechnologyManager: Loaded %d technology nodes" % technology_nodes.size())
 
 
@@ -258,12 +271,25 @@ func has_division_capability(country_tag: String, capability: String) -> bool:
 	return capability in (state["division_capabilities"] as Array)
 
 
+## Returns the list of factory/building types unlocked by technology for this country.
+## Used by MapTechnologyContext and Production for build eligibility and map highlights.
+func get_unlocked_factory_types(country_tag: String) -> Array[String]:
+	var state := _ensure_country(country_tag.strip_edges().to_upper())
+	var arr: Array = state.get("unlocked_factory_types", []) as Array
+	var result: Array[String] = []
+	for v in arr:
+		result.append(str(v))
+	return result
+
+
 func get_technology_modifiers(country_tag: String) -> Dictionary:
 	var state := _ensure_country(country_tag.strip_edges().to_upper())
 	return (state.get("permanent_modifiers", {}) as Dictionary).duplicate()
 
 
-## Thin wrappers so other systems (Supply, Combat, Map) can easily consume radio tree effects.
+## === Radio / Support tech effect helpers (for Supply, Combat, Map, Agents) ===
+## These expose the concrete gameplay impact of the Support/Radio tree (and future support tech).
+## Other systems should prefer these over raw get_technology_modifiers() when possible.
 func get_effective_planning_speed(country_tag: String) -> float:
 	if typeof(NationalModifierManager) == TYPE_NIL:
 		return 0.0
@@ -278,6 +304,16 @@ func get_effective_reconnaissance(country_tag: String) -> float:
 	return float(mods.get("reconnaissance", 0.0))
 
 
+## Public helper for map, production, and other systems to query tech unlocks without
+## reaching directly into country_state.
+##
+## Usage examples:
+##   if TechnologyManager.has_tech_unlock("GER", "factory_type", "tank_plant"): ...
+##   if TechnologyManager.has_tech_unlock(tag, "agent_mission", "infiltrate_research_lab"): ...
+##   if TechnologyManager.has_tech_unlock(tag, "division_capability", "motorized_logistics"): ...
+##
+## Supported unlock_types: "division_capability", "agent_mission", "doctrine_key",
+## "rule_flag", "factory_type", "unit_design"
 func has_tech_unlock(country_tag: String, unlock_type: String, value: String) -> bool:
 	var tag := country_tag.strip_edges().to_upper()
 	var state := _ensure_country(tag)
@@ -695,7 +731,7 @@ func get_technology_screen_data(
 	data.graph_edges = graph.get("edges", []) as Array[Dictionary]
 	if typeof(MapTechnologyContext) != TYPE_NIL:
 		data.map_integration_note = MapTechnologyContext.get_map_integration_note(tag)
-		var preview: Dictionary = MapTechnologyContext.get_build_mode_preview()
+		var preview: Dictionary = MapTechnologyContext.get_build_mode_preview(tag)
 		data.map_build_mode_active = bool(preview.get("active", false))
 		data.map_build_target_tech_id = str(preview.get("target_tech_id", ""))
 		data.map_build_target_label = str(preview.get("target_label", ""))

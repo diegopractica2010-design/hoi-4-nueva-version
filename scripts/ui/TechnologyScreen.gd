@@ -305,7 +305,9 @@ func _apply_map_integration_hint() -> void:
 	if not current_data.map_legend_bbcode.is_empty():
 		parts.append(current_data.map_legend_bbcode.strip_edges())
 	slots_label.tooltip_text = "\n".join(parts) if not parts.is_empty() else ""
-	var footer := "Map: tooltips show research & factory gates"
+	var footer := "Map: tooltips show research, factory gates, and 📡 Support/Radio on your provinces"
+	if MapTechnologyContext.has_support_radio_bonuses(country_tag):
+		footer += " (bonuses active)"
 	if not current_data.map_legend_bbcode.is_empty():
 		footer += " · " + _strip_bbcode_tags(current_data.map_legend_bbcode)
 	footer_label.text = footer
@@ -361,7 +363,7 @@ func _domain_filter_tooltip_line(domain_id: String, counts: Dictionary) -> Strin
 	if not status_map.has(domain_id):
 		return "Filter: %s (%d technologies in current era)" % [domain_id, total]
 	var bucket: Dictionary = status_map[domain_id] as Dictionary
-	return (
+	var line := (
 		"Filter: %s — %d shown · %d available · %d in progress · %d completed"
 		% [
 			domain_id,
@@ -371,6 +373,9 @@ func _domain_filter_tooltip_line(domain_id: String, counts: Dictionary) -> Strin
 			int(bucket.get("completed", 0)),
 		]
 	)
+	if domain_id == "support" and MapTechnologyContext.has_support_radio_bonuses(country_tag):
+		line += "\n📡 Active on map: planning boosts reinforcement; recon softens route interdiction."
+	return line
 
 
 func _on_open_training_pressed() -> void:
@@ -499,7 +504,10 @@ func _populate_active_bar() -> void:
 		else:
 			parts.append("%s%s %s %d%%" % [prefix, slot.get("name", ""), bar, pct])
 	active_research_label.text = ", ".join(parts)
-	active_research_label.tooltip_text = "Active research at %.1f RP/day" % current_data.daily_rp
+	var tip_parts: PackedStringArray = ["Active research at %.1f RP/day" % current_data.daily_rp]
+	if MapTechnologyContext.has_support_radio_bonuses(country_tag):
+		tip_parts.append(_strip_bbcode_tags(MapTechnologyContext.build_support_supply_effect_bbcode(country_tag)))
+	active_research_label.tooltip_text = "\n".join(tip_parts)
 	active_research_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	active_research_label.modulate = Color.WHITE
 
@@ -717,7 +725,15 @@ func _update_inspector() -> void:
 		cancel_button.disabled = true
 		return
 
-	inspector_title.text = "%s [%s]" % [info.get("name", ""), str(info.get("status", "")).capitalize()]
+	var domain_id := str(info.get("domain", "")).to_lower()
+	var title_prefix := ""
+	if domain_id == "support":
+		title_prefix = "📡 "
+	inspector_title.text = "%s%s [%s]" % [
+		title_prefix,
+		info.get("name", ""),
+		str(info.get("status", "")).capitalize(),
+	]
 
 	var lines: PackedStringArray = []
 	lines.append("Domain: %s · %s" % [info.get("domain", ""), info.get("epoch", "")])
@@ -741,11 +757,14 @@ func _update_inspector() -> void:
 		)
 	elif status == "completed":
 		lines.append("Completed — bonuses active.")
+		if domain_id == "support":
+			var route_fx := MapTechnologyContext.build_support_supply_effect_bbcode(country_tag)
+			if not route_fx.is_empty():
+				lines.append(_strip_bbcode_tags(route_fx))
 	elif status == "compromised":
 		lines.append("Compromised — research halted until counter-intel clears the breach.")
 	if str(info.get("node_kind", "")) == "doctrine":
 		lines.append("Doctrine node — unlocks leader training eligibility.")
-	var domain_id := str(info.get("domain", "")).to_lower()
 	if domain_id == "support":
 		lines.append("Support tree — radio, planning speed, and recon feed Supply and Combat.")
 		var support := MapTechnologyContext.build_support_radio_glance_bbcode(country_tag)

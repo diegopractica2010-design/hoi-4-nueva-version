@@ -15,14 +15,25 @@ var _current_year: int = 1936
 
 
 func _ready() -> void:
-	# Connect to yearly advancement if LeaderManager exists
-	if typeof(LeaderManager) != TYPE_NIL:
+	# Prefer central TimeManager for monthly (and yearly) ticks
+	if typeof(TimeManager) != TYPE_NIL:
+		if not TimeManager.game_month_advanced.is_connected(_on_game_month_advanced):
+			TimeManager.game_month_advanced.connect(_on_game_month_advanced)
+		if not TimeManager.game_year_advanced.is_connected(_on_game_year_advanced):
+			TimeManager.game_year_advanced.connect(_on_game_year_advanced)
+	elif typeof(LeaderManager) != TYPE_NIL:
+		# Fallback during transition
 		LeaderManager.game_year_advanced.connect(_on_game_year_advanced)
 
 
 func _on_game_year_advanced(year: int) -> void:
 	set_current_year(year)
-	tick_modifiers(12)  # Advance one year worth of modifiers
+	tick_modifiers(12)  # Advance one year worth of modifiers (for backward compat / full refresh)
+
+func _on_game_month_advanced(year: int, month: int) -> void:
+	set_current_year(year)
+	# Monthly decay/tick for temporary national effects (the main point of monthly ticks)
+	tick_modifiers(1)
 
 
 func set_current_year(year: int) -> void:

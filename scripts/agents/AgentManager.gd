@@ -19,6 +19,11 @@ const DEFAULT_TARGET_COUNTRY_TAGS: Array[String] = [
 	"USA", "GER", "ENG", "FRA", "SOV", "JAP", "ITA", "CHI",
 ]
 
+## Daily network sabotage tuning (light pressure, not destruction)
+const DAILY_NETWORK_SABOTAGE_BASE := 0.022
+const DAILY_NETWORK_SABOTAGE_MAX := 0.10
+const DAILY_NETWORK_SABOTAGE_DURATION_DAYS := 3
+
 var agents: Dictionary = {}                    # country_tag -> Array[Agent]
 var networks: Dictionary = {}                    # province_id (int) -> AgentNetwork
 var mission_definitions: Dictionary = {}
@@ -31,8 +36,23 @@ func _ready() -> void:
 	_load_mission_definitions()
 	print("AgentManager: Loaded %d mission definitions" % mission_definitions.size())
 
+	# Prefer central TimeManager when available (migration path).
+	if typeof(TimeManager) != TYPE_NIL:
+		_current_year = TimeManager.get_current_year()
+	elif typeof(LeaderManager) != TYPE_NIL:
+		_current_year = LeaderManager.get_current_year()
+
+	# Primary listener: central TimeManager
+	if typeof(TimeManager) != TYPE_NIL:
+		if not TimeManager.game_year_advanced.is_connected(_on_game_year_advanced):
+			TimeManager.game_year_advanced.connect(_on_game_year_advanced)
+		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
+			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
+
+	# Backward-compat during transition
 	if typeof(LeaderManager) != TYPE_NIL:
-		LeaderManager.game_year_advanced.connect(_on_game_year_advanced)
+		if not LeaderManager.game_year_advanced.is_connected(_on_game_year_advanced):
+			LeaderManager.game_year_advanced.connect(_on_game_year_advanced)
 
 
 func _on_game_year_advanced(year: int) -> void:
@@ -40,6 +60,11 @@ func _on_game_year_advanced(year: int) -> void:
 	_release_expired_compromised_agents()
 	# Advance missions by 12 months per year for MVP
 	advance_missions(12)
+
+func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
+	# Daily updates for persistent agent networks (makes them feel alive on the map).
+	# This is the new primary path for network progression (replacing pure yearly updates).
+	advance_networks_daily()
 
 
 func _load_mission_definitions() -> void:
@@ -187,6 +212,13 @@ func _resolve_mission(agent: Agent) -> void:
 		detection_chance *= 1.6   # Failures are much riskier
 	if outcome == "success":
 		detection_chance *= 0.7
+
+	# Encryption from radio_iii (national tech) reduces detection risk for this country's operations
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var mods := NationalModifierManager.get_combat_modifiers(agent.country_tag)
+		var enc := float(mods.get("encryption", 0.0))
+		if enc > 0.0:
+			detection_chance *= maxf(0.4, 1.0 - enc * 0.35)   # +1.0 encryption → ~35% lower detection chance
 
 	var detected := randf() < detection_chance
 
@@ -343,6 +375,44 @@ func advance_networks(months: int = 1) -> void:
 		# Perform the network's focus action
 		_process_network_action(net, months)
 
+## Lightweight daily update for agent networks.
+## Called by the central TimeManager via game_day_advanced.
+## Much smaller increments than the monthly version for smoother, more alive-feeling progression.
+## This is the preferred path for daily simulation (see TimeManager signal usage docs).
+func advance_networks_daily() -> void:
+	for province_id in networks.keys():
+		var net: AgentNetwork = networks[province_id]
+		if net == null or not net.is_active():
+			continue
+
+		net.last_daily_note = ""
+		net.last_daily_effect = ""
+		net.last_daily_effect_scalar = 0.0
+		var prev_strength := net.strength
+		var prev_ops := net.local_operatives
+
+		# Very slow daily growth (roughly 1/30th of monthly rate for smoothness)
+		var daily_growth := 0.05 + (randf() * 0.05)
+		net.strength = clampf(net.strength + daily_growth, 0.0, 100.0)
+
+		# Small daily chance to recruit a new operative
+		if randf() < 0.012:  # ~1.2% per day → roughly 30-40% chance per month
+			net.local_operatives += 1
+
+		# Daily focus action (very light version of the monthly logic)
+		var action_note := _process_network_action_daily(net)
+		var effect_note := _apply_daily_network_province_effects(net)
+		if action_note == "detected":
+			net.last_daily_note = "detected"
+		elif net.local_operatives > prev_ops:
+			net.last_daily_note = "recruit"
+		elif not action_note.is_empty():
+			net.last_daily_note = action_note
+		elif not effect_note.is_empty():
+			net.last_daily_note = effect_note
+		elif net.strength > prev_strength + 0.001:
+			net.last_daily_note = "growth"
+
 
 func _process_network_action(net: AgentNetwork, months: int) -> void:
 	var lead := get_agent(net.lead_agent_id)
@@ -356,6 +426,13 @@ func _process_network_action(net: AgentNetwork, months: int) -> void:
 	effectiveness = clampf(effectiveness, 0.1, 1.8)
 
 	var detection_chance := 0.12 * enemy_pressure
+
+	# Encryption (from radio_iii etc.) reduces network detection risk for the owning country
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var mods := NationalModifierManager.get_combat_modifiers(net.controlling_country)
+		var enc := float(mods.get("encryption", 0.0))
+		if enc > 0.0:
+			detection_chance *= maxf(0.5, 1.0 - enc * 0.4)
 
 	match net.focus:
 		"intelligence":
@@ -379,10 +456,164 @@ func _process_network_action(net: AgentNetwork, months: int) -> void:
 		_handle_network_detection(net)
 
 
+## Very light daily version of network focus actions and detection.
+func _process_network_action_daily(net: AgentNetwork) -> String:
+	var lead := get_agent(net.lead_agent_id)
+	if lead == null:
+		return ""
+
+	var enemy_pressure := _estimate_enemy_pressure(net.province_id)
+	var effectiveness := net.get_effectiveness() * (1.0 - enemy_pressure * 0.6)
+	effectiveness = clampf(effectiveness, 0.1, 1.8)
+
+	var detection_chance := 0.12 * enemy_pressure
+
+	# Apply encryption reduction (same as monthly path)
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var mods := NationalModifierManager.get_combat_modifiers(net.controlling_country)
+		var enc := float(mods.get("encryption", 0.0))
+		if enc > 0.0:
+			detection_chance *= maxf(0.5, 1.0 - enc * 0.4)
+
+	var action_note := ""
+	match net.focus:
+		"intelligence":
+			# Daily intel gathering (much smaller than monthly)
+			if randf() < 0.08:  # ~8% chance per day
+				var intel := int(0.2 + effectiveness * 0.3)
+				net.total_intel_gathered += max(0, intel)
+				action_note = "intel"
+
+		"supply_disruption":
+			var disruption := effectiveness * 0.003   # very small daily
+			net.total_disruption_caused += disruption
+			if disruption > 0.0001:
+				action_note = "disrupt"
+			# TODO: Apply actual small daily province supply impact here
+
+		"infrastructure_sabotage":
+			if randf() < 0.04:
+				action_note = "sabotage"
+
+	# Daily detection accumulation (much more granular than monthly)
+	net.detection_risk_accumulated += detection_chance * 0.08
+
+	# Roll for detection (daily chance is low but accumulates over time)
+	if randf() < detection_chance * 0.08:
+		_handle_network_detection(net)
+		return "detected"
+	return action_note
+
+
+## Applies small, scaled daily province-level effects for active networks (new in this session).
+##
+## Daily "teeth" for agent networks driven by TimeManager.game_day_advanced:
+##
+## 1. supply_disruption focus:
+##    - Short (DAILY_NETWORK_SABOTAGE_DURATION_DAYS) temporary national debuff via
+##      NationalModifierManager (supply_consumption + attrition for the controlling country).
+##    - Direct per-province sabotage on the specific ProvinceDepotState:
+##      reduces stockpile + temporarily lowers throughput_capacity.
+##    - Additionally, SupplyManager._generate_local_supply_from_development uses
+##      AgentManager.get_supply_disruption_in_province(pid) to reduce that province's
+##      daily local supply *generation* (truly localized effect).
+##
+## 2. infrastructure_sabotage focus:
+##    - Small daily chipping of the province's infrastructure level via
+##      MapManager.update_province_infrastructure (permanent until repaired).
+##    - Directly increases movement cost (Province.get_movement_cost) and reduces
+##      future local supply generation (via ProvinceEffects + dev/infra factors).
+##
+## Effects are deliberately small + cumulative (gradual partisan pressure, not decisive strikes).
+## They refresh daily while the network remains active.
+## province_data_changed (or "infrastructure"/"effects") is emitted so AgentNetworkLayer,
+## ProvinceInsight, Supply overlays, and movement calcs react.
+##
+## Scaling uses DAILY_NETWORK_SABOTAGE_BASE / MAX + net.get_effectiveness().
+## See the three DAILY_NETWORK_SABOTAGE_* constants near the top of this file for easy tuning.
+## They refresh daily while the network is active. province_data_changed is emitted so
+## AgentNetworkLayer, ProvinceInsight, and Supply UI react.
+##
+## Scaling uses DAILY_NETWORK_SABOTAGE_BASE/MAX and net.get_effectiveness().
+## This integrates cleanly with existing systems (no new effect types required).
+func _apply_daily_network_province_effects(net: AgentNetwork) -> String:
+	if net == null or not net.is_active():
+		return ""
+
+	var pid := net.province_id
+	var effectiveness := net.get_effectiveness()  # 0.1 - 1.5+
+	var magnitude := clampf(effectiveness * DAILY_NETWORK_SABOTAGE_BASE, 0.004, DAILY_NETWORK_SABOTAGE_MAX)
+	net.last_daily_effect_scalar = magnitude
+
+	match net.focus:
+		"supply_disruption":
+			net.last_daily_effect = "supply_disruption"
+			# Apply short (3-day) temporary supply pressure debuff on the controlling country
+			if typeof(NationalModifierManager) != TYPE_NIL:
+				var effect_id := "agent_net_supply_%d" % pid
+				var effect := {
+					"effect_id": effect_id,
+					"source": "agent_network",
+					"source_detail": "Daily sabotage from network in province %d" % pid,
+					"modifiers": {
+						"supply_consumption": magnitude * 0.9,
+						"attrition": magnitude * 0.35
+					},
+					"duration_months": DAILY_NETWORK_SABOTAGE_DURATION_DAYS,
+					"remaining_months": DAILY_NETWORK_SABOTAGE_DURATION_DAYS,
+					"is_debuff": true
+				}
+				NationalModifierManager.apply_national_effect(net.controlling_country, effect)
+
+			# Direct per-province sabotage on the local depot (stock + throughput reduction for the day)
+			if typeof(SupplyManager) != TYPE_NIL:
+				var depot = SupplyManager.depot_states.get(pid)
+				if depot != null:
+					var sabotage := 8.0 * effectiveness
+					# Hit stockpile (immediate loss)
+					depot.current_stock = max(0.0, depot.current_stock - sabotage * 0.3)
+					# Temporarily reduce throughput (simulates damaged logistics for the day)
+					if depot.throughput_capacity > 0:
+						depot.throughput_capacity = max(depot.throughput_capacity * 0.85, depot.throughput_capacity - sabotage * 0.1)
+
+			if typeof(MapManager) != TYPE_NIL:
+				MapManager.notify_province_changed(pid, "effects")
+			return "disrupt"
+
+		"infrastructure_sabotage":
+			net.last_daily_effect = "infrastructure_sabotage"
+			var damaged := false
+			# Chip infrastructure (permanent until repaired; affects movement cost and future supply)
+			if typeof(MapManager) != TYPE_NIL:
+				var p := MapManager.get_province(pid)
+				if p != null:
+					var damage := int(0.5 + effectiveness * 0.35)
+					if damage > 0 and p.infrastructure > 0:
+						damaged = true
+					var new_infra := max(0, p.infrastructure - damage)
+					MapManager.update_province_infrastructure(pid, new_infra)
+
+				MapManager.notify_province_changed(pid, "infrastructure")
+			if damaged:
+				return "sabotage"
+			return "infra_pressure"
+
+	return ""
+
+
 func _estimate_enemy_pressure(province_id: int) -> float:
 	# Placeholder - in a full implementation this would query CombatPresenceRegistry / ProvinceForceReport
 	# For now return a random value between 0.1 and 0.8 to simulate enemy presence
 	return randf_range(0.15, 0.75)
+
+
+## Returns the effectiveness (0.0 - 1.5+) of an active supply_disruption network in the given province, if any.
+## Used by SupplyManager to apply targeted per-province penalties on local generation.
+func get_supply_disruption_in_province(pid: int) -> float:
+	var net: AgentNetwork = networks.get(pid)
+	if net == null or not net.is_active() or net.focus != "supply_disruption":
+		return 0.0
+	return net.get_effectiveness()
 
 
 func _handle_network_detection(net: AgentNetwork) -> void:
