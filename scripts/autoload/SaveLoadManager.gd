@@ -245,9 +245,9 @@ func _gather_save_data() -> Dictionary:
 		"save_version": SAVE_VERSION,
 		"metadata": {
 			"timestamp": Time.get_datetime_string_from_system(true),
-			"scenario_id": "1936",   # TODO: pull from ScenarioLoader when it exposes an id
-			"player_tag": "USA",     # TODO: central player / current country state
-			"play_time_seconds": 0,  # Future
+			"scenario_id": "1936",
+			"player_tag": "USA",
+			"play_time_seconds": 0,
 		},
 		"time": {},
 		"technology": {},
@@ -255,10 +255,11 @@ func _gather_save_data() -> Dictionary:
 		"map": {},
 		"supply": {},
 		"national_modifiers": {},
+		"leaders": {},
 		"misc": {},
 	}
 
-	# --- TimeManager (simple primitives) ---
+	# --- TimeManager ---
 	if typeof(TimeManager) != TYPE_NIL:
 		data["time"] = {
 			"current_date": TimeManager.get_current_date(),
@@ -272,41 +273,43 @@ func _gather_save_data() -> Dictionary:
 		if TechnologyManager.has_method("get_save_data"):
 			data["technology"] = TechnologyManager.get_save_data()
 		else:
-			# Direct snapshot of the mutable per-country runtime state
 			data["technology"] = {
 				"country_state": TechnologyManager.country_state.duplicate(true)
 			}
 
-	# --- AgentManager (Resources require custom (de)serialization) ---
+	# --- AgentManager ---
 	if typeof(AgentManager) != TYPE_NIL:
 		data["agents"] = _serialize_agent_state()
 
-	# --- MapManager provinces (only mutable gameplay fields) ---
+	# --- MapManager ---
 	if typeof(MapManager) != TYPE_NIL:
 		data["map"] = _serialize_map_state()
 
-	# --- SupplyManager depot runtime state (stock, sabotage, etc.) ---
+	# --- SupplyManager ---
 	if typeof(SupplyManager) != TYPE_NIL:
 		data["supply"] = _serialize_supply_state()
 
-	# --- NationalModifierManager (temp effects, including daily sabotage debuffs) ---
+	# --- NationalModifierManager ---
 	if typeof(NationalModifierManager) != TYPE_NIL:
 		data["national_modifiers"] = {
 			"country_modifiers": NationalModifierManager.country_modifiers.duplicate(true)
 		}
 
-	# --- Scenario metadata (for validation / future auto-reload) ---
-	if typeof(ScenarioLoader) != TYPE_NIL and ScenarioLoader.has_method("get_current_scenario_name"):
-		data["metadata"]["scenario_id"] = ScenarioLoader.get_current_scenario_name()
-	elif typeof(ScenarioLoader) != TYPE_NIL:
-		data["metadata"]["scenario_id"] = ScenarioLoader.current_scenario_name
+	# --- Scenario metadata ---
+	var scenario_name := ""
+	if ScenarioLoader != null:
+		if ScenarioLoader.has_method("get_current_scenario_name"):
+			scenario_name = ScenarioLoader.get_current_scenario_name()
+		else:
+			scenario_name = ScenarioLoader.get("current_scenario_name", "")
+	data["metadata"]["scenario_id"] = scenario_name
 
-	# --- Production + Factories (new in this expansion) ---
+	# --- Production + Factories ---
 	if typeof(ProductionManager) != TYPE_NIL:
 		if ProductionManager.has_method("get_save_data"):
 			data["production"] = ProductionManager.get_save_data()
 		else:
-			data["production"] = {}  # fallback will be added if needed
+			data["production"] = {}
 
 	if typeof(FactoryManager) != TYPE_NIL:
 		if FactoryManager.has_method("get_save_data"):
@@ -314,7 +317,7 @@ func _gather_save_data() -> Dictionary:
 		else:
 			data["factories"] = {}
 
-	# --- Leaders (mutable runtime: assignments, XP/status, national positions, officer training) ---
+	# --- Leaders ---
 	if typeof(LeaderManager) != TYPE_NIL:
 		if LeaderManager.has_method("get_save_data"):
 			data["leaders"] = LeaderManager.get_save_data()
@@ -322,6 +325,7 @@ func _gather_save_data() -> Dictionary:
 			data["leaders"] = {}
 
 	return data
+
 
 func _apply_save_data(data: Dictionary) -> void:
 	# Deliberate order matters because of cross-references and signal side-effects.

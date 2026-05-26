@@ -1550,7 +1550,7 @@ func apply_save_data(data: Dictionary) -> void:
 				if ld.has("factory_id"):
 					line.factory_id = int(ld["factory_id"])
 
-	invalidate_all_caches()
+	clear_all_caches()
 	print("ProductionManager: Save data applied (%d lines)" % (data.get("lines", {}).size() if data.has("lines") else 0))
 
 
