@@ -55,9 +55,15 @@ func get_effective_combat_power(
 	var prov_infra := province_infra
 	var province_for_effects: Province = null
 	if prov_dev < 0 or prov_infra < 0:
-		var loader := _find_scenario_loader()
-		if loader != null and province_id >= 0 and loader.provinces.has(province_id):
-			var p: Province = loader.provinces[province_id]
+		# Prefer MapManager (central, fast)
+		var p: Province = null
+		if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
+			p = MapManager.get_province(province_id)
+		if p == null:
+			var loader := _find_scenario_loader()
+			if loader != null and province_id >= 0 and loader.provinces.has(province_id):
+				p = loader.provinces[province_id]
+		if p != null:
 			province_for_effects = p
 			if prov_dev < 0:
 				prov_dev = p.development_level
@@ -81,9 +87,9 @@ func get_effective_combat_power(
 			var lid := LeaderManager.get_leader_id_for_army(army_id)
 			if lid != "" and LeaderManager.leaders.has(lid):
 				owner_tag = LeaderManager.leaders[lid].country_tag
-		var pe := ProvinceEffects.for_country_province(province_for_effects, owner_tag)
-		org_mod = pe.get_effective_organization_recovery()
-		attrition_mod = pe.get_effective_attrition_multiplier()
+		var pe := _get_effects_for_province(province_for_effects, owner_tag)
+		org_mod = pe.get_effective_organization_recovery() if pe != null else 1.0
+		attrition_mod = pe.get_effective_attrition_multiplier() if pe != null else 1.0
 	elif province_for_effects != null:
 		org_mod = province_for_effects.get_organization_recovery_modifier()
 		attrition_mod = province_for_effects.get_attrition_modifier()
@@ -321,20 +327,20 @@ func get_combat_width_for_battle(
 	var defender_dev := 1
 	var battle_terrain := terrain
 
-	var loader := _find_scenario_loader()
-	if loader != null:
-		if loader.provinces.has(attacker_province_id):
-			var attacker: Province = loader.provinces[attacker_province_id]
-			attacker_infra = attacker.infrastructure
-			attacker_dev = attacker.development_level
-			if battle_terrain.is_empty():
-				battle_terrain = attacker.terrain
-		if loader.provinces.has(defender_province_id):
-			var defender: Province = loader.provinces[defender_province_id]
-			defender_infra = defender.infrastructure
-			defender_dev = defender.development_level
-			if battle_terrain.is_empty():
-				battle_terrain = defender.terrain
+	# Use centralized MapManager when possible (preferred after MapManager introduction)
+	var attacker: Province = _get_province_safe(attacker_province_id)
+	if attacker != null:
+		attacker_infra = attacker.infrastructure
+		attacker_dev = attacker.development_level
+		if battle_terrain.is_empty():
+			battle_terrain = attacker.terrain
+
+	var defender: Province = _get_province_safe(defender_province_id)
+	if defender != null:
+		defender_infra = defender.infrastructure
+		defender_dev = defender.development_level
+		if battle_terrain.is_empty():
+			battle_terrain = defender.terrain
 
 	if battle_terrain.is_empty():
 		battle_terrain = "plains"
@@ -372,11 +378,29 @@ func get_province_battle_preview(attacker: Province, defender: Province) -> Dict
 
 
 func _find_scenario_loader() -> ScenarioLoader:
+	# Preferred path: go through MapManager (centralized, no tree walks)
+	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
+		# MapManager doesn't expose the full loader, but we can still return null here
+		# and let callers use the new MapManager paths. Keep legacy for width calc.
+		pass
+
 	var tree := Engine.get_main_loop()
 	if tree == null:
 		return null
 	var loader_node: Node = tree.root.find_child("ScenarioLoader", true, false)
 	return loader_node as ScenarioLoader
+
+## Preferred helper for new code: returns Province via MapManager when available
+func _get_province_safe(province_id: int) -> Province:
+	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
+		var p := MapManager.get_province(province_id)
+		if p != null:
+			return p
+	# Fallback to old loader walk (kept for compatibility during transition)
+	var loader := _find_scenario_loader()
+	if loader != null and loader.provinces.has(province_id):
+		return loader.provinces[province_id] as Province
+	return null
 
 
 ## Returns casualty multiplier from province dev (high dev/infra = lower casualties due to better med/logistics).
@@ -384,21 +408,33 @@ func _find_scenario_loader() -> ScenarioLoader:
 func _get_province_casualty_multiplier(province_id: int) -> float:
 	if province_id < 0:
 		return 1.0
-	var loader := _find_scenario_loader()
-	if loader == null or not loader.provinces.has(province_id):
+	var p: Province = _get_province_safe(province_id)
+	if p == null:
 		return 1.0
-	var p: Province = loader.provinces[province_id]
 	# Reuse attrition_modifier logic (higher dev = lower mult) + slight infra help
 	var dev := float(clampi(p.development_level, 0, 50))
 	var infra := float(clampi(p.infrastructure, 0, 50))
 	var base := maxf(0.65, 1.0 - (dev * 0.018) + (infra * 0.005))
 	# Also respect ProvinceEffects national layer if present (e.g. medic spirits, agent sabotage on infra)
 	if typeof(ProvinceEffects) != TYPE_NIL:
-		var pe := ProvinceEffects.for_country_province(p, p.controller_tag if p.controller_tag != "" else p.owner_tag)
-		var eff_attr := pe.get_effective_attrition_multiplier()
-		# Lower attrition_mult province => lower casualties
-		base = lerp(base, eff_attr, 0.5)
+		var pe := _get_effects_for_province(p, p.controller_tag if p.controller_tag != "" else p.owner_tag)
+		if pe != null:
+			var eff_attr := pe.get_effective_attrition_multiplier()
+			base = lerp(base, eff_attr, 0.5)
 	return clampf(base, 0.55, 1.35)
+
+
+## Internal helper — prefers MapManager for ProvinceEffects (centralized national + dev/infra)
+func _get_effects_for_province(p: Province, tag: String) -> ProvinceEffects:
+	if p == null:
+		return null
+	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province_effects"):
+		var fx := MapManager.get_province_effects(p.id, tag)
+		if fx != null:
+			return fx
+	if typeof(ProvinceEffects) != TYPE_NIL:
+		return ProvinceEffects.for_country_province(p, tag)
+	return null
 
 
 # ============================================

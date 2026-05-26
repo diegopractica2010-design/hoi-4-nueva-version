@@ -33,3 +33,11 @@ extends Resource
 @export var primary_leader_id: String = ""
 @export var primary_leader_name: String = ""
 @export var agent_tech_summary: Dictionary = {}
+
+## Map integration (Phase F — build mode highlights on WorldMap).
+@export var map_integration_note: String = ""
+@export var map_build_mode_active: bool = false
+@export var map_build_target_tech_id: String = ""
+@export var map_build_target_label: String = ""
+@export var map_eligible_province_count: int = -1
+@export var map_legend_bbcode: String = ""

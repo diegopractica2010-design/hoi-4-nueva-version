@@ -263,6 +263,41 @@ func get_technology_modifiers(country_tag: String) -> Dictionary:
 	return (state.get("permanent_modifiers", {}) as Dictionary).duplicate()
 
 
+## Thin wrappers so other systems (Supply, Combat, Map) can easily consume radio tree effects.
+func get_effective_planning_speed(country_tag: String) -> float:
+	if typeof(NationalModifierManager) == TYPE_NIL:
+		return 0.0
+	var mods := NationalModifierManager.get_combat_modifiers(country_tag)
+	return float(mods.get("planning_speed", 0.0))
+
+
+func get_effective_reconnaissance(country_tag: String) -> float:
+	if typeof(NationalModifierManager) == TYPE_NIL:
+		return 0.0
+	var mods := NationalModifierManager.get_combat_modifiers(country_tag)
+	return float(mods.get("reconnaissance", 0.0))
+
+
+func has_tech_unlock(country_tag: String, unlock_type: String, value: String) -> bool:
+	var tag := country_tag.strip_edges().to_upper()
+	var state := _ensure_country(tag)
+	match unlock_type:
+		"division_capability":
+			return value in (state.get("division_capabilities", []) as Array)
+		"agent_mission":
+			return value in (state.get("unlocked_agent_missions", []) as Array)
+		"doctrine_key":
+			return value in (state.get("unlocked_doctrine_keys", []) as Array)
+		"rule_flag":
+			return value in (state.get("rule_flags", []) as Array)
+		"factory_type":
+			return value in (state.get("unlocked_factory_types", []) as Array)
+		"unit_design":
+			return value in (state.get("unlocked_unit_designs", []) as Array)
+		_:
+			return false
+
+
 # === Production gates (Phase B) ===
 
 func get_design_availability(country_tag: String, template_id: String) -> Dictionary:
@@ -658,6 +693,13 @@ func get_technology_screen_data(
 	var graph := _build_graph_layout(tag, nodes)
 	data.graph_nodes = graph.get("nodes", []) as Array[Dictionary]
 	data.graph_edges = graph.get("edges", []) as Array[Dictionary]
+	if typeof(MapTechnologyContext) != TYPE_NIL:
+		data.map_integration_note = MapTechnologyContext.get_map_integration_note(tag)
+		var preview: Dictionary = MapTechnologyContext.get_build_mode_preview()
+		data.map_build_mode_active = bool(preview.get("active", false))
+		data.map_build_target_tech_id = str(preview.get("target_tech_id", ""))
+		data.map_build_target_label = str(preview.get("target_label", ""))
+		data.map_legend_bbcode = str(preview.get("legend_line", ""))
 	return data
 
 
@@ -766,11 +808,17 @@ func _build_active_summaries(tag: String) -> Array[Dictionary]:
 		var node: Dictionary = technology_nodes.get(tech_id, {}) as Dictionary
 		var total := float(entry.get("total_days", 1.0))
 		var progress := float(entry.get("progress_days", 0.0))
+		var left := maxf(total - progress, 0.0)
+		var rp := get_daily_rp(tag)
+		var eta := left / rp if rp > 0.01 else left
 		result.append({
 			"tech_id": tech_id,
 			"name": str(node.get("name", tech_id)),
+			"domain": str(node.get("domain", "")),
 			"progress_days": progress,
 			"total_days": total,
+			"days_remaining": left,
+			"eta_days": eta,
 			"progress_pct": clampf(progress / total, 0.0, 1.0) if total > 0.0 else 0.0,
 		})
 	return result
@@ -782,14 +830,22 @@ func _node_to_summary(tag: String, tech_id: String, node: Dictionary) -> Diction
 	var ui: Dictionary = node.get("ui", {}) as Dictionary
 	var cost_days := get_effective_cost_days(node, _current_year)
 	var progress_pct := 0.0
+	var progress_days := 0.0
+	var total_days := float(cost_days)
+	var days_remaining := 0.0
+	var eta_days := 0.0
 	if status == "in_progress":
 		var state := _ensure_country(tag)
 		for slot in state["active"] as Array:
 			var entry: Dictionary = slot as Dictionary
 			if str(entry.get("tech_id", "")) == tech_id:
-				var total := float(entry.get("total_days", 1.0))
-				progress_pct = clampf(float(entry.get("progress_days", 0.0)) / total, 0.0, 1.0)
-				cost_days = total
+				total_days = maxf(float(entry.get("total_days", 1.0)), 1.0)
+				progress_days = float(entry.get("progress_days", 0.0))
+				progress_pct = clampf(progress_days / total_days, 0.0, 1.0)
+				cost_days = int(round(total_days))
+				days_remaining = maxf(total_days - progress_days, 0.0)
+				var rp := get_daily_rp(tag)
+				eta_days = days_remaining / rp if rp > 0.01 else days_remaining
 				break
 	return {
 		"tech_id": tech_id,
@@ -807,6 +863,10 @@ func _node_to_summary(tag: String, tech_id: String, node: Dictionary) -> Diction
 		"cost_days": cost_days,
 		"status": status,
 		"progress_pct": progress_pct,
+		"progress_days": progress_days,
+		"total_days": total_days,
+		"days_remaining": days_remaining,
+		"eta_days": eta_days,
 		"short_effect": str(ui.get("short_effect", "")),
 		"flavor": str(ui.get("flavor", "")),
 		"prerequisites": (node.get("prerequisites", []) as Array).duplicate(),
@@ -829,6 +889,20 @@ func _build_inspector(tag: String, tech_id: String) -> Dictionary:
 		var pname := str((technology_nodes.get(pid, {}) as Dictionary).get("name", pid))
 		var done := is_tech_completed(tag, pid)
 		prereq_lines.append("%s%s" % [pname, " ✓" if done else " ✗"])
+	var progress_days := 0.0
+	var total_days := float(get_effective_cost_days(node, _current_year))
+	if status == "in_progress":
+		var state := _ensure_country(tag)
+		for slot in state["active"] as Array:
+			var entry: Dictionary = slot as Dictionary
+			if str(entry.get("tech_id", "")) == tech_id:
+				progress_days = float(entry.get("progress_days", 0.0))
+				total_days = maxf(float(entry.get("total_days", total_days)), 1.0)
+				break
+	var days_remaining := maxf(total_days - progress_days, 0.0)
+	var progress_pct := clampf(progress_days / total_days, 0.0, 1.0) if total_days > 0.0 else 0.0
+	var daily_rp := get_daily_rp(tag)
+	var eta_days := days_remaining / daily_rp if daily_rp > 0.01 else days_remaining
 	return {
 		"tech_id": tech_id,
 		"name": str(node.get("name", tech_id)),
@@ -837,7 +911,13 @@ func _build_inspector(tag: String, tech_id: String) -> Dictionary:
 		"node_kind": str(node.get("node_kind", "")),
 		"epoch": str(node.get("epoch", "")),
 		"era_range": "%d–%d" % [int(node.get("era_min", 0)), int(node.get("era_max", 0))],
-		"cost_days": get_effective_cost_days(node, _current_year),
+		"cost_days": int(round(total_days)),
+		"progress_days": progress_days,
+		"total_days": total_days,
+		"days_remaining": days_remaining,
+		"progress_pct": progress_pct,
+		"eta_days": eta_days,
+		"daily_rp": daily_rp,
 		"can_start": can_research(tag, tech_id),
 		"can_cancel": status == "in_progress",
 		"short_effect": str((node.get("ui", {}) as Dictionary).get("short_effect", "")),

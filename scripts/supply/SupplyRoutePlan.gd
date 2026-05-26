@@ -53,6 +53,10 @@ func summary_lines() -> PackedStringArray:
 	)
 	lines.append("Mode: %s" % routing_mode)
 	lines.append("Interdiction risk: %.0f%%" % (interdiction_chance * 100.0))
+	if avg_interdiction_resistance > 1.001:
+		lines.append("Route interdiction resist: ×%.2f (province + national)" % avg_interdiction_resistance)
+	if reinforcement_modifier != 1.0:
+		lines.append("Reinforcement delivery: ×%.2f" % reinforcement_modifier)
 	if cargo_tons_per_day > 0.0:
 		lines.append("Cargo: %.0f t/day along route" % cargo_tons_per_day)
 	if uses_port:

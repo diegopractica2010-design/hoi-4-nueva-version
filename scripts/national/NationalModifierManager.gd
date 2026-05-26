@@ -246,6 +246,9 @@ func get_supply_modifiers(country_tag: String) -> Dictionary:
 		"supply_consumption": 0.0,   # additive to multiplier (negative = better)
 		"attrition_reduction": 0.0,  # positive = reduces attrition (good)
 		"interdiction_resistance": 0.0, # positive = reduces interdiction chance (good)
+		"planning_speed": 0.0,
+		"reconnaissance": 0.0,
+		"encryption": 0.0,
 	}
 
 	if not country_modifiers.has(tag):

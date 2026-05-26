@@ -3,7 +3,7 @@
 **Status:** Design / roadmap  
 **Last updated:** May 2026  
 **Audience:** Small team building in Godot 4.x  
-**Related:** `data/provinces/SCHEMA.md`, `scripts/data/Province.gd`, `scripts/map/MapRenderer.gd`, `scripts/core/ScenarioLoader.gd`, `docs/UI_DESIGN_REFERENCE.md`
+**Related:** `data/provinces/SCHEMA.md`, `scripts/data/Province.gd`, `scripts/map/MapRenderer.gd`, `scripts/core/ScenarioLoader.gd`, `docs/UI_DESIGN_REFERENCE.md`, **`docs/MAP_IMPLEMENTATION_PLAN.md`** (actionable 2026 phases + next steps — read this for execution)
 
 ---
 

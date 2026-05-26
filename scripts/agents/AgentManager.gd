@@ -452,6 +452,13 @@ func get_eligible_missions_for_agent(
 		var agent_skill := agent.get_skill(skill_req)
 		if agent_skill < min_skill:
 			continue
+
+		# Respect tech-unlocked agent missions (e.g. "infiltrate_research_lab" from radio_iii)
+		if typeof(TechnologyManager) != TYPE_NIL:
+			if mission_id == "infiltrate_research_lab":
+				if not TechnologyManager.has_tech_unlock(agent.country_tag, "agent_mission", "infiltrate_research_lab"):
+					continue
+
 		rows.append(_mission_row_for_agent(agent, str(mission_id), mission))
 
 	rows.sort_custom(

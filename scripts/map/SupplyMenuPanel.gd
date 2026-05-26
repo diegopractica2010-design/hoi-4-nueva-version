@@ -41,8 +41,11 @@ func show_supply_state(
 	depot: ProvinceDepotState,
 	attrition_cargo: Dictionary,
 	reroute_mode: bool,
+	province: Province = null,
+	player_tag: String = "",
+	top_depots_text: String = "",
 ) -> void:
-	show_plan(plan, reroute_mode)
+	show_plan(plan, reroute_mode, province, player_tag, top_depots_text)
 	if depot_label and depot != null:
 		depot_label.text = (
 			"Depot P%d: %.0f / %.0f t (%.0f%%) | in %.0f | out %.0f | cap %.0f t/day"

@@ -16,6 +16,9 @@ extends Node2D
 @export var info_special: Label
 @export var info_logistics: Label
 @export var info_combat: Label
+@export var info_modifiers: RichTextLabel
+@export var info_national: RichTextLabel
+@export var btn_national_spirits: Button
 @export var btn_close: Button
 
 #region Province names (visible at lower zoom when enabled)
@@ -47,11 +50,26 @@ extends Node2D
 @export var min_zoom: float = 0.15
 @export var max_zoom: float = 8.0
 @export var middle_mouse_pan_speed: float = 1.0
+#endregion
+
+#region Picking (MapPickGrid integration)
+## Recommended production configuration for 250+ provinces (pure spatial, zero Area2D overhead):
+##   use_spatial_picking = true
+##   create_area_nodes_for_fallback = false
+##
+## In this mode:
+## - No Area2D nodes are created at render time.
+## - Hover is handled exclusively by _update_spatial_hover() polling MapPickGrid.
+## - Clicks are handled by the unhandled_input spatial path.
+## - All visuals (outlines, fills, etc.) continue to work on the province node via ProvinceMapVisuals.
+## This is the intended long-term default for performance and simplicity.
+@export var use_spatial_picking: bool = true
+@export var create_area_nodes_for_fallback: bool = true
+#endregion
 
 var _is_middle_dragging := false
 var _middle_drag_start := Vector2.ZERO
 var _last_mouse_pos := Vector2.ZERO
-#endregion
 
 var provinces: Dictionary = {}
 var geometry: Dictionary = {}
@@ -66,13 +84,38 @@ var _hover_province: Province = null
 var hover_tooltip: ProvinceHoverTooltip = null
 
 var selected_province_id: int = -1
-var _selection_highlight: Polygon2D = null
+var _hover_outline_province_id: int = -1
+var _compare_preview_province_id: int = -1
+var _outline_pulse_phase: float = 0.0
+var _hover_fill_province_id: int = -1
+
+const _HOVER_FILL_TINT := Color(0.5, 0.82, 1.0, 1.0)
+const _COMPARE_FILL_TINT := Color(1.0, 0.72, 0.32, 1.0)
+const _CANDIDATE_FILL_TINT := ProvinceMapVisuals.FILL_COMPARE_CANDIDATE
+const _CONFLICT_FILL_TINT := ProvinceMapVisuals.FILL_CONFLICT
+const _AGENT_FILL_TINT := ProvinceMapVisuals.FILL_AGENT
+
+var _supply_role_by_province: Dictionary = {}
+var _compare_candidate_ids: Array[int] = []
+var _supply_legend_panel: PanelContainer = null
+var _compare_hint_label: Label = null
 
 #region Supply overlay
 @export var supply_overlay_panel: SupplyMenuPanel
 var supply_map_layer: SupplyMapLayer = null
 var supply_mode: bool = false
 var _supply_reroute_active: bool = false
+var _supply_overlay_legend: RichTextLabel = null
+#endregion
+
+#region Conflict overlay
+@export var show_conflict_overlay: bool = true
+var _conflict_layer: ConflictOverlayLayer = null
+#endregion
+
+#region Agent network overlay
+@export var show_agent_overlay: bool = true
+var _agent_layer: AgentNetworkLayer = null
 #endregion
 
 
@@ -97,8 +140,27 @@ func _ready():
 		push_warning("MapRenderer: MapCamera node missing!")
 
 	_setup_hover_tooltip()
+	_setup_inspector_extras()
 	set_process(true)
 	print("MapRenderer _ready() completed")
+
+
+func _setup_inspector_extras() -> void:
+	if btn_national_spirits and not btn_national_spirits.pressed.is_connected(_on_open_national_spirits_pressed):
+		btn_national_spirits.pressed.connect(_on_open_national_spirits_pressed)
+	if info_modifiers == null:
+		info_modifiers = get_node_or_null("UI/InfoPanel/InfoContent/RichTextModifiers") as RichTextLabel
+	if info_national == null:
+		info_national = get_node_or_null("UI/InfoPanel/InfoContent/LabelNational") as Label
+	if info_modifiers:
+		info_modifiers.bbcode_enabled = true
+		info_modifiers.fit_content = false
+		info_modifiers.scroll_active = true
+		info_modifiers.custom_minimum_size = Vector2(360, 140)
+	if btn_national_spirits == null:
+		btn_national_spirits = get_node_or_null("UI/InfoPanel/BtnNationalSpirits") as Button
+		if btn_national_spirits and not btn_national_spirits.pressed.is_connected(_on_open_national_spirits_pressed):
+			btn_national_spirits.pressed.connect(_on_open_national_spirits_pressed)
 
 
 func _setup_hover_tooltip() -> void:
@@ -127,6 +189,25 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 
+	# Spatial picking click handling — this path makes the system fully functional
+	# even when create_area_nodes_for_fallback=false (pure MapPickGrid mode, zero Area2D nodes).
+	if use_spatial_picking and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var world_pos := _screen_to_world(get_viewport().get_mouse_position())
+		var pid := -1
+		if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province_at_world_pos"):
+			pid = MapManager.get_province_at_world_pos(world_pos, true)
+		if pid >= 0 and provinces.has(pid):
+			var resolved_province := provinces[pid]
+			var resolved_node := province_nodes.get(pid)
+			if supply_mode and _handle_supply_province_click(resolved_province):
+				_select_province(resolved_province, resolved_node)
+				get_viewport().set_input_as_handled()
+				return
+			show_info_panel(resolved_province)
+			_select_province(resolved_province, resolved_node)
+			get_viewport().set_input_as_handled()
+			return
+
 	# Middle mouse drag start
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
@@ -145,6 +226,12 @@ func _process(delta: float) -> void:
 		_refresh_hover_tooltip(_hover_province)
 
 	_handle_camera_input(delta)
+	_outline_pulse_phase += delta * 4.5
+	_update_outline_pulse()
+
+	# Spatial picking integration (MapPickGrid via MapManager)
+	if use_spatial_picking:
+		_update_spatial_hover()
 
 
 func _handle_camera_input(delta: float) -> void:
@@ -200,6 +287,14 @@ func _zoom_toward_mouse(zoom_change: float) -> void:
 	cam.zoom = new_zoom
 	var world_after := cam.get_canvas_transform().affine_inverse() * mouse_screen
 	cam.global_position += world_before - world_after
+
+## Converts screen (pixel) mouse position to world/map space using the active Camera2D.
+## This is the key bridge for using MapPickGrid / MapManager picking.
+func _screen_to_world(screen_pos: Vector2) -> Vector2:
+	var cam := get_viewport().get_camera_2d()
+	if not cam:
+		return screen_pos
+	return cam.get_canvas_transform().affine_inverse() * screen_pos
 
 
 func _on_close_pressed() -> void:
@@ -260,7 +355,15 @@ func render_provinces():
 
 	_refresh_province_detail_visibility()
 	_setup_supply_layer()
+	_setup_conflict_layer()
+	_setup_agent_layer()
+	_refresh_supply_highlights()
+	_update_compare_hint_label()
 	print("✅ Map rendered with real polygons")
+
+	# Sync MapPickGrid (via MapManager) after rendering for best picking accuracy
+	if use_spatial_picking and typeof(MapManager) != TYPE_NIL and MapManager.has_method("rebuild_pick_grid"):
+		MapManager.rebuild_pick_grid()
 
 
 func _create_province_node(province: Province, geo: Dictionary) -> Node2D:
@@ -276,16 +379,21 @@ func _create_province_node(province: Province, geo: Dictionary) -> Node2D:
 	poly.color = _get_province_color(province)
 	poly.antialiased = true
 
-	var area := Area2D.new()
-	var collision := CollisionPolygon2D.new()
-	collision.polygon = points
-	area.add_child(collision)
-	area.input_event.connect(_on_province_input.bind(province, node))
-	area.mouse_entered.connect(_on_mouse_entered.bind(node, province))
-	area.mouse_exited.connect(_on_mouse_exited.bind(node))
+	# Area2D is now completely optional.
+	# In the recommended production pure-spatial configuration (use_spatial_picking=true AND
+	# create_area_nodes_for_fallback=false), no Area2D nodes are ever created.
+	if create_area_nodes_for_fallback or not use_spatial_picking:
+		var area := Area2D.new()
+		var collision := CollisionPolygon2D.new()
+		collision.polygon = points
+		area.add_child(collision)
+		area.input_event.connect(_on_province_input.bind(province, node))
+		area.mouse_entered.connect(_on_mouse_entered.bind(node, province))
+		area.mouse_exited.connect(_on_mouse_exited.bind(node))
+
+		node.add_child(area)
 
 	node.add_child(poly)
-	node.add_child(area)
 
 	var center := _calculate_centroid(points)
 	province_centroids[province.id] = center
@@ -441,64 +549,147 @@ func _get_province_color(province: Province) -> Color:
 # ====================== INTERACTION ======================
 
 func _on_province_input(_viewport: Node, event: InputEvent, _shape_idx: int, province: Province, node: Node2D):
+	# When pure spatial picking is active (no Area2D or ignoring it), this handler should not fire for hover/selection.
+	# The unhandled_input path above handles clicks.
+	if use_spatial_picking:
+		return
+
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if supply_mode and _handle_supply_province_click(province):
-			_select_province(province, node)
+		var resolved_province := province
+		var resolved_node := node
+
+		if supply_mode and _handle_supply_province_click(resolved_province):
+			_select_province(resolved_province, resolved_node)
 			return
-		show_info_panel(province)
-		_select_province(province, node)
+		show_info_panel(resolved_province)
+		_select_province(resolved_province, resolved_node)
 
 
 func _clear_selection() -> void:
-	if _selection_highlight != null and is_instance_valid(_selection_highlight):
-		_selection_highlight.queue_free()
-		_selection_highlight = null
+	if selected_province_id >= 0:
+		_set_selection_outline(selected_province_id, false)
 	selected_province_id = -1
+	_clear_compare_preview_outline()
+	_refresh_compare_candidate_outlines()
+	_update_supply_legend_text()
+	_update_compare_hint_label()
 
 
 func _select_province(province: Province, node: Node2D) -> void:
-	_clear_selection()
+	if selected_province_id >= 0 and selected_province_id != province.id:
+		_set_selection_outline(selected_province_id, false)
 
 	selected_province_id = province.id
+	_set_selection_outline(province.id, true)
+	var sm := _supply_manager()
+	if sm != null:
+		sm.set_selected_province(province.id)
 	if info_panel != null and info_panel.visible:
 		show_info_panel(province)
 	if _hover_province != null:
 		_refresh_hover_tooltip(_hover_province)
+	else:
+		_clear_compare_preview_outline()
+	_refresh_supply_highlights()
+	_refresh_compare_candidate_outlines()
+	_update_supply_legend_text()
+	_update_compare_hint_label()
 
-	var poly: Polygon2D = node.get_child(0) as Polygon2D
-	if poly:
-		_selection_highlight = Polygon2D.new()
-		_selection_highlight.polygon = poly.polygon
-		_selection_highlight.color = Color(1, 1, 1, 0.15)
-		_selection_highlight.z_index = 10
-		node.add_child(_selection_highlight)
+
+func _clear_hover_state() -> void:
+	if _hover_fill_province_id >= 0:
+		_apply_hover_fill(_hover_fill_province_id, false)
+		_hover_fill_province_id = -1
+	if _hover_outline_province_id >= 0:
+		_set_hover_outline(_hover_outline_province_id, false)
+		_hover_outline_province_id = -1
+	current_hover = null
+	_hover_province = null
+	_set_conflict_highlight(-1)
+	_set_agent_highlight(-1)
+	_hide_hover_tooltip()
 
 
 func _on_mouse_entered(node: Node2D, province: Province):
+	# When spatial picking is the primary mode, completely ignore Area2D hover events.
+	# This reduces overhead from hundreds of Area2D nodes at scale.
+	if use_spatial_picking:
+		return
 	current_hover = node
 	_hover_province = province
-	node.scale = Vector2(1.05, 1.05)
+	_apply_hover_visuals(province.id, true)
 	if show_hover_province_name:
 		_refresh_hover_tooltip(province)
 
 
-func _on_mouse_exited(node: Node2D):
-	if current_hover == node:
-		node.scale = Vector2.ONE
-		current_hover = null
-		_hover_province = null
-		_hide_hover_tooltip()
+func _on_mouse_exited(node: Node2D) -> void:
+	if use_spatial_picking:
+		return   # Pure spatial mode - Area2D events are ignored
+	if node != null and current_hover != node:
+		return
+	_clear_hover_state()
 
 
 func _refresh_hover_tooltip(province: Province) -> void:
 	if hover_tooltip == null or province == null:
 		return
 	var counterpart := _battle_counterpart_for_hover(province)
+	_update_compare_preview_outline(province, counterpart)
+	_refresh_compare_candidate_outlines()
+	var hover_role := str(_supply_role_by_province.get(province.id, ""))
+	var is_candidate := _is_compare_candidate(province.id) and counterpart == null
+	var contested := ProvinceInsight.is_province_contested(province)
+	var has_agent := ProvinceInsight.has_active_agent_network(province)
+	var p_tag := _player_tag()
+	if p_tag.is_empty():
+		p_tag = ProvinceInsight.country_tag_for_province(province)
+	var has_tech := (
+		typeof(TechnologyManager) != TYPE_NIL
+		and not p_tag.is_empty()
+		and TechnologyManager.get_active_research_count(p_tag) > 0
+	)
 	var text := ProvinceInsight.build_hover_tooltip(
-		province, selected_province_id, counterpart,
+		province, selected_province_id, counterpart, supply_mode, hover_role,
+		is_candidate, contested, has_agent,
 	)
 	var mouse := get_viewport().get_mouse_position()
-	hover_tooltip.show_text(text, mouse, get_viewport().get_visible_rect().size)
+	var compare_active := counterpart != null
+	var selected_accent := selected_province_id == province.id
+	hover_tooltip.show_text(
+		text,
+		mouse,
+		get_viewport().get_visible_rect().size,
+		true,
+		supply_mode,
+		compare_active,
+		selected_accent,
+		is_candidate,
+		contested and not compare_active and not (contested and has_agent),
+		has_agent and not compare_active and not (contested and has_agent),
+		has_tech and not compare_active and not has_agent and not contested,
+		contested and has_agent and not compare_active,
+	)
+	_set_conflict_highlight(province.id if ProvinceInsight.is_province_contested(province) else -1)
+	_set_agent_highlight(province.id if ProvinceInsight.has_active_agent_network(province) else -1)
+	_update_compare_hint_label()
+
+
+func _set_conflict_highlight(province_id: int) -> void:
+	if _conflict_layer == null or not is_instance_valid(_conflict_layer):
+		return
+	_conflict_layer.set_highlight_province(province_id)
+
+
+func _set_agent_highlight(province_id: int) -> void:
+	if _agent_layer == null or not is_instance_valid(_agent_layer):
+		return
+	_agent_layer.set_highlight_province(province_id)
+
+
+func _is_compare_candidate(province_id: int) -> bool:
+	if selected_province_id < 0 or province_id == selected_province_id:
+		return false
+	return province_id in _compare_candidate_ids
 
 
 func _battle_counterpart_for_hover(province: Province) -> Province:
@@ -512,8 +703,41 @@ func _battle_counterpart_for_hover(province: Province) -> Province:
 
 
 func _hide_hover_tooltip() -> void:
+	_clear_compare_preview_outline()
 	if hover_tooltip:
 		hover_tooltip.hide_tooltip()
+
+## Uses MapManager + MapPickGrid (when available) for fast hover detection.
+## This is the primary hover mechanism when use_spatial_picking is true (hybrid with Area2D).
+func _update_spatial_hover() -> void:
+	if not use_spatial_picking:
+		return
+
+	var cam := get_viewport().get_camera_2d()
+	if cam == null:
+		return
+
+	var mouse_screen := get_viewport().get_mouse_position()
+	var world_pos := _screen_to_world(mouse_screen)
+
+	var pid := -1
+	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province_at_world_pos"):
+		pid = MapManager.get_province_at_world_pos(world_pos, true)
+
+	var new_hover_province: Province = null
+	if pid >= 0 and provinces.has(pid):
+		new_hover_province = provinces[pid]
+
+	# Only update state if the hovered province actually changed
+	if new_hover_province != _hover_province:
+		if _hover_province != null:
+			_clear_hover_state()
+		if new_hover_province != null:
+			_hover_province = new_hover_province
+			current_hover = province_nodes.get(pid) as Node2D
+			_apply_hover_visuals(pid, true)
+			if show_hover_province_name:
+				_refresh_hover_tooltip(new_hover_province)
 
 
 # ====================== INFO PANEL ======================
@@ -522,16 +746,43 @@ func show_info_panel(province: Province):
 	if info_panel == null:
 		return
 
-	info_name.text = province.name
-	info_owner.text = "Owner: " + province.owner_tag if province.owner_tag != "" else "Owner: None"
+	var name_text := province.name
+	if selected_province_id >= 0 and selected_province_id != province.id:
+		var other := _battle_counterpart_for_hover(province)
+		if other != null:
+			name_text += "  ⚔ vs " + other.name
+	info_name.text = name_text
+	var ctrl_note := ""
+	if ProvinceInsight.is_province_contested(province):
+		ctrl_note = "  ⚑ held by %s" % province.controller_tag
+	elif province.controller_tag != province.owner_tag and not province.controller_tag.is_empty():
+		ctrl_note = " (controlled by %s)" % province.controller_tag
+	info_owner.text = (
+		"Owner: %s%s" % [province.owner_tag if province.owner_tag != "" else "None", ctrl_note]
+	)
 	info_population.text = "Population: %s" % str(province.population)
 	info_terrain.text = "Terrain: " + province.terrain.capitalize()
 	info_factories.text = "Factories: %d" % province.factories
-	info_dev.text = "Development: %d" % province.development_level
+	info_dev.text = "Development: %d  ·  Infrastructure: %d" % [
+		province.development_level, province.infrastructure,
+	]
 	if info_logistics != null:
-		info_logistics.text = ProvinceInsight.build_info_logistics_text(province)
+		info_logistics.text = ProvinceInsight.build_at_a_glance_logistics(province)
 	if info_combat != null:
-		info_combat.text = ProvinceInsight.build_info_combat_text(province, selected_province_id)
+		info_combat.text = ProvinceInsight.build_combat_summary_for_inspector(
+			province, selected_province_id,
+		)
+	if info_modifiers != null:
+		info_modifiers.text = ProvinceInsight.build_inspector_text(province, selected_province_id)
+	if info_national != null:
+		var conflict_note := ""
+		if ProvinceInsight.is_province_contested(province):
+			conflict_note = " Contested provinces show ⚑ in tooltip and diagonal stripes on the map."
+		info_national.text = (
+			"Inspector: Province | National | Effective columns. "
+			+ "National section lists spirits, timed effects, agents, then combined rollup."
+			+ conflict_note
+		)
 
 	var res_text := "Resources: "
 	if province.resources.size() > 0:
@@ -556,6 +807,97 @@ func show_info_panel(province: Province):
 func hide_info_panel():
 	if info_panel:
 		info_panel.visible = false
+
+
+#region Overlay layer infrastructure (preparing for M3 gameplay overlays)
+## Clean API for adding future layers (AgentNetworkLayer, ConflictOverlayLayer, TechBuildLayer, etc.)
+## All overlay layers live under ProvinceContainers so they move/zoom with the map.
+## Data for overlays is best accessed via MapManager (centroids, bounds, adjacency, effects, etc.).
+func add_overlay_layer(layer_name: String, layer_node: Node2D, z_index: int = 0) -> void:
+	if container == null or layer_node == null:
+		return
+	layer_node.name = layer_name
+	layer_node.z_index = z_index   # Allows basic ordering (e.g. supply routes behind conflict lines)
+	var existing := container.get_node_or_null(layer_name)
+	if existing:
+		existing.queue_free()
+	container.add_child(layer_node)
+
+func remove_overlay_layer(layer_name: String) -> void:
+	if container == null:
+		return
+	var existing := container.get_node_or_null(layer_name)
+	if existing:
+		existing.queue_free()
+
+func get_active_overlay_layers() -> Array[String]:
+	## Returns names of active custom overlay layers added via add_overlay_layer.
+	## Excludes core map elements. Useful for UI/debug.
+	var names: Array[String] = []
+	if container == null:
+		return names
+	var excluded := {"SupplyMapLayer", "ProvinceContainers"}
+	for child in container.get_children():
+		if child is Node2D:
+			var n := child.name
+			if n not in excluded and not n.begins_with("Prov_") and not n.ends_with("Outline") and not n.ends_with("Glow"):
+				names.append(n)
+	return names
+
+func get_overlay_layer(name: String) -> Node2D:
+	if container == null:
+		return null
+	return container.get_node_or_null(name) as Node2D
+
+func _setup_conflict_layer() -> void:
+	if not show_conflict_overlay or container == null:
+		remove_overlay_layer("ConflictOverlay")
+		_conflict_layer = null
+		return
+	if _conflict_layer == null or not is_instance_valid(_conflict_layer):
+		_conflict_layer = ConflictOverlayLayer.new()
+	var centroids := province_centroids
+	var provs := provinces
+	if typeof(MapManager) != TYPE_NIL:
+		if MapManager.has_method("get_all_centroids"):
+			centroids = MapManager.get_all_centroids()
+		if MapManager.has_method("get_all_provinces"):
+			provs = MapManager.get_all_provinces()
+	_conflict_layer.setup_with_map(container, centroids, provs, geometry)
+	add_overlay_layer("ConflictOverlay", _conflict_layer, -1)
+
+
+## Convenience alias for scenes/scripts that call this after map init.
+func setup_demo_conflict_overlay() -> void:
+	_setup_conflict_layer()
+
+
+func _setup_agent_layer() -> void:
+	if not show_agent_overlay or container == null:
+		remove_overlay_layer("AgentNetworkLayer")
+		_agent_layer = null
+		return
+	if _agent_layer == null or not is_instance_valid(_agent_layer):
+		_agent_layer = AgentNetworkLayer.new()
+	var sm := _supply_manager()
+	if sm != null and sm.get("player_tag"):
+		_agent_layer.target_country = str(sm.player_tag).strip_edges().to_upper()
+	else:
+		_agent_layer.target_country = ""
+	_agent_layer.setup()
+	add_overlay_layer("AgentNetworkLayer", _agent_layer, 6)
+
+
+func setup_demo_agent_overlay() -> void:
+	_setup_agent_layer()
+
+# Recommended data access for any overlay layer:
+#   MapManager.get_all_centroids()
+#   MapManager.get_world_bounds()
+#   MapManager.get_adjacency_system()
+#   MapManager.get_province_effects(pid, tag)
+#   MapManager.get_provinces_in_rect(...) for culling
+#endregion
 
 
 #region Supply map layer
@@ -627,6 +969,13 @@ func _ensure_supply_overlay_panel() -> void:
 	supply_overlay_panel.set_mode_callback(_on_supply_mode_changed)
 
 
+func _player_tag() -> String:
+	var sm := _supply_manager()
+	if sm != null and sm.get("player_tag"):
+		return str(sm.player_tag).strip_edges().to_upper()
+	return ""
+
+
 func _supply_manager() -> Node:
 	return get_tree().root.get_node_or_null("SupplyManager")
 
@@ -653,6 +1002,12 @@ func _toggle_supply_overlay() -> void:
 		_refresh_supply_routes()
 	else:
 		_end_supply_reroute()
+	_refresh_province_fill_colors()
+	_refresh_supply_highlights()
+	_update_supply_overlay_legend()
+	_refresh_compare_candidate_outlines()
+	if _hover_province != null:
+		_refresh_hover_tooltip(_hover_province)
 	if supply_overlay_panel:
 		if not supply_mode:
 			supply_overlay_panel.hide_panel()
@@ -664,6 +1019,7 @@ func _refresh_supply_routes() -> void:
 		return
 	supply_map_layer.set_routes(sm.get_all_routes())
 	supply_map_layer.visible = supply_mode
+	_refresh_supply_highlights()
 
 
 func _handle_supply_province_click(province: Province) -> bool:
@@ -681,6 +1037,7 @@ func _handle_supply_province_click(province: Province) -> bool:
 		return true
 	sm.add_reroute_waypoint(province.id)
 	_show_supply_preview()
+	_refresh_supply_highlights()
 	return true
 
 
@@ -704,9 +1061,11 @@ func _update_supply_menu(plan: SupplyRoutePlan, reroute_mode: bool) -> void:
 	var extra := ""
 	for line in sm.get_depot_menu_lines(5):
 		extra += line + "\n"
-	if supply_overlay_panel.body_label:
-		supply_overlay_panel.show_supply_state(plan, depot, attrition, reroute_mode)
-		supply_overlay_panel.body_label.text += "\n\nTop depots:\n" + extra
+	var pid := sm.get_selected_province_id()
+	var province: Province = provinces.get(pid) as Province if provinces.has(pid) else null
+	supply_overlay_panel.show_supply_state(
+		plan, depot, attrition, reroute_mode, province, sm.player_tag, extra.strip_edges(),
+	)
 
 
 func _on_supply_mode_changed(mode: String) -> void:
@@ -741,6 +1100,638 @@ func _end_supply_reroute() -> void:
 	var sm := _supply_manager()
 	if sm:
 		sm.clear_reroute_waypoints()
+
+
+func _refresh_province_fill_colors() -> void:
+	for pid in province_nodes.keys():
+		var node: Variant = province_nodes[pid]
+		if not (node is Node2D) or not is_instance_valid(node):
+			continue
+		if not provinces.has(pid):
+			continue
+		var province: Province = provinces[pid] as Province
+		var poly: Polygon2D = _get_province_polygon(node as Node2D)
+		if poly == null:
+			continue
+		var col := _get_province_color(province)
+		if supply_mode:
+			var fill := ProvinceInsight.depot_fill_ratio(int(pid))
+			if fill >= 0.0:
+				col = col.lerp(_supply_depot_tint_color(fill), 0.38)
+		poly.color = col
+	_refresh_supply_highlights()
+
+
+func _province_polygon(node: Node2D) -> PackedVector2Array:
+	var poly := _get_province_polygon(node)
+	if poly == null:
+		return PackedVector2Array()
+	return poly.polygon
+
+
+func _province_node(province_id: int) -> Node2D:
+	var node: Variant = province_nodes.get(province_id)
+	return node as Node2D if node is Node2D else null
+
+## Robust helper to find the Polygon2D child regardless of whether an Area2D was also added.
+## Essential for pure spatial mode (no Area2D) and hybrid mode.
+func _get_province_polygon(node: Node2D) -> Polygon2D:
+	if node == null:
+		return null
+	for child in node.get_children():
+		if child is Polygon2D:
+			return child as Polygon2D
+	return null
+
+
+func _apply_hover_visuals(province_id: int, active: bool) -> void:
+	if active:
+		if _hover_outline_province_id >= 0 and _hover_outline_province_id != province_id:
+			_apply_hover_visuals(_hover_outline_province_id, false)
+		_hover_outline_province_id = province_id
+		_hover_fill_province_id = province_id
+	_set_hover_outline(province_id, active)
+	if active:
+		_apply_hover_fill(province_id, true)
+		if selected_province_id >= 0:
+			_refresh_compare_candidate_outlines()
+		if supply_mode:
+			_update_supply_legend_text()
+	elif _hover_fill_province_id == province_id:
+		_apply_hover_fill(province_id, false)
+		_hover_fill_province_id = -1
+	if not active and supply_mode:
+		_update_supply_legend_text()
+	if not active and selected_province_id >= 0:
+		_refresh_compare_candidate_outlines()
+
+
+func _hover_outline_colors(province_id: int) -> Dictionary:
+	var colors := {
+		"color": ProvinceMapVisuals.OUTLINE_HOVER,
+		"glow": ProvinceMapVisuals.OUTLINE_HOVER_GLOW,
+	}
+	if not provinces.has(province_id):
+		return colors
+	var hp: Province = provinces[province_id] as Province
+	var contested := ProvinceInsight.is_province_contested(hp)
+	var agent := ProvinceInsight.has_active_agent_network(hp)
+	if contested and agent:
+		colors["color"] = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_HOVER, 0.28)
+		colors["glow"] = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
+	elif agent:
+		colors["color"] = ProvinceMapVisuals.OUTLINE_AGENT.lerp(ProvinceMapVisuals.OUTLINE_HOVER, 0.38)
+		colors["glow"] = ProvinceMapVisuals.OUTLINE_AGENT_GLOW
+	elif contested:
+		colors["color"] = ProvinceMapVisuals.OUTLINE_CONFLICT.lerp(ProvinceMapVisuals.OUTLINE_HOVER, 0.42)
+		colors["glow"] = ProvinceMapVisuals.OUTLINE_CONFLICT_GLOW
+	return colors
+
+
+func _set_hover_outline(province_id: int, visible: bool) -> void:
+	var node := _province_node(province_id)
+	if node == null:
+		return
+	if visible:
+		var width := 2.8 if province_id == selected_province_id else 2.5
+		if provinces.has(province_id):
+			var hp: Province = provinces[province_id] as Province
+			if (
+				ProvinceInsight.is_province_contested(hp)
+				and ProvinceInsight.has_active_agent_network(hp)
+			):
+				width += 0.35
+		var oc: Dictionary = _hover_outline_colors(province_id)
+		ProvinceMapVisuals.ensure_polished_outline(
+			node,
+			_province_polygon(node),
+			ProvinceMapVisuals.NODE_HOVER,
+			oc["color"],
+			width,
+			oc["glow"],
+			3.5,
+			ProvinceMapVisuals.Z_HOVER,
+		)
+	else:
+		ProvinceMapVisuals.hide_polished_outline(node, ProvinceMapVisuals.NODE_HOVER)
+		if _hover_outline_province_id == province_id:
+			_hover_outline_province_id = -1
+
+
+func _set_selection_outline(province_id: int, visible: bool) -> void:
+	var node := _province_node(province_id)
+	if node == null:
+		return
+	if visible:
+		var sel_col := ProvinceMapVisuals.OUTLINE_SELECT
+		var sel_glow := ProvinceMapVisuals.OUTLINE_SELECT_GLOW
+		if provinces.has(province_id):
+			var sp: Province = provinces[province_id] as Province
+			var contested := ProvinceInsight.is_province_contested(sp)
+			var agent := ProvinceInsight.has_active_agent_network(sp)
+			if contested and agent:
+				sel_col = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.35)
+				sel_glow = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
+			elif contested:
+				sel_col = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED
+				sel_glow = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED_GLOW
+			elif agent:
+				sel_col = ProvinceMapVisuals.OUTLINE_AGENT.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.5)
+				sel_glow = ProvinceMapVisuals.OUTLINE_AGENT_GLOW
+		ProvinceMapVisuals.ensure_polished_outline(
+			node,
+			_province_polygon(node),
+			ProvinceMapVisuals.NODE_SELECT,
+			sel_col,
+			3.5,
+			sel_glow,
+			4.0,
+			ProvinceMapVisuals.Z_SELECT,
+		)
+	else:
+		ProvinceMapVisuals.hide_polished_outline(node, ProvinceMapVisuals.NODE_SELECT)
+
+
+func _clear_compare_preview_outline() -> void:
+	if _compare_preview_province_id >= 0:
+		_set_compare_preview_outline(_compare_preview_province_id, false)
+	_compare_preview_province_id = -1
+
+
+func _update_compare_preview_outline(hover_province: Province, counterpart: Province) -> void:
+	_clear_compare_preview_outline()
+	if hover_province == null or counterpart == null:
+		return
+	if counterpart.id == hover_province.id:
+		return
+	_compare_preview_province_id = counterpart.id
+	_set_compare_preview_outline(counterpart.id, true)
+
+
+func _refresh_single_province_fill(province_id: int) -> void:
+	if not provinces.has(province_id):
+		return
+	var node := _province_node(province_id)
+	if node == null:
+		return
+	var poly := _get_province_polygon(node)
+	if poly == null:
+		return
+	var province: Province = provinces[province_id] as Province
+	var col := _get_province_color(province)
+	if supply_mode:
+		var fill := ProvinceInsight.depot_fill_ratio(province_id)
+		if fill >= 0.0:
+			col = col.lerp(_supply_depot_tint_color(fill), 0.38)
+	poly.color = col
+
+
+func _apply_hover_fill(province_id: int, active: bool) -> void:
+	if not active:
+		_refresh_single_province_fill(province_id)
+		return
+	var node := _province_node(province_id)
+	if node == null or not provinces.has(province_id):
+		return
+	var poly := _get_province_polygon(node)
+	if poly == null:
+		return
+	var province: Province = provinces[province_id] as Province
+	var col := _get_province_color(province)
+	if supply_mode:
+		var fill := ProvinceInsight.depot_fill_ratio(province_id)
+		if fill >= 0.0:
+			col = col.lerp(_supply_depot_tint_color(fill), 0.38)
+	var boost := 0.2
+	if _compare_preview_province_id >= 0 and province_id == _hover_outline_province_id:
+		col = col.lerp(_COMPARE_FILL_TINT, 0.14)
+		boost = 0.16
+	elif _is_compare_candidate(province_id):
+		col = col.lerp(_CANDIDATE_FILL_TINT, 0.12)
+		boost = 0.18
+	var contested := ProvinceInsight.is_province_contested(province)
+	var agent := ProvinceInsight.has_active_agent_network(province)
+	if contested and agent:
+		var dual_strength := 0.18 if supply_mode else 0.14
+		col = col.lerp(ProvinceMapVisuals.FILL_DUAL, dual_strength)
+	elif agent:
+		col = col.lerp(_AGENT_FILL_TINT, 0.08)
+	elif contested:
+		col = col.lerp(_CONFLICT_FILL_TINT, 0.09)
+	poly.color = col.lerp(_HOVER_FILL_TINT, boost)
+
+
+func _update_outline_pulse() -> void:
+	var hover_on_selection := (
+		_hover_outline_province_id >= 0
+		and _hover_outline_province_id == selected_province_id
+	)
+	if _hover_outline_province_id >= 0:
+		var node := _province_node(_hover_outline_province_id)
+		if node != null:
+			var hover_w := 3.0 if hover_on_selection else 2.5
+			var pulse_amp := 0.4 if hover_on_selection else 0.35
+			var pulse_speed := 5.5 if hover_on_selection else 4.5
+			if provinces.has(_hover_outline_province_id):
+				var hp: Province = provinces[_hover_outline_province_id] as Province
+				var dual_hover := (
+					ProvinceInsight.is_province_contested(hp)
+					and ProvinceInsight.has_active_agent_network(hp)
+				)
+				if dual_hover:
+					hover_w += 0.25
+					pulse_amp += 0.08
+					if supply_mode:
+						pulse_amp += 0.05
+			var hoc: Dictionary = _hover_outline_colors(_hover_outline_province_id)
+			ProvinceMapVisuals.apply_pulse_to_polished(
+				node,
+				ProvinceMapVisuals.NODE_HOVER,
+				hoc["color"],
+				hover_w,
+				hoc["glow"],
+				6.0,
+				_outline_pulse_phase,
+				pulse_amp,
+				pulse_speed,
+			)
+	if selected_province_id >= 0 and not hover_on_selection:
+		var sel_node := _province_node(selected_province_id)
+		if sel_node != null:
+			var sel_col := ProvinceMapVisuals.OUTLINE_SELECT
+			var sel_glow := ProvinceMapVisuals.OUTLINE_SELECT_GLOW
+			if provinces.has(selected_province_id):
+				var sp: Province = provinces[selected_province_id] as Province
+				var contested := ProvinceInsight.is_province_contested(sp)
+				var agent := ProvinceInsight.has_active_agent_network(sp)
+				if contested and agent:
+					sel_col = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.35)
+					sel_glow = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
+				elif contested:
+					sel_col = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED
+					sel_glow = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED_GLOW
+				elif agent:
+					sel_col = ProvinceMapVisuals.OUTLINE_AGENT.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.5)
+					sel_glow = ProvinceMapVisuals.OUTLINE_AGENT_GLOW
+			ProvinceMapVisuals.apply_pulse_to_polished(
+				sel_node,
+				ProvinceMapVisuals.NODE_SELECT,
+				sel_col,
+				3.5,
+				sel_glow,
+				7.5,
+				_outline_pulse_phase + 0.8,
+				0.3,
+				3.2,
+			)
+	if _compare_preview_province_id >= 0:
+		var cmp_node := _province_node(_compare_preview_province_id)
+		if cmp_node != null:
+			ProvinceMapVisuals.apply_pulse_to_polished(
+				cmp_node,
+				ProvinceMapVisuals.NODE_COMPARE,
+				ProvinceMapVisuals.OUTLINE_COMPARE,
+				3.0,
+				ProvinceMapVisuals.OUTLINE_COMPARE_GLOW,
+				5.8,
+				_outline_pulse_phase + 1.6,
+				0.45,
+				5.0,
+			)
+	for pid in _compare_candidate_ids:
+		if pid == _compare_preview_province_id:
+			continue
+		var cand_node := _province_node(pid)
+		if cand_node == null:
+			continue
+		var emph := pid == _hover_outline_province_id
+		var c_col := (
+			ProvinceMapVisuals.OUTLINE_COMPARE_CANDIDATE_EMPH
+			if emph
+			else ProvinceMapVisuals.OUTLINE_COMPARE_CANDIDATE
+		)
+		ProvinceMapVisuals.apply_pulse_to_polished(
+			cand_node,
+			ProvinceMapVisuals.NODE_COMPARE_CANDIDATE,
+			c_col,
+			2.6 if emph else 1.6,
+			ProvinceMapVisuals.OUTLINE_COMPARE_CANDIDATE_GLOW if not emph else ProvinceMapVisuals.OUTLINE_COMPARE_GLOW,
+			4.1,
+			_outline_pulse_phase + float(pid % 5) * 0.4,
+			0.22 if emph else 0.12,
+			3.0 if emph else 2.0,
+		)
+	if supply_mode:
+		_pulse_supply_outlines()
+
+
+func _refresh_compare_candidate_outlines() -> void:
+	for pid in _compare_candidate_ids:
+		_set_compare_candidate_outline(pid, false, false)
+	_compare_candidate_ids.clear()
+	if selected_province_id < 0 or adjacency == null:
+		return
+	for nid in adjacency.get_neighbors(selected_province_id):
+		var id := int(nid)
+		if id == selected_province_id:
+			continue
+		if id == _compare_preview_province_id:
+			continue
+		_compare_candidate_ids.append(id)
+		var emphasized := id == _hover_outline_province_id
+		_set_compare_candidate_outline(id, true, emphasized)
+
+
+func _set_compare_candidate_outline(province_id: int, visible: bool, emphasized: bool = false) -> void:
+	var node := _province_node(province_id)
+	if node == null:
+		return
+	if visible:
+		var color := ProvinceMapVisuals.OUTLINE_COMPARE_CANDIDATE
+		var glow := ProvinceMapVisuals.OUTLINE_COMPARE_CANDIDATE_GLOW
+		var width := 1.6
+		if emphasized:
+			color = ProvinceMapVisuals.OUTLINE_COMPARE_CANDIDATE_EMPH
+			glow = ProvinceMapVisuals.OUTLINE_COMPARE_GLOW
+			width = 2.6
+		ProvinceMapVisuals.ensure_polished_outline(
+			node,
+			_province_polygon(node),
+			ProvinceMapVisuals.NODE_COMPARE_CANDIDATE,
+			color,
+			width,
+			glow,
+			2.5,
+			ProvinceMapVisuals.Z_COMPARE_CANDIDATE,
+		)
+	else:
+		ProvinceMapVisuals.hide_polished_outline(node, ProvinceMapVisuals.NODE_COMPARE_CANDIDATE)
+
+
+func _set_compare_preview_outline(province_id: int, visible: bool) -> void:
+	var node := _province_node(province_id)
+	if node == null:
+		return
+	if visible:
+		ProvinceMapVisuals.ensure_polished_outline(
+			node,
+			_province_polygon(node),
+			ProvinceMapVisuals.NODE_COMPARE,
+			ProvinceMapVisuals.OUTLINE_COMPARE,
+			2.8,
+			ProvinceMapVisuals.OUTLINE_COMPARE_GLOW,
+			3.0,
+			ProvinceMapVisuals.Z_COMPARE,
+		)
+	else:
+		ProvinceMapVisuals.hide_polished_outline(node, ProvinceMapVisuals.NODE_COMPARE)
+
+
+func _supply_highlight_roles() -> Dictionary:
+	var roles: Dictionary = {}
+	if not supply_mode:
+		return roles
+	var sm := _supply_manager()
+	for pid in province_nodes.keys():
+		if ProvinceInsight.depot_fill_ratio(int(pid)) >= 0.0:
+			roles[int(pid)] = "hub"  # overwritten below if on route / preview / selected
+	if sm == null:
+		return roles
+	var selected := sm.get_selected_province_id()
+	if selected < 0:
+		selected = selected_province_id
+	if selected >= 0:
+		roles[selected] = "active"
+	var preview_pids: Dictionary = {}
+	if _supply_reroute_active:
+		var preview: SupplyRoutePlan = sm.preview_player_route()
+		if preview != null and preview.path_length() > 0:
+			for pid_var in preview.province_path:
+				preview_pids[int(pid_var)] = true
+	for plan_var in sm.get_all_routes():
+		if not (plan_var is SupplyRoutePlan):
+			continue
+		var plan := plan_var as SupplyRoutePlan
+		for pid_var in plan.province_path:
+			var pid := int(pid_var)
+			if str(roles.get(pid, "")) == "active":
+				continue
+			if preview_pids.has(pid):
+				roles[pid] = "preview"
+			else:
+				roles[pid] = "route"
+	for pid in preview_pids.keys():
+		if str(roles.get(pid, "")) != "active":
+			roles[pid] = "preview"
+	return roles
+
+
+func _pulse_supply_outlines() -> void:
+	for pid in _supply_role_by_province.keys():
+		var role: String = str(_supply_role_by_province[pid])
+		if role != "active" and role != "preview":
+			continue
+		var node := _province_node(int(pid))
+		if node == null:
+			continue
+		var style: Dictionary = ProvinceMapVisuals.get_supply_outline_style(role)
+		var phase_off := float(int(pid) % 7) * 0.35
+		ProvinceMapVisuals.apply_pulse_to_polished(
+			node,
+			ProvinceMapVisuals.NODE_SUPPLY,
+			style["color"],
+			style["width"],
+			style["glow"],
+			float(style["width"]) + float(style["glow_extra"]),
+			_outline_pulse_phase + phase_off,
+			0.22 if role == "hub" else 0.32,
+			float(style.get("pulse_speed", 1.0)),
+		)
+
+
+func _refresh_supply_highlights() -> void:
+	var roles := _supply_highlight_roles()
+	_supply_role_by_province = roles
+	for pid in province_nodes.keys():
+		var node := _province_node(int(pid))
+		if node == null:
+			continue
+		var role: String = str(roles.get(int(pid), ""))
+		if role.is_empty():
+			ProvinceMapVisuals.hide_polished_outline(node, ProvinceMapVisuals.NODE_SUPPLY)
+			continue
+		var style: Dictionary = ProvinceMapVisuals.get_supply_outline_style(role)
+		ProvinceMapVisuals.ensure_polished_outline(
+			node,
+			_province_polygon(node),
+			ProvinceMapVisuals.NODE_SUPPLY,
+			style["color"],
+			style["width"],
+			style["glow"],
+			style["glow_extra"],
+			style["z_index"],
+		)
+
+
+func _update_supply_overlay_legend() -> void:
+	var ui := get_node_or_null("UI")
+	if ui == null:
+		return
+	if _supply_overlay_legend == null or not is_instance_valid(_supply_overlay_legend):
+		var panel := PanelContainer.new()
+		_supply_legend_panel = panel
+		panel.name = "SupplyOverlayLegend"
+		panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+		panel.offset_left = 10.0
+		panel.offset_top = 10.0
+		panel.custom_minimum_size = Vector2(520, 0)
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color(0.06, 0.08, 0.14, 0.88)
+		style.border_color = Color(0.35, 0.55, 0.85, 0.75)
+		style.set_border_width_all(1)
+		style.set_corner_radius_all(5)
+		style.content_margin_left = 8
+		style.content_margin_right = 8
+		style.content_margin_top = 6
+		style.content_margin_bottom = 6
+		panel.add_theme_stylebox_override("panel", style)
+		var margin := MarginContainer.new()
+		panel.add_child(margin)
+		_supply_overlay_legend = RichTextLabel.new()
+		_supply_overlay_legend.bbcode_enabled = true
+		_supply_overlay_legend.fit_content = true
+		_supply_overlay_legend.scroll_active = false
+		_supply_overlay_legend.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_supply_overlay_legend.add_theme_font_size_override("normal_font_size", 11)
+		margin.add_child(_supply_overlay_legend)
+		ui.add_child(panel)
+	_update_supply_legend_text()
+
+
+func _update_supply_legend_text() -> void:
+	_set_supply_legend_visible(supply_mode)
+	if _supply_overlay_legend != null and supply_mode:
+		var hover_role := ""
+		if _hover_province != null:
+			hover_role = str(_supply_role_by_province.get(_hover_province.id, ""))
+		var hid := _hover_province.id if _hover_province != null else -1
+		var contested_n := ProvinceInsight.count_contested_provinces(provinces)
+		var agent_n := ProvinceInsight.count_agent_networks(provinces, _player_tag())
+		var dual_n := ProvinceInsight.count_dual_situation_provinces(provinces)
+		_supply_overlay_legend.text = ProvinceInsight.build_supply_legend_bbcode(
+			selected_province_id,
+			_compare_candidate_ids.size(),
+			hid,
+			hover_role,
+			contested_n,
+			agent_n,
+			_player_tag(),
+			dual_n,
+		)
+	_update_compare_hint_label()
+
+
+func _update_compare_hint_label() -> void:
+	var ui := get_node_or_null("UI")
+	if ui == null:
+		return
+	if _compare_hint_label == null or not is_instance_valid(_compare_hint_label):
+		_compare_hint_label = Label.new()
+		_compare_hint_label.name = "CompareHintLabel"
+		_compare_hint_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_compare_hint_label.add_theme_font_size_override("font_size", 11)
+		_compare_hint_label.add_theme_color_override("font_color", Color(1.0, 0.75, 0.45))
+		_compare_hint_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
+		_compare_hint_label.offset_left = 12.0
+		_compare_hint_label.offset_top = 52.0
+		_compare_hint_label.custom_minimum_size = Vector2(480, 0)
+		ui.add_child(_compare_hint_label)
+	var contested_n := ProvinceInsight.count_contested_provinces(provinces)
+	var agent_n := ProvinceInsight.count_agent_networks(provinces, _player_tag())
+	var dual_n := ProvinceInsight.count_dual_situation_provinces(provinces)
+	var show_compare := selected_province_id >= 0 and not supply_mode
+	var show_conflict := contested_n > 0 and not supply_mode and not show_compare
+	var show_agent := agent_n > 0 and not supply_mode and not show_compare and not show_conflict
+	var show_supply_compare := selected_province_id >= 0 and supply_mode
+	var show_supply_overlays := supply_mode and not show_supply_compare and (contested_n > 0 or agent_n > 0)
+	_compare_hint_label.visible = (
+		show_compare or show_conflict or show_agent or show_supply_compare or show_supply_overlays
+	)
+	if show_supply_compare:
+		var hid := _hover_province.id if _hover_province != null else -1
+		var hover_cand := _is_compare_candidate(hid)
+		var base := ProvinceInsight.build_map_compare_hint_plain(
+			selected_province_id, _compare_candidate_ids.size(), hid, hover_cand,
+		)
+		var overlay := ProvinceInsight.build_map_supply_mode_hint_plain(
+			contested_n, agent_n, dual_n, selected_province_id,
+		)
+		_compare_hint_label.text = base + "  |  " + overlay if not overlay.is_empty() else base
+		_compare_hint_label.add_theme_color_override("font_color", Color(1.0, 0.75, 0.45))
+	elif show_supply_overlays:
+		_compare_hint_label.text = ProvinceInsight.build_map_supply_mode_hint_plain(
+			contested_n, agent_n, dual_n, -1,
+		)
+		_compare_hint_label.add_theme_color_override("font_color", Color(0.55, 0.92, 0.78))
+	elif show_compare:
+		var hid := _hover_province.id if _hover_province != null else -1
+		var hover_cand := _is_compare_candidate(hid)
+		_compare_hint_label.text = ProvinceInsight.build_map_compare_hint_plain(
+			selected_province_id, _compare_candidate_ids.size(), hid, hover_cand,
+		)
+	elif show_conflict:
+		_compare_hint_label.text = ProvinceInsight.build_conflict_map_hint_plain(contested_n)
+		_compare_hint_label.add_theme_color_override("font_color", Color(1.0, 0.55, 0.55))
+	elif show_agent:
+		_compare_hint_label.text = (
+			"◎ %d agent network%s — purple rings on map · hover for details"
+			% [agent_n, "s" if agent_n != 1 else ""]
+		)
+		_compare_hint_label.add_theme_color_override("font_color", Color(0.72, 0.55, 1.0))
+	else:
+		_compare_hint_label.add_theme_color_override("font_color", Color(1.0, 0.75, 0.45))
+
+
+func _set_supply_legend_visible(visible: bool) -> void:
+	if _supply_overlay_legend == null:
+		return
+	var panel: CanvasItem = _supply_legend_panel
+	if panel == null:
+		var margin := _supply_overlay_legend.get_parent()
+		panel = margin.get_parent() if margin else null
+	if panel is CanvasItem:
+		panel.visible = visible
+
+
+func _supply_depot_tint_color(fill_ratio: float) -> Color:
+	if fill_ratio < 0.35:
+		return Color(0.85, 0.2, 0.25, 0.9)
+	if fill_ratio < 0.65:
+		return Color(0.9, 0.65, 0.15, 0.85)
+	return Color(0.25, 0.75, 0.45, 0.85)
+
+
+func _on_open_national_spirits_pressed() -> void:
+	if selected_province_id < 0 or not provinces.has(selected_province_id):
+		return
+	var province: Province = provinces[selected_province_id] as Province
+	var tag := ProvinceInsight.country_tag_for_province(province)
+	var existing := get_tree().root.get_node_or_null("NationalSpiritsScreen")
+	if existing != null:
+		existing.queue_free()
+	var packed: PackedScene = load("res://scenes/ui/NationalSpiritsScreen.tscn") as PackedScene
+	if packed == null:
+		return
+	var screen: NationalSpiritsScreen = packed.instantiate() as NationalSpiritsScreen
+	if screen == null:
+		return
+	screen.country_tag = tag
+	screen.name = "NationalSpiritsScreen"
+	get_tree().root.add_child(screen)
+	screen.refresh_screen()
+
+
 #endregion
 
 

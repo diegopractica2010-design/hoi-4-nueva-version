@@ -218,6 +218,8 @@ After the recent heavy investment in the National Modifier/Spirit system and Age
 
 ## Deeper Combat + Province Infrastructure — Concrete Phased Plan
 
+**See the dedicated actionable plan:** `docs/MAP_IMPLEMENTATION_PLAN.md` (2026 update, post-ProvinceEffects + Phase 1 Supply/Combat wiring). It refines and sequences the older `docs/MAP_SYSTEM_DESIGN.md` M-phases with concrete next steps, MapManager as #1 priority, and parallelism notes.
+
 ### Phase 1: Province as a First-Class Gameplay Object (Current Focus)
 - [x] Add rich computed getters on Province (`get_supply_throughput_modifier`, `get_local_supply_generation_modifier`, `get_combat_width_modifier`, `get_organization_recovery_modifier`, `get_attrition_modifier`, `get_logistics_quality`, etc.)
 - [x] Wire development_level into Supply for local supply generation (basic implementation done)

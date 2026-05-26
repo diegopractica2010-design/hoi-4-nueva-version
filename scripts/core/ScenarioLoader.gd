@@ -290,6 +290,13 @@ func load_scenario(scenario_name: String) -> bool:
 		production_mgr.clear_all_caches()
 	print("✅ Scenario loaded | Provinces: ", provinces.size(), " | Countries: ", countries.size())
 	scenario_loaded.emit()
+
+	# Centralize map data for the rest of the game (MapManager is the preferred access point)
+	var mm := get_node_or_null("/root/MapManager")
+	if mm != null and mm.has_method("initialize_from_map_data"):
+		var map_data := get_map_data()
+		mm.call("initialize_from_map_data", map_data)
+
 	return true
 
 

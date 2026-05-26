@@ -17,6 +17,7 @@ extends DraggablePanel
 @onready var active_research_label: Label = (
 	$MarginContainer/VBoxContainer/ActiveBar/ActiveResearchLabel
 )
+@onready var footer_label: Label = $MarginContainer/VBoxContainer/FooterLabel
 @onready var domain_filter: OptionButton = $MarginContainer/VBoxContainer/ToolRow/DomainFilter
 @onready var view_mode_filter: OptionButton = $MarginContainer/VBoxContainer/ToolRow/ViewModeFilter
 @onready var era_slider: HSlider = $MarginContainer/VBoxContainer/ToolRow/EraSlider
@@ -64,6 +65,7 @@ var _domain_filter_id: String = "all"
 var _view_mode: String = "list"
 var _era_filter_key: String = "all"
 var _domain_filter_ready: bool = false
+var _domain_counts_cache: Dictionary = {}
 var _view_mode_ready: bool = false
 
 
@@ -139,17 +141,28 @@ func _setup_domain_filter() -> void:
 	_rebuild_domain_filter(["all", "support"])
 
 
-func _rebuild_domain_filter(domains_present: Array[String]) -> void:
+func _rebuild_domain_filter(
+	domains_present: Array[String],
+	domain_counts: Dictionary = {},
+	active_research: Array = [],
+) -> void:
 	var ids := TechnologyManager.get_domain_tab_ids()
 	var labels := TechnologyManager.get_domain_tab_labels()
 	var previous := _domain_filter_id
 	domain_filter.clear()
 	for i in range(mini(ids.size(), labels.size())):
 		var domain_id := str(ids[i])
-		if domain_id not in domains_present:
+		if domain_id.begins_with("_"):
+			continue
+		if domain_id != "all" and domain_id not in domains_present:
 			continue
 		var idx := domain_filter.item_count
-		domain_filter.add_item(labels[i])
+		var label := str(labels[i])
+		if domain_counts.has(domain_id):
+			label += " (%d)" % int(domain_counts[domain_id])
+		if _domain_has_active_research(domain_id):
+			label = "● " + label
+		domain_filter.add_item(label)
 		domain_filter.set_item_metadata(idx, domain_id)
 	var pick := 0
 	for i in range(domain_filter.item_count):
@@ -191,7 +204,7 @@ func _apply_screen_theme() -> void:
 	RetrowaveTheme.style_body_label($MarginContainer/VBoxContainer/ActiveBar/ActiveTitle)
 	RetrowaveTheme.style_body_label(active_research_label)
 	RetrowaveTheme.style_body_label(era_value_label)
-	RetrowaveTheme.style_body_label($MarginContainer/VBoxContainer/FooterLabel)
+	RetrowaveTheme.style_body_label(footer_label)
 
 
 func _on_close_pressed() -> void:
@@ -273,6 +286,93 @@ func _populate_agent_bar() -> void:
 	open_agents_button.tooltip_text = "Open the Agents screen to assign steal-research and counter-intel missions."
 
 
+func _apply_filter_tooltips() -> void:
+	if current_data == null:
+		return
+	domain_filter.tooltip_text = _domain_filter_tooltip_line(_domain_filter_id, _domain_counts_cache)
+	if current_data.research_entries.is_empty():
+		domain_filter.tooltip_text += "\nNo matches — try All or a different era."
+	era_value_label.tooltip_text = "Era swimlane: %s" % _era_filter_key
+	available_label.tooltip_text = "%d technologies available to start now" % current_data.available_count
+
+
+func _apply_map_integration_hint() -> void:
+	if current_data == null:
+		return
+	var parts: PackedStringArray = []
+	if not current_data.map_integration_note.is_empty():
+		parts.append(current_data.map_integration_note)
+	if not current_data.map_legend_bbcode.is_empty():
+		parts.append(current_data.map_legend_bbcode.strip_edges())
+	slots_label.tooltip_text = "\n".join(parts) if not parts.is_empty() else ""
+	var footer := "Map: tooltips show research & factory gates"
+	if not current_data.map_legend_bbcode.is_empty():
+		footer += " · " + _strip_bbcode_tags(current_data.map_legend_bbcode)
+	footer_label.text = footer
+	footer_label.tooltip_text = current_data.map_integration_note
+
+
+func _strip_bbcode_tags(text: String) -> String:
+	return text.replace("[color=#8899aa]", "").replace("[/color]", "").strip_edges()
+
+
+func _count_entries_by_domain(tag: String, era_key: String) -> Dictionary:
+	if typeof(TechnologyManager) == TYPE_NIL:
+		return {}
+	var preview := TechnologyManager.get_technology_screen_data(tag, "all", "", era_key)
+	var counts: Dictionary = {}
+	var status_counts: Dictionary = {}
+	for entry in preview.research_entries:
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		var row := entry as Dictionary
+		var domain_id := str(row.get("domain", ""))
+		if domain_id.is_empty():
+			continue
+		counts[domain_id] = int(counts.get(domain_id, 0)) + 1
+		if not status_counts.has(domain_id):
+			status_counts[domain_id] = {"available": 0, "in_progress": 0, "completed": 0}
+		var bucket: Dictionary = status_counts[domain_id] as Dictionary
+		var st := str(row.get("status", ""))
+		if bucket.has(st):
+			bucket[st] = int(bucket[st]) + 1
+	counts["all"] = preview.research_entries.size()
+	counts["_status_by_domain"] = status_counts
+	return counts
+
+
+func _domain_has_active_research(domain_id: String, active_research: Array = []) -> bool:
+	if domain_id == "all":
+		return false
+	var slots := active_research
+	if slots.is_empty() and current_data != null:
+		slots = current_data.active_research
+	for slot in slots:
+		if typeof(slot) != TYPE_DICTIONARY:
+			continue
+		if str((slot as Dictionary).get("domain", "")) == domain_id:
+			return true
+	return false
+
+
+func _domain_filter_tooltip_line(domain_id: String, counts: Dictionary) -> String:
+	var total := int(counts.get(domain_id, 0))
+	var status_map: Dictionary = counts.get("_status_by_domain", {}) as Dictionary
+	if not status_map.has(domain_id):
+		return "Filter: %s (%d technologies in current era)" % [domain_id, total]
+	var bucket: Dictionary = status_map[domain_id] as Dictionary
+	return (
+		"Filter: %s — %d shown · %d available · %d in progress · %d completed"
+		% [
+			domain_id,
+			total,
+			int(bucket.get("available", 0)),
+			int(bucket.get("in_progress", 0)),
+			int(bucket.get("completed", 0)),
+		]
+	)
+
+
 func _on_open_training_pressed() -> void:
 	if current_data == null or current_data.primary_leader_id.is_empty():
 		return
@@ -313,7 +413,9 @@ func refresh_screen() -> void:
 	elif not preview.research_entries.is_empty():
 		_selected_tech_id = str(preview.research_entries[0].get("tech_id", ""))
 
-	_rebuild_domain_filter(preview.domains_present)
+	var domain_counts := _count_entries_by_domain(country_tag, _era_filter_key)
+	_domain_counts_cache = domain_counts
+	_rebuild_domain_filter(preview.domains_present, domain_counts, preview.active_research)
 	current_data = TechnologyManager.get_technology_screen_data(
 		country_tag,
 		_domain_filter_id,
@@ -326,8 +428,15 @@ func refresh_screen() -> void:
 		current_data.research_slots_used,
 		current_data.research_slots_max,
 	]
+	if current_data.in_progress_count > 0:
+		slots_label.text += " · %d researching" % current_data.in_progress_count
 	rp_label.text = "RP/day: %.1f" % current_data.daily_rp
-	rp_label.tooltip_text = current_data.daily_rp_tooltip
+	var rp_tip := current_data.daily_rp_tooltip
+	if typeof(TechnologyManager) != TYPE_NIL:
+		var support := MapTechnologyContext.build_support_radio_glance_bbcode(country_tag)
+		if not support.is_empty():
+			rp_tip = (rp_tip + "\n" + support) if not rp_tip.is_empty() else _strip_bbcode_tags(support)
+	rp_label.tooltip_text = rp_tip
 	year_label.text = "Year: %d" % current_data.current_year
 	available_label.text = "Available: %d" % current_data.available_count
 	completed_label.text = "Done: %d" % current_data.completed_count
@@ -337,6 +446,8 @@ func refresh_screen() -> void:
 	else:
 		compromised_label.modulate = Color.WHITE
 	_populate_agent_bar()
+	_apply_map_integration_hint()
+	_apply_filter_tooltips()
 	_populate_active_bar()
 	_apply_view_visibility()
 	_populate_research_list()
@@ -376,8 +487,20 @@ func _populate_active_bar() -> void:
 		if typeof(slot) != TYPE_DICTIONARY:
 			continue
 		var pct := int(round(float(slot.get("progress_pct", 0.0)) * 100.0))
-		parts.append("%s (%d%%)" % [slot.get("name", ""), pct])
+		var eta := float(slot.get("eta_days", slot.get("days_remaining", 0.0)))
+		var filled := int(round(float(slot.get("progress_pct", 0.0)) * 6.0))
+		var bar := ""
+		for i in range(6):
+			bar += "█" if i < filled else "░"
+		var domain := str(slot.get("domain", ""))
+		var prefix := "📡 " if domain == "support" else ""
+		if eta > 0.0:
+			parts.append("%s%s %s %d%% ~%.0fd" % [prefix, slot.get("name", ""), bar, pct, eta])
+		else:
+			parts.append("%s%s %s %d%%" % [prefix, slot.get("name", ""), bar, pct])
 	active_research_label.text = ", ".join(parts)
+	active_research_label.tooltip_text = "Active research at %.1f RP/day" % current_data.daily_rp
+	active_research_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	active_research_label.modulate = Color.WHITE
 
 
@@ -389,7 +512,11 @@ func _populate_research_list() -> void:
 
 	if current_data.research_entries.is_empty():
 		var empty := Label.new()
-		empty.text = "No technologies match filters."
+		empty.text = (
+			"No technologies match domain (%s) or era (%s). Try All domains or a wider era."
+			% [_domain_filter_id, _era_filter_key]
+		)
+		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		RetrowaveTheme.style_body_label(empty)
 		research_list.add_child(empty)
 		return
@@ -513,7 +640,21 @@ func _create_research_row(entry: Dictionary) -> PanelContainer:
 	panel.add_child(box)
 
 	var title := Label.new()
-	title.text = "%s · %s" % [entry.get("name", ""), status.replace("_", " ").capitalize()]
+	var status_icon := ""
+	match status:
+		"available":
+			status_icon = "◆ "
+		"in_progress":
+			status_icon = "⏳ "
+		"completed":
+			status_icon = "✓ "
+		"compromised":
+			status_icon = "⚠ "
+		"locked":
+			status_icon = "🔒 "
+	if str(entry.get("domain", "")) == "support":
+		status_icon = "📡 " + status_icon
+	title.text = "%s%s · %s" % [status_icon, entry.get("name", ""), status.replace("_", " ").capitalize()]
 	RetrowaveTheme.style_body_label(title)
 	box.add_child(title)
 
@@ -524,14 +665,26 @@ func _create_research_row(entry: Dictionary) -> PanelContainer:
 		bar.value = float(entry.get("progress_pct", 0.0))
 		bar.show_percentage = true
 		bar.custom_minimum_size = Vector2(0, 14)
+		var fill := StyleBoxFlat.new()
+		fill.bg_color = Color(0.35, 0.75, 1.0, 0.95)
+		bar.add_theme_stylebox_override("fill", fill)
+		var bg := StyleBoxFlat.new()
+		bg.bg_color = Color(0.12, 0.16, 0.22, 0.9)
+		bar.add_theme_stylebox_override("background", bg)
 		box.add_child(bar)
 
 	var meta := Label.new()
-	meta.text = "%s · %d days · tier %d" % [
+	var meta_text := "%s · %d days · tier %d" % [
 		entry.get("epoch", ""),
 		int(entry.get("cost_days", 0)),
 		int(entry.get("tier", 0)),
 	]
+	if status == "in_progress":
+		var pct := int(round(float(entry.get("progress_pct", 0.0)) * 100.0))
+		var eta := float(entry.get("eta_days", 0.0))
+		if eta > 0.0:
+			meta_text += " · %d%% · ~%.0fd ETA" % [pct, eta]
+	meta.text = meta_text
 	RetrowaveTheme.style_body_label(meta)
 	meta.add_theme_color_override("font_color", RetrowaveTheme.TEXT_DIM)
 	box.add_child(meta)
@@ -569,8 +722,35 @@ func _update_inspector() -> void:
 	var lines: PackedStringArray = []
 	lines.append("Domain: %s · %s" % [info.get("domain", ""), info.get("epoch", "")])
 	lines.append("Era: %s · Cost: %d days" % [info.get("era_range", ""), int(info.get("cost_days", 0))])
+	var status := str(info.get("status", ""))
+	if status == "in_progress":
+		var pct := int(round(float(info.get("progress_pct", 0.0)) * 100.0))
+		var done := float(info.get("progress_days", 0.0))
+		var total := float(info.get("total_days", info.get("cost_days", 1)))
+		var left := float(info.get("days_remaining", 0.0))
+		var eta := float(info.get("eta_days", left))
+		var rp := float(info.get("daily_rp", 1.0))
+		var bar_filled := int(round(float(info.get("progress_pct", 0.0)) * 8.0))
+		var bar := ""
+		for i in range(8):
+			bar += "█" if i < bar_filled else "░"
+		lines.append("Progress: %s  %d%%" % [bar, pct])
+		lines.append(
+			"%.0f / %.0f days done · ~%.0f days remaining at %.1f RP/day"
+			% [done, total, eta, rp]
+		)
+	elif status == "completed":
+		lines.append("Completed — bonuses active.")
+	elif status == "compromised":
+		lines.append("Compromised — research halted until counter-intel clears the breach.")
 	if str(info.get("node_kind", "")) == "doctrine":
 		lines.append("Doctrine node — unlocks leader training eligibility.")
+	var domain_id := str(info.get("domain", "")).to_lower()
+	if domain_id == "support":
+		lines.append("Support tree — radio, planning speed, and recon feed Supply and Combat.")
+		var support := MapTechnologyContext.build_support_radio_glance_bbcode(country_tag)
+		if not support.is_empty():
+			lines.append(_strip_bbcode_tags(support))
 	if str(info.get("short_effect", "")) != "":
 		lines.append(str(info.get("short_effect", "")))
 	if str(info.get("flavor", "")) != "":
@@ -598,7 +778,6 @@ func _update_inspector() -> void:
 
 	inspector_body.text = "\n".join(lines)
 
-	var status := str(info.get("status", ""))
 	research_button.disabled = status == "compromised" or not bool(info.get("can_start", false))
 	cancel_button.disabled = not bool(info.get("can_cancel", false))
 	if status == "compromised":

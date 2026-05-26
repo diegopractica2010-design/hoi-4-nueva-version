@@ -24,17 +24,36 @@ func _ready() -> void:
 		btn_close.pressed.connect(_emit_close)
 
 
-func show_plan(plan: SupplyRoutePlan, reroute_mode: bool) -> void:
+func show_plan(
+	plan: SupplyRoutePlan,
+	reroute_mode: bool,
+	province: Province = null,
+	player_tag: String = "",
+	top_depots_text: String = "",
+) -> void:
 	visible = true
-	if title_label:
-		title_label.text = "Supply route" if not reroute_mode else "Reroute preview"
+	if title_label and plan != null:
+		var hops := plan.path_length()
+		var stats := "reinf ×%.2f · %.0f%% interdict" % [
+			plan.reinforcement_modifier, plan.interdiction_chance * 100.0,
+		]
+		if reroute_mode:
+			title_label.text = "⟳ Reroute preview"
+		else:
+			title_label.text = "⛟ Supply route"
+		if hops > 0:
+			title_label.text += " · %d hops" % hops
+		title_label.text += " · " + stats
 	if body_label:
-		var text := ""
-		for line in plan.summary_lines():
-			text += line + "\n"
-		if plan.path_length() > 0:
-			text += "\nPath: %s" % ", ".join(plan.province_path.map(func(p): return str(p)))
-		body_label.text = text
+		body_label.bbcode_enabled = true
+		body_label.scroll_active = true
+		body_label.fit_content = false
+		var top := top_depots_text
+		if not top.is_empty():
+			top = "Top depots\n" + top
+		body_label.text = ProvinceInsight.build_supply_overlay_bbcode(
+			plan, province, player_tag, top,
+		)
 
 
 func hide_panel() -> void:

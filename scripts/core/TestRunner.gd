@@ -29,6 +29,13 @@ func _ready() -> void:
 		map_data.countries,
 	)
 
+	# Also feed MapManager so it is authoritative even in test runner flows
+	var mm := get_node_or_null("/root/MapManager")
+	if mm != null and mm.has_method("initialize_from_map_data"):
+		mm.initialize_from_map_data(map_data)
+	elif mm != null and mm.has_method("force_initialize"):
+		mm.force_initialize(map_data.provinces, map_data.geometry, map_data.adjacency_system, map_data.countries)
+
 	if camera_controller and map_renderer.container:
 		camera_controller.target = map_renderer.container
 
@@ -41,6 +48,10 @@ func _ready() -> void:
 			sm.record_attrition("us_infantry_div_ww2", 120, {"m4_sherman_medium": 2.0})
 			sm.advance_supply_day(1.0)
 		print("Supply network ready (toggle overlay with L)")
+
+	var mm := get_node_or_null("/root/MapManager")
+	if mm != null and mm.has_method("has_province_data") and mm.has_province_data():
+		print("✅ MapManager ready with %d provinces (ProvinceEffects now centralized)" % mm.get_province_count())
 
 	_configure_top_info_bar(player_tag)
 	if typeof(LeaderManager) != TYPE_NIL:

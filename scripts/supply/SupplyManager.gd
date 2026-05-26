@@ -27,8 +27,24 @@ var overlay_visible: bool = false
 var routing_mode_override: String = ""
 var active_cargo: SupplyCargoProfile = null
 
-# ProvinceEffects wiring note (Phase 1): use ProvinceEffects.for_country_province(prov, tag)
-# for combined dev/infra + national spirits/temp modifiers in Supply calcs.
+# ProvinceEffects + MapManager: All province + national modifier queries should go through
+# MapManager.get_province_effects(...) when possible (centralized after Map System start).
+
+func _get_effects_safe(pid: int, tag: String) -> ProvinceEffects:
+	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province_effects"):
+		var fx := MapManager.get_province_effects(pid, tag)
+		if fx != null:
+			return fx
+	var p: Province = null
+	if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
+		p = MapManager.get_province(pid)
+	if p == null:
+		var loader := get_node_or_null("/root/ScenarioLoader")
+		if loader != null and loader.has_method("get_province"):
+			p = loader.call("get_province", pid)
+	if p == null:
+		return null
+	return ProvinceEffects.for_country_province(p, tag) if typeof(ProvinceEffects) != TYPE_NIL else null
 
 var _pending_waypoints: Array[int] = []
 var _reroute_source_id: int = -1
@@ -394,20 +410,23 @@ func _generate_local_supply_from_development(days: float) -> void:
 		if state == null:
 			continue
 
-		# We need province data — try to get it from the scenario loader if available
+		# Prefer centralized MapManager for province access
 		var province: Province = null
-		var loader := get_node_or_null("/root/ScenarioLoader")
-		if loader != null and loader.has_method("get_province"):
-			province = loader.call("get_province", pid)
-
+		if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
+			province = MapManager.get_province(int(pid))
+		if province == null:
+			var loader := get_node_or_null("/root/ScenarioLoader")
+			if loader != null and loader.has_method("get_province"):
+				province = loader.call("get_province", pid)
 		if province == null:
 			continue
 
 		# Use ProvinceEffects when available (dev + national modifiers for local supply)
 		var local_gen := province.get_local_supply_generation_modifier()
 		if typeof(ProvinceEffects) != TYPE_NIL:
-			var pe := ProvinceEffects.for_country_province(province, _ctrl(province))
-			local_gen = pe.get_effective_local_supply_generation()
+			var pe: ProvinceEffects = null
+			pe = _get_effects_safe(pid, _ctrl(province))
+			local_gen = pe.get_effective_local_supply_generation() if pe != null else province.get_local_supply_generation_modifier()
 		if local_gen <= 0.0:
 			continue
 
@@ -497,6 +516,16 @@ func _plan_route(
 		var temp_s := NationalModifierManager.get_supply_modifiers(player_tag)
 		nat_reinforce += float(temp_s.get("reinforcement_speed", 0.0))
 
+	# === Radio tree (Support) effects: planning_speed and reconnaissance ===
+	if typeof(TechnologyManager) != TYPE_NIL:
+		var planning := TechnologyManager.get_effective_planning_speed(player_tag)
+		nat_reinforce += planning * 0.6   # 0.08 from radio_ii → ~4.8% reinforcement bonus (modest but visible)
+
+		var recon := TechnologyManager.get_effective_reconnaissance(player_tag)
+		if recon > 0.0:
+			# Better reconnaissance improves intel, reducing effective interdiction
+			plan.interdiction_chance *= maxf(0.55, 1.0 - recon * 1.2)   # 0.05 from radio_i → noticeable reduction
+
 	plan.reinforcement_modifier = maxf(0.6, 1.0 + route_reinforce + nat_reinforce)
 
 	var attrition := get_attrition_cargo_summary()
@@ -539,8 +568,8 @@ func _calculate_route_interdiction_resistance(path: Array, player_tag: String) -
 		# Light ProvinceEffects wiring (item 3): prefer it when available for combined layers
 		var resist := 1.0
 		if typeof(ProvinceEffects) != TYPE_NIL:
-			var pe := ProvinceEffects.for_country_province(province, player_tag)
-			resist = pe.get_effective_interdiction_resistance()
+			var pe := _get_effects_safe(pid, player_tag)
+			resist = pe.get_effective_interdiction_resistance() if pe != null else province.get_interdiction_resistance_modifier()
 		else:
 			resist = province.get_interdiction_resistance_modifier()
 		total += maxf(0.0, resist - 1.0)
@@ -566,8 +595,8 @@ func _calculate_route_reinforcement_modifier(path: Array, player_tag: String) ->
 			continue
 		var reinf := 1.0
 		if typeof(ProvinceEffects) != TYPE_NIL:
-			var pe := ProvinceEffects.for_country_province(province, player_tag)
-			reinf = pe.get_effective_reinforcement_speed()
+			var pe := _get_effects_safe(pid, player_tag)
+			reinf = pe.get_effective_reinforcement_speed() if pe != null else province.get_reinforcement_speed_modifier()
 		else:
 			reinf = province.get_reinforcement_speed_modifier()
 		total += maxf(0.0, reinf - 1.0)

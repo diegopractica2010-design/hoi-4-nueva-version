@@ -45,6 +45,9 @@ info_core = NodePath("UI/InfoPanel/InfoContent/LabelCore")
 info_special = NodePath("UI/InfoPanel/InfoContent/LabelSpecial")
 info_logistics = NodePath("UI/InfoPanel/InfoContent/LabelLogistics")
 info_combat = NodePath("UI/InfoPanel/InfoContent/LabelCombat")
+info_modifiers = NodePath("UI/InfoPanel/InfoContent/RichTextModifiers")
+info_national = NodePath("UI/InfoPanel/InfoContent/LabelNationalHeader")
+btn_national_spirits = NodePath("UI/InfoPanel/BtnNationalSpirits")
 btn_close = NodePath("UI/InfoPanel/BtnClose")
 
 [node name="CameraInput" type="Node2D" parent="." unique_id=900010001]
@@ -65,8 +68,8 @@ layer = 20
 visible = false
 offset_left = 40.0
 offset_top = 40.0
-offset_right = 420.0
-offset_bottom = 560.0
+offset_right = 460.0
+offset_bottom = 680.0
 mouse_filter = 0
 theme = SubResource("Theme_ej7nn")
 theme_override_styles/panel = SubResource("StyleBoxFlat_fgl0d")
@@ -75,8 +78,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_fgl0d")
 layout_mode = 0
 offset_left = 16.0
 offset_top = 34.0
-offset_right = 356.0
-offset_bottom = 500.0
+offset_right = 396.0
+offset_bottom = 620.0
 pivot_offset = Vector2(-16, -32)
 theme_override_constants/separation = 8
 
@@ -138,10 +141,33 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
+[node name="LabelNationalHeader" type="Label" parent="UI/InfoPanel/InfoContent"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.431373, 0.705882, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "Modifiers (base → effective)"
+autowrap_mode = 3
+
+[node name="RichTextModifiers" type="RichTextLabel" parent="UI/InfoPanel/InfoContent"]
+custom_minimum_size = Vector2(360, 140)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = false
+scroll_active = true
+
+[node name="BtnNationalSpirits" type="Button" parent="UI/InfoPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 200.0
+offset_bottom = 32.0
+text = "National Spirits"
+
 [node name="BtnClose" type="Button" parent="UI/InfoPanel" unique_id=713871471]
 layout_mode = 0
 mouse_filter = 0
-offset_left = 305.0
+offset_left = 345.0
 offset_top = 8.0
 offset_right = 331.0
 offset_bottom = 32.0
