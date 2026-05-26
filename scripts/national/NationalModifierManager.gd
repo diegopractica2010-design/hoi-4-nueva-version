@@ -172,6 +172,7 @@ func get_production_modifiers(country_tag: String) -> Dictionary:
 		"reliability_multiplier": 1.0,
 		"retooling_days_multiplier": 1.0,
 		"cost_multiplier": 1.0,
+		"infrastructure_repair": 0.0,
 	}
 
 	if typeof(TechnologyManager) != TYPE_NIL:
@@ -260,6 +261,7 @@ func get_supply_modifiers(country_tag: String) -> Dictionary:
 		"planning_speed": 0.0,
 		"reconnaissance": 0.0,
 		"encryption": 0.0,
+		"infrastructure_repair": 0.0,
 	}
 
 	if not country_modifiers.has(tag):

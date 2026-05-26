@@ -148,6 +148,7 @@ func _ready():
 	_setup_hover_tooltip()
 	_setup_inspector_extras()
 	_connect_time_manager_signals()
+	_connect_map_manager_signals()
 	_init_legend_calendar_tracking()
 	set_process(true)
 	print("MapRenderer _ready() completed")
@@ -159,6 +160,22 @@ func _init_legend_calendar_tracking() -> void:
 	_legend_tracked_year = TimeManager.get_current_year()
 	_legend_tracked_month = TimeManager.get_current_month()
 	_legend_tracked_day = TimeManager.get_current_day()
+
+
+func _connect_map_manager_signals() -> void:
+	if typeof(MapManager) == TYPE_NIL:
+		return
+	if not MapManager.province_data_changed.is_connected(_on_map_province_data_changed):
+		MapManager.province_data_changed.connect(_on_map_province_data_changed)
+
+
+func _on_map_province_data_changed(province_id: int, what: String) -> void:
+	if what not in ["effects", "infrastructure", "owner", "controller", "all"]:
+		return
+	if provinces.has(province_id):
+		_refresh_single_province_fill(province_id)
+	if _hover_fill_province_id == province_id:
+		_apply_hover_fill(province_id, true)
 
 
 func _connect_time_manager_signals() -> void:
@@ -187,6 +204,7 @@ func _on_game_day_advanced_legend(year: int, month: int, day: int) -> void:
 	_legend_tracked_day = day
 	_legend_tracked_month = month
 	_legend_tracked_year = year
+	_refresh_province_fill_colors()
 	_refresh_map_time_ui()
 
 
@@ -1248,6 +1266,7 @@ func _refresh_province_fill_colors() -> void:
 			var fill := ProvinceInsight.depot_fill_ratio(int(pid))
 			if fill >= 0.0:
 				col = col.lerp(_supply_depot_tint_color(fill), 0.38)
+		col = _apply_agent_pressure_base_tint(col, province)
 		poly.color = col
 	_refresh_supply_highlights()
 
@@ -1308,7 +1327,15 @@ func _hover_outline_colors(province_id: int) -> Dictionary:
 	var agent := ProvinceInsight.has_active_agent_network(hp)
 	if contested and agent:
 		var dual_lerp := 0.22 if supply_mode else 0.28
-		colors["color"] = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_HOVER, dual_lerp)
+		var dual_base := ProvinceMapVisuals.OUTLINE_DUAL
+		match ProvinceInsight.agent_pressure_focus_kind(hp):
+			"disrupt":
+				dual_base = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT, 0.42)
+				dual_lerp = 0.18 if ProvinceInsight.agent_applies_daily_pressure(hp) else dual_lerp
+			"sabotage":
+				dual_base = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE, 0.4)
+				dual_lerp = 0.18 if ProvinceInsight.agent_applies_daily_pressure(hp) else dual_lerp
+		colors["color"] = dual_base.lerp(ProvinceMapVisuals.OUTLINE_HOVER, dual_lerp)
 		colors["glow"] = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
 	elif agent:
 		var agent_lerp := 0.28 if ProvinceInsight.agent_has_daily_activity(hp) else 0.38
@@ -1372,13 +1399,25 @@ func _set_selection_outline(province_id: int, visible: bool) -> void:
 			var contested := ProvinceInsight.is_province_contested(sp)
 			var agent := ProvinceInsight.has_active_agent_network(sp)
 			if contested and agent:
-				sel_col = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.35)
+				var dual_sel := ProvinceMapVisuals.OUTLINE_DUAL
+				match ProvinceInsight.agent_pressure_focus_kind(sp):
+					"disrupt":
+						dual_sel = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT, 0.38)
+					"sabotage":
+						dual_sel = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE, 0.36)
+				sel_col = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.35)
 				sel_glow = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
 			elif contested:
 				sel_col = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED
 				sel_glow = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED_GLOW
 			elif agent:
-				sel_col = ProvinceMapVisuals.OUTLINE_AGENT.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.5)
+				var agent_sel := ProvinceMapVisuals.OUTLINE_AGENT
+				match ProvinceInsight.agent_pressure_focus_kind(sp):
+					"disrupt":
+						agent_sel = ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT
+					"sabotage":
+						agent_sel = ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE
+				sel_col = agent_sel.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.5)
 				sel_glow = ProvinceMapVisuals.OUTLINE_AGENT_GLOW
 		ProvinceMapVisuals.ensure_polished_outline(
 			node,
@@ -1425,7 +1464,18 @@ func _refresh_single_province_fill(province_id: int) -> void:
 		var fill := ProvinceInsight.depot_fill_ratio(province_id)
 		if fill >= 0.0:
 			col = col.lerp(_supply_depot_tint_color(fill), 0.38)
+	col = _apply_agent_pressure_base_tint(col, province)
 	poly.color = col
+
+
+func _apply_agent_pressure_base_tint(col: Color, province: Province) -> Color:
+	var strength := ProvinceInsight.get_agent_pressure_fill_strength(province, supply_mode)
+	if strength <= 0.0:
+		return col
+	var tint := ProvinceInsight.get_agent_pressure_fill_tint(province)
+	if tint.a <= 0.0:
+		return col
+	return col.lerp(tint, strength)
 
 
 func _apply_hover_fill(province_id: int, active: bool) -> void:
@@ -1444,6 +1494,7 @@ func _apply_hover_fill(province_id: int, active: bool) -> void:
 		var fill := ProvinceInsight.depot_fill_ratio(province_id)
 		if fill >= 0.0:
 			col = col.lerp(_supply_depot_tint_color(fill), 0.38)
+	col = _apply_agent_pressure_base_tint(col, province)
 	var boost := 0.2
 	if _compare_preview_province_id >= 0 and province_id == _hover_outline_province_id:
 		col = col.lerp(_COMPARE_FILL_TINT, 0.14)
@@ -1460,6 +1511,12 @@ func _apply_hover_fill(province_id: int, active: bool) -> void:
 		if province_id == selected_province_id:
 			dual_strength += 0.04
 		col = col.lerp(ProvinceMapVisuals.FILL_DUAL, dual_strength)
+		if ProvinceInsight.agent_applies_daily_pressure(province):
+			match ProvinceInsight.agent_pressure_focus_kind(province):
+				"disrupt":
+					col = col.lerp(ProvinceMapVisuals.FILL_AGENT_DISRUPT, 0.07)
+				"sabotage":
+					col = col.lerp(ProvinceMapVisuals.FILL_AGENT_SABOTAGE, 0.07)
 	elif agent:
 		var agent_tint := _AGENT_FILL_TINT
 		match ProvinceInsight.agent_pressure_focus_kind(province):
@@ -1469,8 +1526,10 @@ func _apply_hover_fill(province_id: int, active: bool) -> void:
 				agent_tint = ProvinceMapVisuals.FILL_AGENT_SABOTAGE
 		var fill_strength := 0.08
 		if ProvinceInsight.agent_applies_daily_pressure(province):
-			fill_strength = 0.13
-		if ProvinceInsight.agent_has_daily_activity(province):
+			fill_strength = 0.16 if supply_mode else 0.14
+		if ProvinceInsight.agent_has_today_pressure_tick(province):
+			fill_strength += 0.05
+		elif ProvinceInsight.agent_has_daily_activity(province):
 			fill_strength += 0.03
 		col = col.lerp(agent_tint, fill_strength)
 	elif contested:
@@ -1522,7 +1581,13 @@ func _update_outline_pulse() -> void:
 				var contested := ProvinceInsight.is_province_contested(sp)
 				var agent := ProvinceInsight.has_active_agent_network(sp)
 				if contested and agent:
-					sel_col = ProvinceMapVisuals.OUTLINE_DUAL.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.35)
+					var dual_sel := ProvinceMapVisuals.OUTLINE_DUAL
+					match ProvinceInsight.agent_pressure_focus_kind(sp):
+						"disrupt":
+							dual_sel = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_AGENT_DISRUPT, 0.38)
+						"sabotage":
+							dual_sel = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE, 0.36)
+					sel_col = dual_sel.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.35)
 					sel_glow = ProvinceMapVisuals.OUTLINE_DUAL_GLOW
 				elif contested:
 					sel_col = ProvinceMapVisuals.OUTLINE_SELECT_CONTESTED

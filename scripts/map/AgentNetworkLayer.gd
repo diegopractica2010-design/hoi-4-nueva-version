@@ -20,7 +20,8 @@ extends Node2D
 
 var _highlight_province_id: int = -1
 var _pulse_phase: float = 0.0
-var _pulse_active_until_msec: int = 0
+var _pulse_active_until_msec: int = -1
+var _ambient_pressure_active: bool = false
 
 
 func _ready() -> void:
@@ -57,10 +58,20 @@ func is_daily_pulse_active() -> bool:
 
 
 func _process(delta: float) -> void:
-	if Time.get_ticks_msec() > _pulse_active_until_msec:
+	var daily_pulse := is_daily_pulse_active()
+	if daily_pulse:
+		_pulse_phase += delta * 4.5
+	elif _ambient_pressure_active:
+		_pulse_phase += delta * 2.4
+	else:
 		set_process(false)
 		return
-	_pulse_phase += delta * 4.5
+	if daily_pulse and Time.get_ticks_msec() > _pulse_active_until_msec:
+		if _ambient_pressure_active:
+			_pulse_active_until_msec = -1
+		else:
+			set_process(false)
+			return
 	queue_redraw()
 
 
@@ -112,6 +123,7 @@ func _draw() -> void:
 
 	var global_pulse := is_daily_pulse_active()
 	var pulse_wave := 0.5 + 0.5 * sin(_pulse_phase) if global_pulse else 0.0
+	_ambient_pressure_active = false
 
 	for net in networks:
 		if net == null or not net.is_active():
@@ -131,14 +143,28 @@ func _draw() -> void:
 		var emphasized := pid == _highlight_province_id
 		var activity_note := net.last_daily_note.strip_edges()
 		var pressure_focus := net.focus in ["supply_disruption", "infrastructure_sabotage"]
+		var today_hit := activity_note in ["disrupt", "sabotage", "infra_pressure"]
 		var activity_pulse := global_pulse and (
 			pulse_wave > 0.55
 			or not activity_note.is_empty()
 			or pressure_focus
 		)
 		_draw_network_ring(
-			c, effective, emphasized, net.focus, pressure, activity_pulse, activity_note, pressure_focus,
+			c,
+			effective,
+			emphasized,
+			net.focus,
+			pressure,
+			activity_pulse,
+			activity_note,
+			pressure_focus,
+			today_hit,
 		)
+		if pressure_focus:
+			_ambient_pressure_active = true
+
+	if _ambient_pressure_active or global_pulse:
+		set_process(true)
 
 
 func _enemy_pressure(province_id: int, owner: String, controller: String) -> float:
@@ -159,15 +185,17 @@ func _draw_pressure_glyph(
 	radius: float,
 	focus: String,
 	activity_pulse: bool,
+	today_hit: bool = false,
 ) -> void:
-	var offset := Vector2(0.0, -radius - 7.0)
+	var t := Time.get_ticks_msec() * 0.001
+	var wave := 0.5 + 0.5 * sin(t * 3.2) if activity_pulse else 0.65
+	var offset := Vector2(0.0, -radius - 8.0)
 	var pos := center + offset
-	var alpha := 0.88
-	if activity_pulse:
-		alpha = 0.65 + 0.35 * (0.5 + 0.5 * sin(_pulse_phase))
+	var alpha := 0.92 if today_hit else 0.78
+	alpha *= 0.7 + 0.3 * wave
+	var half := 5.5 if today_hit else 4.5
 	if focus == "supply_disruption":
 		var c := Color(ring_color_supply_disrupt.r, ring_color_supply_disrupt.g, ring_color_supply_disrupt.b, alpha)
-		var half := 4.5
 		var diamond := PackedVector2Array([
 			pos + Vector2(0.0, -half),
 			pos + Vector2(half, 0.0),
@@ -177,7 +205,11 @@ func _draw_pressure_glyph(
 		draw_colored_polygon(diamond, c)
 	elif focus == "infrastructure_sabotage":
 		var c := Color(ring_color_infra_sabotage.r, ring_color_infra_sabotage.g, ring_color_infra_sabotage.b, alpha)
-		draw_rect(Rect2(pos - Vector2(4.0, 4.0), Vector2(8.0, 8.0)), c, true)
+		var sz := 9.0 if today_hit else 8.0
+		draw_rect(Rect2(pos - Vector2(sz * 0.5, sz * 0.5), Vector2(sz, sz)), c, true)
+	if today_hit:
+		var flash := Color(1.0, 0.9, 0.75, 0.35 + 0.25 * wave)
+		draw_circle(pos, half + 2.5, flash, false, 1.2, true)
 
 
 func _draw_network_ring(
@@ -189,7 +221,10 @@ func _draw_network_ring(
 	activity_pulse: bool = false,
 	activity_note: String = "",
 	pressure_focus: bool = false,
+	today_hit: bool = false,
 ) -> void:
+	var ambient_t := Time.get_ticks_msec() * 0.001
+	var ambient_wave := 0.5 + 0.5 * sin(ambient_t * 2.8) if pressure_focus else 0.0
 	var radius := lerpf(min_ring_radius, max_ring_radius, strength)
 	var alpha := lerpf(0.35, 0.95, strength)
 	var base_col := ring_color_highlight if emphasized else ring_color
@@ -199,15 +234,29 @@ func _draw_network_ring(
 
 	if show_focus_color_tint:
 		if focus == "supply_disruption":
-			col = col.lerp(ring_color_supply_disrupt, 0.48 if pressure_focus else 0.3)
+			col = col.lerp(ring_color_supply_disrupt, 0.52 if pressure_focus else 0.3)
 		elif focus == "infrastructure_sabotage":
-			col = col.lerp(ring_color_infra_sabotage, 0.44 if pressure_focus else 0.25)
+			col = col.lerp(ring_color_infra_sabotage, 0.48 if pressure_focus else 0.25)
 
 	col.a *= alpha
+	if pressure_focus:
+		col.a = minf(1.0, col.a * (0.92 + ambient_wave * 0.12))
 
 	var width := ring_width_highlight if emphasized else ring_width
 	if pressure_focus:
-		width += 0.35
+		width += 0.45 + ambient_wave * 0.25
+	if today_hit:
+		width += 0.4
+		draw_arc(
+			center,
+			radius * 1.08,
+			-_pulse_phase * 0.5,
+			-_pulse_phase * 0.5 + PI * 0.65,
+			20,
+			Color(1.0, 0.92, 0.7, 0.55 + ambient_wave * 0.2),
+			maxf(1.2, width * 0.35),
+			true,
+		)
 	if activity_pulse:
 		var boost := 0.22 + 0.18 * sin(_pulse_phase)
 		if activity_note in ["intel", "disrupt", "recruit", "sabotage", "infra_pressure"]:
@@ -221,8 +270,9 @@ func _draw_network_ring(
 	draw_arc(center, radius, 0.0, TAU, 56, col, width, true)
 
 	if pressure_focus:
-		var outer := Color(col.r, col.g, col.b, col.a * 0.42)
-		draw_arc(center, radius * 1.32, 0.0, TAU, 40, outer, maxf(1.0, width * 0.55), true)
+		var outer_a := 0.38 + ambient_wave * 0.22
+		var outer := Color(col.r, col.g, col.b, col.a * outer_a)
+		draw_arc(center, radius * (1.34 + ambient_wave * 0.06), 0.0, TAU, 40, outer, maxf(1.0, width * 0.55), true)
 
 	if activity_pulse:
 		var pulse_col := Color(col, col.a * (0.25 + 0.2 * sin(_pulse_phase)))
@@ -237,7 +287,7 @@ func _draw_network_ring(
 		draw_circle(center, core_radius, Color(col, col.a * 0.7), true)
 
 	if pressure_focus:
-		_draw_pressure_glyph(center, radius, focus, activity_pulse)
+		_draw_pressure_glyph(center, radius, focus, activity_pulse or pressure_focus, today_hit)
 
 	if double_ring_for_strong_low_pressure and strength > 0.82 and pressure < 0.35:
 		draw_arc(center, radius * 0.6, 0.0, TAU, 40, Color(col, col.a * 0.5), width * 0.65, true)

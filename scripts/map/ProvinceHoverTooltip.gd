@@ -155,24 +155,36 @@ func _apply_panel_style() -> void:
 	elif _selected_accent and _conflict_accent and _agent_accent:
 		_panel_style.border_color = Color(0.98, 0.5, 0.82, 0.96)
 		_panel_style.shadow_color = Color(0.45, 0.15, 0.35, 0.38)
+	elif _conflict_accent and _agent_accent and _supply_accent and _agent_pressure_kind == "disrupt":
+		_panel_style.border_color = Color(0.45, 0.88, 0.78).lerp(Color(1.0, 0.58, 0.32), 0.5)
+		_panel_style.shadow_color = Color(0.25, 0.35, 0.15, 0.38)
+	elif _conflict_accent and _agent_accent and _supply_accent and _agent_pressure_kind == "sabotage":
+		_panel_style.border_color = Color(0.45, 0.88, 0.78).lerp(Color(1.0, 0.42, 0.48), 0.48)
+		_panel_style.shadow_color = Color(0.2, 0.32, 0.18, 0.38)
 	elif _conflict_accent and _agent_accent and _supply_accent:
 		_panel_style.border_color = Color(0.45, 0.88, 0.78).lerp(Color(0.95, 0.5, 0.78), 0.55)
 		_panel_style.shadow_color = Color(0.2, 0.35, 0.35, 0.38)
 	elif _conflict_accent and _agent_accent and _support_accent:
 		_panel_style.border_color = Color(0.95, 0.5, 0.78, 0.94).lerp(Color(0.4, 0.85, 1.0, 0.28), 0.28)
 		_panel_style.shadow_color = Color(0.45, 0.18, 0.35, 0.38)
-	elif _conflict_accent and _agent_accent:
-		_panel_style.border_color = Color(0.95, 0.5, 0.78, 0.94)
-		_panel_style.shadow_color = Color(0.45, 0.18, 0.35, 0.38)
-	elif _conflict_accent:
-		_panel_style.border_color = Color(1.0, 0.48, 0.48, 0.9)
-		_panel_style.shadow_color = Color(0.5, 0.15, 0.15, 0.35)
 	elif _conflict_accent and _agent_accent and _agent_pressure_kind == "disrupt":
 		_panel_style.border_color = Color(0.98, 0.58, 0.32, 0.96).lerp(Color(0.95, 0.5, 0.78), 0.35)
 		_panel_style.shadow_color = Color(0.55, 0.28, 0.15, 0.4)
 	elif _conflict_accent and _agent_accent and _agent_pressure_kind == "sabotage":
 		_panel_style.border_color = Color(1.0, 0.42, 0.48, 0.96).lerp(Color(0.95, 0.5, 0.78), 0.35)
 		_panel_style.shadow_color = Color(0.55, 0.15, 0.2, 0.4)
+	elif _conflict_accent and _agent_accent:
+		_panel_style.border_color = Color(0.95, 0.5, 0.78, 0.94)
+		_panel_style.shadow_color = Color(0.45, 0.18, 0.35, 0.38)
+	elif _conflict_accent:
+		_panel_style.border_color = Color(1.0, 0.48, 0.48, 0.9)
+		_panel_style.shadow_color = Color(0.5, 0.15, 0.15, 0.35)
+	elif _agent_accent and _supply_accent and _agent_pressure_kind == "disrupt":
+		_panel_style.border_color = Color(0.35, 0.95, 0.72).lerp(Color(1.0, 0.62, 0.32), 0.45)
+		_panel_style.shadow_color = Color(0.2, 0.4, 0.15, 0.36)
+	elif _agent_accent and _supply_accent and _agent_pressure_kind == "sabotage":
+		_panel_style.border_color = Color(0.35, 0.95, 0.72).lerp(Color(1.0, 0.45, 0.5), 0.42)
+		_panel_style.shadow_color = Color(0.18, 0.38, 0.18, 0.36)
 	elif _agent_accent and _agent_activity_accent and _agent_pressure_kind == "disrupt":
 		_panel_style.border_color = Color(1.0, 0.62, 0.32, 0.98)
 		_panel_style.shadow_color = Color(0.55, 0.32, 0.12, 0.42)

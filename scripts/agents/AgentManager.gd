@@ -529,12 +529,17 @@ func _process_network_action_daily(net: AgentNetwork) -> String:
 ## province_data_changed (or "infrastructure"/"effects") is emitted so AgentNetworkLayer,
 ## ProvinceInsight, Supply overlays, and movement calcs react.
 ##
+## Repair system (see MapManager.advance_daily_infrastructure_repair, driven by TimeManager):
+## Provinces automatically repair infrastructure at a low base rate (~0.08 + self-reinforcing
+## bonus from current infrastructure level = "pride in maintaining good local infrastructure").
+## This rate is intentionally low so that constant daily agent pressure (or bombing campaigns)
+## can produce net degradation, hindering factories, supply, and movement.
+## Future: further modulated by stability (national pride), engineer formations present in
+## the province, technology, and national focuses. Counter-intel operations help by catching
+## and dismantling networks before they do too much damage.
+##
 ## Scaling uses DAILY_NETWORK_SABOTAGE_BASE / MAX + net.get_effectiveness().
 ## See the three DAILY_NETWORK_SABOTAGE_* constants near the top of this file for easy tuning.
-## They refresh daily while the network is active. province_data_changed is emitted so
-## AgentNetworkLayer, ProvinceInsight, and Supply UI react.
-##
-## Scaling uses DAILY_NETWORK_SABOTAGE_BASE/MAX and net.get_effectiveness().
 ## This integrates cleanly with existing systems (no new effect types required).
 func _apply_daily_network_province_effects(net: AgentNetwork) -> String:
 	if net == null or not net.is_active():

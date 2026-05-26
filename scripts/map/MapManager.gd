@@ -35,6 +35,11 @@ func _ready() -> void:
 	# Try to connect to ScenarioLoader if it is already in the tree (common autoload ordering)
 	_connect_to_scenario_loader()
 
+	# Connect to central daily clock for automatic infrastructure repair
+	if typeof(TimeManager) != TYPE_NIL:
+		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
+			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
+
 func _connect_to_scenario_loader() -> void:
 	var loader := get_node_or_null("/root/ScenarioLoader") as ScenarioLoader
 	if loader != null:
@@ -428,6 +433,78 @@ func update_province_infrastructure(province_id: int, new_infra: int) -> bool:
 func notify_province_changed(province_id: int, what: String) -> void:
 	if _provinces.has(province_id):
 		province_data_changed.emit(province_id, what)
+
+## Clears active daily sabotage effects for a province (used by counter-intel operations).
+## Removes temporary supply disruption debuffs associated with this province.
+## Infrastructure damage is "repaired" via the normal slow repair rate (not instantly cleared).
+func clear_daily_sabotage_effects(province_id: int) -> void:
+	var p: Province = get_province(province_id)
+	if p == null or typeof(NationalModifierManager) == TYPE_NIL:
+		return
+
+	var tag := p.controller_tag if not p.controller_tag.is_empty() else p.owner_tag
+	if tag.is_empty():
+		return
+
+	# Remove supply sabotage effects tied to this province
+	var effect_id := "agent_net_supply_%d" % province_id
+	NationalModifierManager.remove_effect(tag, effect_id)
+
+	# Note: We could also clear any "infrastructure_sabotage" markers here if we add them later.
+	# For now, infrastructure recovers through the automatic repair system.
+
+	notify_province_changed(province_id, "effects")
+
+func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
+	# Automatic slow repair driven by the central clock
+	advance_daily_infrastructure_repair()
+
+## Automatic slow repair for province infrastructure.
+## Called daily by the central TimeManager.
+## Base rate is deliberately low so that sustained agent sabotage or bombing can cause lasting damage.
+## Higher infrastructure creates a "pride" feedback loop (easier to maintain good infrastructure).
+## Future: modulated by stability ("national pride"), engineer formations present, technology, and national focuses.
+func advance_daily_infrastructure_repair() -> void:
+	for pid in _provinces.keys():
+		var p: Province = _provinces[pid]
+		if p == null or p.infrastructure <= 0:
+			continue
+
+		var rate := get_infrastructure_repair_rate(int(pid))
+		if rate <= 0.0:
+			continue
+
+		var new_infra := min(50, p.infrastructure + rate)  # soft cap at 50 for MVP
+		if int(new_infra) > p.infrastructure:
+			update_province_infrastructure(int(pid), int(new_infra))
+
+## Returns the daily infrastructure repair rate for a province.
+## Low base (0.08) so constant pressure matters.
+## Scales with current infrastructure (self-reinforcing "pride" + existing repair capacity).
+func get_infrastructure_repair_rate(province_id: int) -> float:
+	var p: Province = get_province(province_id)
+	if p == null:
+		return 0.0
+
+	var base := 0.08
+	var infra_bonus := float(clampi(p.infrastructure, 0, 50)) * 0.004   # +0.2 at infra 50
+
+	# Stability / national pride bonus (higher stability = more pride in the country = faster repair and maintenance)
+	var stability_bonus := 0.0
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		var stab := NationalModifierManager.get_national_modifier(p.owner_tag, "stability")
+		stability_bonus = clampf(stab * 0.002, -0.05, 0.08)  # modest impact
+
+	# Technology + national focus repair bonus (via "infrastructure_repair" key)
+	var tech_focus_bonus := 0.0
+	if typeof(NationalModifierManager) != TYPE_NIL:
+		tech_focus_bonus = NationalModifierManager.get_national_modifier(p.owner_tag, "infrastructure_repair")
+
+	# TODO: Add engineer formation presence bonus (scan formations in province for "engineer" sustainment)
+	# For now this is 0; wire it when formations have reliable province location.
+
+	var rate := base + infra_bonus + stability_bonus + tech_focus_bonus
+	return maxf(0.01, rate)  # never zero so total collapse is hard without ongoing pressure
 
 ## --- Internal helpers ---
 

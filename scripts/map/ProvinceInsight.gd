@@ -70,6 +70,8 @@ static func build_hover_tooltip(
 		bool(report["is_contested"]),
 		bool(report["has_agent_network"]),
 		tag,
+		4,
+		province,
 	)
 	var body := format_report_tooltip(report)
 	if chip.is_empty():
@@ -97,6 +99,9 @@ static func build_inspector_full_bbcode(
 	if not compare_hdr.is_empty():
 		lines.append(compare_hdr)
 		lines.append("")
+	var pressure_inspector := build_agent_pressure_headline_bbcode(province)
+	if not pressure_inspector.is_empty():
+		lines.append(pressure_inspector)
 	var dual_glance := build_dual_situation_glance_bbcode(province)
 	if not dual_glance.is_empty():
 		lines.append("%sSituation: %s[/color]" % [COLOR_HEADER, dual_glance])
@@ -308,6 +313,7 @@ static func build_tooltip_mode_chip_for_state(
 	has_agent_network: bool = false,
 	country_tag: String = "",
 	max_tokens: int = 4,
+	province: Province = null,
 ) -> String:
 	var tokens: PackedStringArray = []
 	if compare_active:
@@ -317,12 +323,15 @@ static func build_tooltip_mode_chip_for_state(
 	elif is_selected_province:
 		tokens.append("%s◆ Selected[/color]" % COLOR_HEADER)
 	var situation_icon := ""
+	var pressure_suffix := ""
+	if province != null and agent_applies_daily_pressure(province):
+		pressure_suffix = "⛟" if agent_pressure_focus_kind(province) == "disrupt" else "⚙"
 	if is_contested and has_agent_network:
-		situation_icon = "⚑◎"
+		situation_icon = "⚑◎" + pressure_suffix
 	elif is_contested:
 		situation_icon = "⚑"
 	elif has_agent_network:
-		situation_icon = "◎"
+		situation_icon = "◎" + pressure_suffix
 	if supply_overlay and not situation_icon.is_empty():
 		tokens.append("%s📦 Supply · %s[/color]" % [COLOR_EFFECTIVE, situation_icon])
 	elif supply_overlay:
@@ -446,7 +455,7 @@ static func build_layers_symbol_key_bbcode(
 	var n_dual := dual_situation_count if dual_situation_count >= 0 else count_dual_situation_provinces()
 	if n_contested <= 0 and n_agent <= 0 and not supply_overlay_active:
 		return ""
-	var key := "[color=#8899aa]▨ contested · ◎ agent (size · daily pulse · ⛟/⚙ pressure)"
+	var key := "[color=#8899aa]▨ contested · ◎ agent · ⛟/⚙ = daily pressure (tint + glyph)"
 	if supply_overlay_active:
 		key += " · ● L fill"
 	if n_dual > 0:
@@ -475,9 +484,9 @@ static func build_compact_layers_summary_bbcode(
 		parts.append("%s▨%d[/color]" % [COLOR_WARN, n_contested])
 	if n_agent > 0:
 		parts.append("%s◎%d[/color]" % [COLOR_NATIONAL, n_agent])
-		var pressure := build_agent_pressure_legend_fragment(country_tag)
-		if not pressure.is_empty():
-			parts.append(pressure)
+		var pressure_counts := build_agent_pressure_legend_fragment(country_tag)
+		if not pressure_counts.is_empty():
+			parts.append(pressure_counts)
 	if supply_overlay_active:
 		parts.append("%s●L[/color]" % COLOR_EFFECTIVE)
 	if not country_tag.is_empty() and MapTechnologyContext.has_support_radio_bonuses(country_tag):
@@ -758,14 +767,6 @@ static func build_supply_legend_bbcode(
 			"%s⚑◎ %d: blended outline · hover tooltip accent · %s▨ stripes + %s◎ rings[/color]"
 			% [COLOR_WARN, n_dual, COLOR_WARN, COLOR_NATIONAL]
 		)
-	var agent_pressure := build_agent_pressure_legend_fragment(player_tag)
-	if multi_overlay and not agent_pressure.is_empty():
-		lines.append(
-			"%sDaily agent pressure:[/color] %s  [color=#8899aa]hover ⛟/⚙ provinces[/color]"
-			% [COLOR_MUTED, agent_pressure]
-		)
-	elif not multi_overlay and not agent_pressure.is_empty():
-		lines.append("%s◎ pressure:[/color] %s" % [COLOR_MUTED, agent_pressure])
 	if not date_footer.is_empty():
 		lines.append(date_footer)
 	var tech_legend := str(MapTechnologyContext.get_build_mode_preview(player_tag).get("legend_line", ""))
@@ -1064,6 +1065,44 @@ static func agent_applies_daily_pressure(province: Province) -> bool:
 	return net.focus in ["supply_disruption", "infrastructure_sabotage"]
 
 
+static func get_agent_pressure_fill_tint(province: Province) -> Color:
+	match agent_pressure_focus_kind(province):
+		"disrupt":
+			return ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE
+		"sabotage":
+			return ProvinceMapVisuals.FILL_AGENT_SABOTAGE_BASE
+		_:
+			return Color(0, 0, 0, 0)
+
+
+static func agent_has_today_pressure_tick(province: Province) -> bool:
+	var net := get_active_agent_network(province)
+	if net == null:
+		return false
+	return net.last_daily_note.strip_edges() in ["disrupt", "sabotage", "infra_pressure"]
+
+
+static func get_agent_pressure_fill_strength(province: Province, supply_overlay_active: bool = false) -> float:
+	if not agent_applies_daily_pressure(province):
+		return 0.0
+	var strength := 0.1 if supply_overlay_active else 0.06
+	if agent_has_today_pressure_tick(province):
+		strength += 0.035
+	return strength
+
+
+static func build_agent_pressure_headline_bbcode(province: Province) -> String:
+	if not agent_applies_daily_pressure(province):
+		return ""
+	match agent_pressure_focus_kind(province):
+		"disrupt":
+			return "%s⛟ DAILY SUPPLY PRESSURE[/color]" % COLOR_WARN
+		"sabotage":
+			return "%s⚙ DAILY INFRA SABOTAGE[/color]" % COLOR_WARN
+		_:
+			return ""
+
+
 static func agent_pressure_focus_kind(province: Province) -> String:
 	var net := get_active_agent_network(province)
 	if net == null:
@@ -1180,14 +1219,15 @@ static func build_agent_daily_effect_detail_bbcode(province: Province) -> String
 	return ""
 
 
-static func build_agent_daily_activity_bbcode(province: Province) -> String:
+static func build_agent_daily_activity_bbcode(province: Province, include_ongoing: bool = true) -> String:
 	var net := get_active_agent_network(province)
 	if net == null:
 		return ""
 	var lines: PackedStringArray = []
-	var pressure := build_agent_ongoing_pressure_bbcode(province)
-	if not pressure.is_empty():
-		lines.append(pressure)
+	if include_ongoing:
+		var pressure := build_agent_ongoing_pressure_bbcode(province)
+		if not pressure.is_empty():
+			lines.append(pressure)
 	var note := net.last_daily_note.strip_edges()
 	if not note.is_empty():
 		var accent := COLOR_WARN if note in ["disrupt", "sabotage", "detected", "infra_pressure"] else COLOR_NATIONAL
@@ -1248,7 +1288,8 @@ static func build_agent_legend_line(agent_count: int = -1, country_tag: String =
 	var pressure := build_agent_pressure_legend_fragment(country_tag)
 	if not pressure.is_empty():
 		line += "  " + pressure
-	line += "  [color=#8899aa]· ⛟ orange = supply · ⚙ red = infra[/color]"
+	if pressure.is_empty():
+		line += "  [color=#8899aa]· ⛟ supply · ⚙ infra focus[/color]"
 	return line
 
 
@@ -1258,18 +1299,27 @@ static func build_inspector_agent_section(province: Province) -> String:
 		return ""
 	var lines: PackedStringArray = []
 	lines.append("%s── Agent network ──[/color]" % COLOR_HEADER)
+	var pressure_head := build_agent_pressure_headline_bbcode(province)
+	if not pressure_head.is_empty():
+		lines.append(pressure_head)
 	lines.append(build_agent_glance_bbcode(province))
+	var p_tag := country_tag_for_province(province)
+	if _province_matches_country(province, p_tag):
+		var support := MapTechnologyContext.build_support_radio_inspector_block(p_tag)
+		if not support.is_empty():
+			lines.append(support)
 	var pressure := estimate_agent_map_pressure(province)
 	if pressure >= 0.2:
 		lines.append(
 			"%sEnemy pressure %.0f%% shrinks the ring (contested control / neighbors).[/color]"
 			% [COLOR_MUTED, pressure * 100.0]
 		)
-	var activity := build_agent_daily_activity_bbcode(province)
+	var activity := build_agent_daily_activity_bbcode(province, pressure_head.is_empty())
 	if not activity.is_empty():
 		lines.append(activity)
 	lines.append(
-		"%sMap: ring size = effectiveness; rings pulse on daily ticks.[/color]" % COLOR_MUTED
+		"%sMap: ring size = effectiveness; ⛟/⚙ glyphs = daily pressure; rings pulse each day.[/color]"
+		% COLOR_MUTED
 	)
 	return "\n".join(lines)
 
@@ -1415,8 +1465,15 @@ static func build_inspector_situation_section(province: Province) -> String:
 	var lines: PackedStringArray = []
 	if contested and agent:
 		lines.append("%s── Situation: contested + agent ──[/color]" % COLOR_HEADER)
+		var pressure_head := build_agent_pressure_headline_bbcode(province)
+		if not pressure_head.is_empty():
+			lines.append(pressure_head)
 		lines.append(build_conflict_status_bbcode(province))
 		lines.append(build_agent_glance_bbcode(province))
+		var skip_ongoing := not build_agent_pressure_headline_bbcode(province).is_empty()
+		var agent_activity := build_agent_daily_activity_bbcode(province, not skip_ongoing)
+		if not agent_activity.is_empty():
+			lines.append(agent_activity)
 		var nat_badge := build_national_sources_badge(province)
 		if not nat_badge.is_empty():
 			lines.append("%sNational (same view): %s[/color]" % [COLOR_MUTED, nat_badge])
@@ -1501,6 +1558,9 @@ static func format_report_tooltip(report: Dictionary) -> String:
 	if not tags.is_empty():
 		title += " " + tags
 	lines.append(title)
+	var pressure_head := build_agent_pressure_headline_bbcode(p)
+	if not pressure_head.is_empty():
+		lines.append(pressure_head)
 	var banner := build_tooltip_context_banner(report)
 	if not banner.is_empty():
 		lines.append(banner)
@@ -1508,7 +1568,7 @@ static func format_report_tooltip(report: Dictionary) -> String:
 	var dual := build_dual_situation_glance_bbcode(p)
 	if not dual.is_empty():
 		lines.append(dual)
-	var agent_daily := build_agent_daily_activity_bbcode(p)
+	var agent_daily := build_agent_daily_activity_bbcode(p, pressure_head.is_empty())
 	if not agent_daily.is_empty():
 		lines.append(agent_daily)
 	var tag := str(report.get("country_tag", ""))
@@ -1734,11 +1794,17 @@ static func build_tooltip_context_banner(report: Dictionary) -> String:
 				bool(report.get("is_contested", false))
 				and bool(report.get("has_agent_network", false))
 			):
-				hint += "  ·  %s⚑◎ contested + agent[/color]" % COLOR_WARN
+				var ap := ""
+				if agent_applies_daily_pressure(p):
+					ap = "⛟" if agent_pressure_focus_kind(p) == "disrupt" else "⚙"
+				hint += "  ·  %s⚑◎%s contested + agent[/color]" % [COLOR_WARN, ap]
 			elif bool(report.get("is_contested", false)):
 				hint += "  ·  %s⚑ contested[/color]" % COLOR_WARN
 			elif bool(report.get("has_agent_network", false)):
-				hint += "  ·  %s◎ agent[/color]" % COLOR_NATIONAL
+				var ap := ""
+				if agent_applies_daily_pressure(p):
+					ap = "⛟ " if agent_pressure_focus_kind(p) == "disrupt" else "⚙ "
+				hint += "  ·  %s◎%s agent[/color]" % [COLOR_NATIONAL, ap]
 			parts.append(hint)
 		else:
 			parts.append(build_non_adjacent_compare_hint(p, sel))
