@@ -29,9 +29,9 @@ extends Node
 ##     • get_public_offers() — convenience for the open diplomatic market (populated by generate_public_market_offers + player/AI activity).
 ##     • get_offers_for_country(...) — full query with visibility filter.
 ## - Market generation:
-##     • generate_public_market_offers(country_tag, count) — further expanded with additional recurring diplomatic flavor (civilian/industrial surplus pairs, mixed docking + TECH_SHARE naval cooperation deals, plus prior resource mixes, older design licenses, temporary docking packages, SUPPLY credits, and mixed SUPPLY+DESIGN offers). Feels like ongoing, natural nation-to-nation trade activity over game time.
-##     • generate_black_market_opportunity(country_tag, risk) — strengthened with higher-stakes mixed bundles (captured EQUIPMENT + DESIGN technical packages, INTEL + DESIGN prototype leaks) alongside hot designs, PROVINCE concessions, restricted resources/EQUIPMENT, covert DOCKING, and high-risk INTEL/SUPPLY intel. Always emits clear metadata["exposure_risk"] (higher for complex risky bundles). Stronger rewards with meaningful downside.
-##     • AgentManager integration points significantly expanded: smuggling/underworld missions can call the generator with high risk_level for the new mixed bundles; counter-intel sweeps on high exposure_risk BLACK offers can trigger scandals or spawn concrete missions ("Disrupt Black Market Deal", "Seize Smuggled Equipment", "Expose Province Concession", "Counter Black Market Design Leak", etc.).
+##     • generate_public_market_offers(country_tag, count) — further expanded with more recurring everyday diplomatic flavor (agricultural/construction surplus pairs, joint training EQUIPMENT + TECH_SHARE packages, plus prior civilian surplus, naval docking+TECH_SHARE cooperation, resource mixes, older design licenses, docking rights, SUPPLY credits, and mixed SUPPLY+DESIGN offers). Feels like ongoing, natural nation-to-nation trade activity over game time.
+##     • generate_black_market_opportunity(country_tag, risk) — further strengthened with ultra high-stakes combinations: PROVINCE + detailed INTEL (territorial concessions traded for enemy agent networks), rare triple DESIGN + EQUIPMENT + INTEL packages, plus all prior mixed EQUIPMENT+DESIGN, INTEL+DESIGN, hot designs, PROVINCE concessions, and high-risk intel/resource bundles. exposure_risk is now dynamically higher for territory trades and complex multi-item offers (0.35–0.95 range). Stronger rewards with clearer, escalating downside.
+##     • AgentManager integration points significantly expanded: smuggling/underworld missions can call the generator with high risk_level (3–5) for the new PROVINCE+INTEL or triple packages; counter-intel sweeps on high exposure_risk BLACK offers can trigger scandals or spawn concrete missions ("Disrupt Black Market Deal", "Seize Smuggled Equipment", "Expose Province Concession", "Counter Black Market Design Leak", "Infiltrate Territorial Smuggling Ring", etc.).
 ## - TradeVisibility: PUBLIC vs BLACK (architectural only in v1; BLACK offers are still stored
 ##   but can be filtered or hidden from normal diplomacy views).
 ## - Internal per-country indexes for fast lookup.
@@ -43,7 +43,7 @@ extends Node
 ## - No full enforcement of "exportable" flag or owner_countries on create_offer (future: optional check).
 ## - TECH_SHARE, DOCKING_RIGHTS, INTEL, PROVINCE, and SUPPLY now have full (lightweight) execution paths (PROVINCE via MapManager.update_province_owner in receiver path; downstream factory/design capture relies on MapManager hooks).
 ## - Public market generation (generate_public_market_offers) expanded for recurring diplomatic churn (resources, designs, docking, mixed packages).
-## - Black market generation strengthened with higher-stakes mixed bundles (EQUIPMENT+DESIGN, INTEL+DESIGN) and clearer exposure_risk + expanded AgentManager generation/detection hooks.
+## - Black market generation further strengthened with ultra high-stakes PROVINCE+INTEL and triple DESIGN+EQUIPMENT+INTEL bundles, dynamic territory-aware exposure_risk scaling, and expanded AgentManager generation/detection hooks (new missions like "Infiltrate Territorial Smuggling Ring").
 ## - No SaveLoad get/apply (add later; active offers are valuable persistent state).
 ## - No relation/opinion/prestige effects from deals (future hook into NationalModifierManager + diplomacy layer).
 ## - Full province trade restrictions (is_core, population opinion, plebiscite) and pre-accept diplomacy veto hooks remain future extension points in validate/execute.
@@ -97,7 +97,7 @@ extends Node
 ##     value_requested: float,
 ##     reason: String,           # Human-readable summary
 ##     recommendation: String,   # Richer context-aware text for high-value items (PROVINCE/INTEL especially). Multi-sentence strategic advice (core vs peripheral value, permanent production + design capture upside, recon gap vs enemy presence, etc.). Immediately useful and ready for future Trade UI tooltips/panels.
-##     breakdown: Dictionary,    # Per-item values (after quality_modifier) for tooltips/debug
+##     breakdown: Dictionary,    # Per-item values (after quality_modifier) plus extra context keys for PROVINCE (dev/infra/port) and INTEL (quantity/type) — fully UI-ready without changing top-level shape.
 ##     visibility: TradeVisibility,
 ##     is_from: bool             # Whether for_country is the one making the offer
 ##   }
@@ -159,18 +159,18 @@ extends Node
 ## BASIC + ENHANCED BLACK MARKET SUPPORT
 ## =============================================================================
 ## generate_black_market_opportunity(country_tag, risk_level = 0.35) -> offer_id
-##   - Creates a risky but high-reward BLACK visibility offer with stronger variety and higher stakes.
-##   - Dynamic RNG now includes mixed high-value bundles: captured EQUIPMENT + DESIGN (smuggled heavy armor + full technical package), INTEL + DESIGN leaks (prototype data + agent network details), plus the prior hot designs, embargoed resources, PROVINCE concessions, covert DOCKING, and high-risk INTEL/SUPPLY intel packages.
-##   - Buyer terms are often favorable, but every offer carries clear `metadata["exposure_risk"]` (typically 0.5–0.92, boosted for multi-item risky bundles). Offers are short-lived for urgency.
+##   - Creates a risky but high-reward BLACK visibility offer with even higher stakes and variety.
+##   - Dynamic RNG now includes ultra high-stakes combinations: PROVINCE + detailed enemy agent network INTEL (territorial concessions for intelligence), rare triple DESIGN + EQUIPMENT + INTEL "full package" leaks, plus all prior mixed EQUIPMENT+DESIGN, INTEL+DESIGN, hot designs, PROVINCE concessions, covert DOCKING, and high-risk INTEL/SUPPLY bundles.
+##   - Buyer terms are often favorable, but every offer carries clear `metadata["exposure_risk"]` (0.35–0.95, with extra bumps for territory trades and complex multi-item bundles). Offers are short-lived for urgency.
 ##   - "from" side marked "BLACK_MARKET".
 ##   - Higher reward comes with real downside potential in future systems (scandals, counter-intel, prestige hits, war justifications).
 ##
 ## How AgentManager (and future systems) can use this:
 ##   - Successful "Smuggling Ring", "Underworld Contact", or "Corrupt Official" missions can
-##     directly call this generator with elevated risk_level (e.g. 3–5) to inject high-stakes deals — including the new mixed EQUIPMENT+DESIGN or INTEL+DESIGN bundles — into a country's active offer list.
+##     directly call this generator with elevated risk_level (e.g. 3–5) to inject the highest-stakes deals — including the new PROVINCE+INTEL territorial-intel bundles or triple DESIGN+EQUIPMENT+INTEL packages — into a country's active offer list.
 ##   - Counter-intel or agent networks can periodically scan active BLACK offers (via
 ##     get_active_offers_for_country with visibility=BLACK filter and high exposure_risk) and act on them
-##     (e.g., trigger scandals via LeaderEventUI, prestige hits, "steal the deal" opportunities, war justification events, or spawn special missions such as "Disrupt Black Market Deal", "Infiltrate Smuggling Ring", "Seize Smuggled Equipment", "Expose Province Concession", or "Counter Black Market Design Leak").
+##     (e.g., trigger scandals via LeaderEventUI, prestige hits, "steal the deal" opportunities, war justification events, or spawn special missions such as "Disrupt Black Market Deal", "Infiltrate Smuggling Ring", "Seize Smuggled Equipment", "Expose Province Concession", "Counter Black Market Design Leak", or "Infiltrate Territorial Smuggling Ring").
 ##   - Black deals can bypass some exportable/owner_countries restrictions at the cost of risk.
 ##   - Future: exposure events (on TimeManager ticks or agent sweeps) can apply NationalModifier debuffs ("trade_scandal"), enable dedicated agent missions, or create follow-on opportunities.
 ##
@@ -444,17 +444,40 @@ func evaluate_fairness(offer_id: String, for_country: String) -> Dictionary:
 
 	# Polish recommendations for high-value items (PROVINCE, INTEL) with richer, context-aware text
 	# immediately useful for future Trade UI tooltips and decision panels.
+	var saw_province := false
+	var saw_intel := false
 	for item in offer.offered + offer.requested:
 		var itype = item.get("type")
 		if itype == TradeItemType.PROVINCE:
+			saw_province = true
 			recommendation = "High-stakes strategic decision — acquiring this province grants permanent production base, infrastructure, and potential factory seizures with auto design capture via MapManager hooks. Strongly consider if it borders hostile territory, contains ports/resources, or sits on a supply hub (long-term defense + industrial value often exceeds raw score). Reject only if it would over-extend your lines or trigger major diplomatic backlash."
 			break
 		elif itype == TradeItemType.INTEL:
+			saw_intel = true
 			if score > 1.1:
 				recommendation = "Valuable intelligence opportunity — this package can close your current reconnaissance gap and reveal enemy supply/air/naval dispositions. Prioritize when facing active threats or planning offensives; the recon_bonus and intel_visibility modifiers (applied via NationalModifierManager) provide immediate operational value against known enemy presence."
 			else:
 				recommendation = "Intel package may be overpriced unless you have an immediate need for visibility. Current recon levels or low enemy air/naval pressure reduce urgency — consider counter-offering or waiting for a better bundle unless agent networks or SupplyIntelBridge data indicate imminent enemy movements."
 			break
+
+	# Enrich breakdown for high-value items with extra context keys (still inside the same dict, fully UI-ready)
+	if saw_province:
+		for item in offer.offered + offer.requested:
+			if item.get("type") == TradeItemType.PROVINCE:
+				var pid := str(item.get("id", ""))
+				if typeof(MapManager) != TYPE_NIL:
+					var prov := MapManager.get_province(int(pid))
+					if prov != null:
+						breakdown["province_dev"] = prov.development_level
+						breakdown["province_infra"] = prov.infrastructure
+						breakdown["province_has_port"] = "port" in str(prov.features).to_lower() or "naval" in str(prov.features).to_lower()
+				break
+	if saw_intel:
+		for item in offer.offered + offer.requested:
+			if item.get("type") == TradeItemType.INTEL:
+				breakdown["intel_quantity"] = item.get("quantity", 1)
+				breakdown["intel_type"] = item.get("metadata", {}).get("type", "general")
+				break
 
 	return {
 		"score": score,
@@ -781,14 +804,60 @@ func generate_black_market_opportunity(country_tag: String, risk_level: float = 
 		})
 		requested.append({"type": TradeItemType.RESOURCE, "id": "aluminum", "quantity": 650.0})
 
+	# Ultra high-stakes PROVINCE + INTEL bundle (territorial concession + detailed enemy agent network intel)
+	if randf() < 0.04:
+		offered.append({
+			"type": TradeItemType.PROVINCE,
+			"id": "strategic_border_province",
+			"quantity": 1,
+			"metadata": {"notes": "covert territorial concession in exchange for intelligence - catastrophic exposure risk if discovered"}
+		})
+		offered.append({
+			"type": TradeItemType.INTEL,
+			"id": "enemy_agent_networks_detailed",
+			"quantity": 1,
+			"metadata": {"type": "agent_intel", "notes": "comprehensive enemy agent network locations, handlers, and safe houses - extreme risk"}
+		})
+		requested.append({"type": TradeItemType.RESOURCE, "id": "fuel", "quantity": 1200.0})
+
+	# Triple high-risk package (DESIGN + EQUIPMENT + INTEL) - very rare, extremely lucrative but dangerous
+	if randf() < 0.03:
+		offered.append({
+			"type": TradeItemType.DESIGN,
+			"id": "advanced_fighter_variant",
+			"quantity": 1,
+			"quality_modifier": 1.05,
+			"metadata": {"kind": "purchased", "notes": "stolen next-generation fighter design data"}
+		})
+		offered.append({
+			"type": TradeItemType.EQUIPMENT,
+			"id": "prototype_jet_engine",
+			"quantity": 12,
+			"metadata": {"notes": "smuggled prototype engines matching the stolen design"}
+		})
+		offered.append({
+			"type": TradeItemType.INTEL,
+			"id": "enemy_rnd_facility_details",
+			"quantity": 1,
+			"metadata": {"type": "tech_intel", "notes": "detailed layout and security of enemy research facilities - massive exposure risk"}
+		})
+		requested.append({"type": TradeItemType.RESOURCE, "id": "aluminum", "quantity": 950.0})
+
 	var offer_id := create_offer("BLACK_MARKET", tag, offered, requested, TradeVisibility.BLACK)
 
 	if offer_id != "":
 		var offer = _offers[offer_id]
-		# Higher exposure risk for the riskiest mixed bundles
+		# Higher exposure risk for the riskiest mixed bundles; extra penalty for territory trades
 		var base_risk := clampf(risk_level, 0.15, 0.85)
+		var has_territory := false
+		for it in offered:
+			if it.get("type") == TradeItemType.PROVINCE:
+				has_territory = true
+				break
 		if offered.size() >= 2:
 			base_risk = clampf(base_risk + 0.12, 0.25, 0.92)
+		if has_territory:
+			base_risk = clampf(base_risk + 0.15, 0.35, 0.95)
 		offer["metadata"]["exposure_risk"] = base_risk
 		offer["metadata"]["generated_by"] = "black_market"
 		# Optional: make it time-limited for urgency
@@ -922,6 +991,27 @@ func generate_public_market_offers(country_tag: String, count: int = 2) -> Array
 				"metadata": {"notes": "limited naval doctrine exchange"}
 			})
 			requested.append({"type": TradeItemType.RESOURCE, "id": "fuel", "quantity": 420.0})
+
+		# Occasional agricultural / construction surplus trade (everyday minor-power diplomatic flavor)
+		if randf() < 0.08:
+			offered.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 1800.0})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "aluminum", "quantity": 720.0})
+
+		# Occasional joint training / equipment package for allied cooperation feel
+		if randf() < 0.05:
+			offered.append({
+				"type": TradeItemType.EQUIPMENT,
+				"id": "training_vehicles",
+				"quantity": 25,
+				"metadata": {"notes": "surplus training and support vehicles for joint exercises"}
+			})
+			offered.append({
+				"type": TradeItemType.TECH_SHARE,
+				"id": "logistics_doctrine",
+				"quantity": 1,
+				"metadata": {"notes": "limited logistics and maintenance doctrine exchange"}
+			})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "rubber", "quantity": 380.0})
 
 		var other_party := "WORLD_MARKET" if randf() < 0.5 else "TRADE_PARTNER_" + str(randi() % 5)
 		var offer_id := create_offer(other_party, tag, offered, requested, TradeVisibility.PUBLIC)

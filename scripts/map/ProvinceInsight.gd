@@ -1023,20 +1023,26 @@ static func build_supply_legend_bbcode(
 		+ "[color=#7dffb2]high[/color]/[color=#e8c04a]mid[/color]/[color=#ff9a6e]low[/color]  "
 		+ "[color=#8899aa]◇ hub · — route · ~ preview · ◆ selected[/color]"
 	)
-	lines.append("[color=#8899aa]L rings[/color] (pulse speed = who is winning the daily duel):")
+	lines.append("[color=#8899aa]L rings[/color] — pulse speed shows who wins the daily duel:")
 	lines.append(
-		"  [color=#ff4d48]⚙ red · fast[/color] = sabotage winning (chips > repair)  ·  "
-		+ "[color=#5ae6b8]⚙ teal · slow[/color] = repair winning  ·  "
-		+ "[color=#e8a030]⚙ blend · medium[/color] = even (stalemate)"
+		"  [color=#ff4d48][b]⚙ red · fast pulse[/b][/color] = sabotage winning (chip damage > repair)"
 	)
 	lines.append(
-		"  [color=#ff9428]⛟ orange[/color] = supply disruption  ·  "
-		+ "[color=#e8a030]⛟ amber[/color] = depot penalty"
+		"  [color=#5ae6b8][b]⚙ teal · slow pulse[/b][/color] = repair winning (repair beats chips)"
 	)
-	lines.append("[color=#8899aa]L province fill[/color] (matches ring winner):")
 	lines.append(
-		"  [color=#ff6666]rose[/color] sabotage  ·  [color=#5ae6b8]teal[/color] repair  ·  "
-		+ "[color=#ff9428]amber[/color] supply/depot"
+		"  [color=#e8a030]⚙ amber blend[/color] = even / stalemate  ·  "
+		+ "[color=#ff9428]⛟ orange[/color] = supply disruption  ·  "
+		+ "[color=#e8a030]⛟ amber[/color] = depot throughput hit"
+	)
+	lines.append("[color=#8899aa]L fill tint[/color] (under depot color — matches ring winner):")
+	lines.append(
+		"  [color=#ff6666][b]rose[/b][/color] = sabotage  ·  "
+		+ "[color=#5ae6b8][b]teal[/b][/color] = repair/recovering  ·  "
+		+ "[color=#ff9428]amber[/color] = supply pressure"
+	)
+	lines.append(
+		"  [color=#8899aa]Hover tooltip: verdict + NET/day + duel bar · chips max 6[/color]"
 	)
 	lines.append(
 		"[color=#8899aa]◎ agent rings[/color] — focus tint; "
@@ -1516,11 +1522,13 @@ static func build_repair_contributions_glance_bbcode(bd: Dictionary) -> String:
 	if absf(stab) > 0.001:
 		parts.append("stability %+.2f" % stab)
 	if tech > 0.001:
-		parts.append("technology +%.2f" % tech)
+		parts.append("tech +%.2f" % tech)
+	if parts.is_empty() and float(bd.get("base", 0.0)) > 0.05:
+		parts.append("base +%.2f" % float(bd.get("base", 0.0)))
 	if parts.is_empty():
 		return ""
 	var total := float(bd.get("total", 0.0))
-	return "%sRepair boosts: %s  →  +%.2f/day[/color]" % [COLOR_TECH, " · ".join(parts), total]
+	return "%sRepair: %s  →  [b]+%.2f/day[/b][/color]" % [COLOR_TECH, " · ".join(parts), total]
 
 
 static func build_repair_contributions_glance_for_province(province: Province, bd: Dictionary) -> String:
@@ -1590,9 +1598,10 @@ static func build_sabotage_repair_duel_bbcode(
 		else:
 			tug += "[color=#5ae6b8]█[/color]"
 	if compact:
+		var win_tag := "⬇" if winner == "sabotage" else ("⬆" if winner == "repair" else "⚖")
 		return (
-			"%sDuel — %s: %s  (~%.0f chip vs +%.1f repair /day)[/color]"
-			% [line_color, label, tug, chip, rate]
+			"%s%s Duel %s: %s  (~%.0f chip vs +%.1f repair/d)[/color]"
+			% [line_color, win_tag, label, tug, chip, rate]
 		)
 	return (
 		"%sDuel — %s: [color=#ff6666]%s[/color] chip │ [color=#5ae6b8]%s[/color] repair  "
@@ -1893,9 +1902,10 @@ static func build_sabotage_verdict_inline_bbcode(
 	return "%s\n%s" % [line, action]
 
 
-## Combined verdict + net for the Sabotage & repair card (inspector: headline + NET + action).
-static func build_sabotage_verdict_block_bbcode(province: Province, bd: Dictionary, inline: bool = false) -> String:
-	if inline:
+## Combined verdict + net for the Sabotage & repair card.
+## compact=true: one scannable line (tooltip); compact=false: inspector block with action.
+static func build_sabotage_verdict_block_bbcode(province: Province, bd: Dictionary, compact: bool = false) -> String:
+	if compact:
 		return build_sabotage_verdict_inline_bbcode(province, bd, true)
 	var status := _pressure_status_label(province, bd)
 	var headline := ""
@@ -1903,19 +1913,21 @@ static func build_sabotage_verdict_block_bbcode(province: Province, bd: Dictiona
 		"UNDER SABOTAGE":
 			headline = _duel_winner_headline(_daily_infra_duel_winner(province, bd), true)
 		"RECOVERING":
-			headline = "%s[b]⬆ RECOVERING[/b][/color]" % COLOR_TECH
+			headline = "%s[b]⬆ REPAIR WINNING[/b][/color]" % COLOR_TECH
 		"SUPPLY PRESSURE":
 			headline = "%s[b]⬇ SUPPLY PRESSURE[/b][/color]" % COLOR_WARN
 		"DEPOT SABOTAGED":
 			headline = "%s[b]⬇ DEPOT HIT[/b][/color]" % COLOR_WARN
 		_:
 			headline = build_pressure_outcome_headline_bbcode(province, bd)
-	var net := build_net_daily_infra_bbcode(province, bd)
+	var net := build_net_daily_short_bbcode(province, bd)
+	if net.is_empty():
+		net = build_net_daily_infra_bbcode(province, bd)
 	if headline.is_empty():
 		return net
 	if net.is_empty():
 		return headline
-	var parts: PackedStringArray = [headline, net]
+	var parts: PackedStringArray = ["%s  │  %s" % [headline, net]]
 	var action := build_sabotage_action_hint_bbcode(province, bd)
 	if not action.is_empty():
 		parts.append(action)
@@ -2046,9 +2058,6 @@ static func build_province_infrastructure_card_bbcode(
 			lines.append(glance_pre)
 	if not compact:
 		lines.append("%s%s %s[/color]" % [accent, status_icon, status.replace("_", " ")])
-		var trend := build_infra_net_trend_bbcode(province, bd, status)
-		if not trend.is_empty():
-			lines.append(trend)
 
 	if status == "SUPPLY PRESSURE":
 		var fill := depot_fill_ratio(province.id)
@@ -2285,6 +2294,11 @@ static func pressure_agent_section_redundant_with_card(province: Province) -> bo
 			or ("today's effect" in line and "infrastructure chipped" in line)
 			or ("today's effect" in line and "auto-repair" in line)
 			or ("active —" in line and "daily" in line)
+			or ("daily infra sabotage" in line)
+			or ("daily supply pressure" in line)
+			or ("◎ today" in line)
+			or ("sabotage winning" in line)
+			or ("repair winning" in line)
 		)
 		if not redundant:
 			only_redundant = false

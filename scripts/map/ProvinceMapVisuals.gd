@@ -19,7 +19,8 @@ const FILL_AGENT_DISRUPT := Color(0.95, 0.55, 0.28, 1.0)
 const FILL_AGENT_SABOTAGE := Color(1.0, 0.38, 0.45, 1.0)
 const FILL_AGENT_DISRUPT_BASE := Color(0.92, 0.48, 0.22, 1.0)
 const FILL_AGENT_SABOTAGE_BASE := Color(0.98, 0.28, 0.34, 1.0)
-const FILL_INFRA_RECOVERING := Color(0.22, 0.98, 0.78, 1.0)
+const FILL_INFRA_RECOVERING := Color(0.18, 0.96, 0.82, 1.0)
+const FILL_INFRA_SABOTAGE_ACTIVE := Color(0.98, 0.22, 0.32, 1.0)
 const FILL_SUPPORT_RADIO := Color(0.42, 0.78, 1.0, 1.0)
 const OUTLINE_SUPPORT_RADIO := Color(0.45, 0.85, 1.0, 0.9)
 const OUTLINE_SUPPORT_RADIO_GLOW := Color(0.22, 0.52, 0.88, 0.32)
@@ -224,28 +225,28 @@ static func get_supply_outline_style(role: String) -> Dictionary:
 			return {
 				"color": OUTLINE_INFRA_SABOTAGE,
 				"glow": OUTLINE_INFRA_SABOTAGE_GLOW,
-				"width": 3.4,
-				"glow_extra": 4.2,
+				"width": 3.6,
+				"glow_extra": 4.8,
 				"z_index": Z_SUPPLY,
-				"pulse_speed": 2.15,
+				"pulse_speed": 2.35,
 			}
 		"infra_repair":
 			return {
 				"color": OUTLINE_INFRA_REPAIR,
 				"glow": OUTLINE_INFRA_REPAIR_GLOW,
-				"width": 2.0,
-				"glow_extra": 1.4,
+				"width": 2.6,
+				"glow_extra": 2.0,
 				"z_index": Z_SUPPLY,
-				"pulse_speed": 0.48,
+				"pulse_speed": 0.42,
 			}
 		"infra_duel_even":
 			return {
-				"color": OUTLINE_INFRA_SABOTAGE.lerp(OUTLINE_INFRA_REPAIR, 0.45),
-				"glow": OUTLINE_INFRA_SABOTAGE_GLOW.lerp(OUTLINE_INFRA_REPAIR_GLOW, 0.4),
-				"width": 2.4,
-				"glow_extra": 2.6,
+				"color": OUTLINE_INFRA_SABOTAGE.lerp(OUTLINE_INFRA_REPAIR, 0.5),
+				"glow": OUTLINE_INFRA_SABOTAGE_GLOW.lerp(OUTLINE_INFRA_REPAIR_GLOW, 0.45),
+				"width": 2.8,
+				"glow_extra": 3.0,
 				"z_index": Z_SUPPLY,
-				"pulse_speed": 1.0,
+				"pulse_speed": 1.05,
 			}
 		"depot_sabotage":
 			return {

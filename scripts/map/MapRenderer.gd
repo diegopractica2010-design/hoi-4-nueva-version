@@ -1543,11 +1543,15 @@ func _apply_recovering_fill_tint(col: Color, province_id: int) -> Color:
 		return col
 	var role := str(_supply_role_by_province.get(province_id, ""))
 	if role == "infra_repair":
-		return col.lerp(ProvinceMapVisuals.FILL_INFRA_RECOVERING, 0.36)
+		return col.lerp(ProvinceMapVisuals.FILL_INFRA_RECOVERING, 0.44)
 	if role == "infra_sabotage":
-		return col.lerp(ProvinceMapVisuals.FILL_AGENT_SABOTAGE_BASE, 0.26)
+		return col.lerp(ProvinceMapVisuals.FILL_INFRA_SABOTAGE_ACTIVE, 0.34)
 	if role == "infra_duel_even":
-		return col.lerp(ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE, 0.1)
+		return col.lerp(
+			ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE,
+			ProvinceMapVisuals.FILL_INFRA_RECOVERING,
+			0.18,
+		)
 	if str(_supply_role_by_province.get(province_id, "")) == "supply_pressure":
 		return col.lerp(ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE, 0.14)
 	if str(_supply_role_by_province.get(province_id, "")) == "depot_sabotage":
@@ -1921,15 +1925,15 @@ func _pulse_supply_outlines() -> void:
 func _pulse_amount_for_supply_role(role: String) -> float:
 	match role:
 		"infra_sabotage":
-			return 0.68
+			return 0.78
 		"infra_duel_even":
-			return 0.4
+			return 0.48
 		"supply_pressure":
-			return 0.46
+			return 0.5
 		"depot_sabotage":
-			return 0.36
+			return 0.38
 		"infra_repair":
-			return 0.1
+			return 0.16
 		"hub":
 			return 0.22
 		_:
