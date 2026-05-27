@@ -48,7 +48,8 @@ func _process(delta: float) -> void:
 	if absf(current - _target_zoom) <= 0.001:
 		return
 
-	var new_scale := lerpf(current, _target_zoom, clampf(_ZOOM_LERP_SPEED * delta, 0.0, 1.0))
+	var nav_delta := MapViewInput.motion_delta(delta)
+	var new_scale := lerpf(current, _target_zoom, clampf(_ZOOM_LERP_SPEED * nav_delta, 0.0, 1.0))
 	if absf(new_scale - _target_zoom) < 0.002:
 		new_scale = _target_zoom
 	_adjust_origin_for_uniform_zoom(current, new_scale)
@@ -56,6 +57,7 @@ func _process(delta: float) -> void:
 
 
 func _apply_wasd(delta: float) -> void:
+	var nav_delta := MapViewInput.motion_delta(delta)
 	var move := Vector2.ZERO
 	if Input.is_action_pressed("ui_left") or Input.is_action_pressed("move_left"):
 		move.x -= 1.0
@@ -66,13 +68,14 @@ func _apply_wasd(delta: float) -> void:
 	if Input.is_action_pressed("ui_down") or Input.is_action_pressed("move_down"):
 		move.y += 1.0
 	if move.length_squared() > 0.0001:
-		target.position += move.normalized() * wasd_speed * delta
+		target.position += move.normalized() * wasd_speed * nav_delta
 
 
 func _apply_edge_pan(delta: float) -> void:
 	var vp := get_viewport()
-	if vp.gui_get_hovered_control() != null:
+	if MapViewInput.edge_pan_blocked_by_gui(vp):
 		return
+	var nav_delta := MapViewInput.motion_delta(delta)
 	var m := vp.get_mouse_position()
 	var sz := vp.get_visible_rect().size
 	var dir := Vector2.ZERO
@@ -86,7 +89,7 @@ func _apply_edge_pan(delta: float) -> void:
 		dir.y += 1.0
 	if dir.length_squared() < 0.0001:
 		return
-	target.position += dir.normalized() * edge_pan_speed * delta
+	target.position += dir.normalized() * edge_pan_speed * nav_delta
 
 
 func _input(event: InputEvent) -> void:

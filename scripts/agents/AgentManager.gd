@@ -531,7 +531,8 @@ func _process_network_action_daily(net: AgentNetwork) -> String:
 ##
 ## 2. infrastructure_sabotage focus:
 ##    - Small daily chipping of infrastructure (affects movement cost + future supply gen).
-##    - Recovers via automatic daily repair in MapManager (low base 0.08 + pride + stability bonuses).
+##    - Recovers via automatic daily repair in MapManager (low base 0.08 + infra pride + stability + engineer formation bonuses + "infrastructure_repair" tech/focus modifier).
+##      Full breakdown exposed via get_infrastructure_repair_breakdown() for UI/strategy.
 ##
 ## Effects refresh daily while network active. province_data_changed emitted for reactivity (map tints/rings update).
 ##

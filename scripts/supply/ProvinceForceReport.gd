@@ -6,6 +6,8 @@ var land_by_tag: Dictionary = {}
 var air_by_tag: Dictionary = {}
 var naval_by_tag: Dictionary = {}
 var naval_at_port_by_tag: Dictionary = {}
+## Engineer / combat-engineer brigade equivalents (friendly repair crews).
+var engineers_by_tag: Dictionary = {}
 
 
 func _init(p_province_id: int = -1) -> void:
@@ -36,3 +38,13 @@ func total_air(tag: String) -> float:
 
 func total_naval_at_port(tag: String) -> float:
 	return float(naval_at_port_by_tag.get(tag, 0.0))
+
+
+func add_engineers(tag: String, brigade_equiv: float) -> void:
+	if brigade_equiv <= 0.0:
+		return
+	engineers_by_tag[tag] = float(engineers_by_tag.get(tag, 0.0)) + brigade_equiv
+
+
+func total_engineers(tag: String) -> float:
+	return float(engineers_by_tag.get(tag.strip_edges().to_upper(), 0.0))

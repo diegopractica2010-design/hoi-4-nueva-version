@@ -61,6 +61,17 @@ static func build_hover_tooltip(
 	report["is_contested"] = is_contested or is_province_contested(province)
 	report["has_agent_network"] = has_agent_network or has_active_agent_network(province)
 	var tag := country_tag_for_province(province)
+	var chip_limit := 4
+	if supply_overlay_active and province_needs_infrastructure_ui(province):
+		chip_limit = 5
+	if supply_overlay_active and (
+		(bool(report.get("is_contested", false)) and bool(report.get("has_agent_network", false)))
+		or (
+			province_needs_infrastructure_ui(province)
+			and (bool(report.get("is_contested", false)) or bool(report.get("has_agent_network", false)))
+		)
+	):
+		chip_limit = 6
 	var chip := build_tooltip_mode_chip_for_state(
 		supply_overlay_active,
 		other_province != null,
@@ -70,7 +81,7 @@ static func build_hover_tooltip(
 		bool(report["is_contested"]),
 		bool(report["has_agent_network"]),
 		tag,
-		4,
+		chip_limit,
 		province,
 	)
 	var body := format_report_tooltip(report)
@@ -99,9 +110,30 @@ static func build_inspector_full_bbcode(
 	if not compare_hdr.is_empty():
 		lines.append(compare_hdr)
 		lines.append("")
-	var pressure_inspector := build_province_pressure_section_bbcode(province, true)
+	var infra_inspector := build_province_infrastructure_card_bbcode(province, false)
+	var pressure_inspector := ""
+	if not pressure_agent_section_redundant_with_card(province):
+		pressure_inspector = build_province_pressure_section_bbcode(
+			province, infra_inspector.is_empty(),
+		)
+	if not infra_inspector.is_empty():
+		lines.append(infra_inspector)
 	if not pressure_inspector.is_empty():
+		if not infra_inspector.is_empty():
+			lines.append("")
 		lines.append(pressure_inspector)
+	if not infra_inspector.is_empty() or not pressure_inspector.is_empty():
+		lines.append("")
+	var tag := str(report.get("country_tag", ""))
+	if (
+		_province_matches_country(province, tag)
+		and MapTechnologyContext.has_support_radio_bonuses(tag)
+		and (not infra_inspector.is_empty() or not pressure_inspector.is_empty())
+	):
+		var tech_glance := MapTechnologyContext.build_support_radio_glance_bbcode(tag)
+		if not tech_glance.is_empty():
+			lines.append(tech_glance)
+			lines.append("")
 	var dual_glance := build_dual_situation_glance_bbcode(province)
 	if not dual_glance.is_empty():
 		lines.append("%sSituation: %s[/color]" % [COLOR_HEADER, dual_glance])
@@ -303,6 +335,18 @@ static func build_routes_through_province_bbcode(
 	return "\n".join(lines)
 
 
+## Strip outer [color] wrapper so chips can merge into one token.
+static func _bbcode_inner(text: String) -> String:
+	var t := text.strip_edges()
+	if t.begins_with("[color"):
+		var end := t.find("]")
+		if end >= 0:
+			t = t.substr(end + 1)
+	if t.ends_with("[/color]"):
+		t = t.substr(0, t.length() - 8)
+	return t.strip_edges()
+
+
 static func build_tooltip_mode_chip_for_state(
 	supply_overlay: bool,
 	compare_active: bool,
@@ -332,13 +376,37 @@ static func build_tooltip_mode_chip_for_state(
 		situation_icon = "⚑"
 	elif has_agent_network:
 		situation_icon = "◎" + pressure_suffix
+	var pressure_chip_added := false
+	var pending_pressure := ""
+	if province != null:
+		pending_pressure = build_pressure_status_chip_row_bbcode(province)
 	if supply_overlay and not situation_icon.is_empty():
 		var press_hint := ""
 		if not pressure_suffix.is_empty():
 			press_hint = " · %s" % ("supply" if pressure_suffix == "⛟" else "infra")
-		tokens.append("%s📦 L · %s%s[/color]" % [COLOR_EFFECTIVE, situation_icon, press_hint])
+		if not pending_pressure.is_empty():
+			tokens.append(
+				"%s📦 L · %s · %s%s[/color]"
+				% [COLOR_EFFECTIVE, situation_icon, _bbcode_inner(pending_pressure), press_hint]
+			)
+			pressure_chip_added = true
+		else:
+			tokens.append("%s📦 L · %s%s[/color]" % [COLOR_EFFECTIVE, situation_icon, press_hint])
 	elif supply_overlay:
-		tokens.append("%s📦 Supply (L)[/color]" % COLOR_EFFECTIVE)
+		if is_contested and not pending_pressure.is_empty():
+			tokens.append(
+				"%s📦 L · ⚑ · %s[/color]" % [COLOR_EFFECTIVE, _bbcode_inner(pending_pressure)]
+			)
+			pressure_chip_added = true
+		elif is_contested:
+			tokens.append("%s📦 L · ⚑[/color]" % COLOR_EFFECTIVE)
+		elif not pending_pressure.is_empty():
+			tokens.append(
+				"%s📦 L · %s[/color]" % [COLOR_EFFECTIVE, _bbcode_inner(pending_pressure)]
+			)
+			pressure_chip_added = true
+		else:
+			tokens.append("%s📦 Supply (L)[/color]" % COLOR_EFFECTIVE)
 	elif not pressure_suffix.is_empty() and province != null:
 		tokens.append(
 			"%s%s %s pressure[/color]"
@@ -350,12 +418,40 @@ static func build_tooltip_mode_chip_for_state(
 		tokens.append("%s⚑ Contested[/color]" % COLOR_WARN)
 	elif situation_icon == "◎":
 		tokens.append("%s◎ Agent[/color]" % COLOR_NATIONAL)
-	if not country_tag.is_empty() and tokens.size() < max_tokens:
-		var tech_chip := MapTechnologyContext.build_technology_status_chip(country_tag)
-		if not tech_chip.is_empty():
-			tokens.append(tech_chip)
+	if province != null and tokens.size() < max_tokens and pending_pressure.is_empty():
+		pending_pressure = build_pressure_status_chip_row_bbcode(province)
+	if (
+		not pressure_chip_added
+		and not pending_pressure.is_empty()
+		and tokens.size() < max_tokens
+	):
+		tokens.append(pending_pressure)
+		pressure_chip_added = true
 	if not supply_role.is_empty() and tokens.size() < max_tokens:
-		tokens.append("%s%s[/color]" % [COLOR_MUTED, _supply_role_label(supply_role)])
+		var skip_role_label := pressure_chip_added and supply_role in [
+			"infra_sabotage", "supply_pressure", "infra_repair", "infra_duel_even", "depot_sabotage",
+		]
+		if not skip_role_label:
+			tokens.append("%s%s[/color]" % [COLOR_MUTED, _supply_role_label(supply_role)])
+	elif (
+		supply_overlay
+		and province != null
+		and province_needs_infrastructure_ui(province)
+		and not pressure_chip_added
+		and tokens.size() < max_tokens
+	):
+		var bd := _infra_repair_breakdown(province)
+		var outcome_chip := build_pressure_outcome_headline_bbcode(province, bd)
+		if not outcome_chip.is_empty():
+			tokens.append(outcome_chip)
+		elif bool(bd.get("under_infra_sabotage", false)):
+			tokens.append("%s⚙ Sabotaged[/color]" % COLOR_WARN)
+		elif agent_pressure_focus_kind(province) == "disrupt":
+			tokens.append("%s⛟ Supply pressure[/color]" % COLOR_WARN)
+		elif float(bd.get("depot_sabotage_level", 0.0)) > 0.12:
+			tokens.append("%s⛟ Depot hit[/color]" % COLOR_WARN)
+		elif int(bd.get("infrastructure", province.infrastructure)) < 50:
+			tokens.append("%s⚙ Repairing[/color]" % COLOR_TECH)
 	if supply_overlay and tokens.size() < max_tokens:
 		var skip_date := (
 			province != null
@@ -375,14 +471,92 @@ static func build_tooltip_mode_chip_for_state(
 		and tokens.size() < max_tokens
 	):
 		tokens.append("%s◎ TODAY[/color]" % COLOR_WARN)
+	var pressure_ui := province != null and province_needs_infrastructure_ui(province)
+	var defer_tech := pressure_ui or is_contested or has_agent_network
+	var allow_bonus_slot := max_tokens >= 6 and supply_overlay and province != null
+	var allow_radio_slot := allow_bonus_slot and not country_tag.is_empty()
+	var allow_tech_slot := allow_bonus_slot and not country_tag.is_empty() and pressure_ui
+	if not country_tag.is_empty() and tokens.size() < max_tokens and not defer_tech:
+		var tech_chip := MapTechnologyContext.build_technology_status_chip(country_tag)
+		if not tech_chip.is_empty():
+			tokens.append(tech_chip)
+	if (
+		province != null
+		and not country_tag.is_empty()
+		and province_benefits_country(province, country_tag)
+		and MapTechnologyContext.has_support_radio_bonuses(country_tag)
+		and tokens.size() < max_tokens
+		and not defer_tech
+	):
+		var has_radio_token := false
+		for tok in tokens:
+			if "📡" in tok:
+				has_radio_token = true
+				break
+		if not has_radio_token:
+			var local_radio := MapTechnologyContext.build_support_radio_compact_chip(country_tag)
+			if not local_radio.is_empty():
+				tokens.append(local_radio)
+	if (
+		allow_radio_slot
+		and province_benefits_country(province, country_tag)
+		and MapTechnologyContext.has_support_radio_bonuses(country_tag)
+		and tokens.size() < max_tokens
+	):
+		var has_radio := false
+		for tok in tokens:
+			if "📡" in tok:
+				has_radio = true
+				break
+		if not has_radio:
+			var radio_slot := MapTechnologyContext.build_support_radio_compact_chip(country_tag)
+			if not radio_slot.is_empty():
+				tokens.append(radio_slot)
+	if allow_tech_slot and tokens.size() < max_tokens:
+		var tech_slot := MapTechnologyContext.build_technology_status_chip(country_tag)
+		if not tech_slot.is_empty():
+			var has_tech := false
+			for tok in tokens:
+				if "🔬" in tok or "research" in tok.to_lower():
+					has_tech = true
+					break
+			if not has_tech:
+				tokens.append(tech_slot)
 	if tokens.is_empty():
 		return ""
 	if tokens.size() <= max_tokens:
 		return "  ·  ".join(tokens)
+	var priority: Array[String] = []
+	var rest: Array[String] = []
+	for tok in tokens:
+		if (
+			"SABOTAGE" in tok
+			or "SAB WIN" in tok
+			or "REP WIN" in tok
+			or "REPAIR" in tok
+			or "RECOVERING" in tok
+			or "WINNING" in tok
+			or "SUPPLY" in tok
+			or "DEPOT" in tok
+			or 			"📦 L" in tok
+			or "⚑" in tok
+			or "◎" in tok
+			or "Compare" in tok
+			or "Selected" in tok
+		):
+			priority.append(tok)
+		else:
+			rest.append(tok)
+	var ordered: PackedStringArray = []
+	for tok in priority:
+		ordered.append(tok)
+	for tok in rest:
+		ordered.append(tok)
 	var shown: PackedStringArray = []
-	for i in range(mini(tokens.size(), max_tokens)):
-		shown.append(tokens[i])
-	shown.append("%s+%d[/color]" % [COLOR_MUTED, tokens.size() - max_tokens])
+	for i in range(mini(ordered.size(), max_tokens)):
+		shown.append(ordered[i])
+	if ordered.size() > max_tokens:
+		shown.append("%s+%d[/color]" % [COLOR_MUTED, ordered.size() - max_tokens])
 	return "  ·  ".join(shown)
 
 
@@ -396,6 +570,16 @@ static func _supply_role_label(role: String) -> String:
 			return "— supply route"
 		"hub":
 			return "◇ depot hub"
+		"infra_sabotage":
+			return "⚙ ring: sabotage winning"
+		"supply_pressure":
+			return "⛟ ring: supply pressure"
+		"infra_repair":
+			return "⚙ ring: repair winning"
+		"infra_duel_even":
+			return "⚙ ring: duel even"
+		"depot_sabotage":
+			return "⛟ ring: depot hit"
 		_:
 			return role
 
@@ -416,6 +600,16 @@ static func _supply_role_icon(role: String) -> String:
 			return "—"
 		"hub":
 			return "◇"
+		"infra_sabotage":
+			return "⚙"
+		"supply_pressure":
+			return "⛟"
+		"infra_repair":
+			return "⚙"
+		"infra_duel_even":
+			return "⚙"
+		"depot_sabotage":
+			return "⛟"
 		_:
 			return "·"
 
@@ -480,7 +674,9 @@ static func build_layers_symbol_key_bbcode(
 		return ""
 	var key := "[color=#8899aa]▨ contested · ◎ agent · ⛟/⚙ pressure (tint · bars · tooltip)"
 	if supply_overlay_active:
-		key += " · ● L fill"
+		key += " · ● L fill · rings: red/amber/orange/teal"
+		if not country_tag.is_empty() and MapTechnologyContext.has_support_radio_bonuses(country_tag):
+			key += " · 📡 cyan tint on your provinces"
 	if n_dual > 0:
 		key += " · ⚑◎ both"
 	var pressure := build_agent_pressure_legend_fragment(country_tag)
@@ -566,6 +762,9 @@ static func build_supply_multi_overlay_block_bbcode(
 		and (contested_count > 0 or agent_network_count > 0)
 	):
 		header += "\n%s📡 Support/Radio — planning/recon on your routes (hover owned provinces).[/color]" % COLOR_TECH
+	var pressure_frag := build_agent_pressure_legend_fragment(player_tag)
+	if not pressure_frag.is_empty() and agent_network_count > 0:
+		header += "\n%sDaily pressure: %s[/color]" % [COLOR_MUTED, pressure_frag]
 	return header
 
 
@@ -637,6 +836,10 @@ static func build_province_situation_tags(province: Province) -> String:
 			tags.append("%s◎%s[/color]" % [COLOR_WARN, badge])
 		else:
 			tags.append("%s◎[/color]" % COLOR_NATIONAL)
+	elif province.infrastructure < 50 and province_needs_infrastructure_ui(province):
+		var bd := _infra_repair_breakdown(province)
+		if not bool(bd.get("under_infra_sabotage", false)):
+			tags.append("%s⚙ recovering[/color]" % COLOR_TECH)
 	var tag := country_tag_for_province(province)
 	if not tag.is_empty() and _province_matches_country(province, tag):
 		var researching := (
@@ -649,7 +852,8 @@ static func build_province_situation_tags(province: Province) -> String:
 		elif researching:
 			tags.append("%s🔬[/color]" % COLOR_TECH)
 		elif radio:
-			tags.append("%s📡[/color]" % COLOR_TECH)
+			var chip := MapTechnologyContext.build_support_radio_compact_chip(tag)
+			tags.append(chip if not chip.is_empty() else "%s📡[/color]" % COLOR_TECH)
 	return "".join(tags)
 
 
@@ -753,6 +957,11 @@ static func build_supply_legend_bbcode(
 	var date_footer := GameDateDisplay.build_map_date_footer_bbcode(time_pulse_bbcode, time_pulse_kind)
 	if multi_overlay:
 		var header := build_supply_multi_overlay_block_bbcode(n_contested, n_agent, n_dual, player_tag)
+		header += (
+			"\n[color=#8899aa]Hover chips (max 6):[/color] "
+			+ "merged [color=#9eb8d8]📦 L · verdict[/color] when crowded · "
+			+ "[color=#ff6666]⬇ sabotage[/color] / [color=#5ae6b8]⬆ repair[/color] winner shown"
+		)
 		if time_pulse_kind != "day" and not date_footer.is_empty() and date_footer.find("📅") < 0:
 			var glance := GameDateDisplay.build_map_date_glance_bbcode(true, true)
 			if not glance.is_empty():
@@ -814,6 +1023,42 @@ static func build_supply_legend_bbcode(
 		+ "[color=#7dffb2]high[/color]/[color=#e8c04a]mid[/color]/[color=#ff9a6e]low[/color]  "
 		+ "[color=#8899aa]◇ hub · — route · ~ preview · ◆ selected[/color]"
 	)
+	lines.append("[color=#8899aa]L rings[/color] (pulse speed = who is winning the daily duel):")
+	lines.append(
+		"  [color=#ff4d48]⚙ red · fast[/color] = sabotage winning (chips > repair)  ·  "
+		+ "[color=#5ae6b8]⚙ teal · slow[/color] = repair winning  ·  "
+		+ "[color=#e8a030]⚙ blend · medium[/color] = even (stalemate)"
+	)
+	lines.append(
+		"  [color=#ff9428]⛟ orange[/color] = supply disruption  ·  "
+		+ "[color=#e8a030]⛟ amber[/color] = depot penalty"
+	)
+	lines.append("[color=#8899aa]L province fill[/color] (matches ring winner):")
+	lines.append(
+		"  [color=#ff6666]rose[/color] sabotage  ·  [color=#5ae6b8]teal[/color] repair  ·  "
+		+ "[color=#ff9428]amber[/color] supply/depot"
+	)
+	lines.append(
+		"[color=#8899aa]◎ agent rings[/color] — focus tint; "
+		+ "3 mini bars under sabotage = infra / repair / chip duel"
+	)
+	if not player_tag.is_empty() and MapTechnologyContext.has_support_radio_bonuses(player_tag):
+		lines.append(
+			"  [color=#6ec8ff]📡 cyan tint[/color] = your province with Support/Radio (planning/recon on routes)"
+		)
+	lines.append(
+		"[color=#8899aa]Hover chips: [/color]"
+		+ "[color=#ff6666]⬇ SABOTAGE WINNING[/color] · "
+		+ "[color=#5ae6b8]⬆ REPAIR WINNING[/color] · "
+		+ "[color=#5ae6b8]⬆ RECOVERING[/color] · "
+		+ "[color=#ff9428]⬇ SUPPLY[/color]  "
+		+ "(chips: SAB WIN / REP WIN · meter −N or +N/day)"
+	)
+	lines.append(
+		"[color=#8899aa]Action: [/color]"
+		+ "clear [color=#a78bfa]◎[/color] agent network to stop infra chips · "
+		+ "restore depots via routes & Support/Radio"
+	)
 	if selected_province_id >= 0:
 		var sel_name := _province_short_name(selected_province_id)
 		lines.append(
@@ -848,7 +1093,12 @@ static func build_supply_legend_bbcode(
 				if agent_applies_daily_pressure(hp):
 					ab = "⛟" if agent_pressure_focus_kind(hp) == "disrupt" else "⚙"
 				hover_line += " · %s◎%s agent[/color]" % [COLOR_NATIONAL, ab]
-			if agent_applies_daily_pressure(hp):
+			if province_needs_infrastructure_ui(hp):
+				var hp_bd := _infra_repair_breakdown(hp)
+				var outcome_short := build_sabotage_verdict_inline_bbcode(hp, hp_bd)
+				if not outcome_short.is_empty():
+					hover_line += " · " + outcome_short
+			elif agent_applies_daily_pressure(hp):
 				var compact_rec := build_province_pressure_recovery_compact(hp)
 				if not compact_rec.is_empty():
 					hover_line += " · %s%s[/color]" % [COLOR_WARN, compact_rec]
@@ -1104,6 +1354,14 @@ static func agent_applies_daily_pressure(province: Province) -> bool:
 
 
 static func get_agent_pressure_fill_tint(province: Province) -> Color:
+	if province != null:
+		var bd := _infra_repair_breakdown(province)
+		if (
+			not bd.is_empty()
+			and not bool(bd.get("under_infra_sabotage", false))
+			and int(bd.get("infrastructure", province.infrastructure)) < 50
+		):
+			return ProvinceMapVisuals.FILL_INFRA_RECOVERING
 	match agent_pressure_focus_kind(province):
 		"disrupt":
 			return ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE
@@ -1123,48 +1381,783 @@ static func agent_has_today_pressure_tick(province: Province) -> bool:
 static func get_agent_pressure_fill_strength(province: Province, supply_overlay_active: bool = false) -> float:
 	if not agent_applies_daily_pressure(province):
 		return 0.0
-	var strength := 0.1 if supply_overlay_active else 0.06
+	var strength := 0.16 if supply_overlay_active else 0.11
 	if agent_has_today_pressure_tick(province):
-		strength += 0.035
+		strength += 0.05
 	if (
 		agent_pressure_focus_kind(province) == "sabotage"
 		and province != null
 		and province.infrastructure <= 20
 	):
 		strength += 0.03
+		var bd := _infra_repair_breakdown(province)
+		if bool(bd.get("under_infra_sabotage", false)):
+			var chip := estimate_daily_infra_chip_damage(province)
+			var rate := float(bd.get("total", 0.0))
+			if chip > 0 and float(chip) > rate:
+				strength += 0.05
+	elif agent_pressure_focus_kind(province) == "disrupt" and supply_overlay_active:
+		strength += 0.02
 	return strength
 
 
-static func build_province_infra_repair_bbcode(province: Province) -> String:
+static func _infra_repair_breakdown(province: Province) -> Dictionary:
 	if province == null or typeof(MapManager) == TYPE_NIL:
+		return {}
+	return MapManager.get_infrastructure_repair_breakdown(province.id)
+
+
+static func build_infra_sabotage_source_bbcode(province: Province) -> String:
+	var net := get_active_agent_network(province)
+	if net == null:
 		return ""
-	var rate := MapManager.get_infrastructure_repair_rate(province.id)
-	if rate <= 0.0:
+	if net.focus != "infrastructure_sabotage" or not net.is_active():
 		return ""
-	var infra := province.infrastructure
-	var accent := COLOR_MUTED
-	if infra <= 15 or (
-		agent_applies_daily_pressure(province)
-		and agent_pressure_focus_kind(province) == "sabotage"
-	):
-		accent = COLOR_WARN
-	var line := "%s⚙ Infra %d · +%.2f/day auto-repair[/color]" % [accent, infra, rate]
-	if infra < 50:
-		var days := int(ceil(float(50 - infra) / rate))
-		if days > 0 and days < 500:
-			line += (
-				"\n%s~%d days to infra 50 if sabotage stops[/color]"
-				% [COLOR_MUTED, days]
-			)
-	if typeof(NationalModifierManager) != TYPE_NIL:
-		var bonus := NationalModifierManager.get_national_modifier(
-			province.owner_tag, "infrastructure_repair",
+	var focus := str(net.focus).replace("_", " ")
+	var eff := clampf(net.get_effectiveness(), 0.0, 1.5) * 100.0
+	return (
+		"%s◎ Source: agent network (%s) · str %.0f · eff %.0f%% · chips infra daily[/color]"
+		% [COLOR_WARN, focus, net.strength, eff]
+	)
+
+
+static func build_supply_disruption_source_bbcode(province: Province) -> String:
+	var net := get_active_agent_network(province)
+	if net == null:
+		return ""
+	if net.focus != "supply_disruption" or not net.is_active():
+		return ""
+	var focus := str(net.focus).replace("_", " ")
+	var eff := clampf(net.get_effectiveness(), 0.0, 1.5) * 100.0
+	return (
+		"%s◎ Source: agent network (%s) · str %.0f · eff %.0f%% · drains depot daily[/color]"
+		% [COLOR_WARN, focus, net.strength, eff]
+	)
+
+
+static func estimate_daily_infra_chip_damage(province: Province) -> int:
+	var net := get_active_agent_network(province)
+	if net == null or not net.is_active() or net.focus != "infrastructure_sabotage":
+		return 0
+	if province == null or province.infrastructure <= 0:
+		return 0
+	var eff := clampf(net.get_effectiveness(), 0.0, 1.5)
+	var damage := int(0.5 + eff * 0.35)
+	return maxi(damage, 0)
+
+
+static func build_infra_progress_meter_bbcode(
+	infra: int,
+	segments: int = 10,
+	sabotage_winning: bool = false,
+	net_loss_per_day: int = 0,
+	repair_winning: bool = false,
+	net_gain_per_day: float = 0.0,
+) -> String:
+	var filled := clampi(int(round(float(infra) / 50.0 * float(segments))), 0, segments)
+	var bar := ""
+	for i in segments:
+		bar += "█" if i < filled else "░"
+	var bar_color := COLOR_TECH if infra >= 35 else (COLOR_WARN if infra <= 15 else COLOR_MUTED)
+	if sabotage_winning:
+		bar_color = Color("#ff8888")
+	elif repair_winning:
+		bar_color = Color("#5ae6b8")
+	var suffix := ""
+	if sabotage_winning and net_loss_per_day > 0:
+		suffix = "  ·  −%d/day" % net_loss_per_day
+	elif repair_winning and net_gain_per_day > 0.0:
+		suffix = "  ·  +%.1f/day" % net_gain_per_day
+	return "%sInfra %s %d/50%s[/color]" % [bar_color, bar, infra, suffix]
+
+
+## Returns who is winning the daily infra tug-of-war: sabotage | repair | even.
+static func _daily_infra_duel_winner(province: Province, bd: Dictionary) -> String:
+	var chip := float(estimate_daily_infra_chip_damage(province))
+	var rate := float(bd.get("total", 0.0))
+	if chip <= 0.0:
+		return "repair"
+	if chip > rate:
+		return "sabotage"
+	if rate > chip:
+		return "repair"
+	return "even"
+
+
+static func _duel_winner_headline(winner: String, emphasize: bool = false) -> String:
+	match winner:
+		"sabotage":
+			if emphasize:
+				return "%s[b]⬇ SABOTAGE WINNING[/b][/color]" % COLOR_WARN
+			return "%s⬇ SABOTAGE WINNING[/color]" % COLOR_WARN
+		"repair":
+			if emphasize:
+				return "%s[b]⬆ REPAIR WINNING[/b][/color]" % COLOR_TECH
+			return "%s⬆ REPAIR WINNING[/color]" % COLOR_TECH
+		"even":
+			if emphasize:
+				return "%s[b]⚖ EVEN — net ~0[/b][/color]" % COLOR_TECH
+			return "%s⚖ EVEN — net ~0[/color]" % COLOR_TECH
+		_:
+			return ""
+
+
+## One-line repair boosts (engineers / stability / technology) when they matter.
+static func build_repair_contributions_glance_bbcode(bd: Dictionary) -> String:
+	if bd.is_empty():
+		return ""
+	var parts: PackedStringArray = []
+	var eng := float(bd.get("engineer_bonus", 0.0))
+	var eng_n := float(bd.get("engineer_brigades", 0.0))
+	var stab := float(bd.get("stability_bonus", 0.0))
+	var tech := float(bd.get("tech_focus_bonus", 0.0))
+	if eng > 0.001:
+		parts.append("engineers +%.2f (%.1f brg)" % [eng, eng_n])
+	if absf(stab) > 0.001:
+		parts.append("stability %+.2f" % stab)
+	if tech > 0.001:
+		parts.append("technology +%.2f" % tech)
+	if parts.is_empty():
+		return ""
+	var total := float(bd.get("total", 0.0))
+	return "%sRepair boosts: %s  →  +%.2f/day[/color]" % [COLOR_TECH, " · ".join(parts), total]
+
+
+static func build_repair_contributions_glance_for_province(province: Province, bd: Dictionary) -> String:
+	var glance := build_repair_contributions_glance_bbcode(bd)
+	if province == null or bd.is_empty():
+		return glance
+	if _pressure_status_label(province, bd) != "UNDER SABOTAGE":
+		return glance
+	if _daily_infra_duel_winner(province, bd) != "sabotage":
+		return glance
+	var eng := float(bd.get("engineer_brigades", 0.0))
+	if eng > 0.0:
+		return glance
+	var hint := "%sLosing infra — station engineer brigades to raise repair[/color]" % COLOR_WARN
+	if glance.is_empty():
+		return hint
+	return "%s\n%s" % [glance, hint]
+
+
+## Public helper for map visuals (duel winner on sabotaged provinces).
+static func daily_infra_duel_winner(province: Province, bd: Dictionary) -> String:
+	return _daily_infra_duel_winner(province, bd)
+
+
+## Visual chip vs repair strength (8 segments each) for at-a-glance duel read.
+static func build_sabotage_repair_duel_bbcode(
+	province: Province,
+	bd: Dictionary,
+	compact: bool = false,
+) -> String:
+	if province == null or bd.is_empty():
+		return ""
+	var status := _pressure_status_label(province, bd)
+	var rate := float(bd.get("total", 0.0))
+	if status == "RECOVERING":
+		var rep_bar := ""
+		for i in 8:
+			rep_bar += "█"
+		return (
+			"%sRepair winning: [color=#5ae6b8]%s[/color] +%.1f/day toward infra 50[/color]"
+			% [COLOR_TECH, rep_bar, rate]
 		)
-		if bonus > 0.001:
-			line += "\n%s+%.0f%% repair speed (national tech/focus)[/color]" % [
-				COLOR_TECH, bonus * 100.0,
+	if status != "UNDER SABOTAGE":
+		return ""
+	var chip := float(estimate_daily_infra_chip_damage(province))
+	if chip <= 0.0:
+		return ""
+	var winner := _daily_infra_duel_winner(province, bd)
+	var total := maxf(chip + rate, 0.01)
+	var sab_slots := clampi(int(round(8.0 * chip / total)), 1, 7)
+	var rep_slots := clampi(8 - sab_slots, 1, 7)
+	var sab_bar := ""
+	var rep_bar := ""
+	for i in 8:
+		sab_bar += "█" if i < sab_slots else "░"
+		rep_bar += "█" if i < rep_slots else "░"
+	var line_color := COLOR_WARN if winner == "sabotage" else COLOR_TECH
+	var label := (
+		"sabotage winning"
+		if winner == "sabotage"
+		else ("repair winning" if winner == "repair" else "stalemate")
+	)
+	var tug := ""
+	for i in 8:
+		if i < sab_slots:
+			tug += "[color=#ff6666]█[/color]"
+		else:
+			tug += "[color=#5ae6b8]█[/color]"
+	if compact:
+		return (
+			"%sDuel — %s: %s  (~%.0f chip vs +%.1f repair /day)[/color]"
+			% [line_color, label, tug, chip, rate]
+		)
+	return (
+		"%sDuel — %s: [color=#ff6666]%s[/color] chip │ [color=#5ae6b8]%s[/color] repair  "
+		+ "│ %s (~%.0f vs +%.1f /day)[/color]"
+		% [line_color, label, sab_bar, rep_bar, tug, chip, rate]
+	)
+
+
+static func build_repair_boost_highlight_bbcode(province: Province, bd: Dictionary) -> String:
+	if province == null:
+		return ""
+	return build_repair_contributions_glance_bbcode(bd)
+
+
+## Single tooltip chip: verdict + net (saves one token in multi-overlay rows).
+static func build_pressure_status_chip_row_bbcode(province: Province) -> String:
+	if province == null or not province_needs_infrastructure_ui(province):
+		return ""
+	var bd := _infra_repair_breakdown(province)
+	if bd.is_empty():
+		return ""
+	var status := _pressure_status_label(province, bd)
+	var rate := float(bd.get("total", 0.0))
+	match status:
+		"UNDER SABOTAGE":
+			var chip := estimate_daily_infra_chip_damage(province)
+			var winner := _daily_infra_duel_winner(province, bd)
+			if winner == "sabotage":
+				return "%s⬇ SAB WIN · −%d/d[/color]" % [
+					COLOR_WARN,
+					maxi(1, chip - int(floor(rate))),
+				]
+			if winner == "repair":
+				return "%s⬆ REP WIN · +%.1f/d[/color]" % [COLOR_TECH, rate]
+			if chip > 0:
+				return "%s⚖ EVEN · 0/d[/color]" % COLOR_TECH
+			return "%s⬇ SABOTAGE[/color]" % COLOR_WARN
+		"RECOVERING":
+			return "%s⬆ RECOVERING · +%.1f/d[/color]" % [COLOR_TECH, rate]
+		"SUPPLY PRESSURE":
+			var fill := depot_fill_ratio(province.id)
+			if fill >= 0.0:
+				return "%s⬇ SUPPLY · %d%%⛟[/color]" % [
+					COLOR_WARN if fill < 0.4 else COLOR_MUTED,
+					int(round(fill * 100.0)),
+				]
+			return "%s⬇ SUPPLY[/color]" % COLOR_WARN
+		"DEPOT SABOTAGED":
+			return "%s⬇ DEPOT[/color]" % COLOR_WARN
+		_:
+			return ""
+
+
+static func _pressure_outcome_plain(province: Province, bd: Dictionary) -> String:
+	if province == null or bd.is_empty():
+		return ""
+	var status := _pressure_status_label(province, bd)
+	var rate := float(bd.get("total", 0.0))
+	var chip := estimate_daily_infra_chip_damage(province)
+
+	match status:
+		"UNDER SABOTAGE":
+			var winner := _daily_infra_duel_winner(province, bd)
+			if winner == "sabotage":
+				return "Sabotage winning ~%d chip/day (net −%d)" % [
+					chip,
+					maxi(1, chip - int(floor(rate))),
+				]
+			if winner == "repair":
+				return "Repair winning +%.2f/day vs ~%d chip" % [rate, chip]
+			if chip > 0:
+				return "Even — ~%d chip vs +%.2f repair/day" % [chip, rate]
+			return "Infrastructure sabotage active"
+		"RECOVERING":
+			var eta := int(bd.get("eta_days_to_cap", -1))
+			if eta > 0 and eta < 500:
+				return "Recovering +%.2f/day · ~%dd to 50" % [rate, eta]
+			return "Recovering +%.2f/day" % rate
+		"SUPPLY PRESSURE":
+			return "Supply disruption draining depot"
+		"DEPOT SABOTAGED":
+			var depot_sab := float(bd.get("depot_sabotage_level", 0.0))
+			return "Depot penalty %.0f%%" % (depot_sab * 100.0)
+		_:
+			return ""
+
+
+static func build_infra_net_trend_bbcode(
+	province: Province,
+	bd: Dictionary,
+	status: String,
+) -> String:
+	if status != "UNDER SABOTAGE" or province == null or bd.is_empty():
+		return ""
+	var chip := estimate_daily_infra_chip_damage(province)
+	if chip <= 0:
+		return ""
+	var rate := float(bd.get("total", 0.0))
+	var winner := _daily_infra_duel_winner(province, bd)
+	if winner == "sabotage":
+		var loss := chip - int(floor(rate))
+		return (
+			"%sTrend: sabotage winning — net ~−%d infra/day · clear ◎ network[/color]"
+			% [COLOR_WARN, maxi(loss, 1)]
+		)
+	if winner == "repair":
+		return (
+			"%sTrend: repair winning — +%.2f/day beats ~%d chip/day[/color]"
+			% [COLOR_TECH, rate, chip]
+		)
+	return (
+		"%sTrend: even (~%d chip vs +%.2f repair /day)[/color]" % [COLOR_MUTED, chip, rate]
+	)
+
+
+static func build_pressure_trend_chip_bbcode(province: Province) -> String:
+	if province == null or not province_needs_infrastructure_ui(province):
+		return ""
+	var bd := _infra_repair_breakdown(province)
+	if bd.is_empty():
+		return ""
+	var status := _pressure_status_label(province, bd)
+	match status:
+		"UNDER SABOTAGE":
+			return _duel_winner_headline(_daily_infra_duel_winner(province, bd))
+		"RECOVERING":
+			return "%s⬆ RECOVERING[/color]" % COLOR_TECH
+		"SUPPLY PRESSURE":
+			return "%s⬇ SUPPLY[/color]" % COLOR_WARN
+		"DEPOT SABOTAGED":
+			return "%s⬇ DEPOT[/color]" % COLOR_WARN
+		_:
+			return ""
+
+
+## One-line scannable verdict for tooltips and the Sabotage & repair card.
+static func build_pressure_outcome_headline_bbcode(province: Province, bd: Dictionary) -> String:
+	if province == null or bd.is_empty():
+		return ""
+	var status := _pressure_status_label(province, bd)
+	var rate := float(bd.get("total", 0.0))
+	match status:
+		"UNDER SABOTAGE":
+			return _duel_winner_headline(_daily_infra_duel_winner(province, bd))
+		"RECOVERING":
+			return "%s⬆ RECOVERING[/color]" % COLOR_TECH
+		"SUPPLY PRESSURE":
+			return "%s⬇ SUPPLY PRESSURE[/color]" % COLOR_WARN
+		"DEPOT SABOTAGED":
+			return "%s⬇ DEPOT HIT[/color]" % COLOR_WARN
+		_:
+			return ""
+
+
+static func build_net_daily_infra_bbcode(province: Province, bd: Dictionary) -> String:
+	if province == null or bd.is_empty():
+		return ""
+	var status := _pressure_status_label(province, bd)
+	var rate := float(bd.get("total", 0.0))
+	match status:
+		"UNDER SABOTAGE":
+			var chip := estimate_daily_infra_chip_damage(province)
+			var winner := _daily_infra_duel_winner(province, bd)
+			if chip <= 0:
+				return "%sNET: repair +%.2f/day · no sabotage chips today[/color]" % [COLOR_TECH, rate]
+			if winner == "sabotage":
+				var loss := maxi(1, chip - int(floor(rate)))
+				return (
+					"%s[b]SABOTAGE WINNING[/b] — NET −%d infra/day  (~%d chip − +%.2f repair)[/color]"
+					% [COLOR_WARN, loss, chip, rate]
+				)
+			if winner == "repair":
+				return (
+					"%s[b]REPAIR WINNING[/b] — NET +%.2f/day beats ~%d chip/day[/color]"
+					% [COLOR_TECH, rate, chip]
+				)
+			return (
+				"%s[b]EVEN[/b] — NET ~0 (~%d chip vs +%.2f repair /day)[/color]" % [COLOR_MUTED, chip, rate]
+			)
+		"RECOVERING":
+			var eta := int(bd.get("eta_days_to_cap", -1))
+			if eta > 0 and eta < 500:
+				return "%sNET: repair +%.2f/day · ~%d days to infra 50[/color]" % [COLOR_TECH, rate, eta]
+			return "%sNET: repair +%.2f/day toward infra 50[/color]" % [COLOR_TECH, rate]
+		"SUPPLY PRESSURE":
+			var fill := depot_fill_ratio(province.id)
+			if fill >= 0.0:
+				return "%sNET: depot %d%% · daily agent drain on routes[/color]" % [
+					COLOR_WARN if fill < 0.4 else COLOR_MUTED,
+					int(round(fill * 100.0)),
+				]
+			return "%sNET: daily supply disruption on this province[/color]" % COLOR_WARN
+		"DEPOT SABOTAGED":
+			var depot_sab := float(bd.get("depot_sabotage_level", 0.0))
+			return "%sNET: depot throughput −%.0f%% · fades ~13%%/day[/color]" % [
+				COLOR_WARN if depot_sab > 0.2 else COLOR_MUTED,
+				depot_sab * 100.0,
 			]
-	return line
+		_:
+			return ""
+
+
+## Ultra-compact net rate for tooltip chip row (e.g. "−2/d", "+1.2/d").
+static func build_net_daily_compact_chip_bbcode(province: Province, bd: Dictionary) -> String:
+	if province == null or bd.is_empty():
+		return ""
+	var status := _pressure_status_label(province, bd)
+	var rate := float(bd.get("total", 0.0))
+	match status:
+		"UNDER SABOTAGE":
+			var chip := estimate_daily_infra_chip_damage(province)
+			var winner := _daily_infra_duel_winner(province, bd)
+			if winner == "sabotage":
+				return "%s−%d/d[/color]" % [COLOR_WARN, maxi(1, chip - int(floor(rate)))]
+			if winner == "repair":
+				return "%s+%.1f/d[/color]" % [COLOR_TECH, rate]
+			if chip > 0:
+				return "%s0/d[/color]" % COLOR_MUTED
+			return ""
+		"RECOVERING":
+			return "%s+%.1f/d[/color]" % [COLOR_TECH, rate]
+		"SUPPLY PRESSURE":
+			var fill := depot_fill_ratio(province.id)
+			if fill >= 0.0:
+				return "%s%d%%⛟[/color]" % [COLOR_WARN if fill < 0.4 else COLOR_MUTED, int(round(fill * 100.0))]
+			return "%s⛟ drain[/color]" % COLOR_WARN
+		"DEPOT SABOTAGED":
+			return "%s−depot[/color]" % COLOR_WARN
+		_:
+			return ""
+
+
+## Short net phrase for inline verdict (no "Net ≈" prefix).
+static func build_net_daily_short_bbcode(province: Province, bd: Dictionary) -> String:
+	var status := _pressure_status_label(province, bd)
+	var rate := float(bd.get("total", 0.0))
+	match status:
+		"UNDER SABOTAGE":
+			var chip_dmg := estimate_daily_infra_chip_damage(province)
+			var winner := _daily_infra_duel_winner(province, bd)
+			if winner == "sabotage":
+				return "%sNET −%d/day[/color]" % [COLOR_WARN, maxi(1, chip_dmg - int(floor(rate)))]
+			if winner == "repair":
+				return "%sNET +%.1f/day[/color]" % [COLOR_TECH, rate]
+			if chip_dmg > 0:
+				return "%sNET ~0/day[/color]" % COLOR_MUTED
+			return ""
+		"RECOVERING":
+			return "%sNET +%.1f/day[/color]" % [COLOR_TECH, rate]
+		"SUPPLY PRESSURE":
+			var fill := depot_fill_ratio(province.id)
+			if fill >= 0.0:
+				return "%sNET depot %d%%[/color]" % [
+					COLOR_WARN if fill < 0.4 else COLOR_MUTED,
+					int(round(fill * 100.0)),
+				]
+			return "%sNET supply drain[/color]" % COLOR_WARN
+		"DEPOT SABOTAGED":
+			return "%sNET depot penalty[/color]" % COLOR_WARN
+		_:
+			return ""
+
+
+## Single-line verdict for scannable tooltips (headline │ net); optional action line below.
+static func build_sabotage_verdict_inline_bbcode(
+	province: Province,
+	bd: Dictionary,
+	with_action: bool = false,
+) -> String:
+	var status := _pressure_status_label(province, bd)
+	var headline := ""
+	match status:
+		"UNDER SABOTAGE":
+			headline = _duel_winner_headline(_daily_infra_duel_winner(province, bd), true)
+		"RECOVERING":
+			headline = "%s[b]⬆ RECOVERING[/b][/color]" % COLOR_TECH
+		"SUPPLY PRESSURE":
+			headline = "%s[b]⬇ SUPPLY PRESSURE[/b][/color]" % COLOR_WARN
+		"DEPOT SABOTAGED":
+			headline = "%s[b]⬇ DEPOT HIT[/b][/color]" % COLOR_WARN
+		_:
+			headline = build_pressure_outcome_headline_bbcode(province, bd)
+	var net_short := build_net_daily_short_bbcode(province, bd)
+	var line := ""
+	if headline.is_empty():
+		line = net_short
+	elif net_short.is_empty():
+		line = headline
+	else:
+		line = "%s  │  %s" % [headline, net_short]
+	if line.is_empty():
+		return ""
+	if not with_action:
+		return line
+	var action := build_sabotage_action_hint_bbcode(province, bd)
+	if action.is_empty():
+		return line
+	return "%s\n%s" % [line, action]
+
+
+## Combined verdict + net for the Sabotage & repair card (inspector: headline + NET + action).
+static func build_sabotage_verdict_block_bbcode(province: Province, bd: Dictionary, inline: bool = false) -> String:
+	if inline:
+		return build_sabotage_verdict_inline_bbcode(province, bd, true)
+	var status := _pressure_status_label(province, bd)
+	var headline := ""
+	match status:
+		"UNDER SABOTAGE":
+			headline = _duel_winner_headline(_daily_infra_duel_winner(province, bd), true)
+		"RECOVERING":
+			headline = "%s[b]⬆ RECOVERING[/b][/color]" % COLOR_TECH
+		"SUPPLY PRESSURE":
+			headline = "%s[b]⬇ SUPPLY PRESSURE[/b][/color]" % COLOR_WARN
+		"DEPOT SABOTAGED":
+			headline = "%s[b]⬇ DEPOT HIT[/b][/color]" % COLOR_WARN
+		_:
+			headline = build_pressure_outcome_headline_bbcode(province, bd)
+	var net := build_net_daily_infra_bbcode(province, bd)
+	if headline.is_empty():
+		return net
+	if net.is_empty():
+		return headline
+	var parts: PackedStringArray = [headline, net]
+	var action := build_sabotage_action_hint_bbcode(province, bd)
+	if not action.is_empty():
+		parts.append(action)
+	return "\n".join(parts)
+
+
+static func build_sabotage_action_hint_bbcode(province: Province, bd: Dictionary) -> String:
+	if province == null or bd.is_empty():
+		return ""
+	var status := _pressure_status_label(province, bd)
+	match status:
+		"UNDER SABOTAGE":
+			match _daily_infra_duel_winner(province, bd):
+				"sabotage":
+					return "%s→ Clear enemy ◎ network — losing infra daily[/color]" % COLOR_WARN
+				"repair":
+					return (
+						"%s→ Repair winning — keep engineers · clear ◎ to finish recovery[/color]"
+						% COLOR_TECH
+					)
+				_:
+					return "%s→ Stalemate — clear ◎ network or add repair to pull ahead[/color]" % COLOR_MUTED
+		"SUPPLY PRESSURE":
+			return "%s→ Break ◎ network · refill depot via routes & local production[/color]" % COLOR_MUTED
+		"RECOVERING":
+			return "%s→ Keep engineers on station · stability & tech raise repair rate[/color]" % COLOR_MUTED
+		"DEPOT SABOTAGED":
+			return "%s→ Counter-intel fades depot penalty · repair pass heals infra[/color]" % COLOR_MUTED
+		_:
+			return ""
+
+
+static func build_pressure_outcome_bbcode(province: Province, bd: Dictionary) -> String:
+	var headline := build_pressure_outcome_headline_bbcode(province, bd)
+	var net := build_net_daily_infra_bbcode(province, bd)
+	if headline.is_empty():
+		return ""
+	if net.is_empty():
+		return headline
+	return "%s · %s" % [headline, net]
+
+
+static func _pressure_status_label(province: Province, bd: Dictionary) -> String:
+	if bool(bd.get("under_infra_sabotage", false)):
+		return "UNDER SABOTAGE"
+	if province != null and agent_pressure_focus_kind(province) == "disrupt":
+		return "SUPPLY PRESSURE"
+	var depot_sab := float(bd.get("depot_sabotage_level", 0.0))
+	if depot_sab > 0.12:
+		return "DEPOT SABOTAGED"
+	var infra := int(bd.get("infrastructure", 0))
+	if infra < 50:
+		return "RECOVERING"
+	return "STABLE"
+
+
+static func build_infra_repair_breakdown_bbcode(province: Province, detailed: bool = false) -> String:
+	var bd := _infra_repair_breakdown(province)
+	if bd.is_empty():
+		return ""
+	var lines: PackedStringArray = []
+	var base := float(bd.get("base", 0.0))
+	var infra_bonus := float(bd.get("infra_bonus", 0.0))
+	var stab := float(bd.get("stability_bonus", 0.0))
+	var tech := float(bd.get("tech_focus_bonus", 0.0))
+	var eng_bonus := float(bd.get("engineer_bonus", 0.0))
+	var eng := float(bd.get("engineer_brigades", 0.0))
+
+	if detailed:
+		lines.append(
+			"%sRepair rate: base %.2f · pride +%.2f · stability %+.2f · tech +%.2f · engineers +%.2f[/color]"
+			% [COLOR_MUTED, base, infra_bonus, stab, tech, eng_bonus]
+		)
+	else:
+		var parts: PackedStringArray = ["base %.2f" % base, "pride +%.2f" % infra_bonus]
+		if absf(stab) > 0.001:
+			parts.append("stability %+.2f" % stab)
+		if tech > 0.001:
+			parts.append("technology +%.2f" % tech)
+		if eng > 0.0:
+			parts.append("engineers +%.2f (%.1f brg)" % [eng_bonus, eng])
+		var total := float(bd.get("total", 0.0))
+		lines.append(
+			"%sContributions: %s  →  +%.2f/day total[/color]"
+			% [COLOR_MUTED, " · ".join(parts), total]
+		)
+	if eng > 0.0 and detailed:
+		lines.append("%s  Engineers on station: %.1f brigade-equiv[/color]" % [COLOR_TECH, eng])
+	elif eng > 0.0 and not detailed:
+		lines.append("%s  %.1f engineer brigade-equiv on station[/color]" % [COLOR_TECH, eng])
+	return "\n".join(lines)
+
+
+static func build_province_infrastructure_card_bbcode(
+	province: Province,
+	compact: bool = true,
+) -> String:
+	if not province_needs_infrastructure_ui(province):
+		return ""
+	var bd := _infra_repair_breakdown(province)
+	if bd.is_empty():
+		return ""
+	var rate := float(bd.get("total", 0.0))
+	var infra := int(bd.get("infrastructure", province.infrastructure))
+	var status := _pressure_status_label(province, bd)
+	var accent := COLOR_MUTED
+	if status in ["UNDER SABOTAGE", "SUPPLY PRESSURE", "DEPOT SABOTAGED"] or infra <= 15:
+		accent = COLOR_WARN
+	elif status == "RECOVERING":
+		accent = COLOR_TECH
+
+	var lines: PackedStringArray = []
+	var status_icon := "⛟" if status == "SUPPLY PRESSURE" else "⚙"
+	var verdict := build_sabotage_verdict_block_bbcode(province, bd, compact)
+	lines.append("%s── %s Sabotage & repair ──[/color]" % [COLOR_HEADER, status_icon])
+	if not verdict.is_empty():
+		lines.append(verdict)
+	var duel := build_sabotage_repair_duel_bbcode(province, bd, compact)
+	if not duel.is_empty():
+		lines.append(duel)
+	var eng_pre := float(bd.get("engineer_brigades", 0.0))
+	var stab_pre := float(bd.get("stability_bonus", 0.0))
+	var tech_pre := float(bd.get("tech_focus_bonus", 0.0))
+	var has_repair_contrib_pre := eng_pre > 0.0 or absf(stab_pre) > 0.001 or tech_pre > 0.001
+	if compact and (has_repair_contrib_pre or status == "UNDER SABOTAGE"):
+		var glance_pre := build_repair_contributions_glance_for_province(province, bd)
+		if not glance_pre.is_empty():
+			lines.append(glance_pre)
+	if not compact:
+		lines.append("%s%s %s[/color]" % [accent, status_icon, status.replace("_", " ")])
+		var trend := build_infra_net_trend_bbcode(province, bd, status)
+		if not trend.is_empty():
+			lines.append(trend)
+
+	if status == "SUPPLY PRESSURE":
+		var fill := depot_fill_ratio(province.id)
+		if fill >= 0.0:
+			lines.append(
+				"%s⛟ Daily supply disruption · depot stock %d%%[/color]"
+				% [COLOR_WARN if fill < 0.4 else COLOR_MUTED, int(round(fill * 100.0))]
+			)
+		else:
+			lines.append("%s⛟ Daily supply disruption on this province[/color]" % COLOR_WARN)
+		var tag := country_tag_for_province(province)
+		if _province_matches_country(province, tag):
+			var radio_hint := MapTechnologyContext.build_support_recovery_hint_bbcode(tag)
+			if not radio_hint.is_empty():
+				lines.append(radio_hint)
+
+	if infra < 50 or bool(bd.get("under_infra_sabotage", false)):
+		var winner := _daily_infra_duel_winner(province, bd) if status == "UNDER SABOTAGE" else ""
+		var sabotage_winning := winner == "sabotage"
+		var repair_winning := winner == "repair"
+		var net_loss := 0
+		var net_gain := 0.0
+		if sabotage_winning:
+			var chip_d := estimate_daily_infra_chip_damage(province)
+			net_loss = maxi(1, chip_d - int(floor(rate)))
+		elif repair_winning:
+			net_gain = rate
+		lines.append(
+			build_infra_progress_meter_bbcode(
+				infra, 10, sabotage_winning, net_loss, repair_winning, net_gain,
+			)
+		)
+		if not compact:
+			lines.append(
+				"%sInfra %d / 50  ·  Repair rate +%.2f/day[/color]" % [accent, infra, rate]
+			)
+	elif not compact:
+		lines.append("%sInfra %d / 50 (undamaged)[/color]" % [COLOR_MUTED, infra])
+
+	var depot_sab := float(bd.get("depot_sabotage_level", 0.0))
+	if depot_sab > 0.05 and status != "SUPPLY PRESSURE":
+		lines.append(
+			"%s⛟ Depot throughput sabotage %.0f%% (fades ~13%/day)[/color]"
+			% [COLOR_WARN if depot_sab > 0.2 else COLOR_MUTED, depot_sab * 100.0]
+		)
+	elif depot_sab > 0.05 and status == "SUPPLY PRESSURE":
+		lines.append(
+			"%s⛟ Depot throughput penalty %.0f%% (fades ~13%/day)[/color]"
+			% [COLOR_WARN if depot_sab > 0.2 else COLOR_MUTED, depot_sab * 100.0]
+		)
+
+	var eta := int(bd.get("eta_days_to_cap", -1))
+	if eta > 0 and eta < 500 and infra < 50 and status != "RECOVERING":
+		var eta_txt := "~%d days to reach infra 50 at current repair" % eta
+		if bool(bd.get("under_infra_sabotage", false)):
+			eta_txt += " (if sabotage stops)"
+		lines.append("%s%s[/color]" % [COLOR_MUTED, eta_txt])
+
+	var source := build_infra_sabotage_source_bbcode(province)
+	if source.is_empty():
+		source = build_supply_disruption_source_bbcode(province)
+	if not source.is_empty():
+		lines.append(source)
+
+	var eng := float(bd.get("engineer_brigades", 0.0))
+	var stab := float(bd.get("stability_bonus", 0.0))
+	var tech := float(bd.get("tech_focus_bonus", 0.0))
+	var has_repair_contrib := eng > 0.0 or absf(stab) > 0.001 or tech > 0.001
+	var show_breakdown := not compact and (
+		infra < 50
+		or bool(bd.get("under_infra_sabotage", false))
+		or has_repair_contrib
+	)
+	var breakdown := build_infra_repair_breakdown_bbcode(province, true)
+	if not breakdown.is_empty() and show_breakdown:
+		lines.append(breakdown)
+	elif not compact and (has_repair_contrib or status == "UNDER SABOTAGE"):
+		var glance := build_repair_contributions_glance_for_province(province, bd)
+		if not glance.is_empty():
+			lines.append(glance)
+
+	if not compact:
+		lines.append(
+			"%sCounter-intel clears depot sabotage; infra heals via daily repair pass.[/color]"
+			% COLOR_MUTED
+		)
+	return "\n".join(lines)
+
+
+static func build_province_infra_repair_bbcode(province: Province) -> String:
+	return build_province_infrastructure_card_bbcode(province, true)
+
+
+static func province_needs_infrastructure_ui(province: Province) -> bool:
+	if province == null:
+		return false
+	if agent_applies_daily_pressure(province):
+		return true
+	if province.infrastructure < 50:
+		return true
+	if typeof(MapManager) != TYPE_NIL:
+		var bd := MapManager.get_infrastructure_repair_breakdown(province.id)
+		if float(bd.get("depot_sabotage_level", 0.0)) > 0.05:
+			return true
+	return false
+
+
+static func build_province_infrastructure_section_bbcode(province: Province) -> String:
+	return build_province_infrastructure_card_bbcode(province, false)
 
 
 static func build_supply_pressure_recovery_bbcode(province: Province) -> String:
@@ -1193,12 +2186,6 @@ static func build_province_pressure_recovery_bbcode(province: Province) -> Strin
 		return ""
 	var parts: PackedStringArray = []
 	var kind := agent_pressure_focus_kind(province)
-	if kind == "sabotage" or (
-		agent_applies_daily_pressure(province) and province.infrastructure < 50
-	):
-		var infra_line := build_province_infra_repair_bbcode(province)
-		if not infra_line.is_empty():
-			parts.append(infra_line)
 	if kind == "disrupt":
 		var supply_line := build_supply_pressure_recovery_bbcode(province)
 		if not supply_line.is_empty():
@@ -1220,9 +2207,14 @@ static func build_province_pressure_recovery_compact(province: Province) -> Stri
 		if fill >= 0.0:
 			bits.append("depot %d%%" % int(round(fill * 100.0)))
 		bits.append("⛟ drain")
-	if kind == "sabotage" or province.infrastructure < 50:
-		var rate := MapManager.get_infrastructure_repair_rate(province.id)
+	if kind == "sabotage":
 		bits.append("infra %d" % province.infrastructure)
+		var rate := MapManager.get_infrastructure_repair_rate(province.id)
+		if rate > 0.0:
+			bits.append("repair +%.2f/d" % rate)
+	elif province.infrastructure < 50:
+		bits.append("infra %d" % province.infrastructure)
+		var rate := MapManager.get_infrastructure_repair_rate(province.id)
 		if rate > 0.0:
 			bits.append("+%.2f/d" % rate)
 	return " · ".join(bits)
@@ -1240,7 +2232,7 @@ static func build_agent_pressure_headline_bbcode(province: Province) -> String:
 			return ""
 
 
-## Organized block for tooltips / inspector (headline + today + recovery).
+## Organized block for tooltips / inspector (TODAY tick + recovery; no duplicate ACTIVE line).
 static func build_province_pressure_section_bbcode(
 	province: Province,
 	include_headline: bool = true,
@@ -1255,15 +2247,49 @@ static func build_province_pressure_section_bbcode(
 		var head := build_agent_pressure_headline_bbcode(province)
 		if not head.is_empty():
 			lines.append(head)
-	var activity := build_agent_daily_activity_bbcode(province, not include_headline)
+	# When Sabotage & repair card is shown, skip redundant "ACTIVE — daily …" line.
+	var activity := build_agent_daily_activity_bbcode(province, include_headline, not include_headline)
 	if not activity.is_empty():
+		if not include_headline and not pressure_agent_section_redundant_with_card(province):
+			lines.append("%s── Agent activity ──[/color]" % COLOR_HEADER)
 		lines.append(activity)
-	var recovery := build_province_pressure_recovery_bbcode(province)
-	if not recovery.is_empty():
-		lines.append(recovery)
+	if include_headline:
+		var recovery := build_province_pressure_recovery_bbcode(province)
+		if not recovery.is_empty():
+			lines.append(recovery)
 	if lines.is_empty():
 		return ""
 	return "\n".join(lines)
+
+
+## Skip agent activity block when the Sabotage & repair card already covers today's tick.
+static func pressure_agent_section_redundant_with_card(province: Province) -> bool:
+	if province == null or not province_needs_infrastructure_ui(province):
+		return false
+	var activity := build_agent_daily_activity_bbcode(province, false, true)
+	if activity.is_empty():
+		return true
+	var compact_lines := activity.strip_edges().split("\n")
+	if compact_lines.is_empty():
+		return true
+	var only_redundant := true
+	for raw_line in compact_lines:
+		var line := str(raw_line).to_lower()
+		var redundant := (
+			("today" in line and (
+				"infrastructure" in line
+				or "supply disruption" in line
+				or "sabotage" in line
+				or "infra pressure" in line
+			))
+			or ("today's effect" in line and "infrastructure chipped" in line)
+			or ("today's effect" in line and "auto-repair" in line)
+			or ("active —" in line and "daily" in line)
+		)
+		if not redundant:
+			only_redundant = false
+			break
+	return only_redundant
 
 
 static func build_province_radio_overlay_line_bbcode(province: Province, country_tag: String) -> String:
@@ -1408,7 +2434,11 @@ static func build_agent_daily_effect_detail_bbcode(province: Province) -> String
 	return ""
 
 
-static func build_agent_daily_activity_bbcode(province: Province, include_ongoing: bool = true) -> String:
+static func build_agent_daily_activity_bbcode(
+	province: Province,
+	include_ongoing: bool = true,
+	skip_redundant_effect: bool = false,
+) -> String:
 	var net := get_active_agent_network(province)
 	if net == null:
 		return ""
@@ -1421,9 +2451,10 @@ static func build_agent_daily_activity_bbcode(province: Province, include_ongoin
 	if not note.is_empty():
 		var accent := COLOR_WARN if note in ["disrupt", "sabotage", "detected", "infra_pressure"] else COLOR_NATIONAL
 		lines.append("%s◎ TODAY — %s[/color]" % [accent, _agent_daily_note_label(note)])
-	var detail := build_agent_daily_effect_detail_bbcode(province)
-	if not detail.is_empty():
-		lines.append(detail)
+	if not skip_redundant_effect:
+		var detail := build_agent_daily_effect_detail_bbcode(province)
+		if not detail.is_empty():
+			lines.append(detail)
 	if lines.is_empty():
 		return ""
 	return "\n".join(lines)
@@ -1574,6 +2605,16 @@ static func build_province_glance_bbcode(
 	var agent_line := build_agent_glance_bbcode(province)
 	if not agent_line.is_empty() and not (omit_contested_agent and dual_active):
 		parts.append(agent_line)
+	if province_needs_infrastructure_ui(province) and parts.size() < max_parts:
+		var bd := _infra_repair_breakdown(province)
+		if bool(bd.get("under_infra_sabotage", false)):
+			parts.append("%s⚙ Under sabotage[/color]" % COLOR_WARN)
+		elif agent_pressure_focus_kind(province) == "disrupt":
+			parts.append("%s⛟ Supply pressure[/color]" % COLOR_WARN)
+		elif int(bd.get("infrastructure", province.infrastructure)) < 50:
+			var r := float(bd.get("total", 0.0))
+			if r > 0.0:
+				parts.append("%s⚙ Recovering +%.2f/d[/color]" % [COLOR_TECH, r])
 	var tag := country_tag_for_province(province)
 	if not tag.is_empty() and typeof(NationalSpiritManager) != TYPE_NIL:
 		var spirit_n := _national_spirit_lines(tag).size()
@@ -1751,16 +2792,38 @@ static func format_report_tooltip(report: Dictionary) -> String:
 	if not tags.is_empty():
 		title += " " + tags
 	lines.append(title)
-	var pressure_sec := build_province_pressure_section_bbcode(p, true)
+	var infra_card := build_province_infrastructure_card_bbcode(p, true)
+	var pressure_sec := ""
+	if not pressure_agent_section_redundant_with_card(p):
+		pressure_sec = build_province_pressure_section_bbcode(p, infra_card.is_empty())
+	if not infra_card.is_empty():
+		lines.append(infra_card)
 	if not pressure_sec.is_empty():
+		if not infra_card.is_empty():
+			lines.append("")
 		lines.append(pressure_sec)
+	var tag_early := str(report.get("country_tag", ""))
+	if _province_matches_country(p, tag_early) and MapTechnologyContext.has_support_radio_bonuses(tag_early):
+		var radio_line := build_province_radio_overlay_line_bbcode(p, tag_early)
+		var prov_tech := MapTechnologyContext.build_province_support_benefit_bbcode(p, tag_early)
+		var show_prov_tech := (
+			not prov_tech.is_empty()
+			and (agent_applies_daily_pressure(p) or bool(report.get("supply_overlay_active", false)))
+			and prov_tech != radio_line
+		)
+		if show_prov_tech:
+			if not infra_card.is_empty() or not pressure_sec.is_empty():
+				lines.append("")
+			lines.append(prov_tech)
 	var banner := build_tooltip_context_banner(report)
 	if not banner.is_empty():
 		lines.append(banner)
 	lines.append(build_control_glance_bbcode(p))
-	var dual := build_dual_situation_glance_bbcode(p)
-	if not dual.is_empty():
-		lines.append(dual)
+	var dual := ""
+	if infra_card.is_empty():
+		dual = build_dual_situation_glance_bbcode(p)
+		if not dual.is_empty():
+			lines.append(dual)
 	var tag := str(report.get("country_tag", ""))
 	var radio_overlay := build_province_radio_overlay_line_bbcode(p, tag)
 	var nat_line := build_national_situation_one_liner(p, pe)
@@ -1774,7 +2837,8 @@ static func format_report_tooltip(report: Dictionary) -> String:
 	)
 	if not radio_overlay.is_empty() and omit_support_in_glance:
 		lines.append(radio_overlay)
-	var glance := build_province_glance_bbcode(p, pe, 4, not dual.is_empty(), omit_support_in_glance)
+	var skip_dual_glance := not infra_card.is_empty()
+	var glance := build_province_glance_bbcode(p, pe, 4, skip_dual_glance, omit_support_in_glance)
 	if not glance.is_empty():
 		lines.append(glance)
 	lines.append(
@@ -2087,23 +3151,23 @@ static func build_supply_logistics_one_liner(pe: ProvinceEffects, country_tag: S
 static func build_national_situation_one_liner(province: Province, pe: ProvinceEffects = null) -> String:
 	if province == null:
 		return ""
-	var badge := build_national_sources_badge(province)
-	var impact := ""
-	if pe != null:
-		impact = build_national_impact_compact(pe, 2)
 	var tag := country_tag_for_province(province)
 	var support := ""
 	if _province_matches_country(province, tag):
 		support = MapTechnologyContext.build_national_support_line_bbcode(tag)
+	var badge := build_national_sources_badge(province)
+	var impact := ""
+	if pe != null:
+		impact = build_national_impact_compact(pe, 2)
 	if badge.is_empty() and impact.is_empty() and support.is_empty():
 		return ""
 	var parts: PackedStringArray = []
+	if not support.is_empty():
+		parts.append(support)
 	if not badge.is_empty():
 		parts.append(badge)
 	if not impact.is_empty():
 		parts.append(impact)
-	if not support.is_empty():
-		parts.append(support)
 	return "%sNational: %s[/color]" % [COLOR_NATIONAL, " · ".join(parts)]
 
 

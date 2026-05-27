@@ -8,8 +8,35 @@ const NAVAL_CATEGORIES: Array[String] = [
 	"battleship",
 	"carrier",
 	"submarine",
+	"frigate",
+	"corvette",
+	"patrol",
+	"gunboat",
+	"lpd",
+	"lhd",
+	"lph",
+	"lha",
+	"amphib",
+	"auxiliary",
 	"ship",
 	"naval",
+]
+
+const NAVAL_VISUAL_ARCHETYPES: Array[String] = [
+	"destroyer",
+	"frigate",
+	"cruiser",
+	"battleship",
+	"carrier",
+	"submarine",
+	"patrol",
+	"gunboat",
+	"transport",
+	"lpd",
+	"lhd",
+	"lph",
+	"lha",
+	"amphib",
 ]
 
 
@@ -19,16 +46,44 @@ static func is_naval_category(category: String) -> bool:
 		return false
 	if c in NAVAL_CATEGORIES:
 		return true
-	return c.contains("ship")
+	return c.contains("ship") or c.contains("naval")
+
+
+static func is_naval_template(template: UnitTemplate) -> bool:
+	if template == null:
+		return false
+	var bt := template.base_type.strip_edges().to_lower()
+	if bt in ["naval", "submarine"]:
+		return true
+	var arch := template.visual_archetype.strip_edges().to_lower()
+	if not arch.is_empty():
+		for token in NAVAL_VISUAL_ARCHETYPES:
+			if arch == token or arch.contains(token):
+				return true
+		if arch.contains("carrier") or arch.contains("cruiser") or arch.contains("destroyer"):
+			return true
+	var id_lower := template.id.strip_edges().to_lower()
+	if (
+		"_dd" in id_lower
+		or "_bb" in id_lower
+		or "_cv" in id_lower
+		or "_ca" in id_lower
+		or "frigate" in id_lower
+		or "destroyer" in id_lower
+		or "battleship" in id_lower
+		or "carrier" in id_lower
+		or "submarine" in id_lower
+		or "cruiser" in id_lower
+	):
+		return true
+	return is_naval_category(ProductionCostCalculator.infer_category(template))
 
 
 static func is_naval_design(design_id: String) -> bool:
 	if design_id.is_empty() or GameData.design_data == null:
 		return false
 	var template := GameData.design_data.get_template(design_id)
-	if template == null:
-		return false
-	return is_naval_category(ProductionCostCalculator.infer_category(template))
+	return is_naval_template(template)
 
 
 static func factory_can_build_naval(factory: Factory) -> bool:

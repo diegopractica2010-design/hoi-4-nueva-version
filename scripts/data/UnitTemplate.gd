@@ -21,6 +21,24 @@ extends Resource
 @export var production_cost: float = 0.0
 @export var production_category: String = ""
 @export var production_era: String = ""
+## Calendar year design enters service (0 = infer from era / id).
+@export var unlock_year: int = 0
+## Lifecycle grouping for obsolescence (e.g. mbt, fighter); defaults to inferred production category.
+@export var lifecycle_category: String = ""
+@export var lifecycle_role: String = ""
+## UI domain filter: land, naval, air, support (empty = infer).
+@export var design_domain: String = ""
+
+## Nation-specific design support (Phase 1 for Map Build Eligibility + future trade/capture).
+## Empty or ["all"] = available to every country by default (exportable baseline).
+## Otherwise, list of country_tags that own this design natively.
+@export var owner_countries: Array[String] = []
+
+## Explicitly marked as exportable / tradeable even if not natively owned.
+## Future trade/capture mechanics will add designs to a country's acquired list.
+@export var exportable: bool = false
+## ISO-style country tag (GER, USA). Empty = infer from design_family / id, or universal generic.
+@export var design_nation: String = ""
 @export var production_complexity: float = 1.0
 @export var daily_resource_cost: Dictionary = {}
 ## Equipment template id -> count required to field this design at full strength.
@@ -94,6 +112,20 @@ static func from_dict(data: Dictionary) -> UnitTemplate:
 	tpl.production_cost = float(data.get("production_cost", 0.0))
 	tpl.production_category = str(data.get("production_category", data.get("category", "")))
 	tpl.production_era = str(data.get("era", data.get("production_era", "")))
+	tpl.unlock_year = int(data.get("unlock_year", 0))
+	tpl.lifecycle_category = str(data.get("lifecycle_category", data.get("category", "")))
+	tpl.lifecycle_role = str(data.get("lifecycle_role", data.get("role", "")))
+	tpl.design_domain = str(data.get("design_domain", data.get("domain", "")))
+	tpl.design_nation = str(data.get("design_nation", data.get("nation", ""))).strip_edges().to_upper()
+
+	# Nation-specific design support (new)
+	tpl.owner_countries = _string_array(data.get("owner_countries", data.get("nations", [])))
+	tpl.exportable = bool(data.get("exportable", false))
+	if tpl.owner_countries.is_empty() and data.has("design_nation"):
+		# Back-compat: single nation field becomes owner list
+		var single = str(data.get("design_nation", "")).strip_edges().to_upper()
+		if not single.is_empty() and single != "ALL":
+			tpl.owner_countries = [single]
 	tpl.production_complexity = float(data.get("production_complexity", data.get("complexity", 1.0)))
 	tpl.daily_resource_cost = _dict_from_variant(data.get("daily_resource_cost", {}))
 	tpl.required_equipment = _dict_from_variant(data.get("required_equipment", {}))

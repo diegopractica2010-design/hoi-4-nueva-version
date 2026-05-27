@@ -89,8 +89,8 @@ func _connect_buttons() -> void:
 	agents_button.pressed.connect(_on_agents_pressed)
 	map_button.pressed.connect(_on_map_pressed)
 
-	save_button.pressed.connect(_on_save_pressed)
-	load_button.pressed.connect(_on_load_pressed)
+	save_button.pressed.connect(_on_menu_pressed)  # Open main menu for immersion (Save/Load now behind menu)
+	load_button.pressed.connect(_on_menu_pressed)
 	settings_button.pressed.connect(_on_settings_pressed)
 	help_button.pressed.connect(_on_help_pressed)
 
@@ -155,6 +155,40 @@ func _sync_time_manager_controls() -> void:
 		return
 	TimeManager.set_paused(is_paused)
 	TimeManager.set_time_scale(float(current_speed) if not is_paused else 0.0)
+
+## Auto-pause/resume helper for main menu (priority 1).
+## Pauses the game (and TimeManager) when menu opens, resumes on close.
+## Non-intrusive: preserves previous speed/pause state where possible.
+func _pause_for_menu(pause: bool) -> void:
+	if typeof(TimeManager) == TYPE_NIL:
+		# Fallback to direct Engine control
+		Engine.time_scale = 0.0 if pause else float(current_speed)
+		return
+
+	if pause:
+		# Store previous state if not already paused by menu
+		if not has_meta("was_paused_before_menu"):
+			set_meta("was_paused_before_menu", is_paused)
+			set_meta("speed_before_menu", current_speed)
+		is_paused = true
+		Engine.time_scale = 0.0
+		TimeManager.set_paused(true)
+		TimeManager.set_time_scale(0.0)
+	else:
+		# Restore previous state
+		var was_paused = get_meta("was_paused_before_menu", false)
+		var prev_speed = get_meta("speed_before_menu", 1)
+		is_paused = was_paused
+		current_speed = prev_speed
+		Engine.time_scale = 0.0 if is_paused else float(current_speed)
+		TimeManager.set_paused(is_paused)
+		TimeManager.set_time_scale(float(current_speed) if not is_paused else 0.0)
+		# Clean meta
+		remove_meta("was_paused_before_menu")
+		remove_meta("speed_before_menu")
+
+	_update_speed_buttons()
+	_update_date_time()
 
 
 func _update_date_time() -> void:
@@ -274,31 +308,132 @@ func _toggle_screen(screen_name: String, scene_path: String, configure: Callable
 
 
 func _on_save_pressed() -> void:
-	if typeof(SaveLoadManager) != TYPE_NIL:
-		# Quick save + open manager for full control (list, delete, load other slots)
-		SaveLoadManager.quicksave()
-		_show_save_manager_popup()
-	else:
-		print("SaveLoadManager not available")
-
+	# Deprecated direct path - now routes through main menu for immersion
+	_on_menu_pressed()
 
 func _on_load_pressed() -> void:
-	if typeof(SaveLoadManager) != TYPE_NIL:
-		var ok := SaveLoadManager.load_game("quicksave")
-		print("Load Game ← quicksave.json: %s" % ("OK" if ok else "FAILED"))
-		# Force a UI refresh after load (date, resources, etc.)
-		_update_date_time()
-		_update_resources()
-	else:
-		print("SaveLoadManager not available")
+	# Deprecated direct path - now routes through main menu for immersion
+	_on_menu_pressed()
+
+func _on_menu_pressed() -> void:
+	# Clean architecture: instance the dedicated MainMenu scene (priority 1).
+	# The scene handles its own auto-pause, Save Manager, and emits/responds to signals.
+	var existing := get_tree().root.get_node_or_null("MainMenu")
+	if existing != null:
+		if existing.has_method("_on_close_requested"):
+			existing._on_close_requested()
+		else:
+			existing.queue_free()
+			_pause_for_menu(false)
+		return
+
+	var packed := load("res://scenes/ui/MainMenu.tscn")
+	if packed == null:
+		# Fallback to the old code-driven popup during development
+		_show_main_menu_popup_fallback()
+		return
+
+	var menu := packed.instantiate()
+	menu.name = "MainMenu"
+	if menu.has_signal("menu_closed"):
+		menu.menu_closed.connect(func() -> void:
+			_sync_pause_from_time_manager()
+			_update_speed_buttons()
+		)
+	get_tree().root.add_child(menu)
 
 
 func _on_settings_pressed() -> void:
-	print("Open Settings (TODO)")
+	_on_menu_pressed()
 
 
 func _on_help_pressed() -> void:
 	print("Open Help (TODO)")
+
+## === Main Menu Architecture (priority 1) ===
+## TopInfoBar is the trigger:
+##   - Emits `menu_option_selected(option: String)` (for future external MainMenu scenes).
+##   - On button press / ESC, instances res://scenes/ui/MainMenu.tscn (or falls back to legacy popup).
+## The MainMenu scene (MainMenu.gd + .tscn) is responsible for:
+##   - Auto-pause on open / resume on close (self-contained via TimeManager).
+##   - All menu options + integrated Save Manager view.
+## This keeps TopInfoBar lightweight and the menu fully self-contained/extensible.
+## See MainMenu.gd for the full implementation and SaveLoadManager.gd for the APIs it uses.
+
+signal menu_option_selected(option: String)  # e.g. "save", "load", "return_to_main", "exit"
+
+func _show_main_menu_popup_fallback() -> void:
+	# Legacy code-driven popup (used as fallback until MainMenu.tscn is created/assigned).
+	# In a full implementation this would be removed in favor of the scene.
+	if typeof(SaveLoadManager) == TYPE_NIL:
+		print("SaveLoadManager not ready")
+		return
+
+	var existing := get_tree().root.get_node_or_null("MainMenuPopup")
+	if existing != null:
+		existing.queue_free()
+
+	_pause_for_menu(true)
+
+	var panel := Panel.new()
+	panel.name = "MainMenuPopup"
+	panel.size = Vector2(620, 480)
+	panel.position = Vector2( (get_viewport().get_visible_rect().size.x - 620) / 2 , 80)
+	panel.z_index = 200
+
+	if has_node("/root/RetrowaveTheme"):
+		RetrowaveTheme.style_popup_root(panel)
+
+	var main_vbox := VBoxContainer.new()
+	main_vbox.size = panel.size - Vector2(20, 20)
+	main_vbox.position = Vector2(10, 10)
+	panel.add_child(main_vbox)
+
+	var title := Label.new()
+	title.text = "Epochs of Ascendancy (Fallback Menu)"
+	main_vbox.add_child(title)
+
+	# Minimal options for fallback
+	var options := ["Save Game", "Load Game", "Return to Main Menu", "Exit to Desktop"]
+	for opt in options:
+		var b := Button.new()
+		b.text = opt
+		b.pressed.connect(func():
+			menu_option_selected.emit(opt.to_lower().replace(" ", "_"))
+			panel.queue_free()
+			_pause_for_menu(false)
+		)
+		main_vbox.add_child(b)
+
+	get_tree().root.add_child(panel)
+	print("Fallback main menu opened (auto-paused)")
+
+func _add_menu_button(parent: VBoxContainer, label: String, option: String) -> void:
+	var btn := Button.new()
+	btn.text = label
+	btn.pressed.connect(func():
+		menu_option_selected.emit(option)
+		# Default handlers for now (can be overridden by main menu scene later)
+		match option:
+			"save":
+				SaveLoadManager.quicksave()
+				_show_save_manager_popup()  # reuse existing
+			"load":
+				_on_load_pressed()
+			"return_to_main":
+				print("TODO: Return to Main Menu (emit signal for scene change)")
+			"exit":
+				get_tree().quit()
+			"help":
+				_on_help_pressed()
+			_:
+				print("Menu option:", option)
+		# Close the menu after action (except save manager which manages itself)
+		if option != "save":
+			if parent.get_parent() is Panel:
+				parent.get_parent().queue_free()
+	)
+	parent.add_child(btn)
 
 
 ## Basic in-code Save Manager popup (F6 or via Save button enhancement).
@@ -400,3 +535,69 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_F6:
 			_show_save_manager_popup()
 			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_ESCAPE:
+			_show_main_menu_popup_fallback()
+			get_viewport().set_input_as_handled()
+
+## Helper to populate the Save Manager list inside the main menu with rich metadata.
+func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
+	parent.add_child(Control.new())  # spacer
+	var saves := SaveLoadManager.list_saves()
+	if saves.is_empty():
+		var l := Label.new()
+		l.text = "No saves yet. Use the menu to create one."
+		parent.add_child(l)
+		return
+
+	for s in saves:
+		var h := HBoxContainer.new()
+		var meta := s.get("metadata", {}) as Dictionary
+		var ts := str(meta.get("timestamp", meta.get("last_played", "")))
+		var scenario := str(meta.get("scenario_id", "unknown"))
+		var label_text := "%s | %s | %s" % [s.get("slot", "?"), ts.substr(0, 16), scenario]
+		var slot_label := Label.new()
+		slot_label.text = label_text
+		slot_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		h.add_child(slot_label)
+
+		var load_btn := Button.new()
+		load_btn.text = "Load"
+		load_btn.pressed.connect(func():
+			var ok := SaveLoadManager.load_game(s.get("slot", ""))
+			_update_date_time()
+			_update_resources()
+			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+				LeaderEventUI.show_toast("Game loaded: " + s.get("slot", ""), 2.5)
+			if panel and is_instance_valid(panel):
+				panel.queue_free()
+			_pause_for_menu(false)
+		)
+		h.add_child(load_btn)
+
+		var del_btn := Button.new()
+		del_btn.text = "Delete"
+		del_btn.pressed.connect(func():
+			SaveLoadManager.delete_save(s.get("slot", ""))
+			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+				LeaderEventUI.show_toast("Save deleted: " + s.get("slot", ""), 2.0, true)
+			if panel and is_instance_valid(panel):
+				panel.queue_free()
+			_show_main_menu_popup_fallback()  # refresh
+		)
+		h.add_child(del_btn)
+
+		# Rename (lightweight foundation - future menu can use proper dialog)
+		var rename_btn := Button.new()
+		rename_btn.text = "Rename"
+		rename_btn.pressed.connect(func():
+			# Simple inline rename for foundation (in full UI this would be a nice dialog)
+			print("Rename requested for " + s.get("slot", "") + " (use SaveLoadManager.rename_save in console for now)")
+			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+				LeaderEventUI.show_toast("Rename: use console for now (API ready)", 2.0)
+			if panel and is_instance_valid(panel):
+				panel.queue_free()
+			_show_main_menu_popup_fallback()
+		)
+		h.add_child(rename_btn)
+
+		parent.add_child(h)

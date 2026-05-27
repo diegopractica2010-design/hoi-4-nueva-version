@@ -376,24 +376,26 @@ func _handle_camera_input(delta: float) -> void:
 	if not cam:
 		return
 
+	var nav_delta := MapViewInput.motion_delta(delta)
 	var move_dir := Vector2.ZERO
 
-	# WASD / Arrow keys
+	# WASD / Arrow keys (simulation pause must not freeze map navigation)
 	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):    move_dir.y -= 1
 	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):  move_dir.y += 1
 	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):  move_dir.x -= 1
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT): move_dir.x += 1
 
-	# Edge scrolling
-	var mouse_pos := get_viewport().get_mouse_position()
-	var viewport_size := get_viewport().get_visible_rect().size
+	# Edge scrolling (including top strip over TopInfoBar — only block modals/panels)
+	if not MapViewInput.edge_pan_blocked_by_gui(get_viewport()):
+		var mouse_pos := get_viewport().get_mouse_position()
+		var viewport_size := get_viewport().get_visible_rect().size
 
-	if mouse_pos.x < edge_margin:              move_dir.x -= 1
-	elif mouse_pos.x > viewport_size.x - edge_margin: move_dir.x += 1
-	if mouse_pos.y < edge_margin:              move_dir.y -= 1
-	elif mouse_pos.y > viewport_size.y - edge_margin: move_dir.y += 1
+		if mouse_pos.x < edge_margin:              move_dir.x -= 1
+		elif mouse_pos.x > viewport_size.x - edge_margin: move_dir.x += 1
+		if mouse_pos.y < edge_margin:              move_dir.y -= 1
+		elif mouse_pos.y > viewport_size.y - edge_margin: move_dir.y += 1
 
-	# Middle mouse drag
+	# Middle mouse drag (pixel-based — works while paused)
 	if _is_middle_dragging:
 		var current_mouse := get_viewport().get_mouse_position()
 		var drag_delta := current_mouse - _last_mouse_pos
@@ -402,7 +404,7 @@ func _handle_camera_input(delta: float) -> void:
 
 	if move_dir != Vector2.ZERO:
 		move_dir = move_dir.normalized()
-		cam.global_position += move_dir * pan_speed * delta / cam.zoom.x
+		cam.global_position += move_dir * pan_speed * nav_delta / cam.zoom.x
 
 
 func _zoom_toward_mouse(zoom_change: float) -> void:
@@ -800,6 +802,20 @@ func _refresh_hover_tooltip(province: Province) -> void:
 	var dual := contested and has_agent
 	var agent_activity := has_agent and ProvinceInsight.agent_has_daily_activity(province)
 	var agent_pressure := ProvinceInsight.agent_pressure_focus_kind(province) if has_agent else ""
+	if hover_role == "infra_sabotage":
+		agent_pressure = "sabotage"
+		if typeof(MapManager) != TYPE_NIL:
+			var hover_bd: Dictionary = MapManager.get_infrastructure_repair_breakdown(province.id)
+			if ProvinceInsight.daily_infra_duel_winner(province, hover_bd) == "repair":
+				agent_pressure = "repair"
+			elif ProvinceInsight.daily_infra_duel_winner(province, hover_bd) == "even":
+				agent_pressure = "stalemate"
+	elif hover_role in ["infra_repair", "infra_duel_even"]:
+		agent_pressure = "repair" if hover_role == "infra_repair" else "stalemate"
+	elif hover_role == "depot_sabotage":
+		agent_pressure = "depot"
+	elif hover_role == "supply_pressure":
+		agent_pressure = "disrupt"
 	hover_tooltip.show_text(
 		text,
 		mouse,
@@ -812,7 +828,7 @@ func _refresh_hover_tooltip(province: Province) -> void:
 		contested and not compare_active,
 		has_agent and not compare_active,
 		has_tech and not compare_active,
-		has_radio and not compare_active and not has_tech,
+		has_radio and not compare_active,
 		dual and not compare_active,
 		agent_activity,
 		agent_pressure,
@@ -1135,6 +1151,8 @@ func build_supply_network(city_layer: Dictionary, player_tag: String = "USA") ->
 	sm.build_network(provinces, countries, city_layer, adjacency, player_tag)
 	if sm.has_method("seed_demo_enemy_forces"):
 		sm.seed_demo_enemy_forces()
+	if sm.has_method("seed_demo_engineer_presence"):
+		sm.seed_demo_engineer_presence(player_tag)
 	_setup_supply_layer()
 
 
@@ -1356,6 +1374,23 @@ func _hover_outline_colors(province_id: int) -> Dictionary:
 	elif contested:
 		colors["color"] = ProvinceMapVisuals.OUTLINE_CONFLICT.lerp(ProvinceMapVisuals.OUTLINE_HOVER, 0.42)
 		colors["glow"] = ProvinceMapVisuals.OUTLINE_CONFLICT_GLOW
+	if provinces.has(province_id):
+		var hp2: Province = provinces[province_id] as Province
+		if _province_has_support_radio_benefit(hp2):
+			colors["color"] = colors["color"].lerp(ProvinceMapVisuals.OUTLINE_SUPPORT_RADIO, 0.18)
+			colors["glow"] = colors["glow"].lerp(ProvinceMapVisuals.OUTLINE_SUPPORT_RADIO_GLOW, 0.24)
+		if ProvinceInsight.agent_applies_daily_pressure(hp2):
+			var role := str(_supply_role_by_province.get(province_id, ""))
+			if role == "infra_sabotage":
+				colors["color"] = colors["color"].lerp(ProvinceMapVisuals.OUTLINE_INFRA_SABOTAGE, 0.2)
+				colors["glow"] = colors["glow"].lerp(ProvinceMapVisuals.OUTLINE_INFRA_SABOTAGE_GLOW, 0.22)
+			elif role == "supply_pressure":
+				colors["color"] = colors["color"].lerp(ProvinceMapVisuals.OUTLINE_SUPPLY_PRESSURE, 0.16)
+			elif role == "infra_repair":
+				colors["color"] = colors["color"].lerp(ProvinceMapVisuals.OUTLINE_INFRA_REPAIR, 0.14)
+				colors["glow"] = colors["glow"].lerp(ProvinceMapVisuals.OUTLINE_INFRA_REPAIR_GLOW, 0.12)
+			elif role == "depot_sabotage":
+				colors["color"] = colors["color"].lerp(ProvinceMapVisuals.OUTLINE_DEPOT_SABOTAGE, 0.14)
 	return colors
 
 
@@ -1427,6 +1462,9 @@ func _set_selection_outline(province_id: int, visible: bool) -> void:
 						agent_sel = ProvinceMapVisuals.OUTLINE_AGENT_SABOTAGE
 				sel_col = agent_sel.lerp(ProvinceMapVisuals.OUTLINE_SELECT, 0.5)
 				sel_glow = ProvinceMapVisuals.OUTLINE_AGENT_GLOW
+			if _province_has_support_radio_benefit(sp):
+				sel_col = sel_col.lerp(ProvinceMapVisuals.OUTLINE_SUPPORT_RADIO, 0.12)
+				sel_glow = sel_glow.lerp(ProvinceMapVisuals.OUTLINE_SUPPORT_RADIO_GLOW, 0.18)
 		ProvinceMapVisuals.ensure_polished_outline(
 			node,
 			_province_polygon(node),
@@ -1473,7 +1511,48 @@ func _refresh_single_province_fill(province_id: int) -> void:
 		if fill >= 0.0:
 			col = col.lerp(_supply_depot_tint_color(fill), 0.38)
 	col = _apply_agent_pressure_base_tint(col, province)
+	col = _apply_recovering_fill_tint(col, province_id)
+	col = _apply_support_radio_fill_tint(col, province)
 	poly.color = col
+
+
+func _province_has_support_radio_benefit(province: Province) -> bool:
+	if province == null:
+		return false
+	var tag := _player_tag()
+	if tag.is_empty():
+		tag = ProvinceInsight.country_tag_for_province(province)
+	return (
+		not tag.is_empty()
+		and MapTechnologyContext.has_support_radio_bonuses(tag)
+		and ProvinceInsight.province_benefits_country(province, tag)
+	)
+
+
+func _apply_support_radio_fill_tint(col: Color, province: Province) -> Color:
+	if not _province_has_support_radio_benefit(province):
+		return col
+	var strength := 0.06 if supply_mode else 0.09
+	if province != null and ProvinceInsight.agent_applies_daily_pressure(province):
+		strength = minf(strength, 0.05)
+	return col.lerp(ProvinceMapVisuals.FILL_SUPPORT_RADIO, strength)
+
+
+func _apply_recovering_fill_tint(col: Color, province_id: int) -> Color:
+	if not supply_mode:
+		return col
+	var role := str(_supply_role_by_province.get(province_id, ""))
+	if role == "infra_repair":
+		return col.lerp(ProvinceMapVisuals.FILL_INFRA_RECOVERING, 0.36)
+	if role == "infra_sabotage":
+		return col.lerp(ProvinceMapVisuals.FILL_AGENT_SABOTAGE_BASE, 0.26)
+	if role == "infra_duel_even":
+		return col.lerp(ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE, 0.1)
+	if str(_supply_role_by_province.get(province_id, "")) == "supply_pressure":
+		return col.lerp(ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE, 0.14)
+	if str(_supply_role_by_province.get(province_id, "")) == "depot_sabotage":
+		return col.lerp(ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE, 0.12)
+	return col
 
 
 func _apply_agent_pressure_base_tint(col: Color, province: Province) -> Color:
@@ -1509,6 +1588,8 @@ func _apply_hover_fill(province_id: int, active: bool) -> void:
 		if fill >= 0.0:
 			col = col.lerp(_supply_depot_tint_color(fill), 0.38)
 	col = _apply_agent_pressure_base_tint(col, province)
+	col = _apply_recovering_fill_tint(col, province_id)
+	col = _apply_support_radio_fill_tint(col, province)
 	var boost := 0.2
 	if _compare_preview_province_id >= 0 and province_id == _hover_outline_province_id:
 		col = col.lerp(_COMPARE_FILL_TINT, 0.14)
@@ -1540,9 +1621,9 @@ func _apply_hover_fill(province_id: int, active: bool) -> void:
 				agent_tint = ProvinceMapVisuals.FILL_AGENT_SABOTAGE
 		var fill_strength := 0.08
 		if ProvinceInsight.agent_applies_daily_pressure(province):
-			fill_strength = 0.16 if supply_mode else 0.14
+			fill_strength = 0.2 if supply_mode else 0.15
 		if ProvinceInsight.agent_has_today_pressure_tick(province):
-			fill_strength += 0.05
+			fill_strength += 0.06
 		elif ProvinceInsight.agent_has_daily_activity(province):
 			fill_strength += 0.03
 		col = col.lerp(agent_tint, fill_strength)
@@ -1772,13 +1853,52 @@ func _supply_highlight_roles() -> Dictionary[int, String]:
 	for pid in preview_pids.keys():
 		if str(roles.get(pid, "")) != "active":
 			roles[pid] = "preview"
+	_apply_infra_pressure_overlay_roles(roles)
 	return roles
+
+
+func _apply_infra_pressure_overlay_roles(roles: Dictionary[int, String]) -> void:
+	if not supply_mode or typeof(MapManager) == TYPE_NIL:
+		return
+	for pid_var in province_nodes.keys():
+		var pid := int(pid_var)
+		var existing: String = str(roles.get(pid, ""))
+		if existing in ["active", "preview", "route"]:
+			continue
+		if not provinces.has(pid):
+			continue
+		var p: Province = provinces[pid] as Province
+		if p == null:
+			continue
+		var bd: Dictionary = MapManager.get_infrastructure_repair_breakdown(pid)
+		if bool(bd.get("under_infra_sabotage", false)):
+			match ProvinceInsight.daily_infra_duel_winner(p, bd):
+				"repair":
+					roles[pid] = "infra_repair"
+				"even":
+					roles[pid] = "infra_duel_even"
+				_:
+					roles[pid] = "infra_sabotage"
+			continue
+		if ProvinceInsight.agent_pressure_focus_kind(p) == "disrupt":
+			roles[pid] = "supply_pressure"
+			continue
+		var depot_sab := float(bd.get("depot_sabotage_level", 0.0))
+		if depot_sab > 0.12:
+			roles[pid] = "depot_sabotage"
+			continue
+		var infra := int(bd.get("infrastructure", p.infrastructure))
+		if infra < 45 and float(bd.get("total", 0.0)) > 0.0:
+			roles[pid] = "infra_repair"
 
 
 func _pulse_supply_outlines() -> void:
 	for pid in _supply_role_by_province.keys():
 		var role: String = str(_supply_role_by_province[pid])
-		if role != "active" and role != "preview":
+		if role not in [
+			"active", "preview", "infra_sabotage", "infra_repair", "infra_duel_even",
+			"depot_sabotage", "supply_pressure",
+		]:
 			continue
 		var node := _province_node(int(pid))
 		if node == null:
@@ -1793,9 +1913,27 @@ func _pulse_supply_outlines() -> void:
 			style["glow"],
 			float(style["width"]) + float(style["glow_extra"]),
 			_outline_pulse_phase + phase_off,
-			0.22 if role == "hub" else 0.32,
+			_pulse_amount_for_supply_role(role),
 			float(style.get("pulse_speed", 1.0)),
 		)
+
+
+func _pulse_amount_for_supply_role(role: String) -> float:
+	match role:
+		"infra_sabotage":
+			return 0.68
+		"infra_duel_even":
+			return 0.4
+		"supply_pressure":
+			return 0.46
+		"depot_sabotage":
+			return 0.36
+		"infra_repair":
+			return 0.1
+		"hub":
+			return 0.22
+		_:
+			return 0.32
 
 
 func _refresh_supply_highlights() -> void:

@@ -91,10 +91,22 @@ func _show_toast(entry: Dictionary) -> void:
 	vbox.add_theme_constant_override("separation", 4)
 	margin.add_child(vbox)
 
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 8)
+	vbox.add_child(header)
+
 	var title_label := Label.new()
 	title_label.text = str(entry.get("title", "News"))
+	title_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	RetrowaveTheme.style_column_header(title_label)
-	vbox.add_child(title_label)
+	header.add_child(title_label)
+
+	var dismiss_button := Button.new()
+	dismiss_button.text = "×"
+	dismiss_button.tooltip_text = "Dismiss notification"
+	dismiss_button.custom_minimum_size = Vector2(32, 28)
+	RetrowaveTheme.style_secondary_button(dismiss_button)
+	header.add_child(dismiss_button)
 
 	var body_label := Label.new()
 	body_label.text = str(entry.get("body", ""))
@@ -104,10 +116,20 @@ func _show_toast(entry: Dictionary) -> void:
 
 	_toast_container.add_child(panel)
 	while _toast_container.get_child_count() > 4:
-		_toast_container.get_child(0).queue_free()
+		_dismiss_toast(_toast_container.get_child(0) as PanelContainer)
 
 	var timer := get_tree().create_timer(TOAST_DURATION_SEC)
-	timer.timeout.connect(panel.queue_free)
+	timer.timeout.connect(_on_toast_timer_expired.bind(panel), CONNECT_ONE_SHOT)
+	dismiss_button.pressed.connect(_dismiss_toast.bind(panel))
+
+
+func _dismiss_toast(panel: PanelContainer) -> void:
+	if panel != null and is_instance_valid(panel):
+		panel.queue_free()
+
+
+func _on_toast_timer_expired(panel: PanelContainer) -> void:
+	_dismiss_toast(panel)
 
 
 func _on_retirement_offered(leader_id: String) -> void:

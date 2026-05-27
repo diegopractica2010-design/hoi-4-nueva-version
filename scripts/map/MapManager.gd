@@ -408,7 +408,12 @@ func get_agent_network_overlay_data(target_country: String = "") -> Dictionary:
 
 ## Public API for mutating province data at runtime (e.g. from Production, Technology, Diplomacy, or events).
 ## Always emits province_data_changed so overlays, UI, and AI can react.
-func update_province_owner(province_id: int, new_owner: String, new_controller: String = "") -> bool:
+func update_province_owner(
+	province_id: int,
+	new_owner: String,
+	new_controller: String = "",
+	skip_capture: bool = false,
+) -> bool:
 	var p: Province = _provinces.get(province_id)
 	if p == null:
 		return false
@@ -421,6 +426,10 @@ func update_province_owner(province_id: int, new_owner: String, new_controller: 
 		changed = true
 	if changed:
 		province_data_changed.emit(province_id, "owner")
+
+		if not skip_capture and typeof(FactoryManager) != TYPE_NIL:
+			FactoryManager.capture_province_factories(province_id, new_owner)
+
 		return true
 	return false
 
@@ -486,7 +495,11 @@ func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
 ## Called daily by the central TimeManager.
 ## Base rate is deliberately low so that sustained agent sabotage or bombing can cause lasting damage.
 ## Higher infrastructure creates a "pride" feedback loop (easier to maintain good infrastructure).
-## Future: modulated by stability ("national pride"), engineer formations present, technology, and national focuses.
+## Bonuses: stability (national pride via NationalModifierManager), engineer formations (via CombatPresenceRegistry
+##   + SupplyManager.register_division_presence using DivisionTemplate.count_engineer_brigade_equivalent()),
+##   and technology/national focus "infrastructure_repair" modifier.
+## This makes repair strategic: station engineers, maintain high stability, research/focus repair tech to counter
+## agent infrastructure sabotage and depot effects.
 func advance_daily_infrastructure_repair() -> void:
 	for pid in _provinces.keys():
 		var p: Province = _provinces[pid]
@@ -502,33 +515,150 @@ func advance_daily_infrastructure_repair() -> void:
 		if int(new_infra) > p.infrastructure:
 			update_province_infrastructure(int(pid), int(new_infra))
 
-## Returns the daily infrastructure repair rate for a province.
-## Low base (0.08) so constant pressure matters.
-## Scales with current infrastructure (self-reinforcing "pride" + existing repair capacity).
-func get_infrastructure_repair_rate(province_id: int) -> float:
+const INFRA_REPAIR_BASE := 0.08
+const INFRA_REPAIR_PER_LEVEL := 0.004
+const INFRA_REPAIR_STABILITY_FACTOR := 0.005
+const INFRA_REPAIR_ENGINEER_BASE := 0.06
+const INFRA_REPAIR_ENGINEER_PER_BRIGADE := 0.035
+const INFRA_REPAIR_ENGINEER_CAP := 0.28
+const INFRA_SOFT_CAP := 50
+
+
+## Returns per-day repair components for UI, tooltips, and balance tuning.
+## Full breakdown:
+## - base: INFRA_REPAIR_BASE (0.08) — low so pressure matters.
+## - infra_bonus: pride from current infrastructure level.
+## - stability_bonus: from controlling country's "stability" modifier (NationalModifierManager).
+## - tech_focus_bonus: from "infrastructure_repair" modifier (ready for tech + national focuses).
+## - engineer_bonus: from friendly engineer/combat_engineer brigades present (via CombatPresenceRegistry
+##   populated by SupplyManager.register_division_presence when divisions are in-province; uses
+##   DivisionTemplate.count_engineer_brigade_equivalent()).
+## All components (plus sabotage state) are exposed so players can see exactly why repair is fast/slow
+## and make strategic decisions (station engineers, raise stability, counter-intel to clear sabotage sources).
+func get_infrastructure_repair_breakdown(province_id: int) -> Dictionary:
+	var empty := {
+		"base": 0.0,
+		"infra_bonus": 0.0,
+		"stability_bonus": 0.0,
+		"tech_focus_bonus": 0.0,
+		"engineer_bonus": 0.0,
+		"engineer_brigades": 0.0,
+		"total": 0.0,
+		"infrastructure": 0,
+		"under_infra_sabotage": false,
+		"depot_sabotage_level": 0.0,
+		"eta_days_to_cap": -1,
+		"country_tag": "",
+	}
 	var p: Province = get_province(province_id)
 	if p == null:
-		return 0.0
+		return empty
 
-	var base := 0.08
-	var infra_bonus := float(clampi(p.infrastructure, 0, 50)) * 0.004   # +0.2 at infra 50
+	var tag := _repair_country_tag(p)
+	var base := INFRA_REPAIR_BASE
+	var infra_bonus := float(clampi(p.infrastructure, 0, INFRA_SOFT_CAP)) * INFRA_REPAIR_PER_LEVEL
 
-	# Stability / national pride bonus (higher stability = more pride in the country = faster repair and maintenance)
 	var stability_bonus := 0.0
-	if typeof(NationalModifierManager) != TYPE_NIL:
-		var stab := NationalModifierManager.get_national_modifier(p.owner_tag, "stability")
-		stability_bonus = clampf(stab * 0.002, -0.05, 0.08)  # modest impact
-
-	# Technology + national focus repair bonus (via "infrastructure_repair" key)
 	var tech_focus_bonus := 0.0
-	if typeof(NationalModifierManager) != TYPE_NIL:
-		tech_focus_bonus = NationalModifierManager.get_national_modifier(p.owner_tag, "infrastructure_repair")
+	if typeof(NationalModifierManager) != TYPE_NIL and not tag.is_empty():
+		var stab := NationalModifierManager.get_national_modifier(tag, "stability")
+		stability_bonus = clampf(stab * INFRA_REPAIR_STABILITY_FACTOR, -0.06, 0.12)
+		tech_focus_bonus = NationalModifierManager.get_national_modifier(tag, "infrastructure_repair")
 
-	# TODO: Add engineer formation presence bonus (scan formations in province for "engineer" sustainment)
-	# For now this is 0; wire it when formations have reliable province location.
+	var engineer_brigades := get_engineer_brigades_in_province(province_id, tag)
+	var engineer_bonus := _engineer_repair_bonus(engineer_brigades)
 
-	var rate := base + infra_bonus + stability_bonus + tech_focus_bonus
-	return maxf(0.01, rate)  # never zero so total collapse is hard without ongoing pressure
+	var total := base + infra_bonus + stability_bonus + tech_focus_bonus + engineer_bonus
+	total = maxf(0.01, total)
+
+	var depot_sabotage := _depot_sabotage_level(province_id)
+	var under_sabotage := _province_under_infra_sabotage(p, province_id)
+
+	var eta := -1
+	if p.infrastructure < INFRA_SOFT_CAP and total > 0.0:
+		eta = int(ceil(float(INFRA_SOFT_CAP - p.infrastructure) / total))
+
+	return {
+		"base": base,
+		"infra_bonus": infra_bonus,
+		"stability_bonus": stability_bonus,
+		"tech_focus_bonus": tech_focus_bonus,
+		"engineer_bonus": engineer_bonus,
+		"engineer_brigades": engineer_brigades,
+		"total": total,
+		"infrastructure": p.infrastructure,
+		"under_infra_sabotage": under_sabotage,
+		"depot_sabotage_level": depot_sabotage,
+		"eta_days_to_cap": eta,
+		"country_tag": tag,
+	}
+
+
+## Returns the daily infrastructure repair rate for a province.
+func get_infrastructure_repair_rate(province_id: int) -> float:
+	return float(get_infrastructure_repair_breakdown(province_id).get("total", 0.0))
+
+
+func get_engineer_brigades_in_province(province_id: int, country_tag: String = "") -> float:
+	## Engineer detection for repair bonus.
+	## Properly uses the CombatPresenceRegistry (via SupplyManager) which is populated when
+	## formations/divisions are present in the province via SupplyManager.register_division_presence()
+	## (or add_unit paths). DivisionTemplate.count_engineer_brigade_equivalent() identifies
+	## "engineer" / "combat_engineer" sustainment and subunits. Only friendly (controlling country)
+	## engineers contribute to repair (strategic: station your own engineers in threatened provinces).
+	if typeof(SupplyManager) == TYPE_NIL:
+		return 0.0
+	var tag := country_tag.strip_edges().to_upper()
+	if tag.is_empty():
+		var p := get_province(province_id)
+		if p == null:
+			return 0.0
+		tag = _repair_country_tag(p)
+	if tag.is_empty():
+		return 0.0
+	return SupplyManager.get_engineer_brigades_in_province(province_id, tag)
+
+
+func _repair_country_tag(province: Province) -> String:
+	if province == null:
+		return ""
+	var tag := province.controller_tag.strip_edges().to_upper()
+	if tag.is_empty():
+		tag = province.owner_tag.strip_edges().to_upper()
+	return tag
+
+
+func _engineer_repair_bonus(engineer_brigades: float) -> float:
+	if engineer_brigades <= 0.0:
+		return 0.0
+	return clampf(
+		INFRA_REPAIR_ENGINEER_BASE + engineer_brigades * INFRA_REPAIR_ENGINEER_PER_BRIGADE,
+		INFRA_REPAIR_ENGINEER_BASE,
+		INFRA_REPAIR_ENGINEER_CAP,
+	)
+
+
+func _depot_sabotage_level(province_id: int) -> float:
+	if typeof(SupplyManager) == TYPE_NIL:
+		return 0.0
+	var depot = SupplyManager.depot_states.get(province_id)
+	if depot == null:
+		return 0.0
+	return float(depot.sabotage_level)
+
+
+func _province_under_infra_sabotage(province: Province, province_id: int) -> bool:
+	if province == null:
+		return false
+	if typeof(AgentManager) != TYPE_NIL:
+		var net: AgentNetwork = AgentManager.networks.get(province_id)
+		if (
+			net != null
+			and net.is_active()
+			and net.focus == "infrastructure_sabotage"
+		):
+			return true
+	return false
 
 ## --- Internal helpers ---
 

@@ -18,7 +18,11 @@ const FILL_AGENT := Color(0.62, 0.45, 0.98, 1.0)
 const FILL_AGENT_DISRUPT := Color(0.95, 0.55, 0.28, 1.0)
 const FILL_AGENT_SABOTAGE := Color(1.0, 0.38, 0.45, 1.0)
 const FILL_AGENT_DISRUPT_BASE := Color(0.92, 0.48, 0.22, 1.0)
-const FILL_AGENT_SABOTAGE_BASE := Color(0.95, 0.32, 0.38, 1.0)
+const FILL_AGENT_SABOTAGE_BASE := Color(0.98, 0.28, 0.34, 1.0)
+const FILL_INFRA_RECOVERING := Color(0.22, 0.98, 0.78, 1.0)
+const FILL_SUPPORT_RADIO := Color(0.42, 0.78, 1.0, 1.0)
+const OUTLINE_SUPPORT_RADIO := Color(0.45, 0.85, 1.0, 0.9)
+const OUTLINE_SUPPORT_RADIO_GLOW := Color(0.22, 0.52, 0.88, 0.32)
 const OUTLINE_AGENT_DISRUPT := Color(1.0, 0.62, 0.32, 0.95)
 const OUTLINE_AGENT_SABOTAGE := Color(1.0, 0.42, 0.48, 0.95)
 const OUTLINE_CONFLICT := Color(1.0, 0.45, 0.45, 0.75)
@@ -42,6 +46,14 @@ const OUTLINE_SUPPLY_HUB_GLOW := Color(0.2, 0.55, 0.4, 0.25)
 const OUTLINE_SUPPLY_ROUTE_GLOW := Color(0.6, 0.45, 0.1, 0.28)
 const OUTLINE_SUPPLY_PREVIEW_GLOW := Color(0.3, 0.65, 0.75, 0.32)
 const OUTLINE_SUPPLY_ACTIVE_GLOW := Color(0.4, 0.25, 0.75, 0.35)
+const OUTLINE_INFRA_SABOTAGE := Color(1.0, 0.18, 0.22, 1.0)
+const OUTLINE_INFRA_SABOTAGE_GLOW := Color(1.0, 0.05, 0.05, 0.78)
+const OUTLINE_INFRA_REPAIR := Color(0.12, 0.98, 0.82, 0.98)
+const OUTLINE_INFRA_REPAIR_GLOW := Color(0.05, 0.78, 0.62, 0.6)
+const OUTLINE_DEPOT_SABOTAGE := Color(1.0, 0.62, 0.12, 0.96)
+const OUTLINE_DEPOT_SABOTAGE_GLOW := Color(0.88, 0.38, 0.02, 0.48)
+const OUTLINE_SUPPLY_PRESSURE := Color(1.0, 0.48, 0.08, 0.98)
+const OUTLINE_SUPPLY_PRESSURE_GLOW := Color(0.95, 0.28, 0.0, 0.5)
 
 const Z_SUPPLY := 10
 const Z_COMPARE_CANDIDATE := 11
@@ -207,6 +219,51 @@ static func get_supply_outline_style(role: String) -> Dictionary:
 				"glow_extra": 2.2,
 				"z_index": Z_SUPPLY,
 				"pulse_speed": 0.85,
+			}
+		"infra_sabotage":
+			return {
+				"color": OUTLINE_INFRA_SABOTAGE,
+				"glow": OUTLINE_INFRA_SABOTAGE_GLOW,
+				"width": 3.4,
+				"glow_extra": 4.2,
+				"z_index": Z_SUPPLY,
+				"pulse_speed": 2.15,
+			}
+		"infra_repair":
+			return {
+				"color": OUTLINE_INFRA_REPAIR,
+				"glow": OUTLINE_INFRA_REPAIR_GLOW,
+				"width": 2.0,
+				"glow_extra": 1.4,
+				"z_index": Z_SUPPLY,
+				"pulse_speed": 0.48,
+			}
+		"infra_duel_even":
+			return {
+				"color": OUTLINE_INFRA_SABOTAGE.lerp(OUTLINE_INFRA_REPAIR, 0.45),
+				"glow": OUTLINE_INFRA_SABOTAGE_GLOW.lerp(OUTLINE_INFRA_REPAIR_GLOW, 0.4),
+				"width": 2.4,
+				"glow_extra": 2.6,
+				"z_index": Z_SUPPLY,
+				"pulse_speed": 1.0,
+			}
+		"depot_sabotage":
+			return {
+				"color": OUTLINE_DEPOT_SABOTAGE,
+				"glow": OUTLINE_DEPOT_SABOTAGE_GLOW,
+				"width": 2.3,
+				"glow_extra": 2.5,
+				"z_index": Z_SUPPLY,
+				"pulse_speed": 1.1,
+			}
+		"supply_pressure":
+			return {
+				"color": OUTLINE_SUPPLY_PRESSURE,
+				"glow": OUTLINE_SUPPLY_PRESSURE_GLOW,
+				"width": 2.6,
+				"glow_extra": 3.0,
+				"z_index": Z_SUPPLY,
+				"pulse_speed": 1.35,
 			}
 		_:
 			return {

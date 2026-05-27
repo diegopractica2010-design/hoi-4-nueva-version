@@ -43,6 +43,9 @@ func get_active_factories() -> Array[Factory]:
 
 func capture_all_factories(new_owner: String, is_annexed: bool = false) -> void:
 	var mgr := _factory_manager()
+	if mgr and mgr.has_method("capture_province_factories"):
+		mgr.capture_province_factories(province_id, new_owner, is_annexed)
+		return
 	for f in factories:
 		var old := f.owner_tag
 		f.owner_tag = new_owner

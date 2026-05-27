@@ -3,6 +3,11 @@ extends RefCounted
 
 ## Bridge between map UI (ProvinceInsight, MapRenderer) and TechnologyManager.
 ## Keeps technology map/tooltip hooks in one place until build-mode overlays land.
+##
+## Map Build Eligibility (added Phase 1):
+##   Use is_design_buildable_in_province() + get_province_build_lock_reason()
+##   for province-specific tech (and future dev/terrain) gates.
+##   See detailed documentation on those methods.
 
 const COLOR_TECH := "[color=#6ec8ff]"
 const COLOR_MUTED := "[color=#8899aa]"
@@ -126,6 +131,15 @@ static func build_national_support_line_bbcode(country_tag: String) -> String:
 	if not routes.is_empty():
 		line += " · " + routes
 	return "%s%s[/color]" % [COLOR_TECH, line]
+
+
+static func build_support_recovery_hint_bbcode(country_tag: String) -> String:
+	if not has_support_radio_bonuses(country_tag):
+		return ""
+	var routes := build_support_route_summary_plain(country_tag)
+	if routes.is_empty():
+		return ""
+	return "%s📡 Support/Radio helps recovery: %s[/color]" % [COLOR_TECH, routes]
 
 
 static func build_support_supply_effect_bbcode(country_tag: String) -> String:
@@ -285,3 +299,91 @@ static func _build_target_placeholder(country_tag: String) -> String:
 	if types.is_empty():
 		return "factories/buildings"
 	return str(types[types.size() - 1])
+
+
+## === Map Build Eligibility (new lightweight system) ===
+## Determines whether a design (or future building) can be constructed in a specific province.
+## Starts simple (tech gate only) but designed for easy extension.
+##
+## Core rule (Phase 1 - this session):
+##   A design is buildable in a province only if the *controlling country* (from MapManager)
+##   has unlocked the required technology.
+##   Delegates to TechnologyManager.is_unit_design_available + get_design_availability
+##   (which reads the "unit_design" unlocks from the tech trees).
+##
+## How to extend later (documented for future work):
+##   - Province development/infra level (e.g. high-tech designs only in developed provinces)
+##   - Terrain / special features (naval in ports, space in certain zones)
+##   - National focuses or spirits (temporary build permissions)
+##   - Factory type matching at the specific province (already partially in TM.factory_can_build_design)
+##
+## Usage from map / production code:
+##   if MapTechnologyContext.is_design_buildable_in_province(province_id, design_id):
+##       # show in picker, allow factory assignment, start production line, etc.
+##
+## This (combined with DesignManager tech filtering) is the single source of truth
+## for "can I build this design here on the map?"
+##
+## See also:
+##   - DesignManager._eligible_design_ids / get_tech_eligible_design_ids (filters the master list)
+##   - TechnologyManager.get_design_availability + factory_can_build_design (core gates)
+##   - DesignPickerPopup (already respects selectable + shows lock reasons)
+
+static func is_design_buildable_in_province(province_id: int, design_id: String, country_tag: String = "") -> bool:
+	if typeof(MapManager) == TYPE_NIL or typeof(TechnologyManager) == TYPE_NIL:
+		return true
+
+	var tag := country_tag.strip_edges().to_upper()
+	if tag.is_empty():
+		var p: Province = MapManager.get_province(province_id)
+		if p == null:
+			return false
+		tag = p.controller_tag.strip_edges().to_upper()
+		if tag.is_empty():
+			tag = p.owner_tag.strip_edges().to_upper()
+	if tag.is_empty():
+		return false
+
+	if typeof(DesignManager) != TYPE_NIL and not DesignManager.country_may_use_design(tag, design_id):
+		return false
+
+	# Core tech gate (reuses mature TechnologyManager logic)
+	if not TechnologyManager.is_unit_design_available(tag, design_id):
+		return false
+
+	# Future extension hooks (currently pass-through for lightweight Phase 1):
+	# - Province development / infra requirements
+	# - Terrain / feature gates
+	# - Factory-type restrictions at the specific province's factories
+	# Example skeleton for later:
+	# var p: Province = MapManager.get_province(province_id)
+	# if p != null and p.development_level < required_dev_for_design(design_id):
+	#     return false
+
+	# Also respect factory-level gates if a specific factory context is available
+	# (callers in picker/production already layer factory_can_build_design on top)
+	return true
+
+## Returns a human-readable lock reason for a design in a specific province (for UI tooltips).
+## Falls back to TechnologyManager.get_design_availability when tech is the blocker.
+static func get_province_build_lock_reason(province_id: int, design_id: String, country_tag: String = "") -> String:
+	if typeof(MapManager) == TYPE_NIL or typeof(TechnologyManager) == TYPE_NIL:
+		return ""
+
+	var tag := country_tag.strip_edges().to_upper()
+	if tag.is_empty():
+		var p: Province = MapManager.get_province(province_id)
+		if p != null:
+			tag = p.controller_tag.strip_edges().to_upper()
+			if tag.is_empty():
+				tag = p.owner_tag.strip_edges().to_upper()
+
+	if typeof(DesignManager) != TYPE_NIL and not DesignManager.country_may_use_design(tag, design_id):
+		return "Foreign design — not in national catalog (capture or purchase required)"
+
+	var avail := TechnologyManager.get_design_availability(tag, design_id)
+	if not bool(avail.get("available", true)):
+		return str(avail.get("reason", "Requires technology"))
+
+	# Future: add province-specific reasons (dev level, terrain, etc.)
+	return ""

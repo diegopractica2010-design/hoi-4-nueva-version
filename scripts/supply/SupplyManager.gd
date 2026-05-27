@@ -177,6 +177,29 @@ func register_unit_presence(
 	force_registry.add_unit(province_id, owner_tag, template, count)
 
 
+func register_division_presence(
+	province_id: int,
+	owner_tag: String,
+	division: DivisionTemplate,
+	brigade_equiv: float = 1.0,
+) -> void:
+	## Call this (or the lower-level presence methods) when a division/formation is present
+	## or stationed in a province (supply movement, combat, assignment, etc.). This feeds
+	## both general presence (for interdiction) and engineer counts (for MapManager repair bonus).
+	force_registry.register_division_presence(province_id, owner_tag, division, brigade_equiv)
+
+
+func get_engineer_brigades_in_province(province_id: int, country_tag: String) -> float:
+	## Used by MapManager for infrastructure repair engineer bonus.
+	## Returns friendly engineer/combat_engineer brigade equivalents present in the province.
+	## The registry is populated via register_division_presence() (called when divisions are
+	## stationed or operate in a province) which uses DivisionTemplate.count_engineer_brigade_equivalent().
+	var tag := country_tag.strip_edges().to_upper()
+	if tag.is_empty():
+		return 0.0
+	return force_registry.get_report(province_id).total_engineers(tag)
+
+
 func register_force_report(province_id: int, report: ProvinceForceReport) -> void:
 	force_registry.set_report(province_id, report)
 
@@ -462,6 +485,32 @@ func _generate_local_supply_from_development(days: float) -> void:
 func toggle_overlay() -> void:
 	overlay_visible = not overlay_visible
 	overlay_toggled.emit(overlay_visible)
+
+
+func seed_demo_engineer_presence(country_tag: String = "") -> void:
+	var tag := country_tag.strip_edges().to_upper()
+	if tag.is_empty():
+		tag = player_tag
+	if tag.is_empty():
+		return
+	division_templates.load_all()
+	var division: DivisionTemplate = division_templates.get_division(
+		"german_infantry_division_1943_mixed",
+	)
+	if division == null:
+		for div_id in division_templates.get_all_division_ids():
+			var candidate: DivisionTemplate = division_templates.get_division(div_id)
+			if candidate != null and candidate.count_engineer_brigade_equivalent() > 0.0:
+				division = candidate
+				break
+	if division == null:
+		return
+	for pid_var in provinces:
+		var province: Province = provinces[pid_var] as Province
+		if province == null or _ctrl(province) != tag:
+			continue
+		register_division_presence(province.id, tag, division, 1.0)
+		return
 
 
 func seed_demo_enemy_forces(sample_tags: Array[String] = []) -> void:

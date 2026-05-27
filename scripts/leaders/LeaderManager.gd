@@ -2713,6 +2713,14 @@ func apply_save_data(data: Dictionary) -> void:
 			l.health = float(ld.get("health", 1.0))
 			l.duty_post = str(ld.get("duty_post", "active"))
 			l.stayed_past_retirement = bool(ld.get("stayed_past_retirement", false))
+			l.is_in_officer_training = bool(ld.get("is_in_officer_training", false))
+			l.training_path_id = str(ld.get("training_path_id", ""))
+			l.training_path_level = int(ld.get("training_path_level", 0))
+			l.previous_training_path_id = str(ld.get("previous_training_path_id", ""))
+			l.last_xp_gain_time = int(ld.get("last_xp_gain_time", 0))
+			l.last_xp_source = str(ld.get("last_xp_source", ""))
+			if ld.has("trait_levels"):
+				l.trait_levels = (ld.get("trait_levels", {}) as Dictionary).duplicate(true)
 			# Add other fields (officer training quality etc.) as they become critical
 			leaders[l.leader_id] = l
 

@@ -31,6 +31,28 @@ func add_naval_presence(province_id: int, owner_tag: String, strength: float, at
 	r.add_naval(owner_tag, strength, at_port)
 
 
+func add_engineer_presence(province_id: int, owner_tag: String, brigade_equiv: float) -> void:
+	var r := get_report(province_id)
+	r.add_engineers(owner_tag.strip_edges().to_upper(), brigade_equiv)
+
+
+func register_division_presence(
+	province_id: int,
+	owner_tag: String,
+	division: DivisionTemplate,
+	brigade_equiv: float = 1.0,
+) -> void:
+	## Primary entry point for formation presence. Feeds engineer counts used by
+	## MapManager.get_infrastructure_repair_breakdown() for the engineer repair bonus
+	## (counters agent infrastructure sabotage strategically).
+	if division == null:
+		return
+	add_land_presence(province_id, owner_tag, brigade_equiv)
+	var engineers := division.count_engineer_brigade_equivalent()
+	if engineers > 0.0:
+		add_engineer_presence(province_id, owner_tag, engineers)
+
+
 func add_unit(
 	province_id: int,
 	owner_tag: String,

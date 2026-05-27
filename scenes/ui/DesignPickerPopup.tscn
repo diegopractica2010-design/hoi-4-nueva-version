@@ -6,8 +6,9 @@
 transparent_bg = true
 title = "Select Production Design"
 initial_position = 1
-size = Vector2i(520, 580)
+size = Vector2i(520, 600)
 wrap_controls = true
+unresizable = false
 script = ExtResource("1_picker")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -32,21 +33,45 @@ theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 10
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Select New Production Design"
+
+[node name="FilterRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="DomainFilter" type="OptionButton" parent="MarginContainer/VBoxContainer/FilterRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(168, 32)
+
+[node name="ShowObsoleteCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/FilterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Show older designs"
 
 [node name="SearchEdit" type="LineEdit" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 36)
 placeholder_text = "Search designs..."
 
-[node name="DesignList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+[node name="LegendLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Legend"
+
+[node name="ListScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-custom_minimum_size = Vector2(0, 360)
+custom_minimum_size = Vector2(0, 280)
+
+[node name="DesignList" type="ItemList" parent="MarginContainer/VBoxContainer/ListScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_minimum_size = Vector2(460, 220)
 
 [node name="LockHintLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

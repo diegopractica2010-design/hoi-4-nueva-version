@@ -87,6 +87,9 @@ func apply_damage_to_factory(factory_id: int, damage: float) -> void:
 	_invalidate_production_cache_for_owner(f.owner_tag)
 
 
+## Captures all factories in a province for the new owner (seized/annexed flags, repair, cache invalidation, signal).
+## Also triggers automatic foreign design acquisition for any designs the factories were actively producing.
+## See DesignManager.try_grant_captured_designs_from_factory and grant_acquired_design (the single source of truth).
 func capture_province_factories(province_id: int, new_owner: String, is_annexed: bool = false) -> void:
 	if not province_to_factories.has(province_id):
 		return
@@ -95,14 +98,43 @@ func capture_province_factories(province_id: int, new_owner: String, is_annexed:
 		if f == null:
 			continue
 		var old_owner := f.owner_tag
+		if old_owner.strip_edges().to_upper() == new_owner.strip_edges().to_upper():
+			continue
 		f.owner_tag = new_owner
 		f.is_seized = true
 		f.is_annexed = is_annexed
 		f.start_repair()
 		_invalidate_production_cache_for_owner(old_owner)
-		if new_owner != old_owner:
+		if new_owner.strip_edges().to_upper() != old_owner.strip_edges().to_upper():
 			_invalidate_production_cache_for_owner(new_owner)
 		factory_captured.emit(fid, old_owner, new_owner)
+
+		# === Design Acquisition on Conquest (Trade/Capture foundation) ===
+		# Any foreign design this factory was actively producing (current or previous)
+		# is automatically granted to the new owner via DesignManager.grant_acquired_design.
+		# This makes the "Foreign Acquired" section in the DesignPicker immediately useful
+		# the moment a player conquers enemy territory containing factories.
+		if typeof(DesignManager) != TYPE_NIL:
+			DesignManager.try_grant_captured_designs_from_factory(f, new_owner)
+
+
+## After save/load: align factory owner_tag with province owner without conquest side-effects.
+func reconcile_factory_owners_with_map() -> void:
+	if typeof(MapManager) == TYPE_NIL:
+		return
+	for province_id in province_to_factories.keys():
+		var p: Province = MapManager.get_province(int(province_id))
+		if p == null:
+			continue
+		var map_owner := p.owner_tag.strip_edges().to_upper()
+		if map_owner.is_empty():
+			continue
+		for fid in province_to_factories[province_id]:
+			var f: Factory = factories.get(fid)
+			if f == null:
+				continue
+			if f.owner_tag.strip_edges().to_upper() != map_owner:
+				f.owner_tag = map_owner
 
 
 func advance_repair_for_province(province_id: int, days: float, supply_connected: bool) -> void:
@@ -323,6 +355,10 @@ func apply_save_data(data: Dictionary) -> void:
 				f.current_efficiency = float(fd["current_efficiency"])
 			if fd.has("base_retained_efficiency"):
 				f.base_retained_efficiency = float(fd["base_retained_efficiency"])
+
+			# Post-load efficiency recalc (lightweight; full recalc can be added later via factory rules)
+			if f.has_method("_recalculate_efficiency"):
+				f._recalculate_efficiency()
 
 			if f.factory_id != 0:
 				factories[f.factory_id] = f

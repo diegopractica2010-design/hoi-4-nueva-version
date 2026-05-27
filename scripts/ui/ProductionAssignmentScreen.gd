@@ -1,22 +1,35 @@
 # scripts/ui/ProductionAssignmentScreen.gd
 class_name ProductionAssignmentScreen
-extends Control
+extends DraggablePanel
 
 @export var country_tag: String = "GER"
 
-@onready var total_factories_label: Label = $TopSummaryBar/TotalFactoriesLabel
-@onready var avg_efficiency_label: Label = $TopSummaryBar/AverageEfficiencyLabel
-@onready var retooling_label: Label = $TopSummaryBar/RetoolingLabel
-@onready var daily_output_label: Label = $TopSummaryBar/DailyOutputLabel
+@onready var title_label: Label = $TitleBar/TitleLabel
+@onready var close_button: Button = $TitleBar/CloseButton
 
-@onready var status_filter: OptionButton = $FilterBar/StatusFilter
-@onready var type_filter: OptionButton = $FilterBar/TypeFilter
-@onready var search_edit: LineEdit = $FilterBar/SearchEdit
+@onready var total_factories_label: Label = (
+	$MarginContainer/VBoxContainer/TopSummaryBar/TotalFactoriesLabel
+)
+@onready var avg_efficiency_label: Label = (
+	$MarginContainer/VBoxContainer/TopSummaryBar/AverageEfficiencyLabel
+)
+@onready var retooling_label: Label = $MarginContainer/VBoxContainer/TopSummaryBar/RetoolingLabel
+@onready var daily_output_label: Label = (
+	$MarginContainer/VBoxContainer/TopSummaryBar/DailyOutputLabel
+)
 
-@onready var header_row: HBoxContainer = $MainArea/FactoryColumn/HeaderRow
-@onready var factory_list: VBoxContainer = $MainArea/FactoryColumn/FactoryList/FactoryListContent
-@onready var detail_panel: PanelContainer = $MainArea/DetailPanel
-@onready var detail_label: Label = $MainArea/DetailPanel/DetailLabel
+@onready var status_filter: OptionButton = $MarginContainer/VBoxContainer/FilterBar/StatusFilter
+@onready var type_filter: OptionButton = $MarginContainer/VBoxContainer/FilterBar/TypeFilter
+@onready var search_edit: LineEdit = $MarginContainer/VBoxContainer/FilterBar/SearchEdit
+
+@onready var header_row: HBoxContainer = (
+	$MarginContainer/VBoxContainer/MainArea/FactoryColumn/HeaderRow
+)
+@onready var factory_list: VBoxContainer = (
+	$MarginContainer/VBoxContainer/MainArea/FactoryColumn/FactoryList/FactoryListContent
+)
+@onready var detail_panel: PanelContainer = $MarginContainer/VBoxContainer/MainArea/DetailPanel
+@onready var detail_label: Label = $MarginContainer/VBoxContainer/MainArea/DetailPanel/DetailLabel
 
 var current_data: ProductionScreenData
 var filtered_factories: Array[Dictionary] = []
@@ -36,6 +49,9 @@ const ROW_HEIGHT := 36
 
 func _ready() -> void:
 	add_to_group("production_screen")
+	drag_handle = $TitleBar
+	super._ready()
+	close_button.pressed.connect(_on_close_pressed)
 	_apply_screen_theme()
 	_setup_filters()
 	_setup_headers()
@@ -52,8 +68,14 @@ func _exit_tree() -> void:
 		ProductionManager.day_advanced.disconnect(_on_day_advanced)
 
 
+func _on_close_pressed() -> void:
+	queue_free()
+
+
 func _apply_screen_theme() -> void:
 	RetrowaveTheme.style_production_screen(self)
+	RetrowaveTheme.style_title(title_label, RetrowaveTheme.CYAN)
+	RetrowaveTheme.style_secondary_button(close_button)
 	RetrowaveTheme.style_summary_metric(total_factories_label)
 	RetrowaveTheme.style_summary_metric(avg_efficiency_label, RetrowaveTheme.CYAN)
 	RetrowaveTheme.style_summary_metric(retooling_label, RetrowaveTheme.MAGENTA)

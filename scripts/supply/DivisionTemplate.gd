@@ -184,6 +184,21 @@ func get_total_infantry_headcount() -> int:
 	return 0
 
 
+func count_engineer_brigade_equivalent() -> float:
+	var total := 0.0
+	var division_sustainment := sustainment_equipment_template.to_lower()
+	if division_sustainment.contains("engineer"):
+		total += 1.0
+	for subunit_def in subunit_defs:
+		if typeof(subunit_def) != TYPE_DICTIONARY:
+			continue
+		var subunit_type := _subunit_type_key(subunit_def as Dictionary)
+		var weight := maxf(float(maxi(int(subunit_def.get("count", 1)), 1)), 1.0)
+		if subunit_type in ["engineer", "combat_engineer"]:
+			total += weight
+	return total
+
+
 func get_specialized_sustainment_demand() -> float:
 	var extra := 0.0
 	var division_sustainment := sustainment_equipment_template.to_lower()

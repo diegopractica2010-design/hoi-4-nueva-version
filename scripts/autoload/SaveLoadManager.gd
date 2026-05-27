@@ -84,24 +84,29 @@
 ##   so UI, overlays, and daily ticks react correctly after load.
 ## - Does NOT re-advance time or fire daily ticks during load (avoids double-processing).
 ##
-## === WHAT IS SAVED (as of this expansion) ===
+## === WHAT IS SAVED (current full state) ===
 ## - Time (date, start date, pause/scale)
 ## - Technology (full country research state + active progress)
-## - Agents + Networks (full resources + daily effect trackers like last_daily_* and sabotage totals)
-## - Map provinces (owner/controller, development, infrastructure - mutable gameplay fields)
+## - Agents + Networks (full resources + daily effect trackers)
+## - Map provinces (owner/controller, development, infrastructure)
 ## - Supply depots (stockpile, throughput, sabotage_level)
-## - NationalModifierManager temporary effects (including daily agent sabotage debuffs with remaining duration)
-## - Scenario metadata (scenario_id from ScenarioLoader for validation/future auto-reload)
+## - NationalModifierManager temporary effects
+## - Scenario metadata (scenario_id captured on save via ScenarioLoader.get_current_scenario_name(); richer metadata added in 0.2-dev: last_played, game_version)
 ## - Production (stance, national stockpiles/equipment, per-line progress/retooling/shortage state)
 ## - Factories (full Factory resources: damage, owner, retooling, assigned lines, efficiencies)
-## - Leaders (full Leader resources + XP/status/assignments/traits, national positions, officer training assignments, pending retirements/replacements)
+## - Leaders (full Leader resources + XP/status/assignments/traits, national positions, officer training, pending retirements/replacements)
+## - Design lifecycle (if DesignManager provides it)
+##
+## Metadata structure (in every save root["metadata"]):
+##   timestamp, scenario_id, player_tag, last_played, game_version, play_time_seconds (0 for now)
 ##
 ## === LIMITATIONS / WHAT IS NOT SAVED YET ===
 ## - Full combat/formation presence, routes, intel caches, attrition (will partially rebuild)
 ## - Most NationalSpirit / doctrine beyond Tech
 ## - UI caches, camera, selection state
 ## - Mod or highly transient data
-## - Comprehensive migration for very old saves (basic stub exists)
+## - Comprehensive migration for very old saves (basic stub exists; see _migrate_save_data)
+## - (Note: "design_lifecycle" section is opportunistically saved if DesignManager provides it)
 ##
 ## These can (and should) be added by implementing the two methods below on the manager.
 ##
@@ -111,10 +116,18 @@
 ## Usage from code / debug:
 ##   SaveLoadManager.save_game("quicksave")
 ##   SaveLoadManager.load_game("quicksave")
-##   var saves := SaveLoadManager.list_saves()
+##   var saves := SaveLoadManager.list_saves()   # Rich data for future menu
 ##
-## The existing Save/Load buttons in TopInfoBar (RightContainer/MenuContainer) are
-## already wired to call these (see TopInfoBar.gd integration).
+## Future Save Menu UI should rely on:
+##   - list_saves() → rich [{slot, path, metadata: {timestamp, scenario_id, last_played, game_version, ...}}]
+##   - delete_save(slot), rename_save(old, new) for management
+##   - save_game_detailed / load_game_detailed for error objects + consistent toasts
+##   - get_saved_scenario_id(slot) / check_scenario_compatibility(slot) for validation
+##   - get_save_path, quicksave/quickload for convenience
+##   - _migrate_save_data hook for version upgrades
+##
+## The existing TopInfoBar code-driven "Save Manager" popup already demonstrates
+## these APIs (list + load + delete).
 ##
 ## Authoring note: Keep this file relatively small. Heavy per-system logic belongs
 ## in the managers' get/apply methods.
@@ -123,6 +136,7 @@ extends Node
 
 const SAVE_DIR := "user://saves/"
 const SAVE_VERSION := 1
+const SAVE_GAME_VERSION := "0.2-dev"   # Bumped for richer metadata support
 const DEFAULT_SLOT := "quicksave"
 
 var _last_save_path: String = ""
@@ -138,11 +152,28 @@ func _ready() -> void:
 
 func _on_year_advanced_for_autosave(_year: int) -> void:
 	# Autosave to a fixed slot; keeps only the latest autosave for simplicity.
+	# Silent on success (print only), non-spammy toast on failure.
 	var res := save_game_detailed("autosave")
 	if res.get("ok", false):
 		print("SaveLoadManager: Autosaved on year change -> autosave.json")
 	else:
 		push_warning("SaveLoadManager: Autosave failed: %s" % res.get("error", "unknown"))
+		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+			LeaderEventUI.show_toast("Autosave failed", 2.0, true)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_EXIT_TREE:
+		# Light autosave on quit / exit to main menu (non-intrusive, best-effort).
+		# Guard against double-fire during shutdown.
+		if not has_meta("autosave_on_quit_done"):
+			set_meta("autosave_on_quit_done", true)
+			var res := save_game_detailed("autosave")
+			if res.get("ok", false):
+				print("SaveLoadManager: Autosaved on exit/quit -> autosave.json")
+			else:
+				push_warning("SaveLoadManager: Quit autosave failed: %s" % res.get("error", "unknown"))
+				# No toast on shutdown to avoid UI issues
+		# Do not block exit
 
 func _ensure_save_dir() -> void:
 	if not DirAccess.dir_exists_absolute(SAVE_DIR):
@@ -157,7 +188,13 @@ func get_save_path(slot_name: String) -> String:
 		safe = DEFAULT_SLOT
 	return SAVE_DIR + safe + ".json"
 
-## Returns array of { "slot": "quicksave", "path": "...", "metadata": {...} } for UI lists.
+## Returns rich data for a future save menu UI:
+##   [{ "slot": "quicksave", "path": "...", "metadata": {
+##        "timestamp": "...", "scenario_id": "1936", "player_tag": "USA",
+##        "last_played": "...", "game_version": "0.2-dev", "play_time_seconds": 0, ...
+##   }}]
+## Sorted newest first by timestamp/last_played.
+## Future menu should use this + delete_save/rename_save + detailed save/load for errors/toasts.
 func list_saves() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	var dir := DirAccess.open(SAVE_DIR)
@@ -202,19 +239,30 @@ func save_game(slot_name: String = DEFAULT_SLOT) -> bool:
 
 	var f := FileAccess.open(path, FileAccess.WRITE)
 	if f == null:
-		push_error("SaveLoadManager: Cannot open %s for writing (error %s)" % [path, FileAccess.get_open_error()])
+		var err_msg = "Save failed: cannot write " + path
+		push_error("SaveLoadManager: " + err_msg)
+		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+			LeaderEventUI.show_toast(err_msg, 3.0, true)  # error style if supported
 		return false
 	f.store_string(json_text)
 	f.close()
 
 	_last_save_path = path
 	print("SaveLoadManager: Game saved → %s (v%d, %d bytes)" % [path, SAVE_VERSION, json_text.length()])
+
+	# Consistent non-intrusive feedback
+	if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+		LeaderEventUI.show_toast("Game saved (" + slot_name + ")", 2.0)
+
 	return true
 
 func load_game(slot_name: String = DEFAULT_SLOT) -> bool:
 	var path := get_save_path(slot_name)
 	if not FileAccess.file_exists(path):
-		push_error("SaveLoadManager: Save file not found: %s" % path)
+		var err_msg = "Load failed: file not found " + path
+		push_error("SaveLoadManager: " + err_msg)
+		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+			LeaderEventUI.show_toast(err_msg, 3.0, true)
 		return false
 
 	var f := FileAccess.open(path, FileAccess.READ)
@@ -236,6 +284,10 @@ func load_game(slot_name: String = DEFAULT_SLOT) -> bool:
 
 	_apply_save_data(data)
 	print("SaveLoadManager: Game loaded ← %s (v%d)" % [path, file_version])
+
+	if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+		LeaderEventUI.show_toast("Game loaded (" + slot_name + ")", 2.5)
+
 	return true
 
 ## === INTERNAL GATHER / APPLY ===
@@ -310,6 +362,11 @@ func _gather_save_data() -> Dictionary:
 		scenario_name = loader.get_current_scenario_name()
 	data["metadata"]["scenario_id"] = scenario_name
 
+	# Richer metadata for future save menu (timestamp already set above, scenario captured)
+	data["metadata"]["last_played"] = Time.get_datetime_string_from_system(true)
+	data["metadata"]["game_version"] = SAVE_GAME_VERSION
+	# play_time_seconds left as 0 for now (future: accumulate in _ready or day ticks)
+
 	# --- Production + Factories ---
 	if typeof(ProductionManager) != TYPE_NIL:
 		if ProductionManager.has_method("get_save_data"):
@@ -322,6 +379,9 @@ func _gather_save_data() -> Dictionary:
 			data["factories"] = FactoryManager.get_save_data()
 		else:
 			data["factories"] = {}
+
+	if typeof(DesignManager) != TYPE_NIL and DesignManager.has_method("get_save_data"):
+		data["design_lifecycle"] = DesignManager.get_save_data()
 
 	# --- Leaders ---
 	if typeof(LeaderManager) != TYPE_NIL:
@@ -367,8 +427,14 @@ func _apply_save_data(data: Dictionary) -> void:
 	# 8. Production + Factories (factories feed lines; apply after map provinces)
 	if data.has("factories") and typeof(FactoryManager) != TYPE_NIL:
 		_apply_factory_state(data["factories"])
+		if FactoryManager.has_method("reconcile_factory_owners_with_map"):
+			FactoryManager.reconcile_factory_owners_with_map()
 	if data.has("production") and typeof(ProductionManager) != TYPE_NIL:
 		_apply_production_state(data["production"])
+
+	if data.has("design_lifecycle") and typeof(DesignManager) != TYPE_NIL:
+		if DesignManager.has_method("apply_save_data"):
+			DesignManager.apply_save_data(data["design_lifecycle"])
 
 	# Future: after all core state, allow other managers to react
 	# e.g. if typeof(ProductionManager) != TYPE_NIL and ProductionManager.has_method("on_game_loaded"):
@@ -547,7 +613,7 @@ func _apply_map_state(m: Dictionary) -> void:
 		if e.has("owner_tag") or e.has("controller_tag"):
 			var owner := str(e.get("owner_tag", ""))
 			var ctrl := str(e.get("controller_tag", ""))
-			MapManager.update_province_owner(pid, owner, ctrl)
+			MapManager.update_province_owner(pid, owner, ctrl, true)
 
 		if e.has("development_level"):
 			MapManager.update_province_development(pid, int(e["development_level"]))
@@ -633,6 +699,27 @@ func quickload() -> bool:
 func get_last_save_path() -> String:
 	return _last_save_path
 
+## === Save Menu / Scenario helpers (foundation for future UI) ===
+
+## Returns the scenario_id stored in the save (or "" if not present).
+func get_saved_scenario_id(slot_name: String) -> String:
+	var meta := _peek_metadata(get_save_path(slot_name))
+	return str(meta.get("scenario_id", ""))
+
+## Lightweight compatibility check. Returns { "compatible": bool, "saved_scenario": "...", "current_scenario": "..." }
+## Future menu can use this to warn or offer to load the matching scenario first.
+func check_scenario_compatibility(slot_name: String) -> Dictionary:
+	var saved := get_saved_scenario_id(slot_name)
+	var current := ""
+	var loader := _find_scenario_loader()
+	if loader != null:
+		current = loader.get_current_scenario_name()
+	return {
+		"compatible": saved.is_empty() or current.is_empty() or saved == current,
+		"saved_scenario": saved,
+		"current_scenario": current
+	}
+
 ## === New apply helpers for expanded state ===
 
 func _apply_leader_state(l: Dictionary) -> void:
@@ -658,17 +745,20 @@ func _apply_production_state(p: Dictionary) -> void:
 
 ## Called for old save versions to upgrade data in-place before _apply.
 ## Add cases here as SAVE_VERSION increases (e.g. key renames, default sections, data shape fixes).
+## This is the central place for forward/backward compat.
 func _migrate_save_data(data: Dictionary) -> void:
 	var v := int(data.get("save_version", 0))
 	if v >= SAVE_VERSION:
 		return
 	print("SaveLoad: Migrating save from v%d to v%d" % [v, SAVE_VERSION])
 
-	# Example future migration:
+	# Example future migration (uncomment and extend as needed):
 	# if v < 2:
 	#     if not data.has("production"):
 	#         data["production"] = {}
-	#     # rename keys etc.
+	#     if data.has("old_key_name"):
+	#         data["new_key_name"] = data.pop("old_key_name")
+	#     # Provide defaults for new sections, fix shapes, etc.
 
 	data["save_version"] = SAVE_VERSION  # mark as upgraded
 
@@ -683,6 +773,8 @@ func save_game_detailed(slot_name: String = DEFAULT_SLOT) -> Dictionary:
 		var err := FileAccess.get_open_error()
 		var msg := "Cannot write save (error %d)" % err
 		push_error("SaveLoadManager: %s -> %s" % [msg, path])
+		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+			LeaderEventUI.show_toast("Save failed: " + msg, 3.0, true)
 		return {"ok": false, "error": msg, "path": path, "code": err}
 
 	f.store_string(json_text)
@@ -694,7 +786,10 @@ func save_game_detailed(slot_name: String = DEFAULT_SLOT) -> Dictionary:
 func load_game_detailed(slot_name: String = DEFAULT_SLOT) -> Dictionary:
 	var path := get_save_path(slot_name)
 	if not FileAccess.file_exists(path):
-		return {"ok": false, "error": "File not found", "path": path}
+		var msg := "File not found: " + path
+		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
+			LeaderEventUI.show_toast("Load failed: " + msg, 3.0, true)
+		return {"ok": false, "error": msg, "path": path}
 
 	var f := FileAccess.open(path, FileAccess.READ)
 	if f == null:

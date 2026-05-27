@@ -9,6 +9,7 @@ extends Node2D
 @export var ring_color_high_pressure: Color = Color(1.0, 0.42, 0.48, 0.9)
 @export var ring_color_supply_disrupt: Color = Color(0.98, 0.58, 0.28, 0.92)
 @export var ring_color_infra_sabotage: Color = Color(1.0, 0.38, 0.45, 0.92)
+@export var ring_color_infra_repair: Color = Color(0.22, 0.95, 0.78, 0.9)
 @export var ring_width: float = 2.8
 @export var ring_width_highlight: float = 3.6
 @export var max_ring_radius: float = 22.0
@@ -216,6 +217,35 @@ func _draw_pressure_status_bars(center: Vector2, radius: float, province_id: int
 		var t := clampf(float(p.infrastructure) / 50.0, 0.0, 1.0)
 		var fill_col := Color(0.4, 0.92, 0.55) if p.infrastructure > 20 else Color(1.0, 0.52, 0.32)
 		draw_rect(Rect2(pos, Vector2(bar_w * t, bar_h)), Color(fill_col, 0.92), true)
+		if typeof(MapManager) != TYPE_NIL:
+			var rate := MapManager.get_infrastructure_repair_rate(province_id)
+			var repair_t := clampf(rate / 0.35, 0.05, 1.0)
+			var repair_pos := pos + Vector2(0.0, bar_h + 2.0)
+			draw_rect(Rect2(repair_pos, Vector2(bar_w, 2.0)), Color(0.1, 0.14, 0.12, 0.75), true)
+			draw_rect(
+				Rect2(repair_pos, Vector2(bar_w * repair_t, 2.0)),
+				Color(0.28, 0.98, 0.78, 0.85),
+				true,
+			)
+			var chip := 0
+			if typeof(ProvinceInsight) != TYPE_NIL:
+				chip = ProvinceInsight.estimate_daily_infra_chip_damage(p)
+			if chip > 0:
+				var duel_total := maxf(float(chip) + rate, 0.01)
+				var chip_t := clampf(float(chip) / duel_total, 0.08, 0.92)
+				var chip_pos := repair_pos + Vector2(0.0, 4.0)
+				draw_rect(Rect2(chip_pos, Vector2(bar_w, 2.0)), Color(0.14, 0.08, 0.1, 0.75), true)
+				var winner := "even"
+				if float(chip) > rate:
+					winner = "sabotage"
+				elif rate > float(chip):
+					winner = "repair"
+				var chip_col := Color(0.9, 0.75, 0.35, 0.88)
+				if winner == "sabotage":
+					chip_col = Color(1.0, 0.35, 0.4, 0.92)
+				elif winner == "repair":
+					chip_col = Color(0.28, 0.98, 0.78, 0.9)
+				draw_rect(Rect2(chip_pos, Vector2(bar_w * chip_t, 2.0)), chip_col, true)
 	elif focus == "supply_disruption" and typeof(SupplyManager) != TYPE_NIL:
 		var depot = SupplyManager.depot_states.get(province_id)
 		if depot == null:
@@ -271,7 +301,8 @@ func _draw_network_ring(
 	province_id: int = -1,
 ) -> void:
 	var ambient_t := Time.get_ticks_msec() * 0.001
-	var ambient_wave := 0.5 + 0.5 * sin(ambient_t * 2.8) if pressure_focus else 0.0
+	var pulse_hz := 3.4 if focus == "infrastructure_sabotage" else 2.8
+	var ambient_wave := 0.5 + 0.5 * sin(ambient_t * pulse_hz) if pressure_focus else 0.0
 	var radius := lerpf(min_ring_radius, max_ring_radius, strength)
 	var alpha := lerpf(0.35, 0.95, strength)
 	var base_col := ring_color_highlight if emphasized else ring_color
@@ -283,15 +314,34 @@ func _draw_network_ring(
 		if focus == "supply_disruption":
 			col = col.lerp(ring_color_supply_disrupt, 0.52 if pressure_focus else 0.3)
 		elif focus == "infrastructure_sabotage":
-			col = col.lerp(ring_color_infra_sabotage, 0.48 if pressure_focus else 0.25)
+			col = col.lerp(ring_color_infra_sabotage, 0.52 if pressure_focus else 0.28)
+		elif province_id >= 0 and typeof(MapManager) != TYPE_NIL:
+			var bd_rec: Dictionary = MapManager.get_infrastructure_repair_breakdown(province_id)
+			if (
+				not bool(bd_rec.get("under_infra_sabotage", false))
+				and int(bd_rec.get("infrastructure", 50)) < 50
+			):
+				col = col.lerp(ring_color_infra_repair, 0.22 if pressure_focus else 0.12)
 
 	col.a *= alpha
 	if pressure_focus:
-		col.a = minf(1.0, col.a * (0.92 + ambient_wave * 0.12))
+		var pulse_boost := 0.18 if focus == "infrastructure_sabotage" else 0.1
+		if focus == "infrastructure_sabotage" and province_id >= 0 and typeof(MapManager) != TYPE_NIL:
+			var bd: Dictionary = MapManager.get_infrastructure_repair_breakdown(province_id)
+			if bool(bd.get("under_infra_sabotage", false)):
+				var chip := 0
+				if typeof(ProvinceInsight) != TYPE_NIL:
+					var p: Province = MapManager.get_province(province_id) as Province
+					if p != null:
+						chip = ProvinceInsight.estimate_daily_infra_chip_damage(p)
+				var rate := float(bd.get("total", 0.0))
+				pulse_boost = 0.24 if float(chip) > rate else 0.16
+		col.a = minf(1.0, col.a * (0.9 + ambient_wave * pulse_boost))
 
 	var width := ring_width_highlight if emphasized else ring_width
 	if pressure_focus:
-		width += 0.45 + ambient_wave * 0.25
+		var width_boost := 0.65 if focus == "infrastructure_sabotage" else 0.5
+		width += width_boost + ambient_wave * 0.35
 	if today_hit:
 		width += 0.4
 		draw_arc(

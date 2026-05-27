@@ -192,6 +192,7 @@ func set_line_template(line_id: String, template_id: String) -> Dictionary:
 		if fac_for_gate != null:
 			owner_tag = fac_for_gate.owner_tag
 	if typeof(TechnologyManager) != TYPE_NIL and not owner_tag.is_empty():
+		# Map Build Eligibility gate (Phase 1 = tech unlock; later: province-specific via MapTechnologyContext)
 		var gate := TechnologyManager.factory_can_build_design(owner_tag, fac_for_gate, template_id)
 		if not bool(gate.get("allowed", true)):
 			var detail: Dictionary = gate.get("detail", {}) as Dictionary
@@ -209,6 +210,9 @@ func set_line_template(line_id: String, template_id: String) -> Dictionary:
 	var result := line.set_template(template_id)
 	if not bool(result.get("success", false)):
 		return result
+
+	if typeof(DesignManager) != TYPE_NIL:
+		DesignManager.mark_design_used(owner_tag, template_id)
 
 	var retool_days := float(result.get("retooling_days", 0.0))
 	if retool_days > 0.0:
@@ -1372,6 +1376,7 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 		return true
 
 	if typeof(TechnologyManager) != TYPE_NIL:
+		# Map Build Eligibility gate (Phase 1 tech + factory type)
 		var gate := TechnologyManager.factory_can_build_design(
 			factory.owner_tag,
 			factory,
@@ -1434,6 +1439,8 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 		]
 	)
 	invalidate_production_cache(factory.owner_tag)
+	if typeof(DesignManager) != TYPE_NIL:
+		DesignManager.mark_design_used(factory.owner_tag, new_design_id)
 	return true
 
 

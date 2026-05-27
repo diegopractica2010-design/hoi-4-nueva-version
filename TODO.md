@@ -133,6 +133,11 @@ After the recent heavy investment in the National Modifier/Spirit system and Age
 ### Production Licensing & Diplomatic Factory Use
 - Allow nations to license production templates from other countries.
 - Use factories as part of diplomatic/trade deals.
+- **Trade System foundation complete** (see scripts/national/TradeManager.gd):
+  - Full offer/evaluation/accept backend with PUBLIC vs BLACK visibility.
+  - Fairness weighting (extensible), quality_modifier on designs, direct integration with DesignManager.grant_acquired_design.
+  - Comprehensive architecture docs + extension points for intel/tech/province/black-market events.
+  - Next: UI, AI proposers, SaveLoad, full item type execution.
 
 ### Smart Production Advisor
 - Tool that suggests which factories to assign when trying to build equipment for a new division/unit, with time-to-completion estimates.

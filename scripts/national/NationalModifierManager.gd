@@ -179,7 +179,7 @@ func get_production_modifiers(country_tag: String) -> Dictionary:
 		"reliability_multiplier": 1.0,
 		"retooling_days_multiplier": 1.0,
 		"cost_multiplier": 1.0,
-		"infrastructure_repair": 0.0,
+		"infrastructure_repair": 0.0,  # Consumed by MapManager repair system (tech + national focus support for infrastructure)
 	}
 
 	if typeof(TechnologyManager) != TYPE_NIL:

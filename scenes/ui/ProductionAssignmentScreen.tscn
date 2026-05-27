@@ -4,11 +4,19 @@
 
 [node name="ProductionAssignmentScreen" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -620.0
+offset_top = -360.0
+offset_right = 620.0
+offset_bottom = 360.0
+clip_contents = true
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 script = ExtResource("1_screen")
 country_tag = "GER"
 
@@ -22,95 +30,108 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.058824, 0.058824, 0.117647, 1)
 
-[node name="TopSummaryBar" type="HBoxContainer" parent="."]
+[node name="TitleBar" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 64.0
+offset_bottom = 40.0
 grow_horizontal = 2
+mouse_filter = 0
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="TitleBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Production"
+
+[node name="CloseButton" type="Button" parent="TitleBar"]
+layout_mode = 2
+text = "Close"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopSummaryBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
 theme_override_constants/separation = 28
 
-[node name="TotalFactoriesLabel" type="Label" parent="TopSummaryBar"]
+[node name="TotalFactoriesLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
 layout_mode = 2
 text = "Factories: 0"
 
-[node name="AverageEfficiencyLabel" type="Label" parent="TopSummaryBar"]
+[node name="AverageEfficiencyLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
 layout_mode = 2
 text = "Avg Efficiency: 100%"
 
-[node name="RetoolingLabel" type="Label" parent="TopSummaryBar"]
+[node name="RetoolingLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
 layout_mode = 2
 text = "Retooling: 0"
 
-[node name="DailyOutputLabel" type="Label" parent="TopSummaryBar"]
+[node name="DailyOutputLabel" type="Label" parent="MarginContainer/VBoxContainer/TopSummaryBar"]
 layout_mode = 2
 text = "Daily Output: 0.0"
 
-[node name="FilterBar" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 20.0
-offset_top = 72.0
-offset_right = -20.0
-offset_bottom = 112.0
-grow_horizontal = 2
+[node name="FilterBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="StatusFilter" type="OptionButton" parent="FilterBar"]
+[node name="StatusFilter" type="OptionButton" parent="MarginContainer/VBoxContainer/FilterBar"]
 layout_mode = 2
 custom_minimum_size = Vector2(168, 36)
 
-[node name="TypeFilter" type="OptionButton" parent="FilterBar"]
+[node name="TypeFilter" type="OptionButton" parent="MarginContainer/VBoxContainer/FilterBar"]
 layout_mode = 2
 custom_minimum_size = Vector2(168, 36)
 
-[node name="SearchEdit" type="LineEdit" parent="FilterBar"]
+[node name="SearchEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/FilterBar"]
 layout_mode = 2
 size_flags_horizontal = 3
 custom_minimum_size = Vector2(0, 36)
 placeholder_text = "Search design or province..."
 
-[node name="MainArea" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 120.0
-offset_right = -20.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MainArea" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 14
 
-[node name="FactoryColumn" type="VBoxContainer" parent="MainArea"]
+[node name="FactoryColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="HeaderRow" type="HBoxContainer" parent="MainArea/FactoryColumn"]
+[node name="HeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/FactoryColumn"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="FactoryList" type="ScrollContainer" parent="MainArea/FactoryColumn"]
+[node name="FactoryList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainArea/FactoryColumn"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FactoryListContent" type="VBoxContainer" parent="MainArea/FactoryColumn/FactoryList"]
+[node name="FactoryListContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainArea/FactoryColumn/FactoryList"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
-[node name="DetailPanel" type="PanelContainer" parent="MainArea"]
+[node name="DetailPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainArea"]
 layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 
-[node name="DetailLabel" type="Label" parent="MainArea/DetailPanel"]
+[node name="DetailLabel" type="Label" parent="MarginContainer/VBoxContainer/MainArea/DetailPanel"]
 layout_mode = 2
 text = "Select a factory for details."
 autowrap_mode = 2

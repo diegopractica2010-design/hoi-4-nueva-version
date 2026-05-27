@@ -149,6 +149,9 @@ func _apply_panel_style() -> void:
 	elif _selected_accent and _conflict_accent and _agent_accent and _supply_accent:
 		_panel_style.border_color = Color(0.98, 0.42, 0.88).lerp(Color(0.45, 0.88, 0.78), 0.45)
 		_panel_style.shadow_color = Color(0.4, 0.2, 0.35, 0.38)
+	elif _selected_accent and _conflict_accent and _agent_accent and _supply_accent and _support_accent:
+		_panel_style.border_color = Color(0.98, 0.5, 0.82, 0.96).lerp(Color(0.45, 0.88, 0.78), 0.42)
+		_panel_style.shadow_color = Color(0.4, 0.22, 0.38, 0.4)
 	elif _selected_accent and _conflict_accent and _agent_accent and _support_accent:
 		_panel_style.border_color = Color(0.98, 0.5, 0.82, 0.96).lerp(Color(0.4, 0.85, 1.0, 0.28), 0.35)
 		_panel_style.shadow_color = Color(0.45, 0.15, 0.35, 0.38)
@@ -161,6 +164,9 @@ func _apply_panel_style() -> void:
 	elif _conflict_accent and _agent_accent and _supply_accent and _agent_pressure_kind == "sabotage":
 		_panel_style.border_color = Color(0.45, 0.88, 0.78).lerp(Color(1.0, 0.42, 0.48), 0.48)
 		_panel_style.shadow_color = Color(0.2, 0.32, 0.18, 0.38)
+	elif _conflict_accent and _agent_accent and _supply_accent and _support_accent:
+		_panel_style.border_color = Color(0.5, 0.82, 0.95).lerp(Color(0.95, 0.5, 0.78), 0.35)
+		_panel_style.shadow_color = Color(0.2, 0.35, 0.45, 0.38)
 	elif _conflict_accent and _agent_accent and _supply_accent:
 		_panel_style.border_color = Color(0.45, 0.88, 0.78).lerp(Color(0.95, 0.5, 0.78), 0.55)
 		_panel_style.shadow_color = Color(0.2, 0.35, 0.35, 0.38)
@@ -206,6 +212,36 @@ func _apply_panel_style() -> void:
 	elif _selected_accent:
 		_panel_style.border_color = Color(0.98, 0.42, 0.88, 0.98)
 		_panel_style.shadow_color = Color(0.45, 0.12, 0.38, 0.38)
+	elif _supply_accent and _agent_pressure_kind == "disrupt":
+		_panel_style.border_color = Color(1.0, 0.58, 0.22, 0.96)
+		_panel_style.shadow_color = Color(0.55, 0.28, 0.08, 0.4)
+	elif _supply_accent and _agent_pressure_kind == "sabotage":
+		_panel_style.border_color = Color(1.0, 0.42, 0.45, 0.96)
+		_panel_style.shadow_color = Color(0.55, 0.15, 0.2, 0.4)
+	elif _supply_accent and _agent_pressure_kind == "repair":
+		_panel_style.border_color = Color(0.35, 0.92, 0.72, 0.96)
+		_panel_style.shadow_color = Color(0.15, 0.45, 0.35, 0.38)
+	elif _supply_accent and _agent_pressure_kind == "stalemate":
+		_panel_style.border_color = Color(1.0, 0.55, 0.35, 0.94).lerp(Color(0.35, 0.92, 0.72, 0.96), 0.45)
+		_panel_style.shadow_color = Color(0.4, 0.28, 0.18, 0.36)
+	elif _supply_accent and _agent_pressure_kind == "depot":
+		_panel_style.border_color = Color(1.0, 0.72, 0.28, 0.94)
+		_panel_style.shadow_color = Color(0.5, 0.35, 0.1, 0.38)
+	elif _conflict_accent and _supply_accent and _agent_pressure_kind == "repair":
+		_panel_style.border_color = Color(1.0, 0.48, 0.48, 0.9).lerp(Color(0.35, 0.92, 0.72, 0.96), 0.45)
+		_panel_style.shadow_color = Color(0.35, 0.2, 0.25, 0.36)
+	elif _agent_accent and _supply_accent and _support_accent and _agent_pressure_kind == "disrupt":
+		_panel_style.border_color = Color(1.0, 0.58, 0.22, 0.94).lerp(Color(0.4, 0.85, 1.0, 0.35), 0.38)
+		_panel_style.shadow_color = Color(0.45, 0.28, 0.12, 0.38)
+	elif _agent_accent and _supply_accent and _support_accent:
+		_panel_style.border_color = Color(0.4, 0.85, 1.0, 0.9).lerp(Color(0.35, 0.95, 0.72, 0.35), 0.4)
+		_panel_style.shadow_color = Color(0.15, 0.32, 0.45, 0.36)
+	elif _supply_accent and _support_accent and _agent_pressure_kind == "repair":
+		_panel_style.border_color = Color(0.35, 0.92, 0.72, 0.94).lerp(Color(0.42, 0.82, 1.0, 0.35), 0.4)
+		_panel_style.shadow_color = Color(0.15, 0.42, 0.45, 0.36)
+	elif _supply_accent and _support_accent:
+		_panel_style.border_color = Color(0.35, 0.92, 0.72, 0.92).lerp(Color(0.4, 0.85, 1.0, 0.35), 0.35)
+		_panel_style.shadow_color = Color(0.15, 0.38, 0.42, 0.36)
 	elif _supply_accent:
 		_panel_style.border_color = Color(0.35, 0.95, 0.72, 0.95)
 		_panel_style.shadow_color = Color(0.15, 0.45, 0.35, 0.35)
@@ -262,7 +298,7 @@ func show_text(
 		and not candidate_accent
 	)
 	set_tech_accent(tech_accent and not compare_active and not candidate_accent)
-	set_support_accent(support_accent and not compare_active and not candidate_accent and not tech_accent)
+	set_support_accent(support_accent and not compare_active and not candidate_accent)
 	if use_bbcode:
 		_rich.bbcode_enabled = true
 		_rich.text = text
