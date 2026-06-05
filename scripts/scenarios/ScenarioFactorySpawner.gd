@@ -2,7 +2,7 @@
 class_name ScenarioFactorySpawner
 extends Node
 
-const DEFAULT_SCENARIO := "1936"
+const DEFAULT_SCENARIO := "1860"
 const TOP_INDUSTRIAL_TAGS: Array[String] = ["USA", "GER", "ENG", "SOV", "JAP"]
 const TOP_NAVAL_SHIPYARD_TAGS: Array[String] = ["USA", "ENG", "JAP"]
 const SECOND_TIER_NAVAL_TAGS: Array[String] = ["GER", "ITA", "FRA"]

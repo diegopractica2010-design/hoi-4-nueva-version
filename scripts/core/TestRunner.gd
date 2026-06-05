@@ -12,7 +12,7 @@ func _ready() -> void:
 	print("=== Epochs of Ascendancy Test Starting ===")
 	_run_production_line_tests()
 
-	var success := loader.load_scenario("2026")
+	var success := loader.load_scenario("1860")
 
 	if not success:
 		print("Failed to load scenario.")
