@@ -8,7 +8,7 @@ Este documento resuelve la deuda técnica reportada previamente en la Fase 2.
 |----|-------------------|--------|
 | DT-01 | Autoloads de localización no registrados | RESUELTO |
 | DT-02 | Conflicto `class_name` vs nombre de autoload | RESUELTO |
-| DT-04 | Validación en runtime bloqueada | PARCIALMENTE RESUELTO |
+| DT-04 | Validación en runtime bloqueada | RESUELTO |
 
 ---
 
@@ -67,41 +67,60 @@ Este documento resuelve la deuda técnica reportada previamente en la Fase 2.
 - **Descripción original:** no se pudo validar en runtime (cambio de idioma en
   vivo, persistencia, ausencia de errores de arranque) porque los autoloads no
   estaban activos.
-- **Estado de resolución:** **PARCIALMENTE RESUELTO**
+- **Estado de resolución:** **RESUELTO**
 - **Detalles de implementación:**
-  - Se eliminó el bloqueo de origen: los autoloads ya están registrados (DT-01) y
-    el conflicto de nombres está resuelto (DT-02), por lo que el sistema **ya es
-    ejecutable** en runtime.
-  - Se ejecutó **validación estática automatizada** de los datos:
-    - Parseo JSON de `en.json` y `es.json`: **OK** en ambos.
-    - Conteo de claves: **36 / 36**.
-    - Paridad de claves (faltantes/sobrantes en Español): **0 / 0**.
-- **Por qué NO está totalmente resuelto:**
-  - El **ejecutable de Godot no está instalado/disponible** en este equipo (no se
-    encontró en PATH, rutas comunes ni registro), por lo que **no fue posible
-    lanzar el motor** para la verificación interactiva.
-  - La persona usuaria optó explícitamente por **validación estática** dado que no
-    hay Godot disponible en este momento.
-- **Archivos modificados:** ninguno adicional (validación, no cambios de código).
-- **Resultado de validación:**
-  - Verificación estática: **APROBADA**.
-  - Verificación interactiva en el editor (cambio de idioma en vivo + persistencia
-    entre sesiones): **PENDIENTE DE EJECUCIÓN** por ausencia del binario de Godot.
+  - Se eliminó el bloqueo de origen: autoloads registrados (DT-01) y conflicto de
+    nombres resuelto (DT-02).
+  - Se ejecutó el proyecto con **Godot 4.6 en modo headless** mediante una escena
+    de validación temporal (`_runtime_check.tscn`, eliminada tras la prueba) que
+    verificó el sistema real con los autoloads activos.
+  - La validación comprobó: autoloads activos, idiomas disponibles, texto en
+    Inglés, texto en Español, cambio de idioma en runtime, interpolación de
+    parámetros, fallback de clave inexistente y persistencia en disco.
+- **Resultado de validación (runtime, Godot 4.6 headless):**
 
-### Cómo completar la validación interactiva (cuando haya Godot)
+  | Comprobación | Resultado |
+  |--------------|-----------|
+  | `LocalizationSettings` activo | true |
+  | `LanguageManager` activo | true |
+  | `TranslationProvider` activo | true |
+  | `Localization` activo | true |
+  | Idiomas disponibles | `["en", "es"]` |
+  | EN `menu.main.save_game` | "Save Game" |
+  | ES `menu.main.save_game` | "Guardar partida" |
+  | Interpolación de parámetros | "El líder Rommel se ha retirado." |
+  | Fallback (clave inexistente) | devuelve la clave |
+  | Persistencia (guardar→cargar) | "es" |
+  | **Resultado global** | **APROBADO** |
 
-1. Abrir el proyecto en Godot 4.6.
-2. Confirmar que no aparecen errores de arranque en la consola.
-3. Instanciar `scripts/ui/LanguageSelector.tscn` en una escena y cambiar el idioma.
-4. Reiniciar y confirmar que el idioma elegido persiste
-   (`user://localization.cfg`).
+- **Errores de arranque:** ninguno proveniente de los scripts de localización.
+  (El proyecto sí muestra errores preexistentes en otros sistemas —`production`,
+  `map`, `national`, `technology`, `ui/TopInfoBar`— que son trabajo en curso de
+  otros agentes y están **fuera de mi alcance**.)
+
+### Bugs encontrados y corregidos durante la validación runtime
+
+La ejecución real reveló dos defectos en código propio que fueron corregidos:
+
+1. **Persistencia rota** — `LocalizationSettings` usaba `ResourceLoader.exists()`
+   para comprobar `user://localization.cfg`. Ese método solo detecta recursos
+   importados, no archivos `user://`, por lo que la carga siempre devolvía vacío.
+   Se reemplazó por `FileAccess.file_exists()`.
+2. **Lista de idiomas vacía** — `LanguageManager.get_available_languages()`
+   devolvía `AVAILABLE_LANGUAGES.duplicate()` (Array sin tipar) como `Array[String]`;
+   en Godot 4 esa conversión produce un arreglo vacío. Se reconstruye ahora un
+   `Array[String]` tipado explícitamente.
+
+- **Archivos modificados:**
+  - `scripts/localization/LocalizationSettings.gd`
+  - `scripts/localization/LanguageManager.gd`
 
 ---
 
 ## Conclusión
 
-DT-01 y DT-02 quedan **RESUELTOS**: la infraestructura de localización está
-**activa** y libre de conflictos de nombres. DT-04 queda **PARCIALMENTE RESUELTO**:
-el bloqueo técnico desapareció y la validación estática es satisfactoria, pero la
-confirmación interactiva no pudo ejecutarse porque el ejecutable de Godot no está
-disponible en este equipo.
+DT-01, DT-02 y DT-04 quedan **RESUELTOS**. La infraestructura de localización está
+**activa**, libre de conflictos de nombres y **verificada en runtime con Godot 4.6**:
+Inglés, Español, cambio de idioma en vivo y persistencia funcionan correctamente.
+Durante la validación se detectaron y corrigieron dos bugs propios (persistencia y
+listado de idiomas).

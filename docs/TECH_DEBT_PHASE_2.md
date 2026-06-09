@@ -1,8 +1,9 @@
 # Deuda Técnica — Fase 2 (Localización)
 
-> ACTUALIZACIÓN: DT-01, DT-02 y DT-04 fueron atendidos en la fase de cierre de
-> deuda. Ver `docs/PHASE_2_DEBT_RESOLUTION_REPORT.md`. Estados vigentes:
-> DT-01 = RESUELTO, DT-02 = RESUELTO, DT-04 = PARCIALMENTE RESUELTO.
+> ACTUALIZACIÓN: DT-01, DT-02 y DT-04 fueron RESUELTOS en la fase de cierre de
+> deuda y verificados en runtime con Godot 4.6. Ver
+> `docs/PHASE_2_DEBT_RESOLUTION_REPORT.md`. Estados vigentes:
+> DT-01 = RESUELTO, DT-02 = RESUELTO, DT-04 = RESUELTO.
 > DT-03 y DT-05 siguen en **PENDIENTE** (fuera de alcance).
 
 ## DT-01 — Registro de autoloads en `project.godot`

@@ -31,7 +31,7 @@ const LANGUAGE_KEY = "language"
 func save_language_preference(language_code: String) -> void:
 	var config = ConfigFile.new()
 	
-	if ResourceLoader.exists(SETTINGS_FILE):
+	if FileAccess.file_exists(SETTINGS_FILE):
 		var load_error = config.load(SETTINGS_FILE)
 		if load_error != OK:
 			push_warning("Could not load existing localization settings, creating new file")
@@ -49,7 +49,7 @@ func save_language_preference(language_code: String) -> void:
 func load_language_preference() -> String:
 	var config = ConfigFile.new()
 	
-	if not ResourceLoader.exists(SETTINGS_FILE):
+	if not FileAccess.file_exists(SETTINGS_FILE):
 		return ""
 	
 	var load_error = config.load(SETTINGS_FILE)

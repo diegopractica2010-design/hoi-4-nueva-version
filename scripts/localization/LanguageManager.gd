@@ -54,7 +54,13 @@ func set_language(language_code: String) -> void:
 	language_changed.emit(old_lang, _current_language)
 
 func get_available_languages() -> Array[String]:
-	return AVAILABLE_LANGUAGES.duplicate()
+	# Se construye un Array[String] tipado explícitamente. Devolver
+	# AVAILABLE_LANGUAGES.duplicate() (Array sin tipar) produce un arreglo vacío
+	# al convertirlo al tipo de retorno Array[String] en Godot 4.
+	var result: Array[String] = []
+	for language_code in AVAILABLE_LANGUAGES:
+		result.append(language_code)
+	return result
 
 func get_language_display_name(language_code: String) -> String:
 	match language_code:
