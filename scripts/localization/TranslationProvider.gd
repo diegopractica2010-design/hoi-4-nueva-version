@@ -14,7 +14,7 @@
 ##   get_missing_keys() -> Array[String]
 ##
 ## Implementation:
-## - Translation files: data/translations/{lang_code}.json
+## - Translation files: data/localization/{lang_code}.json
 ## - Format: { "section.key": "Translated text" }
 ## - Parameters: {key_name} replaced with params["key_name"]
 ##
@@ -74,7 +74,7 @@ func _load_language(language_code: String) -> void:
 		_translations = translations
 
 func _load_language_file(language_code: String) -> Dictionary:
-	var file_path = "res://data/translations/%s.json" % language_code
+	var file_path = "res://data/localization/%s.json" % language_code
 	
 	if not ResourceLoader.exists(file_path):
 		push_warning("Translation file not found: %s" % file_path)

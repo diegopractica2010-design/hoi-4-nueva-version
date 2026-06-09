@@ -1,0 +1,44 @@
+{
+	"language.name.en": "Inglés",
+	"language.name.es": "Español",
+
+	"menu.main.new_game": "Nueva partida",
+	"menu.main.load_game": "Cargar partida",
+	"menu.main.save_game": "Guardar partida",
+	"menu.main.settings": "Configuración",
+	"menu.main.quit": "Salir",
+	"menu.main.continue": "Continuar",
+	"menu.main.credits": "Créditos",
+
+	"menu.settings.title": "Configuración",
+	"menu.settings.language": "Idioma",
+	"menu.settings.audio": "Audio",
+	"menu.settings.graphics": "Gráficos",
+	"menu.settings.back": "Volver",
+	"menu.settings.apply": "Aplicar",
+
+	"common.yes": "Sí",
+	"common.no": "No",
+	"common.ok": "Aceptar",
+	"common.cancel": "Cancelar",
+	"common.confirm": "Confirmar",
+	"common.close": "Cerrar",
+	"common.loading": "Cargando...",
+	"common.error": "Error",
+
+	"hud.date": "Fecha",
+	"hud.pause": "En pausa",
+	"hud.speed": "Velocidad",
+	"hud.political_power": "Poder político",
+	"hud.manpower": "Mano de obra",
+	"hud.factories": "Fábricas",
+
+	"tooltip.province.population": "Población: {value}",
+	"tooltip.province.owner": "Propietario: {name}",
+	"tooltip.factory.output": "Producción: {value}",
+
+	"message.leader_retired": "El líder {name} se ha retirado.",
+	"message.game_saved": "Partida guardada correctamente.",
+	"message.game_loaded": "Partida cargada correctamente.",
+	"message.trade_completed": "Comercio con {country} completado."
+}

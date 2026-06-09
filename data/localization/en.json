@@ -1,0 +1,44 @@
+{
+	"language.name.en": "English",
+	"language.name.es": "Spanish",
+
+	"menu.main.new_game": "New Game",
+	"menu.main.load_game": "Load Game",
+	"menu.main.save_game": "Save Game",
+	"menu.main.settings": "Settings",
+	"menu.main.quit": "Quit",
+	"menu.main.continue": "Continue",
+	"menu.main.credits": "Credits",
+
+	"menu.settings.title": "Settings",
+	"menu.settings.language": "Language",
+	"menu.settings.audio": "Audio",
+	"menu.settings.graphics": "Graphics",
+	"menu.settings.back": "Back",
+	"menu.settings.apply": "Apply",
+
+	"common.yes": "Yes",
+	"common.no": "No",
+	"common.ok": "OK",
+	"common.cancel": "Cancel",
+	"common.confirm": "Confirm",
+	"common.close": "Close",
+	"common.loading": "Loading...",
+	"common.error": "Error",
+
+	"hud.date": "Date",
+	"hud.pause": "Paused",
+	"hud.speed": "Speed",
+	"hud.political_power": "Political Power",
+	"hud.manpower": "Manpower",
+	"hud.factories": "Factories",
+
+	"tooltip.province.population": "Population: {value}",
+	"tooltip.province.owner": "Owner: {name}",
+	"tooltip.factory.output": "Output: {value}",
+
+	"message.leader_retired": "Leader {name} has retired.",
+	"message.game_saved": "Game saved successfully.",
+	"message.game_loaded": "Game loaded successfully.",
+	"message.trade_completed": "Trade with {country} completed."
+}
