@@ -1,0 +1,111 @@
+﻿Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+Godot_v4.6-stable_win64_console.exe : SCRIPT ERROR: Parse Error: Cannot assign a value of type "Color" as "String".
+En línea: 1 Carácter: 82
++ ... a-version"; & "C:\Users\Diego y Pauli\Desktop\proyecto\godot\Godot_v4 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (SCRIPT ERROR: P...r" as "String".:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   at: GDScript::reload (res://scripts/map/ProvinceInsight.gd:1469)
+SCRIPT ERROR: Parse Error: Value of type "Color" cannot be assigned to a variable of type "String".
+   at: GDScript::reload (res://scripts/map/ProvinceInsight.gd:1469)
+SCRIPT ERROR: Parse Error: Cannot assign a value of type "Color" as "String".
+   at: GDScript::reload (res://scripts/map/ProvinceInsight.gd:1471)
+SCRIPT ERROR: Parse Error: Value of type "Color" cannot be assigned to a variable of type "String".
+   at: GDScript::reload (res://scripts/map/ProvinceInsight.gd:1471)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/map/MapTechnologyContext.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/technology/TechnologyManager.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/national/NationalModifierManager.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/national/NationalSpiritManager.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/map/ProvinceEffects.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/supply/SupplyManager.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/leaders/LeaderManager.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/autoload/TimeManager.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/autoload/ProductionManager.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/autoload/GameData.gd:0)
+ERROR: Failed to load script "res://scripts/autoload/GameData.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "is_from" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/national/TradeManager.gd:412)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "from" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/national/TradeManager.gd:502)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "to" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/national/TradeManager.gd:503)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "modifiers" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/national/TradeManager.gd:1168)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "modifiers" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/national/TradeManager.gd:1181)
+ERROR: Failed to load script "res://scripts/national/TradeManager.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+ERROR: Failed to instantiate an autoload, script 'res://scripts/national/TradeManager.gd' does not inherit from 'Node'.
+   at: start (main/main.cpp:4407)
+✅ Equipment modules loaded: 1082
+✅ Unit templates loaded: 1022
+✅ Sustainment equipment loaded: 4
+✅ Production line rules loaded
+Loaded 68 leaders (25 in pool) from [res://data/leaders/historical_leaders_1936.json] for year 1936
+TimeManager: Initialized (default 1936-01-01)
+AgentManager: Loaded 11 mission definitions
+TechnologyManager: Loaded 23 technology nodes
+SaveLoadManager: Initialized (JSON format v1, user://saves/)
+P4| ===== INICIO VALIDACION FASE 4 =====
+P4| DesignManager presente=true
+P4| FactoryManager presente=true
+P4| ProductionManager presente=true
+P4| TimeManager presente=true
+P4| DesignManager conectado a TimeManager.game_year_advanced=true
+P4| DM tiene try_grant_captured_designs_from_factory=true
+P4| DM tiene mark_design_used=true
+P4| DM get_current_year=1936
+P4| --- ESCENARIO 1879 ---
+✅ Province geometry loaded: 100
+✅ Base provinces loaded: 840 provinces
+=== APPLYING SCENARIO OVERRIDES ===
+  id 2 | owner=GER | specials={ "capital": 1 }
+  id 4 | owner=FRA | specials={ "capital": 1 }
+  id 5 | owner=ENG | specials={ "capital": 1, "port": 5 }
+  id 6 | owner=USA | specials={ "capital": 1 }
+ScenarioFactorySpawner: 1879 — 76 factories, 3 shipyards across 13 province entries
+TimeManager: Scenario start date set to 1879-02-14 (year 1879)
+Loaded 16 leaders (0 in pool) from [res://data/leaders/historical_leaders_1879.json] for year 1879
+✅ Scenario leaders loaded (1879, 1879): 16 active, 0 pooled
+WARNING: TechnologyManager: No starting tech file for scenario '1879', using minimal defaults
+   at: push_warning (core/variant/variant_utility.cpp:1034)
+   GDScript backtrace (most recent call first):
+       [0] apply_scenario_starting_tech (res://scripts/technology/TechnologyManager.gd:1379)
+       [1] _apply_scenario_starting_technology (res://scripts/core/ScenarioLoader.gd:350)
+       [2] load_scenario (res://scripts/core/ScenarioLoader.gd:299)
+       [3] _ready (res://scripts/core/_phase4_check.gd:28)
+TechnologyManager: Applied starting tech for scenario '1879' (9 countries, year 1879)
+Spawned 4 test formations for ARG
+Spawned 4 test formations for BOL
+Spawned 4 test formations for BRA
+Spawned 4 test formations for CHL
+Spawned 4 test formations for ENG
+Spawned 4 test formations for FRA
+Spawned 4 test formations for GER
+Spawned 4 test formations for PER
+Spawned 4 test formations for USA
+Scenario loaded with formations for 9 countries (leader assignment).
+✅ Scenario loaded | Provinces: 840 | Countries: 9
+🗺️ MapPickGrid built with 840 provinces, cell_size=64.0, 90 cells
+🗺️ MapManager initialized with 840 provinces (bounds: [P: (0.0, 0.0), S: (4036.508, 1517.94)])
+P4| load_scenario('1879') ok=true
+P4| provincias=840 paises=9
+P4| ===== FIN VALIDACION FASE 4 =====
+SaveLoadManager: Autosaved on exit/quit -> autosave.json
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2641)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)
