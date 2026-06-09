@@ -1,76 +1,33 @@
-# ==========================================
-# Epochs of Ascendancy - Godot 4 Project
-# ==========================================
+﻿# Godot 4 .gitignore
 
-# Godot 4
+# Godot-specific ignores
 .godot/
-*.import
-export_presets.cfg
-*.uid                    # Godot UID cache files (causes merge conflicts)
-*.tmp
-*.temp
+*.uid
 
-# Godot exports / builds
-export/
-build/
-dist/
-*.pck
-*.zip
-*.exe
-*.app
+# Importados automaticamente (se regeneran)
+.import/
+export.cfg
+export_presets.cfg
+
+# Mono / C# (si aplica)
+.mono/
+data_*/
+mono_crash.*.json
+
+# Builds
+builds/
 *.apk
 *.aab
+*.ipa
+*.exe
+*.x86_64
+*.app
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-*.egg-info/
-dist/
-build/
-
-# IDEs and Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.project
-.settings/
-
-# OS generated files
+# OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# Logs and temporary files
-*.log
-logs/
-*.bak
-*.old
-
-# Tools / Generators cache
-tools/__pycache__/
-tools/*.pyc
-
-# Large binary files (optional but recommended)
-*.png~                # Godot import temp files
-*.wav~
-*.ogg~
-
-# Misc
-*.tmp
-*.temp
-*.cache
+# Editor
+*.swp
+*~
