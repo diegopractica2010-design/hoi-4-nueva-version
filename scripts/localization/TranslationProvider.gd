@@ -22,7 +22,8 @@
 ##   var text = TranslationProvider.get_text("menu.main.save_game")
 ##   var msg = TranslationProvider.get_text("message.leader_retired", {"name": leader_name})
 
-class_name TranslationProvider
+# NOTA: Sin class_name a propósito. Se registra como autoload llamado
+# "TranslationProvider"; un class_name homónimo causaría conflicto en Godot 4.
 extends Node
 
 var _translations: Dictionary = {}

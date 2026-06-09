@@ -32,6 +32,10 @@ TradeManager="*res://scripts/national/TradeManager.gd"
 MapManager="*res://scripts/map/MapManager.gd"
 TechnologyManager="*res://scripts/technology/TechnologyManager.gd"
 SaveLoadManager="*res://scripts/autoload/SaveLoadManager.gd"
+LocalizationSettings="*res://scripts/localization/LocalizationSettings.gd"
+LanguageManager="*res://scripts/localization/LanguageManager.gd"
+TranslationProvider="*res://scripts/localization/TranslationProvider.gd"
+Localization="*res://scripts/localization/Localization.gd"
 
 [display]
 

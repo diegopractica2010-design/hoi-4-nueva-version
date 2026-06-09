@@ -20,7 +20,8 @@
 ##   LocalizationSettings.save_language_preference("es")
 ##   var lang = LocalizationSettings.load_language_preference()
 
-class_name LocalizationSettings
+# NOTA: Sin class_name a propósito. Se registra como autoload llamado
+# "LocalizationSettings"; un class_name homónimo causaría conflicto en Godot 4.
 extends Node
 
 const SETTINGS_FILE = "user://localization.cfg"

@@ -1,7 +1,9 @@
 # Deuda Técnica — Fase 2 (Localización)
 
-> Regla de la fase: la deuda **no se corrige**, solo se documenta.
-> Estado de todos los ítems: **PENDIENTE**.
+> ACTUALIZACIÓN: DT-01, DT-02 y DT-04 fueron atendidos en la fase de cierre de
+> deuda. Ver `docs/PHASE_2_DEBT_RESOLUTION_REPORT.md`. Estados vigentes:
+> DT-01 = RESUELTO, DT-02 = RESUELTO, DT-04 = PARCIALMENTE RESUELTO.
+> DT-03 y DT-05 siguen en **PENDIENTE** (fuera de alcance).
 
 ## DT-01 — Registro de autoloads en `project.godot`
 

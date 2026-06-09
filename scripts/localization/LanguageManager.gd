@@ -21,7 +21,8 @@
 ##   LanguageManager.set_language("es")
 ##   LanguageManager.language_changed.connect(_on_language_changed)
 
-class_name LanguageManager
+# NOTA: Sin class_name a propósito. Se registra como autoload llamado
+# "LanguageManager"; un class_name con el mismo nombre causaría conflicto en Godot 4.
 extends Node
 
 const AVAILABLE_LANGUAGES = ["en", "es"]

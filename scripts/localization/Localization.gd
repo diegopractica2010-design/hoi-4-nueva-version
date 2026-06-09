@@ -19,7 +19,8 @@
 ##   Localization.set_language("es")
 ##   Localization.language_changed.connect(_on_language_changed)
 
-class_name Localization
+# NOTA: Sin class_name a propósito. Se registra como autoload llamado
+# "Localization"; un class_name homónimo causaría conflicto en Godot 4.
 extends Node
 
 signal language_changed(old_language: String, new_language: String)
