@@ -1,0 +1,12 @@
+{
+  "tag": "ARG",
+  "name": "Republica Argentina",
+  "scenario": "1879",
+  "playable": false,
+  "ai_diplomatic": true,
+  "capital_province_id": 28,
+  "color": "#75AADB",
+  "government": "republican",
+  "historical_role": "Actor regional atento al equilibrio austral, la Patagonia y el efecto diplomatico de la guerra sobre Chile.",
+  "strategic_priorities": ["neutralidad_armada", "presion_fronteriza", "equilibrio_regional"]
+}

@@ -1,0 +1,12 @@
+{
+  "tag": "FRA",
+  "name": "Tercera Republica Francesa",
+  "scenario": "1879",
+  "playable": false,
+  "ai_diplomatic": true,
+  "capital_province_id": 4,
+  "color": "#0055A4",
+  "government": "republican",
+  "historical_role": "Potencia europea con interes diplomatico, financiero y tecnologico en la region.",
+  "strategic_priorities": ["comercio_exterior", "influencia_diplomatica", "observacion_naval"]
+}

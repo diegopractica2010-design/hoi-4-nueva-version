@@ -1,0 +1,8 @@
+{
+  "scenario": "1879",
+  "loader_entry": "res://data/scenarios/1879.json",
+  "start_date": "1879-02-14",
+  "owned_scope_note": "El ScenarioLoader actual requiere un archivo plano por escenario. Este manifiesto mantiene una raiz documental para archivos 1879 sin duplicar datos cargables.",
+  "playable_countries": ["CHL", "PER", "BOL"],
+  "diplomatic_ai_countries": ["ARG", "BRA", "USA", "ENG", "FRA", "GER"]
+}

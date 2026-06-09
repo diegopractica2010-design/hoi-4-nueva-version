@@ -1,0 +1,12 @@
+{
+  "tag": "USA",
+  "name": "Estados Unidos de America",
+  "scenario": "1879",
+  "playable": false,
+  "ai_diplomatic": true,
+  "capital_province_id": 6,
+  "color": "#3C3B6E",
+  "government": "republican",
+  "historical_role": "Mediador hemisferico potencial con intereses comerciales y navales crecientes en el Pacifico.",
+  "strategic_priorities": ["mediacion", "comercio_pacifico", "estabilidad_hemisferica"]
+}

@@ -1,0 +1,12 @@
+{
+  "tag": "BRA",
+  "name": "Imperio del Brasil",
+  "scenario": "1879",
+  "playable": false,
+  "ai_diplomatic": true,
+  "capital_province_id": 29,
+  "color": "#009B3A",
+  "government": "monarchy",
+  "historical_role": "Potencia sudamericana de observacion diplomatica, interesada en estabilidad continental y comercio atlantico.",
+  "strategic_priorities": ["equilibrio_sudamericano", "comercio_atlantico", "neutralidad"]
+}

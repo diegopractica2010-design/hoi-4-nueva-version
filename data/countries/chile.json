@@ -1,0 +1,17 @@
+{
+  "tag": "CHL",
+  "name": "Republica de Chile",
+  "scenario": "1879",
+  "playable": true,
+  "capital_province_id": 90,
+  "color": "#0033A0",
+  "government": "republican",
+  "historical_role": "Potencia beligerante que busca asegurar el desierto de Atacama, los puertos salitreros y la superioridad naval en el Pacifico sur.",
+  "strategic_priorities": ["control_del_litoral", "superioridad_naval", "movilizacion_expedicionaria"],
+  "starting_posture": {
+    "stability": 62,
+    "war_support": 68,
+    "industrial_capacity": "baja_media",
+    "naval_readiness": "alta_regional"
+  }
+}

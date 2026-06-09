@@ -1,0 +1,17 @@
+{
+  "tag": "BOL",
+  "name": "Republica de Bolivia",
+  "scenario": "1879",
+  "playable": true,
+  "capital_province_id": 83,
+  "color": "#007A33",
+  "government": "republican",
+  "historical_role": "Beligerante andino con litoral disputado, dependencia logistica alta y necesidad de coordinar defensa con Peru.",
+  "strategic_priorities": ["defensa_del_litoral", "movilizacion_andina", "cooperacion_con_peru"],
+  "starting_posture": {
+    "stability": 42,
+    "war_support": 55,
+    "industrial_capacity": "muy_baja",
+    "naval_readiness": "limitada"
+  }
+}

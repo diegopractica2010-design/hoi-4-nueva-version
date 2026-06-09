@@ -1,0 +1,17 @@
+{
+  "tag": "PER",
+  "name": "Republica Peruana",
+  "scenario": "1879",
+  "playable": true,
+  "capital_province_id": 71,
+  "color": "#D91023",
+  "government": "republican",
+  "historical_role": "Aliado de Bolivia y defensor de los enclaves costeros, con una guerra que depende de sostener la escuadra, Lima y los recursos del sur.",
+  "strategic_priorities": ["defensa_costera", "escuadra_de_disuasion", "alianza_con_bolivia"],
+  "starting_posture": {
+    "stability": 48,
+    "war_support": 58,
+    "industrial_capacity": "baja",
+    "naval_readiness": "media_regional"
+  }
+}

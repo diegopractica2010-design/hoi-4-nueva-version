@@ -1,191 +1,126 @@
-# Epochs of Ascendancy
+# Guerra del Pacifico: conversion 1879
 
-**A grand strategy game of empire, industry, and ascendancy across the 20th and 21st centuries.**
-
-Built in **Godot 4.6** — inspired by *Hearts of Iron IV*, *Terra Invicta*, and *Supreme Ruler*.
-
----
+Este repositorio contiene una conversion historica de gran estrategia construida sobre Godot 4.6. El eje oficial del proyecto es la Guerra del Pacifico, iniciada en 1879, con Chile, Peru y Bolivia como paises jugables y un entorno diplomatico internacional que reacciona al conflicto.
 
 ## Vision
 
-Epochs of Ascendancy puts you in command of any nation across three pivotal starting dates:
+Crear una experiencia de estrategia historica donde el jugador pueda dirigir gobiernos, fuerzas armadas, industria, logistica y diplomacia durante la Guerra del Pacifico. El objetivo no es reemplazar la arquitectura base de Epochs of Ascendancy, sino usarla como plataforma para una conversion enfocada, data-driven y verificable.
 
-- **1918** – Post-WWI world of empires, revolution, and fragile peace
-- **1936** – Interwar rearmament, ideological struggle, and the road to global conflict
-- **2026** – Modern multipolar world with great-power competition, advanced technology, and the dawn of new frontiers
+La prioridad de diseno es que cada sistema jugable tenga una razon historica: control del salitre, acceso al litoral, superioridad naval, movilizacion andina, presion diplomatica, financiamiento externo y desgaste logistico.
 
-Shape (or completely rewrite) history through economic mastery, technological leaps, military innovation, ideological conviction, diplomacy, trade, espionage, and bold strategic choices. Every decision ripples through the ages. Deep replayability comes from choosing any country and forging alternate histories.
+## Marco historico
 
-The game emphasizes **player freedom in design** — from customizing divisions, tanks, planes, ships, and even spaceships/space stations, to building massive focus trees and tech trees that reflect your nation’s unique path to ascendancy.
+El escenario 1879 comienza el 14 de febrero de 1879, cuando Chile ocupa Antofagasta y abre una crisis regional entre Chile, Bolivia y Peru. El mapa base actual aun es abstracto, por lo que la primera fundacion representa los centros politicos y economicos con provincias existentes:
 
----
+- Chile: Santiago y capacidad expedicionaria sobre el Pacifico sur.
+- Peru: Lima y enclaves salitreros del sur.
+- Bolivia: capital andina y litoral disputado representado mediante provincia costera asignada.
+- Argentina y Brasil: observadores regionales.
+- Estados Unidos, Reino Unido, Francia y Alemania: potencias diplomaticas, comerciales y proveedoras de tecnologia o armas.
 
-## Current Features
+## Paises jugables
 
-- **Three playable start dates** (1918, 1936, 2026) with era-appropriate data
-- **~100 strategic provinces** with resources, terrain, development, infrastructure, population, and victory points
-- **Dynamic province system** featuring factories, special buildings (Research Centers, Ports, Shipyards, Oil Rigs, Nuclear Plants, Spaceports, etc.) with upgradeable levels
-- **Country system** with ideologies, stability, war support, capitals, and colors
-- **Interactive map** with country-colored provinces, capital markers, stacked special feature icons, hover effects, and detailed InfoPanel
-- **Camera controls** — Scroll wheel zoom (toward mouse), WASD panning, edge scrolling, and middle-mouse drag (recently overhauled and solid for prototype use)
-- **Data-driven architecture** — JSON/resources for provinces, scenarios, and countries. Highly moddable foundation
+- Chile
+- Peru
+- Bolivia
 
----
+## Paises de IA diplomatica
 
-## Controls (Current Prototype)
+- Argentina
+- Brasil
+- Estados Unidos de America
+- Reino Unido
+- Francia
+- Alemania
 
-- **Left Click** — Select province and open InfoPanel
-- **Mouse Hover** — Highlight provinces with pop effect
-- **Camera** — Zoom, pan with WASD/edge/middle drag
-- **Close Panel** — X button or Escape
+## Sistemas planificados
 
----
+- Escenario 1879 cargable desde `ScenarioLoader`.
+- Paises y colores cargables por el bloque `countries` del escenario.
+- Lideres historicos cargables por `LeaderManager`.
+- Base de industrias y astilleros mediante `ScenarioFactorySpawner`.
+- Investigacion inicial compatible con `TechnologyManager`.
+- Produccion nacional compatible con `FactoryManager` y `ProductionManager`.
+- Suministro y presencia militar compatible con `SupplyManager`.
+- Diplomacia historica para mediacion, neutralidad, compras externas y presion regional.
+- Localizacion data-driven sin hardcodear cadenas nuevas en scripts.
+- Futuros eventos historicos para campanas terrestres, guerra naval, bloqueo y negociaciones.
 
-## Expanded Scope & Key Systems
+## Roadmap
 
-### Multiplayer
-Primary focus is **2–4 players** online, with support for up to **4–8 players**. Games are designed around synchronous or turn-based-friendly online sessions. Authoritative server or peer-to-peer options will be evaluated. Hotseat/local multiplayer as a secondary mode. Multiplayer considerations will influence architecture from early on (state synchronization, desync prevention, etc.).
+### Fase 3: Fundacion Guerra del Pacifico
 
-### Customization & Unit Designers
-Full design freedom for key military and advanced assets:
+- Crear escenario 1879.
+- Crear definiciones nacionales de Chile, Peru, Bolivia y paises diplomaticos.
+- Crear roster historico inicial.
+- Documentar arquitectura, validacion, deuda tecnica y plan maestro.
+- Mantener compatibilidad con loaders existentes sin modificar scripts fuera de alcance.
 
-- **Division Designer** — Customize infantry, support companies, templates
-- **Tank Designer** — Chassis, guns, armor, engines, special modules
-- **Plane Designer** — Fighters, bombers, CAS, transport aircraft
-- **Boat / Ship Designer** — Surface fleet, submarines, carriers
-- **Spaceship & Space Station / Satellite Designer** — Future-oriented units for orbital and deep-space operations (especially relevant in 2026+ scenarios)
+### Fase 4: Contenido jugable inicial
 
-Production lines feed these designs. Key equipment categories include infantry gear, artillery, drones (various types), and more. Units have stats, costs, and upgrade paths.
+- Expandir provincias especificas del teatro si el mapa base lo permite.
+- Crear eventos de inicio de guerra, alianza Peru-Bolivia y decisiones de movilizacion.
+- Introducir objetivos nacionales por pais.
+- Conectar diplomacia con compras, mediacion y presion de potencias.
 
-### Technology & Focus Trees
-- **Large, branching Tech Tree** — Era-spanning research with prerequisites, bonuses, and alt-history branches
-- **Large Focus Trees** — National/ideological paths with mutually exclusive or timed focuses. Major powers get deep trees; minors have meaningful options too
+### Fase 5: Sistemas historicos profundos
 
-### Espionage, Agents & Intelligence
-- **Agent system** with recruitment, assignment, skills, and experience
-- **Espionage missions** (sabotage, intel gathering, influence ops, tech theft, etc.)
-- **Facilities** supporting covert operations
-- Integration with diplomacy, tech race, and internal stability
+- Campanas terrestres del desierto y sierra.
+- Guerra naval con impacto logistico y control de puertos.
+- Economia salitrera, deuda, comercio externo y financiamiento.
+- Paz, tratados, ocupacion y consecuencias de posguerra.
 
-### Economy, Production & Trade
-- Province-level and national production lines
-- Resource management, stockpiles, and trade routes
-- **Trade** as a major diplomatic and economic lever (bilateral deals, embargoes, global markets)
+## Estructura del repositorio
 
-### Diplomacy & AI
-- Deep diplomacy system (alliances, guarantees, trade agreements, ultimatums, influence)
-- Robust **AI opponents** capable of long-term planning, reacting to player actions, and pursuing their own ascendancy goals
-- AI will use many of the same systems (designers, focus trees, espionage) for fairness and depth
+- `data/scenarios/`: escenarios cargables por `ScenarioLoader`.
+- `data/scenarios/1879/`: manifiesto y documentacion auxiliar del paquete 1879.
+- `data/countries/`: definiciones historicas nacionales de la conversion.
+- `data/leaders/`: rosters historicos por escenario.
+- `data/provinces/`: mapa base, geometria, recursos, economia y capas.
+- `data/technology/`: arboles y paquetes de tecnologia existentes.
+- `data/production/`: reglas de fabricas, costes y modificadores.
+- `data/supply/`: reglas de suministro.
+- `scripts/`: sistemas Godot que cargan y ejecutan la simulacion.
+- `docs/`: planes, auditorias e informes oficiales.
 
-### Replayability & Alternate History
-- Play **any country**
-- Decisions have lasting consequences across economic, military, technological, and diplomatic spheres
-- Strong support for alt-history outcomes through flexible trees, events, and player-driven unit/strategy design
-- Multiple paths to victory or dominance (economic, military, technological, ideological, or hybrid)
+## Flujo de trabajo con IA
 
----
+El proyecto puede ser trabajado por multiples agentes en paralelo. Cada agente debe:
 
-## Development & Testing (May 2026)
+- Respetar estrictamente el alcance de archivos asignado.
+- Leer arquitectura antes de editar datos.
+- Preferir extensiones data-driven a cambios de scripts.
+- Validar JSON y arranque despues de cada fase.
+- Registrar deuda tecnica en documentos, sin corregirla cuando este fuera de alcance.
+- Evitar cambios cosmeticos o refactors no solicitados.
+- Comitear cambios con mensajes claros y pequenos.
 
-- **Current state:** [docs/CURRENT_STATE.md](docs/CURRENT_STATE.md)
-- **Testing plan:** [docs/TESTING_PLAN.md](docs/TESTING_PLAN.md) (Time, daily agent pressure, Support/Radio, multi-overlay map)
-- **Roadmap / tasks:** [TODO.md](TODO.md)
+## Politica de deuda tecnica
 
----
+La deuda tecnica se registra, se prioriza y se trata como backlog explicito. No se corrige deuda fuera de fase si:
 
-## Systems Overview
+- Requiere tocar archivos no asignados.
+- Cambia contratos publicos de loaders.
+- Mezcla refactor con contenido historico.
+- Puede bloquear trabajo paralelo.
 
-- **Province & Map System** — Geography, resources, special features, dynamic state
-- **Country & Ideology System** — Stability, support, leadership
-- **Resource, Economy & Production** — Factories, lines, output, trade
-- **Technology & Focus Trees** — Research and national direction
-- **Unit Designers & Production** — Highly customizable military and advanced assets
-- **Espionage & Agents** — Covert operations and intelligence
-- **Diplomacy & Trade** — Relations and economic interaction
-- **War & Military** — Units, movement, combat (with designer-created templates)
-- **Scenario System** — Multiple start dates with tailored data
-- **Multiplayer Foundation** — Online play for 2–8 players
-- **AI Opponents** — Capable singleplayer experience
-- **Data-Driven & Moddable** — JSON-heavy for easy extension
+La deuda debe incluir impacto, ubicacion, riesgo y propuesta futura. La existencia de deuda no invalida una fase si el escenario carga y los sistemas actuales siguen funcionando.
 
----
+## Estrategia de localizacion
 
-## Roadmap (Updated)
+La localizacion debe mantenerse data-driven. En esta fase no se modifican `scripts/localization` ni `data/localization`, por lo que los nombres historicos viven en JSON de escenario, paises y lideres. La estrategia futura es:
 
-### Phase 1 — Prototype (✅ Complete)
-- Core data loading, province system, interactive map, InfoPanel
-- Camera navigation (zoom/WASD/edge/middle-drag) — solid for current needs
+- Crear claves estables para paises, lideres, eventos y sistemas.
+- Migrar textos visibles a archivos de localizacion cuando el alcance lo permita.
+- Mantener espanol como idioma documental oficial de la conversion.
+- Evitar cadenas duplicadas entre escenario, UI y eventos.
 
-### Phase 2 — Data & Core Systems Foundation
-- Expand data models for TechTree, FocusTree, Equipment/Unit definitions, ProductionLines
-- Basic national economy and production loop
-- Infrastructure & development mechanics
-- Scenario data expansion
+## Ejecucion en desarrollo
 
-### Phase 3 — Designers & Military Core
-- Implement Division, Tank, Plane, Ship designers (UI + backend)
-- Production line system feeding designers
-- Basic military units, templates, and movement
-- Initial focus tree framework
+1. Abrir el proyecto con Godot 4.6.2 o superior.
+2. Ejecutar la escena principal configurada en `project.godot`.
+3. Cargar el escenario `1879` desde las herramientas o escenas que invoquen `ScenarioLoader.load_scenario("1879")`.
 
-### Phase 4 — Advanced Gameplay
-- Full tech research system
-- Deep focus trees for major powers
-- Espionage system + agent management + missions/facilities
-- Trade routes and diplomacy mechanics
-- War mechanics and combat resolution
+## Estado de la fase
 
-### Phase 5 — Multiplayer, AI & Polish
-- Multiplayer architecture and online play (2–4 primary, up to 4–8)
-- Capable AI opponents using core systems
-- UI/UX polish, tooltips, national overview screens
-- Sound, visuals, camera refinements
-- Save/load, replay tools
-
-### Phase 6 — Future & Release
-- Spaceship / space station / satellite designers and orbital mechanics
-- 2026+ specific content (advanced tech, space race elements)
-- Balance, alt-history events, Steam integration
-- Mod support expansion
-
-**Note on Map Visuals**: The current interactive province map works well. A full visual overhaul (high-res Earth background + refined province artwork) is deferred to leverage better image generation and design tools available now. Conceptual assets and icons can be prototyped immediately.
-
----
-
-## Tech Stack & Development
-
-- **Godot Engine 4.6+** + **GDScript**
-- Data-driven design (JSON + Godot Resources for provinces, countries, tech, focuses, units, etc.)
-- Networking: Godot built-in (ENet/WebRTC) or plugins evaluated for multiplayer
-- Development aided by **Cursor** + latest **Grok / Grok Build** multi-agent coding tools for rapid iteration on complex systems
-
----
-
-## How to Run (Development)
-
-1. Clone the repository
-2. Open in **Godot 4.6.2** or newer
-3. Open `scenes/WorldMap.tscn`
-4. Press **F5** to run
-
----
-
-## Map & Visual Assets
-
-The current province map and camera are functional. We can generate conceptual art, icons, UI mockups, or style references right here using available image tools for inspiration or prototyping. Actual in-game textures and a polished world map can be integrated once data models are firmer. Let me know if you want example generations (e.g., espionage facility concepts, designer UI mockups, or alternate province styles).
-
----
-
-## Contributing
-
-Contributions welcome from Godot devs, historians, strategy fans, UI designers, and anyone passionate about deep grand strategy with alt-history freedom.
-
----
-
-## License
-
-MIT License — see LICENSE file.
-
----
-
-**Let’s build the definitive grand strategy experience of ascendancy across the ages.**
+La Fase 3 establece la base historica y tecnica del escenario 1879. Los informes oficiales estan en `docs/`.

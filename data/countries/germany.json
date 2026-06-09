@@ -1,0 +1,12 @@
+{
+  "tag": "GER",
+  "name": "Imperio Aleman",
+  "scenario": "1879",
+  "playable": false,
+  "ai_diplomatic": true,
+  "capital_province_id": 2,
+  "color": "#2B2B2B",
+  "government": "monarchy",
+  "historical_role": "Potencia industrial emergente, relevante como proveedor de armas, asesores y comercio indirecto.",
+  "strategic_priorities": ["venta_de_armas", "influencia_tecnica", "neutralidad_comercial"]
+}

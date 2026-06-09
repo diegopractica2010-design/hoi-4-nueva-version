@@ -1,0 +1,345 @@
+{
+  "scenario": "1879",
+  "description": "Roster historico inicial para la Guerra del Pacifico. Usa solo campos soportados por LeaderGenerator y rasgos existentes.",
+  "leaders": [
+    {
+      "leader_id": "chl_errazuriz_1879",
+      "name": "Rafael Sotomayor Baeza",
+      "country_tag": "CHL",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 7,
+      "logistics_skill": 8,
+      "planning_skill": 7,
+      "initiative_skill": 5,
+      "experience": 420,
+      "battles_fought": 12,
+      "trait_levels": {
+        "logistics_wizard": 2,
+        "methodical": 2,
+        "mentor": 1
+      },
+      "birth_year": 1823,
+      "start_year": 1879,
+      "end_year": 1880
+    },
+    {
+      "leader_id": "chl_baquedano_1879",
+      "name": "Manuel Baquedano",
+      "country_tag": "CHL",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 6,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 7,
+      "experience": 620,
+      "battles_fought": 28,
+      "trait_levels": {
+        "aggressive": 2,
+        "iron_will": 1,
+        "morale_builder": 1
+      },
+      "birth_year": 1823,
+      "start_year": 1879
+    },
+    {
+      "leader_id": "chl_condell_1879",
+      "name": "Carlos Condell",
+      "country_tag": "CHL",
+      "leader_type": "admiral",
+      "attack_skill": 7,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 8,
+      "experience": 520,
+      "battles_fought": 16,
+      "trait_levels": {
+        "sea_wolf": 2,
+        "bold": 2
+      },
+      "birth_year": 1843,
+      "start_year": 1879
+    },
+    {
+      "leader_id": "chl_prat_1879",
+      "name": "Arturo Prat",
+      "country_tag": "CHL",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 5,
+      "planning_skill": 5,
+      "initiative_skill": 7,
+      "experience": 440,
+      "battles_fought": 10,
+      "trait_levels": {
+        "iron_will": 1,
+        "charismatic": 1,
+        "sea_wolf": 1
+      },
+      "birth_year": 1848,
+      "start_year": 1879,
+      "end_year": 1879
+    },
+    {
+      "leader_id": "per_prado_1879",
+      "name": "Mariano Ignacio Prado",
+      "country_tag": "PER",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 5,
+      "organization_skill": 5,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 360,
+      "battles_fought": 14,
+      "trait_levels": {
+        "political_general": 1,
+        "methodical": 1
+      },
+      "birth_year": 1825,
+      "start_year": 1879,
+      "end_year": 1879
+    },
+    {
+      "leader_id": "per_caceres_1879",
+      "name": "Andres Avelino Caceres",
+      "country_tag": "PER",
+      "leader_type": "general",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 8,
+      "experience": 600,
+      "battles_fought": 26,
+      "trait_levels": {
+        "mountain_specialist": 2,
+        "bold": 2,
+        "iron_will": 1
+      },
+      "birth_year": 1836,
+      "start_year": 1879
+    },
+    {
+      "leader_id": "per_grau_1879",
+      "name": "Miguel Grau",
+      "country_tag": "PER",
+      "leader_type": "admiral",
+      "attack_skill": 8,
+      "defense_skill": 7,
+      "organization_skill": 8,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 8,
+      "experience": 720,
+      "battles_fought": 24,
+      "trait_levels": {
+        "sea_wolf": 3,
+        "charismatic": 1,
+        "blockade_runner": 1
+      },
+      "birth_year": 1834,
+      "start_year": 1879,
+      "end_year": 1879
+    },
+    {
+      "leader_id": "per_montero_1879",
+      "name": "Lizardo Montero",
+      "country_tag": "PER",
+      "leader_type": "admiral",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 360,
+      "battles_fought": 12,
+      "trait_levels": {
+        "cautious": 1,
+        "sea_wolf": 1
+      },
+      "birth_year": 1832,
+      "start_year": 1879
+    },
+    {
+      "leader_id": "bol_daza_1879",
+      "name": "Hilarion Daza",
+      "country_tag": "BOL",
+      "leader_type": "general",
+      "attack_skill": 4,
+      "defense_skill": 4,
+      "organization_skill": 4,
+      "logistics_skill": 3,
+      "planning_skill": 4,
+      "initiative_skill": 5,
+      "experience": 300,
+      "battles_fought": 10,
+      "trait_levels": {
+        "political_general": 1,
+        "arrogant": 1
+      },
+      "birth_year": 1840,
+      "start_year": 1879,
+      "end_year": 1879
+    },
+    {
+      "leader_id": "bol_campero_1879",
+      "name": "Narciso Campero",
+      "country_tag": "BOL",
+      "leader_type": "general",
+      "attack_skill": 5,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 5,
+      "planning_skill": 6,
+      "initiative_skill": 5,
+      "experience": 420,
+      "battles_fought": 18,
+      "trait_levels": {
+        "mountain_specialist": 1,
+        "methodical": 1,
+        "mentor": 1
+      },
+      "birth_year": 1813,
+      "start_year": 1879
+    },
+    {
+      "leader_id": "arg_roca_1879",
+      "name": "Julio Argentino Roca",
+      "country_tag": "ARG",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 5,
+      "organization_skill": 6,
+      "logistics_skill": 6,
+      "planning_skill": 6,
+      "initiative_skill": 6,
+      "experience": 500,
+      "battles_fought": 20,
+      "trait_levels": {
+        "methodical": 1,
+        "political_general": 1
+      },
+      "birth_year": 1843,
+      "start_year": 1879
+    },
+    {
+      "leader_id": "bra_caxias_1879",
+      "name": "Duque de Caxias",
+      "country_tag": "BRA",
+      "leader_type": "general",
+      "attack_skill": 6,
+      "defense_skill": 7,
+      "organization_skill": 7,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 5,
+      "experience": 760,
+      "battles_fought": 36,
+      "trait_levels": {
+        "methodical": 2,
+        "mentor": 1,
+        "iron_will": 1
+      },
+      "birth_year": 1803,
+      "start_year": 1879,
+      "end_year": 1880
+    },
+    {
+      "leader_id": "usa_sherman_1879",
+      "name": "William Tecumseh Sherman",
+      "country_tag": "USA",
+      "leader_type": "general",
+      "attack_skill": 8,
+      "defense_skill": 6,
+      "organization_skill": 8,
+      "logistics_skill": 8,
+      "planning_skill": 8,
+      "initiative_skill": 7,
+      "experience": 900,
+      "battles_fought": 60,
+      "trait_levels": {
+        "logistics_wizard": 2,
+        "aggressive": 2,
+        "mentor": 1
+      },
+      "birth_year": 1820,
+      "start_year": 1879,
+      "end_year": 1884
+    },
+    {
+      "leader_id": "eng_hornby_1879",
+      "name": "Geoffrey Hornby",
+      "country_tag": "ENG",
+      "leader_type": "admiral",
+      "attack_skill": 7,
+      "defense_skill": 7,
+      "organization_skill": 8,
+      "logistics_skill": 8,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 760,
+      "battles_fought": 30,
+      "trait_levels": {
+        "sea_wolf": 2,
+        "blockade_runner": 2,
+        "methodical": 1
+      },
+      "birth_year": 1825,
+      "start_year": 1879,
+      "end_year": 1886
+    },
+    {
+      "leader_id": "fra_aube_1879",
+      "name": "Theophile Aube",
+      "country_tag": "FRA",
+      "leader_type": "admiral",
+      "attack_skill": 6,
+      "defense_skill": 6,
+      "organization_skill": 6,
+      "logistics_skill": 7,
+      "planning_skill": 7,
+      "initiative_skill": 6,
+      "experience": 540,
+      "battles_fought": 18,
+      "trait_levels": {
+        "sea_wolf": 1,
+        "bold": 1
+      },
+      "birth_year": 1826,
+      "start_year": 1879
+    },
+    {
+      "leader_id": "ger_moltke_1879",
+      "name": "Helmuth von Moltke",
+      "country_tag": "GER",
+      "leader_type": "general",
+      "attack_skill": 8,
+      "defense_skill": 7,
+      "organization_skill": 9,
+      "logistics_skill": 8,
+      "planning_skill": 9,
+      "initiative_skill": 7,
+      "experience": 950,
+      "battles_fought": 70,
+      "trait_levels": {
+        "methodical": 3,
+        "logistics_wizard": 2,
+        "mentor": 2
+      },
+      "birth_year": 1800,
+      "start_year": 1879,
+      "end_year": 1888
+    }
+  ]
+}
