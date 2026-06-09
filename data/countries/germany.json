@@ -7,6 +7,14 @@
   "capital_province_id": 2,
   "color": "#2B2B2B",
   "government": "monarchy",
+  "ideology": "monarchy",
+  "major_power": true,
+  "current_tech_level": 4,
+  "stability": 68.0,
+  "war_support": 30.0,
+  "industrial_weight": 2,
+  "key_provinces": [2],
+  "strategic_role": "arms_supplier",
   "historical_role": "Potencia industrial emergente, relevante como proveedor de armas, asesores y comercio indirecto.",
   "strategic_priorities": ["venta_de_armas", "influencia_tecnica", "neutralidad_comercial"]
 }

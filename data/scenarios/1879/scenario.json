@@ -1,0 +1,216 @@
+{
+  "scenario": "1879",
+  "name": "1879 - Guerra del Pacifico",
+  "start_date": "1879-02-14",
+  "description": "Fundacion historica para la conversion de la Guerra del Pacifico. Chile, Peru y Bolivia son paises jugables; Argentina, Brasil, Estados Unidos, Reino Unido, Francia y Alemania operan como actores diplomaticos de IA.",
+  "country_refs": [
+    "chile",
+    "peru",
+    "bolivia",
+    "argentina",
+    "brazil",
+    "united_states",
+    "united_kingdom",
+    "france",
+    "germany"
+  ],
+  "provinces": [
+    {
+      "id": 2,
+      "owner_tag": "GER",
+      "controller_tag": "GER",
+      "factories": 10,
+      "development_level": 5,
+      "infrastructure": 5,
+      "population": 1200000,
+      "victory_points": 8,
+      "core_for_tags": ["GER"],
+      "special_features": ["capital"],
+      "special_levels": {}
+    },
+    {
+      "id": 4,
+      "owner_tag": "FRA",
+      "controller_tag": "FRA",
+      "factories": 11,
+      "development_level": 5,
+      "infrastructure": 5,
+      "population": 1600000,
+      "victory_points": 9,
+      "core_for_tags": ["FRA"],
+      "special_features": ["capital"],
+      "special_levels": {}
+    },
+    {
+      "id": 5,
+      "owner_tag": "ENG",
+      "controller_tag": "ENG",
+      "factories": 14,
+      "development_level": 6,
+      "infrastructure": 6,
+      "population": 1800000,
+      "victory_points": 10,
+      "core_for_tags": ["ENG"],
+      "special_features": ["capital", "port"],
+      "special_levels": {"port": 5}
+    },
+    {
+      "id": 6,
+      "owner_tag": "USA",
+      "controller_tag": "USA",
+      "factories": 12,
+      "development_level": 5,
+      "infrastructure": 5,
+      "population": 1200000,
+      "victory_points": 8,
+      "core_for_tags": ["USA"],
+      "special_features": ["capital"],
+      "special_levels": {}
+    },
+    {
+      "id": 28,
+      "owner_tag": "ARG",
+      "controller_tag": "ARG",
+      "factories": 4,
+      "development_level": 4,
+      "infrastructure": 4,
+      "population": 650000,
+      "victory_points": 6,
+      "core_for_tags": ["ARG"],
+      "special_features": ["capital", "port"],
+      "special_levels": {"port": 3}
+    },
+    {
+      "id": 29,
+      "owner_tag": "BRA",
+      "controller_tag": "BRA",
+      "factories": 4,
+      "development_level": 4,
+      "infrastructure": 4,
+      "population": 700000,
+      "victory_points": 6,
+      "core_for_tags": ["BRA"],
+      "special_features": ["capital", "port"],
+      "special_levels": {"port": 3}
+    },
+    {
+      "id": 70,
+      "owner_tag": "BRA",
+      "controller_tag": "BRA",
+      "factories": 3,
+      "development_level": 4,
+      "infrastructure": 4,
+      "population": 550000,
+      "victory_points": 3,
+      "core_for_tags": ["BRA"],
+      "special_features": [],
+      "special_levels": {}
+    },
+    {
+      "id": 71,
+      "owner_tag": "PER",
+      "controller_tag": "PER",
+      "factories": 3,
+      "development_level": 3,
+      "infrastructure": 3,
+      "population": 500000,
+      "victory_points": 7,
+      "core_for_tags": ["PER"],
+      "terrain": "coastal",
+      "has_port": true,
+      "natural_resources": {
+        "copper": 40,
+        "nitrates": 30,
+        "guano": 25
+      },
+      "special_features": ["capital", "port"],
+      "special_levels": {"port": 3}
+    },
+    {
+      "id": 83,
+      "owner_tag": "BOL",
+      "controller_tag": "BOL",
+      "factories": 1,
+      "development_level": 2,
+      "infrastructure": 2,
+      "population": 300000,
+      "victory_points": 5,
+      "core_for_tags": ["BOL"],
+      "terrain": "mountains",
+      "natural_resources": {
+        "silver": 35,
+        "tin": 20
+      },
+      "special_features": ["capital"],
+      "special_levels": {}
+    },
+    {
+      "id": 89,
+      "owner_tag": "ARG",
+      "controller_tag": "ARG",
+      "factories": 2,
+      "development_level": 3,
+      "infrastructure": 3,
+      "population": 300000,
+      "victory_points": 2,
+      "core_for_tags": ["ARG"],
+      "special_features": [],
+      "special_levels": {}
+    },
+    {
+      "id": 90,
+      "owner_tag": "CHL",
+      "controller_tag": "CHL",
+      "factories": 4,
+      "development_level": 4,
+      "infrastructure": 4,
+      "population": 600000,
+      "victory_points": 8,
+      "core_for_tags": ["CHL"],
+      "terrain": "urban",
+      "natural_resources": {
+        "copper": 55,
+        "coal": 20
+      },
+      "special_features": ["capital", "port"],
+      "special_levels": {"port": 3}
+    },
+    {
+      "id": 91,
+      "owner_tag": "PER",
+      "controller_tag": "PER",
+      "factories": 1,
+      "development_level": 2,
+      "infrastructure": 2,
+      "population": 250000,
+      "victory_points": 3,
+      "core_for_tags": ["PER"],
+      "terrain": "hills",
+      "natural_resources": {
+        "nitrates": 45,
+        "guano": 30
+      },
+      "special_features": [],
+      "special_levels": {}
+    },
+    {
+      "id": 92,
+      "owner_tag": "BOL",
+      "controller_tag": "BOL",
+      "factories": 1,
+      "development_level": 2,
+      "infrastructure": 2,
+      "population": 180000,
+      "victory_points": 4,
+      "core_for_tags": ["BOL"],
+      "terrain": "coastal",
+      "has_port": true,
+      "natural_resources": {
+        "nitrates": 60,
+        "silver": 20
+      },
+      "special_features": ["port"],
+      "special_levels": {"port": 2}
+    }
+  ]
+}

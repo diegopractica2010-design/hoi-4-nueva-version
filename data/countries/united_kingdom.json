@@ -7,6 +7,15 @@
   "capital_province_id": 5,
   "color": "#C8102E",
   "government": "constitutional_monarchy",
+  "ideology": "constitutional_monarchy",
+  "major_power": true,
+  "naval_power": true,
+  "current_tech_level": 5,
+  "stability": 75.0,
+  "war_support": 24.0,
+  "industrial_weight": 2,
+  "key_provinces": [5],
+  "strategic_role": "commercial_power",
   "historical_role": "Principal potencia comercial externa, vinculada al salitre, deuda, transporte maritimo y venta de material naval.",
   "strategic_priorities": ["comercio_del_salitre", "rutas_maritimas", "neutralidad_interesada"]
 }

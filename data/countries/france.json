@@ -7,6 +7,14 @@
   "capital_province_id": 4,
   "color": "#0055A4",
   "government": "republican",
+  "ideology": "republican",
+  "major_power": true,
+  "current_tech_level": 4,
+  "stability": 52.0,
+  "war_support": 22.0,
+  "industrial_weight": 2,
+  "key_provinces": [4],
+  "strategic_role": "commercial_power",
   "historical_role": "Potencia europea con interes diplomatico, financiero y tecnologico en la region.",
   "strategic_priorities": ["comercio_exterior", "influencia_diplomatica", "observacion_naval"]
 }

@@ -7,6 +7,13 @@
   "capital_province_id": 28,
   "color": "#75AADB",
   "government": "republican",
+  "ideology": "republican",
+  "current_tech_level": 3,
+  "stability": 55.0,
+  "war_support": 28.0,
+  "industrial_weight": 1,
+  "key_provinces": [28, 89],
+  "strategic_role": "regional_observer",
   "historical_role": "Actor regional atento al equilibrio austral, la Patagonia y el efecto diplomatico de la guerra sobre Chile.",
   "strategic_priorities": ["neutralidad_armada", "presion_fronteriza", "equilibrio_regional"]
 }

@@ -68,7 +68,7 @@ func load_province_geometry():
 			continue
 		province_geometry[province_id] = entry
 
-	print("✅ Province geometry loaded: ", province_geometry.size())
+	print("[OK] Province geometry loaded: ", province_geometry.size())
 
 func load_province_layers():
 	_load_adjacency_layer()
@@ -216,23 +216,20 @@ func load_base_provinces():
 		_apply_layer_data_to_province(p)
 		base_provinces[p.id] = p
 	_infer_port_access_for_all(base_provinces)
-	print("✅ Base provinces loaded: ", base_provinces.size(), " provinces")
+	print("[OK] Base provinces loaded: ", base_provinces.size(), " provinces")
 
 func load_scenario(scenario_name: String) -> bool:
-	var file_path = "res://data/scenarios/" + scenario_name + ".json"
-	var file = FileAccess.open(file_path, FileAccess.READ)
-	if not file:
-		push_warning("Could not open scenario file: " + file_path)
+	var scenario_result := ScenarioDataResolver.load_scenario_data(scenario_name)
+	if not bool(scenario_result.get("success", false)):
+		push_warning(str(scenario_result.get("error", "Could not load scenario")))
 		return false
+	var data: Dictionary = scenario_result.get("data", {}) as Dictionary
+	var country_result := ScenarioCountryRuntime.resolve_countries(data)
+	var resolved_country_entries: Array = country_result.get("entries", []) as Array
+	var scenario_runtime_data := data.duplicate(true)
+	scenario_runtime_data["countries"] = resolved_country_entries
 
 	current_scenario_name = scenario_name
-	var json = JSON.new()
-	var parse_result = json.parse(file.get_as_text())
-	file.close()
-	if parse_result != OK or typeof(json.data) != TYPE_DICTIONARY:
-		push_warning("Failed to parse scenario JSON: " + file_path)
-		return false
-	var data = json.data
 	
 	provinces.clear()
 	countries.clear()
@@ -240,55 +237,12 @@ func load_scenario(scenario_name: String) -> bool:
 	for id in base_provinces:
 		provinces[id] = _duplicate_province_from_base(base_provinces[id])
 
-	# Apply overrides with heavy debug
-	print("=== APPLYING SCENARIO OVERRIDES ===")
-	if data.has("provinces"):
-		for p_data in data["provinces"]:
-			var raw_id = p_data.get("id", 0)
-			var id = int(raw_id)                     # ← THIS IS THE FIX
-			if provinces.has(id):
-				var p = provinces[id]
-				p.owner_tag = str(p_data.get("owner_tag", p.owner_tag))
-				p.controller_tag = str(p_data.get("controller_tag", p.controller_tag))
-				p.factories = int(p_data.get("factories", p.factories))
-				p.development_level = int(p_data.get("development_level", p.development_level))
-				p.infrastructure = int(p_data.get("infrastructure", p.infrastructure))
-				if p_data.has("population"):
-					p.population = int(p_data["population"])
-				p.victory_points = int(p_data.get("victory_points", p.victory_points))
-				if p_data.has("core_for_tags") or p_data.has("core_for"):
-					p.core_for = _string_array_from_json(p_data.get("core_for_tags", p_data.get("core_for", [])))
-				if p_data.has("tags"):
-					p.tags = _string_array_from_json(p_data["tags"])
-				if p_data.has("terrain"):
-					p.terrain = str(p_data["terrain"])
-				if p_data.has("is_sea"):
-					p.is_sea = bool(p_data["is_sea"])
-				if p_data.has("has_port"):
-					p.has_port = bool(p_data["has_port"])
-				if p_data.has("natural_resources") or p_data.has("resources"):
-					var rr = p_data.get("natural_resources", p_data.get("resources", {}))
-					p.resources = rr.duplicate(true) if typeof(rr) == TYPE_DICTIONARY else {}
-				if p_data.has("special_features"):
-					p.special_features = _merged_special_features_from(p_data["special_features"], p_data.get("special_levels", {}))
-				elif p_data.has("special_levels"):
-					var merged: Dictionary = p.special_features.duplicate(true)
-					var lvls = p_data["special_levels"]
-					if typeof(lvls) == TYPE_DICTIONARY:
-						for k in lvls:
-							merged[str(k)] = int(lvls[k])
-					p.special_features = merged
-				
-				if id <= 6:   # Debug the first few provinces
-					print("  id ", id, " | owner=", p.owner_tag, " | specials=", p.special_features)
-			else:
-				print("  WARNING: id ", id, " not found in provinces!")
-
-	_load_countries_from_scenario(data)
+	ScenarioProvinceApplier.apply_overrides(provinces, data)
+	countries = country_result.get("registry", {}) as Dictionary
 
 	_rebuild_adjacency_system()
 	_infer_port_access_for_all(provinces)
-	_spawn_scenario_factories(scenario_name)
+	_spawn_scenario_factories(scenario_name, scenario_runtime_data)
 	var scenario_year := _parse_scenario_start_year(data)
 	var start_date_str := str(data.get("start_date", "1936-01-01"))
 	# New central clock (non-breaking: we still pass year to legacy systems for now)
@@ -301,7 +255,7 @@ func load_scenario(scenario_name: String) -> bool:
 	var production_mgr := get_node_or_null("/root/ProductionManager")
 	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
 		production_mgr.clear_all_caches()
-	print("✅ Scenario loaded | Provinces: ", provinces.size(), " | Countries: ", countries.size())
+	print("[OK] Scenario loaded | Provinces: ", provinces.size(), " | Countries: ", countries.size())
 	scenario_loaded.emit()
 
 	# Centralize map data for the rest of the game (MapManager is the preferred access point)
@@ -313,9 +267,8 @@ func load_scenario(scenario_name: String) -> bool:
 	return true
 
 
-func _spawn_scenario_factories(scenario_name: String) -> void:
-	var spawner := ScenarioFactorySpawner.new()
-	spawner.spawn_factories_for_scenario(scenario_name, self)
+func _spawn_scenario_factories(scenario_name: String, scenario_data: Dictionary) -> void:
+	ScenarioFactoryBootstrap.spawn_factories(scenario_name, scenario_data, self)
 
 
 func _parse_scenario_start_year(data: Dictionary) -> int:
@@ -331,7 +284,7 @@ func _load_scenario_leaders(scenario_name: String, start_year: int) -> void:
 		return
 	var loaded := LeaderManager.load_leaders_for_scenario(scenario_name, start_year)
 	print(
-		"✅ Scenario leaders loaded (%s, %d): %d active, %d pooled"
+		"[OK] Scenario leaders loaded (%s, %d): %d active, %d pooled"
 		% [
 			scenario_name,
 			start_year,
@@ -397,87 +350,8 @@ func get_map_data() -> MapScenarioData:
 	return MapScenarioData.new(provinces, build_geometry_dict_for_map(), adjacency_system, countries)
 
 
-func _load_countries_from_scenario(data: Dictionary) -> void:
-	if not data.has("countries"):
-		return
-	var block: Variant = data["countries"]
-	if typeof(block) == TYPE_ARRAY:
-		for item in block:
-			if typeof(item) != TYPE_DICTIONARY:
-				continue
-			var d: Dictionary = item
-			var tag := str(d.get("tag", ""))
-			if tag.is_empty():
-				continue
-			var entry: Variant = _make_country_entry(tag, d)
-			if entry != null:
-				countries[_storage_tag_for_country(entry, tag)] = entry
-	elif typeof(block) == TYPE_DICTIONARY:
-		for key in block:
-			var inner: Variant = block[key]
-			if typeof(inner) != TYPE_DICTIONARY:
-				push_warning("ScenarioLoader: skipped country '" + str(key) + "' (expected object)")
-				continue
-			var tag_key := str(key)
-			var entry: Variant = _make_country_entry(tag_key, inner as Dictionary)
-			if entry != null:
-				countries[_storage_tag_for_country(entry, tag_key)] = entry
-	else:
-		push_warning("ScenarioLoader: 'countries' must be an array or object")
 
-
-func _make_country_entry(tag_hint: String, d: Dictionary) -> Variant:
-	var eff_tag := str(d.get("tag", tag_hint))
-	if eff_tag.is_empty():
-		push_warning("ScenarioLoader: country entry missing tag (hint='" + tag_hint + "')")
-		return null
-	var name_str := str(d.get("name", eff_tag))
-	var col := _parse_country_color(d.get("color", "#CCCCCC"))
-	if bool(d.get("plain_dictionary", false)):
-		return {"tag": eff_tag, "name": name_str, "color": col}
-	var c := Country.new()
-	c.tag = eff_tag
-	c.name = name_str
-	c.color = col
-	c.capital_province_id = int(d.get("capital_province_id", 0))
-	return c
-
-
-func _storage_tag_for_country(entry: Variant, fallback_tag: String) -> String:
-	if entry is Country:
-		return (entry as Country).tag
-	if typeof(entry) == TYPE_DICTIONARY:
-		var t := str((entry as Dictionary).get("tag", fallback_tag))
-		return t if not t.is_empty() else fallback_tag
-	return fallback_tag
-
-
-func _parse_country_color(raw: Variant) -> Color:
-	match typeof(raw):
-		TYPE_COLOR:
-			return raw as Color
-		TYPE_STRING:
-			return Color(String(raw))
-		TYPE_ARRAY:
-			var a: Array = raw
-			if a.size() < 3:
-				return Color(0.65, 0.65, 0.65)
-			var rf := float(a[0])
-			var gf := float(a[1])
-			var bf := float(a[2])
-			var af := float(a[3]) if a.size() > 3 else 1.0
-			if rf > 1.0 or gf > 1.0 or bf > 1.0:
-				rf /= 255.0
-				gf /= 255.0
-				bf /= 255.0
-				if a.size() > 3 and af > 1.0:
-					af /= 255.0
-			return Color(rf, gf, bf, af)
-		_:
-			return Color(0.65, 0.65, 0.65)
-
-
-## Geometry dict keyed by province id → { "points": PackedVector2Array, "label_anchor": Vector2 } for MapRenderer.
+## Geometry dict keyed by province id -> { "points": PackedVector2Array, "label_anchor": Vector2 } for MapRenderer.
 func build_geometry_dict_for_map() -> Dictionary:
 	var out: Dictionary = {}
 	for gid in province_geometry:

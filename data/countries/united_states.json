@@ -7,6 +7,14 @@
   "capital_province_id": 6,
   "color": "#3C3B6E",
   "government": "republican",
+  "ideology": "republican",
+  "major_power": true,
+  "current_tech_level": 4,
+  "stability": 70.0,
+  "war_support": 18.0,
+  "industrial_weight": 2,
+  "key_provinces": [6],
+  "strategic_role": "hemispheric_mediator",
   "historical_role": "Mediador hemisferico potencial con intereses comerciales y navales crecientes en el Pacifico.",
   "strategic_priorities": ["mediacion", "comercio_pacifico", "estabilidad_hemisferica"]
 }
