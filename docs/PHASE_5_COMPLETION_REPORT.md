@@ -48,6 +48,7 @@ Preparar la arquitectura de escenarios para la conversion Guerra del Pacifico, c
 - Validacion estatica de los nueve paises requeridos.
 - Validacion de que los tres jugables siguen siendo Chile, Peru y Bolivia.
 - Validacion de campos runtime requeridos en paises externos.
+- Registro separado en `docs/PHASE_5_RUNTIME_VALIDATION.md`.
 
 ## Validacion no ejecutada
 
@@ -62,3 +63,9 @@ No se pudo ejecutar Godot runtime porque no hay ejecutable `godot`, `godot4`, `g
 ## Observacion de ownership
 
 Durante la fase se detectaron cambios ajenos fuera de alcance en `project.godot`, `scripts/production/DesignManager.gd`, `p4_run.log` y `scripts/core/_phase4_check.*`. No se modificaron ni se incluyeron en esta fase.
+
+## Documentacion adicional de cierre
+
+- `docs/PHASE_5_RUNTIME_VALIDATION.md`
+- `docs/CROSS_PHASE_FINDINGS.md`
+- `docs/PHASE_5_SELF_REVIEW.md`
