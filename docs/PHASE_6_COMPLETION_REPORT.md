@@ -72,7 +72,7 @@ Preparar la arquitectura del mapa para un teatro histórico de la Guerra del Pac
 ## 9. Auto-revisión (Tarea 16)
 
 **¿Qué podría romperse más adelante?**
-- Si otro track edita los mismos datos en paralelo, puede haber conflictos de git con el respaldo que hice.
+- Hay tracks editando datos en paralelo; al cierre, su trabajo de datos ya estaba en `git add` por su propio track (Fase 7), que lo confirma en su commit.
 - El validador no corre automáticamente; una regresión de datos podría pasar desapercibida hasta ejecutarlo a mano (DT-P6-07).
 - Mientras `TradeManager.gd` siga roto, el arranque íntegro del juego no es certificable.
 

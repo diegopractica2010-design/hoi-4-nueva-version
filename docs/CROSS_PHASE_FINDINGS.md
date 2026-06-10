@@ -174,7 +174,7 @@ File: `data/provinces/*`, `data/countries/{bolivia,chile,peru}.json`, `data/scen
 
 Description: al iniciar Fase 6 habia trabajo valido de otros tracks sin confirmar (provincias 840->847, estados 70->75, regiones 20->22, geometria 100->107). La validacion confirma integridad (0 errores).
 
-Impact: riesgo de perdida si no se respalda. Respaldado por Fase 6 (GLOBAL BACKUP RULE) sin alterar su contenido. Ver `GIT_PHASE_6_REPORT.md`.
+Impact: riesgo de perdida si no se respalda. Observado integro (0 errores). Su track propietario (Fase 7) ya lo tiene en `git add` y lo confirma en su propio commit; Fase 6 NO lo respalda por separado para no interferir con el commit en curso de su owner ni violar propiedad. Ver `GIT_PHASE_6_REPORT.md`.
 
 Severity: Media
 

@@ -1466,9 +1466,9 @@ static func build_infra_progress_meter_bbcode(
 		bar += "█" if i < filled else "░"
 	var bar_color := COLOR_TECH if infra >= 35 else (COLOR_WARN if infra <= 15 else COLOR_MUTED)
 	if sabotage_winning:
-		bar_color = Color("#ff8888")
+		bar_color = "[color=#ff8888]"
 	elif repair_winning:
-		bar_color = Color("#5ae6b8")
+		bar_color = "[color=#5ae6b8]"
 	var suffix := ""
 	if sabotage_winning and net_loss_per_day > 0:
 		suffix = "  ·  −%d/day" % net_loss_per_day
