@@ -51,6 +51,7 @@ El commit `82cab65` completa los reportes faltantes solicitados por el protocolo
 - HEAD remoto verificado tras el push de reportes faltantes: `82cab656f94665d89482e7ef54b4812096040a5d`
 - Estado de sincronizacion: sincronizado.
 - Cambios fuera de alcance: presentes en el historial por el commit intermedio `5c052de`, no por el commit de implementacion `7954736`.
+- Archivos fuera de alcance detectados despues del push final de reportes: `scripts/map/MapDataValidator.gd`, `scripts/map/_phase6_check.gd`, `scripts/map/_phase6_check.tscn`, `p6_run.log`. No se prepararon ni commitearon por Fase 5.
 
 ## Archivos creados por cierre documental adicional
 
@@ -62,6 +63,7 @@ El commit `82cab65` completa los reportes faltantes solicitados por el protocolo
 
 - `docs/PHASE_5_COMPLETION_REPORT.md`
 - `docs/GIT_PHASE_5_REPORT.md`
+- `docs/CROSS_PHASE_FINDINGS.md`
 
 ## Archivos eliminados
 

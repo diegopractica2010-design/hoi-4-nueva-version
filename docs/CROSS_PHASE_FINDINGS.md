@@ -64,6 +64,18 @@ Impact: Fase 5 queda con validacion estatica y compatibilidad por contrato, pero
 
 Severity: Alta
 
+## BLOCKED_BY_OWNERSHIP: archivos de mapa sin respaldo dentro del workspace
+
+System: Mapa
+
+File: `scripts/map/MapDataValidator.gd`, `scripts/map/_phase6_check.gd`, `scripts/map/_phase6_check.tscn`, `p6_run.log`
+
+Description: durante la verificacion final aparecieron archivos sin track en `scripts/map`, ruta prohibida para Fase 5.
+
+Impact: pueden representar trabajo valido de otra fase que necesita respaldo por su owner. Fase 5 no puede clasificarlos ni commitearlos sin violar ownership.
+
+Severity: Media
+
 ## HISTORICAL_REVIEW_REQUIRED: datos nacionales 1879
 
 System: Datos historicos
@@ -75,4 +87,3 @@ Description: los campos `stability`, `war_support`, `industrial_weight`, `curren
 Impact: Gemini o el owner historico debe revisar calibracion antes de balance de gameplay.
 
 Severity: Media
-
