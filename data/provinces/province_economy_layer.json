@@ -7583,6 +7583,76 @@
       "resources": {
         "food": 20
       }
+    },
+    "841": {
+      "population": 12000,
+      "factories": 1,
+      "infrastructure": 2,
+      "development_level": 2.0,
+      "resources": {
+        "nitrates": 70,
+        "silver": 10,
+        "copper": 15
+      }
+    },
+    "842": {
+      "population": 18000,
+      "factories": 1,
+      "infrastructure": 2,
+      "development_level": 2.0,
+      "resources": {
+        "nitrates": 85,
+        "guano": 10
+      }
+    },
+    "843": {
+      "population": 12000,
+      "factories": 1,
+      "infrastructure": 3,
+      "development_level": 2.4,
+      "resources": {
+        "nitrates": 65,
+        "guano": 25
+      }
+    },
+    "844": {
+      "population": 9000,
+      "factories": 0,
+      "infrastructure": 2,
+      "development_level": 2.0,
+      "resources": {
+        "guano": 15,
+        "nitrates": 20
+      }
+    },
+    "845": {
+      "population": 18000,
+      "factories": 0,
+      "infrastructure": 2,
+      "development_level": 2.2,
+      "resources": {
+        "nitrates": 15
+      }
+    },
+    "846": {
+      "population": 76000,
+      "factories": 1,
+      "infrastructure": 2,
+      "development_level": 2.8,
+      "resources": {
+        "silver": 20,
+        "tin": 25
+      }
+    },
+    "847": {
+      "population": 24000,
+      "factories": 1,
+      "infrastructure": 2,
+      "development_level": 2.5,
+      "resources": {
+        "silver": 30,
+        "tin": 15
+      }
     }
   }
 }

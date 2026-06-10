@@ -1330,6 +1330,68 @@
         840
       ],
       "supply_hub_province_id": 835
+    },
+    {
+      "id": 71,
+      "name": "Litoral Boliviano",
+      "province_ids": [
+        841
+      ],
+      "supply_hub_province_id": 841,
+      "owner_tag_1879": "BOL",
+      "controller_tag_1879": "CHL",
+      "state_capital_province_id": 841,
+      "historical_role": "Puerto boliviano ocupado por Chile el 14 de febrero de 1879."
+    },
+    {
+      "id": 72,
+      "name": "Tarapaca",
+      "province_ids": [
+        842,
+        843
+      ],
+      "supply_hub_province_id": 843,
+      "owner_tag_1879": "PER",
+      "controller_tag_1879": "PER",
+      "state_capital_province_id": 843,
+      "historical_role": "Zona salitrera peruana y corredor portuario de Iquique."
+    },
+    {
+      "id": 73,
+      "name": "Arica y Tacna",
+      "province_ids": [
+        844,
+        845
+      ],
+      "supply_hub_province_id": 844,
+      "owner_tag_1879": "PER",
+      "controller_tag_1879": "PER",
+      "state_capital_province_id": 845,
+      "historical_role": "Sector sur peruano con puerto, fortificacion costera y enlace hacia el altiplano."
+    },
+    {
+      "id": 74,
+      "name": "La Paz",
+      "province_ids": [
+        846
+      ],
+      "supply_hub_province_id": 846,
+      "owner_tag_1879": "BOL",
+      "controller_tag_1879": "BOL",
+      "state_capital_province_id": 846,
+      "historical_role": "Centro politico y logistico del altiplano boliviano."
+    },
+    {
+      "id": 75,
+      "name": "Chuquisaca",
+      "province_ids": [
+        847
+      ],
+      "supply_hub_province_id": 847,
+      "owner_tag_1879": "BOL",
+      "controller_tag_1879": "BOL",
+      "state_capital_province_id": 847,
+      "historical_role": "Capital constitucional boliviana en Sucre."
     }
   ]
 }

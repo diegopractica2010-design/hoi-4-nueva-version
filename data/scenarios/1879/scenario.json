@@ -24,8 +24,12 @@
       "infrastructure": 5,
       "population": 1200000,
       "victory_points": 8,
-      "core_for_tags": ["GER"],
-      "special_features": ["capital"],
+      "core_for_tags": [
+        "GER"
+      ],
+      "special_features": [
+        "capital"
+      ],
       "special_levels": {}
     },
     {
@@ -37,8 +41,12 @@
       "infrastructure": 5,
       "population": 1600000,
       "victory_points": 9,
-      "core_for_tags": ["FRA"],
-      "special_features": ["capital"],
+      "core_for_tags": [
+        "FRA"
+      ],
+      "special_features": [
+        "capital"
+      ],
       "special_levels": {}
     },
     {
@@ -50,9 +58,16 @@
       "infrastructure": 6,
       "population": 1800000,
       "victory_points": 10,
-      "core_for_tags": ["ENG"],
-      "special_features": ["capital", "port"],
-      "special_levels": {"port": 5}
+      "core_for_tags": [
+        "ENG"
+      ],
+      "special_features": [
+        "capital",
+        "port"
+      ],
+      "special_levels": {
+        "port": 5
+      }
     },
     {
       "id": 6,
@@ -63,8 +78,12 @@
       "infrastructure": 5,
       "population": 1200000,
       "victory_points": 8,
-      "core_for_tags": ["USA"],
-      "special_features": ["capital"],
+      "core_for_tags": [
+        "USA"
+      ],
+      "special_features": [
+        "capital"
+      ],
       "special_levels": {}
     },
     {
@@ -76,9 +95,16 @@
       "infrastructure": 4,
       "population": 650000,
       "victory_points": 6,
-      "core_for_tags": ["ARG"],
-      "special_features": ["capital", "port"],
-      "special_levels": {"port": 3}
+      "core_for_tags": [
+        "ARG"
+      ],
+      "special_features": [
+        "capital",
+        "port"
+      ],
+      "special_levels": {
+        "port": 3
+      }
     },
     {
       "id": 29,
@@ -89,9 +115,16 @@
       "infrastructure": 4,
       "population": 700000,
       "victory_points": 6,
-      "core_for_tags": ["BRA"],
-      "special_features": ["capital", "port"],
-      "special_levels": {"port": 3}
+      "core_for_tags": [
+        "BRA"
+      ],
+      "special_features": [
+        "capital",
+        "port"
+      ],
+      "special_levels": {
+        "port": 3
+      }
     },
     {
       "id": 70,
@@ -102,7 +135,9 @@
       "infrastructure": 4,
       "population": 550000,
       "victory_points": 3,
-      "core_for_tags": ["BRA"],
+      "core_for_tags": [
+        "BRA"
+      ],
       "special_features": [],
       "special_levels": {}
     },
@@ -115,7 +150,9 @@
       "infrastructure": 3,
       "population": 500000,
       "victory_points": 7,
-      "core_for_tags": ["PER"],
+      "core_for_tags": [
+        "PER"
+      ],
       "terrain": "coastal",
       "has_port": true,
       "natural_resources": {
@@ -123,26 +160,13 @@
         "nitrates": 30,
         "guano": 25
       },
-      "special_features": ["capital", "port"],
-      "special_levels": {"port": 3}
-    },
-    {
-      "id": 83,
-      "owner_tag": "BOL",
-      "controller_tag": "BOL",
-      "factories": 1,
-      "development_level": 2,
-      "infrastructure": 2,
-      "population": 300000,
-      "victory_points": 5,
-      "core_for_tags": ["BOL"],
-      "terrain": "mountains",
-      "natural_resources": {
-        "silver": 35,
-        "tin": 20
-      },
-      "special_features": ["capital"],
-      "special_levels": {}
+      "special_features": [
+        "capital",
+        "port"
+      ],
+      "special_levels": {
+        "port": 3
+      }
     },
     {
       "id": 89,
@@ -153,7 +177,9 @@
       "infrastructure": 3,
       "population": 300000,
       "victory_points": 2,
-      "core_for_tags": ["ARG"],
+      "core_for_tags": [
+        "ARG"
+      ],
       "special_features": [],
       "special_levels": {}
     },
@@ -166,51 +192,207 @@
       "infrastructure": 4,
       "population": 600000,
       "victory_points": 8,
-      "core_for_tags": ["CHL"],
+      "core_for_tags": [
+        "CHL"
+      ],
       "terrain": "urban",
       "natural_resources": {
         "copper": 55,
         "coal": 20
       },
-      "special_features": ["capital", "port"],
-      "special_levels": {"port": 3}
+      "special_features": [
+        "capital",
+        "port"
+      ],
+      "special_levels": {
+        "port": 3
+      }
     },
     {
-      "id": 91,
+      "id": 841,
+      "owner_tag": "BOL",
+      "controller_tag": "CHL",
+      "factories": 1,
+      "development_level": 2.0,
+      "infrastructure": 2,
+      "population": 12000,
+      "victory_points": 5,
+      "core_for_tags": [
+        "BOL"
+      ],
+      "terrain": "coastal_desert",
+      "natural_resources": {
+        "nitrates": 70,
+        "silver": 10,
+        "copper": 15
+      },
+      "special_features": [
+        "port",
+        "saltpeter_fields",
+        "railway"
+      ],
+      "special_levels": {
+        "port": 2,
+        "railway": 1
+      },
+      "has_port": true
+    },
+    {
+      "id": 842,
       "owner_tag": "PER",
       "controller_tag": "PER",
       "factories": 1,
-      "development_level": 2,
+      "development_level": 2.0,
       "infrastructure": 2,
-      "population": 250000,
-      "victory_points": 3,
-      "core_for_tags": ["PER"],
-      "terrain": "hills",
+      "population": 18000,
+      "victory_points": 4,
+      "core_for_tags": [
+        "PER"
+      ],
+      "terrain": "desert",
       "natural_resources": {
-        "nitrates": 45,
-        "guano": 30
+        "nitrates": 85,
+        "guano": 10
       },
-      "special_features": [],
-      "special_levels": {}
+      "special_features": [
+        "saltpeter_fields",
+        "railway"
+      ],
+      "special_levels": {
+        "railway": 1
+      }
     },
     {
-      "id": 92,
+      "id": 843,
+      "owner_tag": "PER",
+      "controller_tag": "PER",
+      "factories": 1,
+      "development_level": 2.4,
+      "infrastructure": 3,
+      "population": 12000,
+      "victory_points": 6,
+      "core_for_tags": [
+        "PER"
+      ],
+      "terrain": "coastal_desert",
+      "natural_resources": {
+        "nitrates": 65,
+        "guano": 25
+      },
+      "special_features": [
+        "port",
+        "saltpeter_export_port",
+        "guano_deposits",
+        "railway"
+      ],
+      "special_levels": {
+        "port": 3,
+        "railway": 1
+      },
+      "has_port": true
+    },
+    {
+      "id": 844,
+      "owner_tag": "PER",
+      "controller_tag": "PER",
+      "factories": 0,
+      "development_level": 2.0,
+      "infrastructure": 2,
+      "population": 9000,
+      "victory_points": 5,
+      "core_for_tags": [
+        "PER"
+      ],
+      "terrain": "coastal_desert",
+      "natural_resources": {
+        "guano": 15,
+        "nitrates": 20
+      },
+      "special_features": [
+        "port",
+        "coastal_fort",
+        "railway_node"
+      ],
+      "special_levels": {
+        "port": 2,
+        "fort": 1,
+        "railway": 1
+      },
+      "has_port": true
+    },
+    {
+      "id": 845,
+      "owner_tag": "PER",
+      "controller_tag": "PER",
+      "factories": 0,
+      "development_level": 2.2,
+      "infrastructure": 2,
+      "population": 18000,
+      "victory_points": 4,
+      "core_for_tags": [
+        "PER"
+      ],
+      "terrain": "desert_hills",
+      "natural_resources": {
+        "nitrates": 15
+      },
+      "special_features": [
+        "regional_capital",
+        "railway_node"
+      ],
+      "special_levels": {
+        "railway": 1
+      }
+    },
+    {
+      "id": 846,
       "owner_tag": "BOL",
       "controller_tag": "BOL",
       "factories": 1,
-      "development_level": 2,
+      "development_level": 2.8,
       "infrastructure": 2,
-      "population": 180000,
-      "victory_points": 4,
-      "core_for_tags": ["BOL"],
-      "terrain": "coastal",
-      "has_port": true,
+      "population": 76000,
+      "victory_points": 6,
+      "core_for_tags": [
+        "BOL"
+      ],
+      "terrain": "mountains",
       "natural_resources": {
-        "nitrates": 60,
-        "silver": 20
+        "silver": 20,
+        "tin": 25
       },
-      "special_features": ["port"],
-      "special_levels": {"port": 2}
+      "special_features": [
+        "administrative_center",
+        "highland_supply_hub"
+      ],
+      "special_levels": {
+        "supply_hub": 2
+      }
+    },
+    {
+      "id": 847,
+      "owner_tag": "BOL",
+      "controller_tag": "BOL",
+      "factories": 1,
+      "development_level": 2.5,
+      "infrastructure": 2,
+      "population": 24000,
+      "victory_points": 5,
+      "core_for_tags": [
+        "BOL"
+      ],
+      "terrain": "mountains",
+      "natural_resources": {
+        "silver": 30,
+        "tin": 15
+      },
+      "special_features": [
+        "capital",
+        "administrative_center"
+      ],
+      "special_levels": {
+        "supply_hub": 1
+      }
     }
   ]
 }

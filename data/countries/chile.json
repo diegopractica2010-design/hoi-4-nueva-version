@@ -13,10 +13,17 @@
   "war_support": 68.0,
   "naval_power": true,
   "industrial_weight": 1,
-  "key_provinces": [90],
+  "key_provinces": [
+    90,
+    841
+  ],
   "strategic_role": "belligerent_attacker",
   "historical_role": "Potencia beligerante que busca asegurar el desierto de Atacama, los puertos salitreros y la superioridad naval en el Pacifico sur.",
-  "strategic_priorities": ["control_del_litoral", "superioridad_naval", "movilizacion_expedicionaria"],
+  "strategic_priorities": [
+    "control_del_litoral",
+    "superioridad_naval",
+    "movilizacion_expedicionaria"
+  ],
   "starting_posture": {
     "stability": 62,
     "war_support": 68,

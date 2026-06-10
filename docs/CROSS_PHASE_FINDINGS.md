@@ -16,6 +16,42 @@ Impact: obliga a mantener `ScenarioFactoryBootstrap` en `scripts/core/ScenarioFa
 
 Severity: Media
 
+## BLOCKED_BY_OWNERSHIP: reportes formales de Fase 6 sin respaldo inicial
+
+System: Mapa / documentacion de fase
+
+File: `docs/*`
+
+Description: Fase 7 debia revisar requisitos de teatro historico, reportes de validacion de mapa y readiness report de Fase 6. Esos documentos aparecieron como archivos no trackeados durante la revision.
+
+Impact: la ausencia inicial de respaldo reducia trazabilidad entre arquitectura de mapa y datos historicos. Al estar en `docs/*`, se clasifican como trabajo valido que debe respaldarse sin modificar su contenido.
+
+Severity: Media
+
+## BLOCKED_BY_OWNERSHIP: trabajo de mapa fuera de Fase 7
+
+System: Mapa
+
+File: `scripts/map/ProvinceInsight.gd`, `scripts/map/MapDataValidator.gd`, `scripts/map/_phase6_check.gd`, `scripts/map/_phase6_check.tscn`, `p6_run.log`, `p6_run2.log`, `p6_import.log`, `p6_final.log`
+
+Description: se observaron cambios y artefactos fuera del ownership de Fase 7 durante el cierre.
+
+Impact: pueden representar trabajo valido de Phase 6 o de otro agente. Fase 7 no los modifica ni los respalda para evitar violar ownership.
+
+Severity: Media
+
+## HISTORICAL_REVIEW_REQUIRED: calibracion historica del teatro 1879
+
+System: Datos historicos de mapa
+
+File: `data/provinces/*`, `data/scenarios/1879/scenario.json`
+
+Description: las provincias 841-847 modelan recursos, poblacion, infraestructura y control inicial con escala de gameplay MVP.
+
+Impact: Gemini debe revisar precision historica fina antes de usar estos valores como base de balance, eventos o diplomacia.
+
+Severity: Media
+
 ## BLOCKED_BY_OWNERSHIP: cambios de produccion fuera de Fase 5
 
 System: Produccion
@@ -87,3 +123,67 @@ Description: los campos `stability`, `war_support`, `industrial_weight`, `curren
 Impact: Gemini o el owner historico debe revisar calibracion antes de balance de gameplay.
 
 Severity: Media
+
+---
+
+# Fase 6 (Track A / Claude) — Hallazgos
+
+Solo hallazgos. Sin correcciones ni refactor fuera de la propiedad de Fase 6.
+
+## BLOCKED_BY_OWNERSHIP: TradeManager no compila y contamina el arranque
+
+System: Comercio nacional (autoload `TradeManager`)
+
+File: `scripts/national/TradeManager.gd` (lineas 412, 502, 503, 1168, 1181)
+
+Description: variables sin tipo inferido provocan error de parseo; el autoload no se instancia ("does not inherit from 'Node'") y arrastra la cadena de compilacion, dejando indeclarables varios `class_name` globales (`ScenarioDataResolver`, etc.).
+
+Impact: impide el arranque completo del juego en headless; la validacion de mapa de Fase 6 tuvo que aislarse con `preload` por ruta y reimportacion. Afecta a cualquier fase que dependa del arranque integro.
+
+Severity: Alta
+
+## Cobertura de geometria parcial
+
+System: Datos del mapa
+
+File: `data/provinces/provinces_geometry.json`
+
+Description: 740 de 847 provincias carecen de poligono; no se dibujan. Detectado por `MapDataValidator` (Fase 6).
+
+Impact: la mayoria del mapa es invisible/no seleccionable. No tocado (propiedad de datos). Tambien en deuda DT-P6-02.
+
+Severity: Media
+
+## Escenario 1879 sin provincias historicas reales
+
+System: Datos de escenario
+
+File: `data/scenarios/1879/scenario.json`, `data/provinces/provinces_base.json`
+
+Description: las naciones del Pacifico se ubican sobre provincias genericas reutilizadas; no existen Antofagasta, Tarapaca, Iquique, Arica, Tacna, La Paz ni Sucre como provincias con nombre.
+
+Impact: el teatro no es historicamente fiel todavia. No tocado (propiedad de datos/historia). Detalle en `HISTORICAL_THEATER_READINESS_REPORT.md`.
+
+Severity: Media
+
+## Trabajo de datos sin confirmar en el arbol de trabajo (respaldado)
+
+System: Datos de provincias, paises y escenario
+
+File: `data/provinces/*`, `data/countries/{bolivia,chile,peru}.json`, `data/scenarios/1879/scenario.json`
+
+Description: al iniciar Fase 6 habia trabajo valido de otros tracks sin confirmar (provincias 840->847, estados 70->75, regiones 20->22, geometria 100->107). La validacion confirma integridad (0 errores).
+
+Impact: riesgo de perdida si no se respalda. Respaldado por Fase 6 (GLOBAL BACKUP RULE) sin alterar su contenido. Ver `GIT_PHASE_6_REPORT.md`.
+
+Severity: Media
+
+## Nota: artefactos temporales de Fase 6 eliminados
+
+System: Validacion temporal
+
+File: `scripts/map/_phase6_check.gd`, `scripts/map/_phase6_check.tscn`, `p6_run.log`, `p6_run2.log`, `p6_import.log`, `p6_final.log`
+
+Description: los artefactos temporales que otras fases observaron sin poder clasificar fueron herramientas de validacion de Fase 6. Ya estan **eliminados**. El trabajo permanente de Fase 6 es `scripts/map/MapDataValidator.gd` (validador reutilizable) y la correccion de `scripts/map/ProvinceInsight.gd`.
+
+Severity: Baja

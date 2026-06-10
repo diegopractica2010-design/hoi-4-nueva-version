@@ -960,6 +960,29 @@
         839,
         840
       ]
+    },
+    {
+      "id": 21,
+      "name": "Costa Salitrera del Pacifico Sur",
+      "province_ids": [
+        841,
+        842,
+        843,
+        844,
+        845
+      ],
+      "region_type": "coastal_naval_economic",
+      "historical_role": "Puertos, salitre, guano y operaciones navales iniciales de la guerra."
+    },
+    {
+      "id": 22,
+      "name": "Altiplano Boliviano",
+      "province_ids": [
+        846,
+        847
+      ],
+      "region_type": "highland_military_supply",
+      "historical_role": "Movilizacion boliviana, logistica de altura y centros politicos interiores."
     }
   ]
 }

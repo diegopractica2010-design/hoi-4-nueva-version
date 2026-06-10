@@ -6082,6 +6082,118 @@
           "industry_slots": 1
         }
       ]
+    },
+    "841": {
+      "cities": [
+        {
+          "id": "C841_1",
+          "name": "Antofagasta",
+          "position": [
+            1218.0,
+            1331.0
+          ],
+          "population": 12000,
+          "port_level": 2,
+          "airport_level": 0,
+          "industry_slots": 1
+        }
+      ]
+    },
+    "842": {
+      "cities": [
+        {
+          "id": "C842_1",
+          "name": "Tarapaca",
+          "position": [
+            1224.0,
+            1249.0
+          ],
+          "population": 18000,
+          "port_level": 0,
+          "airport_level": 0,
+          "industry_slots": 1
+        }
+      ]
+    },
+    "843": {
+      "cities": [
+        {
+          "id": "C843_1",
+          "name": "Iquique",
+          "position": [
+            1182.0,
+            1256.0
+          ],
+          "population": 12000,
+          "port_level": 3,
+          "airport_level": 0,
+          "industry_slots": 1
+        }
+      ]
+    },
+    "844": {
+      "cities": [
+        {
+          "id": "C844_1",
+          "name": "Arica",
+          "position": [
+            1187.0,
+            1200.0
+          ],
+          "population": 9000,
+          "port_level": 2,
+          "airport_level": 0,
+          "industry_slots": 1
+        }
+      ]
+    },
+    "845": {
+      "cities": [
+        {
+          "id": "C845_1",
+          "name": "Tacna",
+          "position": [
+            1236.0,
+            1199.0
+          ],
+          "population": 18000,
+          "port_level": 0,
+          "airport_level": 0,
+          "industry_slots": 1
+        }
+      ]
+    },
+    "846": {
+      "cities": [
+        {
+          "id": "C846_1",
+          "name": "La Paz",
+          "position": [
+            1286.0,
+            1223.0
+          ],
+          "population": 76000,
+          "port_level": 0,
+          "airport_level": 0,
+          "industry_slots": 1
+        }
+      ]
+    },
+    "847": {
+      "cities": [
+        {
+          "id": "C847_1",
+          "name": "Sucre",
+          "position": [
+            1294.0,
+            1291.0
+          ],
+          "population": 24000,
+          "port_level": 0,
+          "airport_level": 0,
+          "industry_slots": 1
+        }
+      ]
     }
   }
 }

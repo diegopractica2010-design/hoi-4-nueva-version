@@ -4,7 +4,7 @@
   "scenario": "1879",
   "playable": true,
   "ai_diplomatic": false,
-  "capital_province_id": 83,
+  "capital_province_id": 847,
   "color": "#007A33",
   "government": "republican",
   "ideology": "republican",
@@ -12,10 +12,18 @@
   "stability": 42.0,
   "war_support": 55.0,
   "industrial_weight": 1,
-  "key_provinces": [83, 92],
+  "key_provinces": [
+    847,
+    846,
+    841
+  ],
   "strategic_role": "belligerent_defender",
   "historical_role": "Beligerante andino con litoral disputado, dependencia logistica alta y necesidad de coordinar defensa con Peru.",
-  "strategic_priorities": ["defensa_del_litoral", "movilizacion_andina", "cooperacion_con_peru"],
+  "strategic_priorities": [
+    "defensa_del_litoral",
+    "movilizacion_andina",
+    "cooperacion_con_peru"
+  ],
   "starting_posture": {
     "stability": 42,
     "war_support": 55,

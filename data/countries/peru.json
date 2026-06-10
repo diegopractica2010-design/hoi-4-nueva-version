@@ -13,10 +13,20 @@
   "war_support": 58.0,
   "naval_power": true,
   "industrial_weight": 1,
-  "key_provinces": [71, 91],
+  "key_provinces": [
+    71,
+    842,
+    843,
+    844,
+    845
+  ],
   "strategic_role": "belligerent_defender",
   "historical_role": "Aliado de Bolivia y defensor de los enclaves costeros, con una guerra que depende de sostener la escuadra, Lima y los recursos del sur.",
-  "strategic_priorities": ["defensa_costera", "escuadra_de_disuasion", "alianza_con_bolivia"],
+  "strategic_priorities": [
+    "defensa_costera",
+    "escuadra_de_disuasion",
+    "alianza_con_bolivia"
+  ],
   "starting_posture": {
     "stability": 48,
     "war_support": 58,

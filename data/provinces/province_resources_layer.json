@@ -5903,6 +5903,62 @@
       },
       "resource_score": 20.0,
       "primary_resource": "food"
+    },
+    "841": {
+      "resources": {
+        "nitrates": 70,
+        "silver": 10,
+        "copper": 15
+      },
+      "resource_score": 95.0,
+      "primary_resource": "nitrates"
+    },
+    "842": {
+      "resources": {
+        "nitrates": 85,
+        "guano": 10
+      },
+      "resource_score": 95.0,
+      "primary_resource": "nitrates"
+    },
+    "843": {
+      "resources": {
+        "nitrates": 65,
+        "guano": 25
+      },
+      "resource_score": 90.0,
+      "primary_resource": "nitrates"
+    },
+    "844": {
+      "resources": {
+        "guano": 15,
+        "nitrates": 20
+      },
+      "resource_score": 35.0,
+      "primary_resource": "nitrates"
+    },
+    "845": {
+      "resources": {
+        "nitrates": 15
+      },
+      "resource_score": 15.0,
+      "primary_resource": "nitrates"
+    },
+    "846": {
+      "resources": {
+        "silver": 20,
+        "tin": 25
+      },
+      "resource_score": 45.0,
+      "primary_resource": "tin"
+    },
+    "847": {
+      "resources": {
+        "silver": 30,
+        "tin": 15
+      },
+      "resource_score": 45.0,
+      "primary_resource": "silver"
     }
   }
 }
