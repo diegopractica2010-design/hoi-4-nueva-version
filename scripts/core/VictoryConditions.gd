@@ -59,6 +59,10 @@ func _ready() -> void:
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
 
+	if typeof(BattleManager) != TYPE_NIL:
+		if not BattleManager.province_captured.is_connected(_on_province_captured):
+			BattleManager.province_captured.connect(_on_province_captured)
+
 	# Intentar enlazar con ScenarioLoader si ya está en el árbol (puede no estarlo aún).
 	_try_connect_loader()
 
@@ -106,6 +110,24 @@ func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
 	if typeof(MapManager) == TYPE_NIL or not MapManager.has_province_data():
 		return
 
+	_evaluate_victory_conditions()
+
+
+func _on_province_captured(_province_id: int, _new_owner: String, _old_owner: String) -> void:
+	_check_victory_conditions()
+
+
+func _check_victory_conditions() -> void:
+	if _victory_triggered:
+		return
+	if not _scenario_loaded:
+		_try_connect_loader()
+		if _is_1879_scenario():
+			_scenario_loaded = true
+	if not _scenario_loaded or not _is_1879_scenario():
+		return
+	if typeof(MapManager) == TYPE_NIL or not MapManager.has_province_data():
+		return
 	_evaluate_victory_conditions()
 
 

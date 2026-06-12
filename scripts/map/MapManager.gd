@@ -23,6 +23,7 @@ signal scenario_map_ready()
 signal provinces_loaded(province_count: int)
 signal province_hovered(province_id: int)
 signal province_selected(province_id: int)
+signal province_owner_changed(province_id: int, old_tag: String, new_tag: String)
 signal province_data_changed(province_id: int, what_changed: String)  # e.g. "owner", "development", "effects"
 
 var _provinces: Dictionary[int, Province] = {}           # id -> Province
@@ -183,6 +184,12 @@ func get_provinces_by_owner(owner_tag: String) -> Array[int]:
 		if p != null and p.owner_tag.strip_edges().to_upper() == tag:
 			result.append(int(pid))
 	return result
+
+func get_province_owner(province_id: int) -> String:
+	var province := get_province(province_id)
+	if province == null:
+		return ""
+	return province.owner_tag.strip_edges().to_upper()
 
 func get_provinces_by_controller(controller_tag: String) -> Array[int]:
 	if controller_tag.is_empty():
@@ -406,6 +413,16 @@ func get_agent_network_overlay_data(target_country: String = "") -> Dictionary:
 		}
 	return result
 
+func set_province_owner(province_id: int, new_tag: String) -> void:
+	var province = get_province(province_id)
+	if province == null:
+		push_warning("MapManager: Province %d not found" % province_id)
+		return
+	var old_tag = province.owner_tag
+	province.owner_tag = new_tag
+	emit_signal("province_owner_changed", province_id, old_tag, new_tag)
+	province_data_changed.emit(province_id, "owner")
+
 ## Public API for mutating province data at runtime (e.g. from Production, Technology, Diplomacy, or events).
 ## Always emits province_data_changed so overlays, UI, and AI can react.
 func update_province_owner(
@@ -417,6 +434,7 @@ func update_province_owner(
 	var p: Province = _provinces.get(province_id)
 	if p == null:
 		return false
+	var old_owner := p.owner_tag
 	var changed := false
 	if p.owner_tag != new_owner:
 		p.owner_tag = new_owner
@@ -426,6 +444,8 @@ func update_province_owner(
 		changed = true
 	if changed:
 		province_data_changed.emit(province_id, "owner")
+		if old_owner != p.owner_tag:
+			province_owner_changed.emit(province_id, old_owner, p.owner_tag)
 
 		if not skip_capture and typeof(FactoryManager) != TYPE_NIL:
 			FactoryManager.capture_province_factories(province_id, new_owner)

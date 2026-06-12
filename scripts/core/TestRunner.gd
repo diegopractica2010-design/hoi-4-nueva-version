@@ -57,6 +57,8 @@ func _ready() -> void:
 	# Propagar la nación elegida al sistema de guardado (las partidas registran el bando correcto).
 	if typeof(SaveLoadManager) != TYPE_NIL and SaveLoadManager.has_method("set_player_tag"):
 		SaveLoadManager.set_player_tag(player_tag)
+	if typeof(AIManager) != TYPE_NIL:
+		AIManager.set_player_tag(player_tag)
 	# Propagar también al sistema de movimiento de unidades.
 	if typeof(UnitMovementSystem) != TYPE_NIL and UnitMovementSystem.has_method("set_player_tag"):
 		UnitMovementSystem.set_player_tag(player_tag)

@@ -29,6 +29,13 @@ extends Control
 @onready var settings_button: Button = $ContentRow/RightContainer/MenuContainer/SettingsButton
 @onready var help_button: Button = $ContentRow/RightContainer/MenuContainer/HelpButton
 
+@onready var war_bar: HBoxContainer = $ContentRow/WarBar
+@onready var saltpeter_label: Label = $ContentRow/WarBar/SaltpeterLabel
+@onready var antofagasta_label: Label = $ContentRow/WarBar/AntofagastaLabel
+@onready var lima_label: Label = $ContentRow/WarBar/LimaLabel
+@onready var days_label: Label = $ContentRow/WarBar/DaysLabel
+@onready var income_label: Label = $ContentRow/WarBar/IncomeLabel
+
 var current_speed: int = 1
 var is_paused: bool = false
 
@@ -47,6 +54,16 @@ func _ready() -> void:
 			TimeManager.game_month_advanced.connect(_on_game_month_advanced)
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
+
+	# Conexiones de estado de guerra
+	if typeof(VictoryConditions) != TYPE_NIL:
+		if not VictoryConditions.victory_achieved.is_connected(_on_victory_achieved):
+			VictoryConditions.victory_achieved.connect(_on_victory_achieved)
+	if typeof(BattleManager) != TYPE_NIL:
+		if not BattleManager.province_captured.is_connected(_on_province_captured):
+			BattleManager.province_captured.connect(_on_province_captured)
+
+	_update_war_status()
 
 	var timer := Timer.new()
 	timer.wait_time = 1.0
@@ -140,8 +157,10 @@ func _on_game_month_advanced(_year: int, _month: int) -> void:
 	_update_resources()
 
 
-func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
+func _on_game_day_advanced(_year: int, _month: int, day: int) -> void:
 	_update_date_time()
+	if day % 7 == 0:
+		_update_war_status()
 
 
 func _sync_pause_from_time_manager() -> void:
@@ -209,6 +228,51 @@ func _update_resources() -> void:
 	aluminum_label.text = "Aluminum: %.0f" % float(stockpile.get("aluminum", 0.0))
 	oil_label.text = "Oil: %.0f" % float(stockpile.get("oil", 0.0))
 	rubber_label.text = "Rubber: %.0f" % float(stockpile.get("rubber", 0.0))
+
+
+func _on_victory_achieved(_winner_tag: String, _condition_name: String, _description: String) -> void:
+	war_bar.visible = false
+
+
+func _on_province_captured(_province_id: int, _new_owner: String, _old_owner: String) -> void:
+	_update_war_status()
+
+
+func _update_war_status() -> void:
+	if typeof(VictoryConditions) == TYPE_NIL:
+		return
+	var status: Dictionary = VictoryConditions.get_victory_status()
+
+	# Contador de provincias salitreras
+	var salt_count := int(status.get("saltpeter_provinces_chl", 0))
+	saltpeter_label.text = "Salitreras Chile: %d/3" % salt_count
+
+	# Dueños de provincias clave
+	antofagasta_label.text = "Antofagasta: %s" % status.get("antofagasta_owner", "?")
+	lima_label.text = "Lima: %s" % status.get("lima_owner", "?")
+
+	# Días restantes
+	var days := int(status.get("days_remaining", 0))
+	if days > 0:
+		days_label.text = "Días hasta armisticio: %d" % days
+	else:
+		days_label.text = "¡Período crítico!"
+
+	# Ingreso mensual
+	if typeof(NationalIncomeManager) != TYPE_NIL:
+		var player_tag := "CHL"
+		if typeof(SaveLoadManager) != TYPE_NIL and "current_player_tag" in SaveLoadManager:
+			player_tag = str(SaveLoadManager.current_player_tag)
+		var income := NationalIncomeManager.get_nation_monthly_income(player_tag)
+		income_label.text = "Ingreso/mes: %.0f oro" % income
+
+	# Color coding: verde si Chile va ganando, rojo si va perdiendo
+	if salt_count >= 2:
+		saltpeter_label.theme_override_colors["font_color"] = Color.GREEN
+		days_label.theme_override_colors["font_color"] = Color.GREEN
+	else:
+		saltpeter_label.theme_override_colors["font_color"] = Color.RED
+		days_label.theme_override_colors["font_color"] = Color.RED
 
 
 func _close_overlay_screens() -> void:

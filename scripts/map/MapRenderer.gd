@@ -150,6 +150,7 @@ func _ready():
 	_connect_time_manager_signals()
 	_connect_map_manager_signals()
 	_connect_unit_movement_signals()
+	_connect_battle_manager_signals()
 	_init_legend_calendar_tracking()
 	set_process(true)
 	print("MapRenderer _ready() completed")
@@ -177,6 +178,31 @@ func _on_map_province_data_changed(province_id: int, what: String) -> void:
 		_refresh_single_province_fill(province_id)
 	if _hover_fill_province_id == province_id:
 		_apply_hover_fill(province_id, true)
+
+
+func _connect_battle_manager_signals() -> void:
+	if typeof(BattleManager) == TYPE_NIL:
+		return
+	if not BattleManager.province_captured.is_connected(_on_province_captured):
+		BattleManager.province_captured.connect(_on_province_captured)
+	if not BattleManager.battle_resolved.is_connected(_on_battle_resolved):
+		BattleManager.battle_resolved.connect(_on_battle_resolved)
+
+
+func _on_province_captured(province_id: int, _new_owner: String, _old_owner: String) -> void:
+	refresh_province_color(province_id)
+
+
+func _on_battle_resolved(
+	province_id: int,
+	winner_tag: String,
+	_loser_tag: String,
+	result: Dictionary
+) -> void:
+	print(
+		"[Battle] %s vs %s in province %d - Winner: %s"
+		% [result.attacker_tag, result.defender_tag, province_id, winner_tag]
+	)
 
 
 func _connect_time_manager_signals() -> void:
@@ -1654,6 +1680,12 @@ func _update_compare_preview_outline(hover_province: Province, counterpart: Prov
 		return
 	_compare_preview_province_id = counterpart.id
 	_set_compare_preview_outline(counterpart.id, true)
+
+
+func refresh_province_color(province_id: int) -> void:
+	_refresh_single_province_fill(province_id)
+	if _hover_fill_province_id == province_id:
+		_apply_hover_fill(province_id, true)
 
 
 func _refresh_single_province_fill(province_id: int) -> void:

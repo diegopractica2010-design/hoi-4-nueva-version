@@ -325,6 +325,8 @@ func _gather_save_data() -> Dictionary:
 		"supply": {},
 		"national_modifiers": {},
 		"leaders": {},
+		"event_manager": {},
+		"ai_manager": {},
 		"misc": {},
 	}
 
@@ -402,6 +404,10 @@ func _gather_save_data() -> Dictionary:
 	# --- NationalIncomeManager ---
 	data["national_income"] = NationalIncomeManager.get_save_data() if typeof(NationalIncomeManager) != TYPE_NIL else {}
 
+	data["event_manager"] = EventManager.get_save_data() if typeof(EventManager) != TYPE_NIL else {}
+
+	data["ai_manager"] = AIManager.get_save_data() if typeof(AIManager) != TYPE_NIL else {}
+
 	return data
 
 
@@ -451,6 +457,12 @@ func _apply_save_data(data: Dictionary) -> void:
 	# 9. National income (mes procesado) — estado ligero, sin dependencias.
 	if data.has("national_income") and typeof(NationalIncomeManager) != TYPE_NIL:
 		NationalIncomeManager.load_save_data(data["national_income"])
+
+	if data.has("event_manager") and typeof(EventManager) != TYPE_NIL:
+		EventManager.load_save_data(data["event_manager"])
+
+	if data.has("ai_manager") and typeof(AIManager) != TYPE_NIL:
+		AIManager.load_save_data(data["ai_manager"])
 
 	# Future: after all core state, allow other managers to react
 	# e.g. if typeof(ProductionManager) != TYPE_NIL and ProductionManager.has_method("on_game_loaded"):

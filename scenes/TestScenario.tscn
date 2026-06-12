@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://bofeojlh1wplu" path="res://scripts/core/ScenarioLoader.gd" id="2_wna7v"]
 [ext_resource type="PackedScene" uid="uid://b32rba8qvhmi6" path="res://scenes/WorldMap.tscn" id="3_45mq6"]
 [ext_resource type="PackedScene" uid="uid://topinfobar01" path="res://scenes/ui/TopInfoBar.tscn" id="4_topbar"]
+[ext_resource type="PackedScene" path="res://scenes/ui/EventPopup.tscn" id="5_eventpopup"]
+[ext_resource type="PackedScene" uid="uid://battleresultpopup1879" path="res://scenes/ui/BattleResultPopup.tscn" id="6_battleresult"]
+[ext_resource type="PackedScene" uid="uid://victoryscreen1879" path="res://scenes/ui/VictoryScreen.tscn" id="7_victoryscreen"]
 
 [node name="TestScenario" type="Node" unique_id=1430823089]
 script = ExtResource("1_l5b53")
@@ -17,3 +20,9 @@ script = ExtResource("2_wna7v")
 layer = 10
 
 [node name="TopInfoBar" parent="UILayer" unique_id=204131638 instance=ExtResource("4_topbar")]
+
+[node name="EventPopup" parent="UILayer" instance=ExtResource("5_eventpopup")]
+
+[node name="BattleResultPopup" parent="UILayer" instance=ExtResource("6_battleresult")]
+
+[node name="VictoryScreen" parent="UILayer" instance=ExtResource("7_victoryscreen")]
