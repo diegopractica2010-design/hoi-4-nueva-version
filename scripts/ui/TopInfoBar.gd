@@ -333,7 +333,7 @@ func _on_menu_pressed() -> void:
 		_show_main_menu_popup_fallback()
 		return
 
-	var menu := packed.instantiate()
+	var menu: Node = packed.instantiate()
 	menu.name = "MainMenu"
 	if menu.has_signal("menu_closed"):
 		menu.menu_closed.connect(func() -> void:
@@ -381,8 +381,12 @@ func _show_main_menu_popup_fallback() -> void:
 	panel.position = Vector2( (get_viewport().get_visible_rect().size.x - 620) / 2 , 80)
 	panel.z_index = 200
 
-	if has_node("/root/RetrowaveTheme"):
-		RetrowaveTheme.style_popup_root(panel)
+	var popup_style := StyleBoxFlat.new()
+	popup_style.bg_color = Color(0.08, 0.08, 0.12)
+	popup_style.border_color = RetrowaveTheme.CYAN
+	popup_style.set_border_width_all(2)
+	popup_style.set_corner_radius_all(6)
+	panel.add_theme_stylebox_override("panel", popup_style)
 
 	var main_vbox := VBoxContainer.new()
 	main_vbox.size = panel.size - Vector2(20, 20)
@@ -568,8 +572,8 @@ func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
 			_update_resources()
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 				LeaderEventUI.show_toast("Game loaded: " + s.get("slot", ""), 2.5)
-			if panel and is_instance_valid(panel):
-				panel.queue_free()
+			if owning_panel and is_instance_valid(owning_panel):
+				owning_panel.queue_free()
 			_pause_for_menu(false)
 		)
 		h.add_child(load_btn)
@@ -580,8 +584,8 @@ func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
 			SaveLoadManager.delete_save(s.get("slot", ""))
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 				LeaderEventUI.show_toast("Save deleted: " + s.get("slot", ""), 2.0, true)
-			if panel and is_instance_valid(panel):
-				panel.queue_free()
+			if owning_panel and is_instance_valid(owning_panel):
+				owning_panel.queue_free()
 			_show_main_menu_popup_fallback()  # refresh
 		)
 		h.add_child(del_btn)
@@ -594,8 +598,8 @@ func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
 			print("Rename requested for " + s.get("slot", "") + " (use SaveLoadManager.rename_save in console for now)")
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 				LeaderEventUI.show_toast("Rename: use console for now (API ready)", 2.0)
-			if panel and is_instance_valid(panel):
-				panel.queue_free()
+			if owning_panel and is_instance_valid(owning_panel):
+				owning_panel.queue_free()
 			_show_main_menu_popup_fallback()
 		)
 		h.add_child(rename_btn)

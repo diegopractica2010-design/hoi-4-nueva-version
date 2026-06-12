@@ -1,0 +1,19 @@
+{
+  "id": "batalla_angamos",
+  "name": "Batalla de Angamos — Captura del Huáscar",
+  "description": "El 8 de octubre de 1879, la escuadra chilena captura al Huáscar frente al cabo Angamos. El almirante Miguel Grau muere en combate. Chile obtiene el dominio total del mar, asegurando sus líneas de suministro para la campaña terrestre.",
+  "trigger": { "type": "date", "date": "1879-10-08" },
+  "effects": [
+    { "type": "destroy_unit", "tag": "PER", "unit_id": "per_naval_1879" },
+    { "type": "add_national_spirit", "tag": "CHL",
+      "spirit_id": "dominio_del_mar",
+      "duration_months": 36,
+      "modifiers": { "naval_attack": 0.20, "supply_throughput": 0.15 } },
+    { "type": "add_national_spirit", "tag": "PER",
+      "spirit_id": "caida_de_grau",
+      "duration_months": 12,
+      "modifiers": { "army_morale": -0.10 } }
+  ],
+  "repeatable": false,
+  "target_tags": ["CHL", "PER"]
+}

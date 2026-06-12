@@ -29,6 +29,11 @@ const CATEGORY_SPACE := "space"
 @export var parent_formation_id: String = ""
 @export var is_training: bool = false
 @export var is_in_combat: bool = false
+## Provincia donde se encuentra la formación (-1 = sin desplegar en el mapa).
+## Lo usa UnitMovementSystem para seleccionar y mover formaciones por el mapa.
+@export var province_id: int = -1
+## True mientras la formación ejecuta una orden de movimiento (bloquea nuevas órdenes).
+@export var is_moving: bool = false
 
 var assigned_leader: Leader = null
 

@@ -1,0 +1,19 @@
+{
+  "id": "batalla_tacna",
+  "name": "Batalla del Campo de la Alianza",
+  "description": "El 26 de mayo de 1880, el ejército chileno derrota a las fuerzas combinadas peruano-bolivianas en Tacna. Bolivia abandona efectivamente la guerra. El camino a Arica queda abierto.",
+  "trigger": {
+    "type": "province_owner",
+    "province_id": 845,
+    "owner_tag": "CHL"
+  },
+  "effects": [
+    { "type": "add_national_spirit", "tag": "BOL",
+      "spirit_id": "derrota_de_tacna",
+      "duration_months": -1,
+      "modifiers": { "army_morale": -0.20, "war_support": -0.25 } },
+    { "type": "news_event", "text": "Bolivia se retira de la guerra activa" }
+  ],
+  "repeatable": false,
+  "target_tags": ["CHL", "PER", "BOL"]
+}

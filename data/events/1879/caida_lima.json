@@ -1,0 +1,20 @@
+{
+  "id": "caida_de_lima",
+  "name": "Caída de Lima",
+  "description": "El 17 de enero de 1881, las tropas chilenas entran en Lima. El presidente peruano Piérola huye a la sierra. Chile ocupa la capital peruana pero la guerra de guerrillas continúa bajo el mando del general Andrés Avelino Cáceres.",
+  "trigger": {
+    "type": "province_owner",
+    "province_id": 71,
+    "owner_tag": "CHL"
+  },
+  "effects": [
+    { "type": "add_national_spirit", "tag": "PER",
+      "spirit_id": "resistencia_de_caceres",
+      "duration_months": 36,
+      "modifiers": { "army_morale": 0.10, "defense": 0.15 } },
+    { "type": "news_event",
+      "text": "Lima ha caído — pero Perú no se rinde" }
+  ],
+  "repeatable": false,
+  "target_tags": ["CHL", "PER"]
+}

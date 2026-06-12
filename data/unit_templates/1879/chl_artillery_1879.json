@@ -1,0 +1,47 @@
+{
+  "id": "chl_artillery_1879",
+  "name": "Chilean Krupp Artillery Battery",
+  "design_family": "chilean_artillery_1879",
+  "base_type": "Land",
+  "size_category": "Light",
+  "visual_archetype": "artillery",
+  "crew_required": 7,
+  "base_training_level": 20,
+  "max_experience_level": 90,
+  "base_production_days": 32,
+  "base_stats": {
+    "speed": 9,
+    "reliability": 80,
+    "fuel_consumption": 2,
+    "supply_need": 9,
+    "armor": 4,
+    "hardness": 15
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "Suspension": { "max": 1 }
+  },
+  "module_loadout": {
+    "MainWeapon": "norwegian_75mm_krupp",
+    "Suspension": "m1897_towed_carriage"
+  },
+  "unlock_tech": [
+    "field_artillery",
+    "ww1_artillery"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": false,
+  "production_category": "light_tank",
+  "era": "ww1",
+  "modules": [
+    "norwegian_75mm_krupp",
+    "m1897_towed_carriage"
+  ],
+  "production_cost": 54.0,
+  "daily_resource_cost": {
+    "steel": 0.92,
+    "aluminum": 0.23,
+    "fuel": 0.16,
+    "rubber": 0.07
+  }
+}

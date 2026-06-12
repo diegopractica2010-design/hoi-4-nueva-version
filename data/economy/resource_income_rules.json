@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "description": "Monthly income per unit of resource controlled. Unit = gold per month per resource point.",
+  "rules": {
+    "nitrates": 2.5,
+    "guano": 1.8,
+    "copper": 1.2,
+    "silver": 2.0,
+    "tin": 0.8,
+    "coal": 0.6,
+    "iron": 0.5,
+    "food": 0.3,
+    "oil": 3.0,
+    "steel": 0.4
+  },
+  "notes": {
+    "nitrates": "Primary strategic resource of the War of the Pacific. Antofagasta=70, Tarapacá=85, Iquique=65.",
+    "guano": "Peruvian coastal resource, declining by 1879 but still significant."
+  }
+}

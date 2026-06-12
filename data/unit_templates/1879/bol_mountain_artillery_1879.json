@@ -1,0 +1,47 @@
+{
+  "id": "bol_mountain_artillery_1879",
+  "name": "Bolivian Mountain Artillery",
+  "design_family": "bolivian_artillery_1879",
+  "base_type": "Land",
+  "size_category": "Light",
+  "visual_archetype": "artillery",
+  "crew_required": 5,
+  "base_training_level": 14,
+  "max_experience_level": 80,
+  "base_production_days": 28,
+  "base_stats": {
+    "speed": 11,
+    "reliability": 76,
+    "fuel_consumption": 1,
+    "supply_need": 6,
+    "armor": 3,
+    "hardness": 12
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "Suspension": { "max": 1 }
+  },
+  "module_loadout": {
+    "MainWeapon": "ansaldo_65mm_mountain",
+    "Suspension": "m1897_towed_carriage"
+  },
+  "unlock_tech": [
+    "field_artillery",
+    "ww1_artillery"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": false,
+  "production_category": "light_tank",
+  "era": "ww1",
+  "modules": [
+    "ansaldo_65mm_mountain",
+    "m1897_towed_carriage"
+  ],
+  "production_cost": 40.0,
+  "daily_resource_cost": {
+    "steel": 0.66,
+    "aluminum": 0.16,
+    "fuel": 0.1,
+    "rubber": 0.06
+  }
+}

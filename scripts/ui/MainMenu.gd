@@ -79,6 +79,7 @@ func _clamp_to_viewport() -> void:
 	position = (vp - size) / 2
 
 func _build_menu_options() -> void:
+	options_vbox.add_child(_make_menu_button("Nueva Partida", "new_game"))
 	options_vbox.add_child(_make_menu_button("Save Game", "save"))
 	options_vbox.add_child(_make_menu_button("Load Game", "load"))
 	options_vbox.add_child(_make_menu_button("Save As...", "save_as"))
@@ -195,6 +196,12 @@ func _populate_save_list(parent: VBoxContainer) -> void:
 
 func _handle_menu_option(option: String) -> void:
 	match option:
+		"new_game":
+			# Reinicia el flujo de nueva partida: limpia la selección previa y va a
+			# la pantalla de selección de nación.
+			NationSelectScreen.selected_tag = ""
+			_on_close_requested()  # cierra el popup y reanuda el estado de pausa
+			get_tree().change_scene_to_file("res://scenes/ui/NationSelectScreen.tscn")
 		"save":
 			SaveLoadManager.quicksave()
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):

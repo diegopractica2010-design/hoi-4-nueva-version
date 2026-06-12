@@ -141,6 +141,15 @@ const DEFAULT_SLOT := "quicksave"
 
 var _last_save_path: String = ""
 
+## Tag de la nación del jugador (lo fija NationSelectScreen vía TestRunner al iniciar partida).
+var current_player_tag: String = "CHL"
+
+## Fija la nación del jugador para que las partidas guardadas registren el bando correcto.
+func set_player_tag(tag: String) -> void:
+	var clean := tag.strip_edges().to_upper()
+	if not clean.is_empty():
+		current_player_tag = clean
+
 func _ready() -> void:
 	_ensure_save_dir()
 	print("SaveLoadManager: Initialized (JSON format v%d, user://saves/)" % SAVE_VERSION)
@@ -306,7 +315,7 @@ func _gather_save_data() -> Dictionary:
 		"metadata": {
 			"timestamp": Time.get_datetime_string_from_system(true),
 			"scenario_id": "1936",
-			"player_tag": "USA",
+			"player_tag": current_player_tag,
 			"play_time_seconds": 0,
 		},
 		"time": {},
@@ -390,6 +399,9 @@ func _gather_save_data() -> Dictionary:
 		else:
 			data["leaders"] = {}
 
+	# --- NationalIncomeManager ---
+	data["national_income"] = NationalIncomeManager.get_save_data() if typeof(NationalIncomeManager) != TYPE_NIL else {}
+
 	return data
 
 
@@ -435,6 +447,10 @@ func _apply_save_data(data: Dictionary) -> void:
 	if data.has("design_lifecycle") and typeof(DesignManager) != TYPE_NIL:
 		if DesignManager.has_method("apply_save_data"):
 			DesignManager.apply_save_data(data["design_lifecycle"])
+
+	# 9. National income (mes procesado) — estado ligero, sin dependencias.
+	if data.has("national_income") and typeof(NationalIncomeManager) != TYPE_NIL:
+		NationalIncomeManager.load_save_data(data["national_income"])
 
 	# Future: after all core state, allow other managers to react
 	# e.g. if typeof(ProductionManager) != TYPE_NIL and ProductionManager.has_method("on_game_loaded"):

@@ -1,0 +1,55 @@
+{
+  "id": "per_naval_1879",
+  "name": "Peruvian Ironclad Monitor Huáscar",
+  "design_family": "peruvian_naval_1879",
+  "base_type": "Naval",
+  "size_category": "Heavy",
+  "visual_archetype": "battleship",
+  "crew_required": 200,
+  "base_training_level": 18,
+  "max_experience_level": 90,
+  "base_production_days": 220,
+  "base_stats": {
+    "speed": 10,
+    "reliability": 60,
+    "fuel_consumption": 40,
+    "supply_need": 70,
+    "armor": 58,
+    "deck_armor": 22,
+    "hardness": 82
+  },
+  "slots": {
+    "NavalGun": { "max": 2 },
+    "SecondaryWeapon": { "max": 2 },
+    "Engine": { "max": 1 },
+    "Armor": { "max": 1 },
+    "Sensors": { "max": 1 },
+    "Communications": { "max": 1 }
+  },
+  "module_loadout": {
+    "NavalGun": "uk_12inch_mk10",
+    "Armor": "naval_belt_armor_scheme",
+    "Engine": "ww1_merchant_steamer"
+  },
+  "unlock_tech": [
+    "ww1_naval",
+    "great_war_naval",
+    "dreadnought"
+  ],
+  "can_mount_drones": false,
+  "is_vehicle": true,
+  "production_category": "battleship",
+  "era": "ww1",
+  "modules": [
+    "uk_12inch_mk10",
+    "naval_belt_armor_scheme",
+    "ww1_merchant_steamer"
+  ],
+  "production_cost": 620.0,
+  "daily_resource_cost": {
+    "steel": 18.4,
+    "aluminum": 3.1,
+    "fuel": 5.0,
+    "electronics": 0.8
+  }
+}

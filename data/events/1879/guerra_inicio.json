@@ -1,0 +1,13 @@
+{
+  "id": "guerra_pacifico_inicio",
+  "name": "Chile ocupa Antofagasta",
+  "description": "El 14 de febrero de 1879, tropas chilenas desembarcan en Antofagasta bajo órdenes del Presidente Aníbal Pinto. Bolivia, incapaz de resistir, declara la guerra. Perú, ligado por tratado secreto de 1873, se ve arrastrada al conflicto. La Guerra del Pacífico ha comenzado.",
+  "trigger": { "type": "date", "date": "1879-02-14" },
+  "effects": [
+    { "type": "declare_war", "attacker": "CHL", "defender": "BOL" },
+    { "type": "declare_war", "attacker": "CHL", "defender": "PER" },
+    { "type": "province_transfer", "province_id": 841, "from_tag": "BOL", "to_tag": "CHL" }
+  ],
+  "repeatable": false,
+  "target_tags": ["CHL", "PER", "BOL"]
+}

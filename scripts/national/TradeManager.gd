@@ -409,7 +409,7 @@ func evaluate_fairness(offer_id: String, for_country: String) -> Dictionary:
 		return {"score": 0.0, "reason": "Offer not found", "value_offered": 0.0, "value_requested": 0.0}
 
 	var tag := _norm_tag(for_country)
-	var is_from := (tag == offer.from_tag)
+	var is_from: bool = (tag == offer.from_tag)
 
 	var offered_value := 0.0
 	var requested_value := 0.0
@@ -499,8 +499,8 @@ func accept_offer(offer_id: String) -> bool:
 	if offer.is_empty() or offer.status != TradeStatus.PROPOSED:
 		return false
 
-	var from := offer.from_tag
-	var to := offer.to_tag
+	var from: String = offer.from_tag
+	var to: String = offer.to_tag
 
 	# === Validation: offerer must have offered items; accepter must be able to pay requested ===
 	if not _country_can_supply_items(from, offer.offered):
@@ -1165,7 +1165,7 @@ func _execute_transfer(country_tag: String, item: Dictionary, is_giver_side: boo
 		TradeItemType.DOCKING_RIGHTS:
 			if typeof(NationalModifierManager) != TYPE_NIL and qty > 0:
 				var duration := int(item.get("metadata", {}).get("duration_months", 12))
-				var modifiers := item.get("metadata", {}).get("modifiers", {"supply_throughput": 0.2, "port_access": 1.0})
+				var modifiers: Dictionary = item.get("metadata", {}).get("modifiers", {"supply_throughput": 0.2, "port_access": 1.0})
 				var effect := {
 					"source": "trade_docking_rights",
 					"source_detail": id,
@@ -1178,7 +1178,7 @@ func _execute_transfer(country_tag: String, item: Dictionary, is_giver_side: boo
 		TradeItemType.INTEL:
 			if typeof(NationalModifierManager) != TYPE_NIL and qty > 0:
 				var duration := int(item.get("metadata", {}).get("duration_months", 6))
-				var modifiers := item.get("metadata", {}).get("modifiers", {"recon_bonus": qty * 0.1, "intel_visibility": 0.15})
+				var modifiers: Dictionary = item.get("metadata", {}).get("modifiers", {"recon_bonus": qty * 0.1, "intel_visibility": 0.15})
 				var effect := {
 					"source": "trade_intel",
 					"source_detail": id,

@@ -1,0 +1,45 @@
+{
+  "scenario": "1879",
+  "defaults": {
+    "completed": ["basic_machine_tools"],
+    "research_slots": 1
+  },
+  "countries": {
+    "ENG": {
+      "completed": ["land_doctrine_i", "tank_plant_i", "port_shipyard_i", "medium_tank_ii"],
+      "research_slots": 4
+    },
+    "GER": {
+      "completed": ["land_doctrine_i", "tank_plant_i", "medium_tank_ii"],
+      "research_slots": 4
+    },
+    "FRA": {
+      "completed": ["land_doctrine_i", "tank_plant_i", "port_shipyard_i"],
+      "research_slots": 3
+    },
+    "USA": {
+      "completed": ["land_doctrine_i", "tank_plant_i"],
+      "research_slots": 3
+    },
+    "CHL": {
+      "completed": ["land_doctrine_i", "port_shipyard_i", "tank_plant_i"],
+      "research_slots": 2
+    },
+    "PER": {
+      "completed": ["land_doctrine_i", "port_shipyard_i"],
+      "research_slots": 2
+    },
+    "ARG": {
+      "completed": ["land_doctrine_i"],
+      "research_slots": 1
+    },
+    "BRA": {
+      "completed": ["land_doctrine_i", "port_shipyard_i"],
+      "research_slots": 1
+    },
+    "BOL": {
+      "completed": [],
+      "research_slots": 1
+    }
+  }
+}

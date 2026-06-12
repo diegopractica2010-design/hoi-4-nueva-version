@@ -1,0 +1,41 @@
+{
+  "id": "chl_cavalry_1879",
+  "name": "Chilean Cavalry Regiment",
+  "design_family": "chilean_cavalry_1879",
+  "base_type": "Land",
+  "size_category": "Light",
+  "visual_archetype": "light_tank",
+  "crew_required": 15,
+  "base_training_level": 18,
+  "max_experience_level": 88,
+  "base_production_days": 16,
+  "base_stats": {
+    "speed": 32,
+    "reliability": 75,
+    "fuel_consumption": 1,
+    "supply_need": 7,
+    "armor": 1,
+    "hardness": 8
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "SecondaryWeapon": { "max": 2 }
+  },
+  "module_loadout": {
+    "SecondaryWeapon": "m1903_springfield_rifle"
+  },
+  "unlock_tech": [],
+  "can_mount_drones": false,
+  "is_vehicle": false,
+  "production_category": "light_tank",
+  "era": "ww1",
+  "modules": [
+    "m1903_springfield_rifle"
+  ],
+  "production_cost": 24.0,
+  "daily_resource_cost": {
+    "steel": 0.4,
+    "aluminum": 0.08,
+    "fuel": 0.06
+  }
+}

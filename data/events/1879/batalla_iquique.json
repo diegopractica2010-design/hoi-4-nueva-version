@@ -1,0 +1,16 @@
+{
+  "id": "batalla_iquique",
+  "name": "Batalla de Iquique — El Huáscar vs. La Esmeralda",
+  "description": "El 21 de mayo de 1879, el monitor peruano Huáscar enfrenta a la corbeta chilena Esmeralda frente al puerto de Iquique. El comandante Arturo Prat muere en combate al abordar el Huáscar. Chile pierde la Esmeralda pero el sacrificio de Prat se convierte en símbolo nacional.",
+  "trigger": { "type": "date", "date": "1879-05-21" },
+  "effects": [
+    { "type": "add_national_spirit", "tag": "CHL",
+      "spirit_id": "sacrificio_de_prat",
+      "duration_months": 24,
+      "modifiers": { "army_morale": 0.15, "war_support": 0.10 } },
+    { "type": "damage_unit", "tag": "PER", "unit_id": "per_naval_1879",
+      "damage_percent": 0.30 }
+  ],
+  "repeatable": false,
+  "target_tags": ["CHL", "PER"]
+}

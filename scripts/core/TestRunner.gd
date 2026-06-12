@@ -5,14 +5,27 @@ extends Node
 @onready var map_renderer: MapRenderer = $WorldMap
 @onready var camera_controller: CameraController = $WorldMap/CameraInput
 
-var player_tag: String = "USA"
+var player_tag: String = "CHL"
 
 
 func _ready() -> void:
 	print("=== Epochs of Ascendancy Test Starting ===")
+
+	# Flujo de nueva partida: el jugador debe elegir nación antes de cargar el escenario.
+	# Si todavía no hay selección, mostramos la pantalla de selección de nación y volvemos.
+	if NationSelectScreen.selected_tag.strip_edges().is_empty():
+		print("No hay nación seleccionada — abriendo pantalla de selección.")
+		call_deferred("_go_to_nation_select")
+		return
+
+	# Nación elegida en NationSelectScreen (por defecto "CHL" si llegara vacía).
+	player_tag = NationSelectScreen.selected_tag.strip_edges()
+	if player_tag.is_empty():
+		player_tag = "CHL"
+
 	_run_production_line_tests()
 
-	var success := loader.load_scenario("1860")
+	var success := loader.load_scenario("1879")
 
 	if not success:
 		print("Failed to load scenario.")
@@ -41,6 +54,13 @@ func _ready() -> void:
 
 	player_tag = _resolve_player_tag()
 
+	# Propagar la nación elegida al sistema de guardado (las partidas registran el bando correcto).
+	if typeof(SaveLoadManager) != TYPE_NIL and SaveLoadManager.has_method("set_player_tag"):
+		SaveLoadManager.set_player_tag(player_tag)
+	# Propagar también al sistema de movimiento de unidades.
+	if typeof(UnitMovementSystem) != TYPE_NIL and UnitMovementSystem.has_method("set_player_tag"):
+		UnitMovementSystem.set_player_tag(player_tag)
+
 	if map_renderer and loader:
 		map_renderer.build_supply_network(loader.get_city_layer(), player_tag)
 		var sm := get_node_or_null("/root/SupplyManager")
@@ -55,6 +75,11 @@ func _ready() -> void:
 	_configure_top_info_bar(player_tag)
 	if typeof(LeaderManager) != TYPE_NIL:
 		LeaderManager.set_player_country_tag(player_tag)
+
+
+## Cambia a la pantalla de selección de nación (flujo de nueva partida).
+func _go_to_nation_select() -> void:
+	get_tree().change_scene_to_file("res://scenes/ui/NationSelectScreen.tscn")
 
 
 func _resolve_player_tag() -> String:

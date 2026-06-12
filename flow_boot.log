@@ -1,0 +1,36 @@
+﻿Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+Godot_v4.6-stable_win64_console.exe : SCRIPT ERROR: Parse Error: Identifier "NationSelectScreen" not declared in the 
+current scope.
+En línea: 1 Carácter: 202
++ ... a-version"; & "C:\Users\Diego y Pauli\Desktop\proyecto\godot\Godot_v4 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (SCRIPT ERROR: P... current scope.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   at: GDScript::reload (res://scripts/core/TestRunner.gd:16)
+SCRIPT ERROR: Parse Error: Identifier "NationSelectScreen" not declared in the current scope.
+   at: GDScript::reload (res://scripts/core/TestRunner.gd:22)
+ERROR: Failed to load script "res://scripts/core/TestRunner.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+WARNING: res://scenes/WorldMap.tscn:3 - ext_resource, invalid UID: uid://c6uhgynax25qv - using text path instead: 
+res://scripts/map/MapRenderer.gd
+   at: load (scene/resources/resource_format_text.cpp:500)
+✅ Equipment modules loaded: 1082
+✅ Unit templates loaded: 1031
+✅ Sustainment equipment loaded: 4
+✅ Production line rules loaded
+Loaded 68 leaders (25 in pool) from [res://data/leaders/historical_leaders_1936.json] for year 1936
+TimeManager: Initialized (default 1936-01-01)
+AgentManager: Loaded 11 mission definitions
+TechnologyManager: Loaded 23 technology nodes
+SaveLoadManager: Initialized (JSON format v1, user://saves/)
+[OK] Province geometry loaded: 107
+[OK] Base provinces loaded: 847 provinces
+✅ Camera2D activated
+MapRenderer _ready() completed
+SaveLoadManager: Autosaved on exit/quit -> autosave.json
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2641)
+ERROR: 38 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)

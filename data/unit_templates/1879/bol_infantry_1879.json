@@ -1,0 +1,41 @@
+{
+  "id": "bol_infantry_1879",
+  "name": "Bolivian Infantry Division 1879",
+  "design_family": "bolivian_infantry_1879",
+  "base_type": "Land",
+  "size_category": "Light",
+  "visual_archetype": "apc",
+  "crew_required": 20,
+  "base_training_level": 12,
+  "max_experience_level": 75,
+  "base_production_days": 16,
+  "base_stats": {
+    "speed": 6,
+    "reliability": 70,
+    "fuel_consumption": 1,
+    "supply_need": 6,
+    "armor": 1,
+    "hardness": 9
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "SecondaryWeapon": { "max": 2 }
+  },
+  "module_loadout": {
+    "SecondaryWeapon": "ottoman_mauser_rifle"
+  },
+  "unlock_tech": [],
+  "can_mount_drones": false,
+  "is_vehicle": false,
+  "production_category": "light_tank",
+  "era": "ww1",
+  "modules": [
+    "ottoman_mauser_rifle"
+  ],
+  "production_cost": 21.0,
+  "daily_resource_cost": {
+    "steel": 0.34,
+    "aluminum": 0.07,
+    "fuel": 0.05
+  }
+}

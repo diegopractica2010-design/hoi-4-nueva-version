@@ -1,0 +1,13 @@
+{
+  "id": "tratado_de_ancon",
+  "name": "Tratado de Ancón — Fin de la Guerra",
+  "description": "El 20 de octubre de 1883, Chile y Perú firman el Tratado de Ancón. Tarapacá pasa definitivamente a Chile. Tacna y Arica quedan bajo administración chilena por 10 años. Bolivia pierde su salida al mar en el posterior Pacto de Tregua de 1884.",
+  "trigger": { "type": "date", "date": "1883-10-20" },
+  "effects": [
+    { "type": "force_peace", "attacker": "CHL", "defender": "PER" },
+    { "type": "province_transfer", "province_id": 842, "from_tag": "PER", "to_tag": "CHL" },
+    { "type": "province_transfer", "province_id": 841, "from_tag": "BOL", "to_tag": "CHL" }
+  ],
+  "repeatable": false,
+  "target_tags": ["CHL", "PER", "BOL"]
+}

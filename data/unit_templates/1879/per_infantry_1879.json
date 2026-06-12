@@ -1,0 +1,43 @@
+{
+  "id": "per_infantry_1879",
+  "name": "Peruvian Infantry Division 1879",
+  "design_family": "peruvian_infantry_1879",
+  "base_type": "Land",
+  "size_category": "Light",
+  "visual_archetype": "apc",
+  "crew_required": 20,
+  "base_training_level": 18,
+  "max_experience_level": 85,
+  "base_production_days": 18,
+  "base_stats": {
+    "speed": 7,
+    "reliability": 76,
+    "fuel_consumption": 1,
+    "supply_need": 7,
+    "armor": 2,
+    "hardness": 11
+  },
+  "slots": {
+    "MainWeapon": { "max": 1 },
+    "SecondaryWeapon": { "max": 2 }
+  },
+  "module_loadout": {
+    "MainWeapon": "spandau_lmg_08",
+    "SecondaryWeapon": "ottoman_mauser_rifle"
+  },
+  "unlock_tech": [],
+  "can_mount_drones": false,
+  "is_vehicle": false,
+  "production_category": "light_tank",
+  "era": "ww1",
+  "modules": [
+    "spandau_lmg_08",
+    "ottoman_mauser_rifle"
+  ],
+  "production_cost": 29.0,
+  "daily_resource_cost": {
+    "steel": 0.48,
+    "aluminum": 0.11,
+    "fuel": 0.06
+  }
+}

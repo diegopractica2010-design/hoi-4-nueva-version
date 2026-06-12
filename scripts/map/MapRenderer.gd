@@ -149,6 +149,7 @@ func _ready():
 	_setup_inspector_extras()
 	_connect_time_manager_signals()
 	_connect_map_manager_signals()
+	_connect_unit_movement_signals()
 	_init_legend_calendar_tracking()
 	set_process(true)
 	print("MapRenderer _ready() completed")
@@ -334,6 +335,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if pid >= 0 and provinces.has(pid):
 			var resolved_province: Province = provinces[pid] as Province
 			var resolved_node: Node2D = _province_node(pid)
+			# Movimiento de unidades: enrutar el clic al sistema de movimiento.
+			_on_province_clicked(pid)
 			if supply_mode and _handle_supply_province_click(resolved_province):
 				_select_province(resolved_province, resolved_node)
 				get_viewport().set_input_as_handled()
@@ -498,6 +501,7 @@ func render_provinces():
 	_setup_agent_layer()
 	_refresh_supply_highlights()
 	_update_compare_hint_label()
+	draw_unit_icons()  # CHANGE 4: iconos de unidad tras renderizar el mapa
 	print("✅ Map rendered with real polygons")
 
 	# Sync MapPickGrid (via MapManager) after rendering for best picking accuracy
@@ -683,6 +687,163 @@ func _get_province_color(province: Province) -> Color:
 				return cc
 			return Color(String(co))
 	return fallback
+
+
+# ============== UNIT MOVEMENT INTEGRATION (UnitMovementSystem) ==============
+## Clic de provincia → selección/orden de movimiento, resaltado de la provincia
+## seleccionada y de los destinos válidos, e iconos de unidad por provincia.
+
+const MOVE_SELECT_OUTLINE := "MoveSelectOutline"
+const MOVE_TARGET_OUTLINE := "MoveTargetOutline"
+const MOVE_SELECT_COLOR := Color(1.0, 0.95, 0.35, 1.0)   # amarillo (provincia seleccionada)
+const MOVE_SELECT_GLOW := Color(1.0, 0.82, 0.15, 0.35)
+const MOVE_TARGET_COLOR := Color(0.4, 0.95, 0.45, 0.9)   # verde (destinos válidos)
+const MOVE_TARGET_GLOW := Color(0.18, 0.7, 0.3, 0.28)
+
+var _move_selected_pid: int = -1
+var _move_target_pids: Array[int] = []
+var _unit_icons_layer: Node2D = null
+
+
+## CHANGE 1: enruta un clic de provincia al sistema de movimiento de unidades.
+func _on_province_clicked(province_id: int) -> void:
+	if typeof(UnitMovementSystem) != TYPE_NIL:
+		UnitMovementSystem.on_province_clicked(province_id)
+
+
+## CHANGE 3: conecta las señales de UnitMovementSystem a la retroalimentación visual.
+func _connect_unit_movement_signals() -> void:
+	if typeof(UnitMovementSystem) == TYPE_NIL:
+		return
+	if not UnitMovementSystem.formation_selected.is_connected(_on_formation_selected):
+		UnitMovementSystem.formation_selected.connect(_on_formation_selected)
+	if not UnitMovementSystem.move_completed.is_connected(_on_move_completed):
+		UnitMovementSystem.move_completed.connect(_on_move_completed)
+	if not UnitMovementSystem.movement_invalid.is_connected(_on_movement_invalid):
+		UnitMovementSystem.movement_invalid.connect(_on_movement_invalid)
+
+
+func _on_formation_selected(_formation_id: String, province_id: int) -> void:
+	# Resaltar la provincia seleccionada y mostrar los destinos válidos (adyacentes).
+	highlight_selected_province(province_id)
+	if typeof(UnitMovementSystem) != TYPE_NIL:
+		highlight_valid_move_targets(UnitMovementSystem.get_adjacent_provinces(province_id))
+
+
+func _on_move_completed(_formation_id: String, _province_id: int) -> void:
+	# Limpiar resaltados y refrescar los iconos de unidad en su nueva posición.
+	clear_province_highlight()
+	clear_move_highlights()
+	draw_unit_icons()
+
+
+func _on_movement_invalid(reason: String) -> void:
+	print("[Movement] Invalid: ", reason)
+
+
+## CHANGE 2: resalta la provincia seleccionada con un contorno amarillo.
+func highlight_selected_province(province_id: int) -> void:
+	clear_province_highlight()
+	var node := _province_node(province_id)
+	var pts := _province_points(province_id)
+	if node == null or pts.size() < 3:
+		return
+	ProvinceMapVisuals.ensure_polished_outline(
+		node, pts, MOVE_SELECT_OUTLINE, MOVE_SELECT_COLOR, 3.2, MOVE_SELECT_GLOW, 3.0,
+		ProvinceMapVisuals.Z_SELECT + 1,
+	)
+	_move_selected_pid = province_id
+
+
+func clear_province_highlight() -> void:
+	if _move_selected_pid >= 0:
+		var node := _province_node(_move_selected_pid)
+		if node != null:
+			ProvinceMapVisuals.hide_polished_outline(node, MOVE_SELECT_OUTLINE)
+	_move_selected_pid = -1
+
+
+## CHANGE 2: resalta los destinos de movimiento válidos con un contorno verde.
+func highlight_valid_move_targets(province_ids: Array) -> void:
+	clear_move_highlights()
+	for pid_var in province_ids:
+		var pid := int(pid_var)
+		var node := _province_node(pid)
+		var pts := _province_points(pid)
+		if node == null or pts.size() < 3:
+			continue
+		ProvinceMapVisuals.ensure_polished_outline(
+			node, pts, MOVE_TARGET_OUTLINE, MOVE_TARGET_COLOR, 2.4, MOVE_TARGET_GLOW, 2.6,
+			ProvinceMapVisuals.Z_SELECT,
+		)
+		_move_target_pids.append(pid)
+
+
+func clear_move_highlights() -> void:
+	for pid in _move_target_pids:
+		var node := _province_node(pid)
+		if node != null:
+			ProvinceMapVisuals.hide_polished_outline(node, MOVE_TARGET_OUTLINE)
+	_move_target_pids.clear()
+
+
+func _province_points(province_id: int) -> PackedVector2Array:
+	var geo: Dictionary = geometry.get(province_id, {})
+	var pts: Variant = geo.get("points", PackedVector2Array())
+	return pts if pts is PackedVector2Array else PackedVector2Array()
+
+
+## CHANGE 4: dibuja un icono (cuadrado con el color de la nación) en cada provincia
+## que contiene una formación. Se reconstruye por completo en cada llamada.
+func draw_unit_icons() -> void:
+	if container == null:
+		return
+	if _unit_icons_layer == null or not is_instance_valid(_unit_icons_layer):
+		_unit_icons_layer = Node2D.new()
+		_unit_icons_layer.name = "UnitIcons"
+		_unit_icons_layer.z_index = ProvinceMapVisuals.Z_SELECT + 2
+		container.add_child(_unit_icons_layer)
+	for child in _unit_icons_layer.get_children():
+		child.queue_free()
+
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	for fid in LeaderManager.formations.keys():
+		var f: Formation = LeaderManager.formations[fid] as Formation
+		if f == null or f.province_id < 0:
+			continue
+		if not province_centroids.has(f.province_id):
+			continue
+		var center: Vector2 = province_centroids[f.province_id]
+		var marker := Polygon2D.new()
+		marker.polygon = PackedVector2Array([
+			Vector2(-6, -6), Vector2(6, -6), Vector2(6, 6), Vector2(-6, 6),
+		])
+		marker.position = center
+		marker.color = _nation_color(f.country_tag)
+		_unit_icons_layer.add_child(marker)
+
+
+## Color de la nación, tomado de los datos de país (los mismos que pintan las provincias).
+func _nation_color(tag: String) -> Color:
+	var nation: Variant = countries.get(tag)
+	if nation is Country:
+		return (nation as Country).color
+	if typeof(nation) == TYPE_DICTIONARY:
+		var d: Dictionary = nation
+		if d.has("color"):
+			var co: Variant = d["color"]
+			if typeof(co) == TYPE_COLOR:
+				return co as Color
+			return Color(String(co))
+	# Respaldo: colores reales de los países (consistentes con el mapa).
+	match tag.strip_edges().to_upper():
+		"CHL": return Color(0.0, 0.2, 0.627)
+		"PER": return Color(0.851, 0.063, 0.137)
+		"BOL": return Color(0.0, 0.478, 0.2)
+	return Color(0.7, 0.7, 0.7)
+
+# ============== UNIT MOVEMENT INTEGRATION END ==============
 
 
 # ====================== INTERACTION ======================
@@ -1547,11 +1708,11 @@ func _apply_recovering_fill_tint(col: Color, province_id: int) -> Color:
 	if role == "infra_sabotage":
 		return col.lerp(ProvinceMapVisuals.FILL_INFRA_SABOTAGE_ACTIVE, 0.34)
 	if role == "infra_duel_even":
-		return col.lerp(
-			ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE,
+		var duel_mix := ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE.lerp(
 			ProvinceMapVisuals.FILL_INFRA_RECOVERING,
-			0.18,
+			0.5,
 		)
+		return col.lerp(duel_mix, 0.18)
 	if str(_supply_role_by_province.get(province_id, "")) == "supply_pressure":
 		return col.lerp(ProvinceMapVisuals.FILL_AGENT_DISRUPT_BASE, 0.14)
 	if str(_supply_role_by_province.get(province_id, "")) == "depot_sabotage":

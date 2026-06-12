@@ -394,5 +394,185 @@
         "supply_hub": 1
       }
     }
-  ]
+  ],
+  "starting_forces": [
+    {
+      "country": "CHL",
+      "template": "chl_infantry_1879",
+      "province": 90,
+      "count": 1
+    },
+    {
+      "country": "CHL",
+      "template": "chl_infantry_1879",
+      "province": 841,
+      "count": 1
+    },
+    {
+      "country": "CHL",
+      "template": "chl_artillery_1879",
+      "province": 90,
+      "count": 1
+    },
+    {
+      "country": "CHL",
+      "template": "chl_naval_1879",
+      "province": 90,
+      "count": 1
+    },
+    {
+      "country": "PER",
+      "template": "per_infantry_1879",
+      "province": 71,
+      "count": 1
+    },
+    {
+      "country": "PER",
+      "template": "per_infantry_1879",
+      "province": 844,
+      "count": 1
+    },
+    {
+      "country": "PER",
+      "template": "per_naval_1879",
+      "province": 71,
+      "count": 1
+    },
+    {
+      "country": "PER",
+      "template": "per_artillery_1879",
+      "province": 71,
+      "count": 1
+    },
+    {
+      "country": "BOL",
+      "template": "bol_infantry_1879",
+      "province": 847,
+      "count": 1
+    },
+    {
+      "country": "BOL",
+      "template": "bol_infantry_1879",
+      "province": 841,
+      "count": 1
+    },
+    {
+      "country": "BOL",
+      "template": "bol_mountain_artillery_1879",
+      "province": 846,
+      "count": 1
+    }
+  ],
+  "national_stockpiles": {
+    "CHL": {
+      "steel": 120,
+      "coal": 80,
+      "gold": 200,
+      "nitrates": 0
+    },
+    "PER": {
+      "steel": 80,
+      "coal": 40,
+      "gold": 150,
+      "guano": 60
+    },
+    "BOL": {
+      "steel": 40,
+      "coal": 20,
+      "gold": 80,
+      "silver": 50
+    },
+    "ARG": {
+      "steel": 60,
+      "coal": 30,
+      "gold": 120
+    },
+    "BRA": {
+      "steel": 70,
+      "coal": 35,
+      "gold": 130
+    },
+    "ENG": {
+      "steel": 500,
+      "coal": 400,
+      "gold": 800
+    },
+    "GER": {
+      "steel": 450,
+      "coal": 380,
+      "gold": 600
+    },
+    "FRA": {
+      "steel": 300,
+      "coal": 250,
+      "gold": 500
+    },
+    "USA": {
+      "steel": 350,
+      "coal": 300,
+      "gold": 600
+    }
+  },
+  "country_colors": {
+    "CHL": {
+      "r": 0.0,
+      "g": 0.2,
+      "b": 0.627
+    },
+    "PER": {
+      "r": 0.851,
+      "g": 0.063,
+      "b": 0.137
+    },
+    "BOL": {
+      "r": 0.0,
+      "g": 0.478,
+      "b": 0.2
+    },
+    "ARG": {
+      "r": 0.459,
+      "g": 0.667,
+      "b": 0.859
+    },
+    "BRA": {
+      "r": 0.0,
+      "g": 0.608,
+      "b": 0.227
+    },
+    "ENG": {
+      "r": 0.784,
+      "g": 0.063,
+      "b": 0.18
+    },
+    "GER": {
+      "r": 0.169,
+      "g": 0.169,
+      "b": 0.169
+    },
+    "FRA": {
+      "r": 0.0,
+      "g": 0.333,
+      "b": 0.643
+    },
+    "USA": {
+      "r": 0.235,
+      "g": 0.231,
+      "b": 0.431
+    }
+  },
+  "initial_war_state": {
+    "wars": [
+      {
+        "attackers": [
+          "CHL"
+        ],
+        "defenders": [
+          "PER",
+          "BOL"
+        ],
+        "start_date": "1879-02-14",
+        "name": "Guerra del Pacifico"
+      }
+    ]
+  }
 }

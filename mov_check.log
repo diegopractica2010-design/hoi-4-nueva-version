@@ -1,0 +1,51 @@
+﻿Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+✅ Equipment modules loaded: 1082
+✅ Unit templates loaded: 1031
+✅ Sustainment equipment loaded: 4
+✅ Production line rules loaded
+Loaded 68 leaders (25 in pool) from [res://data/leaders/historical_leaders_1936.json] for year 1936
+TimeManager: Initialized (default 1936-01-01)
+AgentManager: Loaded 11 mission definitions
+TechnologyManager: Loaded 23 technology nodes
+SaveLoadManager: Initialized (JSON format v1, user://saves/)
+MOV| ===== INICIO VERIFICACION MOVIMIENTO =====
+[OK] Province geometry loaded: 107
+[OK] Base provinces loaded: 847 provinces
+ScenarioFactoryBootstrap: 1879 - 80 factories, 6 shipyards across 18 province entries
+TimeManager: Scenario start date set to 1879-02-14 (year 1879)
+Loaded 16 leaders (0 in pool) from [res://data/leaders/historical_leaders_1879.json] for year 1879
+[OK] Scenario leaders loaded (1879, 1879): 16 active, 0 pooled
+TechnologyManager: Applied starting tech for scenario '1879' (9 countries, year 1879)
+Spawned 4 test formations for ARG
+Spawned 4 test formations for BOL
+Spawned 4 test formations for BRA
+Spawned 4 test formations for CHL
+Spawned 8 test formations for ENG
+Spawned 8 test formations for FRA
+Spawned 8 test formations for GER
+Spawned 4 test formations for PER
+Spawned 8 test formations for USA
+Scenario loaded with formations for 9 countries (leader assignment).
+[OK] Scenario loaded | Provinces: 847 | Countries: 9
+🗺️ MapPickGrid built with 847 provinces, cell_size=64.0, 96 cells
+🗺️ MapManager initialized with 847 provinces (bounds: [P: (0.0, 0.0), S: (4036.508, 1517.94)])
+MOV| formación 'CHL_formation_0' colocada en provincia 90
+MOV| adyacentes a 90 = [47, 48, 89, 91, 132, 841]
+MOV| tras clic en 90: seleccionada='CHL_formation_0' prov=90
+MOV| is_province_adjacent(90,47)=true
+MOV| can_move_to('CHL_formation_0',47)=true
+MOV| tras mover: formación.province_id=47 (esperado 47) | selección=''
+MOV| movimiento a no-adyacente: formación sigue en 90 (esperado 90)
+MOV| ===== FIN VERIFICACION =====
+SaveLoadManager: Autosaved on exit/quit -> autosave.json
+Godot_v4.6-stable_win64_console.exe : WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+En línea: 1 Carácter: 202
++ ... a-version"; & "C:\Users\Diego y Pauli\Desktop\proyecto\godot\Godot_v4 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: Object...e for details).:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   at: cleanup (core/object/object.cpp:2641)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)
