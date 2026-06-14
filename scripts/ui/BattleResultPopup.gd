@@ -39,16 +39,14 @@ func _on_battle_resolved(province_id: int, winner_tag: String, loser_tag: String
 	_attacker_label.text = "Atacante: %s (Poder: %.1f)" % [result.get("attacker_tag", "?"), result.get("attacker_power", 0.0)]
 	_defender_label.text = "Defensor: %s (Poder: %.1f)" % [result.get("defender_tag", "?"), result.get("defender_power", 0.0)]
 
-	var att_cas := result.get("attacker_casualties", 0)
-	var def_cas := result.get("defender_casualties", 0)
+	var att_cas: int = int(result.get("attacker_casualties", 0))
+	var def_cas: int = int(result.get("defender_casualties", 0))
 	_winner_label.text = "VICTORIA: " + winner_tag
 	_casualties_label.text = "Bajas: Atacante %d | Defensor %d" % [att_cas, def_cas]
 
 	# Colorear el label del ganador según si el jugador ganó o perdió
-	if winner_tag == result.get("attacker_tag"):
-		_winner_label.theme_override_colors["font_color"] = Color.GREEN
-	else:
-		_winner_label.theme_override_colors["font_color"] = Color.RED
+	var win_color := Color.GREEN if winner_tag == result.get("attacker_tag") else Color.RED
+	_winner_label.add_theme_color_override("font_color", win_color)
 
 	visible = true
 

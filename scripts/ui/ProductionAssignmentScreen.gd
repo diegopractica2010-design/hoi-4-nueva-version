@@ -41,8 +41,8 @@ const HEADER_SPECS: Array[Dictionary] = [
 	{"text": "Retooling", "width": 80},
 	{"text": "Daily Output", "width": 90},
 	{"text": "", "width": 0, "expand": true},
-	{"text": "Change", "width": 90},
-	{"text": "Details", "width": 90},
+	{"text": "Cambiar", "width": 90},
+	{"text": "Detalles", "width": 90},
 ]
 const ROW_HEIGHT := 36
 
@@ -230,14 +230,14 @@ func _create_factory_row(summary: Dictionary) -> HBoxContainer:
 	hbox.add_child(spacer)
 
 	var change_btn := Button.new()
-	change_btn.text = "Change"
+	change_btn.text = "Cambiar"
 	change_btn.custom_minimum_size = Vector2(90, 0)
 	RetrowaveTheme.style_primary_button(change_btn)
 	change_btn.pressed.connect(_on_change_pressed.bind(summary))
 	hbox.add_child(change_btn)
 
 	var details_btn := Button.new()
-	details_btn.text = "Details"
+	details_btn.text = "Detalles"
 	details_btn.custom_minimum_size = Vector2(90, 0)
 	RetrowaveTheme.style_secondary_button(details_btn)
 	details_btn.pressed.connect(_on_details_pressed.bind(summary))

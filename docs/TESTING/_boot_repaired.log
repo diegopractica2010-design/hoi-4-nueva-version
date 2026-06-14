@@ -1,0 +1,25 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+WARNING: res://scenes/WorldMap.tscn:3 - ext_resource, invalid UID: uid://c6uhgynax25qv - using text path instead: res://scripts/map/MapRenderer.gd
+   at: load (scene/resources/resource_format_text.cpp:500)
+✅ Equipment modules loaded: 1082
+✅ Unit templates loaded: 1031
+✅ Sustainment equipment loaded: 4
+✅ Production line rules loaded
+Loaded 68 leaders (25 in pool) from [res://data/leaders/historical_leaders_1936.json] for year 1936
+TimeManager: Initialized (default 1936-01-01)
+AgentManager: Loaded 11 mission definitions
+TechnologyManager: Loaded 23 technology nodes
+SaveLoadManager: Initialized (JSON format v1, user://saves/)
+[EventManager] Loaded 6 events
+[OK] Province geometry loaded: 107
+[OK] Base provinces loaded: 847 provinces
+✅ Camera2D activated
+MapRenderer _ready() completed
+=== Epochs of Ascendancy Test Starting ===
+No hay nación seleccionada — abriendo pantalla de selección.
+SaveLoadManager: Autosaved on exit/quit -> autosave.json
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2641)
+ERROR: 39 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)

@@ -507,9 +507,18 @@ func clear_daily_sabotage_effects(province_id: int) -> void:
 
 	notify_province_changed(province_id, "effects")
 
+var _infra_repair_day_counter: int = 0
+const INFRA_REPAIR_INTERVAL_DAYS := 14
+
 func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
-	# Automatic slow repair driven by the central clock
-	advance_daily_infrastructure_repair()
+	# Rendimiento: la reparación de infraestructura es lenta; recorrer las 847 provincias
+	# CADA día (con cálculos pesados por provincia) era el mayor coste por tick y casi nunca
+	# cambiaba nada. La ejecutamos cada 14 días aplicando la reparación acumulada (mismo
+	# efecto, ~14x menos trabajo).
+	_infra_repair_day_counter += 1
+	if _infra_repair_day_counter >= INFRA_REPAIR_INTERVAL_DAYS:
+		advance_daily_infrastructure_repair(_infra_repair_day_counter)
+		_infra_repair_day_counter = 0
 
 ## Automatic slow repair for province infrastructure.
 ## Called daily by the central TimeManager.
@@ -520,13 +529,13 @@ func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
 ##   and technology/national focus "infrastructure_repair" modifier.
 ## This makes repair strategic: station engineers, maintain high stability, research/focus repair tech to counter
 ## agent infrastructure sabotage and depot effects.
-func advance_daily_infrastructure_repair() -> void:
+func advance_daily_infrastructure_repair(days: int = 1) -> void:
 	for pid in _provinces.keys():
 		var p: Province = _provinces[pid]
-		if p == null or p.infrastructure <= 0:
+		if p == null or p.infrastructure <= 0 or p.infrastructure >= INFRA_SOFT_CAP:
 			continue
 
-		var rate := get_infrastructure_repair_rate(int(pid))
+		var rate := get_infrastructure_repair_rate(int(pid)) * float(days)
 		if rate <= 0.0:
 			continue
 

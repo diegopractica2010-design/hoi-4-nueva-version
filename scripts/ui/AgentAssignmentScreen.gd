@@ -338,7 +338,7 @@ func _update_feedback_hint() -> void:
 
 	var parts: PackedStringArray = []
 	if current_data.total_agents == 0:
-		feedback_hint.text = "Recruit your first agent to begin intelligence operations."
+		feedback_hint.text = "Recluta tu primer agente para iniciar operaciones de inteligencia."
 		return
 
 	if current_data.on_mission_agents > 0:
@@ -383,7 +383,7 @@ func _populate_agents() -> void:
 
 	if current_data == null or current_data.agents.is_empty():
 		var empty := Label.new()
-		empty.text = "No agents recruited. Use Recruit Agent to build your network."
+		empty.text = "No hay agentes reclutados. Usa Reclutar agente para crear tu red."
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		RetrowaveTheme.style_body_label(empty)
 		agents_content.add_child(empty)
@@ -403,7 +403,7 @@ func _populate_agents() -> void:
 
 	if rows.is_empty():
 		var filtered_empty := Label.new()
-		filtered_empty.text = "No agents match this filter."
+		filtered_empty.text = "Ningún agente coincide con este filtro."
 		RetrowaveTheme.style_body_label(filtered_empty)
 		agents_content.add_child(filtered_empty)
 		return
@@ -593,7 +593,7 @@ func _populate_intel_reports() -> void:
 
 	if current_data.intel_reports.is_empty():
 		var empty := Label.new()
-		empty.text = "No intelligence gathered yet.\nComplete intel-category missions to populate reports."
+		empty.text = "Aún no hay inteligencia recopilada.\nCompleta misiones de inteligencia para llenar los informes."
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		RetrowaveTheme.style_body_label(empty)
 		intel_reports_content.add_child(empty)
@@ -646,7 +646,7 @@ func _populate_national_effects() -> void:
 
 	if current_data.national_effects.is_empty():
 		var empty := Label.new()
-		empty.text = "No active national modifiers."
+		empty.text = "No hay modificadores nacionales activos."
 		RetrowaveTheme.style_body_label(empty)
 		empty.add_theme_color_override("font_color", RetrowaveTheme.TEXT_DIM)
 		national_effects_list.add_child(empty)
@@ -657,7 +657,7 @@ func _populate_national_effects() -> void:
 			national_effects_list.add_child(_create_national_effect_chip(effect as Dictionary))
 
 	var spirits_btn := Button.new()
-	spirits_btn.text = "Open National Spirits…"
+	spirits_btn.text = "Abrir espíritus nacionales…"
 	spirits_btn.tooltip_text = "Full national spirits list, filters, and modifier tooltips."
 	RetrowaveTheme.style_secondary_button(spirits_btn)
 	spirits_btn.pressed.connect(_on_open_national_spirits_pressed)
@@ -694,7 +694,7 @@ func _populate_recent_operations() -> void:
 
 	if current_data.recent_operations.is_empty():
 		var empty := Label.new()
-		empty.text = "No operations yet. Deploy agents to build the log."
+		empty.text = "Aún no hay operaciones. Despliega agentes para crear el registro."
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		RetrowaveTheme.style_body_label(empty)
 		empty.add_theme_color_override("font_color", RetrowaveTheme.TEXT_DIM)
@@ -872,7 +872,7 @@ func _update_detail_panel() -> void:
 	var summary := AgentManager.get_agent_summary(_selected_agent_id)
 	if summary.is_empty():
 		agent_state_banner.visible = false
-		detail_label.text = "Agent not found."
+		detail_label.text = "Agente no encontrado."
 		assign_mission_button.disabled = true
 		return
 
@@ -938,7 +938,7 @@ func _update_detail_panel() -> void:
 	if missions.is_empty():
 		var empty := Label.new()
 		if category_filter.is_empty():
-			empty.text = "No missions available (skill requirements not met)."
+			empty.text = "No hay misiones disponibles (no se cumplen los requisitos de habilidad)."
 		else:
 			empty.text = "No %s missions available for this agent." % category_filter.capitalize()
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -988,7 +988,7 @@ func _populate_mission_history(summary: Dictionary) -> void:
 	var history: Variant = summary.get("mission_history", [])
 	if typeof(history) != TYPE_ARRAY or (history as Array).is_empty():
 		var empty := Label.new()
-		empty.text = "No completed operations on record."
+		empty.text = "No hay operaciones completadas registradas."
 		RetrowaveTheme.style_body_label(empty)
 		empty.add_theme_color_override("font_color", RetrowaveTheme.TEXT_DIM)
 		history_list.add_child(empty)
@@ -1195,13 +1195,13 @@ func _create_mission_preview(mission_row: Dictionary) -> PanelContainer:
 func _detection_risk_label(risk: float) -> Label:
 	var label := Label.new()
 	if risk >= 0.4:
-		label.text = "HIGH RISK"
+		label.text = "RIESGO ALTO"
 		label.add_theme_color_override("font_color", RetrowaveTheme.WARNING)
 	elif risk >= 0.25:
-		label.text = "MED RISK"
+		label.text = "RIESGO MEDIO"
 		label.add_theme_color_override("font_color", RetrowaveTheme.MAGENTA)
 	else:
-		label.text = "LOW RISK"
+		label.text = "RIESGO BAJO"
 		label.add_theme_color_override("font_color", RetrowaveTheme.SUCCESS)
 	RetrowaveTheme.style_body_label(label)
 	return label

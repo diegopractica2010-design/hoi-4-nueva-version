@@ -80,12 +80,12 @@ func _clamp_to_viewport() -> void:
 
 func _build_menu_options() -> void:
 	options_vbox.add_child(_make_menu_button("Nueva Partida", "new_game"))
-	options_vbox.add_child(_make_menu_button("Save Game", "save"))
-	options_vbox.add_child(_make_menu_button("Load Game", "load"))
-	options_vbox.add_child(_make_menu_button("Save As...", "save_as"))
-	options_vbox.add_child(_make_menu_button("Return to Main Menu", "return_to_main"))
-	options_vbox.add_child(_make_menu_button("Exit to Desktop", "exit"))
-	options_vbox.add_child(_make_menu_button("Help / About", "help"))
+	options_vbox.add_child(_make_menu_button("Guardar partida", "save"))
+	options_vbox.add_child(_make_menu_button("Cargar partida", "load"))
+	options_vbox.add_child(_make_menu_button("Guardar como...", "save_as"))
+	options_vbox.add_child(_make_menu_button("Volver al menú principal", "return_to_main"))
+	options_vbox.add_child(_make_menu_button("Salir al escritorio", "exit"))
+	options_vbox.add_child(_make_menu_button("Ayuda / Acerca de", "help"))
 
 	var spacer := Control.new()
 	spacer.custom_minimum_size.y = 20
@@ -116,7 +116,7 @@ func _make_menu_button(text: String, option: String) -> Button:
 func _build_save_manager_view() -> void:
 	# Title for the Save Manager section (rich metadata view)
 	var title := Label.new()
-	title.text = "Save Manager"
+	title.text = "Gestor de partidas"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	save_manager_container.add_child(title)
 	if has_node("/root/RetrowaveTheme"):
@@ -138,7 +138,7 @@ func _populate_save_list(parent: VBoxContainer) -> void:
 	var saves := SaveLoadManager.list_saves()
 	if saves.is_empty():
 		var l := Label.new()
-		l.text = "No saves yet."
+		l.text = "Aún no hay partidas guardadas."
 		parent.add_child(l)
 		return
 
@@ -156,7 +156,7 @@ func _populate_save_list(parent: VBoxContainer) -> void:
 		h.add_child(label)
 
 		var load_btn := Button.new()
-		load_btn.text = "Load"
+		load_btn.text = "Cargar"
 		load_btn.pressed.connect(func():
 			SaveLoadManager.load_game(slot)
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
@@ -168,7 +168,7 @@ func _populate_save_list(parent: VBoxContainer) -> void:
 		h.add_child(load_btn)
 
 		var del_btn := Button.new()
-		del_btn.text = "Delete"
+		del_btn.text = "Eliminar"
 		del_btn.pressed.connect(func():
 			SaveLoadManager.delete_save(slot)
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
@@ -181,7 +181,7 @@ func _populate_save_list(parent: VBoxContainer) -> void:
 		h.add_child(del_btn)
 
 		var rename_btn := Button.new()
-		rename_btn.text = "Rename"
+		rename_btn.text = "Renombrar"
 		rename_btn.pressed.connect(func():
 			# Lightweight foundation - real UI would use a LineEdit dialog
 			print("Rename requested for ", slot, " (use SaveLoadManager.rename_save via console/API for now)")
@@ -214,8 +214,10 @@ func _handle_menu_option(option: String) -> void:
 			# Future: open a name dialog then call save_game with custom slot
 			print("Save As requested (API ready via SaveLoadManager)")
 		"return_to_main":
-			print("Return to Main Menu requested (implement scene change)")
+			# Reiniciar partida: cerrar el menú y volver a la selección de nación.
 			_on_close_requested()
+			NationSelectScreen.selected_tag = ""
+			get_tree().change_scene_to_file("res://scenes/ui/NationSelectScreen.tscn")
 		"exit":
 			get_tree().quit()
 		"help":

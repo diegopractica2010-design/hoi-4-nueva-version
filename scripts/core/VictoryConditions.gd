@@ -41,6 +41,13 @@ const BOLIVIA_RECOVERY_YEAR := 1880
 const BOLIVIA_RECOVERY_MONTH := 1
 const BOLIVIA_RECOVERY_DAY := 1
 
+# Una victoria MILITAR no puede decidirse en las primeras semanas: la guerra debe
+# desarrollarse como una campaña. Antes de esta fecha solo cuentan las condiciones
+# por fecha límite. (Evita que la guerra termine en el mes 1 por el combate instantáneo.)
+const MILITARY_VICTORY_MIN_YEAR := 1880
+const MILITARY_VICTORY_MIN_MONTH := 1
+const MILITARY_VICTORY_MIN_DAY := 1
+
 # Días por mes (sin años bisiestos), coherente con TimeManager.
 const MONTH_DAYS: Array[int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
@@ -138,9 +145,13 @@ func _evaluate_victory_conditions() -> void:
 	var past_bolivia_window := _current_date_value() > _date_value(
 		BOLIVIA_RECOVERY_YEAR, BOLIVIA_RECOVERY_MONTH, BOLIVIA_RECOVERY_DAY
 	)
+	# Las victorias militares solo cuentan tras una campaña (no en las primeras semanas).
+	var military_allowed := _current_date_value() >= _date_value(
+		MILITARY_VICTORY_MIN_YEAR, MILITARY_VICTORY_MIN_MONTH, MILITARY_VICTORY_MIN_DAY
+	)
 
 	# 1) CHILE — victoria militar: controla las 3 provincias del salitre.
-	if saltpeter_chl == SALTPETER_PROVINCES.size():
+	if military_allowed and saltpeter_chl == SALTPETER_PROVINCES.size():
 		_trigger_victory(
 			"CHL",
 			"victoria_militar",
@@ -148,12 +159,16 @@ func _evaluate_victory_conditions() -> void:
 		)
 		return
 
-	# 2) PERÚ — victoria militar: controla Lima, Arica e Iquique.
-	if _controls(PROV_LIMA, "PER") and _controls(PROV_ARICA, "PER") and _controls(PROV_IQUIQUE, "PER"):
+	# 2) PERÚ — victoria militar: EXPULSA a Chile del litoral salitrero.
+	#    Debe controlar las 3 provincias del salitre (incluida Antofagasta, que Chile
+	#    ocupa al inicio) Y conservar Lima. No puede cumplirse en el turno 1 porque
+	#    Chile arranca controlando Antofagasta (841).
+	var saltpeter_per := _saltpeter_count_controlled_by("PER")
+	if military_allowed and saltpeter_per == SALTPETER_PROVINCES.size() and _controls(PROV_LIMA, "PER"):
 		_trigger_victory(
 			"PER",
 			"victoria_militar",
-			"Perú mantiene Lima, Arica e Iquique: la ofensiva chilena ha sido contenida."
+			"Perú expulsa a Chile del litoral: recupera todo el salitre y conserva Lima."
 		)
 		return
 

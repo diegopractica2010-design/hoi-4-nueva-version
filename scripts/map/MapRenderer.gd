@@ -528,11 +528,46 @@ func render_provinces():
 	_refresh_supply_highlights()
 	_update_compare_hint_label()
 	draw_unit_icons()  # CHANGE 4: iconos de unidad tras renderizar el mapa
+	_focus_camera_on_theater()  # Recorte de mapa al teatro: encuadrar la zona de guerra
 	print("✅ Map rendered with real polygons")
 
 	# Sync MapPickGrid (via MapManager) after rendering for best picking accuracy
 	if use_spatial_picking and typeof(MapManager) != TYPE_NIL and MapManager.has_method("rebuild_pick_grid"):
 		MapManager.rebuild_pick_grid()
+
+
+## Recorte de mapa al teatro: encuadra la cámara sobre la zona de la Guerra del Pacífico
+## (Antofagasta, Tarapacá, Iquique, Arica, Tacna, La Paz, Sucre + Lima y Santiago) al cargar,
+## en vez de mostrar el mundo entero (del que el 87% no tiene geometría).
+func _focus_camera_on_theater() -> void:
+	var cam := get_node_or_null("MapCamera") as Camera2D
+	if cam == null:
+		return
+	var theater := [841, 842, 843, 844, 845, 846, 847, 71, 90]
+	var min_v := Vector2(INF, INF)
+	var max_v := Vector2(-INF, -INF)
+	var found := false
+	for pid in theater:
+		if province_centroids.has(pid):
+			var c: Vector2 = province_centroids[pid]
+			min_v.x = minf(min_v.x, c.x)
+			min_v.y = minf(min_v.y, c.y)
+			max_v.x = maxf(max_v.x, c.x)
+			max_v.y = maxf(max_v.y, c.y)
+			found = true
+	if not found:
+		return
+	cam.position = (min_v + max_v) * 0.5
+	var span := max_v - min_v
+	# Usamos el tamaño de ventana configurado del proyecto (fiable; el viewport en runtime
+	# puede no estar listo o dar 0 en headless).
+	var vw := float(ProjectSettings.get_setting("display/window/size/viewport_width", 1680))
+	var vh := float(ProjectSettings.get_setting("display/window/size/viewport_height", 960))
+	var margin := 2.2  # deja aire alrededor del teatro
+	var zx := vw / maxf(span.x * margin, 1.0)
+	var zy := vh / maxf(span.y * margin, 1.0)
+	var z := clampf(minf(zx, zy), min_zoom, max_zoom)
+	cam.zoom = Vector2(z, z)
 
 
 func _create_province_node(province: Province, geo: Dictionary) -> Node2D:

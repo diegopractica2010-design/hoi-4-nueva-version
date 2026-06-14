@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/EventPopup.tscn" id="5_eventpopup"]
 [ext_resource type="PackedScene" uid="uid://battleresultpopup1879" path="res://scenes/ui/BattleResultPopup.tscn" id="6_battleresult"]
 [ext_resource type="PackedScene" uid="uid://victoryscreen1879" path="res://scenes/ui/VictoryScreen.tscn" id="7_victoryscreen"]
+[ext_resource type="PackedScene" uid="uid://tutorialpopup1879" path="res://scenes/ui/TutorialPopup.tscn" id="8_tutorial"]
 
 [node name="TestScenario" type="Node" unique_id=1430823089]
 script = ExtResource("1_l5b53")
@@ -26,3 +27,5 @@ layer = 10
 [node name="BattleResultPopup" parent="UILayer" instance=ExtResource("6_battleresult")]
 
 [node name="VictoryScreen" parent="UILayer" instance=ExtResource("7_victoryscreen")]
+
+[node name="TutorialPopup" parent="UILayer" instance=ExtResource("8_tutorial")]

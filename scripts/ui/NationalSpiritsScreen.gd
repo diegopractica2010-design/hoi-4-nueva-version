@@ -134,7 +134,7 @@ func refresh_screen(_ignored: Variant = null) -> void:
 	_populate_lists()
 	_update_filter_status()
 	if _selected_entry_id.is_empty():
-		detail_label.text = "Select a spirit or effect for details. Hover any card for a quick summary."
+		detail_label.text = "Selecciona un espíritu o efecto para ver detalles. Pasa el cursor por una tarjeta para un resumen."
 
 
 func _sync_category_filter() -> void:
@@ -423,7 +423,7 @@ func _create_entry_panel(row: Dictionary, is_temporary: bool) -> PanelContainer:
 	box.add_child(_create_modifier_grid(row))
 
 	var select_btn := Button.new()
-	select_btn.text = "Details"
+	select_btn.text = "Detalles"
 	select_btn.tooltip_text = "Show full effect text in the panel above."
 	RetrowaveTheme.style_secondary_button(select_btn)
 	select_btn.pressed.connect(_on_entry_selected.bind(entry_id, row, is_temporary))

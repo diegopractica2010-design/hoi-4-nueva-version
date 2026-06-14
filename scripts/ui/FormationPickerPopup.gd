@@ -50,7 +50,7 @@ func _present_popup() -> void:
 
 func _update_title() -> void:
 	if leader_name.is_empty():
-		title_label.text = "Assign Leader to Formation"
+		title_label.text = "Asignar líder a formación"
 		title = "Assign to Formation"
 	else:
 		title_label.text = "Assign %s to Formation" % leader_name

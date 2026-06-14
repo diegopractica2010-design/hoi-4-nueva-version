@@ -2668,8 +2668,27 @@ func get_save_data() -> Dictionary:
 		if l != null:
 			leaders_data[lid] = inst_to_dict(l)
 
+	# Serializar formaciones (incluida su posicion en el mapa: province_id).
+	var formations_data := {}
+	for fid in formations:
+		var f: Formation = formations[fid]
+		if f != null:
+			formations_data[fid] = {
+				"formation_id": f.formation_id,
+				"name": f.name,
+				"formation_type": f.formation_type,
+				"country_tag": f.country_tag,
+				"leader_id": f.leader_id,
+				"parent_formation_id": f.parent_formation_id,
+				"is_training": f.is_training,
+				"is_in_combat": f.is_in_combat,
+				"province_id": f.province_id,
+				"is_moving": f.is_moving,
+			}
+
 	return {
 		"leaders": leaders_data,
+		"formations": formations_data,
 		"country_positions": country_positions.duplicate(true),
 		"officer_training_leader_id": officer_training_leader_id.duplicate(true),
 		"pending_retirements": pending_retirements.duplicate(true),
@@ -2700,7 +2719,10 @@ func apply_save_data(data: Dictionary) -> void:
 			l.logistics_skill = int(ld.get("logistics_skill", 3))
 			l.planning_skill = int(ld.get("planning_skill", 3))
 			l.initiative_skill = int(ld.get("initiative_skill", 3))
-			l.traits = (ld.get("traits", []) as Array).duplicate()
+			var traits_arr: Array[String] = []
+			for t in ld.get("traits", []):
+				traits_arr.append(str(t))
+			l.traits = traits_arr
 			l.experience = int(ld.get("experience", 0))
 			l.total_experience_earned = int(ld.get("total_experience_earned", 0))
 			l.battles_fought = int(ld.get("battles_fought", 0))
@@ -2724,14 +2746,40 @@ func apply_save_data(data: Dictionary) -> void:
 			# Add other fields (officer training quality etc.) as they become critical
 			leaders[l.leader_id] = l
 
+	# Restaurar formaciones (con su posicion province_id). El save es la fuente autoritativa.
+	if data.has("formations"):
+		formations.clear()
+		var fdata: Dictionary = data["formations"]
+		for fid in fdata:
+			var fd: Dictionary = fdata[fid]
+			var f := Formation.new()
+			f.formation_id = str(fd.get("formation_id", fid))
+			f.name = str(fd.get("name", ""))
+			f.formation_type = str(fd.get("formation_type", "division"))
+			f.country_tag = str(fd.get("country_tag", ""))
+			f.leader_id = str(fd.get("leader_id", ""))
+			f.parent_formation_id = str(fd.get("parent_formation_id", ""))
+			f.is_training = bool(fd.get("is_training", false))
+			f.is_in_combat = bool(fd.get("is_in_combat", false))
+			f.province_id = int(fd.get("province_id", -1))
+			f.is_moving = bool(fd.get("is_moving", false))
+			formations[f.formation_id] = f
+
 	if data.has("country_positions"):
 		country_positions = (data["country_positions"] as Dictionary).duplicate(true)
 	if data.has("officer_training_leader_id"):
 		officer_training_leader_id = (data["officer_training_leader_id"] as Dictionary).duplicate(true)
 	if data.has("pending_retirements"):
-		pending_retirements = (data["pending_retirements"] as Array).duplicate(true)
+		var pr: Array[String] = []
+		for r in data["pending_retirements"]:
+			pr.append(str(r))
+		pending_retirements = pr
 	if data.has("pending_leader_replacements"):
-		pending_leader_replacements = (data["pending_leader_replacements"] as Array).duplicate(true)
+		var plr: Array[Dictionary] = []
+		for rep in data["pending_leader_replacements"]:
+			if rep is Dictionary:
+				plr.append((rep as Dictionary).duplicate(true))
+		pending_leader_replacements = plr
 	if data.has("player_country_tag"):
 		player_country_tag = str(data["player_country_tag"])
 

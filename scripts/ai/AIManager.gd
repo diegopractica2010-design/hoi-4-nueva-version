@@ -1,5 +1,9 @@
-class_name AIManager
 extends Node
+
+# NOTA: NO declaramos `class_name AIManager` a proposito.
+# Se registra como autoload "AIManager"; usar class_name homonimo provoca
+# "Class 'AIManager' hides an autoload singleton" y el autoload NO carga
+# (patron DT-02). Sigue accesible globalmente como `AIManager`.
 
 const ADJACENCY_PATH := "res://data/provinces/province_adjacency.json"
 const SCENARIO_1879_PATH := "res://data/scenarios/1879/scenario.json"

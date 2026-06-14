@@ -86,13 +86,13 @@ func _build_header() -> void:
 	var departed := str(_request.get("departed_leader_name", "Commander"))
 	var cause := str(_request.get("departure_cause", "departed")).replace("_", " ")
 	var target := str(_request.get("target_label", "command"))
-	title_label.text = "Choose Replacement"
-	title = "Choose Replacement"
+	title_label.text = "Elegir reemplazo"
+	title = "Elegir reemplazo"
 	context_label.text = "%s is no longer available (%s).\nVacancy: %s" % [departed, cause, target]
 
 	var recommended_id := LeaderManager.pick_auto_replacement_leader(_request)
 	if recommended_id.is_empty():
-		recommended_label.text = "No automatic replacement available."
+		recommended_label.text = "No hay reemplazo automático disponible."
 		auto_button.disabled = true
 	else:
 		var rec_leader := LeaderManager.get_leader(recommended_id)

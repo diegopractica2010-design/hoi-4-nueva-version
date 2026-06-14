@@ -252,6 +252,7 @@ func load_scenario(scenario_name: String) -> bool:
 	_load_scenario_leaders(scenario_name, scenario_year)
 	_apply_scenario_starting_technology(scenario_name, scenario_year)
 	_spawn_scenario_formations(scenario_name)
+	_deploy_starting_forces(data)
 	var production_mgr := get_node_or_null("/root/ProductionManager")
 	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
 		production_mgr.clear_all_caches()
@@ -265,6 +266,46 @@ func load_scenario(scenario_name: String) -> bool:
 		mm.call("initialize_from_map_data", map_data)
 
 	return true
+
+
+## Despliega las fuerzas iniciales del escenario (starting_forces) colocando las
+## formaciones de cada nacion en sus provincias historicas (Santiago, Antofagasta,
+## Lima, Arica, Sucre, La Paz...). Antes las formaciones nacian sin posicion (province_id=-1).
+func _deploy_starting_forces(data: Dictionary) -> void:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	var forces: Variant = data.get("starting_forces", [])
+	if typeof(forces) != TYPE_ARRAY:
+		return
+
+	# Agrupar formaciones existentes (sin desplegar) por nacion.
+	var pool: Dictionary = {}  # tag -> Array[Formation]
+	for fid in LeaderManager.formations:
+		var f: Formation = LeaderManager.formations[fid]
+		if f == null:
+			continue
+		var tag := f.country_tag.strip_edges().to_upper()
+		if not pool.has(tag):
+			pool[tag] = []
+		(pool[tag] as Array).append(f)
+
+	var deployed := 0
+	for entry in forces as Array:
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		var tag := str((entry as Dictionary).get("country", "")).strip_edges().to_upper()
+		var pid := int((entry as Dictionary).get("province", -1))
+		var count := int((entry as Dictionary).get("count", 1))
+		if pid < 0 or not pool.has(tag):
+			continue
+		var arr: Array = pool[tag]
+		for _i in count:
+			if arr.is_empty():
+				break
+			var f: Formation = arr.pop_back()
+			f.province_id = pid
+			deployed += 1
+	print("[OK] Starting forces deployed: %d formaciones colocadas en sus provincias" % deployed)
 
 
 func _spawn_scenario_factories(scenario_name: String, scenario_data: Dictionary) -> void:

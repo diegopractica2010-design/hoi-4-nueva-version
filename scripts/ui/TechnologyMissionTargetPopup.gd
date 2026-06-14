@@ -74,7 +74,7 @@ func _load_targets() -> void:
 	_targets = TechnologyManager.get_stealable_tech_targets(actor_country, victim_country)
 	if _targets.is_empty():
 		target_list.add_item("(No stealable research targets — victim has no exposed tech)")
-		detail_label.text = "Complete or start research on theft-target nodes first."
+		detail_label.text = "Primero completa o inicia investigación en los nodos objetivo de robo."
 		return
 
 	for entry in _targets:

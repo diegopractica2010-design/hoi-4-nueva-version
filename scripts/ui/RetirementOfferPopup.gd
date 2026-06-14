@@ -57,7 +57,7 @@ func _present_popup() -> void:
 
 func _setup_ui() -> void:
 	title = "Leadership Transition"
-	title_label.text = "A Respected Commander Considers Retirement"
+	title_label.text = "Un comandante respetado considera retirarse"
 
 	var age := LeaderManager.get_leader_age(leader)
 	var role_name := leader.leader_type.replace("_", " ").capitalize()

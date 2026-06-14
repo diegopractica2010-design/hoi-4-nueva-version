@@ -137,7 +137,7 @@ func _populate_list(search_text: String) -> void:
 	mission_list.clear()
 	selected_mission_id = ""
 	confirm_button.disabled = true
-	detail_label.text = "Select a mission for details."
+	detail_label.text = "Selecciona una misión para ver detalles."
 
 	if _filtered_rows.is_empty():
 		var idx := mission_list.add_item("No eligible missions for this agent.")
@@ -209,7 +209,7 @@ func _on_mission_selected(index: int) -> void:
 func _update_detail_for_mission(mission_id: String) -> void:
 	var mission := AgentManager.get_mission_definition(mission_id)
 	if mission.is_empty():
-		detail_label.text = "Mission not found."
+		detail_label.text = "Misión no encontrada."
 		return
 
 	var chance_pct := 0

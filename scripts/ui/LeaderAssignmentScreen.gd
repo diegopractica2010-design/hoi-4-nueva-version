@@ -58,8 +58,8 @@ const HEADER_SPECS: Array[Dictionary] = [
 	{"text": "Traits", "width": 150},
 	{"text": "XP", "width": 48},
 	{"text": "", "width": 0, "expand": true},
-	{"text": "Assign", "width": 80},
-	{"text": "Details", "width": 80},
+	{"text": "Asignar", "width": 80},
+	{"text": "Detalles", "width": 80},
 ]
 const ROW_HEIGHT := 36
 
@@ -165,7 +165,7 @@ func _setup_national_spirits_button() -> void:
 		return
 
 	_national_spirits_button = Button.new()
-	_national_spirits_button.text = "National Spirits"
+	_national_spirits_button.text = "Espíritus nacionales"
 	_national_spirits_button.tooltip_text = "View national spirits and temporary modifiers."
 	RetrowaveTheme.style_secondary_button(_national_spirits_button)
 	_national_spirits_button.pressed.connect(_on_national_spirits_pressed)
@@ -196,7 +196,7 @@ func _setup_pending_replacements_badge() -> void:
 
 	_pending_replacements_button = Button.new()
 	_pending_replacements_button.visible = false
-	_pending_replacements_button.text = "Replacements (0)"
+	_pending_replacements_button.text = "Reemplazos (0)"
 	_pending_replacements_button.tooltip_text = (
 		"Command vacancies awaiting your decision. Click to resolve the next one."
 	)
@@ -333,7 +333,7 @@ func _create_officer_training_card() -> Control:
 	panel.add_child(vbox)
 
 	var title := Label.new()
-	title.text = "Officer Training"
+	title.text = "Entrenamiento de oficiales"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 14)
 	RetrowaveTheme.style_column_header(title)
@@ -380,7 +380,7 @@ func _create_officer_training_card() -> Control:
 	hbox.add_theme_constant_override("separation", 6)
 
 	var change_btn := Button.new()
-	change_btn.text = "Assign" if training_leader == null else "Change"
+	change_btn.text = "Asignar" if training_leader == null else "Cambiar"
 	change_btn.custom_minimum_size = Vector2(70, 24)
 	RetrowaveTheme.style_secondary_button(change_btn)
 	change_btn.pressed.connect(_on_assign_officer_training_pressed)
@@ -456,14 +456,14 @@ func _create_national_position_card(
 	btn_row.alignment = BoxContainer.ALIGNMENT_CENTER
 
 	var change_btn := Button.new()
-	change_btn.text = "Change"
+	change_btn.text = "Cambiar"
 	RetrowaveTheme.style_secondary_button(change_btn)
 	change_btn.pressed.connect(_on_change_national_position.bind(position_key))
 	btn_row.add_child(change_btn)
 
 	if leader != null:
 		var details_btn := Button.new()
-		details_btn.text = "Details"
+		details_btn.text = "Detalles"
 		RetrowaveTheme.style_secondary_button(details_btn)
 		details_btn.pressed.connect(
 			_on_national_position_details_pressed.bind(leader.leader_id)
@@ -518,7 +518,7 @@ func _populate_unassigned_formations() -> void:
 	var available_formations: Array[Dictionary] = LeaderManager.get_available_formations(country_tag)
 	if available_formations.is_empty():
 		var note := Label.new()
-		note.text = "No formations without a leader."
+		note.text = "No hay formaciones sin líder."
 		note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		RetrowaveTheme.style_body_label(note)
 		formations_content.add_child(note)
@@ -591,18 +591,18 @@ func _create_leader_row(summary: Dictionary) -> HBoxContainer:
 	hbox.add_child(spacer)
 
 	var assign_btn := Button.new()
-	assign_btn.text = "Assign"
+	assign_btn.text = "Asignar"
 	assign_btn.custom_minimum_size = Vector2(80, 0)
 	RetrowaveTheme.style_primary_button(assign_btn)
 	var is_assigned := not str(summary.get("assigned_army_id", "")).is_empty()
 	assign_btn.disabled = is_assigned
 	if is_assigned:
-		assign_btn.text = "Assigned"
+		assign_btn.text = "Asignado"
 	assign_btn.pressed.connect(_on_assign_pressed.bind(summary))
 	hbox.add_child(assign_btn)
 
 	var details_btn := Button.new()
-	details_btn.text = "Details"
+	details_btn.text = "Detalles"
 	details_btn.custom_minimum_size = Vector2(80, 0)
 	RetrowaveTheme.style_secondary_button(details_btn)
 	details_btn.pressed.connect(_on_details_pressed.bind(summary))
@@ -700,7 +700,7 @@ func _populate_trait_detail(summary: Dictionary) -> void:
 	var display: Array = summary.get("trait_display", []) as Array
 	if display.is_empty():
 		var note := Label.new()
-		note.text = "No traits."
+		note.text = "Sin rasgos."
 		RetrowaveTheme.style_body_label(note)
 		_detail_traits_box.add_child(note)
 		return

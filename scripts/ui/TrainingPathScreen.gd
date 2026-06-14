@@ -137,7 +137,7 @@ func _update_current_path_header() -> void:
 	if current_path_label == null or current_leader == null:
 		return
 	if current_leader.training_path_id.is_empty():
-		current_path_label.text = "Current School: None (choose a path below)"
+		current_path_label.text = "Escuela actual: Ninguna (elige un camino abajo)"
 		current_path_label.modulate = Color(0.6, 0.6, 0.6)
 		return
 	var path_data := LeaderManager.get_training_path_definition(current_leader.training_path_id)
@@ -171,7 +171,7 @@ func _populate_available_paths() -> void:
 	var available_paths := LeaderManager.get_available_training_paths(leader_id)
 	if available_paths.is_empty():
 		var empty_note := Label.new()
-		empty_note.text = "No training paths available for this leader."
+		empty_note.text = "No hay caminos de entrenamiento para este líder."
 		empty_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		empty_note.modulate = Color(0.65, 0.65, 0.65)
 		RetrowaveTheme.style_body_label(empty_note)
@@ -217,11 +217,11 @@ func _create_path_row(path: Dictionary) -> PanelContainer:
 
 	var effects: Dictionary = path.get("effects", {})
 	if not effects.is_empty():
-		_append_path_effect_line(vbox, "Current: ", effects, Color(0.78, 0.78, 0.82))
+		_append_path_effect_line(vbox, "Actual: ", effects, Color(0.78, 0.78, 0.82))
 
 	var next_effects: Dictionary = path.get("next_level_effects", {})
 	if not next_effects.is_empty() and current_level < max_level:
-		_append_path_effect_line(vbox, "Next Level: ", next_effects, XP_HIGHLIGHT_COLOR)
+		_append_path_effect_line(vbox, "Siguiente nivel: ", next_effects, XP_HIGHLIGHT_COLOR)
 
 	var separator := HSeparator.new()
 	separator.modulate = Color(1.0, 1.0, 1.0, 0.15)
@@ -282,7 +282,7 @@ func _build_path_action_button(
 	var has_school := current_leader.has_training_path()
 
 	if current_level >= max_level and is_active:
-		action_btn.text = "Max Level Reached"
+		action_btn.text = "Nivel máximo alcanzado"
 		action_btn.disabled = true
 		RetrowaveTheme.style_primary_button(action_btn)
 	elif is_active:

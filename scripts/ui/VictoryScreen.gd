@@ -21,8 +21,8 @@ func _on_victory_achieved(winner_tag: String, condition_name: String, descriptio
 
 	# Nombre legible de la nación
 	var nation_names := {"CHL": "Chile", "PER": "Perú", "BOL": "Bolivia"}
-	var winner_name := nation_names.get(winner_tag, winner_tag)
-	$WinnerTitle.text = "¡" + winner_name + " ha ganado!"
+	var winner_name: String = str(nation_names.get(winner_tag, winner_tag))
+	$CenterContainer/Panel/VBoxContainer/WinnerTitle.text = "¡" + winner_name + " ha ganado!"
 
 	# Resumen histórico según el ganador
 	var summaries := {
@@ -37,7 +37,7 @@ Las provincias salitreras permanecen en manos aliadas.",
 La salida al mar boliviana permanece intacta. \
 La historia del Pacífico toma un rumbo diferente."
 	}
-	$SummaryLabel.text = summaries.get(winner_tag, description)
+	$CenterContainer/Panel/VBoxContainer/SummaryLabel.text = summaries.get(winner_tag, description)
 
 	# Fecha final
 	var date_str := "1879-02-14"
@@ -47,11 +47,13 @@ La historia del Pacífico toma un rumbo diferente."
 			TimeManager.current_month,
 			TimeManager.current_day
 		]
-	$DateLabel.text = "Fecha final: " + date_str
-	$ConditionLabel.text = condition_name
+	$CenterContainer/Panel/VBoxContainer/DateLabel.text = "Fecha final: " + date_str
+	$CenterContainer/Panel/VBoxContainer/ConditionLabel.text = condition_name
 
 
 func _on_main_menu_pressed() -> void:
 	if typeof(TimeManager) != TYPE_NIL:
 		TimeManager.set_paused(false)
-	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
+	# Reiniciar: volver a la pantalla de selección de nación (nueva partida).
+	NationSelectScreen.selected_tag = ""
+	get_tree().change_scene_to_file("res://scenes/ui/NationSelectScreen.tscn")

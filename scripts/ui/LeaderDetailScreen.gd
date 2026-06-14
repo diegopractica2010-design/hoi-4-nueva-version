@@ -72,7 +72,7 @@ func _ready() -> void:
 	_apply_theme()
 	if training_paths_btn:
 		training_paths_btn.custom_minimum_size = Vector2(170, 26)
-		training_paths_btn.text = "Doctrine Paths"
+		training_paths_btn.text = "Caminos de doctrina"
 		training_paths_btn.pressed.connect(_on_training_paths_pressed)
 	close_button.pressed.connect(_on_close_pressed)
 	if not LeaderManager.trait_leveled.is_connected(_on_trait_leveled):
@@ -224,7 +224,7 @@ func _update_training_path_bonuses() -> void:
 	var effects := LeaderManager.get_leader_training_path_effects(current_leader)
 	if effects.is_empty():
 		var none_label := Label.new()
-		none_label.text = "No active bonuses"
+		none_label.text = "Sin bonificaciones activas"
 		none_label.modulate = Color(0.6, 0.6, 0.6)
 		RetrowaveTheme.style_body_label(none_label)
 		bonus_container.add_child(none_label)
@@ -383,7 +383,7 @@ func _populate_level_up_options() -> void:
 
 	if not has_options:
 		var no_options := Label.new()
-		no_options.text = "No traits can be leveled up right now."
+		no_options.text = "Ningún rasgo se puede subir de nivel ahora mismo."
 		no_options.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		no_options.modulate = Color(0.6, 0.6, 0.6)
 		RetrowaveTheme.style_body_label(no_options)
@@ -417,7 +417,7 @@ func _create_level_up_row(trait_entry: Dictionary) -> HBoxContainer:
 	if not current_effects.is_empty():
 		var current_label := Label.new()
 		current_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		current_label.text = "Current: " + _format_trait_effects_clean(current_effects)
+		current_label.text = "Actual: " + _format_trait_effects_clean(current_effects)
 		current_label.add_theme_font_size_override("font_size", 11)
 		current_label.modulate = Color(0.7, 0.7, 0.7)
 		info_vbox.add_child(current_label)
@@ -425,7 +425,7 @@ func _create_level_up_row(trait_entry: Dictionary) -> HBoxContainer:
 	if not next_effects.is_empty():
 		var next_label := Label.new()
 		next_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		next_label.text = "Next Level: " + _format_trait_effects_clean(next_effects)
+		next_label.text = "Siguiente nivel: " + _format_trait_effects_clean(next_effects)
 		next_label.add_theme_font_size_override("font_size", 11)
 		next_label.modulate = XP_HIGHLIGHT_COLOR
 		info_vbox.add_child(next_label)
@@ -442,7 +442,7 @@ func _create_level_up_row(trait_entry: Dictionary) -> HBoxContainer:
 	action_vbox.add_child(cost_label)
 
 	var level_btn := Button.new()
-	level_btn.text = "Level Up"
+	level_btn.text = "Subir nivel"
 	level_btn.custom_minimum_size = Vector2(90, 28)
 	level_btn.tooltip_text = _build_level_up_tooltip(trait_entry, next_effects)
 	RetrowaveTheme.style_primary_button(level_btn)

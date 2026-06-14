@@ -1,5 +1,9 @@
-class_name EventManager
 extends Node
+
+# NOTA: NO declaramos `class_name EventManager` a proposito.
+# Se registra como autoload "EventManager"; usar class_name homonimo provoca
+# "Class 'EventManager' hides an autoload singleton" y el autoload NO carga
+# (patron DT-02, igual que TimeManager/MapManager). Sigue accesible como `EventManager`.
 
 signal event_triggered(event_data: Dictionary)
 signal event_effect_applied(effect_type: String, target_tag: String)

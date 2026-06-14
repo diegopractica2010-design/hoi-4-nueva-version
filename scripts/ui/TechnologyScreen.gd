@@ -556,9 +556,9 @@ func _populate_doctrine_panel() -> void:
 		current_data.doctrine_xp_hint,
 	]
 	if current_data.primary_leader_name.is_empty():
-		open_training_button.text = "Open Leader Training Paths"
+		open_training_button.text = "Abrir caminos de entrenamiento"
 		open_training_button.disabled = true
-		open_training_button.tooltip_text = "No active leader found for this country."
+		open_training_button.tooltip_text = "No se encontró un líder activo para este país."
 	else:
 		open_training_button.text = "Training Paths — %s" % current_data.primary_leader_name
 		open_training_button.disabled = false
@@ -566,7 +566,7 @@ func _populate_doctrine_panel() -> void:
 
 	if current_data.doctrine_training_entries.is_empty():
 		var empty := Label.new()
-		empty.text = "No training path definitions loaded."
+		empty.text = "No se cargaron definiciones de caminos de entrenamiento."
 		RetrowaveTheme.style_body_label(empty)
 		doctrine_list.add_child(empty)
 		return

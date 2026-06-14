@@ -78,6 +78,14 @@ func _ready() -> void:
 	if typeof(LeaderManager) != TYPE_NIL:
 		LeaderManager.set_player_country_tag(player_tag)
 
+	# Carga pendiente desde el menú de inicio ("Cargar partida"): aplica el estado guardado
+	# encima del escenario recién montado, y luego limpia el slot.
+	if typeof(SaveLoadManager) != TYPE_NIL and not SaveLoadManager.pending_load_slot.is_empty():
+		var slot := SaveLoadManager.pending_load_slot
+		SaveLoadManager.pending_load_slot = ""
+		var ok := SaveLoadManager.load_game(slot)
+		print("TestRunner: carga pendiente '%s' aplicada=%s" % [slot, ok])
+
 
 ## Cambia a la pantalla de selección de nación (flujo de nueva partida).
 func _go_to_nation_select() -> void:

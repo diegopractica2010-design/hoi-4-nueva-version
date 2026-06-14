@@ -144,6 +144,10 @@ var _last_save_path: String = ""
 ## Tag de la nación del jugador (lo fija NationSelectScreen vía TestRunner al iniciar partida).
 var current_player_tag: String = "CHL"
 
+## Slot pendiente de cargar al entrar a la escena de juego (lo fija el menú de inicio "Cargar").
+## TestRunner lo aplica tras montar el escenario y luego lo limpia.
+var pending_load_slot: String = ""
+
 ## Fija la nación del jugador para que las partidas guardadas registren el bando correcto.
 func set_player_tag(tag: String) -> void:
 	var clean := tag.strip_edges().to_upper()
@@ -335,6 +339,7 @@ func _gather_save_data() -> Dictionary:
 		data["time"] = {
 			"current_date": TimeManager.get_current_date(),
 			"scenario_start_date": TimeManager.get_scenario_start_date(),
+			"game_seed": TimeManager.game_seed,
 			"paused": TimeManager.is_paused(),
 			"time_scale": TimeManager.time_scale,
 		}
@@ -478,6 +483,9 @@ func _apply_time_state(t: Dictionary) -> void:
 		TimeManager.current_day = int(d.get("day", 1))
 	if t.has("scenario_start_date"):
 		TimeManager.scenario_start_date = str(t["scenario_start_date"])
+	if t.has("game_seed"):
+		TimeManager.game_seed = int(t["game_seed"])
+		seed(TimeManager.game_seed)  # reproducibilidad desde el inicio de la partida
 	if t.has("paused"):
 		TimeManager.set_paused(bool(t["paused"]))
 	if t.has("time_scale"):
@@ -543,7 +551,11 @@ func _dict_to_agent(d: Dictionary) -> Agent:
 	a.total_missions_completed = int(d.get("total_missions_completed", 0))
 	a.successful_missions = int(d.get("successful_missions", 0))
 	a.mission_history = (d.get("mission_history", []) as Array).duplicate(true)
-	a.traits = (d.get("traits", []) as Array).duplicate()
+	# Agent.traits es Array[String]: construir tipado (asignar Array sin tipo revienta la carga).
+	var agent_traits: Array[String] = []
+	for t in d.get("traits", []):
+		agent_traits.append(str(t))
+	a.traits = agent_traits
 
 	return a
 

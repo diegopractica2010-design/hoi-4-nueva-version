@@ -1,0 +1,56 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+✅ Equipment modules loaded: 1082
+✅ Unit templates loaded: 1031
+✅ Sustainment equipment loaded: 4
+✅ Production line rules loaded
+Loaded 68 leaders (25 in pool) from [res://data/leaders/historical_leaders_1936.json] for year 1936
+TimeManager: Initialized (default 1936-01-01)
+AgentManager: Loaded 11 mission definitions
+TechnologyManager: Loaded 23 technology nodes
+SaveLoadManager: Initialized (JSON format v1, user://saves/)
+[EventManager] Loaded 6 events
+PLAY| ====== INICIO PARTIDA SIMULADA (CHL) ======
+[OK] Province geometry loaded: 107
+[OK] Base provinces loaded: 847 provinces
+ScenarioFactoryBootstrap: 1879 - 80 factories, 6 shipyards across 18 province entries
+TimeManager: Scenario start date set to 1879-02-14 (year 1879), seed=288657784
+Loaded 16 leaders (0 in pool) from [res://data/leaders/historical_leaders_1879.json] for year 1879
+[OK] Scenario leaders loaded (1879, 1879): 16 active, 0 pooled
+TechnologyManager: Applied starting tech for scenario '1879' (9 countries, year 1879)
+Spawned 4 test formations for ARG
+Spawned 4 test formations for BOL
+Spawned 4 test formations for BRA
+Spawned 4 test formations for CHL
+Spawned 8 test formations for ENG
+Spawned 8 test formations for FRA
+Spawned 8 test formations for GER
+Spawned 4 test formations for PER
+Spawned 8 test formations for USA
+Scenario loaded with formations for 9 countries (leader assignment).
+[OK] Starting forces deployed: 11 formaciones colocadas en sus provincias
+[OK] Scenario loaded | Provinces: 847 | Countries: 9
+🗺️ MapPickGrid built with 847 provinces, cell_size=64.0, 96 cells
+🗺️ MapManager initialized with 847 provinces (bounds: [P: (0.0, 0.0), S: (4036.508, 1517.94)])
+TimeManager: Paused = true
+PLAY| VICTORIA: PER por 'victoria_militar'
+[EventManager] Firing event: guerra_pacifico_inicio
+[EventManager] War declared: CHL vs BOL
+[EventManager] War declared: CHL vs PER
+[NationalIncomeManager] Monthly income processed for GER: +75.5 gold
+[NationalIncomeManager] Monthly income processed for FRA: +39.5 gold
+[NationalIncomeManager] Monthly income processed for ENG: +66.0 gold
+[NationalIncomeManager] Monthly income processed for USA: +36.0 gold
+[NationalIncomeManager] Monthly income processed for ARG: +89.0 gold
+[NationalIncomeManager] Monthly income processed for BRA: +83.0 gold
+[NationalIncomeManager] Monthly income processed for PER: +933.5 gold
+[NationalIncomeManager] Monthly income processed for CHL: +78.0 gold
+[NationalIncomeManager] Monthly income processed for BOL: +132.0 gold
+PLAY| estado fecha=1879-03-16 oro=78 provincias_CHL=1 salitre_CHL=0
+PLAY| batallas_totales=6
+PLAY| ====== FIN (meses simulados=1, victoria=true) ======
+SaveLoadManager: Autosaved on exit/quit -> autosave.json
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2641)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)

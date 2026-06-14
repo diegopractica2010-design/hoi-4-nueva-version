@@ -82,9 +82,11 @@ func _resolve_battle(province_id: int, attacker_id: String, defender_id: String)
 	# 1) Señal de inicio.
 	battle_started.emit(province_id, attacker_tag, defender_tag)
 
-	# 4-6) Poder de combate efectivo + factor aleatorio para evitar resultados deterministas.
-	var attacker_power := _combat_power(attacker, province, false) * randf_range(0.85, 1.15)
-	var defender_power := _combat_power(defender, province, true) * randf_range(0.85, 1.15)
+	# 4-6) Poder de combate: SUMA de todas las formaciones de cada bando presentes en la
+	# provincia (concentrar el ejército decide la batalla) + habilidad de los líderes.
+	# Azar reducido (0.92-1.08) para que las decisiones pesen más que la suerte.
+	var attacker_power := _side_power(province_id, attacker_tag, false) * randf_range(0.92, 1.08)
+	var defender_power := _side_power(province_id, defender_tag, true) * randf_range(0.92, 1.08)
 
 	var attacker_wins := attacker_power >= defender_power
 	var winner_tag := attacker_tag if attacker_wins else defender_tag
@@ -204,12 +206,37 @@ func _combat_power(formation: Formation, province: Province, is_defender: bool) 
 		if dev > 0:
 			power += float(dev)
 
+	# Habilidad del líder asignado (ataque o defensa según el rol): premia comandar bien.
+	if not formation.leader_id.is_empty() and typeof(LeaderManager) != TYPE_NIL:
+		var leader = LeaderManager.get_leader(formation.leader_id)
+		if leader != null:
+			var skill := int(leader.defense_skill if is_defender else leader.attack_skill)
+			power += float(skill) * 2.0
+
 	# Ventaja defensiva: terreno + fortificación.
 	if is_defender and province != null:
 		power *= 1.15
 		if province.has_feature("fort"):
 			power *= 1.0 + 0.1 * float(province.get_feature_level("fort"))
 	return power
+
+
+## Poder total de un bando en una provincia = suma de TODAS sus formaciones presentes.
+## Hace que concentrar el ejército sea una decisión decisiva (stacking).
+func _side_power(province_id: int, tag: String, is_defender: bool) -> float:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return 0.0
+	var province: Province = _get_province(province_id)
+	var clean := tag.strip_edges().to_upper()
+	var total := 0.0
+	for fid in LeaderManager.formations:
+		var f: Formation = LeaderManager.formations[fid]
+		if f == null or f.province_id != province_id:
+			continue
+		if f.country_tag.strip_edges().to_upper() != clean:
+			continue
+		total += _combat_power(f, province, is_defender)
+	return total
 
 
 ## Retira una formación a una provincia adyacente que controle su nación; si no hay

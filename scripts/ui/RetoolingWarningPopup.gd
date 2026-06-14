@@ -21,7 +21,7 @@ func _ready() -> void:
 	RetrowaveTheme.style_danger_button(confirm_button)
 	RetrowaveTheme.style_secondary_button(cancel_button)
 
-	title_label.text = "RETOOLING WARNING"
+	title_label.text = "AVISO DE REAJUSTE"
 	_update_warning_text()
 	confirm_button.pressed.connect(_on_confirm_pressed)
 	cancel_button.pressed.connect(_on_cancel_pressed)

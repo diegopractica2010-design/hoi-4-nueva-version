@@ -267,12 +267,9 @@ func _update_war_status() -> void:
 		income_label.text = "Ingreso/mes: %.0f oro" % income
 
 	# Color coding: verde si Chile va ganando, rojo si va perdiendo
-	if salt_count >= 2:
-		saltpeter_label.theme_override_colors["font_color"] = Color.GREEN
-		days_label.theme_override_colors["font_color"] = Color.GREEN
-	else:
-		saltpeter_label.theme_override_colors["font_color"] = Color.RED
-		days_label.theme_override_colors["font_color"] = Color.RED
+	var status_color := Color.GREEN if salt_count >= 2 else Color.RED
+	saltpeter_label.add_theme_color_override("font_color", status_color)
+	days_label.add_theme_color_override("font_color", status_color)
 
 
 func _close_overlay_screens() -> void:
@@ -458,11 +455,11 @@ func _show_main_menu_popup_fallback() -> void:
 	panel.add_child(main_vbox)
 
 	var title := Label.new()
-	title.text = "Epochs of Ascendancy (Fallback Menu)"
+	title.text = "Epochs of Ascendancy (menú de respaldo)"
 	main_vbox.add_child(title)
 
 	# Minimal options for fallback
-	var options := ["Save Game", "Load Game", "Return to Main Menu", "Exit to Desktop"]
+	var options := ["Guardar partida", "Cargar partida", "Volver al menú principal", "Salir al escritorio"]
 	for opt in options:
 		var b := Button.new()
 		b.text = opt
@@ -535,14 +532,14 @@ func _show_save_manager_popup() -> void:
 	panel.add_child(vbox)
 
 	var title := Label.new()
-	title.text = "Save Manager (F6 to close, click actions)"
+	title.text = "Gestor de partidas (F6 para cerrar)"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
 	var saves := SaveLoadManager.list_saves()
 	if saves.is_empty():
 		var l := Label.new()
-		l.text = "No saves yet. Use F5 / Save button to create 'quicksave' or 'autosave'."
+		l.text = "Aún no hay partidas. Usa F5 / Guardar para crear 'quicksave' o 'autosave'."
 		vbox.add_child(l)
 	else:
 		for s in saves:
@@ -555,7 +552,7 @@ func _show_save_manager_popup() -> void:
 			h.add_child(slot_label)
 
 			var load_btn := Button.new()
-			load_btn.text = "Load"
+			load_btn.text = "Cargar"
 			load_btn.pressed.connect(func():
 				SaveLoadManager.load_game(s.get("slot", ""))
 				_update_date_time()
@@ -565,7 +562,7 @@ func _show_save_manager_popup() -> void:
 			h.add_child(load_btn)
 
 			var del_btn := Button.new()
-			del_btn.text = "Delete"
+			del_btn.text = "Eliminar"
 			del_btn.pressed.connect(func():
 				SaveLoadManager.delete_save(s.get("slot", ""))
 				panel.queue_free()
@@ -576,7 +573,7 @@ func _show_save_manager_popup() -> void:
 			vbox.add_child(h)
 
 	var close_btn := Button.new()
-	close_btn.text = "Close (F6)"
+	close_btn.text = "Cerrar (F6)"
 	close_btn.pressed.connect(func(): panel.queue_free())
 	vbox.add_child(close_btn)
 
@@ -613,7 +610,7 @@ func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
 	var saves := SaveLoadManager.list_saves()
 	if saves.is_empty():
 		var l := Label.new()
-		l.text = "No saves yet. Use the menu to create one."
+		l.text = "Aún no hay partidas. Usa el menú para crear una."
 		parent.add_child(l)
 		return
 
@@ -629,7 +626,7 @@ func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
 		h.add_child(slot_label)
 
 		var load_btn := Button.new()
-		load_btn.text = "Load"
+		load_btn.text = "Cargar"
 		load_btn.pressed.connect(func():
 			var ok := SaveLoadManager.load_game(s.get("slot", ""))
 			_update_date_time()
@@ -643,7 +640,7 @@ func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
 		h.add_child(load_btn)
 
 		var del_btn := Button.new()
-		del_btn.text = "Delete"
+		del_btn.text = "Eliminar"
 		del_btn.pressed.connect(func():
 			SaveLoadManager.delete_save(s.get("slot", ""))
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
@@ -656,7 +653,7 @@ func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
 
 		# Rename (lightweight foundation - future menu can use proper dialog)
 		var rename_btn := Button.new()
-		rename_btn.text = "Rename"
+		rename_btn.text = "Renombrar"
 		rename_btn.pressed.connect(func():
 			# Simple inline rename for foundation (in full UI this would be a nice dialog)
 			print("Rename requested for " + s.get("slot", "") + " (use SaveLoadManager.rename_save in console for now)")

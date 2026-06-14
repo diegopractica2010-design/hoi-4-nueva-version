@@ -63,6 +63,11 @@ var scenario_start_year: int = 1936
 var paused: bool = false
 var time_scale: float = 1.0   # Future use for simulation speed (1.0, 2.0, 5.0, etc.)
 
+## Semilla de RNG de la partida (para reproducibilidad). Se fija al iniciar escenario
+## y se persiste/restaura en el guardado. Nota: reproduce desde el inicio; la deriva del
+## RNG global a mitad de partida no se captura (haria falta un RNG dedicado).
+var game_seed: int = 0
+
 # Internal accumulator for real-time driven simulation (in game days)
 var _accumulated_game_days: float = 0.0
 
@@ -94,7 +99,13 @@ func initialize_from_scenario_start_date(start_date_str: String) -> void:
 	else:
 		current_day = 1
 
-	print("TimeManager: Scenario start date set to %s (year %d)" % [scenario_start_date, current_year])
+	# Semilla de RNG de la partida: aleatoria por partida nueva, pero registrada para
+	# poder reproducirla. SaveLoadManager la persiste y la restaura al cargar.
+	randomize()
+	game_seed = randi()
+	seed(game_seed)
+
+	print("TimeManager: Scenario start date set to %s (year %d), seed=%d" % [scenario_start_date, current_year, game_seed])
 
 func get_current_year() -> int:
 	return current_year

@@ -98,7 +98,13 @@ func _load_mission_definitions() -> void:
 
 func get_agents_for_country(country_tag: String) -> Array[Agent]:
 	var tag := country_tag.strip_edges().to_upper()
-	return agents.get(tag, []) as Array[Agent]
+	# Los valores del diccionario son Array sin tipar; construimos un Array[Agent]
+	# explicito (castear `[] as Array[Agent]` revienta en runtime en Godot 4).
+	var result: Array[Agent] = []
+	for a in agents.get(tag, []):
+		if a is Agent:
+			result.append(a)
+	return result
 
 
 func get_agent(agent_id: String) -> Agent:
