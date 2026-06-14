@@ -67,6 +67,27 @@ func _build_ui() -> void:
 		na.text = "(Sistema de idioma no disponible)"
 		vbox.add_child(na)
 
+	var diff_label := Label.new()
+	diff_label.text = "Dificultad de la IA"
+	vbox.add_child(diff_label)
+
+	if typeof(AIManager) != TYPE_NIL:
+		for level in [AIManager.DIFF_FACIL, AIManager.DIFF_NORMAL, AIManager.DIFF_DIFICIL]:
+			var db := Button.new()
+			db.set_meta("diff_level", level)
+			db.name = "Diff_" + str(level)
+			db.pressed.connect(func() -> void:
+				AIManager.set_difficulty(level)
+				_refresh_difficulty_buttons())
+			if typeof(RetrowaveTheme) != TYPE_NIL:
+				RetrowaveTheme.style_secondary_button(db)
+			vbox.add_child(db)
+		_refresh_difficulty_buttons()
+	else:
+		var na_ai := Label.new()
+		na_ai.text = "(Sistema de IA no disponible)"
+		vbox.add_child(na_ai)
+
 	var note := Label.new()
 	note.text = "Audio y gráficos: pendientes (no hay assets aún)."
 	note.add_theme_font_size_override("font_size", 12)
@@ -92,3 +113,21 @@ func _refresh_language_buttons() -> void:
 	for child in find_children("Lang_*", "Button", true, false):
 		var code := str(child.get_meta("lang_code", ""))
 		child.text = ("● " if code == current else "○ ") + LanguageManager.get_language_display_name(code)
+
+
+func _refresh_difficulty_buttons() -> void:
+	if typeof(AIManager) == TYPE_NIL:
+		return
+	var current := AIManager.get_difficulty()
+	for child in find_children("Diff_*", "Button", true, false):
+		var level := int(child.get_meta("diff_level", AIManager.DIFF_NORMAL))
+		child.text = ("● " if level == current else "○ ") + _diff_name(level)
+
+
+func _diff_name(level: int) -> String:
+	if typeof(AIManager) != TYPE_NIL:
+		if level == AIManager.DIFF_FACIL:
+			return "Fácil"
+		if level == AIManager.DIFF_DIFICIL:
+			return "Difícil"
+	return "Normal"

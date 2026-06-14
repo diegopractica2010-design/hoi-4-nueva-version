@@ -15,6 +15,16 @@ var ai_tags: Array[String] = []
 var player_tag: String = "CHL"
 var _days_since_last_eval: int = 0
 var EVAL_INTERVAL_DAYS: int = 7
+
+# --- Dificultad de la IA (Fácil / Normal / Difícil) ---
+# Controla dos cosas: la FUERZA de la IA en combate (multiplicador que lee
+# BattleManager y aplica solo a los bandos de la IA) y su AGRESIVIDAD (cada
+# cuántos días evalúa y emite órdenes -> EVAL_INTERVAL_DAYS).
+const DIFF_FACIL := 0
+const DIFF_NORMAL := 1
+const DIFF_DIFICIL := 2
+const DIFFICULTY_FILE := "user://gameplay.cfg"
+var difficulty: int = DIFF_NORMAL
 var _adjacency: Dictionary = {}
 var _war_state: Dictionary = {}
 var _scenario_data: Dictionary = {}
@@ -22,6 +32,7 @@ var _triggered_events: Array = []
 
 
 func _ready() -> void:
+	_load_difficulty()
 	_load_adjacency()
 	_load_1879_scenario_state()
 	_sync_player_tag()
@@ -57,6 +68,53 @@ func set_player_tag(tag: String) -> void:
 		return
 	player_tag = clean
 	_initialize_ai_tags()
+
+
+func set_difficulty(level: int) -> void:
+	difficulty = clampi(level, DIFF_FACIL, DIFF_DIFICIL)
+	_apply_difficulty()
+	_save_difficulty()
+
+
+func get_difficulty() -> int:
+	return difficulty
+
+
+func get_difficulty_name() -> String:
+	match difficulty:
+		DIFF_FACIL: return "Fácil"
+		DIFF_DIFICIL: return "Difícil"
+		_: return "Normal"
+
+
+## Multiplicador de poder que BattleManager aplica SOLO a los bandos de la IA.
+func get_ai_combat_multiplier() -> float:
+	match difficulty:
+		DIFF_FACIL: return 0.8
+		DIFF_DIFICIL: return 1.25
+		_: return 1.0
+
+
+## Traduce la dificultad a la cadencia de evaluación (agresividad de la IA).
+func _apply_difficulty() -> void:
+	match difficulty:
+		DIFF_FACIL: EVAL_INTERVAL_DAYS = 14
+		DIFF_DIFICIL: EVAL_INTERVAL_DAYS = 3
+		_: EVAL_INTERVAL_DAYS = 7
+
+
+func _load_difficulty() -> void:
+	var cfg := ConfigFile.new()
+	if cfg.load(DIFFICULTY_FILE) == OK:
+		difficulty = clampi(int(cfg.get_value("ai", "difficulty", DIFF_NORMAL)), DIFF_FACIL, DIFF_DIFICIL)
+	_apply_difficulty()
+
+
+func _save_difficulty() -> void:
+	var cfg := ConfigFile.new()
+	cfg.load(DIFFICULTY_FILE)  # preserva otras claves si las hubiera
+	cfg.set_value("ai", "difficulty", difficulty)
+	cfg.save(DIFFICULTY_FILE)
 
 
 func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:

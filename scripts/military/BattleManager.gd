@@ -236,6 +236,11 @@ func _side_power(province_id: int, tag: String, is_defender: bool) -> float:
 		if f.country_tag.strip_edges().to_upper() != clean:
 			continue
 		total += _combat_power(f, province, is_defender)
+	# Dificultad: la IA pelea más fuerte/débil según el nivel elegido. Solo se
+	# aplica a los bandos controlados por la IA (no al del jugador); en batallas
+	# IA-vs-IA el factor afecta a ambos y se cancela.
+	if typeof(AIManager) != TYPE_NIL and clean != AIManager.player_tag:
+		total *= AIManager.get_ai_combat_multiplier()
 	return total
 
 
