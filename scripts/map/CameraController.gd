@@ -18,6 +18,13 @@ extends Node2D
 var _target_zoom := 1.0
 var _is_panning := false
 
+# --- Táctil (tablet) ---
+# Un dedo arrastra el mapa; dos dedos hacen zoom con pellizco. La selección de
+# provincias la resuelve MapRenderer al soltar un toque corto, así que aquí solo
+# movemos/escalamos la vista sin tocar la lógica de selección.
+var _touch_points: Dictionary = {}   # index -> Vector2 (posición en pantalla)
+var _pinch_prev_dist: float = 0.0
+
 const _ZOOM_LERP_SPEED: float = 12.0
 
 
@@ -93,9 +100,20 @@ func _apply_edge_pan(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if target == null or not enable_pan:
+	if target == null:
 		return
 
+	# --- Gestos táctiles (tablet) ---
+	if event is InputEventScreenTouch:
+		_handle_screen_touch(event as InputEventScreenTouch)
+		return
+	if event is InputEventScreenDrag:
+		_handle_screen_drag(event as InputEventScreenDrag)
+		return
+
+	# --- Ratón (escritorio): arrastre con botón central ---
+	if not enable_pan:
+		return
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_MIDDLE:
@@ -103,6 +121,65 @@ func _input(event: InputEvent) -> void:
 
 	if _is_panning and event is InputEventMouseMotion:
 		target.position += (event as InputEventMouseMotion).relative
+
+
+func _handle_screen_touch(t: InputEventScreenTouch) -> void:
+	if t.pressed:
+		_touch_points[t.index] = t.position
+	else:
+		_touch_points.erase(t.index)
+	# La referencia de pellizco solo es válida con exactamente dos dedos.
+	if _touch_points.size() == 2:
+		_pinch_prev_dist = _two_finger_distance()
+	else:
+		_pinch_prev_dist = 0.0
+
+
+func _handle_screen_drag(d: InputEventScreenDrag) -> void:
+	_touch_points[d.index] = d.position
+	var count := _touch_points.size()
+	if count >= 2:
+		if enable_zoom:
+			_apply_pinch()
+		return
+	if count == 1 and enable_pan:
+		target.position += d.relative
+
+
+func _two_finger_distance() -> float:
+	var pts: Array = _touch_points.values()
+	if pts.size() < 2:
+		return 0.0
+	return (pts[0] as Vector2).distance_to(pts[1] as Vector2)
+
+
+func _two_finger_centroid() -> Vector2:
+	var pts: Array = _touch_points.values()
+	if pts.size() < 2:
+		return Vector2.ZERO
+	return ((pts[0] as Vector2) + (pts[1] as Vector2)) * 0.5
+
+
+func _apply_pinch() -> void:
+	var cur_dist := _two_finger_distance()
+	if cur_dist <= 0.0:
+		return
+	if _pinch_prev_dist <= 0.0:
+		_pinch_prev_dist = cur_dist
+		return
+	var factor := cur_dist / _pinch_prev_dist
+	_pinch_prev_dist = cur_dist
+	var cur: float = target.scale.x
+	var next: float = clampf(cur * factor, min_zoom, max_zoom)
+	if is_equal_approx(next, cur):
+		return
+	# Mantener bajo los dedos el punto del mapa que había en el centro del pellizco.
+	var screen_centroid := _two_finger_centroid()
+	var world_centroid: Vector2 = get_viewport().get_canvas_transform().affine_inverse() * screen_centroid
+	var local: Vector2 = target.get_global_transform().affine_inverse() * world_centroid
+	target.position += local * (cur - next)
+	target.scale = Vector2(next, next)
+	_target_zoom = next
 
 
 func _unhandled_input(event: InputEvent) -> void:

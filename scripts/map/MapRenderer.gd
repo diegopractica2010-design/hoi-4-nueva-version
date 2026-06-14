@@ -70,6 +70,12 @@ extends Node2D
 var _is_middle_dragging := false
 var _middle_drag_start := Vector2.ZERO
 var _last_mouse_pos := Vector2.ZERO
+# Selección por "tap": en táctil el dedo emula el ratón, así que separamos un toque
+# (seleccionar/mover) de un arrastre (mover el mapa) actuando al SOLTAR, no al pulsar,
+# y solo si el puntero apenas se movió. En ratón el comportamiento es idéntico.
+var _left_press_pos := Vector2.ZERO
+var _left_press_active := false
+const _TAP_MAX_MOVE := 14.0
 
 var provinces: Dictionary[int, Province] = {}
 var geometry: Dictionary = {}
@@ -353,7 +359,20 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# Spatial picking click handling — this path makes the system fully functional
 	# even when create_area_nodes_for_fallback=false (pure MapPickGrid mode, zero Area2D nodes).
-	if use_spatial_picking and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	# Se actúa al SOLTAR un toque/clic corto (tap): así un arrastre con el dedo mueve el
+	# mapa sin emitir órdenes de movimiento por error.
+	if use_spatial_picking and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		var lmb := event as InputEventMouseButton
+		if lmb.pressed:
+			_left_press_pos = get_viewport().get_mouse_position()
+			_left_press_active = true
+			return
+		# Soltar: solo cuenta como tap si apenas se movió desde que se pulsó.
+		if not _left_press_active:
+			return
+		_left_press_active = false
+		if get_viewport().get_mouse_position().distance_to(_left_press_pos) > _TAP_MAX_MOVE:
+			return
 		var world_pos := _screen_to_world(get_viewport().get_mouse_position())
 		var pid := -1
 		if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province_at_world_pos"):

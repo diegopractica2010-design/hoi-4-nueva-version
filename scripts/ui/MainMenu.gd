@@ -76,7 +76,7 @@ func _ready() -> void:
 func _clamp_to_viewport() -> void:
 	var vp := get_viewport().get_visible_rect().size
 	size = Vector2i(mini(MENU_WIDTH, int(vp.x * 0.9)), mini(MENU_HEIGHT, int(vp.y * 0.85)))
-	position = (vp - size) / 2
+	position = (Vector2i(vp) - size) / 2
 
 func _build_menu_options() -> void:
 	options_vbox.add_child(_make_menu_button("Nueva Partida", "new_game"))

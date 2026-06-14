@@ -43,6 +43,10 @@ LanguageManager="*res://scripts/localization/LanguageManager.gd"
 TranslationProvider="*res://scripts/localization/TranslationProvider.gd"
 Localization="*res://scripts/localization/Localization.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/exportador/plugin.cfg")
+
 [display]
 
 window/size/viewport_width=1680
@@ -79,6 +83,13 @@ move_down={
 
 3d/physics_engine="Jolt Physics"
 
+[input_devices]
+
+pointing/emulate_mouse_from_touch=true
+pointing/emulate_touch_from_mouse=false
+
 [rendering]
 
+renderer/rendering_method="forward_plus"
+renderer/rendering_method.mobile="gl_compatibility"
 rendering_device/driver.windows="d3d12"
