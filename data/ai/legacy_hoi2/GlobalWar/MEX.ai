@@ -1,0 +1,66 @@
+war = 50
+
+combat = { 
+	   BRA = 100
+	   JAP = 100
+	   ENG = 100
+	   ITA = 100
+	   SAF = 100
+           PER = 100
+           USA = 100
+           AST = 100
+           FRA = 100
+           SWE = 100
+           ROM = 100 
+           CHI = 100
+	}
+
+befriend = {
+	     SIA = 50
+	     GER = 50
+	     SOV = 50
+    	     TUR = 50
+	     NEP = 50
+	   }
+trade = {
+	cancel_deal_threshold = 2
+
+	energy 		= -1
+	rare_materials 	= -1
+	metal 		= -1
+	oil 		= -1
+	supplies 	= -1
+	money 		= -1
+
+
+	favored = {
+		SIA = 50
+		GER = 50
+		SOV = 50
+		TUR = 50
+		NEP = 50
+	}
+	embargo = {
+		    BRA
+		    JAP
+		    ENG
+		    ITA
+		    SAF
+		    PER
+           	    USA
+           	    AST
+           	    FRA
+           	    SWE
+           	    ROM
+           	    CHI 
+	}
+}
+tech_sharing = {
+	favored = {
+		    SIA = 50
+	     	    GER = 50
+	     	    SOV = 50
+    	     	    TUR = 50
+	     	    NEP = 50
+	}
+}	   

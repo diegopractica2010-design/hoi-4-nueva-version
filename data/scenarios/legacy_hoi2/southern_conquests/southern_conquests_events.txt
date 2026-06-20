@@ -1,0 +1,2085 @@
+event = { 
+	id = 1
+	random = no
+	country = Jap
+        
+        trigger = { random = 50 }
+  
+	name = "ge_event1_name"   ###reinforcements arrive (KG100)
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 2 month = january year = 1942 }
+        offset = 3
+	deathdate = { day = 2 month = february year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 582  where = 1187 }
+		command = { type = activate_division which = 10300 value = 583  where = 1187 }
+		command = { type = activate_division which = 10300 value = 584  where = 1187 }
+		command = { type = activate_division which = 10300 value = 585  where = 1187 }
+		command = { type = activate_division which = 10300 value = 401  where = 1187 }
+		command = { type = activate_division which = 10300 value = 402  where = 1187 }
+		command = { type = activate_division which = 10300 value = 403  where = 1187 }
+		command = { type = activate_division which = 10300 value = 404  where = 1187 }
+		command = { type = activate_division which = 10300 value = 405  where = 1187 }
+		command = { type = activate_division which = 10300 value = 406  where = 1187 }
+		command = { type = activate_division which = 10300 value = 133  where = 1187 }
+		command = { type = activate_division which = 10300 value = 134  where = 1187 }
+	}
+}
+
+
+event = { 
+	id = 2
+	random = no
+	country = Jap
+        
+        trigger = { random = 50 }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "japanese_navy"
+	style = 0
+	
+	date = { day = 15 month = january year = 1942 }
+        offset = 4
+	deathdate = { day = 2 month = february year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 1001  where = 1187 }
+
+	}
+}
+
+
+event = { 
+	id = 3
+	random = no
+	country = Jap
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments2"
+	style = 0
+	
+	date = { day = 4 month = january year = 1942 }
+        offset = 6
+	deathdate = { day = 24 month = february year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 600  where = 1187 }
+		command = { type = activate_division which = 10300 value = 601  where = 1187 }
+
+	}
+}
+
+
+event = { 
+	id = 4
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments_jungle"
+	style = 0
+	
+	date = { day = 4 month = january year = 1942 }
+        offset = 6
+	deathdate = { day = 24 month = february year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2  where = 1756 }
+	}
+}
+
+
+
+
+event = { 
+	id = 5
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "american_naval_reinforcments"
+	style = 0
+	
+	date = { day = 6 month = january year = 1942 }
+        offset = 7
+	deathdate = { day = 24 month = february year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 51  where = 1756 }
+		command = { type = activate_division which = 10200 value = 52  where = 1756 }
+		command = { type = activate_division which = 10200 value = 53  where = 1756 }
+		command = { type = activate_division which = 10200 value = 54  where = 1756 }
+		command = { type = activate_division which = 10200 value = 55  where = 1756 }
+		command = { type = activate_division which = 10200 value = 56  where = 1756 }
+		command = { type = activate_division which = 10200 value = 57  where = 1756 }
+		command = { type = activate_division which = 10200 value = 58  where = 1756 }
+		command = { type = activate_division which = 10200 value = 59  where = 1756 }
+		command = { type = activate_division which = 10200 value = 60  where = 1756 }
+		command = { type = activate_division which = 10200 value = 61  where = 1756 }
+	}
+}
+
+event = { 
+	id = 6
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "american_air_reinforcments"
+	style = 0
+	
+	date = { day = 8 month = january year = 1942 }
+        offset = 12
+	deathdate = { day = 24 month = february year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 71  where = 1722 }
+		command = { type = activate_division which = 10200 value = 73  where = 1722 }
+		command = { type = activate_division which = 10200 value = 75  where = 1722 }
+		command = { type = activate_division which = 10200 value = 77  where = 1722 }
+		command = { type = activate_division which = 10200 value = 79  where = 1722 }
+	}
+}
+
+event = { 
+	id = 7
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments7"
+	style = 0
+	
+	date = { day = 4 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 80  where = 1692 }
+		command = { type = activate_division which = 10200 value = 88  where = 1692 }
+                }
+}
+
+
+event = { 
+	id = 8
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments8"
+	style = 0
+	
+	date = { day = 4 month = august year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = november year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 81  where = 1692 }
+		command = { type = activate_division which = 10200 value = 82  where = 1692 }
+		command = { type = activate_division which = 10200 value = 98  where = 1692 }
+		command = { type = activate_division which = 10200 value = 99  where = 1692 }
+                }
+}
+
+
+event = { 
+	id = 9
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+	
+	date = { day = 1 month = may year = 1942 }
+        offset = 15
+	deathdate = { day = 2 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 200  where = 1722 }
+		command = { type = activate_division which = 10200 value = 201  where = 1722 }
+                }
+}
+
+
+event = { 
+	id = 10
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_naval_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = may year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 204  where = 1756 }
+		command = { type = activate_division which = 10200 value = 205  where = 1756 }
+		command = { type = activate_division which = 10200 value = 206  where = 1756 }
+		command = { type = activate_division which = 10200 value = 207  where = 1756 }
+		command = { type = activate_division which = 10200 value = 208  where = 1756 }
+		command = { type = activate_division which = 10200 value = 209  where = 1756 }
+		command = { type = activate_division which = 10200 value = 210  where = 1756 }
+		command = { type = activate_division which = 10200 value = 211  where = 1756 }
+                }
+}
+
+
+
+event = { 
+	id = 11
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_naval_reinforcments2"
+	style = 0
+	
+	date = { day = 4 month = may year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 202  where = 1756 }
+		#command = { type = activate_division which = 10200 value = 203  where = 1756 }
+		command = { type = activate_division which = 10200 value = 212  where = 1756 }
+		command = { type = activate_division which = 10200 value = 213  where = 1756 }
+		command = { type = activate_division which = 10200 value = 214  where = 1756 }
+		command = { type = activate_division which = 10200 value = 215  where = 1756 }
+                }
+}
+
+
+
+event = { 
+	id = 12
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments4"
+	style = 0
+	
+	date = { day = 8 month = may year = 1942 }
+        offset = 15
+	deathdate = { day = 8 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 216  where = 1756 }
+		command = { type = activate_division which = 10200 value = 217  where = 1756 }
+		command = { type = activate_division which = 10200 value = 218  where = 1756 }
+		command = { type = activate_division which = 10200 value = 219  where = 1756 }
+		command = { type = activate_division which = 10200 value = 220 where = 1756 }
+                }
+}
+
+
+#######scen description
+
+#event = { 
+#	id = 13
+#	random = no
+#	country = jap
+#
+#       trigger = { ai = no }
+#
+#	name = "sc_event1_name"
+#	desc = "sc_event1_desc"
+#       picture = "japanese_navy2"
+#	style = 0
+#
+#	date = { day = 7 month = december year = 1941}
+#	
+#	action_a = {
+#		name = "Ok"
+#		command = { }
+#	}
+#}
+
+
+
+#event = { 
+#	id = 14
+#	random = no
+#	country = usa
+#
+#       trigger = { ai = no }
+#
+#	name = "sc_event2_name"
+#	desc = "sc_event2_desc"
+#       picture = "american_naval_reinforcments3"
+#	style = 0
+#
+#	date = { day = 7 month = december year = 1941}
+#	
+#	action_a = {
+#		name = "Ok"
+#		command = { }
+#	}
+#}
+
+
+#event = { 
+#	id = 15
+#	random = no
+#	country = eng
+#
+#       trigger = { ai = no }
+#
+#	name = "sc_event3_name"
+#	desc = "sc_event3_desc"
+#       picture = "british_naval_reinforcments"
+#	style = 0
+#
+#	date = { day = 7 month = december year = 1941}
+#	
+#	action_a = {
+#		name = "Ok"
+#		command = { }
+#	}
+#}
+
+
+
+
+#######orders
+
+
+event = { 
+	id = 16
+	random = no
+	country = jap
+
+        trigger = { ai = no }
+
+	name = "sc_event4_name"
+	desc = "sc_event4_desc"
+        picture = "japanese_centrufugal_offensive"
+	style = 0
+
+	date = { day = 7 month = december year = 1941}
+	
+	action_a = {
+		name = "cs_actionname6a"
+		command = { }
+	}
+}
+
+
+
+
+
+event = { 
+	id = 17
+	random = no
+	country = usa
+
+        trigger = { ai = no }
+
+	name = "sc_event5_name"
+	desc = "sc_event5_desc"
+        picture = "american_naval_reinforcments3"
+	style = 0
+
+	date = { day = 7 month = december year = 1941}
+	
+	action_a = {
+		name = "Ok"
+		command = { }
+	}
+}
+
+
+
+event = { 
+	id = 18
+	random = no
+	country = eng
+
+        trigger = { ai = no }
+
+	name = "sc_event5_name"
+	desc = "sc_event6_desc"
+        picture = "british_naval_reinforcments2"
+	style = 0
+
+	date = { day = 7 month = december year = 1941}
+	
+	action_a = {
+		name = "Ok"
+		command = { }
+	}
+}
+
+
+
+####special events
+
+event = { #MacArthur Evacuated from Phillipines
+	id = 19 
+	country = USA
+	random = no
+
+	trigger = { or = {
+	 control = { province = 1738 data = jap } 
+	 control = { province = 1739 data = jap } 
+	 control = { province = 1740 data = jap } 
+                         }
+
+	random = 50 
+		}
+
+	name = "sc_event17_name"
+	desc = "sc_event17_desc"
+        picture = "mcarthur"
+	style = 0
+
+	date = { day = 1 month = january year = 1942 }
+	offset = 7
+	deathdate = { day = 30 month = june year = 1942 }
+
+	action_a = {
+		name = "OK"
+		command = { } #todo add in game effect
+
+	}
+}
+
+event = { #Wainwright's surrender at Bataan (includes surrender at Corregidor-but can be separated)
+	id = 20
+	country = USA
+	random = no
+
+	trigger = {
+		control = { province = 1738 data = -1 } #Loss of control of Bataan
+		random = 30 
+		}
+
+	name = "sc_event16_name"
+	desc = "sc_event16_desc"
+        picture = "surrender_at_bataan"
+	style = 0
+
+	date = { day = 1 month = march year = 1942 }
+	offset = 7
+	deathdate = { day = 30 month = june year = 1942 }
+
+	action_a = {
+		name = "sc_actioname16a"
+		command = { } #todo add in game effects
+		}
+
+	}
+
+#event = {  #Manilla declared an open city
+#	id = 21
+#	country = PHI
+#	random = no
+#
+#	trigger = { #needs more control triggers to check Japanese advances
+#		control = { province = data = PHI } #Manilla
+#		lost_national = { country = PHI value = 10 }
+#		random = 40
+#		}
+#
+#	name = "sc_event18_name"
+#	desc = "sc_event18_desc"
+#	style = 0
+#
+#	date = { day = 20 month = december year = 1941 }
+#	offset = 2
+#	deathdate = { day = 30 month = january year = 1942 }
+#
+#	action_a = {
+#		name = "OK"
+#		command = { type = cede_province which = data = JAP } #Manilla
+#		}
+#
+#	}
+#
+#
+
+event = { 
+	id = 22
+	random = no
+	country = Jap
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments3"
+	style = 0
+	
+	date = { day = 12 month = january year = 1942 }
+        offset = 7
+	deathdate = { day = 24 month = march year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 602  where = 1187 }
+		command = { type = activate_division which = 10300 value = 603  where = 1187 }
+
+	}
+}
+
+
+
+
+####phill, quick
+event = { 
+	id = 23
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1737 data = jap } 
+	 control = { province = 1738 data = jap } 
+	 control = { province = 1739 data = jap } 
+	 control = { province = 1740 data = jap } 
+	 control = { province = 1749 data = jap } 
+	 control = { province = 1750 data = jap } 
+		}
+
+
+
+	name = "sc_event8_name"  
+	desc = "sc_event7_desc"
+        picture = "fall_of_philipines"
+	style = 0
+	
+	date = { day = 14 month = march year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = inherit which = phi }
+		command = { type = vp value = 10  }
+		command = { type = sleepevent which = 24 }
+		command = { type = sleepevent which = 25 }
+		command = { type = sleepevent which = 26 }
+	}
+}
+
+
+####phill, normal
+event = { 
+	id = 24
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1737 data = jap } 
+	 control = { province = 1738 data = jap } 
+	 control = { province = 1739 data = jap } 
+	 control = { province = 1740 data = jap } 
+	 control = { province = 1749 data = jap } 
+	 control = { province = 1750 data = jap } 
+		}
+
+
+
+	name = "sc_event8_name"  
+	desc = "sc_event8_desc"
+        picture = "fall_of_philipines2"
+	style = 0
+	
+	date = { day = 9 month = april year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = inherit which = phi }
+		command = { type = vp value = 4  }
+		command = { type = sleepevent which = 25 }
+		command = { type = sleepevent which = 26 }
+	}
+}
+
+
+####phill, slow
+event = { 
+	id = 25
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1737 data = jap } 
+	 control = { province = 1738 data = jap } 
+	 control = { province = 1739 data = jap } 
+	 control = { province = 1740 data = jap } 
+	 control = { province = 1749 data = jap } 
+	 control = { province = 1750 data = jap } 
+		}
+
+
+
+	name = "sc_event8_name"  
+	desc = "sc_event9_desc"
+        picture = "fall_of_philipines2"
+	style = 0
+	
+	date = { day = 30 month = april year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = inherit which = phi }
+		command = { type = vp value = 2  }
+		command = { type = sleepevent which = 26 }
+	}
+}
+
+
+####phill, loose
+event = { 
+	id = 26
+	country = jap
+	random = no
+
+	trigger = { not = { or = {
+	 control = { province = 1737 data = jap } 
+	 control = { province = 1738 data = jap } 
+	 control = { province = 1739 data = jap } 
+	 control = { province = 1740 data = jap } 
+	 control = { province = 1749 data = jap } 
+	 control = { province = 1750 data = jap } 
+		} } }
+
+
+	name = "sc_event19_name"  
+	desc = "sc_event10_desc"
+        picture = "philiphines_fediant"
+	style = 0
+	
+	date = { day = 15 month = may year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -4 } 
+
+	}
+}
+
+
+
+#######Borneo
+
+####borneo, quick
+event = { 
+	id = 27
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1648 data = jap } 
+	 control = { province = 1658 data = jap } 
+	 control = { province = 1650 data = jap } 
+	 control = { province = 1653 data = jap } 
+		}
+
+
+
+	name = "sc_event9_name"  
+	desc = "sc_event7_desc"
+        picture = "borneo"
+	style = 0
+	
+	date = { day = 14 month = january year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 3  }
+		command = { type = sleepevent which = 28 }
+		command = { type = sleepevent which = 29 }
+		command = { type = sleepevent which = 30 }
+	}
+}
+
+
+####borneo, normal
+event = { 
+	id = 28
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1648 data = jap } 
+	 control = { province = 1658 data = jap } 
+	 control = { province = 1650 data = jap } 
+	 control = { province = 1653 data = jap } 
+		}
+
+
+
+	name = "sc_event9_name"  
+	desc = "sc_event8_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 1 month = february year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 1  }
+		command = { type = sleepevent which = 29 }
+		command = { type = sleepevent which = 30 }
+	}
+}
+
+
+####borneo, slow
+event = { 
+	id = 29
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1648 data = jap } 
+	 control = { province = 1658 data = jap } 
+	 control = { province = 1650 data = jap } 
+	 control = { province = 1653 data = jap } 
+		}
+
+
+
+	name = "sc_event9_name"  
+	desc = "sc_event9_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 14 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = sleepevent which = 30 }
+	}
+}
+
+
+####borneo, loose
+event = { 
+	id = 30
+	country = jap
+	random = no
+
+	trigger = { not = { or = {
+	 control = { province = 1648 data = jap } 
+	 control = { province = 1658 data = jap } 
+	 control = { province = 1650 data = jap } 
+	 control = { province = 1653 data = jap } 
+		} } }
+
+
+
+	name = "sc_event20_name"  
+	desc = "sc_event10_desc"
+        picture = "fall_of_sumatra"
+	style = 0
+	
+	date = { day = 15 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -2 } 
+
+	}
+}
+
+
+
+#######malaya
+
+####malaya, quick
+event = { 
+	id = 31
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1348 data = jap } 
+	 control = { province = 1353 data = jap } 
+	 control = { province = 1352 data = jap } 
+	 control = { province = 1351 data = jap } 
+		}
+
+
+
+	name = "sc_event7_name"  
+	desc = "sc_event7_desc"
+        picture = "fall_of_malaya"
+	style = 0
+	
+	date = { day = 15 month = january year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 8  }
+		command = { type = sleepevent which = 32 }
+		command = { type = sleepevent which = 33 }
+		command = { type = sleepevent which = 34 }
+	}
+}
+
+
+####malaya, normal
+event = { 
+	id = 32
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1348 data = jap } 
+	 control = { province = 1353 data = jap } 
+	 control = { province = 1352 data = jap } 
+	 control = { province = 1351 data = jap } 
+		}
+
+
+
+	name = "sc_event7_name"  
+	desc = "sc_event8_desc"
+        picture = "fall_of_malaya"
+	style = 0
+	
+	date = { day = 31 month = january year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 4  }
+		command = { type = sleepevent which = 33 }
+		command = { type = sleepevent which = 34 }
+	}
+}
+
+
+####malaya, slow
+event = { 
+	id = 33
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1348 data = jap } 
+	 control = { province = 1353 data = jap } 
+	 control = { province = 1352 data = jap } 
+	 control = { province = 1351 data = jap } 
+		}
+
+
+
+	name = "sc_event7_name"  
+	desc = "sc_event9_desc"
+        picture = "fall_of_malaya"
+	style = 0
+	
+	date = { day = 1 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = sleepevent which = 34 }
+	}
+}
+
+
+####malaya, loose
+event = { 
+	id = 34
+	country = jap
+	random = no
+
+	trigger = { not = { or = {
+	 control = { province = 1348 data = jap } 
+	 control = { province = 1353 data = jap } 
+	 control = { province = 1352 data = jap } 
+	 control = { province = 1351 data = jap } 
+		} } }
+
+
+
+	name = "sc_event23_name"  
+	desc = "sc_event10_desc"
+        picture = "fall_of_malaya"
+	style = 0
+	
+	date = { day = 2 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -2 } 
+
+	}
+}
+
+
+
+
+#######sumatra
+
+####suma, quick
+event = { 
+	id = 35
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1358 data = jap } 
+	 control = { province = 1355 data = jap } 
+		}
+
+
+
+	name = "sc_event10_name"  
+	desc = "sc_event7_desc"
+        picture = "fall_of_sumatra"
+	style = 0
+	
+	date = { day = 7 month = february year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 8  }
+		command = { type = sleepevent which = 36 }
+		command = { type = sleepevent which = 37 }
+		command = { type = sleepevent which = 38 }
+	}
+}
+
+
+####suma, normal
+event = { 
+	id = 36
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1358 data = jap } 
+	 control = { province = 1355 data = jap }  
+		}
+
+
+
+	name = "sc_event10_name"  
+	desc = "sc_event8_desc"
+        picture = "fall_of_sumatra"
+	style = 0
+	
+	date = { day = 25 month = february year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 4  }
+		command = { type = sleepevent which = 33 }
+		command = { type = sleepevent which = 34 }
+	}
+}
+
+
+###suma, slow
+event = { 
+	id = 37
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1358 data = jap } 
+	 control = { province = 1355 data = jap }  
+		}
+
+
+
+	name = "sc_event10_name"  
+	desc = "sc_event9_desc"
+        picture = "fall_of_sumatra"
+	style = 0
+	
+	date = { day = 12 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = sleepevent which = 34 }
+	}
+}
+
+
+####suma, loose
+event = { 
+	id = 38
+	country = jap
+	random = no
+
+	trigger = { not = { or = {
+	 control = { province = 1358 data = jap } 
+	 control = { province = 1355 data = jap } 
+		} } }
+
+
+
+	name = "sc_event21_name"  
+	desc = "sc_event10_desc"
+        picture = "fall_of_sumatra"
+	style = 0
+	
+	date = { day = 30 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -2 } 
+
+	}
+}
+
+
+
+#######java
+
+####java, quick
+event = { 
+	id = 39
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1632 data = jap } 
+	 control = { province = 1657 data = jap } 
+	 control = { province = 1628 data = jap } 
+	 control = { province = 1629 data = jap } 
+		}
+
+
+
+	name = "sc_event11_name"  
+	desc = "sc_event7_desc"
+        picture = "java"
+	style = 0
+	
+	date = { day = 1 month = february year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 8  }
+		command = { type = sleepevent which = 40 }
+		command = { type = sleepevent which = 41 }
+		command = { type = sleepevent which = 42 }
+	}
+}
+
+
+####java, normal
+event = { 
+	id = 40
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1632 data = jap } 
+	 control = { province = 1657 data = jap } 
+	 control = { province = 1628 data = jap } 
+	 control = { province = 1629 data = jap } 
+		}
+
+
+
+	name = "sc_event11_name"  
+	desc = "sc_event8_desc"
+        picture = "java"
+	style = 0
+	
+	date = { day = 10 month = february year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 4  }
+		command = { type = sleepevent which = 41 }
+		command = { type = sleepevent which = 42 }
+	}
+}
+
+
+####java, slow
+event = { 
+	id = 41
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1632 data = jap } 
+	 control = { province = 1657 data = jap } 
+	 control = { province = 1628 data = jap } 
+	 control = { province = 1629 data = jap } 
+		}
+
+
+
+	name = "sc_event11_name"  
+	desc = "sc_event9_desc"
+        picture = "java"
+	style = 0
+	
+	date = { day = 1 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = sleepevent which = 42 }
+	}
+}
+
+
+
+####java, loose
+event = { 
+	id = 42
+	country = jap
+	random = no
+
+	trigger = { not = { or = {
+	 control = { province = 1632 data = jap } 
+	 control = { province = 1657 data = jap } 
+	 control = { province = 1628 data = jap } 
+	 control = { province = 1629 data = jap } 
+		} } }
+
+
+
+	name = "sc_event22_name"  
+	desc = "sc_event10_desc"
+        picture = "java"
+	style = 0
+	
+	date = { day = 28 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -2 } 
+
+	}
+}
+
+
+
+
+####NEI
+event = { 
+	id = 43
+	country = jap
+	random = no
+
+	trigger = { 
+                 and = {
+                       or= { event = 27
+                             event = 28
+                             event = 29
+                            }
+                       or= { event = 35
+                             event = 36
+                             event = 37
+                            }
+                       or= { event = 39
+                             event = 40
+                             event = 41
+                            }
+                         }
+		}
+
+
+
+	name = "sc_event30_name"  
+	desc = "sc_event30_desc"
+        picture = "fall_of_dutch_east_india"
+	style = 0
+	
+	date = { day = 2 month = january year = 1942 }
+        offset = 3
+	deathdate = { day = 2 month = may year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = inherit which = hol }
+	}
+}
+
+
+
+
+##### rangoon 8th march
+
+####rangoon, quick
+event = { 
+	id = 44
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1299 data = jap } 
+		}
+
+
+
+	name = "sc_event27_name"  
+	desc = "sc_event7_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 14 month = february year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 2  }
+		command = { type = sleepevent which = 45 }
+		command = { type = sleepevent which = 46 }
+		command = { type = sleepevent which = 47 }
+	}
+}
+
+
+####rangoon, normal
+event = { 
+	id = 45
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1299 data = jap } 
+		}
+
+
+
+	name = "sc_event27_name"  
+	desc = "sc_event8_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 8 month = march year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 1  }
+		command = { type = sleepevent which = 46 }
+		command = { type = sleepevent which = 47 }
+	}
+}
+
+
+####rangoon, slow
+event = { 
+	id = 46
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1299 data = jap } 
+		}
+
+
+
+	name = "sc_event27_name"  
+	desc = "sc_event9_desc"
+        picture = "ruins"
+	style = 0
+	
+	date = { day = 22 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = sleepevent which = 47 }
+	}
+}
+
+
+
+####rangoon, loose
+event = { 
+	id = 47
+	country = jap
+	random = no
+
+	trigger = { not = { control = { province = 1299 data = jap } } }
+
+
+
+	name = "sc_event27_name"  
+	desc = "sc_event10_desc"
+        picture = "japanese_officers"
+	style = 0
+	
+	date = { day = 2 month = april year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -1 } 
+
+	}
+}
+
+
+
+### mandalay 1st may
+###mandalay, quick
+event = { 
+	id = 48
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1296 data = jap } 
+		}
+
+
+
+	name = "sc_event28_name"  
+	desc = "sc_event7_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 14 month = february year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 2  }
+		command = { type = sleepevent which = 49 }
+		command = { type = sleepevent which = 50 }
+		command = { type = sleepevent which = 51 }
+	}
+}
+
+
+####mandalay, normal
+event = { 
+	id = 49
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1296 data = jap } 
+		}
+
+
+
+	name = "sc_event28_name"  
+	desc = "sc_event8_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 8 month = march year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 1  }
+		command = { type = sleepevent which = 50 }
+		command = { type = sleepevent which = 51 }
+	}
+}
+
+
+####mandalay, slow
+event = { 
+	id = 50
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1296 data = jap } 
+		}
+
+
+
+	name = "sc_event28_name"  
+	desc = "sc_event9_desc"
+        picture = "japanese_officers"
+	style = 0
+	
+	date = { day = 22 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = sleepevent which = 51 }
+	}
+}
+
+
+
+####mandalay, loose
+event = { 
+	id = 51
+	country = jap
+	random = no
+
+	trigger = { not = { control = { province = 1296 data = jap } } }
+
+
+
+	name = "sc_event28_name"  
+	desc = "sc_event10_desc"
+        picture = "failed_objective"
+	style = 0
+	
+	date = { day = 2 month = april year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -1 } 
+
+	}
+}
+
+
+
+###guadal july 8
+##guadal, quick
+event = { 
+	id = 52
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1685 data = jap } 
+		}
+
+
+
+	name = "sc_event28_name"  
+	desc = "sc_event7_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 2 month = june year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 2  }
+		command = { type = sleepevent which = 53 }
+		command = { type = sleepevent which = 54 }
+		command = { type = sleepevent which = 55 }
+	}
+}
+
+
+####guadal, normal
+event = { 
+	id = 53
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1685 data = jap } 
+		}
+
+
+
+	name = "sc_event28_name"  
+	desc = "sc_event8_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 8 month = july year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 1  }
+		command = { type = sleepevent which = 54 }
+		command = { type = sleepevent which = 55 }
+	}
+}
+
+
+####guadal, slow
+event = { 
+	id = 54
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1685 data = jap } 
+		}
+
+
+
+	name = "sc_event28_name"  
+	desc = "sc_event9_desc"
+        picture = "failed_objective"
+	style = 0
+	
+	date = { day = 20 month = july year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = sleepevent which = 55 }
+	}
+}
+
+
+
+####guadal, loose
+event = { 
+	id = 55
+	country = jap
+	random = no
+
+	trigger = { not = { control = { province = 1685 data = jap } } }
+
+
+
+	name = "sc_event28_name"  
+	desc = "sc_event9_desc"
+        picture = "failed_objective"
+	style = 0
+	
+	date = { day = 5 month = august year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -1 } 
+
+	}
+}
+
+#### rabaul feb 19th
+##rabaul, quick
+event = { 
+	id = 56
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1670 data = jap } 
+		}
+
+
+
+	name = "sc_event12_name"  
+	desc = "sc_event7_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 24 month = january year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 2  }
+		command = { type = sleepevent which = 57 }
+		command = { type = sleepevent which = 58 }
+		command = { type = sleepevent which = 59 }
+	}
+}
+
+
+####rabaul, normal
+event = { 
+	id = 57
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1670 data = jap } 
+		}
+
+
+
+	name = "sc_event12_name"  
+	desc = "sc_event8_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 19 month = february year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 1  }
+		command = { type = sleepevent which = 58 }
+		command = { type = sleepevent which = 59 }
+	}
+}
+
+
+####rabaul, slow
+event = { 
+	id = 58
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1670 data = jap } 
+		}
+
+
+
+	name = "sc_event12_name"  
+	desc = "sc_event9_desc"
+        picture = "japanese_officers"
+	style = 0
+	
+	date = { day = 30 month = february year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = sleepevent which = 55 }
+	}
+}
+
+
+
+####rabaul, loose
+event = { 
+	id = 59
+	country = jap
+	random = no
+
+	trigger = { not = { control = { province = 1670 data = jap } } }
+
+
+
+	name = "sc_event12_name"  
+	desc = "sc_event10_desc"
+        picture = "failed_objective"
+	style = 0
+	
+	date = { day = 15 month = march year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = { type = vp value = -1 } 
+
+	}
+}
+
+
+
+
+#### port moresby may mid
+##port moresby, quick
+event = { 
+	id = 60
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1679 data = jap } 
+		}
+
+
+
+	name = "sc_event13_name"  
+	desc = "sc_event7_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 15 month = april year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 3  }
+		command = { type = sleepevent which = 61 }
+		command = { type = sleepevent which = 62 }
+		command = { type = sleepevent which = 63 }
+	}
+}
+
+
+####port moresby, normal
+event = { 
+	id = 61
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1679 data = jap } 
+		}
+
+
+
+	name = "sc_event13_name"  
+	desc = "sc_event8_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 15 month = may year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 2  }
+		command = { type = sleepevent which = 62 }
+		command = { type = sleepevent which = 63 }
+	}
+}
+
+
+####port moresby, slow
+event = { 
+	id = 62
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1679 data = jap } 
+		}
+
+
+
+	name = "sc_event13_name"  
+	desc = "sc_event9_desc"
+        picture = "japanese_officers"
+	style = 0
+	
+	date = { day = 30 month = may year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+		command = { type = vp value = 1  }
+		command = { type = sleepevent which = 63 }
+	}
+}
+
+
+
+####port moresby, loose
+event = { 
+	id = 63
+	country = jap
+	random = no
+
+	trigger = { not = { control = { province = 1679 data = jap } } }
+
+
+
+	name = "sc_event13_name"  
+	desc = "sc_event10_desc"
+        picture = "failed_objective"
+	style = 0
+	
+	date = { day = 15 month = april year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname6A"
+                command = {  } 
+
+	}
+}
+
+
+
+####calcutta
+##calcutta, quick
+event = { 
+	id = 64
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1457 data = jap } 
+		}
+
+
+
+	name = "sc_event29_name"  
+	desc = "sc_event7_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 15 month = june year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 8  }
+		command = { type = sleepevent which = 65 }
+	}
+}
+
+
+####calcutta
+event = { 
+	id = 65
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1457 data = jap } 
+		}
+
+
+
+	name = "sc_event29_name"  
+	desc = "sc_event8_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 5 month = august year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 4  }
+	}
+}
+
+
+
+####noumea
+##noumea, quick
+event = { 
+	id = 66
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1692 data = jap } 
+		}
+
+
+
+	name = "sc_event14_name"  
+	desc = "sc_event7_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 15 month = june year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 6  }
+		command = { type = sleepevent which = 67 }
+	}
+}
+
+
+####calcutta
+event = { 
+	id = 67
+	country = jap
+	random = no
+
+	trigger = {
+	 control = { province = 1692 data = jap } 
+		}
+
+
+
+	name = "sc_event14_name"  
+	desc = "sc_event8_desc"
+        picture = "japan_victory"
+	style = 0
+	
+	date = { day = 5 month = august year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = vp value = 3  }
+	}
+}
+
+
+#sudden death///strategic victory
+
+
+
+event = { 
+	id = 68
+	country = jap
+	random = no
+
+	trigger = { VP = 76 }
+
+
+
+	name = "ge_event5_name"  
+	desc = "sc_event24_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 2 month = january year = 1942 }
+        offset = 3
+	deathdate = { day = 4 month = august year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = endgame value = 4 }
+
+	}
+}
+
+
+####tactical victory
+
+
+event = { 
+	id = 71
+	country = jap
+	random = no
+
+	trigger = { VP = 62 }
+
+
+
+	name = "ge_event6_name"  
+	desc = "sc_event25_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 5 month = august year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = endgame value = 3 }
+	}
+}
+
+
+###draw
+
+
+
+event = { 
+	id = 74
+	country = jap
+	random = no
+
+	trigger = { VP = 55 
+                    NOT = { VP = 62}
+                  }
+
+
+
+	name = "ge_event8_name"  
+	desc = "sc_event26_desc"
+        picture = "failed_objective"
+	style = 0
+	
+	date = { day = 5 month = august year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = endgame value = 2 }
+	}
+}
+
+
+
+##jap defeat
+
+
+event = { 
+	id = 77
+	country = jap
+	random = no
+
+	trigger = { VP = 45 
+                    NOT = { VP = 55 }
+                  }
+
+
+
+
+	name = "ge_event10_name"  
+	desc = "sc_event27_desc"
+        picture = "japanese_officers"
+	style = 0
+	
+	date = { day = 5 month = august year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = endgame value = 5 }
+	}
+}
+
+
+
+
+###jap dec. defeat
+
+
+event = { 
+	id = 80
+	country = jap
+	random = no
+
+	trigger = { 
+	                NOT = { VP = 45 }
+                  }
+
+	name = "ge_event11_name"  
+	desc = "sc_event28_desc"
+        picture = "japanese_decisive_defeat"
+	style = 0
+	
+	date = { day = 12 month = august year = 1942 }
+	
+	action_a = {
+		name = "cs_actionname8a"
+		command = { type = endgame value = 6 }
+	}
+}
+
+

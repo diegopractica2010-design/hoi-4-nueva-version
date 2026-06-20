@@ -1,0 +1,434 @@
+#
+# Hearts of Iron
+#
+# Germany 1939 with Phony War handicap to France. Used by the 1939 scenario.
+
+max_front_ratio = 4.0
+max_garrison_prop = 0.12
+min_garrison_prop = 0.08
+neutrality = 0.000
+war = 90
+strat_redeploy_threshold = 15
+
+#Default values
+construction = {
+            max_factor = 0.200
+            transports = -1
+            escorts = -1
+            AA_batteries = no
+            max_AA_level = 10
+            AA_provs = { }
+            coastal_fort = no
+            max_coastal_level = 5
+            coastal_fort_provs = { }
+            radar_station = no
+            max_radar = 5
+            radar_provs = { }
+            air_base = no
+            max_air_base = 5
+            air_base_provs = { }
+            naval_base = no
+            max_naval_base = 5
+            naval_base_provs = { }
+            land_fort = no
+            max_land_level = 5
+            fort_borders = { }
+            ic_at_war = yes
+            force_ic_until = 1900
+            ic_end_year = 1946
+            IC_provs = { }
+}
+
+combat = {
+	POL = 60
+	DEN = 20
+	NOR = 15
+	BEL = 45
+	HOL = 45
+	FRA = 47
+	SOV = 30
+	SPR = 10
+}
+befriend = {
+	ROM = 50
+	SLO = 50
+	BUL = 40
+	HUN = 80
+	SPA = 20 #ADDED TAM
+	YUG = 50
+	ITA = 80
+	SWE = 10
+	FIN = 20
+	JAP = 20 #ADDED TAM
+}
+
+
+protect = {
+	BUL = 80
+	HUN = 80
+	SWE = 80
+	SCH = 80
+	AUS = 80
+	SLO = 80
+}
+target = {
+	485 = 100 #Warsaw
+	51 = 95
+	41 = 90
+	56 = 85 #Paris
+	238 = 80 #Kiev
+	219 = 80 #Smolensk
+	197 = 80 #Riga
+	233 = 80 #Odessa
+	248 = 70 #Kharkov
+	258 = 60 #Rostov
+	255 = 50 #Crimea
+	163 = 40 #Stalingrad
+	1907 = 30 #Baku
+ }
+
+exp_force_ratio = 0.750
+exp_force_ratios = { }
+
+admiral = {
+#North atlantic for U-Boot
+	target = {
+		2420 = 50
+		2421 = 50
+		2595 = 50
+		2371 = 50
+		2422 = 50
+		2359 = 50
+		2357 = 50
+		2424 = 50
+		2427 = 50
+		2462 = 50
+		2425 = 50
+		2419 = 50
+		2593 = 50
+		2304 = 50
+		2371 = 50
+		2376 = 50
+	}
+
+	# FREEZE
+	# core = {
+	#	2420 = 50
+	# }
+
+	# WANTED WHEN CORE WORK
+	# core = {
+	#	2473 = 50
+	#	2474 = 50
+	#	2475 = 100
+	#	2476 = 100
+	#	2472 = 100
+	#	2478 = 100
+	#	2479 = 100
+	#	2480 = 100
+	#	2481 = 100
+	#	2482 = 100
+	#	2489 = 100
+	#	2491 = 100
+	#	2492 = 100
+	#	2483 = 100
+	#	2484 = 100
+	# }
+  }
+
+invasion = {
+ 	base		= 0.1	#Relative modifier. (lower = specific targets much more important.)
+	random	= 8.0	#How big a random range.  (1.0 = 1%)
+	coastal	= 0.1	#increase to avoid coastal forts more.
+	beach		= 0.1	#higher, avoid worst beaches.
+	distance	= 0.1	#higher = avoid long distance.
+	pocket	= 5.0	#prioritise pockets, ie provinces with no adjacent controlled by same.
+	island	= 0.5	#prioritise taking pure islands.
+	enemy		= 1.0	#higher = much more vary of troops in province.
+	adjacentenemy = 1.0	#higher = much more vary of troops nearby
+	air_base = 1.5
+      naval_base = 0.100
+      air_support = 3.0
+      redirect = nearest
+
+	target = {
+		#Norway
+		107 = 200 #Oslo
+		108 = 200
+		109 = 200
+		110 = 200 #Bergen
+		112 = 190
+		118 = 190
+		124 = 190
+		125 = 190 #Narvik
+		#Sweden
+		106 = 170
+		98 = 170 #Goteborg
+		93 = 170 #Malmo
+		96 = 170
+		100 = 170
+		101 = 170 #Stockolm
+		102 = 170 #Upsala
+		114 = 170
+		170 = 170
+		120 = 170
+		122 = 170
+		127 = 170
+		#Finland
+		131 = 160
+		137 = 160
+		138 = 160
+		140 = 160
+		141 = 160
+		142 = 160 #Helsinki
+		145 = 160
+		#Poland/Baltic states/USSR
+		302 = 150
+		304 = 150
+		510 = 150 # Koenigsberg
+		204 = 150
+		205 = 150
+		206 = 150
+		197 = 150
+		196 = 150
+		194 = 150
+		193 = 150
+		188 = 150
+		187 = 150 #Leningrad
+
+		#Black sea
+		233 = 140
+		234 = 140
+		251 = 140
+		250 = 140
+		252 = 140
+		1848 = 140
+		449 = 140
+		439 = 140
+		422 = 140
+		409 = 140
+
+		#UK/Eire
+		9 = 130
+		10 = 130
+		11 = 130
+		12 = 130
+		13 = 130
+		14 = 130
+		17 = 130
+		20 = 130
+		21 = 130
+		23 = 130
+		24 = 130
+		27 = 130
+		28 = 130
+
+		#Canada/USA-East coast
+		574 = 80
+		586 = 80
+		590 = 80
+		579 = 80
+		581 = 80
+
+		583 = 80
+		596 = 80
+		601 = 80
+		602 = 80
+		603 = 80
+		604 = 80
+		605 = 80
+		633 = 80
+		634 = 80
+		644 = 80
+		646 = 80
+		648 = 80
+		650 = 80
+		651 = 80
+		649 = 80
+		677 = 80
+		676 = 80
+		678 = 80
+		679 = 80
+		716 = 80
+
+	}
+}
+
+bomber = {
+      units = 1.000
+      defensiveIC = 20.000
+      recentlybombed = 20.000
+      protectoil = 3.00
+      protectenergy = 3.00
+      protectmetal = 3.000
+      protectrarematerials = 1.000
+      areasize = 0.1
+      areadistance = 1.0
+      adjacency = 0.1
+      targetic = 10.000
+      avoidaa = 1.000
+      targetenergy = 5.000
+      targetmetal = 5.000
+      targetoil = 20.000
+      targetrarematerials = 20.000
+      occupied = 25.000
+      fighter = 40.000
+}
+garrison = {
+	# OVERSEAS DISTRIBUTION:
+	defend_overseas_beaches = yes
+	area_multiplier = {
+		650 = 5.0		# Königsberg in order to get a decent build-up before Fall Weiss.
+	}
+
+	# PRIORITIES:
+	beach			= 20	# Beach level 2
+	capital			= 40	# Our capital
+	human_border		= 150	# Ignored for allied human players
+	war_target		= 300	# The next country targeted for attack by this AI
+
+	opposing_alliance	= 20	# For neutrals, all alliances are "opposing"
+	claim_threat		= 10	# If we are neutral, countries with claims on us get this
+	unstable_border		= 10	# Bordering countries at war with someone else get this
+
+	# Borders with specific countries
+	country_priorities = {
+		VIC = -1
+		SCH = -1
+		FIN = -1
+		POL = 100
+		YUG = 60
+		SOV = 100
+		FRA = 150
+		BEL = 50
+		HOL = 50
+		GRE = 50
+		HUN = -1
+		ROM = -1
+		BUL = -1
+		DEN = 60
+		SLO = -1
+	}
+
+	key_point_prio_mult	= 0
+}
+
+military = {
+      relative_build_scheme = yes
+      max_batch_peace = 800
+      max_batch_war = 500
+      max_batch_home_front = 190
+
+      relative_build_scheme 	= yes
+
+	infantry = 			35
+	cavalry = 			2
+	motorized = 		12
+	mechanized =		9
+	light_armor =		6
+	armor =			5
+	paratrooper = 		0
+	marine = 			0
+	bergsjaeger = 		1
+	garrison	=		5
+	cas 		= 		8
+#						83 %
+	interceptor = 		1
+	multi_role = 		1
+	escort = 			1
+	strategic_bomber = 	1
+	tactical_bomber = 	2
+	naval_bomber = 		1
+	transport_plane = 	0
+#						7 %
+	battleship = 		0
+	carrier = 			0
+	destroyer = 		1
+	light_cruiser =		1
+	heavy_cruiser = 		0
+	battlecruiser =		0
+	submarine = 		5
+	transports = 		3
+#						10 %
+
+      hq = 				0
+      militia = 			0
+      flying_bomb = 		0
+      flying_rocket = 		0
+
+      artillery = 		15
+      sp_artillery = 		5
+      rocket_artillery = 	0
+      sp_rct_artillery = 	2
+      anti_tank = 		3
+      tank_destroyer = 		5
+      light_armor_brigade = 	0
+      heavy_armor = 		0
+      super_heavy_armor = 	0
+      armored_car = 		0
+      anti_air = 			5
+      police = 			10
+      engineer = 			5
+
+      cag = 100.000
+}
+
+front = {
+	strength = 1.0
+	organisation = 2.0
+	soft_attack = 1.0
+	hard_attack = 2.0
+	ground_defense = 1.0
+	dig_in = 1.25 # Against defender
+
+	frozen_attack = 0.50
+	snow_attack = 0.50
+	blizzard_attack = 0.25
+	storm_attack = 0.60
+	muddy_attack = 0.75
+
+	largefort = 2.0
+	smallfort = 1.5
+	occupied = 0.7
+	owned = 0.7
+
+	jungle_attack = 0.85
+	mountain_attack = 0.60
+	swamp_attack = 0.60
+	forest_attack = 0.85
+	hill_attack = 0.75
+	river = 0.50
+
+	recklessness 		= 	1 # 0-3
+	distrib_vs_ai 		= 	even
+	distrib_vs_human 	= 	even
+
+	enemy_reinf_days	=	6
+
+	reserve_prop		=	0.2
+	panic_ratio_vs_ai	=	3.0
+	panic_ratio_vs_human	=	2.5
+	base_attack_odds	=	2.5
+	min_attack_odds		=	1.0
+	max_attack_odds		=	3.0
+	reinforce_odds		=	1.0
+	withdraw_odds		=	0.5
+    enemy_handicap = {
+    	FRA = 50
+    }
+}
+ technology = {
+      endgoal = { }
+      preference = { }
+      ignore = { }
+
+      armor = 4.000
+	infantry = 5.000
+      industry = 4.000
+      aircraft = 3.000
+      naval = 2.000
+      land_doctrines = 3.000
+      secret_weapons = 1.000
+      air_doctrines = 2.000
+      naval_doctrines = 2.000
+}

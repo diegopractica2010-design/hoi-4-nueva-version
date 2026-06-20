@@ -1,0 +1,1044 @@
+#################################
+# Designed by Greven and Tracid #
+#################################
+
+
+#########################################################################
+#  Allied High Command Priority
+#########################################################################
+
+event = {
+	id = 1
+	random = no
+	country = ALS
+
+	trigger = {
+ 		random = 75
+ 		control = { province = 37 data = -1 }
+ 		control = { province = 38 data = -1 }
+ 		control = { province = 39 data = -1 }
+	}
+
+	name = "dday_event1_name"
+	desc = "dday_event1_desc"		
+        picture = "command_priority"
+	style = 0
+
+	date = { day = 15 month = july year = 1944 }
+	offset = 14
+	deathdate = { day = 15 month = january year = 1945 }
+
+	action_a = {
+		name = "dday_actionname1A" # Offensive in Italy
+		command = { type = trigger which = 2 }
+
+	}
+	action_b = {
+		name = "dday_actionname1B" # Launch Operation Dragoon
+		command = { type = trigger which = 5 }
+		command = { type = province_keypoints which = 364 value = 5 } #Marseilles
+		command = { type = province_keypoints which = 43 value = -5 } #Calais
+		command = { type = province_keypoints which = 18 value = -5 } #Dunkirk
+		command = { type = activate_division which = 10178 value = 233  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 234  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 235  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 236  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 237  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 238  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 239  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 240  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 241  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 242  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 243  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 244  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 245  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 246  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 247  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 248  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 249  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 250  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 251  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 252  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 253  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 254  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 255  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 256  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 257  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 258  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 259  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 260  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 261  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 262  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 263  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 264  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 265  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 266  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 267  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 268  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 269  where = 367 when = 0 }
+		command = { type = activate_division which = 10178 value = 270  where = 367 when = 0 }
+		
+		command = { type = add_corps which = "6th Army Group" value = land when = 60128 where = 367 }
+		command = { type = add_division which = "6th Army Group HQ" value = hq when = 2 where = artillery }
+		command = { type = add_corps which = "7th US Army" value = land when = 60291 where = 367 }
+		command = { type = add_division which = "7th US Army HQ" value = hq when = 2 where = artillery }
+		command = { type = add_division which = "1st US Airborne Task Force" value = paratrooper when = 3 }
+		command = { type = add_corps which = "VI US Corps" value = land when = 60352 where = 367 }
+		command = { type = add_division which = "36th US Infantry Division" value = infantry when = 4 }
+		command = { type = add_division which = "45th US Infantry Division" value = infantry when = 4  }
+		command = { type = add_division which = "3rd US Infantry Division" value = infantry when = 4 where = artillery }		
+		command = { type = add_corps which = "II. French Corps" value = land when = 24114 where = 367 }
+		command = { type = add_division which = "1st Free French Inf Div" value = infantry when = 4 where = artillery }
+		command = { type = add_division which = "9th Colonial Infantry Div" value = infantry when = 3  }
+		command = { type = add_division which = "3rd Algerian Infantry Div" value = infantry when = 3  }
+	}
+}
+
+
+#########################################################################
+#  Allied offensive in Italy
+#########################################################################
+
+event = {
+	id = 2
+	random = no
+	country = GER
+
+	trigger = {
+ 				#triggered by ALS1
+}
+
+	name = "ard_event11_name"
+	desc = "ard_event11_desc"		
+        picture = "allied_offensive_italy"
+	style = 0
+
+
+
+	action_a = {
+		name = "ard_actionname11A" # Send forces to Goten Linie
+		command = { type = supplies value = -200 }
+		command = { type = oilpool value = -100 }
+		command = { type = manpowerpool value = -100 }
+	}
+}
+
+#########################################################################
+#  Allied offensive in Italy stopped permanently
+#########################################################################
+
+event = {
+	id = 3
+	random = no
+	country = GER
+
+	trigger = {
+ 				random = 18
+ 				event = 2
+ 				NOT = {
+ 						event = 4
+ 						}
+}
+
+	name = "ard_event12_name"
+	desc = "ard_event12_desc"		
+        picture = "allied_offencive_stopped"
+	style = 0
+
+	date = { day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every month
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname12A" # Acquisite reinforcements
+		command = { type =	sleepevent which = 4 }
+		command = { type = supplies value = 200 }
+		command = { type = oilpool value = 100 }
+		command = { type = manpowerpool value = 100 }
+		command = { type = add_division which = "1. Fallschirmjäger div" value = paratrooper when = 3 where = artillery }
+		command = { type = add_division which = "4. Fallschirmjäger div" value = paratrooper when = 3 where = artillery }
+		command = { type = add_division which = "26. Panzerdivision" value = armor when = 4 where = tank_destroyer }
+	}
+}
+
+#########################################################################
+#  The Goten Linie in Italy has collapsed
+#########################################################################
+
+event = {
+	id = 4
+	random = no
+	country = GER
+
+	trigger = {
+ 				random = 15
+ 				event = 2
+ 				NOT = {
+ 						event = 3
+ 						}
+}
+
+	name = "ard_event1_name"
+	desc = "ard_event1_desc"		
+        picture = "goten_linie_colapse"
+	style = 0
+
+	date = { day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every month
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname1A" # Send forces to Tyrolen Linie
+		command = { type =	sleepevent which = 3 }
+		command = { type = trigger which = 6 }
+		command = { type = vp value = -10 }
+		command = { type = supplies value = -200 }
+		command = { type = oilpool value = -100 }
+		command = { type = manpowerpool value = -100 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+	}
+}
+#########################################################################
+#  The Allies launches Operation Dragoon
+#########################################################################
+
+event = {
+	id = 5
+	random = no
+	country = GER
+
+	trigger = {
+ 				#triggered by ALS1
+}
+
+	name = "dday_event5_name"
+	desc = "dday_event5_desc"		
+        picture = "operation_dragon"
+	style = 0
+
+
+
+	action_a = {
+		name = "dday_actionname5a" # They come from all directions!
+		command = {  }
+	}
+}
+#########################################################################
+#  Allied Offensive in Italy is a Great Success
+#########################################################################
+
+event = {
+	id = 6
+	random = no
+	country = ALS
+
+	trigger = {
+ 				#triggered by GER4
+}
+
+	name = "ard_event1_name"
+	desc = "ard_event1_desc"		
+        picture = "allied_offensive_italy_great_succes"
+	style = 0
+
+
+	action_a = {
+		name = "ww_actionname1A" # Great!
+		command = { type = vp value = 10 }
+		command = { type = supplies value = 200 }
+		command = { type = oilpool value = 100 }
+		command = { type = manpowerpool value = 100 }
+		command = { type = add_division which = -1 } #want a real div
+		command = { type = add_division which = -1 } #want a real div
+		command = { type = add_division which = -1 } #want a real div
+	}
+}
+#########################################################################
+#  Hitler release Panzer Reserves
+#########################################################################
+
+event = {
+	id = 7
+	random = no
+	country = GER
+
+	trigger = {
+ 				random = 30
+}
+
+	name = "dday_event7_name"
+	desc = "dday_event7_desc"		
+        picture = "panzer_reserves"
+	style = 0
+
+	date = { day = 15 month = july year = 1944 }
+	offset = 3
+	deathdate = { day = 15 month = january year = 1945 }
+
+
+	action_a = {
+		name = "dday_actionname7a" # Release Panzer Reserve
+		command = { type =	sleepevent which = 34 }
+		command = { type = unlock_division which = 10602 value = 95   }
+		command = { type = unlock_division which = 10602 value = 96   }
+		command = { type = unlock_division which = 10602 value = 97   }
+		command = { type = unlock_division which = 10602 value = 105   }
+		command = { type = unlock_division which = 10602 value = 106   }
+		command = { type = unlock_division which = 10602 value = 107   }
+		command = { type = unlock_division which = 10602 value = 108   }
+	}
+}
+#########################################################################
+#  Hitler release 15th Army for action
+#########################################################################
+
+event = {
+	id = 8
+	random = no
+	country = GER
+
+	trigger = {
+ 				random = 30
+}
+
+	name = "dday_event8_name"
+	desc = "dday_event8_desc"		
+        picture = "15th_army"
+	style = 0
+
+	date = { day = 15 month = july year = 1944 }
+	offset = 3
+	deathdate = { day = 15 month = january year = 1945 }
+
+
+	action_a = {
+		name = "dday_actionname8a" # Release 15th Army
+		command = { type =	sleepevent which = 33 }
+		command = {  type = unlock_division which = 10602 value = 13  }
+		command = {  type = unlock_division which = 10602 value = 14  }
+		command = {  type = unlock_division which = 10602 value = 15  }
+		command = {  type = unlock_division which = 10602 value = 16  }
+		command = {  type = unlock_division which = 10602 value = 17  }
+		command = {  type = unlock_division which = 10602 value = 18  }
+		command = {  type = unlock_division which = 10602 value = 19  }
+		command = {  type = unlock_division which = 10602 value = 20  }
+		command = {  type = unlock_division which = 10602 value = 22  }
+		command = {  type = unlock_division which = 10602 value = 23  }
+		command = {  type = unlock_division which = 10602 value = 24  }
+		command = {  type = unlock_division which = 10602 value = 25  }
+		command = {  type = unlock_division which = 10602 value = 27  }
+		command = {  type = unlock_division which = 10602 value = 28  }
+		command = {  type = unlock_division which = 10602 value = 29  }
+		command = {  type = unlock_division which = 10602 value = 30  }
+		command = {  type = unlock_division which = 10602 value = 32  }
+		command = {  type = unlock_division which = 10602 value = 33  }
+		command = {  type = unlock_division which = 10602 value = 34  }
+		command = {  type = unlock_division which = 10602 value = 36  }
+		command = {  type = unlock_division which = 10602 value = 37  }
+		command = {  type = unlock_division which = 10602 value = 38  }
+		command = {  type = unlock_division which = 10602 value = 39  }
+	}
+}
+#########################################################################
+#  German Reinforcements
+#########################################################################
+event = {
+	id = 9
+	random = no
+	country = GER
+
+
+
+	name = "ge_event1_name"   ###reinforcements arrive
+	desc = "ge_event1_desc"
+        picture = "german_reinforcment_2"
+	style = 0
+
+	date = { day = 10 month = july year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10602 value = 113 where = 53 }
+		command = { type = activate_division which = 10602 value = 122 where = 56 }
+
+	}
+}
+event = {
+	id = 10
+	random = no
+	country = GER
+
+
+
+	name = "ge_event1_name"   ###reinforcements arrive
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 10 month = june year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10602 value = 118 where = 56 }
+		command = { type = activate_division which = 10602 value = 119 where = 56 }
+
+	}
+}
+event = {
+	id = 11
+	random = no
+	country = GER
+
+
+
+	name = "ge_event1_name"   ###reinforcements arrive
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 20 month = june year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10602 value = 120 where = 56 }
+
+	}
+}
+event = {
+	id = 12
+	random = no
+	country = GER
+
+
+
+	name = "ge_event1_name"   ###reinforcements arrive
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = july year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10602 value = 121 where = 56 }
+
+	}
+}
+event = {
+	id = 13
+	random = no
+	country = GER
+
+
+
+	name = "ge_event1_name"   ###reinforcements arrive
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 5 month = august year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10602 value = 124 where = 56 }
+
+	}
+}
+event = {
+	id = 14
+	random = no
+	country = GER
+
+
+
+	name = "ge_event1_name"   ###reinforcements arrive
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 28 month = june year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10602 value = 126 where = 56 }
+
+	}
+}
+#########################################################################
+#  German Withdrawal
+#########################################################################
+event = {
+	id = 15
+	random = no
+	country = GER
+
+    trigger = {
+    			division_exists = { type = 10602 id = 114 }
+    }
+
+	name = "ge_event2_name"
+	desc = "ge_event2_desc"
+        picture = "german_withdrawal"
+	style = 0
+
+	date = { day = 30 month = september year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 10602 value = 114  }
+	}
+}
+event = {
+	id = 16
+	random = no
+	country = GER
+
+    trigger = {
+    			division_exists = { type = 10602 id = 115 }
+    }
+
+	name = "ge_event2_name"
+	desc = "ge_event2_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 22 month = november year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 10602 value = 115  }
+	}
+}
+event = {
+	id = 17
+	random = no
+	country = GER
+
+    trigger = {
+    			division_exists = { type = 10602 id = 122 }
+    }
+
+	name = "ge_event2_name"
+	desc = "ge_event2_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 2 month = september year = 1944 }
+
+
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 10602 value = 122  }
+	}
+}
+
+#########################################################################
+#  Oil and Supply from Germany
+#########################################################################
+
+event = {
+	id = 18
+	random = no
+	country = GER
+	persistent = yes
+
+	trigger = {
+		random = 50
+		NOT = {
+			event = 3
+		}
+	}
+
+	name = "ard_event19_name"
+	desc = "ard_event19_desc"		
+        picture = "oil_supply"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = january year = 1945 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 50 }
+	}
+}
+#########################################################################
+#  German Replacements
+#########################################################################
+
+event = {
+	id = 19
+	random = no
+	country = GER
+	persistent = yes
+
+	trigger = {
+		random = 20
+		NOT = {
+			event = 3
+		}
+	}
+
+	name = "ard_event20_name"
+	desc = "ard_event20_desc"		
+        picture = "german_replacements"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = january year = 1945 }
+
+	action_a = {
+		name = "ard_actionname20A" # Fresh troopers
+		command = { type = manpowerpool value = 50 }
+	}
+}
+#########################################################################
+#  Oil and Supply through Dunkirk
+#########################################################################
+
+event = {
+	id = 20
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 43 data = -1 }
+	}
+
+	name = "ard_event22_name"
+	desc = "ard_event22_desc"		
+        picture = "oil_supply"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = january year = 1945 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 50 }
+		command = { type = transport_pool which = ALS value = 4 }
+	}
+}
+#########################################################################
+#  Oil and Supply through Dieppe
+#########################################################################
+
+event = {
+	id = 21
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 42 data = -1 }
+	}
+
+	name = "ard_event24_name"
+	desc = "ard_event24_desc"		
+        picture = "oil_supply"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = january year = 1945 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 50 }
+		command = { type = transport_pool which = ALS value = 4 }
+	}
+}
+#########################################################################
+#  Oil and Supply through Calais
+#########################################################################
+
+event = {
+	id = 22
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 18 data = -1 }
+	}
+
+	name = "ard_event25_name"
+	desc = "ard_event25_desc"		
+        picture = "oil_supply"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = january year = 1945 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 50 }
+		command = { type = transport_pool which = ALS value = 4 }
+	}
+}
+#########################################################################
+#  Oil and Supply through Le Havre
+#########################################################################
+
+event = {
+	id = 23
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 41 data = -1 }
+	}
+
+	name = "ard_event27_name"
+	desc = "ard_event27_desc"		
+        picture = "oil_supply"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = january year = 1945 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 50 }
+		command = { type = transport_pool which = ALS value = 4 }
+	}
+}
+#########################################################################
+#  Oil and Supply through Cherbourg
+#########################################################################
+
+event = {
+	id = 24
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 38 data = -1 }
+	}
+
+	name = "dday_event24_name"
+	desc = "ard_event27_desc"		
+        picture = "oil_supply"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = january year = 1945 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 50 }
+		command = { type = transport_pool which = ALS value = 4 }
+	}
+}
+#########################################################################
+#  Allied Replacements
+#########################################################################
+
+event = {
+	id = 25
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 20
+	}
+
+	name = "ard_event28_name"
+	desc = "ard_event28_desc"		
+        picture = "allied_replacments"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = january year = 1945 }
+
+	action_a = {
+		name = "ard_actionname20A" # Fresh troopers
+		command = { type = manpowerpool value = 50 }
+	}
+}
+#########################################################################
+#  Mulberries
+#########################################################################
+
+event = {
+	id = 26
+	random = no
+	country = ALS
+
+	trigger = {
+				random = 20
+}
+
+	name = "dday_event26_name"
+	desc = "dday_event26_desc"		
+        picture = "mulberry"
+	style = 0
+
+	date = { day = 16 month = june year = 1944 }
+	offset = 5
+	deathdate = { day = 15 month = august year = 1944 }
+
+	action_a = {
+		name = "dday_actionname26a" # Set in place!
+		command = { type = extra_tc value = 50 }
+		command = { type = supply_dist_mod value = 10 }
+		command = { type = repair_mod value = 10 }
+	}
+}
+#########################################################################
+#########################################################################
+#########################################################################
+
+#########################################################################
+#  Allied Strategic Victory
+#########################################################################
+event = {
+	id = 27
+	random = no
+	country = ALS
+
+	trigger = {
+ 				vp = 140
+}
+
+	name = "ard_event29_name"
+	desc = "dday_event27_desc"
+        picture = "allied_strategic_victory"
+	style = 0
+
+	date = { day = 1 month = june year = 1944 }
+	offset = 3
+	deathdate = { day = 1 month = december year = 1944 }
+
+	action_a = {
+		name = "ard_actionname29A" #End Game
+		command = { type = endgame value = 6 }
+	}
+}
+#########################################################################
+#  Allied Marginal Victory
+#########################################################################
+event = {
+	id = 28
+	random = no
+	country = ALS
+
+	trigger = {
+ 			range = { min = 136 max = 139 }
+
+	}
+
+	name = "ard_event30_name"
+	desc = "dday_event28_desc"
+        picture = "allied_marginal_victory"
+	style = 0
+
+	date = { hour = 22 day = 1 month = december year = 1944 }
+
+	action_a = {
+		name = "ard_actionname29A" #End Game
+		command = { type = endgame value = 5 }
+	}
+}
+
+#########################################################################
+#  German Strategic Victory
+#########################################################################
+event = {
+	id = 31
+	random = no
+	country = GER
+
+	trigger = {
+ 				 vp = 115
+}
+
+	name = "ard_event33_name"
+	desc = "dday_event31_desc"
+        picture = "german_strategic_victory"
+	style = 0
+
+	date = { day = 1 month = september year = 1944 }
+	offset = 3
+	deathdate = { day = 1 month = december year = 1944 }
+
+	action_a = {
+		name = "ard_actionname29A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  German Marginal Victory
+#########################################################################
+event = {
+	id = 32
+	random = no
+	country = GER
+
+	trigger = {
+ 		range = { min = 51 max = 114 }
+	}
+
+	name = "ard_event34_name"
+	desc = "dday_event32_desc"
+        picture = "german_marginal_victory"
+	style = 0
+
+	date = { hour = 23 day = 1 month = december year = 1944 }
+
+	action_a = {
+		name = "ard_actionname29A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}
+#########################################################################
+#  Hitler release 15th Army for action
+#########################################################################
+
+event = {
+	id = 33
+	random = no
+	country = GER
+
+	trigger = {
+ 		OR = {
+ 			control = { province = 56 data = ALS }
+ 			control = { province = 54 data = ALS }
+ 			control = { province = 55 data = ALS }
+ 			control = { province = 44 data = ALS }
+ 			control = { province = 53 data = ALS }
+ 			control = { province = 43 data = ALS }
+ 			control = { province = 45 data = ALS }
+ 			control = { province = 46 data = ALS }
+ 			control = { province = 47 data = ALS }
+ 			control = { province = 78 data = ALS }
+ 			control = { province = 64 data = ALS }
+ 		}
+}
+
+	name = "dday_event8_name"
+	desc = "dday_event8_desc"		
+        picture = "15th_army"
+	style = 0
+
+	date = { day = 6 month = june year = 1944 }
+	offset = 3
+	deathdate = { day = 15 month = january year = 1945 }
+
+
+	action_a = {
+		name = "dday_actionname8a" # Release 15th Army
+		command = { type =	sleepevent which = 8 }
+		command = {  type = unlock_division which = 10602 value = 13  }
+		command = {  type = unlock_division which = 10602 value = 14  }
+		command = {  type = unlock_division which = 10602 value = 15  }
+		command = {  type = unlock_division which = 10602 value = 16  }
+		command = {  type = unlock_division which = 10602 value = 17  }
+		command = {  type = unlock_division which = 10602 value = 18  }
+		command = {  type = unlock_division which = 10602 value = 19  }
+		command = {  type = unlock_division which = 10602 value = 20  }
+		command = {  type = unlock_division which = 10602 value = 22  }
+		command = {  type = unlock_division which = 10602 value = 23  }
+		command = {  type = unlock_division which = 10602 value = 24  }
+		command = {  type = unlock_division which = 10602 value = 25  }
+		command = {  type = unlock_division which = 10602 value = 27  }
+		command = {  type = unlock_division which = 10602 value = 28  }
+		command = {  type = unlock_division which = 10602 value = 29  }
+		command = {  type = unlock_division which = 10602 value = 30  }
+		command = {  type = unlock_division which = 10602 value = 32  }
+		command = {  type = unlock_division which = 10602 value = 33  }
+		command = {  type = unlock_division which = 10602 value = 34  }
+		command = {  type = unlock_division which = 10602 value = 36  }
+		command = {  type = unlock_division which = 10602 value = 37  }
+		command = {  type = unlock_division which = 10602 value = 38  }
+		command = {  type = unlock_division which = 10602 value = 39  }
+	}
+}
+#########################################################################
+#  Hitler release Panzer Reserves
+#########################################################################
+
+event = {
+	id = 34
+	random = no
+	country = GER
+
+	trigger = {
+			OR = {
+				event = 5
+ 				OR = {
+ 			control = { province = 56 data = ALS }
+ 			control = { province = 54 data = ALS }
+ 			control = { province = 40 data = ALS }
+ 			control = { province = 37 data = ALS }
+ 			control = { province = 57 data = ALS }
+ 			control = { province = 36 data = ALS }
+ 			control = { province = 35 data = ALS }
+ 			control = { province = 59 data = ALS }
+ 		}
+ 		}
+}
+
+	name = "dday_event7_name"
+	desc = "dday_event7_desc"		
+        picture = "panzer_reserves"
+	style = 0
+
+	date = { day = 5 month = june year = 1944 }
+	offset = 3
+	deathdate = { day = 15 month = january year = 1945 }
+
+
+	action_a = {
+		name = "dday_actionname7a" # Release Panzer Reserve
+		command = { type =	sleepevent which = 7 }
+		command = { type = unlock_division which = 10602 value = 95   }
+		command = { type = unlock_division which = 10602 value = 96   }
+		command = { type = unlock_division which = 10602 value = 97   }
+		command = { type = unlock_division which = 10602 value = 105   }
+		command = { type = unlock_division which = 10602 value = 106   }
+		command = { type = unlock_division which = 10602 value = 107   }
+		command = { type = unlock_division which = 10602 value = 108   }
+	}
+}

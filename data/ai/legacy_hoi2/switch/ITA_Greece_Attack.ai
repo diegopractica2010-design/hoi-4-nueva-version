@@ -1,0 +1,12 @@
+# Italy vs Greece AI File by Lothos
+
+max_garrison_prop = 0.30
+min_garrison_prop = 0.25
+
+###################################
+# Ground Combat, Leaders and Garrisons
+###################################
+garrison = {
+	province_priorities = {	}
+	area_multiplier = { }
+}

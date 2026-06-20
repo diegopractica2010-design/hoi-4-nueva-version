@@ -1,0 +1,23 @@
+header = {
+	name = "User Scenario"
+    startyear = 1936
+    endyear = 1949
+}
+
+globaldata = { 
+    startdate = { 
+        year = 1936 
+        month = january 
+        day = 0 
+        hour = 0 
+        } 
+    enddate = { 
+        year = 1947 
+        month = december 
+        day = 29 
+        hour = 0 
+        } 
+    axis = { id = { type = 15000 id = 1 } participant = { } } 
+    allies = { id = { type = 15000 id = 3 } participant = { } } 
+    comintern = { id = { type = 15000 id = 2 } participant = { } } 
+} 

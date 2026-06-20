@@ -1,0 +1,546 @@
+#########################################################################
+#  Stalin proposes early attack
+#########################################################################
+
+event = {
+	id = 1
+	random = no
+	country = SOV
+
+	trigger = {
+ 				random = 5
+}
+
+	name = "fw_event1_name"
+	desc = "fw_event1_desc"
+         picture = "stalin_proposes"
+	style = 0
+
+	date = { day = 1 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 17 month = september year = 1939 }
+
+	action_a = {
+		name = "fw_actionname1A" #No to dangerous
+		command = {  }
+	}
+	action_b = {
+		name = "fw_actionname1B" #Yes do it
+		command = { type = war which = POL }
+		command = { type = vp value = -5 }
+		command = { type = sleepevent which = 2 }
+	}
+}
+
+#########################################################################
+#  Partition Poland with the Germans
+#########################################################################
+
+
+event = {
+	id = 2
+	random = no
+	country = SOV
+
+
+	name = "fw_event2_name"
+	desc = "fw_event2_desc"
+         picture = "partition_poland"
+	style = 0
+
+	date = { day = 17 month = september year = 1939 }
+
+	action_a = {
+		name = "fw_actionname2A" #Ok
+		command = { type = war which = POL }
+		command = { type = sleepevent which = 1 }
+
+	}
+}
+
+
+
+#########################################################################
+#  Polish Replacements
+#########################################################################
+
+event = {
+	id = 3
+	random = no
+	country = POL
+
+	trigger = {
+		random = 10
+		division_exists = { type = 30013 id = 6 }
+	}
+
+	name = "fw_event4_name"
+	desc = "fw_event4_desc"
+         picture = "polish_replacments"
+	style = 0
+
+	date = { day = 25 month = september year = 1939 }
+	offset = 3
+
+	action_a = {
+		name = "fw_actionname4A" #Mobilized at last!
+		command = { type = remove_division which = 30013 value = 6 }
+		command = { type = manpowerpool value = 50 }
+	}
+
+}
+event = {
+	id = 4
+	random = no
+	country = POL
+
+	trigger = {
+		random = 10
+		division_exists = { type = 30013 id = 30 }
+	}
+
+	name = "fw_event4_name"
+	desc = "fw_event4_desc"
+         picture = "polish_replacments"
+	style = 0
+
+	date = { day = 25 month = september year = 1939 }
+	offset = 3
+
+	action_a = {
+		name = "fw_actionname4A" #Mobilized at last!
+		command = { type = remove_division which = 30013 value = 30 }
+		command = { type = manpowerpool value = 50 }
+	}
+
+}
+event = {
+	id = 5
+	random = no
+	country = POL
+
+	trigger = {
+		random = 10
+		division_exists = { type = 30013 id = 83 }
+	}
+
+	name = "fw_event4_name"
+	desc = "fw_event4_desc"
+         picture = "polish_replacments"
+	style = 0
+
+	date = { day = 25 month = september year = 1939 }
+	offset = 3
+
+	action_a = {
+		name = "fw_actionname4A" #Mobilized at last!
+		command = { type = remove_division which = 30013 value = 83 }
+		command = { type = manpowerpool value = 100 }
+	}
+
+}
+
+
+#########################################################################
+#  Seperate Peace with the Soviet Union
+#########################################################################
+event = {
+	id = 6
+	random = no
+	country = POL
+
+	trigger = {
+ 				random = 10
+				control = { province = 212 data = -1 }
+				control = { province = 227 data = -1 }
+}
+
+	name = "fw_event10_name"
+	desc = "fw_event10_desc"
+         picture = "polish_replacments"
+	style = 0
+
+	date = { day = 1 month = october year = 1939 }
+	offset = 3
+
+	action_a = {
+		name = "fw_actionname10A" #Propose an armistice
+		command = { type = vp value = 5 }
+	}
+}
+#########################################################################
+#  Stalin forced to sign armistice with Poland
+#########################################################################
+event = {
+	id = 7
+	random = no
+	country = SOV
+
+	trigger = {
+ 				random = 10
+				event = 6
+}
+
+	name = "fw_event11_name"
+	desc = "fw_event11_desc"
+         picture = "stalin_meeting"
+	style = 0
+
+	date = { day = 1 month = october year = 1939 }
+	offset = 3
+
+	action_a = {
+		name = "fw_actionname11A" #The War is over
+		command = { type = vp value = -20 }
+		command = { type = peace which = POL value = 1 }
+	}
+}
+#########################################################################
+#  We have conquered Berlin!
+#########################################################################
+event = {
+	id = 8
+	random = no
+	country = POL
+
+	trigger = {
+ 				random = 10
+				control = { province = 300 data = -1 }
+}
+
+	name = "fw_event12_name"
+	desc = "fw_event12_desc"
+         picture = "berlin_in_ruins"
+	style = 0
+
+	date = { day = 1 month = october year = 1939 }
+	offset = 3
+
+	action_a = {
+		name = "fw_actionname12A" #Yes we did it!
+		command = { type = vp value = 25 }
+		command = { type =	trigger which = 9 }
+	}
+}
+#########################################################################
+#  Berlin is lost!
+#########################################################################
+event = {
+	id = 9
+	random = no
+	country = GER
+
+
+	name = "fw_event13_name"
+	desc = "fw_event13_desc"
+        picture = "surrender"
+	style = 0
+
+
+
+	action_a = {
+		name = "fw_actionname13A" #Oh! No
+		command = { type = vp value = -25 }
+	}
+}
+
+#########################################################################
+#  Soviet Strategic Victory
+#########################################################################
+event = {
+	id = 10
+	random = no
+	country = SOV
+
+	trigger = {
+ 				vp = 45
+}
+
+	name = "fw_event14_name"
+	desc = "fw_event14_desc"
+         picture = "soviet_strategic_victory"
+	style = 0
+
+	date = { day = 1 month = september year = 1939 }
+	offset = 1
+	deathdate = { day = 30 month = october year = 1939 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 8 }
+	}
+}
+#########################################################################
+#  Soviet Marginal Victory
+#########################################################################
+event = {
+	id = 11
+	random = no
+	country = SOV
+
+	trigger = {
+ 			range = { min = 35 max = 45 }
+	}
+
+	name = "fw_event15_name"
+	desc = "fw_event15_desc"
+         picture = "soviet_marginal_victory"
+	style = 0
+
+	date = { hour = 23 day = 30 month = october year = 1939 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 7 }
+	}
+}
+#########################################################################
+#  Soviet Marginal Defeat
+#########################################################################
+#event = {
+#	id = 12
+#	random = no
+#	country = SOV
+#
+#	trigger = {
+# 				 vp = 25
+# 			NOT = { vp = 35 }
+#}
+#
+#	name = "fw_event16_name"
+#	desc = "fw_event16_desc"
+#         picture = "soviet_marginal_defeat"
+#	style = 0
+#
+#	date = { hour = 23 day = 30 month = october year = 1939 }
+#
+#	action_a = {
+#		name = "fw_actionname14A" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+#  Soviet Strategic Defeat
+#########################################################################
+#event = {
+#	id = 13
+#	random = no
+#	country = SOV
+#
+#	trigger = {
+# 				vp = 15
+# 			NOT = { vp = 25 }
+#}
+#
+#	name = "fw_event17_name"
+#	desc = "fw_event17_desc"
+#         picture = "soviet_strategic_defeat"
+#	style = 0
+#
+#	date = { hour = 23 day = 30 month = october year = 1939 }
+#
+#	action_a = {
+#		name = "fw_actionname14A" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+#  Polish Strategic Victory
+#########################################################################
+event = {
+	id = 14
+	random = no
+	country = POL
+
+	trigger = {
+ 				vp = 15
+}
+
+	name = "fw_event18_name"
+	desc = "fw_event18_desc"
+         picture = "polish_strategic_victory"
+	style = 0
+
+	date = { day = 15 month = october year = 1939 }
+	offset = 1
+	deathdate = { day = 30 month = october year = 1939 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 6 }
+	}
+}
+#########################################################################
+#  Polish Marginal Victory
+#########################################################################
+event = {
+	id = 15
+	random = no
+	country = POL
+
+	trigger = {
+			exists = POL
+			NOT = { axis = 36 }			
+	}
+
+	name = "fw_event19_name"
+	desc = "fw_event19_desc"
+         picture = "polish_marginal_victory"
+	style = 0
+
+	date = { hour = 23 day = 30 month = october year = 1939 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 5 }
+	}
+}
+#########################################################################
+#  Polish Marginal Defeat
+#########################################################################
+#event = {
+#	id = 16
+#	random = no
+#	country = POL
+#
+#	trigger = {
+#				vp = 3
+# 			NOT = { vp = 8 }
+#}
+#
+#	name = "fw_event20_name"
+#	desc = "fw_event20_desc"
+#        picture = "marginal_defeat"
+#	style = 0
+#
+#	date = { hour = 23 day = 30 month = october year = 1939 }
+#
+#	action_a = {
+#		name = "fw_actionname14A" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+#  Polish Strategic Defeat
+#########################################################################
+#event = {
+#	id = 17
+#	random = no
+#	country = POL
+#
+#	trigger = {
+# 				NOT = { vp = 3 }
+#}
+#
+#	name = "fw_event21_name"
+#	desc = "fw_event21_desc"
+#         picture = "polish_strategic_defeat"
+#	style = 0
+#
+#	date = { hour = 23 day = 30 month = october year = 1939 }
+#
+#	action_a = {
+#		name = "fw_actionname14A" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+#  German Strategic Victory
+#########################################################################
+event = {
+	id = 18
+	random = no
+	country = GER
+
+	trigger = {
+ 			vp = 46
+	}
+
+	name = "fw_event22_name"
+	desc = "fw_event22_desc"
+         picture = "german_strategic_victory"
+	style = 0
+
+	date = { day = 1 month = september year = 1939 }
+	offset = 1
+	deathdate = { day = 30 month = october year = 1939 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  German Marginal Victory
+#########################################################################
+event = {
+	id = 19
+	random = no
+	country = GER
+
+	trigger = {
+ 			range = { min = 36 max = 46 }
+	}
+
+	name = "fw_event23_name"
+	desc = "fw_event23_desc"
+         picture = "german_marginal_victory3"
+	style = 0
+
+	date = { hour = 23 day = 30 month = october year = 1939 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}
+#########################################################################
+#  German Marginal Defeat
+#########################################################################
+#event = {
+#	id = 20
+#	random = no
+#	country = GER
+#
+#	trigger = {
+# 				vp = 26
+# 			NOT = { vp = 36 }
+#}
+#
+#	name = "fw_event24_name"
+#	desc = "fw_event24_desc"
+#         picture = "german_marginal_defeat2"
+#	style = 0
+#
+#	date = { hour = 23 day = 30 month = october year = 1939 }
+#
+#	action_a = {
+#		name = "fw_actionname14A" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+#  German Strategic Defeat
+#########################################################################
+#event = {
+#	id = 21
+#	random = no
+#	country = GER
+#
+#	trigger = {
+# 				 vp = 16
+# 			NOT = { vp = 26 }
+#}
+#
+#	name = "fw_event25_name"
+#	desc = "fw_event25_desc"
+#         picture = "german_strategic_defeat2"
+#	style = 0
+#
+#	date = { hour = 23 day = 30 month = october year = 1939 }
+#
+#	action_a = {
+#		name = "fw_actionname14A" #End Game
+#		command = {  }
+#	}
+#}

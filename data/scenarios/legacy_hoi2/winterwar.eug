@@ -1,0 +1,166 @@
+name = "WINTERWAR_NAME"
+panel = "scenarios/data/scenario_winterwar.bmp"
+
+#################################
+# Designed by Greven and Tracid #
+#################################
+
+header = {
+	name = "Grand Campaign"
+    startyear = 1939
+    endyear = 1940
+   free = no
+	combat = yes	#this is a battlescenario
+
+
+
+	SOV = {
+			desc = WW_SOVIET
+			picture = "scenarios\data\finland.bmp"		
+
+	}
+
+	FIN = {
+			desc = WW_FIN
+			picture = "scenarios\data\finland.bmp"		
+			bottom = yes
+	}
+}
+
+globaldata = {
+	rules = {
+		diplomacy = no
+		production = no
+		technology = no
+	}
+    startdate = {
+        year = 1939
+        month = november
+		day = 30
+        }
+    enddate = {
+        year = 1940
+        month = march
+        day = 13   ###Finnish Gov accept Soviet Demands
+        }
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { SOV }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { FIN }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1939
+	            month = september
+	            day = 1
+	            hour = 1
+            }
+            enddate = {
+	            year = 1939
+	            month = september
+	            day = 1
+	            hour = 1
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { SOV }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { FIN }
+        	}
+	}
+
+    }
+
+
+
+map = {
+no = all
+#	Finland
+yes = 	132
+yes = 	130
+yes = 	131
+yes = 	137
+yes = 	136
+yes = 	148
+yes = 	149
+yes = 	147
+yes = 	146
+yes = 	144
+yes = 	138
+yes = 	139
+yes = 	140
+yes = 	143
+yes = 	141
+yes = 	142
+yes = 	145
+yes = 	103
+#	Sweden
+yes =	114
+#	Soviet Union
+yes = 	133
+yes = 	134
+yes = 	135
+yes = 	150
+yes = 	152
+yes = 	151
+yes = 	183
+yes = 	185
+yes = 	186
+yes = 	187
+yes = 	188
+yes = 	192
+yes = 	193
+yes = 	195
+yes = 	194
+yes = 	196
+yes = 	199
+yes = 	200
+yes = 	191
+yes = 	189
+yes = 	184
+yes = 	153
+yes = 	154
+yes = 	1771
+# Sea zones
+yes = 2384
+yes = 2482
+yes = 2483
+yes = 2484
+yes = 2485
+yes = 2486
+yes = 2487
+yes = 2489
+yes = 2491
+yes = 2493
+
+top = {	x = 16110 y = 422 }
+bottom = {	x = 18292 y = 1732 }
+
+}
+
+
+# Vp things
+include = "scenarios/winterwar/vp.inc"
+
+include = "scenarios/winterwar/fin.inc"
+include = "scenarios/winterwar/sov.inc"
+include = "scenarios/winterwar/swe.inc"
+
+event = "scenarios/winterwar/winterwar_events.txt"
+
+
+
+
+
+
+
+
+
+

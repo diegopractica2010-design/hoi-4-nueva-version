@@ -1,0 +1,494 @@
+####################################################################
+# HOI2 MEX AI  |  MEX War |  By Panzer Guderian 
+####################################################################
+
+strat_redeploy_threshold = 20
+
+max_front_ratio		= 4.0
+max_garrison_prop	= 0.5
+min_garrison_prop	= 0.2
+
+#flags = {
+#  	testflag = no
+#}
+####################################################################
+# Diplomacy
+####################################################################
+#
+War = 5
+
+protect = {
+# North America
+	CAN = 100
+# Central America
+	USA = 100
+	GUA = 100
+	HON = 100
+	PAN = 100
+	NIC = 100
+	SAL = 100
+	COS = 100
+# Caribbean
+	CUB = 100
+	HAI = 100
+	DOM = 100
+# South America
+	BRA = 100
+	VEN = 80
+	COL = 80
+}
+befriend = {
+# North America
+	CAN = 100
+	USA = 100
+# Central America
+	GUA = 100
+	HON = 100
+	PAN = 100
+	NIC = 100
+	SAL = 100
+	COS = 100
+# Caribbean
+	CUB = 100
+	HAI = 100
+	DOM = 100
+# South America
+	BRA = 100
+	VEN = 80
+	COL = 80
+}
+
+
+trade = {
+	favored = {
+		TAG = USA
+		TAG = CAN
+		TAG = BRA
+		TAG = CUB
+		TAG = VEN
+		TAG = HOL
+		TAG = COL
+		TAG = GUA
+		TAG = HON
+		TAG = COS
+		TAG = SAL
+		TAG = GUA
+
+	}
+}
+
+tech_sharing = {
+	favored = {
+		TAG = USA
+		TAG = CAN
+		TAG = FRA
+		TAG = AST
+		TAG = NZL
+		TAG = BRA
+	}
+}
+####################################################################
+# Economy
+####################################################################
+construction = {
+	max_factor		= .2	# [0.0-1.0] Proportion of Production IC that should be used for province buildings.
+
+	AA_batteries	 	= atwar	# yes = all the time, no = none, atwar = build during wars, not_atwar = build during peace
+	max_AA_level		= 5	# Don't improve beyond this level.
+	AA_provs		= { }   # 
+
+	coastal_fort 		= atwar	# [yes/no/atwar/not_atwar]
+	max_coastal_level	= 4	# Don't improve beyond this level.
+	coastal_fort_provs	= { }   # 
+
+	radar_station 		= atwar	# [yes/no/atwar/not_atwar]
+	max_radar		= 1	# Don't improve beyond this level.
+	radar_provs		= { }   # 
+
+	air_base 		= atwar	# [yes/no/atwar/not_atwar]
+	max_air_base		= 5	# Don't improve beyond this level.
+	air_base_provs		= { }   # 
+
+	naval_base 		= atwar	# [yes/no/atwar/not_atwar]
+	max_naval_base		= 5	# Don't improve beyond this level.
+	naval_base_provs	= { }   # 
+
+	land_fort		= atwar	# [yes/no/atwar/not_atwar]
+	max_land_level		= 1	# Don't improve land forts beyond this level.
+	fort_borders 		= { }   # Build land forts along these borders	
+
+	ic_at_war		= no	# [yes/no] Normally, we always build IC if there is a large resource surplus. The exception could be during wars.
+	force_ic_until		= 1939	# Ignore presence of a resource surplus and build IC anyway, until year X. (Useful for countries anticipating expansion.)
+	ic_end_year		= 1940	# Stop building IC at the end of year X.
+	IC_provs		= { }   # 
+}
+
+
+
+military = {
+	relative_build_scheme 	= yes
+	max_batch_peace 	= 600 # Max production run length in DAYS while at peace
+	max_batch_war 		= 500 # Max production run length in DAYS while at war with no home front
+	max_batch_home_front 	= 190 # Max production run length in DAYS while at war with home fronts
+
+	# USA Build scheme:
+            infantry 	     = 40.000 
+            cavalry	     = 10.000 
+            motorized 	     = 5.000 
+            mechanized	     = 0.000 
+            light_armor      = 0.000 
+            armor 	     = 0.000 
+            paratrooper      = 0.000 
+            marine 	     = 0.000 
+            bergsjaeger      = 0.000 
+            garrison 	     = 0.000 
+            hq 	             = 5.000 
+            militia          = 0.000 
+			     # 60 %
+
+            escort    	     = 0.000 
+            multi_role       = 5.000 
+            interceptor      = 5.000 
+            strategic_bomber = 0.000 
+            tactical_bomber  = 5.000 
+            naval_bomber     = 0.000 
+            cas 	     = 0.000 
+            transport_plane  = 0.000 
+            flying_bomb      = 0.000 
+            flying_rocket    = 0.000
+			    # 15 %
+
+            battleship       = 0.000 
+            light_cruiser    = 7.000 
+            heavy_cruiser    = 3.000 
+            battlecruiser    = 0.000 
+            destroyer        = 7.000 
+            carrier 	     = 0.000 
+            submarine 	     = 4.000 
+            transport 	     = 4.000 
+			    # 25 %
+	# NOTE: The sum _must_ be exactly 100%!
+
+	# Brigade preferences:
+	# (% of division types that should be built with brigade type.  Seems to effect Research )
+	# Land types:
+	artillery		= 10
+	sp_artillery		= 0
+	rocket_artillery	= 0
+	sp_rocket_artillery	= 0
+	anti_tank		= 10
+	tank_destroyer		= 0
+	light_armor_brigade	= 0
+	heavy_armor		= 0
+	super_heavy_armor	= 0
+	armored_car		= 5
+	anti_air		= 15
+	police			= 0
+	engineer		= 5
+	# Sum of these should be <= 100
+
+	# Naval types:
+	cag			= 100
+	# Sum of these should be <= 100
+}
+
+technology = {
+	endgoal 	= { }	#list of endgoals to achieve.
+	preference 	= { 
+
+# Infantry Techs
+
+1010 1020 1030 1040 1050 1060 # Infantry
+#1070 1080 1090 1100 # Paratroopers
+1110 1120 1130 1040 # Mountain
+1150 1160 1170 1180 # Marines
+1190 1200 1210 1220  # Cavalry
+1230 1240 1250 # Motorized 
+#1260 1270 1280 1290 1300 # Mechanized Inf.
+1310 1320 1330 1340 1350 1360 # Supply and Repair
+
+# Armor and Artillery Techs
+
+2020 2030 2040 2050 2060 # Light tanks
+2070 2080 2090  # Medium tanks
+#2100 2110 2120 2140 # Heavy Tanks and Semi-Modern Tank
+2150 2160 # Armoured Cars
+#2170 2180 2190 2200 2210 # Tank destroyers
+#2220 2230 2240 2250 # SP guns
+#2260 2270 2280 # SP Rocket Artillery
+2290 2300 2310 2320 2330 2340 2350 2360 # Artillery
+#2370 2380 2390 # Rocket artillery
+2400 2410 2420 2430 2440 # Anti-Tank artillery
+2450 2460 2470 2480 2490 2500 # Static Anti-Aircraft
+2510 2520 2530 2540 # Mobile AA
+
+# Naval Techs
+
+3020 3030 3040 3050 3060 # Destroyers
+3080 3090 3100 3110 3120 # Light Cruisers
+3140 3150 3160 3170 3180 # Heavy Cruisers
+#3200 3210 3220 # Battle Cruisers
+#3260 3270 3280 3290 # Battleships
+#3330 3340 3350 3360 3370 3380 3390 # Aircraft Carriers
+3410 3420 3430 3440 3450 # Submarines
+
+# Aircraft Techs
+
+4020 4030 4040 4050 4060 4070 4080 4090 4100 4110 # Fighters (all)
+#4120 4130 4140 4150 4160 # Medium bombers
+4170 4280 4180 # Close Air Support 
+4190 4200 4210 # Naval bombers
+#4220 4230 4240 # Strategic bombers
+#4250 4260 4270 # Air Transports (Not used)
+
+# Industry Techs
+
+5040 # Agriculture
+5070 # Machine Tools
+5140 5150 5160 5180 # Assembly lines w/o Rockets
+5210 5220 5230 5240 # Oil plants 
+5270 5280 5290 # Rare materials conversions
+5330 5340 # Computing machines
+5350 5360 5370 5380 5390 5400 # Encryption/decryption
+5410 5420 5430 5440 5450 5460 # Cent. Radar
+#5490 5500 5510 5520 5530 5540 # Nuclear Reactor Operability
+5550 5560 5570 # Jet and rocket engines
+
+# Land Docs
+
+6010 6020 6040 6050 6060 6070 6080 # Land Docs - Armored route for Combined Arms.
+
+# Secret Weapons Technology
+
+7140 7150 7160 # Electronic computers
+#7180 7190 # Atomic bomb
+7030 7040 7050 7060 7070 7080 7090 7240 7260 7280 7290 # Secret Weapons / Jet Aircraft
+
+# Naval Docs
+
+8010 8020 8030 8040 8050 8060 8090 8100 8110 8130 8160 8170 8180 8230 8240 8310 8320
+
+# Air Docs
+
+9010 9020 9030 9040 9050 9060 9080 9090 9100 9110 9120 9130 9140 9150 9160 9170 9180 9190 9200 
+9210 9220 9230 9240 9250 9260 9270 9280 9290 9300 9310 9320 9330 9340 9350 9360 9370 9380 9390 
+9400 9410 9420 9430 9440 9450 9460 
+
+}
+
+ignore 		= { 5490 5500 1070 }	# Nyte, No, Nein. 
+
+	#preference to weight importance of research in these fields.
+
+	armor 		= 2
+	infantry 	= 3
+	industry 	= 6
+	aircraft  	= 1
+	naval 		= 1
+	land_doctrines 	= 3
+	air_doctrines 	= 3
+	naval_doctrines = 3
+	secret_weapons  = 1
+}
+
+####################################################################
+# Military
+####################################################################
+garrison = {
+	# OVERSEAS GARRISONING:
+	defend_overseas_beaches = no
+
+	# Basic need is X divisions per area where X is: number of provinces - attrition provinces
+	home_multiplier 	= 1.0
+	overseas_multiplier 	= 0.5
+	home_peace_cap 		= 24
+	war_zone_odds 		= 2.0
+	key_point_prio_mult	= 1.0
+
+	area_multiplier = {
+
+	}
+
+	# PRIORITIES:
+
+	beach 			= 50
+	capital 		= 50
+	human_border		= 100
+	war_target 		= 150
+	opposing_alliance 	= 100
+	claim_threat 		= 50
+	unstable_border		= 50
+
+	country_priorities = {
+		CAN = -1
+		USA = -1
+		GUA = -1
+		HON = -1
+		ENG = -1
+		GER = 100
+		ITA = 100
+		JAP = 100
+
+	}
+	province_priorities = {
+	
+	}
+}
+front = {
+	recklessness 		= 1	[0-3]
+	distrib_vs_ai 		= even	[even/reactive/defensive]
+	distrib_vs_human 	= even	[even/reactive/defensive]
+
+	# Countries we do not counter-attack for a certain number of days
+#	enemy_handicap = {
+#		JAP = 150
+#		GER = 150
+#	}
+
+
+	reserve_prop		= 0.2 # Proportion of front troops that should behave as reserves.
+	panic_ratio_vs_ai	= 2.5 # Front requests more troops if outnumbered by this factor
+	panic_ratio_vs_human	= 2.5 # Front requests more troops if outnumbered by this factor
+	enemy_reinf_days 	= 6   # Count enemy units less than X days from a target province in odds calculations
+	base_attack_odds	= 2.1 # Will attack at X odds or better
+	min_attack_odds		= 1.5 # If stalemated for a long period, may go as low as these attack odds
+	max_attack_odds		= 4.0 # Don't use more force than necessary to reach these odds
+	reinforce_odds		= 1.1 # Send in more troops if the attacking force is at these odds
+	withdraw_odds		= 0.6 # Break off attacks and withdraw at these odds
+
+	strength 	= 1.0
+	organisation 	= 2.0
+	soft_attack 	= 1.0
+	hard_attack 	= 2.0
+	ground_defense 	= 1.0
+	dig_in 		= 1.25  # Against defender
+
+	frozen_attack 	= 0.50
+	snow_attack 	= 0.50
+	blizzard_attack = 0.25
+	storm_attack 	= 0.60
+	muddy_attack 	= 0.75
+
+	largefort 	= 2.0
+	smallfort 	= 1.5
+	occupied 	= 0.7
+	owned 		= 0.7
+
+	jungle_attack 	= 0.85
+	mountain_attack = 0.60
+	swamp_attack 	= 0.60
+	forest_attack 	= 0.85
+	hill_attack 	= 0.75
+	river 		= 0.50
+}
+# Factors guiding the use of fighters and strategic bombers.
+bomber = {
+	#defensive fighter ai factors
+	defensiveIC 		= 1.0
+	recentlyBombed 		= 2.0   #protect anything bombed.
+	protectOil 		= 1.0
+	protectEnergy 		= 1.0
+	protectMetal 		= 1.0
+	protectRarematerials 	= 1.0
+
+	#Evaluation factors for determening which landarea to be strategically bombarded.
+	areaSize 		= 5.0	#size of area.
+	areaDistance 		= 1.0   #distance
+	adjacency 		= 10.0  #if its neighbor to us.
+
+	#Evaluate which province to get a bombing mission.
+	targetIC 		= 1.0	#How important are IC to target..
+	avoidAA 		= 1.0	#how bad AA are.
+	targetEnergy 		= 1.0
+	targetMetal 		= 1.0
+	targetOil 		= 1.0
+	targetRarematerials 	= 3.0
+	occupied 		= 20    #Subtract for provinces which are occupied, ie bomb germany ahead of france as UK.
+	fighter 		= 3.0   #how important it is to avoid enemy fighters
+}
+
+#Factors regarding amphibious invasions by ai.
+
+invasion = {
+  	#for evaluating specific province target.
+	base 		= 0.9	# Relative modifier. (lower = specific targets much more important.)
+	random 		= 2.0	# How big a random range.  (1.0 = 1%)
+	coastal 	= 2.0	# increase to avoid coastal forts more.
+	beach 		= 1.0	# higher, avoid worst beaches.
+	distance 	= 1.0	# higher = avoid long distance.
+	pocket 		= 1.0   # prioritise pockets, ie provinces with no adjacent controlled by same.
+	island 		= 1.5   # prioritise taking pure islands.
+	enemy 		= 1.0   # higher = much more vary of troops in province.
+	adjacentenemy 	= 1.0   # higher = much more vary of troops nearby
+	air_base	= 0.5   # add this priority for air bases within adjacentenemy
+	naval_base	= 0.5	# add this priority for naval bases within adjacentenemy
+	air_support	= 0.5   # add this priority for beaches within reach of air_bases
+
+	redirect	= nearest   # priority refers to targets in the AI file,
+				    # nearest is the closest enemy beach where the AI has
+				    # good attack odds and home is to return back to port
+
+	#specific provinces can be targetted to get special bonuses..
+	target = {
+
+		# Caribbean Islands
+		654  = 150 # Havana
+		655  = 150 # Santa Clara
+		652  = 150 # Andros
+		664  = 150 # Grand Bahama
+		665  = 150 # The Abacus
+		668  = 150 # Long Island
+		893  = 100 # Santiago
+		801  = 150 # Caracao
+		896  = 100 # Virgin Islands
+		897  = 100 # Antigua
+		807  = 100 # Barbados
+		809  = 150 # Port of Spain
+
+		
+		
+	}
+}
+#admiral = {
+#	min_org		= 95   # 1-100 NEW: Percent of org gained back before the unit can leave port
+#	min_dmg		= 100  # 1-100 NEW: Percent of dmg gained back before the unit can leave port
+#	return_org 	= 50   # 1-100 NEW: PERCENT OF ORG LOST BEFORE RETURNING TO PORT applies to all fleets/ships
+#	return_dmg 	= 70   # 1-100 NEW: PERCENT OF DMG LOST BEFORE RETURNING TO PORT for repairs applies to all fleets/ships
+#
+#	sub_patrol = { 	# NEW PARM on how AI should do sub patrols
+#		type 		= atwar	  # yes/no/atwar
+#		attack  	= convoys # convoys/capitalships Set to CapitalShips subs are treated like surface ships if
+#				  		#  set to convoys they patrol marked sea zones with enemy  convoys
+#		rotation 	= 10      # HOW MANY DAYS STAY IN ONE SEA ZONE
+#		return_org 	= 30%     # 1-100 PERCENT OF ORG LOST BEFORE RETURNING TO PORT
+#		return_dmg 	= 80%     # 1-100 PERCENT OF DMG LOST BEFORE RETURNING TO PORT
+#		distance 	= 15.0    # Max distance from FRIENDLY PORTS to do patrol from
+#	}
+#	raider_patrol = { 	# NEW PARM on how AI should do raider patrols
+#		type 		= atwar	  # yes/no/atwar
+#		attack  	= convoys # convoys/capitalships Set to CapitalShips raiders are treated like surface ships if
+#						 #  set to convoys they patrol marked sea zones with enemy  convoys
+#		rotation 	= 5       # HOW MANY DAYS STAY IN ONE SEA ZONE
+#		return_org 	= 50      # 1-100 PERCENT OF ORG LOST BEFORE RETURNING TO PORT
+#		return_dmg 	= 70      # 1-100 PERCENT OF DMG LOST BEFORE RETURNING TO PORT
+#		distance 	= 10.0    # Max distance from FRIENDLY PORTS to do patrol from
+#	}
+#	patrol_convoy_zones = {  # NEW PARM sends AI to patrol the zones marked with convoys in them.
+#		type 		= yes     # yes/no/atwar
+#		rotation 	= 10      # HOW MANY DAYS STAY IN ONE SEA ZONE
+#		return_org 	= 50      # 1-100 PERCENT OF ORG LOST BEFORE RETURNING TO PORT
+#		return_dmg 	= 80      # 1-100 PERCENT OF DMG LOST BEFORE RETURNING TO PORT
+#		distance 	= 20.0    # Max distance from ENEMY PORTS to do patrol from
+#	}
+#
+#	#specific provinces to get special bonuses.  Will adjust after seeing how it works.  Will add/subtrack after testing.
+#	target = {
+#
+#	}
+#	#This is used to determine that it's a core seazone and its control is important.  Will add/subtrack after testing.
+#	core = {
+#		2532 = 180 # Gulf of Mexico
+#		
+#	}
+}
+

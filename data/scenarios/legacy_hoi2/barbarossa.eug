@@ -1,0 +1,421 @@
+name = "fbarb_name"
+panel = "scenarios/data/scenario_fallbarbarossa.bmp"
+
+header = {
+	name = "Grand Campaign"
+    startyear = 1941
+    endyear = 1942
+
+	free = no
+	combat = yes	#this is a battlescenario
+
+
+
+	GER = {
+			desc = BARB_GER
+			picture = "scenarios\data\barbarossa.bmp"		
+			
+	}
+
+	SOV = {
+			desc = BARB_SOV
+			bottom = yes
+			picture = "scenarios\data\barbarossa.bmp"		
+	}
+
+	HUN = {
+			desc = BARB_HUN
+			picture = "scenarios\data\barbarossa.bmp"		
+	}
+
+	ROM = {
+			desc = BARB_ROM
+			picture = "scenarios\data\barbarossa.bmp"		
+	}
+
+	FIN = {
+			desc = BARB_FIN
+			picture = "scenarios\data\barbarossa.bmp"		
+	}
+}
+
+globaldata = {
+    startdate = {
+        year = 1941
+        month = june
+		day = 21
+        }
+    enddate = {
+        year = 1941
+        month = December
+        day = 5    ### Counteroffensive!
+        }
+
+	#	dormant_leaders = yes
+
+	rules = {
+		diplomacy = no
+		production = no
+		technology = no
+	}
+
+		comintern = {
+	        id = { type = 15000 id = 1 }
+			participant = { SOV }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { GER ROM SLO HUN FIN }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1941
+	            month = june
+	            day = 20
+	            hour = 1
+			}
+			enddate = {
+	            year = 1941
+	            month = june
+	            day = 20
+			}
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { GER ROM SLO HUN FIN }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { SOV }
+        	}
+	}
+
+    }
+
+
+map = {
+no = all
+#Germany
+yes = 206
+yes = 300
+yes = 301
+yes = 302
+yes = 303
+yes = 304
+yes = 305
+yes = 306
+yes = 307
+yes = 308
+yes = 309
+yes = 473
+yes = 474
+yes = 479
+yes = 480
+yes = 481
+yes = 482
+yes = 483
+yes = 484
+yes = 485
+yes = 487
+yes = 488
+yes = 489
+yes = 509
+yes = 510
+
+
+#USSR
+yes = 133
+yes = 134
+yes = 135
+yes = 145
+yes = 146
+yes = 150
+yes = 151
+yes = 152
+yes = 153
+yes = 154
+yes = 155
+yes = 156
+yes = 157
+yes = 158
+yes = 159
+yes = 160
+yes = 161
+yes = 162
+yes = 163
+yes = 164
+yes = 165
+yes = 166
+yes = 167
+yes = 168
+yes = 169
+yes = 170
+yes = 171
+yes = 172
+yes = 173
+yes = 174
+yes = 175
+yes = 176
+yes = 177
+yes = 1776
+yes = 1777
+yes = 1778
+yes = 178
+yes = 179
+yes = 180
+yes = 181
+yes = 182
+yes = 183
+yes = 1830
+yes = 1831
+yes = 1832
+yes = 1833
+yes = 1834
+yes = 1835
+yes = 1836
+yes = 1837
+yes = 1838
+yes = 184
+yes = 1841
+yes = 1842
+yes = 1843
+yes = 1844
+yes = 1845
+yes = 1846
+yes = 1847
+yes = 1848
+yes = 1849
+yes = 185
+yes = 1850
+yes = 1856
+yes = 1857
+yes = 1858
+yes = 186
+yes = 187
+yes = 1874
+yes = 188
+yes = 189
+yes = 190
+yes = 1907
+yes = 191
+yes = 192
+yes = 193
+yes = 194
+yes = 195
+yes = 196
+yes = 197
+yes = 198
+yes = 199
+yes = 200
+yes = 201
+yes = 202
+yes = 203
+yes = 204
+yes = 205
+yes = 207
+yes = 208
+yes = 209
+yes = 210
+yes = 211
+yes = 212
+yes = 213
+yes = 214
+yes = 215
+yes = 216
+yes = 217
+yes = 218
+yes = 219
+yes = 220
+yes = 221
+yes = 222
+yes = 225
+yes = 226
+yes = 227
+yes = 228
+yes = 229
+yes = 230
+yes = 231
+yes = 232
+yes = 233
+yes = 234
+yes = 235
+yes = 236
+yes = 237
+yes = 238
+yes = 239
+yes = 240
+yes = 241
+yes = 242
+yes = 243
+yes = 244
+yes = 245
+yes = 246
+yes = 247
+yes = 248
+yes = 249
+yes = 250
+yes = 251
+yes = 252
+yes = 253
+yes = 254
+yes = 255
+yes = 256
+yes = 257
+yes = 258
+yes = 259
+yes = 260
+yes = 261
+yes = 262
+yes = 263
+yes = 264
+yes = 265
+yes = 266
+yes = 267
+yes = 268
+yes = 269
+yes = 270
+yes = 271
+yes = 272
+yes = 273
+yes = 274
+yes = 275
+yes = 276
+yes = 277
+yes = 278
+yes = 279
+yes = 280
+yes = 281
+yes = 282
+yes = 283
+yes = 284
+yes = 285
+yes = 286
+yes = 287
+yes = 288
+yes = 289
+yes = 291
+yes = 433
+yes = 434
+yes = 435
+yes = 486
+yes = 500
+yes = 501
+yes = 502
+yes = 503
+yes = 504
+yes = 505
+yes = 506
+yes = 507
+yes = 508
+yes = 511
+yes = 562
+yes = 577
+yes = 94
+
+#Slovakia
+yes = 475
+yes = 478
+yes = 477
+yes = 490
+yes = 476
+#Finland
+yes = 103
+yes = 130
+yes = 131
+yes = 132
+yes = 136
+yes = 137
+yes = 138
+yes = 139
+yes = 140
+yes = 141
+yes = 142
+yes = 143
+yes = 144
+yes = 147
+yes = 148
+yes = 149
+#Hungary
+yes = 456
+yes = 457
+yes = 458
+yes = 491
+yes = 492
+yes = 497
+yes = 427
+yes = 428
+yes = 429
+yes = 430
+yes = 496
+yes = 498
+yes = 499
+#Romania
+yes = 423
+yes = 424
+yes = 425
+yes = 431
+yes = 426
+yes = 495
+yes = 432
+yes = 436
+#Sea Zones - Baltic
+yes = 2477
+yes = 2478
+yes = 2479
+yes = 2480
+yes = 2481
+yes = 2482
+yes = 2483
+yes = 2484
+yes = 2489
+yes = 2491
+yes = 2492
+yes = 2493
+yes = 2494
+#Sea Zones - Arctic
+yes = 2385
+yes = 2382
+yes = 2381
+yes = 2383
+yes = 2384
+#Sea Zones - Black Sea
+yes = 2465
+yes = 2466
+yes = 2467
+yes = 2468
+#Sea Zones - Lakes
+yes = 2485
+yes = 2487
+yes = 2488
+yes = 2486
+yes = 2449
+yes = 2450
+yes = 2447
+yes = 2469
+
+top = {	x = 15704 y = 0 }
+bottom = {	x = 19732 y = 3862 }
+
+}
+
+
+# Vp things
+include = "scenarios/fallbarbarossa/vp.inc"
+include = "scenarios/fallbarbarossa/germany.inc"
+include = "scenarios/fallbarbarossa/ussr.inc"
+include = "scenarios/fallbarbarossa/finland.inc"
+include = "scenarios/fallbarbarossa/romania.inc"
+include = "scenarios/fallbarbarossa/hungary.inc"
+include = "scenarios/fallbarbarossa/slovakia.inc"
+event = "scenarios/fallbarbarossa/fall_barbarossa_events.txt"
+
+
+
+
+
+
+
+
+
+

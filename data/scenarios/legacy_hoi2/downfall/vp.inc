@@ -1,0 +1,10 @@
+province = { id = 1191 points = 4 } #Kagoshima
+province = { id = 1190 points = 2 } #Fukuoka
+province = { id = 1189 points = 2 } #Shikoku
+province = { id = 1188 points = 4 } #Hiroshima
+province = { id = 1187 points = 6 } #Osaka
+province = { id = 1185 points = 6 } #Nagoya
+province = { id = 1184 points = 10 } #Tokyo
+province = { id = 1179 points = 2 } #Sapporo
+province = { id = 1372 points = 5 } #Vladivostok
+province = { id = 1737 points = 5 } #Manila

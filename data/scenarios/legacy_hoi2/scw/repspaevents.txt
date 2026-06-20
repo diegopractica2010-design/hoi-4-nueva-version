@@ -1,0 +1,611 @@
+#
+# HoI2 SCW Scenario - Republican Spain Events
+#
+#		written by José María Aguirre and Generalisimo
+#
+
+##################################################
+# Moving Capital
+##################################################
+event = { 
+	id = 15000
+	random = no
+	country = SPR
+	picture = "capital"
+
+	trigger = {
+		control = { province = 341 data = SPR }
+		control = { province = 354 data = SPR }
+		control = { province = 357 data = SPR }
+		}
+		
+	name = "SCW_15000_NAME"
+	desc = "SCW_15000_DESC"
+	style = 0
+	
+	date = { day = 1 month = november year = 1936 }
+	offset = 10
+	deathdate = { day = 30 month = december year = 1937 }
+
+	action_a = {
+		name = "SCW_15000_OPTIONA" # Valencia
+		command = { type = capital which = 354 }
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+	}
+	action_b = {
+		name = "SCW_15000_OPTIONB" # Barcelona
+		command = { type = capital which = 357 }
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+	}
+	action_c = {
+		name = "SCW_15000_OPTIONC" # We will stay!
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+	}
+}
+##################################################
+# Shoot José Antonio! 
+##################################################
+event = { 
+	id = 15001
+	random = no
+	country = SPR
+	picture = "joseantonio"
+
+	trigger = {
+
+		}
+		
+	name = "SCW_15001_NAME"
+	desc = "SCW_15001_DESC"
+	style = 0
+	
+	date = { day = 19 month = november year = 1936 }
+
+	action_a = {
+		name = "SCW_15001_OPTIONA" # yes
+		command = { type = trigger which = 16001 }
+		command = { type = dissent value = -5 }
+		command = { type = setflag which = joseantonio_killed }
+	}
+	action_b = {
+		name = "SCW_15001_OPTIONB" # no
+		command = { type = dissent value = 5 }
+		command = { type = revolt which = 354 }
+	}
+}
+##################################################
+# Anarchist-Troskist Uprising in Barcelona
+##################################################
+event = { 
+	id = 15002
+	random = no
+	country = SPR
+	 picture = "barricadas"
+
+	trigger = {
+		control = { province = 357 data = SPR }
+		}
+		
+	name = "SCW_15002_NAME"
+	desc = "SCW_15002_DESC"
+	style = 0
+	
+	date = { day = 4 month = may year = 1937 }
+
+	action_a = {
+		name = "SCW_15002_OPTIONA" # More Problems!
+		command = { type = dissent value = 3 }
+		command = { type = revolt which = 357 }
+		command = { type = revolt which = 357 }
+	}
+}
+##################################################
+# Moving Capital II
+##################################################
+event = { 
+	id = 15003
+	random = no
+	country = SPR
+	 picture = "capital"
+
+	trigger = {
+		control = { province = 341 data = SPR }
+		control = { province = 354 data = SPR }
+		control = { province = 357 data = SPR }
+		}
+		
+	name = "SCW_15003_NAME"
+	desc = "SCW_15003_DESC"
+	style = 0
+	
+	date = { day = 7 month = october year = 1938 }
+	offset = 20
+	deathdate = { day = 30 month = december year = 1938 }
+
+	action_a = {
+		name = "SCW_15003_OPTIONA" # Barcelona
+		command = { type = capital which = 357 }
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+	}
+	action_b = {
+		name = "SCW_15003_OPTIONB" # Valencia
+		command = { type = capital which = 354 }
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+	}
+	action_c = {
+		name = "SCW_15003_OPTIONC" # Madrid
+		command = { type = capital which = 341 }
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+	}
+}
+##################################################
+# Arm the People
+##################################################
+event = { 
+	id = 15004
+	random = no
+	country = SPR
+	 picture = "milicianos"
+
+	trigger = {
+
+		}
+		
+	name = "SCW_15004_NAME"
+	desc = "SCW_15004_DESC"
+	style = 0
+	
+	date = { day = 19 month = july year = 1937 }
+
+	action_a = {
+		name = "SCW_15004_OPTIONA" # yes
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+		command = { type = add_division which = "Milicianos" value = militia when = 0 }
+		command = { type = dissent value = -1 }
+		command = { type = domestic which = democratic value = -2 }
+		command = { type = domestic which = political_left value = 1 }
+		command = { type = domestic which = freedom value =  -1 } 
+		command = { type = headofgovernment which = 11067 } # José Giral Pereira
+		command = { type = foreignminister which = 11096 } # Barciá Trelles
+		command = { type = armamentminister which = 11144 } # Bernardo Giner de los Ríos
+		command = { type = ministerofsecurity which = 11183 } # Amós Salvador Carreras
+		command = { type = chiefofarmy which = 11284 } # Lusi Castelló Pantoja
+	}
+	action_b = {
+		name = "SCW_15004_OPTIONB" # no
+		command = { type = dissent value = 3 }
+		command = { type = revolt which = 341 }
+		command = { type = revolt which = 357 }
+		command = { type = domestic which = political_left value = -1 }
+	}
+}
+##################################################
+# We need a leader
+##################################################
+event = { 
+	id = 15005
+	random = no
+	country = SPR
+	picture = "caballero"
+
+	trigger = {
+
+		}
+		
+	name = "SCW_15005_NAME"
+	desc = "SCW_15005_DESC"
+	style = 0
+	
+	date = { day = 4 month = september year = 1936 }
+
+	action_a = {
+		name = "SCW_15005_OPTIONA" # Largo Caballero
+		command = { type = domestic which = political_left value = -2 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = headofgovernment which = 11062 } # Francisco Largo Caballero
+		command = { type = foreignminister which = 11078 } # del Vayo
+		command = { type = armamentminister which = 11129 } # Juan Negrín López
+		command = { type = ministerofsecurity which = 11177 } # Ángel Galarza y Gago
+		command = { type = chiefofnavy which = 11307 } # Indalecio Prieto
+		command = { type = chiefofair which = 11331 } # Indalecio Prieto
+		command = { type = dissent value = -3 }
+	}
+	action_b = {
+		name = "SCW_15005_OPTIONB" # No changes to the Goverment of the Republic
+		command = { type = dissent value = 3 }
+		command = { type = revolt which = 341 }
+		command = { type = revolt which = 357 }
+		command = { type = domestic which = political_left value = -1 }
+	}
+}
+##################################################
+# The Basque State
+##################################################
+event = { 
+	id = 15006
+	random = no
+	country = SPR
+	picture = "vasconia"
+
+	trigger = {
+
+		}
+		
+	name = "SCW_15006_NAME"
+	desc = "SCW_15006_DESC"
+	style = 0
+	
+	date = { day = 7 month = october year = 1936 }
+
+	action_a = {
+		name = "SCW_15006_OPTIONA" # Bai
+		command = { type = independence which = EUS value = 0 }
+		command = { type = trigger which = 17000 }
+	}
+	action_b = {
+		name = "SCW_15006_OPTIONB" # Ez
+		command = { type = dissent value = 1 }
+		command = { type = revolt which = 331 }
+	}
+}
+##################################################
+# A Politician better than a Syndicalist
+##################################################
+event = { 
+	id = 15007
+	random = no
+	country = SPR
+	 picture = "negrin"
+
+	trigger = {
+
+		}
+		
+	name = "SCW_15007_NAME"
+	desc = "SCW_15007_DESC"
+	style = 0
+	
+	date = { day = 17 month = may year = 1937 }
+
+	action_a = {
+		name = "SCW_15007_OPTIONA" # Negrín
+		command = { type = dissent value = -2 }
+		command = { type = domestic which = political_left value = -3 }
+		command = { type = domestic which = freedom value = -2 }
+		command = { type = headofgovernment which = 11060 } # Negrín
+		command = { type = foreignminister which = 11092 } # José Giral Pereira
+		command = { type = ministerofsecurity which = 11176 } # Zugazagoitia
+		command = { type = ministerofintelligence which = 11217 } # Benjamín Balboa López
+	}
+	action_b = {
+		name = "SCW_15007_OPTIONB" # Largo Caballero
+		command = { type = dissent value = 2 }
+		command = { type = domestic which = political_left value = -2 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = headofgovernment which = 11062 } # Francisco Largo Caballero
+		command = { type = foreignminister which = 11078 } # del Vayo
+		command = { type = armamentminister which = 11129 } # Juan Negrín López
+		command = { type = ministerofsecurity which = 11177 } # Ángel Galarza y Gago
+		command = { type = chiefofnavy which = 11307 } # Indalecio Prieto
+		command = { type = chiefofair which = 11331 } # Indalecio Prieto
+	}
+}
+##################################################
+# Anarchists and Troskists may pay for their traison!
+##################################################
+event = { 
+	id = 15008
+	random = no
+	country = SPR
+	picture = "comunista"
+
+	trigger = {
+		event = 15002
+		}
+		
+	name = "SCW_15008_NAME"
+	desc = "SCW_15008_DESC"
+	style = 0
+	
+	date = { day = 17 month = june year = 1937 }
+
+	action_a = {
+		name = "SCW_15008_OPTIONA" # Allow to kill them
+		command = { type = dissent value = 3 }
+	}
+	action_b = {
+		name = "SCW_15008_OPTIONB" # We need them
+		command = { type = dissent value = 10 }
+		command = { type = revolt which = -1 }
+		command = { type = revolt which = -1 }
+		command = { type = revolt which = -1 }
+	}
+}
+##################################################
+# The Last Goverment
+##################################################
+event = { 
+	id = 15009
+	random = no
+	country = SPR
+	picture = "gobierno"
+
+	trigger = {
+		lost_VP = { country = SPR value = 75 }
+		}
+		
+	name = "SCW_15009_NAME"
+	desc = "SCW_15009_DESC"
+	style = 0
+	
+	date = { day = 5 month = april year = 1939 }
+
+	action_a = {
+		name = "SCW_15009_OPTIONA" # Azaña Retires
+		command = { type = capital which = 354 }
+		command = { type = dissent value = 5 }
+		command = { type = domestic which = political_left value = -2 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = headofstate which = 11041 } # Martinez Barrio
+		command = { type = headofgovernment which = 11060 } # Negrín
+		command = { type = foreignminister which = 11078 } # del Vayo
+		command = { type = armamentminister which = 11129 } # Juan Negrín López
+		command = { type = ministerofsecurity which = 11179 } # Ramon Gonzalez Peña
+	}
+	action_b = {
+		name = "SCW_15009_OPTIONB" # Azaña Stays
+		command = { type = capital which = 354 }
+		command = { type = dissent value = 25 }
+		command = { type = headofgovernment which = 11046 } # Azaña
+		command = { type = foreignminister which = 11092 } # José Giral
+		command = { type = armamentminister which = 11144 } # Giner de los Ríos
+		command = { type = ministerofsecurity which = 11179 } # Ramon Gonzalez Peña
+	}
+}
+##################################################
+# France gives us planes
+##################################################
+event = { 
+	id = 15010
+	random = no
+	country = SPR
+	picture = "polikarpov"
+
+	trigger = {
+
+		}
+		
+	name = "SCW_15010_NAME"
+	desc = "SCW_15010_DESC"
+	style = 0
+	
+	date = { day = 25 month = july year = 1937 }
+
+	action_a = {
+		name = "SCW_15010_OPTIONA" # Accept them!
+		command = { type = add_division which = "1a Escuadrilla de Cazas" value = interceptor when = 1 }
+		command = { type = supplies value = 2000 }
+		command = { type = manpowerpool value = 20 }
+	}
+	action_b = {
+		name = "SCW_15010_OPTIONB" # Don't do it!
+		command = { type = dissent value = 2 }
+		command = { type = supplies value = -2000 }
+	}
+}
+##################################################
+# Brigadist go back home!
+##################################################
+event = { 
+	id = 15011
+	random = no
+	country = SPR
+	picture = "despedidainternacionales"
+
+	trigger = {
+		lost_VP = { country = SPR value = 30 }
+		}
+		
+	name = "SCW_15011_NAME"
+	desc = "SCW_15011_DESC"
+	style = 0
+	
+	date = { day = 28 month = october year = 1938 }
+
+	action_a = {
+		name = "SCW_15011_OPTIONA" # They have done what they could
+		command = { type = remove_division which = 16500 value = 52 } 
+		command = { type = remove_division which = 16500 value = 54 } 
+		command = { type = remove_division which = 16500 value = 56 } 
+	}
+}
+##################################################
+# Soviet Union decides to help us!
+##################################################
+event = { 
+	id = 15012
+	random = no
+	country = SPR
+	picture = "polikarpov"
+
+	trigger = { random = 90 }
+		
+		
+	name = "SCW_15012_NAME"
+	desc = "SCW_15012_DESC"
+	style = 0
+	
+	date = { day = 25 month = september year = 1936 }
+	offset = 20
+	deathdate = { day = 30 month = june year = 1937 }
+
+	action_a = {
+		name = "SCW_15012_OPTIONA" # Accept them!
+		command = { type = supplies value = 1500 }
+		command = { type = add_division which = "2a Escuadrilla de Cazas" value = interceptor when = 1 }
+		command = { type = add_division which = "T-60 Regiment" value = armor when = 1 }
+		command = { type = add_division which = "Katiuska bombers " value = cas when = 1 }
+		command = { type = relative_manpower value = 5 }
+	}
+	action_b = {
+		name = "SCW_15012_OPTIONB" # Don't do it!
+		command = { type = sleepevent which = 15013 }
+		command = { type = sleepevent which = 15014 }
+		command = { type = sleepevent which = 15015 }
+		command = { type = dissent value = 1 }
+		command = { type = supplies value = -1500 }
+	}
+}
+##################################################
+# International Brigades!
+##################################################
+event = { 
+	id = 15013
+	random = no
+	country = SPR
+	picture = "brigadasinternacionales"
+
+	trigger = {
+		event = 15012
+		random = 80
+		}
+		
+	name = "SCW_15013_NAME"
+	desc = "SCW_15013_DESC"
+	style = 0
+	
+	date = { day = 1 month = october year = 1936 }
+	offset = 20
+	deathdate = { day = 30 month = june year = 1937 }
+
+	action_a = {
+		name = "SCW_15013_OPTIONA" # Welcome Comrades!
+		command = { type = activate_division which = 16500 value = 52 where = 357 when = 0 }
+	}
+	action_b = {
+		name = "SCW_15013_OPTIONB" # No need of this type of help!
+		command = { type = sleepevent which = 15014 }
+		command = { type = sleepevent which = 15015 }
+		command = { type = dissent value = 1 }
+		command = { type = supplies value = -500 }
+	}
+}
+##################################################
+# International Brigades!
+##################################################
+event = { 
+	id = 15014
+	random = no
+	country = SPR
+	picture = "brigadasinternacionales"
+
+	trigger = {
+		event = 15013
+		random = 70
+		}
+		
+	name = "SCW_15014_NAME"
+	desc = "SCW_15014_DESC"
+	style = 0
+	
+	date = { day = 1 month = june year = 1937 }
+	offset = 20
+	deathdate = { day = 30 month = december year = 1937 }
+
+	action_a = {
+		name = "SCW_15014_OPTIONA" # Welcome Comrades!
+		command = { type = activate_division which = 16500 value = 54 where = 357 when = 0 }
+	}
+	action_b = {
+		name = "SCW_15014_OPTIONB" # No need of this type of help!
+		command = { type = sleepevent which = 15015 }
+		command = { type = dissent value = 1 }
+		command = { type = supplies value = -500 }
+	}
+}
+##################################################
+# International Brigades!
+##################################################
+event = { 
+	id = 15015
+	random = no
+	country = SPR
+	picture = "brigadasinternacionales"
+
+	trigger = {
+		event = 15014
+		random = 60
+		}
+		
+	name = "SCW_15015_NAME"
+	desc = "SCW_15015_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1938 }
+	offset = 20
+	deathdate = { day = 30 month = june year = 1938 }
+
+	action_a = {
+		name = "SCW_15015_OPTIONA" # Welcome Comrades!
+		command = { type = activate_division which = 16500 value = 56 where = 357 when = 0 }
+	}
+	action_b = {
+		name = "SCW_15015_OPTIONB" # No need of this type of help!
+		command = { type = dissent value = 1 }
+		command = { type = supplies value = -500 }
+	}
+}
+#########################################################################
+#  Republican Strategic Victory
+#########################################################################
+event = {
+	id = 15016
+	random = no
+	country = SPR
+
+	trigger = {
+ 				vp = 43
+}
+
+	name = "ge_event5_name"
+	desc = "sc_win_3"
+         picture = "brigadasinternacionales"
+	style = 0
+
+	date = { day = 20 month = july year = 1936 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 1 month = april year = 1939 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 8 }
+	}
+}
+#########################################################################
+#  Republican Marginal Victory
+#########################################################################
+event = {
+	id = 15017
+	random = no
+	country = SPR
+
+	trigger = {
+		range = { min = 28 max = 42 }
+
+	}
+
+	name = "ge_event7_name"
+	desc = "sc_win_4"
+         picture = "brigadasinternacionales"
+	style = 0
+
+	date = { day = 1 month = january year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 1 month = january year = 1949 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 7 }
+	}
+}

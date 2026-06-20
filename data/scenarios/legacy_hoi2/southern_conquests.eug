@@ -1,0 +1,424 @@
+name = "SCONQ_NAME"
+panel = "scenarios/data/scenario_southern_conquests.bmp"
+
+header = {
+	name = "SCONQ_NAME"	
+
+
+    startyear = 1941
+    endyear = 1942
+   free = no
+	combat = yes	#this is a battlescenario
+
+
+	JAP = {
+			desc = SOU_JAP
+			picture = "scenarios\data\south.bmp"		
+	}
+
+	USA = {
+			desc = SOU_USA
+			bottom = yes
+			picture = "scenarios\data\south.bmp"		
+	}
+
+	ENG = {
+			desc = SOU_ENG
+			bottom = yes
+			picture = "scenarios\data\south.bmp"		
+	}
+
+}
+
+globaldata = {
+
+
+  rules = {
+         diplomacy = no
+         production = no
+         technology = no
+         }
+
+
+    startdate = {
+        year = 1941
+        month = december
+		day = 6
+                hour = 9
+        }
+    enddate = {
+        year = 1942
+        month = august
+        day = 25   ###???
+        }
+
+
+
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { AST ENG USA HOL PHI }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { JAP }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1941
+	            month = december
+	            day = 7
+	            hour = 1
+            }
+            enddate = {
+	            year = 1941
+	            month = december
+	            day = 7
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { JAP }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { AST ENG USA HOL PHI}
+        	}
+	}
+
+    }
+
+
+
+map = {
+no = all
+yes =	1187
+yes =	1188
+yes =	1189
+yes =	1190
+yes =	1191
+yes =	1192
+yes =	1193
+yes =	1284
+yes =	1285
+yes =	1286
+yes =	1287
+yes =	1288
+yes =	1289
+yes =	1290
+yes =	1291
+yes =	1292
+yes =	1295
+yes =	1296
+yes =	1297
+yes =	1298
+yes =	1299
+yes =	1300
+yes =	1301
+yes =	1302
+yes =	1303
+yes =	1304
+yes =	1306
+yes =	1314
+yes =	1315
+yes =	1321
+yes =	1322
+yes =	1323
+yes =	1324
+yes =	1326
+yes =	1328
+yes =	1329
+yes =	1330
+yes =	1331
+yes =	1332
+yes =	1333
+yes =	1334
+yes =	1335
+yes =	1336
+yes =	1337
+yes =	1338
+yes =	1339
+yes =	1340
+yes =	1341
+yes =	1342
+yes =	1343
+yes =	1344
+yes =	1345
+yes =	1346
+yes =	1347
+yes =	1348
+yes =	1348
+yes =	1349
+yes =	1350
+yes =	1351
+yes =	1352
+yes =	1353
+yes =	1354
+yes =	1355
+yes =	1356
+yes =	1357
+yes =	1358
+yes =	1359
+yes =	1456
+yes =	1457
+yes =	1518
+yes =	1519
+yes =	1599
+yes =	1612
+yes =	1613
+yes =	1613
+yes =	1614
+yes =	1615
+yes =	1616
+yes =	1617
+yes =	1618
+yes =	1619
+yes =	1620
+yes =	1621
+yes =	1622
+yes =	1624
+yes =	1625
+yes =	1627
+yes =	1628
+yes =	1629
+yes =	1630
+yes =	1631
+yes =	1632
+yes =	1633
+yes =	1634
+yes =	1635
+yes =	1636
+yes =	1637
+yes =	1638
+yes =	1639
+yes =	1640
+yes =	1641
+yes =	1642
+yes =	1643
+yes =	1644
+yes =	1645
+yes =	1646
+yes =	1647
+yes =	1648
+yes =	1649
+yes =	1650
+yes =	1651
+yes =	1652
+yes =	1653
+yes =	1654
+yes =	1655
+yes =	1656
+yes =	1657
+yes =	1659
+yes =	1660
+yes =	1661
+yes =	1662
+yes =	1663
+yes =	1664
+yes =	1665
+yes =	1666
+yes =	1667
+yes =	1668
+yes =	1669
+yes =	1670
+yes =	1670
+yes =	1671
+yes =	1672
+yes =	1673
+yes =	1674
+yes =	1675
+yes =	1676
+yes =	1677
+yes =	1678
+yes =	1679
+yes =	1680
+yes =	1681
+yes =	1682
+yes =	1683
+yes =	1684
+yes =	1685
+yes =	1686
+yes =	1687
+yes =	1688
+yes =	1689
+yes =	1690
+yes =	1691
+yes =	1692
+yes =	1693
+yes =	1696
+yes =	1698
+yes =	1722
+yes =	1735
+yes =	1736
+yes =	1737
+yes =	1738
+yes =	1739
+yes =	1740
+yes =	1741
+yes =	1742
+yes =	1743
+yes =	1744
+yes =	1745
+yes =	1746
+yes =	1747
+yes =	1748
+yes =	1749
+yes =	1750
+yes =	1752
+yes =	1753
+yes =	1754
+yes =	1755
+yes =	1756
+yes =	1758
+yes =	1877
+yes =	1878
+yes =	1883
+yes =	1898
+yes =	1975
+yes =	1976
+yes =	1980
+yes =	1981
+yes =	2056
+yes =	2059
+yes =	2060
+yes =	2061
+yes =	2062
+yes =	2072
+yes =	2073
+yes =	2074
+yes =   2075
+yes =	2076
+yes =	2077
+yes =	2080
+yes =	2081
+yes =	2082
+yes =	2101
+yes =	2107
+yes =	2112
+yes =	2113
+yes =	2114
+yes =	2115
+yes =	2116
+yes =	2117
+yes =	2118
+yes =	2119
+yes =	2120
+yes =	2121
+yes =	2122
+yes =	2123
+yes =	2124
+yes =	2125
+yes =	2126
+yes =	2127
+yes =	2128
+yes =	2130
+yes =	2131
+yes =	2132
+yes =	2133
+yes =	2134
+yes =	2135
+yes =	2136
+yes =	2137
+yes =	2138
+yes =	2139
+yes =	2140
+yes =	2141
+yes =	2142
+yes =	2142
+yes =	2143
+yes =	2144
+yes =	2145
+yes =	2146
+yes =	2147
+yes =	2148
+yes =	2149
+yes =	2150
+yes =	2151
+yes =	2152
+yes =	2153
+yes =	2154
+yes =	2155
+yes =	2156
+yes =	2157
+yes =	2158
+yes =	2159
+yes =	2160
+yes =	2161
+yes =	2162
+yes =	2163
+yes =	2164
+yes =	2165
+yes =	2166
+yes =	2167
+yes =	2168
+yes =	2169
+yes =	2169
+yes =	2170
+yes =	2174
+yes =	2175
+yes =	2176
+yes =	2177
+yes =	2178
+yes =	2179
+yes =	2181
+yes =	2182
+yes =	2182
+yes =	2183
+yes =	2184
+yes =	2185
+yes =	2186
+yes =	2187
+yes =	2193
+yes =	2195
+yes =	2247
+yes =	2248
+yes =	2249
+yes =	2250
+yes =	2251
+yes =	2252
+yes =	2253
+yes =	2254
+yes =	2255
+yes =   2256
+yes =	2257
+yes =	2258
+yes =	2259
+yes =	2260
+yes =	2261
+yes =	2262
+yes =	2263
+yes =	2264
+yes =	2265
+yes =	2266
+yes =	2267
+yes =	2588
+
+
+top = {	x = 22240 y = 4111 }
+bottom = {	x = 1345 y = 10345 }
+
+}
+
+
+# Vp things
+include = "scenarios/southern_conquests/vp.inc"
+
+include = "scenarios/southern_conquests/japan.inc"
+include = "scenarios/southern_conquests/usa.inc"
+include = "scenarios/southern_conquests/australia.inc"
+include = "scenarios/southern_conquests/uk.inc"
+include = "scenarios/southern_conquests/sia.inc"
+include = "scenarios/southern_conquests/phi.inc"
+include = "scenarios/southern_conquests/hol.inc"
+
+
+event = "scenarios/southern_conquests/southern_conquests_events.txt"
+
+
+
+
+
+
+
+
+

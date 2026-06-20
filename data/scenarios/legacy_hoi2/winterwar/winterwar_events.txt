@@ -1,0 +1,1414 @@
+#########################################################################
+#  Soviet Reinforcements
+#########################################################################
+
+event = {
+	id = 1
+	random = no
+	country = SOV
+
+	trigger = {
+ 		random = 40
+		division_exists = { type = 30008 id = 22 }
+	}
+
+	name = "ww_event1_name"
+	desc = "ww_event1_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30008 value = 22  }
+		command = { type = activate_division which = 30008 value = 83 }
+
+	}
+}
+event = {
+	id = 2
+	random = no
+	country = SOV
+
+	trigger = {
+ 		random = 40
+		division_exists = { type = 30008 id = 23 }
+	}
+
+	name = "ww_event2_name"
+	desc = "ww_event1_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+	date = { day = 1 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30008 value = 23  }
+		command = { type = activate_division which = 30008 value = 84 }
+
+	}
+}
+event = {
+	id = 3
+	random = no
+	country = SOV
+
+	trigger = {
+ 		random = 40
+		division_exists = { type = 30008 id = 42 }
+	}
+
+	name = "ww_event3_name"
+	desc = "ww_event1_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+	date = { day = 1 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30008 value = 42 }
+		command = { type = activate_division which = 30008 value = 85  }
+	}
+}
+event = {
+	id = 4
+	random = no
+	country = SOV
+
+
+	name = "ww_event4_name"
+	desc = "ww_event4_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 10 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname4A"
+		command = { type = activate_division which = 30008 value = 62 }
+		command = { type = activate_division which = 30008 value = 63 }
+		command = { type = activate_division which = 30008 value = 64 }
+		command = { type = activate_division which = 30008 value = 65 }
+		command = { type = activate_division which = 30008 value = 66 }
+		command = { type = activate_division which = 30008 value = 67 }
+		command = { type = activate_division which = 30008 value = 68 }
+	}
+}
+event = {
+	id = 5
+	random = no
+	country = SOV
+
+	trigger = {
+		division_exists = { type = 30008 id = 62 }
+	}
+
+	name = "ww_event5_name"
+	desc = "ww_event5_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname4A"
+		command = { type = activate_division which = 30008 value = 69 }
+		command = { type = activate_division which = 30008 value = 70 }
+	}
+}
+event = {
+	id = 6
+	random = no
+	country = SOV
+
+	trigger = {
+ 				random = 30
+}
+
+	name = "ww_event6_name"
+	desc = "ww_event6_desc"
+         picture = "para1"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 5
+
+	action_a = {
+		name = "ww_actionname4A"
+		command = { type = activate_division which = 30008 value = 71 }
+	}
+}
+event = {
+	id = 7
+	random = no
+	country = SOV
+
+	trigger = {
+ 				random = 30
+}
+
+	name = "ww_event7_name"
+	desc = "ww_event6_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 5
+
+	action_a = {
+		name = "ww_actionname4A"
+		command = { type = activate_division which = 30008 value = 72 }
+	}
+}
+event = {
+	id = 8
+	random = no
+	country = SOV
+
+	trigger = {
+ 				random = 30
+}
+
+	name = "ww_event8_name"
+	desc = "ww_event6_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 5
+
+	action_a = {
+		name = "ww_actionname4A"
+		command = { type = activate_division which = 30008 value = 73 }
+	}
+}
+event = {
+	id = 9
+	random = no
+	country = SOV
+
+	trigger = {
+ 		random = 40
+		division_exists = { type = 30008 id = 62 }
+	}
+
+	name = "ww_event9_name"
+	desc = "ww_event9_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname4A"
+		command = { type = activate_division which = 30008 value = 74 }
+		command = { type = activate_division which = 30008 value = 75 }
+		command = { type = activate_division which = 30008 value = 76 }
+		command = { type = activate_division which = 30008 value = 77 }
+		command = { type = activate_division which = 30008 value = 78 }
+	}
+}
+event = {
+	id = 10
+	random = no
+	country = SOV
+
+	trigger = {
+ 		random = 30
+		division_exists = { type = 30008 id = 62 }
+	}
+
+	name = "ww_event9_name"
+	desc = "ww_event9_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname4A"
+		command = { type = activate_division which = 30008 value = 79 }
+		command = { type = activate_division which = 30008 value = 80 }
+		command = { type = activate_division which = 30008 value = 81 }
+		command = { type = activate_division which = 30008 value = 82 }
+	}
+}
+event = {
+	id = 11
+	random = no
+	country = SOV
+
+	trigger = {
+				random = 30
+				control = { province = 187 data = -1 }
+}
+
+	name = "ww_event12_name"
+	desc = "ww_event12_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 4 # Check for trigger conditions every three days
+
+	action_a = {
+		name = "ww_actionname12A"
+		command = { type = activate_division which = 30008 value = 25 }
+		command = { type = activate_division which = 30008 value = 26 }
+		command = { type = activate_division which = 30008 value = 32 }
+		command = { type = activate_division which = 30008 value = 36 }
+		command = { type = vp value = -2 }
+	}
+	action_b = {
+		name = "ww_actionname12B"
+		command = {  }
+	}
+}
+event = {
+	id = 12
+	random = no
+	country = SOV
+
+	trigger = {
+				random = 30
+				control = { province = 194 data = -1 }
+}
+
+	name = "ww_event12_name"
+	desc = "ww_event12_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 4 # Check for trigger conditions every three days
+
+	action_a = {
+		name = "ww_actionname12A"
+		command = { type = activate_division which = 30008 value = 27 }
+		command = { type = activate_division which = 30008 value = 28 }
+		command = { type = activate_division which = 30008 value = 33 }
+		command = { type = activate_division which = 30008 value = 37 }
+		command = { type = vp value = -2 }
+	}
+	action_b = {
+		name = "ww_actionname12B"
+		command = {  }
+	}
+}
+event = {
+	id = 13
+	random = no
+	country = SOV
+
+	trigger = {
+				random = 30
+				control = { province = 152 data = -1 }
+}
+
+	name = "ww_event12_name"
+	desc = "ww_event12_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 4 # Check for trigger conditions every three days
+
+	action_a = {
+		name = "ww_actionname12A"
+		command = { type = activate_division which = 30008 value = 29 }
+		command = { type = activate_division which = 30008 value = 30 }
+		command = { type = activate_division which = 30008 value = 34 }
+		command = { type = activate_division which = 30008 value = 38 }
+		command = { type = vp value = -2 }
+	}
+	action_b = {
+		name = "ww_actionname12B"
+		command = {  }
+	}
+}
+event = {
+	id = 14
+	random = no
+	country = SOV
+
+	trigger = {
+				random = 30
+				control = { province = 133 data = -1 }
+}
+
+	name = "ww_event12_name"
+	desc = "ww_event12_desc"
+         picture = "soviet_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 4 # Check for trigger conditions every three days
+
+	action_a = {
+		name = "ww_actionname12A"
+		command = { type = activate_division which = 30008 value = 31 }
+		command = { type = activate_division which = 30008 value = 35 }
+		command = { type = activate_division which = 30008 value = 39 }
+		command = { type = vp value = -2 }
+	}
+	action_b = {
+		name = "ww_actionname12B"
+		command = {  }
+	}
+}
+#########################################################################
+#  Soviet Replacements
+#########################################################################
+event = {
+	id = 15
+	random = no
+	country = SOV
+
+	trigger = {
+				random = 10
+				NOT = {
+						OR = {
+								control = { province = 144 data = -1 }
+								control = { province = 142 data = -1 }
+								control = { province = 141 data = -1 }
+							}
+				}
+}
+
+	name = "ww_event15_name"
+	desc = "ww_event15_desc"
+         picture = "soviet_replacement"
+	style = 0
+
+
+	date = { day = 1 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname15A"
+		command = { type = manpowerpool value = 50 }
+		command = { type = supplies value = 200 }
+		command = { type = oilpool value = 50 }
+		command = { type = vp value = -1 }
+	}
+	action_b = {
+		name = "ww_actionname15B"
+		command = { type = manpowerpool value = 100 }
+		command = { type = supplies value = 400 }
+		command = { type = oilpool value = 100 }
+		command = { type = vp value = -2 }
+	}
+	action_c= {
+		name = "ww_actionname15C"
+		command = { type = manpowerpool value = 0 }
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 25 }
+		command = { type = vp value = 1 }
+	}
+}
+event = {
+	id = 16
+	random = no
+	country = SOV
+
+	trigger = {
+				random = 10
+				NOT = {
+						OR = {
+								control = { province = 144 data = -1 }
+								control = { province = 142 data = -1 }
+								control = { province = 141 data = -1 }
+							}
+				}
+}
+
+	name = "ww_event15_name"
+	desc = "ww_event16_desc"
+         picture = "soviet_replacement"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname15A"
+		command = { type = manpowerpool value = 50 }
+		command = { type = supplies value = 200 }
+		command = { type = oilpool value = 50 }
+		command = { type = vp value = -1 }
+	}
+	action_b = {
+		name = "ww_actionname15B"
+		command = { type = manpowerpool value = 100 }
+		command = { type = supplies value = 400 }
+		command = { type = oilpool value = 100 }
+		command = { type = vp value = -2 }
+	}
+	action_c= {
+		name = "ww_actionname15C"
+		command = { type = manpowerpool value = 0 }
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 25 }
+		command = { type = vp value = 1 }
+	}
+}
+event = {
+	id = 17
+	random = no
+	country = SOV
+
+	trigger = {
+				control = { province = 187 data = -1 }
+				random = 10
+				NOT = {
+						OR = {
+								control = { province = 142 data = -1 }
+								control = { province = 141 data = -1 }
+							}
+				}
+}
+
+	name = "ww_event17_name"
+	desc = "ww_event17_desc"
+         picture = "soviet_replacement"
+	style = 0
+
+
+	date = { day = 1 month = february year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = february year = 1940 }
+
+	action_a = {
+		name = "ww_actionname15A"
+		command = { type = manpowerpool value = 50 }
+		command = { type = supplies value = 200 }
+		command = { type = oilpool value = 50 }
+		command = { type = vp value = -1 }
+	}
+	action_b = {
+		name = "ww_actionname15B"
+		command = { type = manpowerpool value = 100 }
+		command = { type = supplies value = 400 }
+		command = { type = oilpool value = 100 }
+		command = { type = vp value = -2 }
+	}
+	action_c= {
+		name = "ww_actionname15C"
+		command = { type = manpowerpool value = 0 }
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 25 }
+		command = { type = vp value = 1 }
+	}
+}
+event = {
+	id = 18
+	random = no
+	country = SOV
+
+	trigger = {
+				random = 10
+}
+
+	name = "ww_event18_name"
+	desc = "ww_event18_desc"
+         picture = "soviet_replacement"
+	style = 0
+
+
+	date = { day = 1 month = march year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = march year = 1940 }
+
+	action_a = {
+		name = "ww_actionname18A"
+		command = { type = manpowerpool value = 80 }
+		command = { type = supplies value = 400 }
+		command = { type = oilpool value = 100 }
+		command = { type = vp value = -1 }
+	}
+	action_b = {
+		name = "ww_actionname18B"
+		command = { type = manpowerpool value = 150 }
+		command = { type = supplies value = 1000 }
+		command = { type = oilpool value = 300 }
+		command = { type = vp value = -3 }
+	}
+	action_c= {
+		name = "ww_actionname18C"
+		command = { type = manpowerpool value = 50 }
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 50 }
+		command = { type = vp value = 1 }
+	}
+	action_d= {
+		name = "ww_actionname18D"
+		command = { type = manpowerpool value = 0 }
+		command = { type = supplies value = 0 }
+		command = { type = oilpool value = 0 }
+		command = { type = province_keypoints which = 141 value = 2 }
+		command = { type = province_keypoints which = 142 value = 2 }
+		command = { type = province_keypoints which = 144 value = 2 }
+	}
+}
+#########################################################################
+#  Soviet Fortunes of War
+#########################################################################
+event = {
+	id = 19
+	random = no
+	country = SOV
+
+	trigger = {
+				NOT = {
+						control = { province = 187 data = -1 }
+				}
+}
+
+	name = "ww_event19_name"
+	desc = "ww_event19_desc"
+#        picture = "soviet_fortunes_of_war"
+	style = 0
+	
+	date = { day = 1 month = march year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = march year = 1941 }
+
+	action_a = {
+		name = "ww_actionname19A"
+		command = { type = manpowerpool value = 50 }
+		command = { type = remove_division which = 10849 value = 7 }
+		command = { type = remove_division which = 10849 value = 8 }
+		command = { type = remove_division which = 10849 value = 9 }
+		command = { type = remove_division which = 10849 value = 10 }
+		command = { type = remove_division which = 10849 value = 11 }
+		command = { type = remove_division which = 10849 value = 12 }
+		command = { type = remove_division which = 10849 value = 13 }
+		command = { type = remove_division which = 10849 value = 14 }
+		command = { type = remove_division which = 10849 value = 15 }
+		command = { type = remove_division which = 10849 value = 16 }
+		command = { type = vp value = -5 }
+		command = { type = add_corps which = "Red Navy Sailor Corps" value = land  where = 187 }
+		command = { type = add_division which = "1. Red Navy Division" value = infantry when = 2 where = engineer }
+		command = { type = add_division which = "2. Red Navy Division" value = infantry when = 2 where = artillery }
+		command = { type = add_division which = "3. Red Navy Division" value = infantry when = 2 where = engineer }
+		command = { type = add_division which = "4. Red Navy Division" value = infantry when = 2 where = artillery }
+	}
+}
+#########################################################################
+#  Finnish Army Reinforcements
+#########################################################################
+
+
+event = {
+	id = 20
+	random = no
+	country = FIN
+
+	trigger = {
+ 				random = 10
+}
+
+	name = "ww_event20_name"
+	desc = "ww_event1_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 1 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = activate_division which = 30038 value = 91 }
+
+	}
+}
+event = {
+	id = 21
+	random = no
+	country = FIN
+
+	trigger = {
+ 		random = 10
+		division_exists = { type = 30038 id = 52 }
+	}
+
+	name = "ww_event21_name"
+	desc = "ww_event1_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 15 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30038 value = 52  }
+		command = { type = activate_division which = 30038 value = 127 }
+
+	}
+}
+event = {
+	id = 22
+	random = no
+	country = FIN
+
+	trigger = {
+ 		random = 10
+		division_exists = { type = 30038 id = 72 }
+	}
+
+	name = "ww_event22_name"
+	desc = "ww_event1_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 15 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30038 value = 72  }
+		command = { type = activate_division which = 30038 value = 92 }
+
+	}
+}
+event = {
+	id = 23
+	random = no
+	country = FIN
+
+	trigger = {
+ 		random = 10
+		division_exists = { type = 30038 id = 73 }
+	}
+
+	name = "ww_event23_name"
+	desc = "ww_event1_desc"
+         picture = "para1"
+	style = 0
+
+
+	date = { day = 15 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30038 value = 73  }
+		command = { type = activate_division which = 30038 value = 93 }
+
+	}
+}
+event = {
+	id = 24
+	random = no
+	country = FIN
+
+	trigger = {
+ 		random = 10
+		division_exists = { type = 30038 id = 74 }
+	}
+
+	name = "ww_event24_name"
+	desc = "ww_event1_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 15 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30038 value = 74  }
+		command = { type = activate_division which = 30038 value = 99 }
+
+	}
+}
+event = {
+	id = 25
+	random = no
+	country = FIN
+
+	trigger = {
+ 		random = 10
+		division_exists = { type = 30038 id = 76 }
+	}
+
+	name = "ww_event25_name"
+	desc = "ww_event1_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 15 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30038 value = 76  }
+		command = { type = activate_division which = 30038 value = 100 }
+
+	}
+}
+event = {
+	id = 26
+	random = no
+	country = FIN
+
+	trigger = {
+ 		random = 10
+		division_exists = { type = 30038 id = 77 }
+	}
+
+	name = "ww_event26_name"
+	desc = "ww_event1_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 15 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30038 value = 77  }
+		command = { type = activate_division which = 30038 value = 101 }
+
+	}
+}
+event = {
+	id = 27
+	random = no
+	country = FIN
+
+	trigger = {
+ 		random = 10
+		division_exists = { type = 30038 id = 78 }
+	}
+
+	name = "ww_event27_name"
+	desc = "ww_event1_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 15 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = remove_division which = 30038 value = 78  }
+		command = { type = activate_division which = 30038 value = 102 }
+
+	}
+}
+event = {
+	id = 28
+	random = no
+	country = FIN
+
+	trigger = {
+ 				random = 10
+}
+
+	name = "ww_event28_name"
+	desc = "ww_event28_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 20 month = february year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = activate_division which = 30038 value = 103 }
+		command = { type = activate_division which = 30038 value = 104 }
+		command = { type = activate_division which = 30038 value = 105 }
+	}
+}
+event = {
+	id = 29
+	random = no
+	country = FIN
+
+	trigger = {
+ 				random = 10
+}
+
+	name = "ww_event29_name"
+	desc = "ww_event29_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = activate_division which = 30038 value = 106 }
+		command = { type = activate_division which = 30038 value = 107 }
+		command = { type = activate_division which = 30038 value = 108 }
+		command = { type = activate_division which = 30038 value = 109 }
+		command = { type = activate_division which = 30038 value = 110 }
+	}
+}
+event = {
+	id = 30
+	random = no
+	country = FIN
+
+	trigger = {
+ 				random = 10
+}
+
+	name = "ww_event29_name"
+	desc = "ww_event29_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 1 month = february year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = february year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = activate_division which = 30038 value = 111 }
+		command = { type = activate_division which = 30038 value = 112 }
+		command = { type = activate_division which = 30038 value = 113 }
+		command = { type = activate_division which = 30038 value = 114 }
+		command = { type = activate_division which = 30038 value = 115 }
+		command = { type = activate_division which = 30038 value = 116 }
+		command = { type = activate_division which = 30038 value = 117 }
+	}
+}
+event = {
+	id = 31
+	random = no
+	country = FIN
+
+	trigger = {
+ 				random = 10
+}
+
+	name = "ww_event29_name"
+	desc = "ww_event29_desc"
+         picture = "finnish_reinforcment"
+	style = 0
+
+
+	date = { day = 1 month = march year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = march year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = activate_division which = 30038 value = 118 }
+		command = { type = activate_division which = 30038 value = 119 }
+		command = { type = activate_division which = 30038 value = 120 }
+		command = { type = activate_division which = 30038 value = 121 }
+		command = { type = activate_division which = 30038 value = 122 }
+	}
+}
+#########################################################################
+#  Finnish Army Replacements
+#########################################################################
+event = {
+	id = 32
+	random = no
+	country = FIN
+
+	trigger = {
+				random = 10
+}
+
+	name = "ww_event32_name"
+	desc = "ww_event32_desc"
+         picture = "finnish_replacement"
+	style = 0
+
+
+	date = { day = 1 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = manpowerpool value = 100 }
+		command = { type = supplies value = 20 }
+		command = { type = oilpool value = 5 }
+
+	}
+}
+event = {
+	id = 33
+	random = no
+	country = FIN
+
+	trigger = {
+				random = 10
+}
+
+	name = "ww_event33_name"
+	desc = "ww_event32_desc"
+         picture = "finnish_replacement"
+	style = 0
+
+
+	date = { day = 1 month = january year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = manpowerpool value = 100 }
+		command = { type = supplies value = 20 }
+		command = { type = oilpool value = 5 }
+	}
+}
+event = {
+	id = 34
+	random = no
+	country = FIN
+
+	trigger = {
+				random = 10
+}
+
+	name = "ww_event34_name"
+	desc = "ww_event32_desc"
+         picture = "finnish_replacement"
+	style = 0
+
+
+	date = { day = 1 month = february year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = february year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = manpowerpool value = 100 }
+		command = { type = supplies value = 20 }
+		command = { type = oilpool value = 5 }
+	}
+}
+event = {
+	id = 35
+	random = no
+	country = FIN
+
+	trigger = {
+				random = 10
+}
+
+	name = "ww_event35_name"
+	desc = "ww_event32_desc"
+         picture = "finnish_replacement"
+	style = 0
+
+
+	date = { day = 1 month = march year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = march year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = manpowerpool value = 100 }
+		command = { type = supplies value = 20 }
+		command = { type = oilpool value = 5 }
+	}
+}
+#########################################################################
+#  Finnish Air Force Reinforcements
+#########################################################################
+event = {
+	id = 36
+	random = no
+	country = FIN
+
+	trigger = {
+				random = 10
+}
+
+	name = "ww_event36_name"
+	desc = "ww_event36_desc"
+         picture = "finnish_air_force_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = activate_division which = 30038 value = 123 }
+	}
+}
+event = {
+	id = 37
+	random = no
+	country = FIN
+
+	trigger = {
+				random = 10
+}
+
+	name = "ww_event37_name"
+	desc = "ww_event37_desc"
+         picture = "finnish_air_force_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = february year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = february year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = activate_division which = 30038 value = 124 }
+	}
+}
+event = {
+	id = 38
+	random = no
+	country = FIN
+
+	trigger = {
+				random = 10
+}
+
+	name = "ww_event38_name"
+	desc = "ww_event38_desc"
+         picture = "finnish_air_force_reinforcments"
+	style = 0
+
+
+	date = { day = 1 month = march year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 30 month = march year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = activate_division which = 30038 value = 125 }
+		command = { type = activate_division which = 30038 value = 126 }
+	}
+}
+#########################################################################
+#  Finish Fortunes of War
+#########################################################################
+event = {
+	id = 39
+	random = no
+	country = FIN
+
+	trigger = {
+
+}
+
+	name = "ww_event39_name"
+	desc = "ww_event39_desc"
+         picture = "finish_fortunes_of_war"
+	style = 0
+
+
+	date = { day = 1 month = december year = 1939 }
+
+	action_a = {
+		name = "ww_actionname39A"
+		command = { type = vp value = 2 }
+	}
+	action_b = {
+		name = "ww_actionname39B"
+		command = { type = vp value = -1 }
+		command = { type = setflag which = allied_pressure }
+	}
+	action_c = {
+		name = "ww_actionname39C"
+		command = { type = vp value = -2 }
+		command = { type = setflag which = german_pressure }
+	}
+}
+event = {
+	id = 40
+	random = no
+	country = FIN
+
+	trigger = {
+				flag = german_pressure
+				random = 1
+}
+
+	name = "ww_event40_name"
+	desc = "ww_event40_desc"
+         picture = "finish_fortunes_of_war"
+	style = 0
+
+
+	date = { day = 10 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname40A"
+		command = { type = vp value = -5 }
+		command = { type =	alliance which = SWE }
+		command = { type = make_puppet which = SWE }
+		command = { type = access which = SWE }
+		command = { type =	sleepevent which = 41 }
+
+	}
+}
+event = {
+	id = 41
+	random = no
+	country = FIN
+
+	trigger = {
+				flag = german_pressure
+				random = 1
+}
+
+	name = "ww_event41_name"
+	desc = "ww_event41_desc"
+         picture = "finish_fortunes_of_war"
+	style = 0
+
+
+	date = { day = 10 month = february year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = march year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = vp value = -3 }
+		command = { type =	trigger which = 42 }
+	}
+}
+event = {
+	id = 42
+	random = no
+	country = SOV
+
+	trigger = {
+				# triggered by FIN41
+}
+
+	name = "ww_event41_name"
+	desc = "ww_event41_desc"
+         picture = "finish_fortunes_of_war"
+	style = 0
+
+
+	action_a = {
+		name = "ww_actionname42A"
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+	}
+}
+event = {
+	id = 43
+	random = no
+	country = FIN
+
+	trigger = {
+				flag = allied_pressure
+				random = 1
+}
+
+	name = "ww_event43_name"
+	desc = "ww_event43_desc"
+         picture = "finish_fortunes_of_war"
+	style = 0
+
+
+	date = { day = 10 month = december year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = january year = 1940 }
+
+	action_a = {
+		name = "ww_actionname43A"
+		command = { type = vp value = 2 }
+	}
+}
+event = {
+	id = 44
+	random = no
+	country = FIN
+
+	trigger = {
+				flag = allied_pressure
+				random = 1
+}
+
+	name = "ww_event44_name"
+	desc = "ww_event44_desc"
+         picture = "finish_fortunes_of_war"
+	style = 0
+
+
+	date = { day = 20 month = february year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 15 month = march year = 1940 }
+
+	action_a = {
+		name = "ww_actionname1A"
+		command = { type = vp value = -2 }
+		command = { type = activate_division which = 30038 value = 128 }
+		command = { type = activate_division which = 30038 value = 129 }
+	}
+}
+#########################################################################
+#  Finnish Strategic Victory
+#########################################################################
+event = {
+	id = 45
+	random = no
+	country = FIN
+
+	trigger = {
+ 				 vp = 55
+}
+
+	name = "ge_event5_name"
+	desc = "ww_win_1"
+         picture = "finish_fortunes_of_war"
+	style = 0
+
+	date = { day = 15 month = january year = 1940 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 13 month = march year = 1940 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  Finnish Marginal Victory
+#########################################################################
+event = {
+	id = 46
+	random = no
+	country = FIN
+
+	trigger = {
+ 				 vp = 40
+ 			NOT = { vp = 55 }
+}
+
+	name = "ge_event7_name"
+	desc = "ww_win_2"
+         picture = "german_marginal_victory2"
+	style = 0
+
+	date = { hour = 23 day = 13 month = march year = 1940 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}
+#########################################################################
+#  Soviet Strategic Victory
+#########################################################################
+event = {
+	id = 47
+	random = no
+	country = SOV
+
+	trigger = {
+ 				vp = 60
+}
+
+	name = "fw_event14_name"
+	desc = "ww_win_3"
+         picture = "soviet_strategic_victory"
+	style = 0
+
+	date = { day = 30 month = november year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 13 month = march year = 1940 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 8 }
+	}
+}
+#########################################################################
+#  Soviet Marginal Victory
+#########################################################################
+event = {
+	id = 48
+	random = no
+	country = SOV
+
+	trigger = {
+ 				 vp = 40
+ 			NOT = { vp = 60 }
+
+}
+
+	name = "fw_event15_name"
+	desc = "ww_win_4"
+         picture = "soviet_marginal_victory"
+	style = 0
+
+	date = { hour = 23 day = 12 month = march year = 1940 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 7 }
+	}
+}

@@ -1,0 +1,114 @@
+name = "WATCHTOWER_NAME"
+panel = "scenarios/data/scenario_watchtower.bmp"
+
+header = {
+	name = "WATCHTOWER_NAME"
+	startyear = 1942
+	endyear = 1943
+	free = no
+
+	combat = yes	#this is a battlescenario
+
+	JAP = {
+		desc = "OPW_USA"
+		picture = "scenarios\data\watchtower.bmp"		
+		}
+
+	ALS = {
+		desc = "OPW_JAP"
+		bottom = yes
+		picture = "scenarios\data\watchtower.bmp"		
+		}
+
+	}
+
+globaldata = {
+
+	rules = {
+		diplomacy = no
+		production = no
+		technology = no
+		}
+
+	startdate = {
+		year = 1942
+		month = august
+		day = 6
+		hour = 12
+		}
+	enddate = {
+		year = 1943
+		month = march
+		day = 1
+		}
+
+	allies = {
+		id = { type = 15000 id = 1 }
+		participant = { ALS }
+		}
+	axis = {
+		id = { type = 15000 id = 2 }
+		participant = { JAP }
+		}
+
+	war = {
+		id = { type = 9430 id = 1 }
+		date = {
+			year = 1941
+			month = december
+			day = 7
+			hour = 1
+			}
+		enddate = {
+			year = 1941
+			month = december
+			day = 7
+			hour = 1
+			}
+		attackers = {
+			id = { type = 9430 id = 2 }
+			participant = { JAP }
+			}
+		defenders = {
+			id = { type = 9430 id = 3 }
+			participant = { ALS }
+			}
+		}
+	}
+
+map = {
+	no = all
+	yes = 1614
+	yes = 1622
+	yes = 1669
+	yes = 1670
+	yes = 1681
+	yes = 1682
+	yes = 1683
+	yes = 1684
+	yes = 1685
+	yes = 1686
+	yes = 1688
+	yes = 1689
+	yes = 1690
+	yes = 1692
+	yes = 1883
+	yes = 2101
+	yes = 2115
+	yes = 2117
+	yes = 2118
+	yes = 2119
+	yes = 2120
+	yes = 2121
+	yes = 2123
+	yes = 2124
+	yes = 2125
+	top = { x = 27828 y = 7186 }
+	bottom = { x = 100 y = 9250 }
+	}
+
+include = "scenarios/watchtower/vp.inc"
+include = "scenarios/watchtower/japan.inc"
+include = "scenarios/watchtower/usa.inc"
+
+event = "scenarios/watchtower/watchtower_events.txt"

@@ -1,0 +1,176 @@
+name = "CORALSEA_NAME"
+panel = "scenarios/data/scenario_coralsea.bmp"
+
+header = {
+	name = "CORALSEA_NAME"
+
+    startyear = 1942
+    endyear = 1944
+   free = no
+	combat = yes	#this is a battlescenario
+
+
+	JAP = {
+			desc = COR_JAP
+			picture = "scenarios\data\coralsea.bmp"
+	}
+
+	AST = {
+			desc = COR_AST
+			bottom = yes
+			picture = "scenarios\data\coralsea.bmp"
+	}
+
+	USA = {
+			desc = COR_USA
+			bottom = yes
+			picture = "scenarios\data\coralsea.bmp"
+	}
+
+}
+
+globaldata = {
+
+  rules = {
+         diplomacy = no
+         technology = no
+         }
+
+    startdate = {
+        year = 1942
+        month = may
+		day = 8
+        }
+    enddate = {
+        year = 1944
+        month = june
+        day = 25   ###???
+        }
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { AST USA }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { JAP }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1941
+	            month = december
+	            day = 7
+	            hour = 1
+            }
+            enddate = {
+	            year = 1941
+	            month = december
+	            day = 7
+	            hour = 1
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { JAP }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { USA AST }
+        	}
+	}
+
+    }
+
+
+
+map = {
+no = all
+yes =	1612
+yes =	1613
+yes =	1614
+yes =	1622
+yes =	1667
+yes =	1668
+yes =	1669
+yes =	1670
+yes =	1671
+yes =	1672
+yes =	1677
+yes =	1678
+yes =	1679
+yes =	1680
+yes =	1681
+yes =	1682
+yes =	1683
+yes =	1684
+yes =	1685
+yes =	1686
+yes =	1687
+yes =	1688
+yes =	1689
+yes =	1690
+yes =	1691
+yes =	1692
+yes =	1693
+yes =	1696
+yes =	1698
+yes =	1722
+yes =	1752
+yes =	1753
+yes =	1754
+yes =	1755
+yes =	1756
+yes =	1758
+yes =	1883
+yes =	1976
+yes =	1980
+yes =	2101
+yes =	2107
+yes =	2112
+yes =	2113
+yes =	2114
+yes =	2115
+yes =	2116
+yes =	2117
+yes =	2118
+yes =	2119
+yes =	2120
+yes =	2121
+yes =	2122
+yes =	2123
+yes =	2124
+yes =	2125
+yes =	2126
+yes =	2127
+yes =	2128
+yes =	2169
+yes =	2179
+yes =	2247
+yes = 1975
+yes = 1981
+yes = 2168
+
+top = {	x = 27400 y = 6100 }
+bottom = {	x = 2840 y = 9900 }
+
+}
+
+
+# Vp things
+include = "scenarios/coralsea/vp.inc"
+
+include = "scenarios/coralsea/japan.inc"
+include = "scenarios/coralsea/usa.inc"
+include = "scenarios/coralsea/australia.inc"
+
+
+event = "scenarios/coralsea/coralsea_events.txt"
+
+
+
+
+
+
+
+
+

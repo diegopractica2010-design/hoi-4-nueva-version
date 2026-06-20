@@ -1,0 +1,213 @@
+#########################################################################
+#  German Strategic Victory
+#########################################################################
+event = {
+	id = 1
+	random = no
+	country = GER
+
+	trigger = {
+ 				vp = 64
+}
+
+	name = "ge_event5_name"
+	desc = "grun_text_1"
+	picture = "german_strategic_victory2"
+	style = 0
+
+	date = { day = 1 month = october year = 1938 }
+	offset = 1
+	deathdate = { day = 20 month = november year = 1938 }
+
+	action_a = {
+		name = "ge_actioname5A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  German Marginal Victory
+#########################################################################
+event = {
+	id = 2
+	random = no
+	country = GER
+
+	trigger = {
+		range = { min = 44 max = 63 }
+	}
+
+	name = "ge_event7_name"
+	desc = "grun_text_2"
+	picture = "german_marginal_victory2"
+	style = 0
+
+	date = { hour = 23 day = 19 month = november year = 1938 }
+
+	action_a = {
+		name = "ge_actioname7A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}
+#########################################################################
+#  German Marginal Defeat
+#########################################################################
+#event = {
+#	id = 3
+#	random = no
+#	country = GER
+#
+#	trigger = {
+# 			vp = 25
+#
+# 			NOT = { 
+#				vp = 44 
+#				event = 2
+#				}
+#
+#}
+#
+#	name = "ge_event9_name"
+#	desc = "ge_event9_desc"
+#	picture = "german_marginal_defeat2"
+#	style = 0
+#
+#	date = { hour = 23 day = 19 month = november year = 1938 }
+#
+#	action_a = {
+#		name = "ge_actioname9A" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+#  German Strategic Defeat
+#########################################################################
+#event = {
+#	id = 4
+#	random = no
+#	country = GER
+#
+#	trigger = {
+#			NOT = { 
+#				vp = 25 
+#			}
+#	}
+#
+#	name = "ge_event11_name"
+#	desc = "ge_event11_desc"
+#	picture = "german_strategic_defeat2"
+#	style = 0
+#
+#	date = { hour = 23 day = 19 month = november year = 1938 }
+#
+#	action_a = {
+#		name = "ge_actioname11A" #End Game
+#		command = {  }
+#	}
+#}
+#
+#########################################################################
+#  Czech Strategic Victory
+#########################################################################
+event = {
+	id = 5
+	random = no
+	country = CZE
+
+	trigger = {
+ 				vp = 64
+	}
+
+	name = "ge_event5_name"
+	desc = "grun_text_3"
+	picture = "czech_strategic_victory"
+	style = 0
+
+	date = { day = 1 month = october year = 1938 }
+	offset = 1
+	deathdate = { day = 20 month = november year = 1938 }
+
+	action_a = {
+		name = "ge_actioname5A" #End Game
+		command = { type = endgame value = 6 }
+	}
+}
+#########################################################################
+#  Czech Marginal Victory
+#########################################################################
+event = {
+	id = 6
+	random = no
+	country = CZE
+
+	trigger = {
+		NOT = { axis = 44 }
+	}
+
+	name = "ge_event7_name"
+	desc = "grun_text_4"
+	picture = "czech_marginal_victory"
+	style = 0
+
+	date = { hour = 23 day = 19 month = november year = 1938 }
+
+	action_a = {
+		name = "ge_actioname7A" #End Game
+		command = { type = endgame value = 5 }
+	}
+}
+#########################################################################
+#  German Marginal Defeat
+#########################################################################
+#event = {
+#	id = 7
+#	random = no
+#	country = CZE
+#
+#	trigger = {
+#			vp = 25
+#
+# 			NOT = { 
+#				vp = 44 
+#				event = 6
+#				}
+#
+#}
+#
+#	name = "ge_event9_name"
+#	desc = "ge_event9_desc"
+#	picture = "german_marginal_defeat3"
+#	style = 0
+#
+#	date = { hour = 23 day = 19 month = november year = 1938 }
+#
+#	action_a = {
+#		name = "ge_actioname9A" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+#  German Strategic Defeat
+#########################################################################
+#event = {
+#	id = 8
+#	random = no
+#	country = CZE
+#
+#	trigger = {
+# 			NOT = { 
+#				vp = 25 
+#			}
+#	}
+#
+#	name = "ge_event10_name"
+#	desc = "ge_event10_desc"
+#	picture = "german_strategic_defeat"
+#	style = 0
+#
+#	date = { hour = 23 day = 19 month = november year = 1938 }
+#
+#	action_a = {
+#		name = "ge_actioname10A" #End Game
+#		command = {  }
+#	}
+#}

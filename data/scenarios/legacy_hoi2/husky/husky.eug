@@ -1,0 +1,151 @@
+name = "husky_name"
+panel = "scenarios/data/scenario_husky.bmp"
+
+header = {
+	name = "operation husky"
+    startyear = 1943
+    endyear = 1944
+   free = no
+
+
+	ENG = {
+	}
+
+	USA = {
+	}
+
+	GER = {
+	}
+
+	ITA = {
+	}
+
+
+
+
+}
+
+globaldata = {
+
+ rules = {
+        diplomay = no
+         production = no
+         research = no
+        }
+
+    startdate = {
+        year = 1943
+        month = july
+		day = 9
+                hour = 4
+        }
+    enddate = {
+        year = 1944
+        month = december
+        day = 25   ###???
+        }
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { ENG USA }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { GER ITA }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1939
+	            month = september
+	            day = 1
+	            hour = 1
+            }
+            enddate = {
+	            year = 1939
+	            month = september
+	            day = 1
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { GER ITA }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { USA ENG }
+        	}
+	}
+
+    }
+
+
+
+
+map = {
+no = all
+yes =	31
+yes =	368
+yes =	369
+yes =	370
+yes =	371
+yes =	373
+yes =	376
+yes =	377
+yes =	378
+yes =	379
+yes =	937
+yes =	512
+yes =	513
+yes =	514
+yes =	515
+yes =	516
+yes =	517
+yes =	518
+yes =	519
+yes =	520
+yes =	521
+yes =	522
+yes =	523
+yes =	524
+yes =	525
+yes =	526
+yes =	531
+yes =	534
+yes =	939
+yes =	940
+yes =	2437
+yes =	2439
+yes =	2440
+yes =	2441
+yes =	2442
+yes =	2443
+yes =	2444
+yes =	2446
+yes =	2448
+
+
+top = {	x = 13240 y = 3720 }
+bottom = {	x = 18400 y = 4952 }
+
+}
+
+
+# Vp things
+include = "scenarios/husky/vp.inc"
+
+include = "scenarios/husky/ita.inc"
+include = "scenarios/husky/ger.inc"
+include = "scenarios/husky/eng.inc"
+include = "scenarios/husky/usa.inc"
+
+event = "scenarios/husky/husky_events.txt"
+
+
+
+
+
+
+
+
+
+

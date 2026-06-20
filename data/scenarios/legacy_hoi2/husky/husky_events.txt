@@ -1,0 +1,2469 @@
+#############################
+#Event List
+#
+#  1. (GER) 90 PzG deployed from sardinia
+#  2. (GER) German Reinforcements
+#  3. (GER) German Reinforcements #commented out-duplicate of #2
+#  4. (GER) SS reiforcements
+#  5. (GER) Removal of SS panzers
+#  6. (GER) 14th Amry Corps Activated
+#  7. (GER) Luftwaffe withdraws
+#  8. (GER) Fighter reinforcements
+#  9. (ENG) RN reinforcements
+# 10. (ENG) British reinforcemnts
+# 11. (ENG) CW reinforcements
+# 12. (ENG) British reinforcements
+# 13. (ENG) Indian/British reinforcements
+# 14. (ENG) Polish reinforcemnts
+# 15. (USA) USAAF reinforements
+# 16. (USA) USAAF reinforcements
+# 17. (USA) USAAF reinforcements
+# 18. (USA) 9th Infantry arrives
+# 19. (USA) French Colonials
+# 20. (USA) American reinforcements
+# 21. (USA) French reinforcements
+# 22. (GER) Rescue Mussolini
+# 23. (GER) Strategic defense of Italy options
+# 24. (ITA) Surrender of Italy
+# 25. (GER) Trasimene Line
+# 26. (GER) Cassino/Gustav line
+# 27. (ITA) Italy inavaded!
+# 28. (GER) Gothic Line
+# 29. (USA) American igneuity
+# 30. (ENG) British Experience
+# 31. (GER) Allied strategic bombing
+# 32. (USA) 82nd Withdrawn
+# 33. (ENG) 1st Abn withdrawn
+# 34. (ITA) Italian surrender (if player opts to become RSI)
+# 35. (RSI) Mussolini Rescued
+# 36. (USA) Anzio Annie
+# 37. (ENG) Anzio Annie
+# 38. (USA) Strategic Victory
+# 39. (ENG) Stratgeic victory
+# 40. (ENG) 50,51 Infantry withdrawn
+# 41. (ENG) 50, 51 Infantry redeployed
+# 42. (ENG) Greek and Indian Reinforcements
+# 43. (ENG) 50, 51 Infantry, 7 Armor withdrawn
+# 44. (ENG) 4 Armor Bde removed
+# 45. (ENG) 46, 56 Infantry removed
+# 46. (ENG) 201 Gds removed
+# 47. (ENG) 23 Armor Bde removed
+# 48. (ENG) 4 Infantry, 4 Indian removed
+# 49. (ENG) British reinforcements 
+# 50. (ENG) 6 Armor arrives
+# 51. (ENG) CW reinforcements arrive
+# 52. (ENG) British armor reinforcements
+# 53. (ENG) 2 Amor Bde arrives
+# 54. (ENG) Jewish Bde and RE arrive
+# 55. (USA) 1, 3, 9 Infantry removed
+# 56. (USA) 1, 9 Infantry rmeoved
+# 57. (USA) Withdraws for invasion of S.France (Anvil/Dragoon)
+# 58. (USA) French forces removed
+# 59. (USA) 1, 3, 9 Infantry redeployed plus 34 Infantry
+# 60. (USA) French reinforcements
+# 61. (USA) American and French reinforcements
+# 62. (USA) 91 Infantry arrives
+# 63. (USA) Brazillian reinforcements
+# 64. (USA) 10 Mountain arrives
+# 65. (USA) Dissolution of 3rd Army
+# 66. (GER) German strategic Victory
+# 67. (GER) German Marginal Victory
+# 68. (ITA) Reinforcements from France
+# 69. (ITA) New Italian Army (post surrender)
+# 70. (RSI) Formation of RSI Army
+# 71. (RSI) Italian SS Unit
+# 72. (RSI) Black Brigades
+# 73. (GER) Unlock XIV Corps reserves
+# 74. (GER) 10. Armee unlocked
+# 75. (GER) LXXXVII corps unlocked
+###############################################################
+
+
+
+
+event = { 
+	id = 1
+	random = no
+	country = GER 
+        
+        trigger = { not = { or = {  control = { province = 525 data = ITA }
+                                    control = { province = 526 data = ITA }	
+                                 }      
+                          }
+                  }
+  
+	name = "ge_event1_name"   ###reinforcements arrive   90th PzG
+	desc = "ge_event1_desc"
+        picture = "german_reinforcment_3"
+	style = 0
+	
+	date = { day = 9 month = july year = 1943 }
+        offset = 7
+	deathdate = { day = 1 month = august year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = unlock_division which = 10000 value = 18 } #90th PzG
+	}
+}
+
+event = { 
+	id = 2
+	random = no
+	country = GER
+        
+        trigger = { 
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			}
+		random = 35 }
+  
+	name = "ge_event1_name"   ###reinforcements arrive  
+	desc = "ge_event1_desc"
+        picture = "german_reinforcment_2"
+	style = 0
+	
+	date = { day = 1 month = august year = 1943 }
+        offset = 3
+	deathdate = { day = 1 month = september year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10000 value = 19 where = 376 } #1 Fallschrimjaeger
+		command = { type = activate_division which = 10000 value = 20 where = 376 } #65 Infantry
+		command = { type = activate_division which = 10000 value = 21 where = 376 } #334 Infantry
+		command = { type = activate_division which = 10000 value = 22 where = 376 } #26 Panzer
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+#event = { 
+#	id = 3
+#	random = no
+#	country = GER
+#       
+#       trigger = { random = 35 }
+#  
+#	name = "ge_event1_name"   ###reinforcements arrive  
+#	desc = "ge_event1_desc"
+#        picture = "german_reinforcment_4"
+#	style = 0
+#	
+#	date = { day = 1 month = august year = 1943 }
+#        offset = 3
+#	deathdate = { day = 1 month = september year = 1943 }
+#
+#	
+#	action_a = {
+#		name = "ge_actioname1A"
+#		command = { type = activate_division which = 10000 value = 19 where = 376 } 
+#		command = { type = activate_division which = 10000 value = 20 where = 376 }
+#		command = { type = activate_division which = 10000 value = 21 where = 376 }
+#		command = { type = activate_division which = 10000 value = 22 where = 376 }
+#	}
+#}
+
+event = { 
+	id = 4
+	random = no
+	country = GER
+        
+        trigger = { 
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 521 data = ITA }
+			exists = RSI
+			}
+		random = 35 }
+  
+	name = "ge_event1_name"   ###reinforcements arrive 
+	desc = "ge_event1_desc"
+        picture = "german_reinforcment_5"
+	style = 0
+	
+	date = { day = 15 month = september year = 1943 }
+        offset = 10
+	deathdate = { day = 30 month = november year = 1943 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10000 value = 28 where = 376 } #1 SS LAH
+		command = { type = activate_division which = 10000 value = 29 where = 376 } #2 SS DR
+		command = { type = activate_division which = 10000 value = 30 where = 376 } #3 SS TK
+		command = { type = activate_division which = 10000 value = 33 where = 376 } #167 Infantry
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+
+event = { 
+	id = 5
+	random = no
+	country = GER
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event2_name"   ###remove ss pz korps
+	desc = "ge_event2_desc"
+        picture = "german_reinforcment_6"
+	style = 0
+	
+	date = { day = 15 month = january year = 1944 }
+        offset = 10
+	deathdate = { day = 30 month = march year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 10000 value = 28  } #1 SS LAH
+		command = { type = remove_division which = 10000 value = 29  } #2 SS DR
+		command = { type = remove_division which = 10000 value = 30  } #3 SS TK
+	}
+}
+
+
+
+event = { 
+	id = 6
+	random = no
+	country = GER 
+        
+        trigger = { not = { or = {  control = { province = 513 data = ITA }
+                                    control = { province = 514 data = ITA }	
+                                    control = { province = 512 data = ITA }	
+                                    control = { province = 515 data = ITA }	
+                                    control = { province = 516 data = ITA }	
+                                    control = { province = 517 data = ITA }	
+                                    control = { province = 518 data = ITA }	
+                                    ####to do: check provinces!!!!!!!
+                                 }      
+                          }
+                  }
+  
+	name = "ge_event1_name"   ###14 army activated
+	desc = "ge_event1_desc"
+        picture = "german_reinforcment_7"
+	style = 0
+	
+	date = { day = 9 month = july year = 1943 }
+        offset = 7
+	deathdate = { day = 30 month = december year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 10000 value = 12  } #514 #305 Infantry
+		command = { type = remove_division which = 10000 value = 13  } #514 #334 Infantry
+		command = { type = remove_division which = 10000 value = 15  } #513 #356 Infantry
+		command = { type = remove_division which = 10000 value = 16  } #513 #278 Infantry
+		command = { type = remove_division which = 10000 value = 17  } #513 #188 Infantry
+		command = { type = activate_division which = 10000 value = 23  where = 514 when = 0 } #305 Infantry
+		command = { type = activate_division which = 10000 value = 24  where = 514 when = 0 } #334 Infantry
+		command = { type = activate_division which = 10000 value = 25 where = 513 when = 0 } #356 Infantry
+		command = { type = activate_division which = 10000 value = 26 where = 513 when = 0 } #278 Infantry
+		command = { type = activate_division which = 10000 value = 27 where = 513 when = 0 } #188 Infantry
+		command = { type = activate_division which = 10000 value = 32 where = 513 when = 0 } #14 Army HQ
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 7
+	random = no
+	country = GER
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event2_name"   ###remove 
+	desc = "ge_event2_desc"
+        picture = "german_air_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = december year = 1943 }
+        offset = 8
+	deathdate = { day = 30 month = march year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 10000 value = 42  } #KG 76
+		command = { type = remove_division which = 10000 value = 53  } #KG 53
+	}
+}
+
+
+
+event = { 
+	id = 8
+	random = no
+	country = GER
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   ###reinforcements arrive 
+	desc = "ge_event1_desc"
+        picture = "german_air_reinforcments"
+	style = 0
+	
+	date = { day = 15 month = september year = 1943 }
+        offset = 10
+	deathdate = { day = 30 month = december year = 1943 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10000 value = 54 where = 515 when = 0 } #ZG 26
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+event = { 
+	id = 9
+	random = no
+	country = eng
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   ###reinforcements arrive -Royal Navy
+	desc = "ge_event1_desc"
+        picture = "royal_navy_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = september year = 1943 }
+        offset = 5
+	deathdate = { day = 30 month = december year = 1943 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 55 where = 31 } #Illustrious
+		command = { type = activate_division which = 11000 value = 56 where = 31 } #Battler
+		command = { type = activate_division which = 11000 value = 57 where = 31 } #Hunter
+		command = { type = activate_division which = 11000 value = 58 where = 31 } #Stalker
+		command = { type = activate_division which = 11000 value = 59 where = 31 } #Unicorn
+		command = { type = activate_division which = 11000 value = 60 where = 31 } #Uganda
+		command = { type = activate_division which = 11000 value = 63 where = 31 } #Spartan
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+
+event = { 
+	id = 10
+	random = no
+	country = eng
+        
+        trigger = { not = { AND = {  control = { province = 525 data = ITA }
+                                    control = { province = 526 data = ITA }	
+                                 }      
+                          }
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments"
+	style = 0
+	
+	date = { day = 9 month = july year = 1943 }
+        offset = 1
+	deathdate = { day = 1 month = august year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 67 where = 31 when = 0 } #78th MOtorized
+		command = { type = activate_division which = 11000 value = 95 where = 31 when = 0 } #4th Amrored Bde
+		command = { type = activate_division which = 11000 value = 96 where = 31 when = 0 } #201 Guards Bde
+		command = { type = activate_division which = 11000 value = 97 where = 31 when = 0 } #23rd Armored Bde
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 11
+	random = no
+	country = eng
+        
+        trigger = { 
+		event = 10
+		random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = september year = 1943 }
+        offset = 4
+	deathdate = { day = 30 month = march year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 68 where = 31 when = 0 } #8th Indian
+		command = { type = activate_division which = 11000 value = 69 where = 31 when = 0 } #2nd NZ
+		command = { type = activate_division which = 11000 value = 70 where = 31 when = 0 } #7th Armor
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+
+event = { 
+	id = 12
+	random = no
+	country = eng
+        
+        trigger = {
+		NOT = { control = { province = 521 data = ITA }
+			exists = RSI
+			}
+		random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments"
+	style = 0
+
+            ####or triggered by avalanche event
+	
+	date = { day = 1 month = july year = 1944 }
+        offset = 12
+	deathdate = { day = 30 month = september year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 71 where = 31 when = 0 } #46th
+		command = { type = activate_division which = 11000 value = 72 where = 31 when = 0 } #56th
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 13
+	random = no
+	country = eng
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments"
+	style = 0
+
+	date = { day = 1 month = december year = 1943 }
+        offset = 5
+	deathdate = { day = 30 month = march year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 75 where = 31 when = 0 } #4th Indian
+		command = { type = activate_division which = 11000 value = 80 where = 31 when = 0 } #1st Infantry
+		command = { type = activate_division which = 11000 value = 81 where = 31 when = 0 } #24th Guards
+		command = { type = activate_division which = 11000 value = 82 where = 31 when = 0 } #52nd Infantry
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 14
+	random = no
+	country = eng
+        
+        trigger = { 
+		flag = ita_invaded
+		random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments"
+	style = 0
+
+	date = { day = 14 month = february year = 1944 }
+        offset = 8
+	deathdate = { day = 30 month = may year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 73 where = 521 when = 0 } #5th Pol
+		command = { type = activate_division which = 11000 value = 74 where = 521 when = 0 } #3rd Pol
+		command = { type = activate_division which = 11000 value = 77 where = 521 when = 0 } #Pol Arm bde
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+
+event = { 
+	id = 15
+	random = no
+	country = usa
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "usa_air_reinforcments"
+	style = 0
+
+	date = { day = 1 month = august year = 1943 }
+        offset = 8
+	deathdate = { day = 30 month = may year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 100 where = 937 when = 0 } #air
+		command = { type = activate_division which = 13000 value = 101 where = 937 when = 0 } #air
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 16
+	random = no
+	country = usa
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "usa_air_reinforcments"
+	style = 0
+
+	date = { day = 15 month = august year = 1943 }
+        offset = 8
+	deathdate = { day = 30 month = may year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 102 where = 937 when = 0 } #air
+		command = { type = activate_division which = 13000 value = 103 where = 937 when = 0 } #air
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 17
+	random = no
+	country = usa
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "usa_air_reinforcments"
+	style = 0
+
+	date = { day = 30 month = august year = 1943 }
+        offset = 8
+	deathdate = { day = 30 month = may year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 104 where = 937 when = 0 } #air
+		command = { type = activate_division which = 13000 value = 105 where = 937 when = 0 } #air
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+
+event = { 
+	id = 18
+	random = no
+	country = usa
+        
+        trigger = { not = { AND = {  control = { province = 525 data = ITA }
+                                    control = { province = 526 data = ITA }	
+                                 }      
+                          }
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments1"
+	style = 0
+	
+	date = { day = 9 month = july year = 1943 }
+        offset = 1
+	deathdate = { day = 1 month = august year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 106 where = 939 when = 0 } #9th Infantry
+		}
+	}
+
+
+event = { 
+	id = 19
+	random = no
+	country = usa
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments2"
+	style = 0
+
+	date = { day = 3 month = december year = 1943 }
+        offset = 4
+	deathdate = { day = 30 month = february year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 130 where = 939 when = 0 } #4th FF Mtn Bde
+		command = { type = activate_division which = 13000 value = 110 where = 939 when = 0 } #2nd Moroccan
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+
+event = { 
+	id = 20
+	random = no
+	country = usa
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+
+	date = { day = 5 month = november year = 1943 }
+        offset = 5
+	deathdate = { day = 30 month = january year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 112 where = 939 when = 0 } #1st Amror
+		command = { type = activate_division which = 13000 value = 117 where = 939 when = 0 } #1st SSF
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+
+event = { 
+	id = 21
+	random = no
+	country = usa
+        
+        trigger = { 
+		flag = ita_invaded
+		OR = {
+			control = { province = 521 data = USA }
+			control = { province = 521 data = ENG }
+			}
+		random = 35 
+			}
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+
+	date = { day = 2 month = january year = 1944 }
+        offset = 4
+	deathdate = { day = 30 month = march year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 135 where = 521 when = 0 } #FF HQ
+		command = { type = activate_division which = 13000 value = 109 where = 521 when = 0 } #3rd FF Algerian
+		command = { type = activate_division which = 13000 value = 126 where = 521 when = 0 } #9th FF Colonial
+		command = { type = activate_division which = 13000 value = 127 where = 521 when = 0 } #1st FF Mtn Bde
+		command = { type = activate_division which = 13000 value = 128 where = 521 when = 0 } #2nd FF Mtn Bde
+		command = { type = activate_division which = 13000 value = 129 where = 521 when = 0 } #3rd FF Mtn Bde
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+######################
+#Below added in by JRaup
+######################
+
+
+event = {
+	id = 22
+	random = no
+	country = GER
+
+	trigger = { 
+		event = 24 #Italian surrender
+		exists = ITA
+		exists = RSI
+		AND = { 
+			OR = { 
+				control = { province = 370 data = ITA }
+		       		control = { province = 370 data = GER } 
+				}
+			}
+		random = 35 
+		}
+
+	name = "hus_event22_name"
+	desc = "hus_event22_desc"
+	picture = "italy_surrenders"
+	style = 0
+
+	date = { day = 1 month = august year = 1943 }
+	offset = 14
+	deathdate = { day = 30 month = december year = 1944 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { } #todo: add event effects-no idea what they should be if any
+		command = { type = trigger which = 35 } #RSI event
+		}
+
+	}
+
+
+event = {
+	id = 23
+	random = no
+	country = GER
+
+	name = "hus_event23_name"
+	desc = "hus_event23_desc"
+	style = 0
+
+	date = { day = 2 month = january year = 1943 }
+
+	action_a = {
+		name = "hus_actioname23a"
+		ai_chance = 85
+		#command = { type = ground_defense which = land value = 1 } #test effects
+		command = { type = supplies value = 500 }
+		}
+
+	action_b = {
+		name = "hus_actioname23b"
+		ai_chance = 15 
+		command = { type = oilpool value = 250 }  
+		command = { type = sleepevent which = 26 }#Cassino line
+		command = { type = sleepevent which = 25 }#Trasimene Line
+		command = { type = sleepevent which = 28 }#Gothic Line
+		}
+}
+
+event = { 
+	id = 24
+	random = no
+	country = ITA
+	
+	trigger = { 
+		flag = ita_invaded
+		NOT = { control = { province = 525 data = ITA }}
+			control = { province = 526 data = ITA }
+			control = { province = 524 data = ITA }
+			control = { province = 523 data = ITA }
+			control = { province = 521 data = ITA }
+			}
+	
+
+	name = "hus_event24_name"
+	desc= "hus_event24_desc"
+	style = 0
+
+	date = { day = 1 month = july year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = december year = 1944 }
+
+	action_a = {
+		name = "hus_actioname24a"
+		command = { type = remove_division which = 12000 value = 2 }
+		command = { type = remove_division which = 12000 value = 3 }
+		command = { type = remove_division which = 12000 value = 6 }
+		command = { type = remove_division which = 12000 value = 7 }
+		command = { type = remove_division which = 12000 value = 8 }
+		command = { type = remove_division which = 12000 value = 10 }
+		command = { type = remove_division which = 12000 value = 11 }
+		command = { type = remove_division which = 12000 value = 13 }
+		command = { type = remove_division which = 12000 value = 14 }
+		command = { type = remove_division which = 12000 value = 16 }
+		command = { type = remove_division which = 12000 value = 17 }
+		command = { type = remove_division which = 12000 value = 19 }
+		command = { type = remove_division which = 12000 value = 20 }
+		command = { type = remove_division which = 12000 value = 22 }
+		command = { type = remove_division which = 12000 value = 23 }
+		command = { type = remove_division which = 12000 value = 26 }
+		command = { type = remove_division which = 12000 value = 27 }
+		command = { type = remove_division which = 12000 value = 29 }
+		command = { type = remove_division which = 12000 value = 31 }
+		command = { type = remove_division which = 12000 value = 33 }
+		command = { type = remove_division which = 12000 value = 34 }
+		command = { type = remove_division which = 12000 value = 35 }
+		command = { type = remove_division which = 12000 value = 37 }
+		command = { type = remove_division which = 12000 value = 38 }
+		command = { type = remove_division which = 12000 value = 40 }
+		command = { type = remove_division which = 12000 value = 48 }
+		command = { type = remove_division which = 12000 value = 68 }
+		command = { type = remove_division which = 12000 value = 69 }
+		command = { type = remove_division which = 12000 value = 70 }
+		command = { type = remove_division which = 12000 value = 71 }
+		command = { type = remove_division which = 12000 value = 72 }
+		command = { type = remove_division which = 12000 value = 74 }
+		command = { type = independence which = RSI value = 0 }
+		command = { type = peace which = USA value = 1 }
+		command = { type = alliance which = USA }
+		command = { type = capital which = 523 } #move capital to Taranto
+		command = { type = domestic which = democratic value = -4 }
+		command = { type = domestic which = political_left value = -3 }
+		command = { type = domestic which = freedom value = -2 }
+		}
+
+	action_b = {
+		name = "hus_actioname24b"
+		command = { type = remove_division which = 12000 value = 2 }
+		command = { type = remove_division which = 12000 value = 3 }
+		command = { type = remove_division which = 12000 value = 6 }
+		command = { type = remove_division which = 12000 value = 7 }
+		command = { type = remove_division which = 12000 value = 8 }
+		command = { type = remove_division which = 12000 value = 10 }
+		command = { type = remove_division which = 12000 value = 11 }
+		command = { type = remove_division which = 12000 value = 13 }
+		command = { type = remove_division which = 12000 value = 14 }
+		command = { type = remove_division which = 12000 value = 16 }
+		command = { type = remove_division which = 12000 value = 17 }
+		command = { type = remove_division which = 12000 value = 19 }
+		command = { type = remove_division which = 12000 value = 20 }
+		command = { type = remove_division which = 12000 value = 22 }
+		command = { type = remove_division which = 12000 value = 23 }
+		command = { type = remove_division which = 12000 value = 26 }
+		command = { type = remove_division which = 12000 value = 27 }
+		command = { type = remove_division which = 12000 value = 29 }
+		command = { type = remove_division which = 12000 value = 31 }
+		command = { type = remove_division which = 12000 value = 33 }
+		command = { type = remove_division which = 12000 value = 34 }
+		command = { type = remove_division which = 12000 value = 35 }
+		command = { type = remove_division which = 12000 value = 37 }
+		command = { type = remove_division which = 12000 value = 38 }
+		command = { type = remove_division which = 12000 value = 40 }
+		command = { type = remove_division which = 12000 value = 48 }
+		command = { type = remove_division which = 12000 value = 68 }
+		command = { type = remove_division which = 12000 value = 69 }
+		command = { type = remove_division which = 12000 value = 70 }
+		command = { type = remove_division which = 12000 value = 71 }
+		command = { type = remove_division which = 12000 value = 72 }
+		command = { type = remove_division which = 12000 value = 74 }
+		command = { type = country which = RSI }
+		command = { type = independence which = ITA value = 0 }
+		command = { type = domestic which = political_left value = 2 }
+		command = { type = domestic which = democratic value = 2 }
+		command = { type = trigger which = 34 }
+
+	}
+}
+
+event = { 
+	id = 25 #Trasimene Line
+	random = no
+	country = GER
+
+	trigger = {
+		NOT = { control = { province = 521 data = ITA }
+			control = { province = 524 data = ITA }
+		}
+		event = 26
+		OR = { control = { province = 513 data = RSI }
+		       control = { province = 514 data = RSI }
+		       control = { province = 513 data = GER }
+		       control = { province = 514 data = GER }	
+			}
+	}
+
+	name = "hus_event25_name"
+	desc = "hus_event25_desc"
+	style = 0
+
+	date = { day = 1 month = june year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = february year = 1944 }
+
+	action_a = {
+		name = "hus_actioname25a"
+		command = { type = construct which = land_fort where = 513 value = 3 } 
+		command = { type = construct which = land_fort where = 514 value = 3 }
+		command = { type = supplies value = -750 }
+		}
+
+
+	}
+
+event = { #Cassino line
+	id = 26
+	random = no
+	country = GER
+
+	trigger = { 		
+		NOT = { control = { province = 521 data = ITA }
+			control = { province = 524 data = ITA }
+			exists = RSI } 
+		control = { province = 518 data = ITA }
+		control = { province = 519 data = ITA }
+		control = { province = 517 data = ITA }
+			}
+
+	name = "hus_event26_name"
+	desc = "hus_event25_desc"
+	style = 0
+
+	date = { day = 1 month = june year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = december year = 1944 }
+
+	action_a = {
+		name = "hus_actioname25a"
+		command = { type = construct which = land_fort where = 519 value = 2 } #Anzio
+		command = { type = construct which = land_fort where = 518 value = 4 } #Cassino
+		command = { type = construct which = land_fort where = 517 value = 3 }
+		command = { type = supplies value = -1500 }
+		}
+
+	}
+
+event = { 
+	id = 27 
+	random = no
+	country = ITA
+
+	trigger = {
+		AND = {
+			NOT = {
+				control = { province = 525 data = ITA }
+				control = { province = 526 data = ITA }
+				}
+			}
+		OR = { 
+			NOT = { control = { province = 515 data = ITA } }
+			NOT = { control = { province = 519 data = ITA } }
+			NOT = { control = { province = 520 data = ITA } }
+			NOT = { control = { province = 523 data = ITA } }
+			NOT = { control = { province = 521 data = ITA } }
+			NOT = { control = { province = 513 data = ITA } }
+			NOT = { control = { province = 514 data = ITA } }
+			}
+		}
+
+	name = "hus_event27_name"
+	desc = "hus_event27_desc"
+	style = o
+
+	date = { day = 1 month = january year = 1943 }
+	offset = 7
+	deathdate = { day = 30 month = december year = 1944 }
+
+	action_a = {
+		name = "ge_actioname8A"
+		command = { type = setflag which = ita_invaded }
+		}
+
+	}
+
+event = { #Gothic Line
+	id = 28
+	random = no
+	country = GER
+
+	trigger = { 
+		event = 25 #Gustav line
+		exists = RSI
+		NOT = {
+			control = { province = 515 data = GER } #Rome
+			control = { province = 518 data = GER } #Cassino
+			control = { province = 513 data = GER } #Trsimene line breached
+			control = { province = 515 data = RSI }
+			control = { province = 518 data = RSI }
+			control = { province = 513 data = RSI }
+			}
+		OR = {
+			AND = {
+				control = { province = 369 data = RSI }
+				control = { province = 512 data = RSI }
+				control = { province = 379 data = RSI }
+				}
+			AND = {
+				control = { province = 369 data = GER }
+				control = { province = 512 data = GER }
+				control = { province = 379 data = GER }
+				}
+			}
+		} 
+
+	
+
+	name = "hus_event28_name"
+	desc = "hus_event25_desc"
+	style = 0
+
+	date = { day = 1 month = june year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = december year = 1944 }
+
+	action_a = {
+		name = "hus_actioname25a"
+		command = { type = construct which = land_fort where = 369 value = 3 } #
+		command = { type = construct which = land_fort where = 512 value = 3 }
+		command = { type = construct which = land_fort where = 379 value = 3 }
+		command = { type = supplies value = -1000 }
+		}
+
+
+	}
+
+	
+event = {
+	id = 29
+	random = no
+	country = USA
+
+	name = "hus_event29_name"
+	desc = "hus_event29_desc"
+	style = 0
+
+	date = { day = 10 month = july year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = shore_attack which = infantry value = 10 }
+		command = { type = shore_attack which = armor value = 10 }
+		}
+
+	}
+
+event = {
+	id = 30
+	random = no
+	country = ENG
+
+	name = "hus_event30_name"
+	desc = "hus_event30_desc"
+	style = 0
+	
+	date = { day = 10 month = july year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = shore_attack which = infantry value = 10 }
+		command = { type = shore_attack which = armor value = 10 }
+		}
+
+	}
+
+event = {  #Allied bombing raids
+	id = 31
+	random = yes
+	country = GER
+
+	trigger = {
+		NOT = { 
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			}
+		random = 50
+		}
+
+	name = "hus_event31_name"
+	desc = "hus_event31_desc"
+	style = 0
+
+	date = { day = 1 month = march year = 1943 }
+	offset = 21
+	deathdate = { day = 30 month = december year = 1944 }
+
+	action_a = {
+		name = "ge_actioname54b"
+		command = { type = tc_occupied_mod value = -2 }
+		command = { type = attrition_mod value = 1 }
+		command = { type = supply_dist_mod value = -1 }
+		}
+
+	}
+
+event = {
+	id = 32
+	random = no
+	country = USA
+
+	trigger = { 
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			}
+		random = 50
+		}
+
+	name = "hus_event32_name"
+	desc = "hus_event32_desc"
+
+
+	date = { day = 1 month = november year = 1943 }
+	offset = 7
+	deathdate = { day = 30 month = december year = 1943 }
+
+	action_a = {
+		name = "hus_actioname32a"
+		command = { type = remove_division which = 13000 value = 107 } #82nd Abn
+		}
+
+	}
+
+event = {
+	id = 33
+	random = no
+	country = ENG
+
+	trigger = { 
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			}
+		random = 50
+		}
+
+	name = "hus_event33_name"
+	desc = "hus_event33_desc"
+	style = 0
+
+	action_a = {
+		name = "hus_actioname33a"
+		command = { type = remove_division which = 11000 value = 4 } #1st Abn
+		}
+
+
+	}
+
+event = {
+	id = 34
+	random = no
+	country = ITA
+
+	
+	#triggered by Italian surrender B option
+
+	name = "hus_event34_name"
+	desc = "hus_event34_desc"
+	style = 0
+
+	action_a = {
+		name = "OK"
+		command = { type = peace which = USA value = 1 }
+		command = { type = alliance which = USA }
+		command = { type = capital which = 523 } #Taranto
+		command = { type = domestic which = democratic value = -4 }
+		command = { type = domestic which = political_left value = -3 }
+		command = { type = domestic which = freedom value = -2 }
+		}
+
+
+	}
+
+event = {
+	id = 35 
+	random = no
+	country = RSI
+
+	#triggered by German rescue event
+
+	name = "hus_event35_name"
+	desc = "hus_event35_desc"
+	style = 0
+
+	action_a = {
+		name = "ge_actioname1A"
+##TODO		command = { type = headofstate = } #Mussolini
+##TODO		command = { type = headofgovernment which = } #Mussolini
+		}
+
+	}
+
+	
+event = {
+	id = 36
+	random = no
+	country = USA
+
+	trigger = {
+		OR = {
+			control = { province = 519 data = USA }
+			control = { province = 519 data = ENG }
+			}
+		}
+
+	name = "hus_event36_name"
+	desc = "hus_event36_desc"
+	style = 0
+
+	date = { day = 1 month = february year = 1944 }
+	offset = 2
+	deathdate = { day = 30 month = may year = 1944 }
+
+	action_a = {
+		name = "hus_actioname36a"
+		command = { type = assault value = -1 }
+		command = { type = breakthrough value = -1 }
+		}
+
+	}
+
+event = {
+	id = 37
+	random = no
+	country = ENG
+
+	trigger = {
+		OR = {
+			control = { province = 519 data = USA }
+			control = { province = 519 data = ENG }
+			}
+		}
+
+	name = "hus_event36_name"
+	desc = "hus_event36_desc"
+	style = 0
+
+	date = { day = 1 month = february year = 1944 }
+	offset = 2
+	deathdate = { day = 30 month = may year = 1944 }
+
+	action_a = {
+		name = "hus_actioname36a"
+		command = { type = assault value = -1 }
+		command = { type = breakthrough value = -1 }
+		}
+
+	}
+
+event = {
+	id = 38
+	random = no
+	country = USA
+
+	trigger = { 
+		allies = 44
+		}
+
+	name = "ge_event5_name" #Strategic victory
+	desc = "ge_event5_desc"
+	style = 0
+
+	date = { day = 1 month = january year = 1944 }
+	offset = 5
+	deathdate = { day = 21 month = february year = 1945 }
+
+	action_a = {
+		name = "ge_actionname1A" #Excellent
+		command = { type = endgame value = 6 } #cut to allied victory vp screen
+		}
+
+	}
+
+
+event = {
+	id = 40
+	random = no
+	country = ENG
+
+	trigger = {
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #Sicily in Allied hands
+			}
+		random = 35
+		}
+
+	name = "ge_event3_name"
+	desc = "ge_event3_desc"
+	style = 0
+
+	date = { day = 1 month = july year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = august year = 1943 }
+	
+	action_a = {
+		name = "ge_actionname3A"
+		command = { type = remove_division which = 3 } #50th division
+		command = { type = remove_division which = 6 } #51st division
+		}
+
+	}
+
+event = {
+	id = 41
+	random = no
+	country = ENG
+
+	trigger = {
+		event = 40
+		random = 50
+		}
+
+	name = "ge_event4_name"
+	desc = "ge_event4_desc"
+	style = 0
+
+	date = { day = 21 month = september year = 1943 }
+	offset = 2
+	deathdate = { day = 30 month = october year = 1943 }
+
+	action_a = {
+		name = "ge_actionname1A"
+		command = { type = activate_division which = 11000 value = 95 where = 525 when = 0 } #51st redeployed
+		command = { type = activate_division which = 11000 value = 83 where = 525 when = 0 } #50th redpeployed
+		}
+	}
+
+
+
+event = {
+	id = 43
+	random = no
+	country = ENG
+
+	trigger = {
+		flag = ita_invaded #Italian mainland invaded
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #Sicily in Allied hands
+			}
+		random = 35
+		}
+
+	name = "ge_event3_name"
+	desc = "ge_event3_desc"
+	style = 0
+
+	date = { day = 30 month = november year = 1943 }
+	offset = 7
+	deathdate = { day = 30 month = january year = 1944 }
+	
+	action_a = {
+		name = "ge_actionname3A"
+		command = { type = remove_division which = 95 } #50th division
+		command = { type = remove_division which = 83 } #51st division
+		command = { type = remove_division which = 70 } #7th Armored
+		}
+	}
+
+
+event = {
+	id = 44
+	random = no
+	country = ENG
+
+	trigger = {
+		flag = ita_invaded
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #Sicily in Allied hands
+			}
+		random = 35
+		}
+
+	name = "ge_event3_name"
+	desc = "ge_event3_desc"
+	style = 0
+
+	date = { day = 1 month = january year = 1944 }
+	offset = 5
+	deathdate = { day = 30 month = february year = 1945 }
+	
+	action_a = {
+		name = "ge_actionname3A"
+		command = { type = remove_division which = 108 } #4th Armor BDE
+
+		}
+
+	}
+
+
+event = {
+	id = 45
+	random = no
+	country = ENG
+
+	trigger = {
+		flag = ita_invaded
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #Sicily in Allied hands
+			}
+		random = 35
+		}
+
+	name = "ge_event3_name"
+	desc = "ge_event3_desc"
+	style = 0
+
+	date = { day = 1 month = march  year = 1944 }
+	offset = 5
+	deathdate = { day = 30 month = april year = 1944 }
+	
+	action_a = {
+		name = "ge_actionname3A"
+		command = { type = remove_division which = 71 } #46th division
+		command = { type = remove_division which = 72 } #56th division
+		}
+
+	}
+
+
+event = {
+	id = 46
+	random = no
+	country = ENG
+
+	trigger = {
+		flag = ita_invaded
+		NOT = {
+			control = { province = 525 data = RSI }
+			control = { province = 526 data = RSI }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #Sicily in Allied hands
+			control = { province = 521 data = GER } #Naples
+			control = { province = 521 data = RSI }
+			control = { province = 523 data = GER } #Taranto
+			control = { province = 523 data = RSI }
+			}
+		random = 35
+		}
+
+	name = "ge_event3_name"
+	desc = "ge_event3_desc"
+	style = 0
+
+	date = { day = 1 month = april year = 1944 }
+	offset = 5
+	deathdate = { day = 30 month = may year = 1944 }
+	
+	action_a = {
+		name = "ge_actionname3A"
+		command = { type = remove_division which = 96 } #201 Guards Bde
+		}
+
+	}
+
+
+event = {
+	id = 47
+	random = no
+	country = ENG
+
+	trigger = {
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #Sicily in Allied hands
+			}
+		random = 35
+		}
+
+	name = "ge_event3_name"
+	desc = "ge_event3_desc"
+	style = 0
+
+	date = { day = 1 month = july year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = august year = 1943 }
+	
+	action_a = {
+		name = "ge_actionname3A"
+		command = { type = remove_division which = 97 } #23rd Armored Bde
+		}
+
+	}
+
+event = {
+	id = 48
+	random = no
+	country = ENG
+
+	trigger = {
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #Sicily in Allied hands
+			}
+		random = 35
+		}
+
+	name = "ge_event3_name"
+	desc = "ge_event3_desc"
+	style = 0
+
+	date = { day = 1 month = july year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = august year = 1943 }
+	
+	action_a = {
+		name = "ge_actionname3A"
+		command = { type = remove_division which = 85 } #4th Infantry
+		command = { type = remove_division which = 75 } #4th Indian
+		}
+	}
+
+
+event = { 
+	id = 49
+	random = no
+	country = eng
+        
+        trigger = { random = 40
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = january year = 1944 }
+        offset = 1
+	deathdate = { day = 30 month = march year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 84 where = 525 when = 0 } #5th Canadian Armor
+		command = { type = activate_division which = 11000 value = 85 where = 525 when = 0 } #4th Infantry
+		command = { type = activate_division which = 11000 value = 86 where = 525 when = 0 } #1 Guards Bde
+		command = { type = activate_division which = 11000 value = 87 where = 525 when = 0 } #18th Motorized Bde
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 50
+	random = no
+	country = eng
+        
+        trigger = { random = 40
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = march year = 1944 }
+        offset = 1
+	deathdate = { day = 30 month = may year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 88 where = 525 when = 0 } #6th Armor
+	}
+}
+
+event = { 
+	id = 51
+	random = no
+	country = eng
+        
+        trigger = { random = 40
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments2"
+	style = 0
+	
+	date = { day = 1 month = april year = 1944 }
+        offset = 1
+	deathdate = { day = 30 month = june year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 100 where = 525 when = 0 } #6th SA Armor
+		command = { type = activate_division which = 11000 value = 78 where = 525 when = 0 } #10th Indian
+		command = { type = activate_division which = 11000 value = 90 where = 525 when = 0 } #25th Amror Bde
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+event = { 
+	id = 52
+	random = no
+	country = eng
+        
+        trigger = { random = 40
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments2"
+	style = 0
+	
+	date = { day = 1 month = may year = 1944 }
+        offset = 1
+	deathdate = { day = 30 month = july year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 91 where = 525 when = 0 } #7th Armor Bde
+		command = { type = activate_division which = 11000 value = 92 where = 525 when = 0 } #9th Armor Bde
+		command = { type = activate_division which = 11000 value = 93 where = 525 when = 0 } #21st Armor Bde
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 53
+	random = no
+	country = eng
+        
+        trigger = { random = 40
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments3"
+	style = 0
+	
+	date = { day = 1 month = june year = 1944 }
+        offset = 1
+	deathdate = { day = 30 month = august year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 89 where = 525 when = 0} #2nd Armor Bde
+	}
+}
+
+
+event = { 
+	id = 42
+	random = no
+	country = eng
+        
+        trigger = { random = 40
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments3"
+	style = 0
+	
+	date = { day = 1 month = august year = 1944 }
+        offset = 1
+	deathdate = { day = 30 month = october year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 76 where = 525 when = 0 } #3rd Greek Bde
+		command = { type = activate_division which = 11000 value = 94 where = 525 when = 0 } #43rd Indian Mot Bde
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+
+event = { 
+	id = 54
+	random = no
+	country = eng
+        
+        trigger = { random = 40
+                  }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "british_reinforcments5"
+	style = 0
+	
+	date = { day = 1 month = november year = 1944 }
+        offset = 1
+	deathdate = { day = 30 month = january year = 1945 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 11000 value = 98 where = 525 when = 0 } #Jewish Bde
+		command = { type = activate_division which = 11000 value = 99 where = 525 when = 0 } #25th Royal Engineers
+	}
+}
+
+
+event = { 
+	id = 55
+	random = no
+	country = USA
+        
+        trigger = { 
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #sicily in allied hands
+			}
+		random = 40
+			}
+  
+	name = "ge_event2_name"   
+	desc = "ge_event2_desc"
+        picture = "american_reinforcments4"
+	style = 0
+	
+	date = { day = 15 month = july year = 1943 }
+        offset = 10
+	deathdate = { day = 30 month = august year = 1943 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 13000 value = 2 } #1st Infantry
+		command = { type = remove_division which = 13000 value = 5 } #3rd Infantry
+		command = { type = remove_division which = 13000 value = 106 } #9th Infantry
+	}
+}
+
+event = { 
+	id = 56
+	random = no
+	country = USA
+        
+        trigger = { 
+		event = 59 #1st and 9th redeployed
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #sicily in allied hands
+			}
+		random = 40
+			}
+  
+	name = "ge_event2_name"   
+	desc = "ge_event2_desc"
+        picture = "american_reinforcments6"
+	style = 0
+	
+	date = { day = 15 month = december year = 1943 }
+        offset = 10
+	deathdate = { day = 30 month = february year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 13000 value = 120 } #1st Infantry
+		command = { type = remove_division which = 13000 value = 122 } #9th Infantry
+	}
+}
+
+event = { 
+	id = 57
+	random = no
+	country = USA
+        
+        trigger = { 
+		event = 59 
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #sicily in allied hands
+			}
+		random = 40
+			}
+  
+	name = "ge_event2_name"   #Operation:Anvil (invasion of Southern France)
+	desc = "ge_event2_desc"
+        picture = "american_reinforcments6"
+	style = 0
+	
+	date = { day = 15 month = june year = 1944 }
+        offset = 10
+	deathdate = { day = 30 month = august year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 13000 value = 121 } #3rd Infantry
+		command = { type = remove_division which = 13000 value = 108 } #36th Infantry
+		command = { type = remove_division which = 13000 value = 3 } #45th Infantry
+		command = { type = remove_division which = 13000 value = 116 } #1st FF Mechanized
+		command = { type = remove_division which = 13000 value = 117 } #1st SSF
+	}
+}
+
+event = { 
+	id = 58
+	random = no
+	country = USA
+        
+        trigger = { 
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER } #sicily in allied hands
+			}
+		random = 40
+			}
+  
+	name = "ge_event2_name"   
+	desc = "ge_event2_desc"
+        picture = "american_reinforcments4"
+	style = 0
+	
+	date = { day = 15 month = july year = 1944 }
+        offset = 10
+	deathdate = { day = 30 month = september year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = remove_division which = 13000 value = 109 } #3rd FF Algerian
+		command = { type = remove_division which = 13000 value = 113 } #4th FF Moroccan
+		command = { type = remove_division which = 13000 value = 126 } #9th FF Colonial
+		command = { type = remove_division which = 13000 value = 127 } #1st FF Mtn Bde
+		command = { type = remove_division which = 13000 value = 128 } #2nd FF Mtn Bde
+		command = { type = remove_division which = 13000 value = 129 } #3rd FF Mtn Bde
+		command = { type = remove_division which = 13000 value = 130 } #4th FF Mtn Bde
+	}
+}
+
+
+event = { 
+	id = 59
+	random = no
+	country = usa
+        
+        trigger = { 
+		event = 55
+		random = 35 }
+  
+	name = "ge_event1_name"   #redployments+34th Infantry
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments4"
+	style = 0
+
+	date = { day = 1 month = september year = 1943 }
+        offset = 4
+	deathdate = { day = 30 month = november year = 1943 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 134 where = 525 when = 0 } #5th Army HQ
+		command = { type = activate_division which = 13000 value = 136 where = 525 when = 0 } #VI corps HQ
+		command = { type = activate_division which = 13000 value = 120 where = 525 when = 0 } #3rd Infantry
+		command = { type = activate_division which = 13000 value = 121 where = 525 when = 0 } #9th Infantry
+		command = { type = activate_division which = 13000 value = 122 where = 525 when = 0 } #1st Infantry
+		command = { type = activate_division which = 13000 value = 111 where = 525 when = 0 } #34th Infantry
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+event = { 
+	id = 60
+	random = no
+	country = usa
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+
+	date = { day = 2 month = february year = 1944 }
+        offset = 4
+	deathdate = { day = 30 month = april year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 113 where = 521 when = 1 } #4th FF Moroccan
+	}
+}
+
+event = { 
+	id = 61
+	random = no
+	country = usa
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments1"
+	style = 0
+
+	date = { day = 2 month = april year = 1944 }
+        offset = 4
+	deathdate = { day = 30 month = june year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 115 where = 521 when = 0 } #85th Infantry
+		command = { type = activate_division which = 13000 value = 114 where = 521 when = 0 } #88th Infantry
+		command = { type = activate_division which = 13000 value = 116 where = 521 when = 0 } #1st FF Mechanized
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+event = { 
+	id = 62
+	random = no
+	country = usa
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments2"
+	style = 0
+
+	date = { day = 2 month = july year = 1944 }
+        offset = 4
+	deathdate = { day = 30 month = september year = 1944 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 123 where = 521 when = 0 } #91st Infantry
+	}
+}
+
+event = { 
+	id = 63
+	random = no
+	country = usa
+        
+        trigger = { 
+		NOT = {
+			control = { province = 515 data = GER } #Rome
+			control = { province = 515 data = RSI }
+			control = { province = 521 data = GER } #Naples
+			control = { province = 521 data = RSI }
+			control = { province = 518 data = GER } #Cassino
+			control = { province = 518 data = RSI }
+			control = { province = 513 data = GER }
+			control = { province = 513 data = RSI }
+			}
+		random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments2"
+	style = 0
+
+	date = { day = 2 month = november year = 1944 }
+        offset = 4
+	deathdate = { day = 30 month = january year = 1945 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 124 where = 521 when = 0 } #92nd Infantry
+		command = { type = activate_division which = 13000 value = 118 where = 521 when = 0 } #1st Brazillian
+		command = { type = activate_division which = 13000 value = 119 where = 521 when = 0 } #1st Fighter Braz
+		command = { type = extra_TC value = 25 }
+		command = { type = oilpool value = 500 }
+		command = { type = supplies value = 1000 }
+	}
+}
+
+event = { 
+	id = 64
+	random = no
+	country = usa
+        
+        trigger = { 
+		exists = RSI
+		NOT = { 
+			control = { province = 515 data = GER } #Rome
+			control = { province = 515 data = RSI }
+			}
+		random = 35
+}
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments1"
+	style = 0
+
+	date = { day = 2 month = january year = 1945 }
+        offset = 4
+	deathdate = { day = 30 month = february year = 1945 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 125 where = 515 when = 0 } #10th Mountain
+	}
+}
+
+event = {
+	id = 65
+	random = no
+	country = USA
+
+	trigger = {
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			control = { province = 525 data = GER }
+			control = { province = 526 data = GER }
+			}
+		random = 30
+		}
+
+	name = "ge_event2_name"
+	desc = "ge_event2_desc"
+	picture = "american_reinforcments1"
+	style = 0
+
+	date = { day = 30 month = august year = 1943 }
+	offset = 7
+	deathdate = { day = 30 month = january year = 1940 }
+
+	action_a = {
+		name = "ge_actionnname3A"
+		command = { type = remove_division which = 13000 value = 39 } 
+		}
+	}
+	
+	
+event = {
+	id = 39
+	random = no
+	country = USA
+
+	trigger = { 
+		NOT = {
+			axis = 21
+			}
+		}
+
+	name = "ge_event7_name" #Marginal victory
+	desc = "ge_event7_desc"
+	style = 0
+
+	date = { day = 26 month = february year = 1945 }
+
+	action_a = {
+		name = "ge_actionname1A" #Excellent
+		command = { type = endgame value = 5 } #cut to allied victory vp screen
+		}
+
+	}
+#########################################################################
+#  German Strategic Victory
+#########################################################################
+event = {
+	id = 66
+	random = no
+	country = GER
+
+	trigger = {
+ 				axis = 49
+	}
+
+	name = "ge_event5_name"
+	desc = "ge_event5_desc"
+         picture = "german_strategic_victory"
+	style = 0
+
+	date = { day = 21 month = february year = 1945 }
+        offset = 1
+	deathdate = { day = 25 month = february year = 1945 }
+	
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  German Marginal Victory
+#########################################################################
+event = {
+	id = 67
+	random = no
+	country = GER
+
+	trigger = {
+ 				 axis = 21
+	}
+
+	name = "ge_event7_name"
+	desc = "ge_event7_desc"
+         picture = "german_marginal_victory2"
+	style = 0
+
+	date = { day = 26 month = february year = 1945 }
+	
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}
+
+
+##################################################
+
+event = {
+	id = 68
+	random = no
+	country = ITA
+
+	trigger = {
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			}
+		}
+
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+	picture = reinforcements
+	style = 0
+
+	date = { day = 1 month = august year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = february year = 1945 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 12000 value = 19 } #201. Coastal
+		command = { type = activate_division which = 12000 value = 72 } #223. Coastal
+		}
+
+}
+
+event = {
+	id = 69
+	random = no
+	country = ITA
+
+	trigger = {
+		event = 24
+		exists = RSI
+		random = 30
+		}
+
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+	picture = reinforcements
+	style = 0
+
+	date = { day = 1 month = august year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = february year = 1945 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 12000 value = 75 }
+		command = { type = activate_division which = 12000 value = 76 }	
+		command = { type = activate_division which = 12000 value = 77 }
+		command = { type = activate_division which = 12000 value = 78 }
+		command = { type = activate_division which = 12000 value = 79 }
+		command = { type = activate_division which = 12000 value = 80 }
+		}
+
+}
+
+
+event = {
+	id = 70
+	random = no
+	country = RSI
+
+	trigger = {
+		exists = ITA
+		NOT = {
+			OR = {
+				control = { province = 515 data = RSI }
+				control = { province = 515 data = GER }
+				}
+			}
+		random = 40
+		}
+
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+	picture = reinforcements
+	style = 0
+
+	date = { day = 1 month = august year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = february year = 1945 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = add_division which = "1st Alpini 'Monterosa'" value = bergsjaeger when = 2 where = artillery }
+		command = { type = add_division which = "2nd Infantry 'Littorio'" value = infantry when = 2 where = artillery }
+		command = { type = add_division which = "3rd Naval Infantry 'San Marco'" value = marine when = 1 where = artillery }
+		command = { type = add_division which = "5th Bersaglieri 'Italia'" value = infantry when = 2 where = artillery }
+		}
+	}
+
+
+event = {
+	id = 71
+	random = no
+	country = RSI
+
+	trigger = {
+		exists = ITA
+		exists = GER
+		event = 24
+		random = 40
+		}
+
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+	picture = reinforcements
+	style = 0
+
+	date = { day = 1 month = august year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = february year = 1945 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = add_division which = "29 Waffen SS nr1 'Italieniesche'" value = infantry when = 3 where = police }
+		command = { type = add_division which = "Xa MAS" value = marine when = 2 where = engineer }
+		}
+	}
+
+
+event = {
+	id = 72
+	random = no
+	country = RSI
+
+	trigger = {
+		exists = ITA
+		exists = GER
+		control = { province = 531 data = RSI }
+		control = { province = 370 data = RSI }
+		control = { province = 369 data = RSI }
+		control = { province = 513 data = RSI }
+		control = { province = 512 data = RSI }
+		event = 24
+		random = 40
+		}
+
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+	picture = reinforcements
+	style = 0
+
+	date = { day = 1 month = august year = 1943 }
+	offset = 5
+	deathdate = { day = 30 month = february year = 1945 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = add_corps which = "Turin Black Brigades" value = land where = 531 }
+		command = { type = add_division which = "1 Black Brigade" value = militia when = 1 }
+		command = { type = add_division which = "4 Black Brigade" value = militia when = 1 }
+		command = { type = add_corps which = "Milano Black Brigades" value = land where = 370 }
+		command = { type = add_division which = "8 Black Brigade" value = militia when = 1 }
+		command = { type = add_division which = "13 Black Brigade" value = militia when = 1 }
+		command = { type = add_corps which = "La Spezia Black Brigades" value = land where = 369 }
+		command = { type = add_division which = "27 Black Brigade" value = militia when = 1 }
+		command = { type = add_division which = "34 Black Brigade" value = militia when = 1 }
+		command = { type = add_corps which = "Florence Black Brigades" value = land where = 513 }
+		command = { type = add_division which = "37 Black Brigade" value = militia when = 1 }
+		command = { type = add_division which = "40 Black Brigade" value = militia when = 1 }
+		command = { type = add_corps which = "Bologna Black Brigades" value = land where = 512 }
+		command = { type = add_division which = "25 Black Brigade" value = militia when = 1 }
+		}
+
+	}
+
+
+event = {
+	id = 73
+	random = no
+	country = GER
+
+	trigger = {
+		NOT = {
+			control = { province = 525 data = ITA }
+			control = { province = 526 data = ITA }
+			OR = {
+				control = { province = 521 data = ITA }
+			}
+			}
+		}
+
+	name = "ge_event1_name"   #unlock XIV corps reserve
+	desc = "ge_event1_desc"
+        picture = "german_reinforcment_3"
+	style = 0
+
+
+	date = { day = 10 month = june year = 1943 }
+	offset = 2
+	deathdate = { day = 30 month = september year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = unlock_division which = 10000 value = 60 }
+		command = { type = unlock_division which = 10000 value = 4 }
+		command = { type = unlock_division which = 10000 value = 3 }
+		}
+
+	}
+
+
+event = {
+	id = 74
+	random = no
+	country = GER
+
+	trigger = {
+		NOT = { exists = RSI }
+		AND = {
+			OR = {
+			NOT = { control = { province = 524 data = ITA } }
+			NOT = { control = { province = 523 data = ITA } }
+			NOT = { control = { province = 521 data = ITA } }
+			}
+			}
+		}
+
+	name = "ge_event1_name"   #unlock 10. Amree
+	desc = "ge_event1_desc"
+        picture = "german_reinforcment_3"
+	style = 0
+
+
+	date = { day = 10 month = june year = 1943 }
+	offset = 2	
+	deathdate = { day = 30 month = january year = 1945 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = unlock_division which = 10000 value = 10 }
+		}
+
+	}
+
+
+event = { 
+	id = 75
+	random = no
+	country = GER
+
+	trigger = {
+		NOT = { exists = RSI }
+		AND = {
+			OR = {
+			NOT = { control = { province = 518 data = ITA } }
+			NOT = { control = { province = 519 data = ITA } }
+			NOT = { control = { province = 515 data = ITA } }
+			NOT = { control = { province = 521 data = ITA } }
+			}
+			}
+		}
+
+	name = "ge_event1_name"   #unlock 10. Amree
+	desc = "ge_event1_desc"
+        picture = "german_reinforcment_3"
+	style = 0
+
+
+	date = { day = 10 month = june year = 1943 }
+	offset = 2
+	deathdate = { day = 30 month = february year = 1945 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = unlock_division which = 10000 value = 61 }
+		command = { type = unlock_division which = 10000 value = 15 }
+		command = { type = unlock_division which = 10000 value = 16 }
+		command = { type = unlock_division which = 10000 value = 17 }
+		command = { type = unlock_division which = 10000 value = 56 } #Army Group C HQ
+		}
+
+	}
+
+
+
+	
+
+		

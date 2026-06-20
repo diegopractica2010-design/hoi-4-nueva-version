@@ -1,0 +1,379 @@
+#########################################################################
+#  Reserves activation - Tank Armies (SOV)
+#########################################################################
+event = {
+	id = 1
+	random = no
+	country = SOV
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "soviet_offensive_east"
+	style = 0
+
+	date = { day = 3 month = july year = 1942 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		# 5st Army - Voronez
+		command = { type = add_corps which = "5ya Tankovaya Armiya" value = land when = 10257 where = 283 } #Rybalko
+		command = { type = activate_division which = 13000 value = 150 where = 283 }
+		command = { type = activate_division which = 13000 value = 151 where = 283 }
+		command = { type = activate_division which = 13000 value = 152 where = 283 }
+		command = { type = activate_division which = 13000 value = 153 where = 283 }
+
+		# 4th Army - Stalingrad
+		command = { type = add_corps which = "4ya Tankovaya Armiya" value = land when = 10049 where = 163 } #Kryuchenkin
+		command = { type = activate_division which = 13000 value = 147 where = 163 }
+		command = { type = activate_division which = 13000 value = 148 where = 163 }
+		command = { type = activate_division which = 13000 value = 149 where = 163 }
+
+		#1th Army - North
+		command = { type = add_corps which = "1ya Tankovaya Armiya" value = land when = 10132 where = 278 } #Moskalenko
+		command = { type = activate_division which = 13000 value = 143 where = 278 }
+		command = { type = activate_division which = 13000 value = 144 where = 278 }
+		command = { type = activate_division which = 13000 value = 145 where = 278 }
+		command = { type = activate_division which = 13000 value = 146 where = 278 }
+
+	}
+}
+
+#########################################################################
+#  Reserves activation - Trans. Kavk. Front (SOV)
+#########################################################################
+event = {
+	id = 2
+	random = no
+	country = SOV
+
+	trigger = {
+			OR = {
+ 				control = { province = 253 data = GER } # Sevastopol
+				control = { province = 258 data = GER } # Rostov
+				control = { province = 255 data = GER } # Novorossyjsk
+			}
+
+	}
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "soviet_reinforcments"
+	style = 0
+
+	date = { day = 28 month = june year = 1942 }
+	offset = 1
+	deathdate = { day = 17 month = november year = 1942 }
+
+	action_a = {
+		name = "ge_actioname1A"
+
+		command = { type = activate_division which = 13000 value = 154 where = 1907 }
+		command = { type = activate_division which = 13000 value = 155 where = 1848 }
+		command = { type = activate_division which = 13000 value = 156 where = 1848 }
+		command = { type = activate_division which = 13000 value = 157 where = 1907 }
+		command = { type = activate_division which = 13000 value = 158 where = 1907 }
+		command = { type = activate_division which = 13000 value = 159 where = 1907 }
+		command = { type = activate_division which = 13000 value = 160 where = 1907 }
+		command = { type = activate_division which = 13000 value = 161 where = 1907 }
+		command = { type = activate_division which = 13000 value = 162 where = 1907 }
+		command = { type = activate_division which = 13000 value = 163 where = 1907 }
+		command = { type = activate_division which = 13000 value = 164 where = 1850 }
+		command = { type = activate_division which = 13000 value = 165 where = 1850 }
+		command = { type = activate_division which = 13000 value = 166 where = 1850 }
+		command = { type = activate_division which = 13000 value = 167 where = 1850 }
+		command = { type = activate_division which = 13000 value = 168 where = 1850 }
+		command = { type = activate_division which = 13000 value = 169 where = 1837 }
+		command = { type = activate_division which = 13000 value = 170 where = 1837 }
+		command = { type = activate_division which = 13000 value = 171 where = 1837 }
+		command = { type = activate_division which = 13000 value = 172 where = 1837 }		
+		command = { type = activate_division which = 13000 value = 173 where = 1837 }
+	}
+}
+
+#########################################################################
+#  Reserves activation - STAVKA (SOV)
+#########################################################################
+event = {
+	id = 3
+	random = no
+	country = SOV
+
+	trigger = {
+			OR = {
+ 				control = { province = 253 data = GER } # Sevastopol
+				control = { province = 258 data = GER } # Rostov
+				control = { province = 255 data = GER } # Novorossyjsk
+				control = { province = 256 data = GER } # Front is broken
+				control = { province = 260 data = GER } 
+				control = { province = 261 data = GER } 
+			}
+
+	}
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "soviet_fortunes_of_war"
+	style = 0
+
+	date = { day = 28 month = june year = 1942 }
+	offset = 1
+	deathdate = { day = 17 month = november year = 1942 }
+
+	action_a = {
+		name = "ge_actioname1A"
+
+		command = { type = activate_division which = 13000 value = 174 where = 283 }
+		command = { type = activate_division which = 13000 value = 175 where = 283 }
+		command = { type = activate_division which = 13000 value = 176 where = 283 }
+		command = { type = activate_division which = 13000 value = 177 where = 283 }
+		command = { type = activate_division which = 13000 value = 178 where = 283 }
+		command = { type = activate_division which = 13000 value = 179 where = 283 }
+		command = { type = activate_division which = 13000 value = 180 where = 283 }
+		command = { type = activate_division which = 13000 value = 181 where = 283 }
+		command = { type = activate_division which = 13000 value = 182 where = 283 }
+		command = { type = activate_division which = 13000 value = 183 where = 283 }
+		command = { type = activate_division which = 13000 value = 184 where = 163 }
+		command = { type = activate_division which = 13000 value = 185 where = 163 }
+		command = { type = activate_division which = 13000 value = 186 where = 163 }
+		command = { type = activate_division which = 13000 value = 187 where = 163 }
+		command = { type = activate_division which = 13000 value = 188 where = 163 }
+		command = { type = activate_division which = 13000 value = 189 where = 163 }
+		command = { type = activate_division which = 13000 value = 190 where = 163 }
+		command = { type = activate_division which = 13000 value = 191 where = 163 }
+		command = { type = activate_division which = 13000 value = 192 where = 163 }		
+		command = { type = activate_division which = 13000 value = 193 where = 163 }
+		command = { type = activate_division which = 13000 value = 194 where = 163 }
+		command = { type = activate_division which = 13000 value = 195 where = 163 }
+		command = { type = activate_division which = 13000 value = 196 where = 163 }
+		command = { type = activate_division which = 13000 value = 197 where = 163 }		
+		command = { type = activate_division which = 13000 value = 198 where = 163 }
+	}
+}
+
+#########################################################################
+#  Reserves activation - STAVKA Air Reserve (SOV)
+#########################################################################
+event = {
+	id = 4
+	random = no
+	country = SOV
+
+	trigger = {
+			OR = {
+ 				control = { province = 253 data = GER } # Sevastopol
+				control = { province = 258 data = GER } # Rostov
+				control = { province = 255 data = GER } # Novorossyjsk
+				control = { province = 256 data = GER } # Front is broken
+				control = { province = 260 data = GER } 
+				control = { province = 261 data = GER } 
+			}
+
+	}
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "soviet_air"
+	style = 0
+
+	date = { day = 28 month = june year = 1942 }
+	offset = 1
+	deathdate = { day = 17 month = november year = 1942 }
+
+	action_a = {
+		name = "ge_actioname1A"
+
+		command = { type = activate_division which = 13000 value = 743 where = 1828 }
+		command = { type = activate_division which = 13000 value = 744 where = 1828 }
+		command = { type = activate_division which = 13000 value = 745 where = 1828 }
+		command = { type = activate_division which = 13000 value = 746 where = 1828 }
+		command = { type = activate_division which = 13000 value = 747 where = 1828 }
+		command = { type = activate_division which = 13000 value = 748 where = 1828 }
+	}
+}
+
+#########################################################################
+#  Reserves activation - OKH (GER)
+#########################################################################
+event = {
+	id = 5
+	random = no
+	country = GER
+
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "german_reinforcment_2"
+	style = 0
+
+	date = { day = 20 month = july year = 1942 }
+
+	action_a = {
+		name = "ge_actioname1A"
+
+		command = { type = activate_division which = 10500 value = 140 where = 238 }
+		command = { type = activate_division which = 10500 value = 141 where = 238 }
+		command = { type = activate_division which = 10500 value = 142 where = 238 }
+	}
+}
+
+
+#########################################################################
+#  Operational Goals!
+#########################################################################
+event = {
+	id = 6
+	random = no
+	country = GER
+
+	name = "fblau_event1_name"
+	desc = "fblau_event2_desc"
+	picture = "soviet_offensive_east"
+	style = 0
+
+	date = { hour = 1 day = 28 month = june year = 1942 }
+	offset = 1
+	deathdate = { hour = 0 day = 20 month = june year = 1944 }
+
+	action_a = {
+		name = "OK"
+		command = {}
+	}
+}
+
+event = {
+	id = 7
+	random = no
+	country = SOV
+
+	name = "fblau_event1_name"
+	desc = "fblau_event1_desc"
+	picture = "panzer_reserves"
+	style = 0
+
+	date = { hour = 1 day = 28 month = june year = 1942 }
+	offset = 1
+	deathdate = { hour = 0 day = 20 month = june year = 1944 }
+
+	action_a = {
+		name = "OK"
+		command = {}
+	}
+}
+
+#########################################################################
+#  German Strategic Victory
+#########################################################################
+event = {
+	id = 11
+	random = no
+	country = GER
+
+	trigger = {
+ 			vp = 130
+
+
+	}
+
+	name = "ge_event5_name"
+	desc = "ge_event5_desc"
+	picture = "german_strategic_victory"
+	style = 0
+
+	date = { day = 28 month = june year = 1942 }
+	offset = 1
+	deathdate = { day = 17 month = november year = 1942 }
+
+
+	action_a = {
+		name = "ge_actioname5A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  German Marginal Victory
+#########################################################################
+event = {
+	id = 12
+	random = no
+	country = GER
+
+	trigger = {
+		vp = 95
+		
+	}
+
+	name = "ge_event7_name"
+	desc = "ge_event7_name"
+	picture = "german_marginal_victory2"
+	style = 0
+
+	date = { day = 28 month = june year = 1942 }
+	offset = 1
+	deathdate = { day = 18 month = november year = 1942 }
+
+
+	action_a = {
+		name = "ge_actioname7A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}
+
+#########################################################################
+#  USSR Strategic Victory
+#########################################################################
+event = {
+	id = 13
+	random = no
+	country = SOV
+
+	trigger = {
+		vp = 100
+ 				
+	}
+
+	name = "ge_event5_name"
+	desc = "ge_event5_name"
+	picture = "ussr_strategic_victory"
+	style = 0
+
+
+	date = { day = 18 month = november year = 1942 }
+
+
+	action_a = {
+		name = "ge_actioname5A" #End Game
+		command = { type = endgame value = 8 }
+	}
+}
+
+
+#########################################################################
+#  USSR Marginal Victory
+#########################################################################
+event = {
+	id = 14
+	random = no
+	country = SOV
+
+	trigger = {
+ 			range = { min = 30 max = 99 }
+	}
+
+	name = "ge_event7_name"
+	desc = "ge_event7_name"
+	picture = "ussr_marginal_victory"
+	style = 0
+	
+	
+	date = { day = 18 month = november year = 1942 }
+
+	action_a = {
+		name = "ge_actioname7A" #End Game
+		command = { type = endgame value = 7 }
+	}
+} 

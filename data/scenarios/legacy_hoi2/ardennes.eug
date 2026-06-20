@@ -1,0 +1,224 @@
+#################################
+# Designed by Greven and Tracid #
+#################################
+name = "ardennes_name"
+panel = "scenarios/data/scenario_ardennes.bmp"
+
+header = {
+    startyear = 1944
+    endyear = 1945
+
+	free = no
+
+	combat = yes	#this is a battlescenario
+
+
+	ALS = {
+			desc = ARD_ALLIES
+			picture = "scenarios\data\ardennes.bmp"
+	}
+
+	GER = {
+			desc = ARD_AXIS
+			bottom = yes
+			picture = "scenarios\data\ardennes.bmp"
+	}
+
+}
+
+globaldata = {
+	 rules = {
+         diplomacy = no
+         production = no
+         technology = no
+         }
+    startdate = {
+        year = 1944
+        month = december
+        day = 15
+        }
+    enddate = {
+        year = 1945
+        month = march
+        day = 2
+        }
+        dormant_leaders = YES
+
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { ALS }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { GER }
+		}
+
+
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1939
+	            month = september
+	            day = 1
+	            hour = 1
+            }
+            enddate = {
+	            year = 1939
+	            month = september
+	            day = 1
+	            hour = 1
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { GER }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+            		participant = { ALS }
+        	}
+	}
+weather = {   
+#	static = yes
+        pattern = {     	
+            id = { type = 9430 id = 4 }   
+            provinces = { 48 49 45 50 51 52 65 68 69 70 66 71 73 316 317 318 72 64 63 56 55 54 53 44 43 18 41 42 46 47 77 78 79 83 80 81 82 76 67 75 74 84 313 314 315 374 85 86 87 }   
+            centre = 71   
+            speed = 0  
+            heading = "northwest"   
+            } 
+		}
+    }
+map = {
+no = all
+
+
+yes = 48
+yes = 49
+yes = 45
+yes = 50
+yes = 51
+yes = 52
+yes = 65
+yes = 68
+yes = 69
+yes = 70
+yes = 66
+yes = 71
+yes = 73
+yes = 316
+yes = 317
+yes = 318
+yes = 72
+yes = 64
+yes = 63
+yes = 56
+yes = 55
+yes = 54
+yes = 53
+yes = 44
+yes = 43
+yes = 18
+yes = 41
+yes = 42
+yes = 46
+yes = 47
+yes = 77
+yes = 78
+yes = 79
+yes = 83
+yes = 80
+yes = 81
+yes = 82
+yes = 76
+yes = 67
+yes = 75
+yes = 74
+yes = 84
+yes = 313
+yes = 314
+yes = 315
+yes = 374
+yes = 85
+yes = 86
+yes = 87
+
+# Sea zones
+yes = 2395
+yes = 2412
+yes = 2472
+yes = 2473
+
+top = {	x = 14574 y = 2004 }
+bottom = {	x = 15810 y = 3020 }
+
+}
+
+province = { id = 48	weather = snowing }
+province = { id = 49	weather = snowing }
+province = { id = 45	weather = snowing }
+province = { id = 50	weather = snowing }
+province = { id = 51	weather = snowing }
+province = { id = 52	weather = snowing }
+province = { id = 65	weather = snowing }
+province = { id = 68	weather = snowing }
+province = { id = 69	weather = snowing }
+province = { id = 70	weather = snowing }
+province = { id = 66 	weather = snowing }
+province = { id = 71 	weather = snowing }
+province = { id = 73 	weather = snowing }
+province = { id = 316	weather = snowing }
+province = { id = 317	weather = snowing }
+province = { id = 318	weather = snowing }
+province = { id = 72 	weather = snowing }
+province = { id = 64 	weather = snowing }
+province = { id = 63 	weather = snowing }
+province = { id = 56 	weather = snowing }
+province = { id = 55	weather = snowing }
+province = { id = 54	weather = snowing }
+province = { id = 53	weather = snowing }
+province = { id = 44	weather = snowing }
+province = { id = 43	weather = snowing }
+province = { id = 18	weather = snowing }
+province = { id = 41	weather = snowing }
+province = { id = 42	weather = snowing }
+province = { id = 46	weather = snowing }
+province = { id = 47	weather = snowing }
+province = { id = 77	weather = snowing }
+province = { id = 78	weather = snowing }
+province = { id = 79	weather = snowing }
+province = { id = 83	weather = snowing }
+province = { id = 80	weather = snowing }
+province = { id = 81	weather = snowing }
+province = { id = 82	weather = snowing }
+province = { id = 76	weather = snowing }
+province = { id = 67	weather = snowing }
+province = { id = 75	weather = snowing }
+province = { id = 74 	weather = snowing }
+province = { id = 84 	weather = snowing }
+province = { id = 313	weather = snowing }
+province = { id = 314	weather = snowing }
+province = { id = 315	weather = snowing }
+province = { id = 374	weather = snowing }
+province = { id = 85 	weather = snowing }
+province = { id = 86 	weather = snowing }
+province = { id = 87 	weather = snowing }
+                     	
+
+# Vp things
+include = "scenarios/ardennes/vp.inc"
+
+
+
+include = "scenarios/ardennes/ger.inc"
+include = "scenarios/ardennes/usa.inc"
+
+
+event = "scenarios/ardennes/ardennes_events.txt"
+
+
+
+
+
+
+

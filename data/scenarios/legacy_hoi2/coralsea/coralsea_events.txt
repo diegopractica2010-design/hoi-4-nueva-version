@@ -1,0 +1,1864 @@
+event = { 
+	id = 1
+	random = no
+	country = Jap
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   ###reinforcements arrive (KG100)
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 2 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 2 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 200  where = 1613 }
+	}
+}
+
+event = { 
+	id = 2
+	random = no
+	country = Jap
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"  
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 201  where = 1613 }
+	}
+}
+
+event = { 
+	id = 3
+	random = no
+	country = Jap
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 3 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 3 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 202  where = 1613 }
+		command = { type = activate_division which = 10300 value = 203  where = 1613 }
+		command = { type = activate_division which = 10300 value = 204  where = 1613 }
+	}
+}
+
+event = { 
+	id = 4
+	random = no
+	country = Jap
+        
+        trigger = { random = 34 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 3 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 3 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 205  where = 1613 }
+		command = { type = activate_division which = 10300 value = 206  where = 1613 }
+		command = { type = activate_division which = 10300 value = 207  where = 1613 }
+		command = { type = activate_division which = 10300 value = 208  where = 1613 }
+	}
+}
+
+event = { 
+	id = 5
+	random = no
+	country = Jap
+        
+        trigger = { random = 37 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 4 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 209  where = 1613 }
+		#command = { type = activate_division which = 10300 value = 210  where = 1613 }
+		command = { type = activate_division which = 10300 value = 211  where = 1613 }
+		command = { type = activate_division which = 10300 value = 212  where = 1613 }
+		command = { type = activate_division which = 10300 value = 218  where = 1613 }
+	}
+}
+
+
+event = { 
+	id = 6
+	random = no
+	country = Jap
+        
+        trigger = { random = 33 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 12 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 12 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 213  where = 1613 }
+		command = { type = activate_division which = 10300 value = 214  where = 1613 }
+		command = { type = activate_division which = 10300 value = 215  where = 1613 }
+		command = { type = activate_division which = 10300 value = 217  where = 1613 }
+	}
+}
+
+event = { 
+	id = 7
+	random = no
+	country = Jap
+        
+        trigger = { random = 30 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 12 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 12 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 216  where = 1613 }
+		command = { type = activate_division which = 10300 value = 219  where = 1613 }
+	}
+}
+
+
+
+event = { 
+	id = 8
+	random = no
+	country = Jap
+        
+        trigger = { random = 37 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = october year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = december year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 225  where = 1613 }
+		command = { type = activate_division which = 10300 value = 226  where = 1613 }
+		command = { type = activate_division which = 10300 value = 227  where = 1613 }
+		command = { type = activate_division which = 10300 value = 228  where = 1613 }
+		command = { type = activate_division which = 10300 value = 229  where = 1613 }
+		command = { type = activate_division which = 10300 value = 230  where = 1613 }
+	}
+}
+
+event = { 
+	id = 9
+	random = no
+	country = Jap
+        
+        trigger = { random = 37 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 3 month = october year = 1942 }
+        offset = 15
+	deathdate = { day = 3 month = december year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 231  where = 1613 }
+
+	}
+}
+
+event = { 
+	id = 10
+	random = no
+	country = Jap
+        
+        trigger = { random = 33 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = november year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = january year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 232  where = 1613 }
+		command = { type = activate_division which = 10300 value = 233  where = 1613 }
+		command = { type = activate_division which = 10300 value = 234  where = 1613 }
+		command = { type = activate_division which = 10300 value = 235  where = 1613 }
+		command = { type = activate_division which = 10300 value = 236  where = 1613 }
+		command = { type = activate_division which = 10300 value = 237  where = 1613 }
+                }
+}
+
+
+
+event = { 
+	id = 11
+	random = no
+	country = Jap
+        
+        trigger = { random = 35}
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 2 month = november year = 1942 }
+        offset = 15
+	deathdate = { day = 2 month = january year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 238  where = 1613 }
+                }
+}
+
+event = { 
+	id = 12
+	random = no
+	country = Jap
+        
+        trigger = { random = 35}
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 2 month = december year = 1942 }
+        offset = 15
+	deathdate = { day = 2 month = february year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 239  where = 1613 }
+                }
+}
+
+event = { 
+	id = 13
+	random = no
+	country = Jap
+        
+        trigger = { random = 36}
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = december year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = february year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 240  where = 1613 }
+                }
+}
+
+event = { 
+	id = 14
+	random = no
+	country = Jap
+        
+        trigger = { random = 35}
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 3 month = december year = 1942 }
+        offset = 15
+	deathdate = { day = 3 month = february year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 248  where = 1613 }
+                }
+}
+
+event = { 
+	id = 15
+	random = no
+	country = Jap
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = january year = 1943 }
+        offset = 15
+	deathdate = { day = 1 month = march year = 1944 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 241  where = 1613 }
+                }
+}
+
+
+event = { 
+	id = 16
+	random = no
+	country = Jap
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = february year = 1943 }
+        offset = 15
+	deathdate = { day = 1 month = april year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 242  where = 1613 }
+                }
+}
+
+
+event = { 
+	id = 17
+	random = no
+	country = Jap
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = march year = 1943 }
+        offset = 15
+	deathdate = { day = 1 month = may year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 249  where = 1613 }
+                }
+}
+
+event = { 
+	id = 18
+	random = no
+	country = Jap
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = june year = 1943 }
+        offset = 15
+	deathdate = { day = 1 month = september year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 243  where = 1613 }
+		command = { type = activate_division which = 10300 value = 244  where = 1613 }
+                }
+}
+
+event = { 
+	id = 19
+	random = no
+	country = Jap
+        
+        trigger = { random = 40 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = november year = 1943 }
+        offset = 15
+	deathdate = { day = 1 month = february year = 1944 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 245  where = 1613 }
+		command = { type = activate_division which = 10300 value = 246  where = 1613 }
+                }
+}
+
+event = { 
+	id = 20
+	random = no
+	country = Jap
+        
+        trigger = { random = 60 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 1 month = march year = 1944 }
+        offset = 15
+	deathdate = { day = 1 month = may year = 1944 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 247  where = 1613 }
+                }
+}
+
+
+####usa reinforcements
+event = { 
+	id = 21
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments1"
+	style = 0
+	
+	date = { day = 1 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 2 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 200  where = 1722 }
+		command = { type = activate_division which = 10200 value = 201  where = 1722 }
+                }
+}
+
+event = { 
+	id = 22
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments2"
+	style = 0
+	
+	date = { day = 1 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 204  where = 1756 }
+		command = { type = activate_division which = 10200 value = 205  where = 1756 }
+		command = { type = activate_division which = 10200 value = 206  where = 1756 }
+		command = { type = activate_division which = 10200 value = 207  where = 1756 }
+		command = { type = activate_division which = 10200 value = 208  where = 1756 }
+		command = { type = activate_division which = 10200 value = 209  where = 1756 }
+		command = { type = activate_division which = 10200 value = 210  where = 1756 }
+		command = { type = activate_division which = 10200 value = 211  where = 1756 }
+                }
+}
+
+
+
+event = { 
+	id = 23
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+	
+	date = { day = 4 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 202  where = 1756 }
+		#command = { type = activate_division which = 10200 value = 203  where = 1756 }
+		command = { type = activate_division which = 10200 value = 212  where = 1756 }
+		command = { type = activate_division which = 10200 value = 213  where = 1756 }
+		command = { type = activate_division which = 10200 value = 214  where = 1756 }
+		command = { type = activate_division which = 10200 value = 215  where = 1756 }
+                }
+}
+
+
+
+event = { 
+	id = 24
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments4"
+	style = 0
+	
+	date = { day = 8 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 8 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 216  where = 1756 }
+		command = { type = activate_division which = 10200 value = 217  where = 1756 }
+		command = { type = activate_division which = 10200 value = 218  where = 1756 }
+		command = { type = activate_division which = 10200 value = 219  where = 1756 }
+		command = { type = activate_division which = 10200 value = 220 where = 1756 }
+                }
+}
+
+
+event = { 
+	id = 25
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments6"
+	style = 0
+	
+	date = { day = 1 month = september year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = december year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 221  where = 1756 }
+		command = { type = activate_division which = 10200 value = 222  where = 1756 }
+                }
+}
+
+
+event = { 
+	id = 26
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments7"
+	style = 0
+	
+	date = { day = 1 month = october year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = january year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 223  where = 1756 }
+		command = { type = activate_division which = 10200 value = 224  where = 1756 }
+		command = { type = activate_division which = 10200 value = 225  where = 1756 }
+                }
+}
+
+
+event = { 
+	id = 27
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments8"
+	style = 0
+	
+	date = { day = 4 month = november year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = february year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 226  where = 1756 }
+		command = { type = activate_division which = 10200 value = 227  where = 1756 }
+		command = { type = activate_division which = 10200 value = 228  where = 1756 }
+		command = { type = activate_division which = 10200 value = 229  where = 1756 }
+		command = { type = activate_division which = 10200 value = 230  where = 1756 }
+		command = { type = activate_division which = 10200 value = 231  where = 1756 }
+		command = { type = activate_division which = 10200 value = 232  where = 1756 }
+		command = { type = activate_division which = 10200 value = 233  where = 1756 }
+                }
+}
+
+
+
+
+event = { 
+	id = 28
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments8"
+	style = 0
+	
+	date = { day = 1 month = november year = 1942 }
+        offset = 15
+	deathdate = { day = 1 month = february year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 234  where = 1756 }
+		command = { type = activate_division which = 10200 value = 235  where = 1756 }
+		command = { type = activate_division which = 10200 value = 236  where = 1756 }
+		command = { type = activate_division which = 10200 value = 237  where = 1756 }
+		command = { type = activate_division which = 10200 value = 238  where = 1756 }
+                }
+}
+
+
+event = { 
+	id = 29
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments7"
+	style = 0
+	
+	date = { day = 4 month = december year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = march year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 239  where = 1756 }
+		command = { type = activate_division which = 10200 value = 240  where = 1756 }
+		command = { type = activate_division which = 10200 value = 241  where = 1756 }
+		command = { type = activate_division which = 10200 value = 242  where = 1756 }
+                }
+}
+
+
+event = { 
+	id = 30
+	random = no
+	country = USA
+        
+        trigger = { random = 36 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments6"
+	style = 0
+	
+	date = { day = 1 month = january year = 1943 }
+        offset = 15
+	deathdate = { day = 1 month = april year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 243  where = 1756 }
+		command = { type = activate_division which = 10200 value = 244  where = 1756 }
+		command = { type = activate_division which = 10200 value = 245  where = 1756 }
+		command = { type = activate_division which = 10200 value = 246  where = 1756 }
+		command = { type = activate_division which = 10200 value = 247  where = 1756 }
+		command = { type = activate_division which = 10200 value = 248  where = 1756 }
+                }
+}
+
+
+
+event = { 
+	id = 31
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments4"
+	style = 0
+	
+	date = { day = 4 month = february year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = may year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 249  where = 1756 }
+		command = { type = activate_division which = 10200 value = 250  where = 1756 }
+		command = { type = activate_division which = 10200 value = 251  where = 1756 }
+		command = { type = activate_division which = 10200 value = 252  where = 1756 }
+		command = { type = activate_division which = 10200 value = 253  where = 1756 }
+                }
+}
+
+event = { 
+	id = 32
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+	
+	date = { day = 4 month = june year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = september year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 254  where = 1756 }
+		command = { type = activate_division which = 10200 value = 255  where = 1756 }
+                }
+}
+
+
+event = { 
+	id = 33
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+	
+	date = { day = 4 month = august year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = december year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 256  where = 1756 }
+                }
+}
+
+
+event = { 
+	id = 34
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments2"
+	style = 0
+	
+	date = { day = 4 month = november year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = january year = 1944 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 257  where = 1756 }
+		command = { type = activate_division which = 10200 value = 258  where = 1756 }
+		command = { type = activate_division which = 10200 value = 259  where = 1756 }
+		command = { type = activate_division which = 10200 value = 260  where = 1756 }
+		command = { type = activate_division which = 10200 value = 261  where = 1756 }
+		command = { type = activate_division which = 10200 value = 262  where = 1756 }
+		command = { type = activate_division which = 10200 value = 263  where = 1756 }
+		command = { type = activate_division which = 10200 value = 264  where = 1756 }
+		command = { type = activate_division which = 10200 value = 265  where = 1756 }
+                }
+}
+
+event = { 
+	id = 35
+	random = no
+	country = USA
+        
+        trigger = { random = 55 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments1"
+	style = 0
+	
+	date = { day = 4 month = december year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = february year = 1944 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 266  where = 1756 }
+		command = { type = activate_division which = 10200 value = 267  where = 1756 }
+                }
+}
+
+event = { 
+	id = 36
+	random = no
+	country = USA
+        
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments2"
+	style = 0
+	
+	date = { day = 4 month = march year = 1944 }
+        offset = 15
+	deathdate = { day = 4 month = april year = 1944 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 268  where = 1756 }
+		command = { type = activate_division which = 10200 value = 269  where = 1756 }
+		command = { type = activate_division which = 10200 value = 270  where = 1756 }
+		command = { type = activate_division which = 10200 value = 271  where = 1756 }
+		command = { type = activate_division which = 10200 value = 272  where = 1756 }
+                }
+}
+
+event = { 
+	id = 37
+	random = no
+	country = AST
+        
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+	
+	date = { day = 4 month = october year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = december year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10002 value = 16  where = 1756 }
+                }
+}
+
+event = { 
+	id = 38
+	random = no
+	country = AST
+        
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments4"
+	style = 0
+	
+	date = { day = 4 month = october year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = december year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10002 value = 15  where = 1722 }
+                }
+}
+
+event = { 
+	id = 39
+	random = no
+	country = AST
+        
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments6"
+	style = 0
+	
+	date = { day = 4 month = january year = 1944 }
+        offset = 15
+	deathdate = { day = 4 month = december year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10002 value = 17  where = 1756 }
+                }
+}
+
+
+event = { 
+	id = 40
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments7"
+	style = 0
+	
+	date = { day = 4 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 80  where = 1692 }
+		command = { type = activate_division which = 10200 value = 88  where = 1692 }
+                }
+}
+
+
+event = { 
+	id = 41
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments6"
+	style = 0
+	
+	date = { day = 4 month = august year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = november year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 81  where = 1692 }
+		command = { type = activate_division which = 10200 value = 82  where = 1692 }
+		command = { type = activate_division which = 10200 value = 98  where = 1692 }
+		command = { type = activate_division which = 10200 value = 99  where = 1692 }
+                }
+}
+
+
+event = { 
+	id = 42
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments4"
+	style = 0
+	
+	date = { day = 4 month = october year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = january year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 89  where = 1692 }
+		command = { type = activate_division which = 10200 value = 94  where = 1692 }
+                }
+}
+
+
+
+event = { 
+	id = 43
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+	
+	date = { day = 4 month = november year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = february year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 83  where = 1692 }
+		command = { type = activate_division which = 10200 value = 96  where = 1692 }
+		command = { type = activate_division which = 10200 value = 97  where = 1692 }
+                }
+}
+
+
+event = { 
+	id = 44
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments2"
+	style = 0
+	
+	date = { day = 4 month = february year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = march year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 87  where = 1692 }
+		command = { type = activate_division which = 10200 value = 93  where = 1692 }
+		command = { type = activate_division which = 10200 value = 86  where = 1692 }
+		command = { type = activate_division which = 10200 value = 94  where = 1692 }
+                }
+}
+
+
+event = { 
+	id = 45
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments4"
+	style = 0
+	
+	date = { day = 4 month = april year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = september year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 91 where = 1692 }
+		command = { type = activate_division which = 10200 value = 85 where = 1692 }
+                }
+}
+
+
+event = { 
+	id = 46
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments6"
+	style = 0
+	
+	date = { day = 4 month = august year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = december year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 84 where = 1692 }
+                }
+}
+
+event = { 
+	id = 47
+	random = no
+	country = USA
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments7"
+	style = 0
+	
+	date = { day = 4 month = november year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = february year = 1944 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 90 where = 1692 }
+                }
+}
+
+
+event = { 
+	id = 48
+	random = no
+	country = JAP
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments2"
+	style = 0
+	
+	date = { day = 4 month = june year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = september year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 250 where = 1613 }
+		command = { type = activate_division which = 10300 value = 251 where = 1613 }
+                }
+}
+
+
+event = { 
+	id = 49
+	random = no
+	country = JAP
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments2"
+	style = 0
+	
+	date = { day = 4 month = july year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = october year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 252 where = 1613 }
+		command = { type = activate_division which = 10300 value = 253 where = 1613 }
+                }
+}
+
+
+event = { 
+	id = 50
+	random = no
+	country = JAP
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments3"
+	style = 0
+	
+	date = { day = 4 month = august year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = december year = 1942 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 254 where = 1613 }
+		command = { type = activate_division which = 10300 value = 255 where = 1613 }
+		command = { type = activate_division which = 10300 value = 257 where = 1613 }
+                }
+}
+
+
+event = { 
+	id = 51
+	random = no
+	country = JAP
+        
+        trigger = { random = 35 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments3"
+	style = 0
+	
+	date = { day = 4 month = september year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = february year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 256 where = 1613 }
+		command = { type = activate_division which = 10300 value = 258 where = 1613 }
+		command = { type = activate_division which = 10300 value = 261 where = 1613 }
+                }
+}
+
+
+event = { 
+	id = 52
+	random = no
+	country = JAP
+        
+        trigger = { random = 15 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments3"
+	style = 0
+	
+	date = { day = 4 month = october year = 1942 }
+        offset = 15
+	deathdate = { day = 4 month = march year = 1943 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 259 where = 1613 }
+		command = { type = activate_division which = 10300 value = 260 where = 1613 }
+		command = { type = activate_division which = 10300 value = 262 where = 1613 }
+                }
+}
+
+
+event = { 
+	id = 53
+	random = no
+	country = JAP
+        
+        trigger = { random = 15 }
+  
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments2"
+	style = 0
+	
+	date = { day = 4 month = june year = 1943 }
+        offset = 15
+	deathdate = { day = 4 month = january year = 1944 }
+
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 263 where = 1613 }
+		command = { type = activate_division which = 10300 value = 264 where = 1613 }
+                }
+}
+
+
+event = { 
+	id = 54
+	random = no
+	country = jap
+        
+        trigger = { ai = yes}
+        
+	name = "ai_event"   
+	style = 0
+	
+	date = { day = 9 month = may year = 1942 }
+
+	
+	action_a = {
+		name = "ok"
+		command = { }
+                }
+
+
+}
+
+event = { 
+	id = 55
+	random = no
+	country = usa
+        
+        trigger = { ai = yes}
+        
+	name = "ai_event"   
+	style = 0
+	
+	date = { day = 9 month = may year = 1942 }
+
+	
+	action_a = {
+		name = "ok"
+		command = { }
+                }
+
+
+}
+
+event = { 
+	id = 56
+	random = no
+	country = jap
+
+        trigger = { 
+        ai = usa
+        not = { event = 54 } 
+        }  ###japan = human, usa = ai!
+        
+  
+	name = "cs_event1_name"   
+	desc = "cs_event1_desc"
+        picture = "midway"
+	style = 0
+	
+	date = { day = 8 month = june year = 1942 }
+
+	
+	action_a = {
+		name = "cs_actioname1a"
+		command = { type = sleepevent which = 58 }
+		command = { type = sleepevent which = 59 }
+                }
+	action_b = {
+		name = "cs_actioname1b"
+		command = { type = sleepevent which = 58 }
+                }
+	action_c = {
+		name = "cs_actioname1c"
+		command = { type = sleepevent which = 59 }
+		command = { type = sleepevent which = 60 }
+                }
+
+}
+
+
+event = { 
+	id = 61
+	random = no
+	country = usa
+
+        trigger = { not = { event = 55 } }  ###usa = human! if jap and usa are human, usa decides
+        
+  
+	name = "cs_event1_name"   
+	desc = "cs_event1_desc"
+        picture = "midway"
+	style = 0
+	
+	date = { day = 8 month = june year = 1942 }
+
+	
+	action_a = {
+		name = "cs_actioname2a"
+		command = { type = sleepevent which = 58 }
+		command = { type = sleepevent which = 59 }
+                }
+	action_b = {
+		name = "cs_actioname2b"
+		command = { type = sleepevent which = 58 }
+                }
+	action_c = {
+		name = "cs_actioname2c"
+		command = { type = sleepevent which = 59 }
+		command = { type = sleepevent which = 60 }
+                }
+
+}
+
+
+event = { 
+	id = 57
+	random = no
+	country = usa
+
+  	trigger = {
+  		division_exists = { type = 10200 id = 54 }
+  	}
+  
+  
+	name = "ge_event3_name"  ###focus shifted towards another theatre
+	desc = "ge_event3_desc"
+
+        picture = "schwerpunkt" 
+	style = 0
+	
+	date = { day = 18 month = may year = 1942 }
+
+	
+	action_a = {
+		name = "ge_actioname3A"
+		command = { type = remove_division which = 10200 value = 54  }  ###yorktown -> midway
+                }
+}
+
+
+event = { 
+	id = 58
+	random = no
+	country = jap
+        
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 15 month = july year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 265  where = 1613 }
+		command = { type = activate_division which = 10300 value = 266  where = 1613 }
+		command = { type = activate_division which = 10300 value = 267  where = 1613 }
+		command = { type = activate_division which = 10300 value = 268  where = 1613 }
+                }
+}
+
+event = { 
+	id = 59
+	random = no
+	country = jap
+        
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "japanese_reinforcments"
+	style = 0
+	
+	date = { day = 15 month = july year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 265  where = 1613 }
+		command = { type = activate_division which = 10300 value = 266  where = 1613 }
+                }
+}
+
+
+
+event = { 
+	id = 60
+	random = no
+	country = usa
+        
+	name = "ge_event1_name"   
+	desc = "ge_event1_desc"
+        picture = "american_reinforcments3"
+	style = 0
+	
+	date = { day = 15 month = july year = 1942 }
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 203  where = 1756 }
+                }
+}
+
+
+
+
+event = { 
+	id = 62
+	random = no
+	country = jap
+
+        trigger = { ai = no }
+
+	name = "cs_event3_name"
+	desc = "cs_event3_desc"
+        picture = "japanese_navy"
+	style = 0
+
+	date = { day = 9 month = may year = 1942}
+	
+	action_a = {
+		name = "Ok"
+		command = { }
+	}
+}
+
+
+event = { 
+	id = 63
+	random = no
+	country = ast
+
+        trigger = { ai = no }
+
+	name = "cs_event3_name"
+	desc = "cs_event4_desc"
+        picture = "coralsea_map"
+	style = 0
+
+	date = { day = 9 month = may year = 1942}
+	
+	action_a = {
+		name = "Ok"
+		command = { }
+	}
+}
+
+
+event = { 
+	id = 64
+	random = no
+	country = usa
+
+        trigger = { ai = no }
+
+	name = "cs_event3_name"
+	desc = "cs_event5_desc"
+        picture = "american_carrier"
+	style = 0
+
+	date = { day = 9 month = may year = 1942}
+	
+	action_a = {
+		name = "Ok"
+		command = { }
+	}
+}
+
+
+
+event = { 
+	id = 65
+	random = no
+	country = jap
+
+        trigger = { ai = no }
+
+	name = "cs_event6_name"
+	desc = "cs_event6_desc"
+        picture = "japanese_navy3"
+	style = 0
+
+	date = { day = 9 month = may year = 1942}
+	
+	action_a = {
+		name = "cs_actionname6a"
+		command = { }
+	}
+}
+
+
+event = { 
+	id = 66
+	random = no
+	country = usa
+
+        trigger = { ai = no }
+
+	name = "cs_event7_name"
+	desc = "cs_event7_desc"
+        picture = "american_ships_in_dock"
+	style = 0
+
+	date = { day = 9 month = may year = 1942}
+	
+	action_a = {
+		name = "cs_actionname7a"
+		command = { }
+	}
+}
+
+
+
+
+
+
+#sudden death///strategic victory
+
+
+
+event = { 
+	id = 67
+	country = jap
+	random = no
+
+	trigger = { VP = 43 }
+
+
+
+	name = "ge_event5_name"  
+	desc = "cs_event8_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 2 month = january year = 1942 }
+        offset = 3
+	deathdate = { day = 4 month = june year = 1944 }
+	
+	action_a = {
+		name = "cs_actioname8A"
+		command = { type = endgame value = 4 }
+
+	}
+}
+
+
+####tactical victory
+
+
+event = { 
+	id = 68
+	country = jap
+	random = no
+
+	trigger = { VP = 14 }
+
+
+
+	name = "ge_event6_name"  
+	desc = "cs_event9_desc"
+        picture = "japan_celebrating"
+	style = 0
+	
+	date = { day = 5 month = june year = 1944 }
+	
+	action_a = {
+		name = "cs_actioname8A"
+		command = { type = endgame value = 3 }
+	}
+}
+
+
+###draw
+
+
+
+event = { 
+	id = 69
+	country = jap
+	random = no
+
+	trigger = { 
+			range = { min = 10 max = 13 }
+                  }
+
+
+
+	name = "ge_event8_name"  
+	desc = "cs_event10_desc"
+        picture = "failed_objective"
+	style = 0
+	
+	date = { day = 5 month = june year = 1944 }
+	
+	action_a = {
+		name = "cs_actioname8A"
+		command = { type = endgame value = 2 }
+	}
+}
+
+
+
+##jap defeat/us vic
+
+
+event = { 
+	id = 70
+	country = usa
+	random = no
+
+
+	trigger = { allies = 40
+                  }
+
+
+
+
+	name = "ge_event6_name"  
+	desc = "cs_event12_desc"
+        picture = "japanese_decisive_defeat"
+	style = 0
+	
+	date = { day = 5 month = august year = 1943 }
+        offset = 3
+	deathdate = { day = 4 month = august year = 1944 }
+	
+	action_a = {
+		name = "cs_actioname8A"
+		command = { type = endgame value = 5 }
+	}
+}
+
+
+
+
+###jap dec. defeat/us dec victory
+
+
+event = { 
+	id = 71
+	country = usa
+	random = no
+
+	trigger = { allies = 50 
+                  }
+
+	name = "ge_event5_name"  
+	desc = "cs_event11_desc"
+        picture = "japanese_decisive_defeat"
+	style = 0
+	
+	date = { day = 2 month = january year = 1942 }
+        offset = 3
+	deathdate = { day = 4 month = august year = 1943 }
+	
+	action_a = {
+		name = "cs_actioname8A"
+		command = { type = endgame value = 6 }
+	}
+}
+

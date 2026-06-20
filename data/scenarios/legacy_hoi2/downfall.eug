@@ -1,0 +1,226 @@
+name = "DOWNFALL_NAME"
+panel = "scenarios/data/scenario_downfall.bmp"
+
+header = {
+	name = "DOWNFALL_NAME"
+	startyear = 1945
+	endyear = 1947
+	free = no
+	combat = yes	#this is a battlescenario
+
+	JAP = {
+		desc = "ODW_JAP"
+		picture = "scenarios\data\downfall.bmp"		
+		}
+
+	ALS = {
+		desc = "ODW_USA"
+		bottom = yes
+		picture = "scenarios\data\downfall.bmp"		
+		}
+
+	SOV = {
+		desc = "ODW_SOV"
+		bottom = yes
+		picture = "scenarios\data\downfall.bmp"		
+		}
+
+	}
+
+globaldata = {
+	startdate = {
+		year = 1945
+		month = october
+		day = 20
+		hour = 0
+		}
+	enddate = {
+		year = 1947
+		month = december
+		day = 31
+		}
+
+
+	rules = {
+		diplomacy = no
+		production = no
+		technology = no
+		}
+
+	allies = {
+		id = { type = 15000 id = 1 }
+		participant = { ALS }
+		}
+	axis = {
+		id = { type = 15000 id = 2 }
+		participant = { JAP }
+		}
+	comintern = {
+		id = { type = 15000 id = 3 }
+		participant = { SOV }
+		}
+
+	war = {
+		id = { type = 9430 id = 1 }
+		date = {
+			year = 1941
+			month = december
+			day = 7
+			hour = 1
+			}
+		enddate = {
+			year = 1941
+			month = december
+			day = 7
+			hour = 1
+			}
+		attackers = {
+			id = { type = 9430 id = 2 }
+			participant = { JAP }
+			}
+		defenders = {
+			id = { type = 9430 id = 3 }
+			participant = { ALS }
+			}
+		}
+
+	war = {
+		id = { type = 9430 id = 4 }
+		date = {
+			year = 1945
+			month = august
+			day = 8
+			hour = 1
+			}
+		enddate = {
+			year = 1945
+			month = august
+			day = 8
+			hour = 1
+			}
+		attackers = {
+			id = { type = 9430 id = 5 }
+			participant = { SOV }
+			}
+		defenders = {
+			id = { type = 9430 id = 6 }
+			participant = { JAP }
+			}
+		}
+
+	}
+
+map = {
+	no = all
+	yes = 2263
+	yes = 2181
+	yes = 1191
+	yes = 1190
+	yes = 1189
+	yes = 1188
+	yes = 1187
+	yes = 1186
+	yes = 1185
+	yes = 1184
+	yes = 1183
+	yes = 1182
+	yes = 1181
+	yes = 1180
+	yes = 1179
+	yes = 1178
+	yes = 1177
+	yes = 1176
+	yes = 1174
+	yes = 1194
+	yes = 1195
+	yes = 1196
+	yes = 1197
+	yes = 1198
+	yes = 1199
+	yes = 1322
+	yes = 1323
+	yes = 1324
+	yes = 1201
+	yes = 1200
+	yes = 1393
+	yes = 1391
+	yes = 1392
+	yes = 1376
+	yes = 1372
+	yes = 1373
+	yes = 1371
+	yes = 1370
+	yes = 1369
+	yes = 1367
+	yes = 1366
+	yes = 1175
+	yes = 1737
+	yes = 1738
+	yes = 1739
+	yes = 1740
+	yes = 1741
+	yes = 1742
+	yes = 1743
+	yes = 1193
+	yes = 1599
+	yes = 1624
+	yes = 1626
+	yes = 1627
+	yes = 1618
+	yes = 2189
+	yes = 2188
+	yes = 2192
+	yes = 2191
+	yes = 2194
+	yes = 2590
+	yes = 2215
+	yes = 2216
+	yes = 2217
+	yes = 2214
+	yes = 2222
+	yes = 2223
+	yes = 2212
+	yes = 2213
+	yes = 2589
+	yes = 2193
+	yes = 2187
+	yes = 2185
+	yes = 2211
+	yes = 2205
+	yes = 2195
+	yes = 2184
+	yes = 2264
+	yes = 2262
+	yes = 2257
+	yes = 2256
+	yes = 2254
+	yes = 2259
+	yes = 2258
+	yes = 2260
+	yes = 2265
+	yes = 2266
+	yes = 2267
+	yes = 2177
+	yes = 2249
+	yes = 2248
+	yes = 2175
+	yes = 2176
+	yes = 2182
+	yes = 2183
+	yes = 2186
+	yes = 2196
+	yes = 2174
+	yes = 2197
+	yes = 2204
+	yes = 2206
+	yes = 2261
+	top = { x = 24992 y = 2056 }
+	bottom = { x = 28344 y = 7056 }
+	}
+
+include = "scenarios/downfall/vp.inc"
+include = "scenarios/downfall/japan.inc"
+include = "scenarios/downfall/soviet.inc"
+include = "scenarios/downfall/usa.inc"
+
+event = "scenarios/downfall/downfall_events.txt"

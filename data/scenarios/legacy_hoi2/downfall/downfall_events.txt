@@ -1,0 +1,613 @@
+event = {
+	id = 1
+	random = no
+	country = ALS
+
+	trigger = {
+		random = 5
+		owned = { province = 1191 data = ALS }
+		}
+
+	name = "downfall_event1_name"
+	desc = "downfall_event1_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = november year = 1945 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "Ok"
+		command = { type = activate_division which = 10000 value = 500 where = 1193 } #24th Infantry Division
+		command = { type = activate_division which = 10000 value = 501 where = 1193 } #31st Infantry Division
+		command = { type = activate_division which = 10000 value = 502 where = 1193 } #37th Infantry Division
+		command = { type = activate_division which = 10000 value = 503 where = 1193 } #13th Armoured Division
+		command = { type = activate_division which = 10000 value = 504 where = 1193 } #20th Armoured Division
+		command = { type = activate_division which = 10000 value = 505 where = 1193 } #6th Infantry Division
+		command = { type = activate_division which = 10000 value = 506 where = 1193 } #32nd Infantry Division
+		command = { type = activate_division which = 10000 value = 507 where = 1193 } #38th Infantry Division
+		command = { type = activate_division which = 10000 value = 508 where = 1193 } #97th Infantry Division
+		command = { type = activate_division which = 10000 value = 509 where = 1193 } #3rd British Division
+		command = { type = activate_division which = 10000 value = 510 where = 1193 } #6th Canadian Division
+		command = { type = activate_division which = 10000 value = 511 where = 1193 } #10th Australian Division
+		command = { type = activate_division which = 10000 value = 528 where = 1193 } #1st Army HQ
+		command = { type = activate_division which = 10000 value = 529 where = 1193 } #8th Army HQ
+		}
+	}
+
+event = {
+	id = 2
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = february year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 512 where = 1618 } #5th Infantry Division
+		}
+	}
+
+event = {
+	id = 3
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = february year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 513 where = 1618 } #44th Infantry Division
+		}
+	}
+
+event = {
+	id = 4
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = february year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 514 where = 1618 } #86th Infantry Division
+		}
+	}
+
+event = {
+	id = 5
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = march year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 515 where = 1618 } #4th Infantry Division
+		}
+	}
+
+event = {
+	id = 6
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = march year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 516 where = 1618 } #8th Infantry Division
+		}
+	}
+
+event = {
+	id = 7
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = march year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 517 where = 1618 } #87th Infantry Division
+		}
+	}
+
+event = {
+	id = 8
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = april year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 518 where = 1618 } #2nd Infantry Division
+		}
+	}
+
+event = {
+	id = 9
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = april year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 519 where = 1618 } #28th Infantry Division
+		}
+	}
+
+event = {
+	id = 10
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = april year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 520 where = 1618 } #35th Infantry Division
+		}
+	}
+
+event = {
+	id = 11
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = may year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 521 where = 1618 } #91st Infantry Division
+		}
+	}
+
+event = {
+	id = 12
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = may year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 522 where = 1618 } #95th Infantry Division
+		}
+	}
+
+event = {
+	id = 13
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = may year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 523 where = 1618 } #104th Infantry
+		}
+	}
+
+event = {
+	id = 14
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event3_name"
+	desc = "downfall_event3_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = may year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname3A"
+		command = { type = activate_division which = 10000 value = 524 where = 1618 } #1st British Division
+		}
+	}
+
+event = {
+	id = 15
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event3_name"
+	desc = "downfall_event3_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = may year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname3A"
+		command = { type = activate_division which = 10000 value = 525 where = 1618 } #2nd British Division
+		}
+	}
+
+event = {
+	id = 16
+	random = no
+	country = ALS
+
+	trigger = {
+		vp = 40
+		}
+
+	name = "downfall_event6_name" #US Victory
+	desc = "downfall_event6_desc"
+	style = 0
+
+	date = { day = 1 month = october year = 1945 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname6A"
+		command = { type = endgame value = 5 } #Allied Victory
+		}
+	}
+
+event = {
+	id = 17
+	random = no
+	country = ALS
+
+	trigger = {
+		NOT = { axis = 1 }
+		}
+
+	name = "downfall_event7_name" #US-Soviet Victory
+	desc = "downfall_event7_desc"
+	style = 0
+
+	date = { day = 1 month = october year = 1945 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname7A"
+		command = { type = endgame value = 7 } #Communist Victory
+		}
+	}
+
+
+
+event = {
+	id = 21
+	random = no
+	country = JAP
+
+	trigger = {
+		vp = 1
+		}
+
+	name = "downfall_event10_name" #Japanese Victory
+	desc = "downfall_event10_desc"
+	style = 0
+
+	date = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname11A"
+		command = { type = endgame value = 2 } #Axis Victory
+		}
+	}
+
+
+
+event = {
+	id = 22
+	random = no
+	country = SOV
+
+	trigger = {
+		vp = 40
+		}
+
+	name = "downfall_event11_name" #Soviet Victory
+	desc = "downfall_event11_desc"
+	style = 0
+
+	date = { day = 1 month = october year = 1945 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname11A"
+		command = { type = endgame value = 7 } #Communist Victory
+		}
+	}
+
+
+event = {
+	id = 25
+	random = no
+	country = ALS
+
+	trigger = {
+		OR = {
+			control = { province = 1179 data = SOV } #Sapporo
+			control = { province = 1178 data = SOV } #Asahikawa
+			}
+		}
+
+	name = "downfall_event13_name" #Soviets on Hokkaido
+	desc = "downfall_event13_desc"
+	style = 0
+
+	action_a = {
+		name = "downfall_actioname13A"
+		command = { }
+		}
+	}
+
+event = {
+	id = 26
+	random = no
+	country = ALS
+
+	trigger = {
+		OR = {
+			control = { province = 1181 data = SOV } #Akita
+			control = { province = 1180 data = SOV } #Sendai
+			}
+		}
+
+	name = "downfall_event14_name" #Soviets on Honshu
+	desc = "downfall_event14_desc"
+	style = 0
+
+	action_a = {
+		name = "downfall_actioname14A"
+		command = { }
+		}
+	}
+
+event = {
+	id = 27
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = may year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 526 where = 1618 } #82nd Airborne Division
+		}
+	}
+
+event = {
+	id = 28
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = may year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 527 where = 1618 } #101st Airborne Division
+		}
+	}
+
+event = {
+	id = 29
+	random = no
+	country = ALS
+
+	trigger = { random = 10 }
+
+	name = "downfall_event2_name"
+	desc = "downfall_event2_desc"
+	picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = june year = 1946 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		name = "downfall_actioname2A"
+		command = { type = activate_division which = 10000 value = 530 where = 1618 } #4th Army HQ
+		}
+	}
+
+event = {
+	id = 30
+	random = no
+	country = ALS
+
+	trigger = { ai = yes }
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+
+	style = 0
+
+	date = { day = 1 month = october year = 1945 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		command = { type = ai which = "downfall_ALS.ai" } 
+		}
+	}
+
+
+event = {
+	id = 31
+	random = no
+	country = SOV
+
+	trigger = { ai = yes }
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+
+	style = 0
+
+	date = { day = 1 month = october year = 1945 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		command = { type = ai which = "downfall_SOV.ai" } 
+		}
+	}
+event = {
+	id = 32
+	random = no
+	country = JAP
+
+	trigger = { ai = yes }
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+
+	style = 0
+
+	date = { day = 1 month = october year = 1945 }
+	offset = 1
+	deathdate = { day = 1 month = november year = 1946 }
+
+	action_a = {
+		command = { type = ai which = "downfall_JAP.ai" } 
+		}
+	}

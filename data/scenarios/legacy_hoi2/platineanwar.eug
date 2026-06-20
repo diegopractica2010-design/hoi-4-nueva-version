@@ -1,0 +1,222 @@
+name = "PLATWAR_NAME"
+panel = "scenarios/data/platineanwar.bmp"
+
+############################
+# Designed by Generalisimo #
+############################
+
+header = {
+	name = "PLATWAR_NAME"
+	startyear = 1942
+	endyear = 1949
+	free = no
+	combat = yes	#this is a battlescenario
+
+	ARG = {
+			desc = PLAT_ARG
+			picture = "scenarios\data\southam.bmp"		
+
+	}
+
+	BRA = {
+			desc = PLAT_BRA
+			bottom = yes
+			picture = "scenarios\data\southam.bmp"		
+	}
+
+}
+
+globaldata = {
+			rules = {
+         diplomacy = yes
+         production = yes
+         technology = yes
+         }
+	startdate = {
+        	year = 1942
+	        month = august
+		day = 29
+	        }
+	enddate = {
+	        year = 1949
+	        month = december
+	        day = 30
+        	}
+	allies = {
+	        id = { type = 15000 id = 1 }
+		participant = { BRA }
+		}
+	axis = 	{
+		id = { type = 15000 id = 2 }
+		participant = { ARG }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+			year = 1942
+			month = august
+			day = 29
+			hour = 1
+			}
+        	attackers = {
+			id = { type = 9430 id = 2 }
+			participant = { ARG }
+			}
+		defenders = {
+			id = { type = 9430 id = 3 }
+			participant = { BRA }
+			}
+		}
+
+    }
+
+map = {
+no = all
+# ARGENTINA
+yes = 667 
+yes = 853 
+yes = 852 
+yes = 843 
+yes = 844 
+yes = 845 
+yes = 851 
+yes = 854 
+yes = 855 
+yes = 857 
+yes = 858 
+yes = 859 
+yes = 862 
+yes = 863 
+yes = 865 
+yes = 850
+# BOLIVIA
+yes = 836 
+yes = 833 
+yes = 838 
+yes = 832 
+yes = 828 
+yes = 827
+# BRAZIL
+yes = 848 
+yes = 847 
+yes = 835 
+yes = 834 
+yes = 825 
+yes = 823 
+yes = 822 
+yes = 820 
+yes = 872 
+yes = 824 
+yes = 826 
+yes = 878 
+yes = 876 
+yes = 877 
+yes = 879 
+yes = 883 
+yes = 887 
+yes = 886
+yes = 885 
+yes = 884 
+yes = 882 
+yes = 880 
+yes = 881
+# CHILE
+yes = 864 
+yes = 861 
+yes = 860 
+yes = 856 
+yes = 840 
+yes = 839
+yes = 841 
+yes = 842
+# ECUADOR
+yes = 814 
+yes = 815 
+yes = 817 
+yes = 818
+# PERU
+yes = 831 
+yes = 829 
+yes = 830 
+yes = 821 
+yes = 816
+# PARAGUAY
+yes = 837 
+yes = 846
+# URUGUAY
+yes = 849
+# Sea zones
+yes = 1910
+yes = 1963
+yes = 1964
+yes = 1965
+yes = 1966
+yes = 1967
+yes = 1968
+yes = 1991
+yes = 1992
+yes = 1993
+yes = 1994
+yes = 1995
+yes = 1996
+yes = 1997
+yes = 1998
+yes = 1999
+yes = 2000
+yes = 2001
+yes = 2500
+yes = 2501
+yes = 2502
+yes = 2503
+yes = 2504
+yes = 2505
+yes = 2506
+yes = 2507
+yes = 2508
+yes = 2509
+yes = 2510
+yes = 2511
+yes = 2512
+yes = 2513
+yes = 2514
+yes = 2515
+yes = 2516
+yes = 2542
+yes = 2544
+yes = 2545
+yes = 2546
+yes = 2548
+yes = 2549
+yes = 2550
+yes = 2551
+yes = 2552
+yes = 2553
+yes = 2554
+yes = 2555
+yes = 2556
+yes = 2557
+yes = 2558
+yes = 2559
+yes = 2560
+yes = 2561
+
+top = {	x = 6450 y = 6100 }
+bottom = { x = 12800 y = 11500 }
+
+}
+
+
+# Vp things
+include = "scenarios/platineanwar/vp.inc"
+
+include = "scenarios/platineanwar/arg.inc"
+include = "scenarios/platineanwar/bra.inc"
+include = "scenarios/platineanwar/bol.inc"
+include = "scenarios/platineanwar/chl.inc"
+include = "scenarios/platineanwar/ecu.inc"
+include = "scenarios/platineanwar/par.inc"
+include = "scenarios/platineanwar/peu.inc"
+include = "scenarios/platineanwar/uru.inc"
+
+event = "scenarios/platineanwar/PlatineanWar.txt"

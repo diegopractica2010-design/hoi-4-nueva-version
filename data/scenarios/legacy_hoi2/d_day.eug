@@ -1,0 +1,213 @@
+#################################
+# Designed by Greven and Tracid #
+#################################
+
+name = "d_day_name"
+panel = "scenarios/data/scenario_dday.bmp"
+
+header = {
+    startyear = 1944
+    endyear = 1944
+
+	free = no
+		combat = yes	#this is a battlescenario
+
+
+
+	ALS = {
+			desc = DDAY_ALLIES
+		picture = "scenarios\data\dday.bmp"		
+			
+	}
+
+	GER = {
+			desc = DDAY_AXIS
+			bottom = yes
+		picture = "scenarios\data\dday.bmp"		
+	}
+
+}
+
+globaldata = {
+	 rules = {
+         diplomacy = no
+         production = no
+         technology = no
+         }
+    startdate = {
+        year = 1944
+        month = june
+        day = 1
+        }
+    enddate = {
+        year = 1944
+        month = december
+        day = 1
+        }
+		
+		dormant_leaders = yes
+
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { ALS }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { GER }
+		}
+
+
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1941
+	            month = december
+	            day = 11
+	            hour = 1
+            }
+            enddate = {
+	            year = 1941
+	            month = december
+	            day = 11
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { GER }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+            		participant = { ALS }
+        	}
+	}
+
+
+    }
+map = {
+no = all
+yes = 20
+yes = 21
+yes = 22
+yes = 23
+yes = 19
+yes = 17
+yes = 16
+yes = 15
+yes = 14
+yes = 13
+yes = 64
+yes = 72
+yes = 317
+yes = 73
+yes = 71
+yes = 32
+yes = 33
+yes = 34
+yes = 37
+yes = 38
+yes = 39
+yes = 40
+yes = 41
+yes = 42
+yes = 43
+yes = 44
+yes = 18
+yes = 53
+yes = 54
+yes = 55
+yes = 56
+yes = 57
+yes = 58
+yes = 36
+yes = 35
+yes = 59
+yes = 60
+yes = 61
+yes = 62
+yes = 63
+yes = 70
+yes = 69
+yes = 68
+yes = 65
+yes = 50
+yes = 51
+yes = 52
+yes = 45
+yes = 46
+yes = 49
+yes = 47
+yes = 48
+yes = 77
+yes = 78
+yes = 79
+yes = 74
+yes = 75
+yes = 66
+yes = 67
+yes = 76
+yes = 80
+yes = 81
+yes = 82
+yes = 313
+yes = 314
+yes = 315
+yes = 320
+yes = 321
+yes = 322
+yes = 323
+yes = 324
+yes = 325
+yes = 326
+yes = 327
+yes = 328
+yes = 358
+yes = 359
+yes = 360
+yes = 361
+yes = 362
+yes = 363
+yes = 364
+yes = 365
+yes = 366
+yes = 527
+yes = 528
+yes = 529
+yes = 319
+yes = 318
+yes = 316
+yes = 367
+#Seazones
+yes = 2438
+yes = 2435
+yes = 2395
+yes = 2412
+yes = 2413
+yes = 2414
+yes = 2415
+yes = 2416
+yes = 2417
+yes = 2111
+yes = 2410
+yes = 2396
+
+top = {	x = 13904 y = 1912 }
+bottom = {	x = 15736 y = 3772 }
+
+}
+
+# Vp things
+include = "scenarios/d_day/vp.inc"
+
+
+include = "scenarios/d_day/ger.inc"
+include = "scenarios/d_day/usa.inc"
+
+
+event = "scenarios/d_day/d_day_events.txt"
+
+
+
+
+
+
+

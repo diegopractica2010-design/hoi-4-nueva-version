@@ -1,0 +1,170 @@
+ ;HEARTS OF IRON! Doomsday;;;;;;;;;;X
+##;;;;;;;;;;;X
+##;;;;;;;;;;;X
+##### Open this document in Excel, version 5 or later.;;;;;;;;;;;X
+##### To convert the semicolon-separated list to a normal Excel table, first click on the 'A' above to select the entire 'A' column.;;;;;;;;;;;X
+##### Select 'Data' -> 'Text to Columns' -> 'Delimited' -> 'Next';;;;;;;;;;;X
+##### Check 'Semicolon' (ONLY!) -> 'Finish';;;;;;;;;;;X
+##### Select column 'A' through 'K' (click + drag on letters above columns);;;;;;;;;;;X
+##### Right-click anywhere on the sheet (inside the selection) and select 'Column width' and set it so that only THREE columns are visible ('45' with 1024 x 768 screen resolution);;;;;;;;;;;X
+##### Right-click anywhere on the sheet again (still inside the selection) and select 'Format Cells' -> 'Alignment' -> check 'Wrap Text' + select 'Vertical: Top' -> 'OK';;;;;;;;;;;X
+##### Place the cursor in cell C1 and select 'Window' -> 'Freeze Panes' (allows you to scroll horizontally to see any language in the rightmost coulmn while still having the string names/comments and the english original text in the left and middle column;;;;;;;;;;;X
+##### CAREFULLY read the instructions in cells B18 ? B36;;;;;;;;;;;X
+##;;;;;;;;;;;X
+##;;;;;;;;;;;X
+##;NOTES TO TRANSLATORS:;;;;;;;;;;X
+##;=====================;;;;;;;;;;X
+##;;;;;;;;;;;X
+##;1) '%s' is for indicating where another string is inserted, and MAY NEVER BE REMOVED! If there are more than one '%s' in a string, they may NOT CHANGE PLACES.;;;;;;;;;;X
+##;2) '%d' is for indicating where another integer value is inserted, and MAY NEVER BE REMOVED! If there are more than one '%d' in a string, they may not change places. ('%.1f' is used in exactly the same way but for non-integer values ?  '%c%d' is used for values that are displayed with a '+' or '-' sign in front, DO NOT CHANGE, ADD, OR REMOVE!);;;;;;;;;;X
+##;3) '%t' is for indicating where the player's 'title' is inserted, however only in game message boxes.';;;;;;;;;;X
+##;4) The characters '#' (hashmark), semicolon, '%' (percentage sign), '?' (paragraph sign), quotation marks and '\' (backslash) MAY NOT BE USED (except when used as control codes ? this will otherwise create serious problems!!! Quotation marks may not even be used in comments -- use a 'citation mark' (single) instead if necessary!);;;;;;;;;;X
+##;5) A dollar sign, '$' will always automatically be replaced by the 'ducats' icon.;;;;;;;;;;X
+##;6) Any row with a '#' in the first column (column 'A') will be ignored. However, you cannot use any paragraph characters in these rows!!!;;;;;;;;;;X
+##;7) To insert a carriage return, insert a '\n' (backslash + n);;;;;;;;;;X
+##;8) No formatting can be done in this file. To change the color of a text, insert the following codes in front of the word:;;;;;;;;;;X
+##;§W = white text;;;;;;;;;;X
+##;§Y = orange text;;;;;;;;;;X
+##;Note that the color change will be applied to all words after the code, until the end of the line that the word is printed on. If several words should have a color change, put the code in front of each of them to be on the safe side. If only one word should have a color change, make sure to reset the color after the word.;;;;;;;;;;X
+##;9) Unless otherwise specifically stated, length of words and texts does not really matter THAT much (message boxes, rollover help boxes and buttons WILL stretch to fit the text string) ? however you will notice once the translation is inserted that space IS limited in quite a few areas? so be brief, and try not to use words that are considerably longer than the English original.;;;;;;;;;;X
+##;10) ALL CELLS in column 'L' in this document MUST contain a character!;;;;;;;;;;X
+##;11) The LAST CELL in the 'A' column MUST contain the string '#EOF';;;;;;;;;;X
+##;12) If you want to begin a string with a ' (citation mark), you will need to type it twice (Excel will read the first one as a commentary which is not  exported into the actual text database file);;;;;;;;;;X
+##;;;;;;;;;;;X
+##;WHEN DONE: save as 'Semicolon Separated (.csv)' format, and make sure the file is called 'Text.csv'.;;;;;;;;;;X
+##;;;;;;;;;;;X
+##;NOTE: If Excel complains about an 'Error in formula' when the cell content begins with a '+' or '-' sign, type a ' (citation mark) in front of the plus or minus.;;;;;;;;;;X
+##;;;;;;;;;;;X
+##;;;;;;;;;;;X
+#  STRING NAME (do not change!);English;French;Italian;Spanish;German;Polish;Portuguese;Russian;;Extra2;X
+#  ========================;==========;==========;==========;========;==========;==========;==========;==========;;==========;X
+#LANGUAGE;English;French;Italian;Spanish;German;Polish;Portuguese;Russian;;Extra2;X
+#########################################;;;;;;;;;;;X
+######### GENERAL TEXT STRINGS #########;;;;;;;;;;;X
+#########################################;;;;;;;;;;;X
+##;;;;;;;;;;;X
+NAME_NAVAL_ASW;ASW;;;;;;;;;;X
+NAME_NAVAL_ANTI_AIR_S;Anti Air;;;;;;;;;;X
+NAME_NAVAL_RADAR_S;Radar;;;;;;;;;;X
+NAME_NAVAL_FIRE_CONTROLL_S;Fire Controll;;;;;;;;;;X
+NAME_NAVAL_IMPROVED_HULL_S;Improved Hull;;;;;;;;;;X
+NAME_NAVAL_TORPEDOES_S;Torpedoes;;;;;;;;;;X
+NAME_NAVAL_ANTI_AIR_L;Capital  Antr Air;;;;;;;;;;X
+NAME_NAVAL_RADAR_L;Capital Radar;;;;;;;;;;X
+NAME_NAVAL_FIRE_CONTROLL_L;Capital Fire Controll;;;;;;;;;;X
+NAME_NAVAL_IMPROVED_HULL_L;Capital Improved Hull;;;;;;;;;;X
+NAME_NAVAL_TORPEDOES_L;Capital Torpedoes;;;;;;;;;;X
+SNAME_NAVAL_ASW;ASW;;;;;;;;;;X
+SNAME_NAVAL_ANTI_AIR_S;AA;;;;;;;;;;X
+SNAME_NAVAL_RADAR_S;RA;;;;;;;;;;X
+SNAME_NAVAL_FIRE_CONTROLL_S;FC;;;;;;;;;;X
+SNAME_NAVAL_IMPROVED_HULL_S;IH;;;;;;;;;;X
+SNAME_NAVAL_TORPEDOES_S;TM;;;;;;;;;;X
+SNAME_NAVAL_ANTI_AIR_L;AA;;;;;;;;;;X
+SNAME_NAVAL_RADAR_L;RA;;;;;;;;;;X
+SNAME_NAVAL_FIRE_CONTROLL_L;FX;;;;;;;;;;X
+SNAME_NAVAL_IMPROVED_HULL_L;IH;;;;;;;;;;X
+SNAME_NAVAL_TORPEDOES_L;TM;;;;;;;;;;X
+SDESC_NAVAL_ASW;Improvements in both Sonar and ASW weaponry improve this ships ability to find and sink submarines.;;;;;;;;;;X
+SDESC_NAVAL_ANTI_AIR_S;Improvements to anti aircraft armaments and targeting technology make this ship better at engaging enemy aircraft. ;;;;;;;;;;X
+SDESC_NAVAL_RADAR_S;Improved surface search radar allows this ship to better find enemy naval units and convoys. ;;;;;;;;;;X
+SDESC_NAVAL_FIRE_CONTROLL_S;The use of mechanical computers to calculate and update firing solutions allows this naval unit to fire further and more accurately;;;;;;;;;;X
+SDESC_NAVAL_IMPROVED_HULL_S;The focusing of armour on key location and the addition of more watertight compartments will improve the survivability of this ship. ;;;;;;;;;;X
+SDESC_NAVAL_TORPEDOES_S;The upgrading of the torpedo targeting systems and the fitting of more modern torpedoes will make this ship more effective at convoy raiding. ;;;;;;;;;;X
+SDESC_NAVAL_ANTI_AIR_L;Improvements to anti aircraft armaments and targeting technology make this ship better at engaging enemy aircraft. ;;;;;;;;;;X
+SDESC_NAVAL_RADAR_L;Improved surface search radar allows this ship to better find enemy naval units and convoys. ;;;;;;;;;;X
+SDESC_NAVAL_FIRE_CONTROLL_L;The use of mechanical computers to calculate and update firing solutions allows this naval unit to fire further and more accurately;;;;;;;;;;X
+SDESC_NAVAL_IMPROVED_HULL_L;The focusing of armour on key location and the addition of more watertight compartments will improve the survivability of this ship. ;;;;;;;;;;X
+SDESC_NAVAL_TORPEDOES_L;The upgrading of the torpedo targeting systems and the fitting of more modern torpedoes will make this ship more effective at convoy raiding. ;;;;;;;;;;X
+LDESC_NAVAL_ASW;Improvements in both Sonar and ASW weaponry improve this ships ability to find and sink submarines.;;;;;;;;;;X
+LDESC_NAVAL_ANTI_AIR_S;Improvements to anti aircraft armaments and targeting technology make this ship better at engaging enemy aircraft.;;;;;;;;;;X
+LDESC_NAVAL_RADAR_S;Improved surface search radar allows this ship to better find enemy naval units and convoys. ;;;;;;;;;;X
+LDESC_NAVAL_FIRE_CONTROLL_S;The use of mechanical computers to calculate and update firing solutions allows this naval unit to fire further and more accurately;;;;;;;;;;X
+LDESC_NAVAL_IMPROVED_HULL_S;The focusing of armour on key location and the addition of more watertight compartments will improve the survivability of this ship.;;;;;;;;;;X
+LDESC_NAVAL_TORPEDOES_S;The upgrading of the torpedo targeting systems and the fitting of more modern torpedoes will make this ship more effective at convoy raiding. ;;;;;;;;;;X
+LDESC_NAVAL_ANTI_AIR_L;Improvements to anti aircraft armaments and targeting technology make this ship better at engaging enemy aircraft.;;;;;;;;;;X
+LDESC_NAVAL_RADAR_L;Improved surface search radar allows this ship to better find enemy naval units and convoys. ;;;;;;;;;;X
+LDESC_NAVAL_FIRE_CONTROLL_L;The use of mechanical computers to calculate and update firing solutions allows this naval unit to fire further and more accurately;;;;;;;;;;X
+LDESC_NAVAL_IMPROVED_HULL_L;The focusing of armour on key location and the addition of more watertight compartments will improve the survivability of this ship.;;;;;;;;;;X
+LDESC_NAVAL_TORPEDOES_L;The upgrading of the torpedo targeting systems and the fitting of more modern torpedoes will make this ship more effective at convoy raiding. ;;;;;;;;;;X
+BRIG_MODEL_16_0;ASW;;;;;;;;;;X
+BRIG_MODEL_17_0;AA;;;;;;;;;;x
+BRIG_MODEL_18_0;Radar;;;;;;;;;;x
+BRIG_MODEL_19_0;Fire Controll;;;;;;;;;;x
+BRIG_MODEL_20_0;Improved Hull;;;;;;;;;;x
+BRIG_MODEL_21_0;Torpedoes;;;;;;;;;;x
+BRIG_MODEL_22_0;Capital AA;;;;;;;;;;x
+BRIG_MODEL_23_0;Capital Radar;;;;;;;;;;x
+BRIG_MODEL_24_0;Capital Fire Controll;;;;;;;;;;x
+BRIG_MODEL_25_0;Capital Improved Hull;;;;;;;;;;x
+BRIG_MODEL_26_0;Capital Torpedoes;;;;;;;;;;x
+BRIG_MODEL_16_1;Capital ASW;;;;;;;;;;X
+BRIG_MODEL_17_1;AA;;;;;;;;;;x
+BRIG_MODEL_18_1;Radar;;;;;;;;;;x
+BRIG_MODEL_19_1;Fire Controll;;;;;;;;;;x
+BRIG_MODEL_20_1;Improved Hull;;;;;;;;;;x
+BRIG_MODEL_21_1;Torpedoes;;;;;;;;;;x
+BRIG_MODEL_22_1;Capital AA;;;;;;;;;;x
+BRIG_MODEL_23_1;Capital Radar;;;;;;;;;;x
+BRIG_MODEL_24_1;Capital Fire Controll;;;;;;;;;;x
+BRIG_MODEL_25_1;Capital Improved Hull;;;;;;;;;;x
+BRIG_MODEL_26_1;Capital  Torpedoes;;;;;;;;;;x
+EXTRA_LAND;This unit can have %d Attachment;;;;;;;;;;x
+EXTRA_NAVAL;This Ship can have %d Attachment;;;;;;;;;;x
+EXTRA_AIR;This air unit can have %d Attachment;;;;;;;;;;x
+DONTSENDFORCES;Expiditionary forces;;;;;;;;;;x
+FEOPT_ENDDATE;End Date;;;;;;;;;;x
+FEOPT_ICTAKEOVER;Full IC Take Over;;;;;;;;;;x
+FEOPT_TECHTEAMTAKEOVER;Tech-Team Take Over;;;;;;;;;;x
+FEOPT_DEMWAR;Democracy can start war;;;;;;;;;;x
+FEOPT_1940;1940;;;;;;;;;;x
+FEOPT_1946;1946;;;;;;;;;;x
+FEOPT_1952;1952;;;;;;;;;;x
+FEOPT_1958;1958;;;;;;;;;;x
+FEOPT_1964;1964;;;;;;;;;;x
+AUTONAVALUNITS;Auto assign naval attachments;;;;;;;;;;x
+AUTONAVALUNITS_TOOLTIP;This check box will toggle whether the AI should assign naval attachments for you.;;;;;;;;;;x
+BUTTON_SHOW_ARROWS_IN_DRO;This will enable you to see all your units movements arrows on the map.;;;;;;;;;;x
+BUTTON_SHOW_ARROWS_IN_IRO;Show Arrows (*);;;;;;;;;;x
+EXTRA_DONT_HAVE1;You don't have the tecnology to build;;;;;;;;;;x
+EXTRA_DONT_HAVE2;any attachemts.;;;;;;;;;;x
+USN;USNA;;;;;;;;;;x
+UAU;Australasia;;;;;;;;;;x
+UCH;Republic of china;;;;;;;;;;x
+UBO;Bourbon;;;;;;;;;;x
+UTC;The Cossacks;;;;;;;;;;x
+UGS;Sweden;;;;;;;;;;x
+UCS;The Confederates;;;;;;;;;;x
+UIC;Indo China;;;;;;;;;;x
+UPR;Prussia;;;;;;;;;;x
+UER;Empire of Russia;;;;;;;;;;x
+UTO;The Ottomans;;;;;;;;;;x
+UIR;Indian Republic;;;;;;;;;;x
+UTL;The Libertadores;;;;;;;;;;x
+UPS;PRRS;;;;;;;;;;x
+UES;European Soviets;;;;;;;;;;x
+URO;Roma;;;;;;;;;;x
+UAP;APR;;;;;;;;;;x
+UPE;Republic of Persia;;;;;;;;;;x
+USN_DESC;With the conquest of Quebec during the war of independence the new young United States, was able to gain all of Canada in the following peace, forming the United States of North America. However the United States government faces ongoing loyalist resentment in New York State and Canada, the government tries a combination of repression and persuasion to deal with this meeting with little success. When the civil war breaks out there are massive loyalist uprisings in both Canada and New York, taking advantage of the civil war to right past wrongs. The US facing a war on two front decides to concentrate on the Northern risings first. By 1864 the war in the North is won, but at a cost of few gains in the South. With no end of the war in site the Northern Electorate turns to the Democrats and the hero of the Great Lakes campaign George B. McClellan, who negotiates peace with South. The United States continued to seek to destabilise the confederate states and managed to secure the succession of several of the border states from the CSA and bring them back into the United States.;;;;;;;;;;x
+UES_DESC;During the bloody suppression of the Chartist movement in the United Kingdom the more individualistic colonists “down under” became increasing concerned about the direction of the mother country. As the chaos grew to a climax they saw no alternative but to part company and go their own way, forming the federation of Australasia. Much of the 19th centaury saw great peace and development, and a great deal of immigrants from the mother country seeking freedom. However this all changed when Japan started to expand into the power vacuum in the Pacific. This sparked of a wave if Xenophobia and the only solution the government saw was to purse a forward policy in the Pacific. The gradual expansion into the Pacific islands saw an uneasy truce of sorts form between Japan, Indo-China and Australasia. It would take the Japanese Revolution and the appearance of the a revolutionary communist government on it’s northern border, would once again lead to growing hostility in the pacific. ;;;;;;;;;;X
+UCH_DESC;The end of the 19th centaury saw the gradual disintegration of the Ming Empire. China became a battleground between the powers with Russia and Japan fighting for control of Manchuria. For many Chinese nationalists the situation was intolerable and the revolution that overthrew the Ming Emperor, was with hindsight, inevitable. Although the result of the revolution nearly saw the destruction of China as rival warlords carved out their power bases and in the South the Nationalists and Communists vied for power. However just when it looked like China was doomed the surprise death of Mao Zedong lead to the more pragmatic Deng Xiaoping becoming leader of CCP. Putting the needs of China ahead of the revolution (that could wait) a deal was struck with the KMT and the united forces quickly brought the warlords to heel. The Chinese state was at it’s strongest for centauries and would need to be as none of its neighbours looked friendly. ;;;;;;;;;;X
+UBO_DESC;France narrowly avoided revolution at the end of the 18th centaury, and the death of last Bourbon King lead to the crown passing to the Spanish branch of the family. The New Kingdom quickly added Portugal to its domains. As the European powers started to form alliances to check the new super power the Carlist war erupted. It became a bloody civil war between local nationalist forces and those that favoured a unified state. For the rest of Europe the war came as a relief and did much to support resistance against the Bourbon crown. The Crown’s forces would be triumphant in Europe, but at the price of loosing their colonial empire. The Bourbon Kingdom would spend the rest of nineteenth centaury trying to re-establish control over its old colonies (without success) and reform at home (were a new constitutional monarchy is established). The Bourbon Kingdom still was looking for an outlet for expansion and the decaying Ottoman Empire looked like just the place. Together with Italy and the Cossack state a victorious war is waged against the Ottoman Empire leading to massive gains in North Africa. However along its long European and African Frontier the Bourbon Kingdom faces neighbours who are ideologically hostile to the state.;;;;;;;;;;x
+UTC_DESC;The youngest nation in the world, the Grand Union of the Cossacks, formed out the 1905 revolution in Russia. Some would say if only Tsar Nicholas II had been willing to make concessions the rich Ukraine would have been kept in the Empire, but as it was the new young state broke free from Russia during the Chaos and carved out a new state. Then joining Italy and the Bourbon Kingdom they successfully added the Danubian Principalities to the new state. In a more peaceful era the Cossacks could look forward to a long and prosperous development but storm clouds are gathering and their ideological allies are far away.;;;;;;;;;;x
+UGS_DESC;For many the beginning of Modern Sweden began in during the Great Northern War. Although forced to give up their territory in Germany, the Swedish state was able to hold the Russian off and remained in the eyes of the world a Baltic power. The Swedish Kingdom was quick to take advantage of the dissolution of the Danish monarchy and added Norway to their Northern Empire and another victorious war against Russia left Sweden in owning the entire Russian Baltic coast and the Kola Peninsular. With Russia halting its attempt to gain control the Baltic, Sweden’s only issue was ongoing argument with the United Kingdom over ownership of Norway, although this never led to warfare. The second half the nineteenth centaury saw Sweden retreat into isolationism abroad and reform at home. A more prosperous and democratic state grew up and for the majority of the Kingdom’s citizens there was hope for perpetual peace and prosperity. However it became clear that this was not going to be the case as their neighbours started to rattle the sabres. The Kingdom of Sweden knew it would have to fight.;;;;;;;;;;X
+UCS_DESC;When the Carlist Wars erupted in the great Franco-Spanish Bourbon Kingdom, for many in the in the Old Spanish colonies it was time for Independence. Long resentful of French dominance, the war in the colonies took on the form of a national rising. Mexico formed out of the old Viceroyalty of New Spain. Quickly overrunning New Granada and the Bourbon Kingdom’s Caribbean possessions, the new state of Mexico was born. After loosing territory to its American Neighbour, it became increasing hostile to it’s northern neighbour. Preventing from intervening in the Confederate War of Independence by the Bourbon’s short-lived installation of the Emperor Maximilian. Maximilian would soon be deposed and executed, his only legacy would be the name the Empire of Mexico. For the Confederate States the exhausting victory in their war of independence would leave a bankrupt land facing a still hostile neighbour. Their Northern Neighbour would continue to subvert the bankrupt south and with several of the Border States left to rejoin their Northern Neighbour the Confederate States drew closer to Mexico. Eventually the Two countries saw the logic of a Union and the Empire of the Confederates was formed. Although facing hostility from their populace a single authoritarian state replaced the two states.;;;;;;;;;;X
+UIC_DESC;The end of the 18th centaury and the beginning of the nineteenth saw a steady growth of European influence in Asia. For many of the Kingdoms there it was a fearful time and each was looking to its solution to the problem. It would be Thailand that would eventually rise triumphant from the solution. Taking advantage first of the Carlist wars to displace French influence in Indo-China and then the Indian Mutiny to replace the British in Malay and Burma. The Multination state originally based it’s authority on its successful defence against the Europeans soon needed a more broad base of appeal. A tactical name change to Indo China and the gradual opening up of government jobs to non-Thais gave the state the stability it needed. Expansion into Indonesia earned the Kingdom the hostility of both Japan and Australasia, while the choice of the name Indo China did not make it very popular with its Chinese neighbour. Only neighbouring India is anyway friendly to the Kingdom.;;;;;;;;;;X
+UPR_DESC;The Kingdom of Prussia originally was just a contender to be the dominant power in Germany. However the first Victory of the Russians gave Prussia large tracts of Poland. Then Prussia was quick to take advantage of the 1848 revolutions. By making a few concessions at home the Prussians were able (unlike the recently defeated Russians) to intervene in the collapse of Austria and divide the country with the powerful Italian state of Piedmont. The end of the Austria left Prussia dominant in Germany and gradually the various states (with the exception of Hanover which remained part of the British crown) were brought into the Prussian orbit. The new state remained authoritarian and as the forces of Socialism grew, so too did the fear amongst the ruling circles in Prussia. The communist revolutions in both Italy and Britain left two powerful communist neighbours on the border and Prussia’s central position was looking increasingly weak, the choice was clear, rapprochement with the Russian Empire.;;;;;;;;;;X
+UER_DESC;The 19th and early 20th centauries were a period of disaster for the Russian Empire. Many wondered if the state would even survive. First there was defeat at the hands of Prussia Sweden, Persia and the Ottoman Empire, which pushed back the Russian Frontiers in Europe and Central Asia, and leaving the reactionary government unable to counter the forces of revolution in Austria. However the Russia Empire appeared to recover and began a forward policy in Asia. Initial Russian Sabre rattling convinced the Japanese to back off, and Russian influences steadily grew in Manchuria. However the Japanese would not be convinced to stay passive for long and as Russian influence grew so too did Japanese determination to check it. The Russo-Japanese war ended in defeat and revolution for Russia. Forced to cede all of its gains and Asia, it looked like Russian collapse was imminent. The Ukraine broke away forming a new Cossack state, but inside Russia proper government repression was successful. The Russian state licked its wounds and waited for the opportunity for revenge.;;;;;;;;;;X
+UTO_DESC;The 19th centaury looked like a centaury of recovery for the Ottomans, war against Russia recovered much of the land lost in the Caucuses and the dissolution of Austria gave the Ottomans breathing space in the Balkans, allowing the government to reign in the powerful Beys at home. This led to a period of growth at home and expansion into Africa. However the weaknesses of the Ottoman State would cruelly exposed when Italy, the Bourbon Kingdom and the Cossacks would large an attack on the Empire. Forced to give up all of it’s West African holdings and much territory in the Balkans the Ottoman Empire embarked on a painful period of reform at home. With the economic base of the Empire built up, once again the Ottomans once again look like a World Power.;;;;;;;;;;X
+UIR_DESC;The United Kingdom was already facing serious unrest at home when the Indian Mutiny stuck, although Indian historians would remember it as the War of Independence. Unable to send reinforcements to suppress the soldiers of the Bengal presidency the British power was already beginning to look shaky. When the revolt spread to the armies Madras and  Bombay presidency’s joined the rebellion 100 years of British rule in India was at an end. The reborn Mogul Empire focussed its efforts on bringing to heal the princely states that had broken away during its long decline and advance into Afghanistan. However it would be large-scale industrialisation that would really shape contemporary politics. The newly empowered working and middle classes became increasing disillusioned with the old imperial order and the failure or liberal politics, the turned towards a more extreme nationalistic politics. The old order couldn’t cope with the new society and were swept away in a revolution that brought the nationalists to power. The new government’s first act was to rename the state India and look for ways to make India the power on the world stage. ;;;;;;;;;;X
+UTL_DESC;When the Carlist Wars erupted in the great Franco Spanish Bourbon Kingdom, for many in the in the old Spanish and Portuguese colonies it was time for Independence. Men such as Simon Bolivar and Jose de San Martin, the legendary Libertabores, lead South America to independence. Just it when it looked like local interests would lead to a collapse in the unity felt during the war of independence, fresh efforts by the Bourbon Kingdom to re-establish control forced the competing elites to cooperate. The crucible of conflict forged a South American Identity. However the young country still had problems and as the 19th centaury drew to a close the widening social inequalities lead to rising discontent. Finally in the 1920s the discontent reached it’s peak and the old order was swept away and new communist state emerged. Ready to export its revolution north, the revolutionary government was left friendless in the Western hemisphere. ;;;;;;;;;;X
+UPS_DESC;When Japan emerged from its long isolation in the middle of the 19th centaury, it was a country looking to establish its place in the world. Quickly realising that territory was the key to being consider great Japan embarked on a programme of expansion. Firstly looking north towards the decaying Ming Empire Japan began to carve out concessions for itself, until Russian policy made the Japanese seek the lest line of resistance and turned South towards the various pacific islands abandoned by the colonial powers during the turmoil of the early 19th centaury. However this line of expansion lead quickly lead to conflict with Australasia and this Japan did not want. The Japanese came to an accommodation, of sorts, with their Southern neighbours and with both sides feeling they had a reasonable buffer a peace of sorts was agreed. The Japanese once again turned North, as growing Russian influence in Manchuria and Korea, left them fearful for the security of the home islands. The Russo-Japanese war was a brutal affair and just when it looked like Japan would be bankrupted by its efforts, revolution struck in Russia. Giving the Japanese total victory and security on its northern border. However just when it seemed that Japan had reached its goals the spectre of internal disorder hit the country, as many of the poorer in society were increasingly left behind in Japan’s march to glory. Growing factionalism in the army and navy and a decline of the effectiveness of domestic politics left Japan facing growing internal chaos. Unable to contain the revolutionary forces, a communist revolution hit the army. Initially believing that the Emperor just didn’t know what was going on and once the revolutionaries showed him what was going everything would be find. However there were none more conservative than the Imperial court and the revolution quickly radicalised itself into a full-blown revolutionary republic. ;;;;;;;;;;X
+UES_DESC;The History of the 19th centaury United Kingdom was one of one tactical gain followed by strategic failure. The loss of the American colonies was initially not much of a loss overall, the level of trade continued to underpin the rising prosperity of the united Kingdom and the strong royal ties lead to the Danish Monarchy also coming into personal Union with the British crown. This enhanced British security for it’s other Royal Domain, Hanover, and lead to the passing of the Salic Law to keep the dynastic block together. This lead to Edward’s daughter Victoria being disinherited and Ernest August, Duke of Cumberland, becoming heir to the throne. Ernest was highly unpopular with the British public, and politically extreme Tory leaving him dsitinctly out of touch which popular poltical mood. Fortune would still favour Britain with the Dutch monarchy also falling into it’s lap, giving it a compact mass of terrotry in Northern Europe.  When the Chartist agitation began it would be Ernest who be the strongest advocate of supression and would lead troops in person to aid in the supression of the revolt. Although ultimately sucessful in the suppression, the settler conolnies in Australia and New Zealand and the Dutch terrotry in the cape would leave the Kingdom. The  seizing of Austrian Belgium to fastall revolution would not compensate for this and the loss of India after the mutiny would leave a Kingdom that was ruled by an unpopular government and short on international rpestige. The government would face rising nationalistic revolts, but a policy oif divide and rule would allow the government to keep a lid on discontent. However the rise of solcailism would allow the various nationalistic movement to align behind a single leader and a massed revolution followed. The new state, the Union of European Soviets (named after the soviets of the falied Russian Revolution) arose and was ready to export its revolution to its neighbours. ;;;;;;;;;;X
+URO_DESC;The History of Modern Italy begins in the year 1848 as revolution ended the old Hapsburg Empire, it would be the Monarch in Piedmont who would take advantage. Sweeping all before it in Northern Italy and eventually reaching Vienna, the new expanded state would dominate Italian politics. Taking advantage of every opportunity it would steadily expand into Italy, eventually a united Italian state emerged. However the Italian State would remain hungry for glory and expansion and the opportunity to make gains at Ottoman Expense would be an opportunity that was too good to miss. In alliance with the Bourbon Kingdom and the Cossacks the Italians would join the war to dismember the Ottoman Empire. The Italians would gain Libya, Tunisia and parts of the Balkans, but would also end up doing the baulk of the fighting and pay the highest price. This phyrric victory would lead to rising discontentment with government and the forces of communism and extreme nationalism would polarise politics. Finally it would be a Croat, Josip Broz, who would lead the Communists to Victory and the Roman Socialist Republic would be born. ;;;;;;;;;;X
+UAP_DESC;Unsuccessful revolutions in both the Bourbon Kingdom and the United Kingdom would leave the African Colonies of these nations independent and with white minority governments. They quickly united together to avoid being picked off by their former mother countries and looked towards the exploitation of the Dark Continent. As the 19th centaury drew to a close the White Minority government realised that they would need a strong industrial base to maintain their independence in an increasing expansionistic world. However this very act would also sow the seeds of the end of the white minority rule as the only way to do this would be to create a black working class. The early years of the 20th centaury would see the creation of the African National Congress lead by the former Emperors of Ethiopia, seen as many in the black community as symbols of resistance for their long efforts to resist Ottoman rule. Finally the damn would burst and an ANC government would take power. Quickly (and wisely) making some concession to the White minority who still staffed key positions in both Industry and the military, the new state began to consolidate. Although faced with hostile states to the North, conflict seems inevitable.;;;;;;;;;;X
+UPE_DESC;The 19th centaury Persia was not a state that did much on the world stage. Although it did join the Swedes, Ottomans and Prussians in war against Russia, and would gain central Asia, beyond that Persia didn’t seem to do much. This was because the Persian Shah’s faced problems at home, trying to balance the traditionalists against the modernists. The Traditionalists took their support from the old landowners and the Mosques, while modernist drew their support from the growing middle and working classes. Up until the early years 20th centaury the Shahs managed this balancing act pretty well, but then they made a fatal miscalculation. Growing protests lead by the traditionalists lead the Shah to believe that they were much stronger than they were (in fact this was their last grasp effort to maintain themselves), and a number of concessions were made. This angered the modernist factions and leading to the communist revolution and the founding the Democratic Republic of Persia.;;;;;;;;;;X
+##;;;;;;;;;;;
+##;;;;;;;;;;;
+#EOF;;;;;;;;;;;
+#EOF;;;;;;;;;;;

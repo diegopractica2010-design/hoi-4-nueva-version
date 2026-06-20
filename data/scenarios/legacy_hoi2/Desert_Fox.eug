@@ -1,0 +1,231 @@
+name = "desertfox_name"
+panel = "scenarios/data/scenario_desertfox.bmp"
+
+header = {
+	name = "Grand Campaign"
+    startyear = 1941
+    endyear = 1943
+   free = no
+	combat = yes	#this is a battlescenario
+
+
+	GER = {
+			desc = DF_GER
+			picture = "scenarios\data\desertfox.bmp"		
+	}
+
+	ITA = {
+			desc = DF_ITA
+			picture = "scenarios\data\desertfox.bmp"		
+	}
+
+	ENG = {
+			desc = DF_ENG
+			bottom = yes
+			picture = "scenarios\data\desertfox.bmp"		
+	}
+
+
+}
+
+globaldata = {
+
+  rules = {
+		 
+         diplomacy = no
+         production = no
+         technology = no
+         }
+
+    startdate = {
+        year = 1941
+        month = march
+		day = 29
+        }
+    enddate = {
+        year = 1943
+        month = december
+        day = 25   ###???
+        }
+
+		dormant_leaders = yes
+
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { ENG }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { GER ITA }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1939
+	            month = september
+	            day = 1
+	            hour = 1
+            }
+            enddate = {
+	            year = 1939
+	            month = september
+	            day = 1
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { GER ITA }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { ENG }
+        	}
+	}
+
+    }
+
+
+
+map = {
+no = all
+yes = 	4
+yes = 	31
+yes = 	522
+yes = 	396
+yes = 	523
+yes = 	524
+yes = 	525
+yes = 	526
+yes = 	901
+yes = 	902
+yes = 	903
+yes = 	904
+yes = 	905
+yes = 	906
+yes = 	908
+yes = 	909
+yes = 	910
+yes = 	911
+yes = 	912
+yes = 	913
+yes = 	914
+yes = 	915
+yes = 	916
+yes = 	917
+yes = 	918
+yes = 	919
+yes = 	920
+yes = 	921
+yes = 	922
+yes = 	923
+yes = 	924
+yes = 	925
+yes = 	926
+yes = 	927
+yes = 	928
+yes = 	929
+yes = 	930
+yes = 	931
+yes = 	932
+yes = 	933
+yes =   938
+yes = 	1020
+yes = 	2240
+yes = 	2441
+yes = 	2442
+yes = 	2443
+yes = 	2448
+yes = 	2451
+yes = 	2451
+yes = 	2454
+yes = 	2463
+yes = 	935
+yes = 	936
+yes = 	934
+yes = 	937
+yes = 	939
+yes = 	940
+yes = 	941
+yes = 	942
+yes = 	943
+yes = 	945
+yes = 	946
+yes = 	944
+yes = 	947
+yes = 	948
+yes = 	949
+yes = 	951
+yes = 	950
+yes = 	952
+yes = 	953
+yes = 	2437
+yes = 	2436
+yes = 	2434
+yes = 	2432
+
+##add
+yes = 954
+yes = 956
+yes = 958
+yes = 959
+yes = 960
+yes = 961
+yes = 966
+yes = 967
+yes = 2303
+yes = 2440
+
+
+Yes =	900
+Yes =	1800
+Yes =	1792
+Yes =	1793
+Yes =	1794
+Yes =	1795
+Yes =	1796
+Yes =	1797
+Yes =	1798
+Yes =	1799
+Yes =	1800
+Yes =	1801
+Yes =	1802
+Yes =	407
+Yes =	404
+Yes =	406
+Yes =	1861
+Yes =	1862
+Yes =	1863
+Yes =	1861
+Yes =	2452
+
+
+
+top = {	x = 13240 y = 3720 }
+bottom = {	x = 18400 y = 4952 }
+
+}
+
+
+# Vp things
+include = "scenarios/desertfox/vp.inc"
+
+include = "scenarios/desertfox/ita.inc"
+include = "scenarios/desertfox/ger.inc"
+include = "scenarios/desertfox/uk.inc"
+include = "scenarios/desertfox/gre.inc"
+include = "scenarios/desertfox/usa.inc"
+include = "scenarios/desertfox/vic.inc"
+##include = "scenarios/desertfox/leb.inc"
+include = "scenarios/desertfox/syr.inc"
+
+event = "scenarios/desertfox/desertfox_events.txt"
+
+
+
+
+
+
+
+
+
+

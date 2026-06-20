@@ -1,0 +1,215 @@
+name = "SCW_NAME"
+panel = "scenarios/data/scenario_SCW.bmp"
+
+header = {
+	name = "SCW_NAME"
+    startyear = 1936
+    endyear = 1939
+   free = no
+	combat = yes	#this is a battlescenario
+
+
+	SPA = {
+			desc = SCW_SPA
+			picture = "scenarios\data\scw.bmp"		
+
+	}
+
+	SPR = {
+			desc = SCW_SPR
+			bottom = yes
+			picture = "scenarios\data\scw.bmp"		
+	}
+
+	
+}
+
+globaldata = { 
+
+	rules = {
+         diplomacy = no
+         }
+
+    startdate = { 
+        year = 1936
+        month = july
+		day = 18
+        } 
+    enddate = { 
+        year = 1939
+        month = april 
+        day = 1 
+        } 
+		comintern = { 
+	        id = { type = 15000 id = 1 } 
+			participant = { SPR } 
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 } 
+			participant = { SPA } 
+		}
+	
+	war = {
+	        id = { type = 9430 id = 1 } 
+	        date = { 
+	            year = 1936
+	            month = july
+	            day = 17
+	            hour = 16
+            } 
+        	attackers = { 
+        	    id = { type = 9430 id = 2 } 
+        	    participant = { SPA }
+        	} 
+	        defenders = { 
+       			id = { type = 9430 id = 3 } 
+			participant = { SPR } 
+        	} 
+	}
+
+    } 
+
+
+
+map = {
+no = all
+yes = 	360
+yes = 	361
+yes = 	362
+yes = 	358
+yes = 	359
+yes = 	327
+yes = 	326
+yes = 	325
+yes = 	324
+yes = 	323
+yes = 	322
+yes = 	328
+yes = 	329
+yes = 	330
+yes = 	331
+yes = 	332
+yes = 	333
+yes = 	334
+yes = 	335
+yes = 	336
+yes = 	337
+yes = 	338
+yes = 	339
+yes = 	340
+yes = 	341
+yes = 	342
+yes = 	343
+yes = 	344
+yes = 	345
+yes = 	346
+yes = 	347
+yes = 	348
+yes = 	349
+yes = 	350
+yes = 	351
+yes = 	352
+yes = 	353
+yes = 	354
+yes = 	355
+yes = 	356
+yes = 	357
+yes = 	536
+yes = 	535
+yes = 	537
+yes = 	954
+yes =		955
+yes =		956
+yes = 	957
+yes = 	363
+yes = 	946
+yes = 	947
+yes = 	948
+yes =		949
+yes =		950
+yes =		951
+yes =		952
+yes = 	953
+yes =		958
+yes =		959
+yes =		960
+yes =		961
+yes =		962
+yes =		963
+yes =		964
+yes =		965
+yes =		966
+yes =		967
+yes =		968
+yes =		969
+yes =		970
+yes =		971
+yes =		972
+yes =		973
+yes =		974
+yes = 	975
+yes = 	2416
+yes =		2417
+yes =		2418
+yes =		1013
+yes =		1014
+yes =		2419
+yes =		2425
+yes =		2426
+yes =		2427
+yes =		2420
+yes =		2596
+yes =		2595
+yes =		2428
+yes =		2424
+yes =		2593
+yes =		2429
+yes =		2303
+yes =		2300
+yes =		2301
+yes =		2297
+yes =		2302
+yes =		2594
+yes =		2304
+yes =		2357
+yes = 	2358
+yes =		2422
+yes = 	2430
+yes =		2431
+yes =		2432
+yes =		2434
+yes = 	2433
+yes = 	2435
+yes =		2436
+
+top = {	x = 12040 y = 3250 }
+bottom = {	x = 14700 y = 5500 }
+
+}
+
+
+# Vp things
+include = "scenarios/scw/vp.inc"
+
+include = "scenarios/scw/spain_bases.inc"
+
+include = "scenarios/scw/nationalists.inc"
+include = "scenarios/scw/republicans.inc"
+include = "scenarios/scw/portugal.inc"
+include = "scenarios/scw/france.inc"
+include = "scenarios/scw/uk.inc"
+event = "scenarios/scw/natspaevents.txt"
+event = "scenarios/scw/eusevents.txt"
+event = "scenarios/scw/repspaevents.txt"
+
+
+
+
+
+
+
+
+
+
+
+

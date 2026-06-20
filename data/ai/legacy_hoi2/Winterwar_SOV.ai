@@ -1,0 +1,124 @@
+#
+# SOV AI
+# 1939 Winter War Battlescenario (by Copper)
+# 07/09
+#
+
+switch = no
+
+target = {
+
+	# Viborg-Helsinki
+
+	145 = 100
+	142 = 100
+	141 = 100
+
+	# Karelia
+
+	149 = 80
+	146 = 50
+	144 = 80
+
+	# North
+	136 = 30
+	137 = 30
+
+
+}
+
+strat_redeploy_threshold = 20
+
+max_front_ratio			= 10.0
+max_garrison_prop		= 0.0
+min_garrison_prop		= 0.0
+
+
+
+garrison = {
+	defend_overseas_beaches = no
+
+	# PRIORITIES:
+	beach			= 0
+	capital			= 10	# Minimum - no need to worry...
+	human_border		= 0	# Ignored for allied human players
+	war_target		= 0	# The next country targeted for attack by this AI
+
+	opposing_alliance	= 0	# For neutrals, all alliances are "opposing"
+	claim_threat		= 0	# If we are neutral, countries with claims on us get this
+	unstable_border		= 0	# Bordering countries at war with someone else get this
+
+}
+
+front = {
+
+	river			=	0.9
+	largefort		=	0.4
+	smallfort		=	1.0
+
+	#CHANGED - Soviets are now hiper-agressive
+	frozen_attack 	= 0.75
+	snow_attack 	= 0.75
+	blizzard_attack = 0.50
+	storm_attack 	= 0.80
+	muddy_attack 	= 1.00
+
+	#reduces the size of odds in total.. (1.0 = no difference, 0.5 = halved.)
+	jungle_attack 	= 0.85
+	mountain_attack	= 0.60
+	swamp_attack 	= 0.60
+	forest_attack 	= 0.85
+	hill_attack 	= 0.75
+	urban_attack 	= 0.40
+
+	recklessness 		= 	1 # 0-3
+	distrib_vs_ai 		= 	even
+	distrib_vs_human 	= 	even
+
+	enemy_reinf_days	=	6
+
+	reserve_prop		=	0.2
+	panic_ratio_vs_ai	=	1.5
+	panic_ratio_vs_human	=	1.0
+	base_attack_odds	=	1.0
+	min_attack_odds		=	0.5
+	max_attack_odds		=	4.0
+	reinforce_odds		=	0.25
+	withdraw_odds		=	0.1
+}
+
+air_marshal = {
+	icxdayscostfactor 		= 10.0		# How to value true industrial cost when calculating expect causalties
+	manpowercostfactor		= 100.0		# How to value manpower cost when calculating expect causalties
+	destructionriskthreashold 	= 0.2		# when to fear a divisiopn might be destroyed
+
+	# desirability is a multiplier used when calcualting the mission desirability
+	airsuperioritydesirability 	= 10.0
+	groundattackdesirability 	= 40.0
+	inderdictiondesirability 	= 1.0
+	logisticalstrikedesirability 	= 30.0
+	runwaycrateringdesirability 	= 20.0
+	strategicstrikedesirability 	= 2.0
+	installationstrikedesirability 	= 2.0
+	navalstrikedesirability 	= 2.0
+	portstrikedesirability 		= 9.0
+
+	# tolerance is the required kill:loss ration expected to do 
+	#    mission, 2.0 accept twice the losses of your enemy, 0.5 accept half
+	airsuperioritylosstolerance 	= 1.0
+	groundattacklosstolerance 	= 1.0
+	interdictionlosstolerance 	= 1.5
+	logisticalstrikelosstolerance 	= 4.5
+	runwaycrateringlosstolerance 	= 1.5
+	strategicstriketolerance 	= 4.5
+	installationstriketolerance 	= 1.5
+	navalstriketolerance 		= 1.0
+	portstriketolerance 		= 1.0
+
+	# efficency is a tweakable param to adjust according to how 
+	#    much actual damage comes from doing this mission (not to be confused with desirability)
+	logisticalstrikeefficency 	= 0.01
+	runwaycrateringefficency 	= 0.01
+	strategicstrikeefficency 	= 0.01
+	installationstrikeefficency 	= 0.01
+}

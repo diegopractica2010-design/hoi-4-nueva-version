@@ -1,0 +1,167 @@
+name = "fallgelb_name"
+panel = "scenarios/data/scenario_fallgelb.bmp"
+
+header = {
+	name = "Grand Campaign"
+    startyear = 1940
+    endyear = 1940
+   free = no
+	combat = yes	#this is a battlescenario
+
+
+	GER = {
+			desc = FGE_GER
+			picture = "scenarios\data\france.bmp"		
+
+	}
+
+	ENG = {
+			desc = FGE_ENG
+			bottom = yes
+			picture = "scenarios\data\france.bmp"		
+	}
+
+	FRA = {
+			desc = FGE_FRA
+			bottom = yes
+			picture = "scenarios\data\france.bmp"		
+	}
+
+}
+
+globaldata = {
+    startdate = {
+        year = 1940
+        month = may
+		day = 8
+        }
+    enddate = {
+        year = 1940
+        month = june
+        day = 25   ###???
+        }
+
+  rules = {
+         diplomacy = no
+         production = no
+         technology = no
+         }
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { ENG FRA BEL LUX HOL }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { GER }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1939
+	            month = september
+	            day = 1
+	            hour = 1
+            }
+            enddate = {
+	            year = 1939
+	            month = september
+	            day = 1
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { GER }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { ENG FRA BEL LUX HOL }
+        	}
+	}
+
+    }
+
+
+
+map = {
+no = all
+yes = 	18
+yes = 	20
+yes = 	38
+yes = 	39
+yes = 	40
+yes = 	41
+yes = 	42
+yes = 	43
+yes = 	44
+yes = 	45
+yes = 	46
+yes = 	47
+yes = 	48
+yes = 	49
+yes = 	50
+yes = 	51
+yes = 	52
+yes = 	53
+yes = 	54
+yes = 	55
+yes = 	56
+yes = 	57
+yes = 	62
+yes = 	63
+yes = 	64
+yes = 	65
+yes = 	66
+yes = 	67
+yes = 	68
+yes = 	69
+yes = 	70
+yes = 	71
+yes = 	72
+yes = 	73
+yes = 	74
+yes = 	75
+yes = 	76
+yes = 	77
+yes = 	78
+yes = 	79
+yes = 	80
+yes = 	81
+yes = 	86
+yes = 	313
+yes = 	314
+yes = 	315
+yes =	316
+yes = 	317
+yes = 	318
+yes = 	2395
+yes = 	2412
+yes = 	2472
+
+
+top = {	x = 14850 y = 2330 }
+bottom = {	x = 15390 y = 2900 }
+
+}
+
+
+# Vp things
+include = "scenarios/fallgelb/vp.inc"
+
+include = "scenarios/fallgelb/germany.inc"
+include = "scenarios/fallgelb/holland.inc"
+include = "scenarios/fallgelb/belgium.inc"
+include = "scenarios/fallgelb/uk.inc"
+include = "scenarios/fallgelb/france.inc"
+include = "scenarios/fallgelb/lux.inc"
+
+event = "scenarios/fallgelb/fall_gelb_events.txt"
+
+
+
+
+
+
+
+
+
+

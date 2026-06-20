@@ -1,0 +1,419 @@
+#
+# HoI2 SCW Scenario - Nationalist Spain Events
+#
+#		written by José María Aguirre
+#
+
+#Flavour Events
+
+event = { 
+	id = 16000
+	random = no
+	country = SPA
+	picture = "sanjurjocrash"
+	trigger = { random = 95 }
+	
+	
+	name = "SCW_16000_NAME"
+	desc = "SCW_16000_DESC"
+	style = 0
+	
+	date = { day = 20 month = july year = 1936 }
+	
+	action_a = {
+		name = "SCW_16000_OPTION"
+		command = { type = headofstate which = 10001 } #Miguel Cabanellas
+		command = { type = headofgovernment which = 10002 }
+		command = { type = chiefofstaff which = 10183 } #Francisco Franco
+		command = { type = sleepminister which = 10188 } #José Sanjurjo as CoS (FA)
+		command = { type = sleepminister which = 10211 } #José Sanjurjo as CoA (FA)
+		command = { type = sleepleader which = 3460 } #José Sanjurjo as Leader	
+                command = { type = sleepminister which = 10279 } #José Sanjurjo as HoS
+                command = { type = sleepminister which = 10281 } #José Sanjurjo as HoG0
+	}
+}
+
+event = { 
+	id = 16001
+	random = no
+	country = SPA
+	picture = "joseantonio"
+	trigger = {
+				flag = joseantonio_killed 
+	}
+	
+	name = "SCW_16001_NAME"
+	desc = "SCW_16001_DESC"
+	style = 0
+	
+	date = { day = 20 month = november year = 1936 }
+	offset = 1
+	deathdate = { day = 25 month = november year = 1936 }
+	
+	action_a = {
+		name = "SCW_16001_OPTION"
+		command = { type = sleepminister which = 10047 } #José Antonio Primo de Rivera as MoA
+		command = { type = add_division which = "Milicia Falangista" value = militia when = 0 }
+		command = { type = add_division which = "Milicia Falangista" value = militia when = 0 }
+	}
+}
+
+event = { 
+	id = 16002
+	random = no
+	country = SPA
+	picture = "molacrash"
+	trigger = {
+		not = { headofstate	= 10278 } #Emilio Mola
+		random = 90
+	}
+	
+	name = "SCW_16002_NAME"
+	desc = "SCW_16002_DESC"
+	style = 0
+	
+	date = { day = 3 month = june year = 1937 }
+	
+	action_a = {
+		name = "SCW_16002_OPTION"
+		command = { type = sleepminister which = 10008 } #Emilio Mola as CoA
+		#command = { type = sleepminister which = 10045 } #Emilio Mola as HoG
+		command = { type = sleepminister which = 10189 } #Emilio Mola as CoS
+		command = { type = sleepminister which = 10275 } #Emilio Mola as MoS
+		command = { type = sleepminister which = 10278 } #Emilio Mola as HOS
+		command = { type = sleepleader which = 3443 } #Mola	
+	}
+}
+
+event = { 
+	id = 16003
+	random = no
+	country = SPA
+	picture = "cabanellas"
+	trigger = {}
+	
+	name = "SCW_16003_NAME"
+	desc = "SCW_16003_DESC"
+	style = 0
+	
+	date = { day = 14 month =may year = 1938 }
+	
+	action_a = {
+		name = "SCW_16003_OPTION"
+	#	command = { type = sleepminister which = 10001 } #Miguel Cabanellas as HOS
+		command = { type = sleepminister which = 10154 } # Miguel Cabanellas as MOS
+	#	command = { type = sleepminister which = 10155 } #Miguel Cabanellas as MOS
+		command = { type = sleepminister which = 10204 } #Miguel Cabanellas as COS
+		command = { type = sleepminister which = 10227 } #Miguel Cabanellas as COA
+		command = { type = sleepleader which = 3414 } #Cabanellas
+	}
+}
+
+#Political Events
+
+event = { 
+	id = 16004
+	random = no
+	country = SPA
+	picture = "juntadeburgos"
+	trigger = {}
+	
+	name = "SCW_16004_NAME"
+	desc = "SCW_16004_DESC"
+	style = 0
+	
+	date = { day = 1 month = october year = 1936 }
+	
+	action_a = {
+		name = "SCW_16004_OPTIONA"
+		command = { type = domestic which = political_left value = -2 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = domestic which = professional_army value = 3 }
+		command = { type = domestic which = defense_lobby value = 2 }
+		command = { type = headofstate which = 10032 } #Francisco Franco
+		command = { type = headofgovernment which = 10002 } #Fidel Dávila
+		command = { type = foreignminister which = 10003 } #Fernando Serrat
+		command = { type = ministerofsecurity which = 10005 }
+		command = { type = chiefofstaff which = 10183 } #Francisco Franco
+		command = { type = dissent value = 2 }
+		}
+	action_b = {
+		name = "SCW_16004_OPTIONB"
+		command = { type = domestic which = free_market value = 2 }
+		command = { type = domestic which = professional_army value = 2 }
+		command = { type = domestic which = interventionism value = -1 }
+		command = { type = headofstate which = 10278 } #Emilio Mola
+		command = { type = headofgovernment which = 10002 } #Fidel Dávila
+		command = { type = foreignminister which = 10064 } #Javier de Borbón-Parma
+		command = { type = ministerofsecurity which = 10134 } #Valdés Cavanilles
+		command = { type = chiefofstaff which = 10189 } #Emilio Mola
+		command = { type = chiefofarmy which = 10276 } #Francisco Franco
+		command = { type = dissent value = 4 }
+	}
+	action_c = {
+		name = "SCW_16004_OPTIONC"
+		command = { type = domestic which = democratic value = 2 }
+		command = {type = domestic which = free_market value = 4 }
+		command = { type = domestic which = freedom value = 1 }
+		command = { type = domestic which = professional_army value = 1 }
+		command = { type = domestic which = interventionism value = -2 }
+		command = { type = headofstate which = 10039 } #Alfonso XIII
+		command = { type = headofgovernment which = 10054 } #José Mª Gil-Robles
+		command = { type = foreignminister which = 10081 } #José Yanguas
+		command = { type = armamentminister which = 10113 } #Juan March
+		command = { type = ministerofsecurity which = 10148 } #Jacobo Fitz-James-Stuart
+		command = { type = ministerofintelligence which = 10177 } #Luis Orgáz
+		command = { type = chiefofnavy which = 10242 } #Francisco Nuñez
+		command = { type = dissent value = 6 }
+	}
+}
+
+event = { 
+	id = 16005
+	random = no
+	country = SPA
+	picture = "generalisimo"
+	trigger = {
+		headofstate = 10032
+	}
+	
+	name = "SCW_16005_NAME"
+	desc = "SCW_16005_DESC"
+	style = 0
+	
+	date = { day = 30 month = january year = 1938 }
+	
+	action_a = {
+		name = "SCW_16005_OPTIONA"
+		command = { type = domestic which = political_left value = -1 }
+		command = { type = domestic which = professional_army value = 1 }
+		command = { type = domestic which = defense_lobby value = 1 }
+		command = { type = headofgovernment which = 10046 } #Francisco Franco
+		command = { type = foreignminister which = 10057 } #Francisco Gómez-Jordana
+		command = { type = armamentminister which = 10088 }
+		command = { type = ministerofsecurity which = 10127 }
+		command = { type = ministerofintelligence which = 10162 }
+		command = { type = chiefofarmy which = 10206 } #Fidel Dávila	
+	}
+	action_b = {
+		name = "SCW_16005_OPTIONB"
+		command = { type = domestic which = political_left value = 2 }
+		command = { type = domestic which = free_market value = 2 }
+		command = { type = domestic which = interventionism value = -1 }
+		command = { type = headofgovernment which = 10055 } #Queipo de Llano
+		command = { type = foreignminister which = 10057 } #Francisco Gómez-Jordana
+		command = { type = armamentminister which = 10092 } #Nicolás Franco
+		command = { type = ministerofsecurity which = 10135 } #Tomás Garciano Goñi
+		command = { type = ministerofintelligence which = 10162 }
+		command = { type = chiefofarmy which = 10206 } #Fidel Dávila
+		command = { type = dissent value = 2 }	
+	}
+	action_c = {
+		name = "SCW_16005_OPTIONC"
+		command = { type = domestic which = democratic value = 4 }
+		command = { type = domestic which = freedom value = 2 }
+		command = { type = domestic which = professional_army value = -2 }
+		command = { type = domestic which = interventionism value = -1 }
+		command = { type = headofgovernment which = 10054 } #José Mª Gil-Robles
+		command = { type = foreignminister which = 10081 } #José Yanguas
+		command = { type = armamentminister which = 10113 } #Juan March
+		command = { type = ministerofsecurity which = 10148 } #Jacobo Fitz-James-Stuart 
+		command = { type = ministerofintelligence which = 10162 } 
+		command = { type = chiefofarmy which = 10206 } #Fidel Dávila
+		command = { type = dissent value = 4 }
+	}
+}
+
+event = { 
+	id = 16006
+	random = no
+	country = SPA
+	picture = "joseantonio"
+	trigger = {
+		control = { province = 354 data = SPA }
+	}
+	
+	name = "SCW_16006_NAME"
+	desc = "SCW_16006_DESC"
+	style = 0
+	
+	date = { day = 19 month = july year = 1936 }
+	
+	
+	action_a = {
+		name = "SCW_16006_OPTIONA"
+		command = { type = domestic which = democratic value = -2 }
+		command = { type = domestic which = political_left value = -5 }
+		command = { type = domestic which = freedom value =  -1 } 
+		command = { type = ministerofsecurity which = 10141 } #Agustín Aznar Guerner
+		command = { type = add_division which = "Milicia Falangista" value = militia when = 0 }
+	}
+	action_b = {
+		name = "SCW_16006_OPTIONB"
+		command = { type = dissent value = 2 }	
+		command = { type = domestic which = freedom value =  2 } 
+	}
+}
+
+#Strategical Events
+
+event = { 
+	id = 16007
+	random = no
+	country = SPA
+	picture = "condor"
+	
+	trigger = {
+		control = { province = 347 data = SPA }
+	}
+	
+	name = "SCW_16007_NAME"
+	desc = "SCW_16007_DESC"
+	style = 0
+
+	date = { day = 28 month = march year = 1937 }
+	
+	action_a = {
+		name = "SCW_16007_OPTIONA"
+		command = { type = manpowerpool value = 33 }
+		command = { type = supplies value = 3300 }
+		command = { type = add_division which = "Legion Condor Panzer Abteilung 88" value = light_armor when = 1 }
+		command = { type = add_corps which = "Legion Condor" value = air where =347 }
+		command = { type = add_division which = "1/88 Schwadron" value = cas when = 1 }
+		command = { type = add_division which = "2/88 Schwadron" value = cas when = 1 }
+		command = { type = add_division which = "3/88 Schwadron" value = interceptor when = 1 }
+		command = { type = add_division which = "4/88 Schwadron" value = interceptor when = 1 }
+		command = { type = energypool value = -1500 }
+		command = { type = rarematerialspool value = -500 }
+		command = { type = money value = -1000 }
+	}
+	action_b = {
+		name = "SCW_16007_OPTIONB"
+		command = { type = dissent value = 3 }
+		command = { type = supplies value = -3300 }
+	}
+}
+
+event = { 
+	id = 16008
+	random = no
+	country = SPA
+	picture = "itaplanes"
+	
+	trigger = {
+		control = { province = 347 data = SPA }
+	}
+	
+	name = "SCW_16008_NAME"
+	desc = "SCW_16008_DESC"
+	style = 0
+
+	date = { day = 28 month = july year = 1936 }
+	
+	action_a = {
+		name = "SCW_16008_OPTIONA"
+		command = { type = manpowerpool value = 20 }
+		command = { type = supplies value = 2000 }
+		command = { type = add_division which = "Escuadrón Italiano de Cazas" value = interceptor when = 1}
+		command = { type = add_division which = "Escuadrón Italiano de Transporte" value = transport_plane when = 1 }
+		command = { type = energypool value = -700 }
+		command = { type = rarematerialspool value = -500 }
+		command = { type = money value = -800 }
+	}
+	action_b = {
+		name = "SCW_16008_OPTIONB"
+		command = { type = dissent value = 2 }
+		command = { type = supplies value = -2000 }
+	}
+}
+
+event = { 
+	id = 16009
+	random = no
+	country = SPA
+	picture = "ctv"
+	
+	trigger = {
+		control = { province = 347 data = SPA }
+	}
+	
+	name = "SCW_16009_NAME"
+	desc = "SCW_16009_DESC"
+	style = 0
+
+	date = { day = 22 month =december year = 1936 }
+	
+	action_a = {
+		name = "SCW_16009_OPTIONA"
+		command = { type = manpowerpool value = 20 }
+		command = { type = supplies value = 2000 }
+		command = { type = add_corps which = "CTV" value = land where = 347 }
+		command = { type = add_division which = "1a División de la CTV" value = infantry when = 1 }
+		command = { type = add_division which = "2a División de la CTV" value = infantry when = 1 }
+		command = { type = add_division which = "3a División de la CTV" value = infantry when = 1 }
+		command = { type = add_corps which = "Cuerpo de Submarinos" value = naval where = 535 }
+		command = { type = add_division which = "Sanjurjo" value = submarine when = 1 }
+		command = { type = add_division which = "Mola" value = submarine when = 1 }
+		command = { type = energypool value = -700 }
+		command = { type = rarematerialspool value = -500 }
+		command = { type = money value = -2000 }
+	}
+	action_b = {
+		name = "SCW_16009_OPTIONB"
+		command = { type = dissent value = 2 }
+		command = { type = supplies value = -2000 }
+	}
+}
+#########################################################################
+#  Nationalist Strategic Victory
+#########################################################################
+event = {
+	id = 16010
+	random = no
+	country = SPA
+
+	trigger = {
+ 				 vp = 48
+}
+
+	name = "ge_event5_name"
+	desc = "sc_win_1"
+         picture = "generalisimo"
+	style = 0
+
+	date = { day = 20 month = july year = 1936 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 1 month = april year = 1939 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  Nationalist Marginal Victory
+#########################################################################
+event = {
+	id = 16011
+	random = no
+	country = SPA
+
+	trigger = {
+ 				 vp = 35
+ 			NOT = { vp = 48 }
+}
+
+	name = "ge_event7_name"
+	desc = "sc_win_2"
+         picture = "generalisimo"
+	style = 0
+
+	date = { day = 1 month = january year = 1939 }
+	offset = 3 # Check for trigger conditions every three days
+	deathdate = { day = 1 month = january year = 1949 }
+
+	action_a = {
+		name = "fw_actionname14A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}

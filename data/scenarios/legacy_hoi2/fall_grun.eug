@@ -1,0 +1,139 @@
+name = "fallgrun_name"
+panel = "scenarios/data/scenario_fallgrun.bmp"
+
+header = {
+	name = "fallgrun_name"
+    startyear = 1938
+    endyear = 1938
+   free = no
+	combat = yes
+	GER = {
+			desc = FG_GER
+			picture = "scenarios\data\grun.bmp"		
+	}
+
+	CZE = {
+			desc = FG_CZE
+			bottom = yes
+			picture = "scenarios\data\grun.bmp"		
+	}
+
+}
+
+globaldata = {
+    startdate = {
+        year = 1938
+        month = october
+		day = 0
+        }
+    enddate = {
+        year = 1938
+        month = november
+        day = 20    ### It must be fast victory!
+        }
+
+
+  rules = {
+         diplomacy = no
+         production = no
+         technology = no
+         }
+
+
+		allies = {
+	        id = { type = 15000 id = 1 }
+			participant = { CZE }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { GER }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1930
+	            month = september
+	            day = 30
+	            hour = 1
+            }
+            enddate = {
+	            year = 1930
+	            month = september
+	            day = 30
+            }
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { GER }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { CZE }
+        	}
+	}
+
+    }
+
+
+map = {
+no = all
+#Czechoslovakia
+yes = 471
+yes = 470
+yes = 466
+yes = 472
+yes = 469
+yes = 468
+yes = 467
+yes = 474
+yes = 475
+yes = 476
+yes = 478
+yes = 477
+yes = 490
+yes = 499
+# Germany
+yes = 308
+yes = 482
+yes = 473
+yes = 300
+yes = 309
+yes = 311
+yes = 310
+yes = 83
+yes = 312
+yes = 375
+yes = 376
+#Austria - Germany controlled
+yes = 462
+yes = 465
+yes = 461
+yes = 460
+yes = 463
+yes = 464
+
+
+
+top = {	x = 15556 y = 2012 }
+bottom = {	x = 17304 y = 2912 }
+
+}
+
+
+# Vp things
+include = "scenarios/fallgrun/vp.inc"
+
+include = "scenarios/fallgrun/germany.inc"
+include = "scenarios/fallgrun/czechoslovakia.inc"
+
+event = "scenarios/fallgrun/fall_grun_events.txt"
+
+
+
+
+
+
+
+
+
+

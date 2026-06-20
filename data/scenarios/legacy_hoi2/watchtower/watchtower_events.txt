@@ -1,0 +1,1130 @@
+event = { 
+	id = 1
+	random = no
+	country = JAP
+
+	trigger = { random = 75 }
+        
+	name = "ge_event1_name" #Battle of Eastern Solomons Reinforcements
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+	
+	date = { day = 15 month = august year = 1942 }
+        offset = 1
+	deathdate = { day = 20 month = august year = 1942 }
+
+	
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 1100 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1101 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1102 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1103 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1104 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1105 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1106 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1107 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1108 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1109 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1110 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1111 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1112 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1113 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1114 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1115 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1116 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1117 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1118 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1119 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1120 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1121 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1122 where = 1670 }
+		command = { type = activate_division which = 10300 value = 1123 where = 1670 }
+		}
+	}
+
+event = {
+	id = 2
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 25 month = november year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2100 where = 1692 } #5th Bomber Group
+		}
+	}
+
+event = {
+	id = 3
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 6 month = march year = 1943 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2101 where = 1692 } #18th Fighter Group
+		}
+	}
+
+event = {
+	id = 4
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = february year = 1943 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2102 where = 1692 } #307th Bomber Group
+		}
+	}
+
+event = {
+	id = 5
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 28 month = september year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2103 where = 1692 } #VMF-121
+		}
+	}
+
+event = {
+	id = 6
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 7 month = november year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2104 where = 1692 } #VMF-122
+		}
+	}
+
+event = {
+	id = 7
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 29 month = january year = 1943 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2105 where = 1692 } #VMF-123
+		}
+	}
+
+event = {
+	id = 8
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 29 month = january year = 1943 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2106 where = 1692 } #VMF-124
+		}
+	}
+
+event = {
+	id = 9
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 6 month = november year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2107 where = 1692 } #VMSB-131
+		}
+	}
+
+event = {
+	id = 10
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 25 month = october year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2108 where = 1692 } #VMSB-132
+		}
+	}
+
+event = {
+	id = 11
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 18 month = september year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2109 where = 1692 } #VMSB-141
+		}
+	}
+
+event = {
+	id = 12
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 7 month = november year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2110 where = 1692 } #VMSB-142
+		}
+	}
+
+event = {
+	id = 13
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 15 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2111 where = 1692 } #VMF-223
+		}
+	}
+
+event = {
+	id = 14
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 25 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2112 where = 1692 } #VMF-224
+		}
+	}
+
+event = {
+	id = 15
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 25 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2113 where = 1692 } #VMSB-231
+		}
+	}
+
+event = {
+	id = 16
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 15 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2114 where = 1692 } #VMSB-232
+		}
+	}
+
+event = {
+	id = 17
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 20 month = december year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 2115 where = 1692 } #VMSB-233
+		}
+	}
+
+event = {
+	id = 18
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = november year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 100 where = 1692 } #2nd Marine Division
+		command = { type = activate_division which = 10200 value = 1200 where = 1692 } #1st Transport Flotilla
+		}
+	}
+
+event = {
+	id = 19
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = january year = 1943 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 101 where = 1692 } #2nd Raider Battalion
+		}
+	}
+
+event = {
+	id = 20
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = january year = 1943 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 102 where = 1692 } #25th Division
+		command = { type = activate_division which = 10200 value = 1201 where = 1692 } #2nd Transport Flotilla
+		}
+	}
+
+event = {
+	id = 21
+	random = no
+	country = JAP
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 25 month = september year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 100 where = 1670 } #2nd Division
+		command = { type = activate_division which = 10300 value = 1201 where = 1670 } #4th Transport Flotilla
+		}
+	}
+
+event = {
+	id = 22
+	random = no
+	country = JAP
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = november year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 101 where = 1670 } #38th Division
+		command = { type = activate_division which = 10300 value = 1202 where = 1670 } #5th Transport Flotilla
+		}
+	}
+
+event = {
+	id = 23
+	random = no
+	country = JAP
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 20 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 102 where = 1670 } #28th Division
+		command = { type = activate_division which = 10300 value = 1203 where = 1670 } #6th Transport Flotilla
+		}
+	}
+
+event = {
+	id = 24
+	random = no
+	country = JAP
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = september year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 103 where = 1670 } #35th Infantry Brigade
+		}
+	}
+
+event = {
+	id = 25
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = october year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 1100 where = 1692 } #USS Boise
+		command = { type = activate_division which = 10200 value = 1101 where = 1692 } #7th Destroyer Division
+		}
+	}
+
+event = {
+	id = 26
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 10 month = october year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 1102 where = 1692 } #USS Hornet
+		command = { type = activate_division which = 10200 value = 1103 where = 1692 } #USS South Dakota
+		command = { type = activate_division which = 10200 value = 1104 where = 1692 } #USS Northampton
+		command = { type = activate_division which = 10200 value = 1105 where = 1692 } #USS Pensacola
+		command = { type = activate_division which = 10200 value = 1106 where = 1692 } #USS San Diego
+		command = { type = activate_division which = 10200 value = 1107 where = 1692 } #USS Juneau
+		command = { type = activate_division which = 10200 value = 1108 where = 1692 } #8th Destroyer Division
+		}
+	}
+
+event = {
+	id = 27
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 1 month = november year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 1109 where = 1692 } #USS Helena
+		command = { type = activate_division which = 10200 value = 1110 where = 1692 } #9th Destroyer Division
+		}
+	}
+
+event = {
+	id = 28
+	random = no
+	country = ALS
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 15 month = november year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10200 value = 1111 where = 1692 } #USS Honolulu
+		}
+	}
+
+event = {
+	id = 29
+	random = no
+	country = JAP
+
+	trigger = { random = 25 }
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+        picture = "reinforcements"
+	style = 0
+
+	date = { day = 10 month = october year = 1942 }
+	offset = 1
+	deathdate = { day = 31 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 10300 value = 1124 where = 1670 } #Junyo
+		command = { type = activate_division which = 10300 value = 1125 where = 1670 } #Zuiho
+		command = { type = activate_division which = 10300 value = 1126 where = 1670 } #Haruna
+		command = { type = activate_division which = 10300 value = 1127 where = 1670 } #Kongo
+		command = { type = activate_division which = 10300 value = 1128 where = 1670 } #5th Destroyer Flotilla
+		}
+	}
+
+event = {
+	id = 30
+	random = no
+	country = JAP
+
+	trigger = {
+		control = { province = 1685 data = JAP } #Guadalcanal
+		}
+
+	name = "ge_event5_name"
+	desc = "watch_jap_desc"
+	picture = "japan_celebrating"
+	style = 0
+
+	date = { day = 1 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname5A"
+		command = { type = endgame value = 3 } #Axis Victory
+		}
+	}
+
+
+
+event = {
+	id = 33
+	random = no
+	country = ALS
+
+	trigger = {
+		control = { province = 1685 data = ALS } #Guadalcanal
+		}
+
+	name = "ge_event5_name"
+	desc = "watch_USA_desc"
+	picture = "american_pacific_victory"
+	style = 0
+
+	date = { day = 1 month = march year = 1943 }
+
+	action_a = {
+		name = "ge_actioname5A"
+		command = { type = endgame value = 5 } #Allied Victory
+		}
+	}
+
+event = {
+	id = 34
+	random = no
+	country = ALS
+
+	trigger = {
+		control = { province = 1685 data = ALS } #Guadalcanal
+		random = 5
+		NOT = { event = 35 }
+		}
+
+	name = "ge_event42_name"
+	desc = "ge_event42_desc"
+	picture = "private_sector"
+	style = 0
+
+	date = { day = 15 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = construct which = air_base where = 1685 value = 1 }
+		}
+	}
+
+event = {
+	id = 35
+	random = no
+	country = JAP
+
+	trigger = {
+		control = { province = 1685 data = JAP } #Guadalcanal
+		random = 5
+		NOT = { event = 34 }
+		}
+
+	name = "ge_event42_name"
+	desc = "ge_event42_desc"
+	picture = "private_sector"
+	style = 0
+
+	date = { day = 15 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = construct which = air_base where = 1685 value = 1 }
+		}
+	}
+
+event = {
+	id = 36
+	random = no
+	country = ALS
+
+	trigger = {
+		control = { province = 1685 data = ALS } #Guadalcanal
+		random = 5
+		NOT = { event = 37 }
+		}
+
+	name = "ge_event42_name"
+	desc = "ge_event42_desc"
+	picture = "private_sector"
+	style = 0
+
+	date = { day = 1 month = october year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = construct which = air_base where = 1685 value = 1 }
+		}
+	}
+
+event = {
+	id = 37
+	random = no
+	country = JAP
+
+	trigger = {
+		control = { province = 1685 data = JAP } #Guadalcanal
+		random = 5
+		NOT = { event = 36 }
+		}
+
+	name = "ge_event42_name"
+	desc = "ge_event42_desc"
+	picture = "private_sector"
+	style = 0
+
+	date = { day = 1 month = october year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = construct which = air_base where = 1685 value = 1 }
+		}
+	}
+
+event = {
+	id = 38
+	random = no
+	country = ALS
+
+	trigger = {
+		control = { province = 1685 data = ALS } #Guadalcanal
+		random = 5
+		NOT = { event = 39 }
+		}
+
+	name = "ge_event42_name"
+	desc = "ge_event42_desc"
+	picture = "private_sector"
+	style = 0
+
+	date = { day = 1 month = december year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = construct which = air_base where = 1685 value = 1 }
+		}
+	}
+
+event = {
+	id = 39
+	random = no
+	country = JAP
+
+	trigger = {
+		control = { province = 1685 data = JAP } #Guadalcanal
+		random = 5
+		NOT = { event = 38 }
+		}
+
+	name = "ge_event42_name"
+	desc = "ge_event42_desc"
+	picture = "private_sector"
+	style = 0
+
+	date = { day = 1 month = december year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = construct which = air_base where = 1685 value = 1 }
+		}
+	}
+
+event = {
+	id = 40
+	random = no
+	country = JAP
+	persistent = yes
+	trigger = {
+		ai = yes
+		carrier = 3
+
+		NOT = {
+			event = 29
+		}
+		NOT = {
+			flag = JAP_Guad 
+		}
+		OR = {
+			AND = {
+				NOT = {
+					marine  = 2
+				}
+				NOT = {
+					infantry = 3
+				}
+			}
+			NOT = {
+				transport = 2
+			}
+			control = { province = 1685 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		command = { type = ai which = "watchtower_Guadalcanal_naval.ai" }
+		command = { type = setflag which = JAP_Guad }
+		command = { type = clrflag which = JAP_quiet  }
+		command = { type = clrflag which = JAP_invasions  }
+	}
+}
+
+event = {
+	id = 41
+	random = no
+	country = ALS
+	persistent = yes
+	trigger = {
+		ai = yes
+		carrier = 3
+		OR = {
+			AND = {
+				NOT = {
+					marine  = 2
+				}
+				NOT = {
+					infantry = 3
+				}
+			}
+			NOT = {
+				transport = 2
+			}
+			control = { province = 1685 data = ALS }
+		}
+		NOT = {
+			event = 26
+		}
+		NOT = {
+			flag = ALS_Guad 
+		}
+	}
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		command = { type = ai which = "watchtower_Guadalcanal_naval.ai" }
+		command = { type = setflag which = ALS_Guad }
+		command = { type = clrflag which = ALS_quiet  }
+		command = { type = clrflag which = ALS_invasions  }
+	}
+}
+
+event = {
+	id = 42
+	random = no
+	country = JAP
+	persistent = yes
+	trigger = {
+		ai = yes
+		NOT = {
+			carrier = 3
+		}
+		NOT = {
+			event = 29
+		}
+		NOT = {
+			flag = JAP_quiet 
+		}
+		
+	}
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		command = { type = ai which = "watchtower_naval_quiet.ai" }
+		command = { type = setflag which = JAP_quiet }
+		command = { type = clrflag which = JAP_Guad  }
+		command = { type = clrflag which = JAP_invasions  }
+	}
+}
+
+event = {
+	id = 43
+	random = no
+	country = ALS
+	persistent = yes
+	trigger = {
+		ai = yes
+		NOT = {
+			carrier = 3
+		}
+		NOT = {
+			event = 26
+		}
+		NOT = {
+			flag = ALS_quiet 
+		}
+	}
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		command = { type = ai which = "watchtower_naval_quiet.ai" }
+		command = { type = setflag which = ALS_quiet }
+		command = { type = clrflag which = ALS_Guad  }
+		command = { type = clrflag which = ALS_invasions  }
+	}
+}
+event = {
+	id = 44
+	random = no
+	country = JAP
+	persistent = yes
+	trigger = {
+		ai = yes
+		OR = {
+			AND = {
+				carrier = 3
+				OR = {
+					marine   = 2
+					infantry = 3
+				}
+				transport = 2
+			}
+			event = 29 #Max reinforcements
+		}
+		NOT = {
+			control = { province = 1685 data = JAP }
+		}
+		NOT = {
+			flag = JAP_invasions 
+		}
+	}
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		command = { type = ai which =  "watchtower_yes_invasions.ai" }
+		command = { type = setflag which = JAP_invasions }
+		command = { type = clrflag which = JAP_quiet }
+		command = { type = clrflag which = JAP_Guad  }
+	}
+}
+
+event = {
+	id = 45
+	random = no
+	country = ALS
+	persistent = yes
+	trigger = {
+		ai = yes
+		OR = {
+			AND = {
+				carrier = 3
+				OR = {
+					marine   = 2
+					infantry = 3
+				}
+				transport = 2
+			}
+			event = 26 #Max reinforcements
+		}
+		NOT = {
+			control = { province = 1685 data = ALS }
+		}
+		NOT = {
+			flag = ALS_invasions 
+		}
+	}
+
+	name = "AI_EVENT"
+	desc = "AI_EVENT"
+
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 1
+	deathdate = { day = 1 month = march year = 1943}
+
+	action_a = {
+		command = { type = ai which = "watchtower_yes_invasions.ai" }
+		command = { type = setflag which = ALS_invasions }
+		command = { type = clrflag which = ALS_quiet }
+		command = { type = clrflag which = ALS_Guad  }
+	}
+}

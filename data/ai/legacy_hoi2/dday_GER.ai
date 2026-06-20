@@ -1,0 +1,72 @@
+#
+# GER AI
+# 1944 DDay Battlescenario (by Copper)
+# 07/10
+#
+#
+
+target = {
+
+	# Normandy - counterattack!
+
+	39 = 80 # Caen
+	38 = 80 # Cherbourg
+	41 = 80 # Havre
+	32 = 80 # Brest
+
+	# Hold Paris
+
+	56 = 80 # Paris
+
+	# Defend Westwall
+
+	74 = 80
+	75 = 80
+	
+}
+
+strat_redeploy_threshold = 20
+
+max_front_ratio			= 4.0
+max_garrison_prop		= 0.3
+min_garrison_prop		= 0.2
+
+
+
+garrison = {
+
+	defend_overseas_beaches = yes # Just in case...
+
+	war_zone_odds 	= 4   # As many units as possible
+
+
+	# PRIORITIES:
+	beach			= 50	
+	capital			= 10	# Minimum - front is more important
+	human_border		= 0	# Ignored for allied human players
+	war_target		= 0	# The next country targeted for attack by this AI
+
+	opposing_alliance	= 0	# For neutrals, all alliances are "opposing"
+	claim_threat		= 0	# If we are neutral, countries with claims on us get this
+	unstable_border		= 0	# Bordering countries at war with someone else get this
+
+}
+
+
+
+front = {
+	recklessness 		= 	1 # 0-3
+	distrib_vs_ai 		= 	even
+	distrib_vs_human 	= 	even
+
+	enemy_reinf_days	=	6
+
+	reserve_prop		=	0.3
+	panic_ratio_vs_ai	=	1.5
+	panic_ratio_vs_human	=	1.0
+	base_attack_odds	=	2.0 # Attack when good odds...
+	min_attack_odds		=	1.5
+	max_attack_odds		=	3.0
+	reinforce_odds		=	0.8
+	withdraw_odds		=	0.5
+}

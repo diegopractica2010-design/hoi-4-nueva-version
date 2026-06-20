@@ -1,0 +1,1556 @@
+#########################################################################
+#  Eben emael
+#########################################################################
+
+event = { 
+	id = 1
+	random = no
+	country = GER
+		
+	name = "fg_event1_name"
+	desc = "fg_event1_desc"
+        picture = "para1"
+	style = 0
+	
+	date = { day = 9 month = may year = 1940 }
+	
+	action_a = {
+		name = "fg_actionname1A"
+		command = { type = supplies value = -1500 }
+	}
+	action_b = {
+		name = "fg_actionname1B"
+		command = { type = sleepevent which = 2}
+		command = { type = sleepevent which = 3}
+	}
+}
+
+
+
+
+event = { 
+	id = 2
+	random = no
+	country = BEL
+	
+	trigger = { random = 15 }
+	
+	name = "fg_event2_name"
+	desc = "fg_event2_desc"
+        picture = "Eben_emael"
+	style = 0
+	
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 11 month = may year = 1940 }
+	
+	action_a = {
+		name = "fg_actionname2A"
+		command = { type = remove_division which = 25006 value = 4  }
+		command = {  type = construct which = land_fort where = 69 value = -1  }
+		command = { type = sleepevent which = 3 }
+
+
+	}
+}
+
+
+event = { 
+	id = 3
+	random = no
+	country = BEL
+
+	name = "fg_event3_name"
+	desc = "fg_event3_desc"
+        picture = "Eben_emael"
+	style = 0
+	
+	date = { day = 12 month = may year = 1940 }
+
+	
+	action_a = {
+		name = "fg_actionname3A"
+		command = { type = remove_division which = 25006 value = 4  }
+		command = { type = secedeprovince which = GER  value = 69  }
+		command = {  type = construct which = land_fort where = 69 value = -2  }
+	}
+}
+
+#########
+##holland
+#########
+
+event = { 
+	id = 4
+	random = no
+	country = GER
+
+
+	name = "fg_event4_name"
+	desc = "fg_event4_desc"
+        picture = "he_111"
+	style = 0
+	
+	date = { day = 13 month = may year = 1940 }
+	
+	action_a = {
+		name = "fg_actionname4A"
+		command = { type = remove_division which = 10000 value = 172 }
+		command = { type = remove_division which = 10000 value = 173 }
+		command = { type = supplies value = -1500 }
+		command = { type = oilpool value = -500 }
+		command = { type = trigger which = 5 }
+	}
+
+	action_b = {
+		name = "fg_actionname4B"
+		command = {}
+		}
+}
+
+
+event = { 
+	id = 5
+	random = no
+	country = HOL
+	
+     
+	name = "fg_event5_name"
+	desc = "fg_event5_desc"
+        picture = "rotterdam"
+	style = 0
+
+	# Triggered by GER 4
+
+	action_a = {
+		name = "fg_actionname5A"
+		command = { type = trigger which = 7 }
+		command = { type = sleepevent which = 6 }
+
+	}
+	action_b = {
+		name = "fg_actionname5B"
+#		command = { type = remove_division which = -1}
+		command = { type = dissent value = 8 }
+		}
+
+}
+
+
+event = { 
+	id = 6
+	random = no
+	country = HOL
+	
+
+	name = "fg_event6_name"
+	desc = "fg_event6_desc"
+        picture = "rotterdam"
+	style = 0
+	date = { day = 15 month = may year = 1940 }
+	
+	
+	action_a = {
+		name = "fg_actionname5A"
+		command = { type = trigger which = 7 }
+
+	}
+	action_b = {
+		name = "fg_actionname5B"
+#		command = { type = remove_division which = -1}
+		command = { type = dissent value = 8 }
+		command = { type = sleepevent which = 7 }
+		command = { type = trigger which = 8 }
+		}
+
+}
+
+event = { 
+	id = 7
+	random = no
+	country = GER
+	
+	name = "fg_event7_name"
+	desc = "fg_event7_desc"
+        picture = "rotterdam"
+	style = 0
+	
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = inherit which = hol }
+		command = { type = activate_division which = 10000 value = 225 }
+		command = { type = activate_division which = 10000 value = 226 }
+	}
+}
+
+
+event = { 
+	id = 8
+	random = no
+	country = GER
+
+
+	name = "fg_event8_name"
+	desc = "fg_event8_desc"
+        picture = "rotterdam"
+	style = 0
+	
+
+	action_a = {
+		name = "fg_actionname8A"
+		command = { type = activate_division which = 10000 value = 225 }
+		command = { type = activate_division which = 10000 value = 226 }
+	}
+}
+
+
+#####################################
+##blitz through the ardennes!
+##################################### 
+event = { 
+	id = 9
+	random = no
+	country = FRA
+        
+        trigger = { or = {
+                           control = { province = 71 data = GER }
+                           control = { province = 68 data = GER }
+                           control = { province = 70 data = GER }
+                         }
+                  }
+                        	
+
+	name = "fg_event9_name"
+	desc = "fg_event9_desc"
+        picture = "panzer2"
+	style = 0
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = may year = 1940 }
+	
+
+	action_a = {
+		name = "fg_actionname9A"
+		command = { type = 	extra_tc value = -45 }
+	         }
+         }
+
+event = { 
+	id = 10
+	random = no
+	country = FRA
+        
+        trigger = { event = 9 }                
+                        	
+
+	name = "fg_event10_name"
+	desc = "fg_event10_desc"
+        picture = "panzer2"
+	style = 0
+        date = { day = 27 month = may year = 1940 }
+        offset = 2
+
+	action_a = {
+		name = "fg_actionname10A"
+		command = { type = 	extra_tc value = 15 }
+	}
+}
+
+event = { 
+	id = 11
+	random = no
+	country = FRA
+        
+        trigger = { event = 10 }                
+                        	
+
+	name = "fg_event10_name"
+	desc = "fg_event10_desc"
+        picture = "panzer2"
+	style = 0
+        date = { day = 30 month = may year = 1940 }
+        offset = 2
+
+	action_a = {
+		name = "fg_actionname10A"
+		command = { type = 	extra_tc value = 15 }
+	}
+}
+
+event = { 
+	id = 12
+	random = no
+	country = FRA
+        
+        trigger = { event = 11 }                 
+                        	
+
+	name = "fg_event10_name"
+	desc = "fg_event10_desc"
+        picture = "panzer2"
+	style = 0
+        date = { day = 4 month = june year = 1940 }
+        offset = 2
+
+	action_a = {
+		name = "fg_actionname10A"
+		command = { type = 	extra_tc value = 15 }
+	}
+}
+
+
+
+event = { 
+	id = 13
+	random = no
+	country = FRA
+
+
+        trigger = { or = {
+                           control = { province = 52 data = GER }
+                           control = { province = 53 data = GER }
+                           control = { province = 44 data = GER }
+                           control = { province = 45 data = GER }
+                         }
+                  random = 55
+                  }
+                        	
+
+	name = "fg_event13_name"
+	desc = "fg_event13_desc"
+        picture = "panzer2"
+	style = 0
+	
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+
+	
+	action_a = {
+		name = "fg_actionname13A"
+		command = { type = 	extra_tc value = -10 }
+		command = { type =  unlock_division  which = 10527 value = 40  }
+        	command = { type =  unlock_division  which = 10527 value = 41  }
+		command = { type =  unlock_division  which = 10527 value = 42 }
+		command = { type =  unlock_division  which = 10527 value = 43 }
+		command = { type =  unlock_division  which = 10527 value = 44 }
+		command = { type =  unlock_division  which = 10527 value = 45 }
+		command = { type =  unlock_division  which = 10527 value = 46 }
+		command = { type =  unlock_division  which = 10527 value = 47 }
+		command = { type =  unlock_division  which = 10527 value = 48 }
+		command = { type =  unlock_division  which = 10527 value = 59 }
+		command = { type =  unlock_division  which = 10527 value = 60 }
+		command = { type =  unlock_division  which = 10527 value = 61 }
+		command = { type =  unlock_division  which = 10527 value = 62 }
+		command = { type = trigger which = 14 }
+	}
+}
+
+
+event = { 
+	id = 14
+	random = no
+	country = ger
+
+	name = "fg_event13_name"
+	desc = "fg_event14_desc"
+        picture = "panzer2"
+	style = 0
+	
+	action_a = {
+		name = "fg_actionname14A"
+		command = { type =  unlock_division  which = 10000 value = 144 }
+		command = { type =  unlock_division  which = 10000 value = 145 }
+		command = { type =  unlock_division  which = 10000 value = 146 }
+		command = { type =  unlock_division  which = 10000 value = 149 }
+		command = { type =  unlock_division  which = 10000 value = 150 }
+		command = { type =  unlock_division  which = 10000 value = 151 }
+		command = { type =  unlock_division  which = 10000 value = 152 }
+		command = { type =  unlock_division  which = 10000 value = 153 }
+		command = { type =  unlock_division  which = 10000 value = 154 }
+		command = { type =  unlock_division  which = 10000 value = 157 }
+		command = { type =  unlock_division  which = 10000 value = 158 }
+		command = { type =  unlock_division  which = 10000 value = 161 }
+		command = { type =  unlock_division  which = 10000 value = 162 }
+		command = { type =  unlock_division  which = 10000 value = 165 }
+		command = { type =  unlock_division  which = 10000 value = 166 }
+		command = { type =  unlock_division  which = 10000 value = 163 }
+		command = { type =  unlock_division  which = 10000 value = 169 }
+		command = { type =  unlock_division  which = 10000 value = 228 }
+	}
+}
+
+
+
+
+####intro
+#event = { 
+#	id = 15
+#	random = no
+#	country = FRA
+ #        
+  #      trigger = { ai = no }
+#
+#	name = "fg_event15_name"
+#	desc = "fg_event17_desc"
+#       picture = "panzer2"
+#	style = 0
+#
+#	date = { day = 9 month = may year = 1940 }
+#	
+#	action_a = {
+#		name = "Ok"
+#		command = { }
+#	}
+#}
+
+####intro
+#event = { 
+#	id = 16
+#	random = no
+#	country = GER
+#
+#       trigger = { ai = no }
+#
+#	name = "fg_event15_name"
+#	desc = "fg_event15_desc"
+#        picture = "panzer2"
+#	style = 0
+#
+#	date = { day = 9 month = may year = 1940 }
+#	
+#	action_a = {
+#		name = "Ok"
+#		command = { }
+#	}
+#}
+
+
+####intro
+#event = { 
+#	id = 17
+#	random = no
+#	country = ENG
+#
+#        trigger = { ai = no }
+#
+#	name = "fg_event15_name"
+#	desc = "fg_event16_desc"
+#        picture = "panzer2"
+#	style = 0
+
+#	date = { day = 9 month = may year = 1940 }
+#	
+#	action_a = {
+#		name = "Ok"
+#		command = { }
+#	}
+#}
+
+####op flages
+event = { 
+	id = 18
+	random = no
+	country = GER
+
+        trigger = { ai = no }
+
+	name = "fg_event18_name"
+	desc = "fg_event18_desc"
+        picture = "panzer2"
+	style = 0
+
+	date = { day = 9 month = may year = 1940 }
+	
+	action_a = {
+		name = "fg_actionname18a"
+		command = { type = setflag which = channel }
+	}
+
+#	action_b = {
+#		name = "fg_actionname18b"
+#		command = { type = 	extra_tc value = -15 }
+#	}
+}
+
+
+event = { 
+	id = 19
+	random = no
+	country = eng
+
+        trigger = { ai = no }
+
+	name = "fg_event18_name"
+	desc = "fg_event19_desc"
+        picture = "panzer2"
+	style = 0
+
+	date = { day = 9 month = may year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { }
+	}
+}
+
+event = { 
+	id = 20
+	random = no
+	country = fra
+
+        trigger = { ai = no }
+
+	name = "fg_event18_name"
+	desc = "fg_event19_desc"
+        picture = "panzer2"
+	style = 0
+
+	date = { day = 9 month = may year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { }
+	}
+}
+
+
+####channel, dunkirk
+event = { 
+	id = 21
+	random = no
+	country = ger
+
+        trigger = { ai = no
+                    and = { flag = channel
+                           or = { control = { province = 43 data = ger }
+                                 control = { province = 18 data = ger }
+                                 control = { province = 42 data = ger }
+                                 control = { province = 41 data = ger }
+                                }
+                           }
+
+                    }
+
+	name = "fg_event20_name"
+	desc = "fg_event20_desc"
+        picture = "panzer2"
+	style = 0
+
+	date = { day = 10 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = 	extra_tc value = 10 }
+		command = { type = vp value = 6  }
+	}
+}
+
+
+
+
+event = { 
+	id = 22
+	random = no
+	country = ger
+
+        trigger = { ai = no
+                    and = { flag = channel
+                           or = { control = { province = 43 data = ger }
+                                 control = { province = 18 data = ger }
+                                 control = { province = 42 data = ger }
+                                 control = { province = 41 data = ger }
+                                }
+                           }
+
+                    }
+
+	name = "fg_event20_name"
+	desc = "fg_event21_desc"
+        picture = "panzer2"
+	style = 0
+
+	date = { day = 15 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = 	extra_tc value = 6 }
+		command = { type = vp value = 3  }
+	}
+}
+
+
+event = { 
+	id = 23
+	random = no
+	country = ger
+
+        trigger = { ai = no
+                    and = { flag = channel
+                           or = { control = { province = 43 data = ger }
+                                 control = { province = 18 data = ger }
+                                 control = { province = 42 data = ger }
+                                 control = { province = 41 data = ger }
+                                }
+                           }
+
+                    }
+
+	name = "fg_event20_name"
+	desc = "fg_event22_desc"
+        picture = "panzer2"
+	style = 0
+
+	date = { day = 25 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = 	extra_tc value = -10 }
+		command = { type = vp value = -4  }   ###remove leaders!!!
+	}
+}
+
+
+
+event = { 
+	id = 24
+	random = no
+	country = eng
+
+        trigger = { and = { flag = channel
+                           or = { control = { province = 43 data = ger }
+                                 control = { province = 18 data = ger }
+                                 control = { province = 42 data = ger }
+                                 control = { province = 41 data = ger }
+                                }
+                           }
+
+                    }
+
+	name = "fg_event20_name"
+	desc = "fg_event23_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 3
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "fg_actionname23a"
+                command = { type = setflag which = dynamo }  ###dunkirk events, normal victory determination!
+	}
+
+	action_b = {
+		name = "fg_actionname23b"
+		command = { } ###sleep all dunkirk events, make victory harder!
+	}
+}
+
+
+#####operation dynamo
+
+####3/divs/day at max!!!!
+
+event = { 
+	id = 25
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 20 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 20 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 20 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 20 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 20 } 
+	}
+
+}
+
+
+event = { 
+	id = 26
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 20 }
+                                    event = 25
+                                     }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+#######
+
+
+event = { 
+	id = 27
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 21 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 21 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 21 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 21 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 21 } 
+	}
+
+}
+
+
+event = { 
+	id = 28
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 21 }
+                                    event = 27
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+######
+
+
+####3/divs/day at max!!!!
+
+event = { 
+	id = 29
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 22 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 22 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 22 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 22 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 22 } 
+	}
+
+}
+
+
+event = { 
+	id = 30
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 22 }
+                                    event = 29
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+################
+###day2!
+
+
+####3/divs/day at max!!!!
+
+event = { 
+	id = 31
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 23 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 23 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 23 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 23 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 11 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 23 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 23 } 
+	}
+
+}
+
+
+event = { 
+	id = 32
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 23 }
+                                    event = 31
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+####3/divs/day at max!!!!
+
+event = { 
+	id = 33
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 24 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 24 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 24 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 24 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 11 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 23 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 24 } 
+	}
+
+}
+
+
+event = { 
+	id = 34
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 24 }
+                                    event = 33
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+####3/divs/day at max!!!!
+
+event = { 
+	id = 35
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 25 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 25 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 25 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 25 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 11 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 23 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 25 } 
+	}
+
+}
+
+
+event = { 
+	id = 36
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 25 }
+                                    event = 35
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+
+event = { 
+	id = 37
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 26 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 26 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 26 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 26 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 11 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 23 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 26 } 
+	}
+
+}
+
+
+event = { 
+	id = 38
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 26 }
+                                    event = 37
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+
+###day3!
+
+
+
+event = { 
+	id = 39
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 27 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 27 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 27 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 27 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 12 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 25 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 27 } 
+	}
+
+}
+
+
+event = { 
+	id = 40
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 27 }
+                                    event = 39
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+
+
+event = { 
+	id = 41
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 28 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 28 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 28 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 28 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 12 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 25 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 28 } 
+	}
+
+}
+
+
+event = { 
+	id = 42
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 28 }
+                                    event = 41
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+
+event = { 
+	id = 43
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 29 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 29 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 29 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 29 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 12 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 25 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 29 } 
+	}
+
+}
+
+
+event = { 
+	id = 44
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 29 }
+                                    event = 43
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+
+###day 4
+event = { 
+	id = 45
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 30 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 30 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 30 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 30 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 13 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 26 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 30 } 
+	}
+
+}
+
+
+event = { 
+	id = 46
+	random = no
+	country = ger
+
+        trigger = { and = { flag = dynamo
+                            Not = { division_exists = { type = 11000 id = 30 }
+                                    event = 45
+                           }
+                         }
+                    }
+
+	name = "fg_event33_name"
+	desc = "fg_event34_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = vp value = 1  } 
+	}
+
+}
+
+
+
+
+###day 4
+event = { 
+	id = 47
+	random = no
+	country = eng
+
+        trigger = { and = { flag = dynamo
+                          or = { division_in_province = { id = { type = 11000 id = 33 } province = 43 }
+                                           division_in_province = { id = { type = 11000 id = 33 } province = 18 }
+                                           division_in_province = { id = { type = 11000 id = 33 } province = 42 }
+                                           division_in_province = { id = { type = 11000 id = 33 } province = 41 }
+                               }
+                           }
+
+                    }
+
+
+	name = "fg_event33_name"
+	desc = "fg_event33_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 13 month = may year = 1940 }
+	offset = 4
+	deathdate = { day = 26 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+                command = { type = remove_division which = 11000 value = 33 } 
+	}
+
+}
+
+
+event = { 
+	id = 48
+	random = no
+	country = ger
+
+        trigger = { control = { province = 50 data = GER }
+                    control = { province = 51 data = GER }
+                    control = { province = 52 data = GER }
+                    control = { province = 65 data = GER }
+                    control = { province = 68 data = GER }
+                    control = { province = 69 data = GER }
+                    }
+
+	name = "fg_event32_name"
+	desc = "fg_event32_desc"
+        picture = "panzer2"
+	style = 0
+
+
+	date = { day = 10 month = may year = 1940 }
+	offset = 1
+	deathdate = { day = 20 month = july year = 1940 }
+	
+	action_a = {
+		name = "Ok"
+		command = { type = inherit which = bel } 
+	}
+
+}
+
+
+#####victory: german decisive!
+
+event = { 
+	id = 49
+	country = ger
+	random = no
+
+	trigger = { axis = 90 }
+
+
+	name = "ge_event5_name"  
+	desc = "fg_event25_desc"
+        picture = "german_strategic_victory"
+	style = 0
+
+	date = { day = 8 month = may year = 1940 }
+	offset = 3
+	deathdate = { day = 25 month = june year = 1940 }
+	
+	action_a = {
+		name = "ge_actioname5A"
+		command = { type = endgame value = 4 }
+	           }
+}
+
+#####victory: german marginal!
+
+event = { 
+	id = 50
+	country = ger
+	random = no
+
+	trigger = { axis = 70 }
+
+
+	name = "ge_event7_name"  
+	desc = "fg_event26_desc"
+        picture = "german_marginal_victory2"
+	style = 0
+
+	date = { day = 19 month = june year = 1940 }
+	offset = 1
+	deathdate = { day = 21 month = june year = 1940 }
+	
+	action_a = {
+		name = "ge_actioname7A"
+		command = { type = endgame value = 3 }
+	           }
+}
+
+
+#####defeat: german marginal!
+#
+event = { 
+	id = 51
+	country = FRA
+	random = no
+
+	trigger = { NOT = {axis = 70 } }
+
+
+	name = "ge_event7_name"  
+	desc = "fg_event27_desc"
+        picture = "german_marginal_defeat"
+	style = 0
+
+	date = { day = 23 month = june year = 1940 }
+	
+	action_a = {
+		name = "ge_actioname11A"
+		command = { type = endgame value = 5 }
+	           }
+}
+
+#####defeat: german decsive!
+
+event = { 
+	id = 52
+	country = FRA
+	random = no
+
+	trigger = { 
+		NOT = { axis = 60 }
+		}
+
+	name = "ge_event5_name"  
+	desc = "fg_event28_desc"
+        picture = "german_strategic_defeat2"
+	style = 0
+
+	date = { day = 22 month = june year = 1940 }
+	offset = 1
+	deathdate = { day = 21 month = june year = 1940 }
+
+	action_a = {
+		name = "ge_actioname11A"
+		command = { type = endgame value = 6 }
+	           }
+}

@@ -1,0 +1,1041 @@
+#################################
+# Designed by Greven and Tracid #
+#################################
+
+#########################################################################
+#  Hitler's Directive: Wacht am Rhein
+#########################################################################
+
+event = {
+	id = 1
+	random = no
+	country = GER
+
+	trigger = {
+	}
+
+	name = "ard_event1_name"
+	desc = "ard_event1_desc"		#Take Antwerp!
+        picture = "whachtamrhein"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+
+
+	action_a = {
+		name = "ard_actionname1A" #Yes We will
+		command = {  }
+	}
+}
+
+#########################################################################
+#  Hitler impatiently demands progress
+#########################################################################
+
+event = {
+	id = 2
+	random = no
+	country = GER
+	persistent = yes
+
+	trigger = {
+ 		random = 25
+ 		NOT = { control = { province = 50 data = -1 } }
+	}
+
+	name = "ard_event2_name"
+	desc = "ard_event2_desc"
+        picture = "impatientlydemands"
+	style = 0
+
+	date = { hour = 1 day = 23 month = december year = 1944 }
+	offset = 7 # Check for trigger conditions every week
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname2A" # I will take it soon
+		command = { type = province_keypoints which = 50 value = 2 } # Antwerp
+	}
+	action_b = {
+		name = "ard_actionname2B" # It might be a problem
+		command = { type = province_keypoints which = 50 value = 3 } # Antwerp
+		command = { type = manpowerpool value = 10 }
+		command = { type = supplies value = 50 }
+	}
+}
+
+#########################################################################
+#  Hitler furiuos about the lack of progress
+#########################################################################
+
+event = {
+	id = 3
+	random = no
+	country = GER
+
+	trigger = {
+ 				event = 2
+ 				random = 25
+ 				NOT = { control = { province = 50 data = -1 } }
+	}
+
+	name = "ard_event3_name"
+	desc = "ard_event3_desc"
+        picture = "furios_hitler"
+	style = 0
+
+	date = { hour = 1 day = 30 month = december year = 1944 }
+	offset = 7 # Check for trigger conditions every week
+	deathdate = { day = 30 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname3a" #Hitler has lost the confidence in you
+		command = { type =	sleepevent which = 2 }
+		command = { type =	sleepevent which = 3 } 
+		##command = { type = remove_division which = 10602 value = 64 } #Withdraws 6. SS-Panzerarmee #not a div!!
+		command = { type = remove_division which = 10602 value = 65 }
+		##command = { type = remove_division which = 10602 value = 66 } #not a div!!
+		command = { type = remove_division which = 10602 value = 67 }
+		command = { type = remove_division which = 10602 value = 68 }
+		command = { type = remove_division which = 10602 value = 69 }
+		command = { type = remove_division which = 10602 value = 70 }
+		command = { type = remove_division which = 10602 value = 71 }
+		command = { type = remove_division which = 10602 value = 72 }
+		##command = { type = remove_division which = 10602 value = 73 } #not a div!!
+		command = { type = remove_division which = 10602 value = 74 }
+		command = { type = remove_division which = 10602 value = 75 }
+		command = { type = remove_division which = 10602 value = 76 }
+       		##command = { type = remove_division which = 10602 value = 77 }#not a div!!
+		command = { type = remove_division which = 10602 value = 78 }
+		command = { type = remove_division which = 10602 value = 79 }
+		command = { type = remove_division which = 10602 value = 80 }
+		command = { type = province_keypoints which = 76 value = 5 } # Dortmund
+		command = { type = province_keypoints which = 77 value = 5 } # Saarbrücken
+		command = { type = province_keypoints which = 313 value = 5 } # Frankfurt am Main
+		command = { type = province_keypoints which = 314 value = 5 } # Stuttgart
+		command = { type = province_keypoints which = 315 value = 5 } # Freiburg
+	}
+}
+
+#########################################################################
+#  Antwerpen is captured
+#########################################################################
+
+event = {
+	id = 4
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 50 data = -1 }
+	}
+
+	name = "ard_event4_name"
+	desc = "ard_event4_desc"
+        picture = "antwerpen_captured"
+	style = 0
+
+	date = { hour = 1 day = 1 month = september year = 1944 }
+	offset = 7 # Check for trigger conditions every week
+	deathdate = { day = 30 month = december year = 1946 }
+
+
+	action_a = {
+		name = "ard_actionname4A" #Excellent!
+		command = { type =	sleepevent which = 2 }
+		command = { type =	sleepevent which = 3 }
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Hitler's Order: Operation Westwind
+#########################################################################
+
+event = {
+	id = 5
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 50 data = -1 }
+		random = 15
+		NOT = {
+			event = 6
+			event = 7
+		}
+	}
+
+	name = "ard_event5_name"
+	desc = "ard_event5_desc"
+        picture = "operation_westwind"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 30 month = december year = 1946 }
+
+
+	action_a = {
+		name = "ard_actionname5A" #Let us drive them into the sea
+		command = { type =	sleepevent which = 6 }
+		command = { type =	sleepevent which = 7 }
+		command = { type = province_keypoints which = 43 value = 1 } #Dunkirk
+		command = { type = province_keypoints which = 45 value = 1 } #Ghent
+		command = { type = province_keypoints which = 42 value = 1 } #Dieppe
+		command = { type = province_keypoints which = 18 value = 1 } #Calais
+		command = { type = province_keypoints which = 46 value = 1 } #Rotterdam
+		command = { type = province_keypoints which = 41 value = 1 } #Le Havre
+	}
+}
+
+#########################################################################
+#  Hitler's Order: Operation Rheinschild
+#########################################################################
+
+event = {
+	id = 6
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 50 data = -1 }
+		random = 4
+		NOT = {
+			event = 5
+			event = 7
+		}
+	}
+
+	name = "ard_event6_name"
+	desc = "ard_event6_desc"
+        picture = "operation_rhienschild"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 30 month = december year = 1946 }
+
+
+	action_a = {
+		name = "ard_actionname6A" #Let us Defend
+		command = { type =	sleepevent which = 5 }
+		command = { type =	sleepevent which = 7 }
+		command = { type = province_keypoints which = 50 value = 5 } # Antwerp
+	}
+}
+
+#########################################################################
+#  Hitler's Order: Operation Husarenritt
+#########################################################################
+
+event = {
+	id = 7
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 50 data = -1 }
+		random = 1
+		NOT = {
+			event = 5
+			event = 6
+		}
+	}
+
+	name = "ard_event7_name"
+	desc = "ard_event7_desc"
+        picture = "operation_husarenritt"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 30 month = december year = 1946 }
+
+
+	action_a = {
+		name = "ard_actionname7A" #Let us take Paris
+		command = { type =	sleepevent which = 5 }
+		command = { type =	sleepevent which = 6 }
+		command = { type = province_keypoints which = 56 value = 10 } # Paris
+	}
+}
+
+#########################################################################
+#  Paris is captured
+#########################################################################
+
+event = {
+	id = 8
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 56 data = -1 }
+	}
+
+	name = "ard_event8_name"
+	desc = "ard_event8_desc"
+        picture = "paris_captured"
+	style = 0
+
+	date = { hour = 1 day = 1 month = september year = 1944 }
+	offset = 7 # Check for trigger conditions every week
+	deathdate = { day = 30 month = december year = 1946 }
+
+
+	action_a = {
+		name = "ard_actionname4A" #Excellent!
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+#########################################################################
+#  Operation Westwind is a huge success
+#########################################################################
+
+event = {
+	id = 9
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 41 data = -1 }
+		control = { province = 42 data = -1 }
+		control = { province = 43 data = -1 }
+		control = { province = 45 data = -1 }
+		control = { province = 46 data = -1 }
+		control = { province = 18 data = -1 }
+	}
+
+	name = "ard_event9_name"
+	desc = "ard_event9_desc"
+        picture = "westwind_success"
+	style = 0
+
+	date = { hour = 1 day = 1 month = september year = 1944 }
+	offset = 2 # Check for trigger conditions every week
+	deathdate = { day = 30 month = december year = 1946 }
+
+
+	action_a = {
+		name = "ard_actionname4A" #Excellent!
+		command = { type = supplies value = 500 }
+		command = { type = oilpool value = 500 }
+		command = { type = province_keypoints which = 43 value = 2 } #Dunkirk
+		command = { type = province_keypoints which = 45 value = 2 } #Ghent
+		command = { type = province_keypoints which = 42 value = 2 } #Dieppe
+		command = { type = province_keypoints which = 18 value = 2 } #Calais
+		command = { type = province_keypoints which = 46 value = 2 } #Rotterdam
+		command = { type = province_keypoints which = 41 value = 2 } #Le Havre
+	}
+}
+
+#########################################################################
+#  Soviet offensive in the East
+#########################################################################
+
+event = {
+	id = 10
+	random = no
+	country = GER
+
+	trigger = {
+ 				random = 2
+}
+
+	name = "ard_event10_name"
+	desc = "ard_event10_desc"
+        picture = "soviet_offensive_east"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 30 # Check for trigger conditions every month
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname10A" # Send forces East
+		command = { type = supplies value = -200 }
+		command = { type = oilpool value = -100 }
+		command = { type = manpowerpool value = -100 }
+	}
+}
+
+#########################################################################
+#  Allied offensive in Italy
+#########################################################################
+
+event = {
+	id = 11
+	random = no
+	country = GER
+
+	trigger = {
+ 				random = 5
+}
+
+	name = "ard_event11_name"
+	desc = "ard_event11_desc"
+        picture = "allied _offensive_italy"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 30 # Check for trigger conditions every month
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname11A" # Send forces to Goten Linie
+		command = { type = supplies value = -200 }
+		command = { type = oilpool value = -100 }
+		command = { type = manpowerpool value = -100 }
+	}
+}
+
+#########################################################################
+#  Allied offensive in Italy stopped permanently
+#########################################################################
+
+event = {
+	id = 12
+	random = no
+	country = GER
+
+	trigger = {
+ 				random = 18
+ 				NOT = {
+ 						event = 13
+ 						}
+}
+
+	name = "ard_event12_name"
+	desc = "ard_event12_desc"
+        picture = "allied _offensive_italy"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every month
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname12A" # Acquisite reinforcements
+		command = { type =	sleepevent which = 13 }
+		command = { type = supplies value = 200 }
+		command = { type = oilpool value = 100 }
+		command = { type = manpowerpool value = 100 }
+		command = { type = add_division which = "1. fallschirmjäger" value = paratrooper when = 3 where = artillery }
+		command = { type = add_division which = "4. fallschirmjäger" value = paratrooper when = 3 where = artillery }
+		command = { type = add_division which = "26. panzerdivision" value = armor when = 4 where = tank_destroyer }
+	}
+}
+
+#########################################################################
+#  The Goten Linie in Italy has collapsed
+#########################################################################
+
+event = {
+	id = 13
+	random = no
+	country = GER
+
+	trigger = {
+ 				random = 15
+ 				NOT = {
+ 						event = 12
+ 						}
+}
+
+	name = "ard_event1_name"
+	desc = "ard_event1_desc"
+        picture = "goten_linie_colapse"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every month
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname1A" # Send forces to Tyrolen Linie
+		command = { type =	sleepevent which = 12 }
+		command = { type = supplies value = -200 }
+		command = { type = oilpool value = -100 }
+		command = { type = manpowerpool value = -100 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+		command = { type = remove_division which = -1 }
+	}
+}
+
+#########################################################################
+#  German Reinforcements
+#########################################################################
+event = {
+	id = 14
+	random = no
+	country = GER
+
+	trigger = {
+ 		random = 10
+		OR = {
+			control = { province = 67 data = -1 }
+			control = { province = 75 data = -1 }
+			control = { province = 76 data = -1 }
+			control = { province = 77 data = -1 }
+			control = { province = 313 data = -1 }
+			control = { province = 314 data = -1 }
+			control = { province = 315 data = -1 }
+		}
+	}
+
+	name = "ard_event14_name"
+	desc = "ard_event14_desc"
+        picture = "german_reinforcment"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every month
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname14A" #Luftwaffe Reinforcements
+		command = { type = activate_division which = 10602 value = 145  where = 313 }
+		command = { type = activate_division which = 10602 value = 146  where = 314 }
+	}
+}
+
+#########################################################################
+#  Allied Frontal Supply captured
+#########################################################################
+
+event = {
+	id = 15
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 69 data = -1 }
+	}
+
+	name = "ard_event15_name"
+	desc = "ard_event15_desc"
+        picture = "allied_supply_captured"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Allied Frontal Supply captured
+#########################################################################
+
+event = {
+	id = 16
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 71 data = -1 }
+	}
+
+	name = "ard_event15_name"
+	desc = "ard_event15_desc"
+        picture = "allied_supply_captured"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Allied Frontal Supply captured
+#########################################################################
+
+event = {
+	id = 17
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 72 data = -1 }
+	}
+
+	name = "ard_event15_name"
+	desc = "ard_event15_desc"
+        picture = "allied_supply_captured"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Allied Frontal Supply captured
+#########################################################################
+
+event = {
+	id = 18
+	random = no
+	country = GER
+
+	trigger = {
+		control = { province = 73 data = -1 }
+	}
+
+	name = "ard_event15_name"
+	desc = "ard_event15_desc"
+        picture = "allied_supply_captured"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Oil and Supply from Germany
+#########################################################################
+
+event = {
+	id = 19
+	random = no
+	country = GER
+	persistent = yes
+
+	trigger = {
+		random = 50
+		NOT = {
+			event = 3
+		}
+	}
+
+	name = "ard_event19_name"
+	desc = "ard_event19_desc"
+        picture = "oil_supply"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 50 }
+		command = { type = oilpool value = 50 }
+	}
+}
+
+#########################################################################
+#  German Replacements
+#########################################################################
+
+event = {
+	id = 20
+	random = no
+	country = GER
+	persistent = yes
+
+	trigger = {
+		random = 20
+		NOT = {
+			event = 3
+		}
+	}
+
+	name = "ard_event20_name"
+	desc = "ard_event20_desc"
+        picture = "german_replacements"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname20A" # Fresh troopers
+		command = { type = manpowerpool value = 50 }
+	}
+}
+
+#########################################################################
+#########################################################################
+#########################################################################
+
+#########################################################################
+#  Oil and Supply through Antwerp
+#########################################################################
+
+event = {
+	id = 21
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 50 data = -1 }
+	}
+
+	name = "ard_event21_name"
+	desc = "ard_event21_desc"
+        picture = "oil_supply"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 250 }
+		command = { type = oilpool value = 250 }
+	}
+}
+
+#########################################################################
+#  Oil and Supply through Dunkirk
+#########################################################################
+
+event = {
+	id = 22
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 43 data = -1 }
+	}
+
+	name = "ard_event22_name"
+	desc = "ard_event22_desc"
+        picture = "oil_supply"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Oil and Supply through Ghent
+#########################################################################
+
+event = {
+	id = 23
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 45 data = -1 }
+	}
+
+	name = "ard_event23_name"
+	desc = "ard_event23_desc"
+        picture = "oil_supply"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Oil and Supply through Dieppe
+#########################################################################
+
+event = {
+	id = 24
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 42 data = -1 }
+	}
+
+	name = "ard_event24_name"
+	desc = "ard_event24_desc"
+        picture = "oil_supply"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Oil and Supply through Calais
+#########################################################################
+
+event = {
+	id = 25
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 18 data = -1 }
+	}
+
+	name = "ard_event25_name"
+	desc = "ard_event25_desc"
+        picture = "oil_supply"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Oil and Supply through Rotterdam
+#########################################################################
+
+event = {
+	id = 26
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 46 data = -1 }
+	}
+
+	name = "ard_event26_name"
+	desc = "ard_event26_desc"
+        picture = "oil_supply"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 250 }
+		command = { type = oilpool value = 250 }
+	}
+}
+
+#########################################################################
+#  Oil and Supply through Le Havre
+#########################################################################
+
+event = {
+	id = 27
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 50
+		control = { province = 41 data = -1 }
+	}
+
+	name = "ard_event27_name"
+	desc = "ard_event27_desc"
+        picture = "oil_supply"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname15A" # Resupply all formations
+		command = { type = supplies value = 100 }
+		command = { type = oilpool value = 100 }
+	}
+}
+
+#########################################################################
+#  Allied Replacements
+#########################################################################
+
+event = {
+	id = 28
+	random = no
+	country = ALS
+	persistent = yes
+
+	trigger = {
+		random = 20
+	}
+
+	name = "ard_event28_name"
+	desc = "ard_event28_desc"
+        picture = "allied_replacments"
+	style = 0
+
+	date = { hour = 1 day = 16 month = december year = 1944 }
+	offset = 14 # Check for trigger conditions every two weeks
+	deathdate = { day = 1 month = december year = 1946 }
+
+	action_a = {
+		name = "ard_actionname20A" # Fresh troopers
+		command = { type = manpowerpool value = 50 }
+	}
+}
+
+#########################################################################
+#########################################################################
+#########################################################################
+
+#########################################################################
+#  Allied Strategic Victory
+#########################################################################
+event = {
+	id = 29
+	random = no
+	country = ALS
+
+	trigger = {
+ 				vp = 100
+}
+
+	name = "ard_event29_name"
+	desc = "ard_event29_desc"
+        picture = "allied_strategic_victory"
+	style = 0
+
+	date = { hour = 1 day = 1 month = january year = 1945 }
+	offset = 3
+	deathdate = { day = 2 month = march year = 1945 }
+
+	action_a = {
+		name = "ard_actionname29A" #End Game
+		command = { type = endgame value = 6 }
+	}
+}
+#########################################################################
+#  Allied Marginal Victory
+#########################################################################
+event = {
+	id = 30
+	random = no
+	country = ALS
+
+	trigger = {
+			range = { min = 65 max = 99 }
+	}
+
+	name = "ard_event30_name"
+	desc = "ard_event30_desc"
+        picture = "allied_marfinal_victory"
+	style = 0
+
+	date = { hour = 23 day = 1 month = march year = 1945 }
+
+	action_a = {
+		name = "ard_actionname29A" #End Game
+		command = { type = endgame value = 5 }
+	}
+}
+
+#########################################################################
+#  German Strategic Victory
+#########################################################################
+event = {
+	id = 33
+	random = no
+	country = GER
+
+	trigger = {
+ 		vp = 68
+	}
+
+	name = "ard_event33_name"
+	desc = "ard_event33_desc"
+        picture = "german_stratec_victory"
+	style = 0
+
+	date = { day = 1 month = february year = 1945 }
+	offset = 3
+	deathdate = { day = 2 month = march year = 1945 }
+
+	action_a = {
+		name = "ard_actionname29A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  German Marginal Victory
+#########################################################################
+event = {
+	id = 34
+	random = no
+	country = GER
+
+	trigger = {
+			range = { min = 51 max = 67 }
+	}
+
+	name = "ard_event34_name"
+	desc = "ard_event34_desc"
+        picture = "german_marginal_victory"
+	style = 0
+
+	date = { hour = 23 day = 1 month = march year = 1945 }
+
+	action_a = {
+		name = "ard_actionname29A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}

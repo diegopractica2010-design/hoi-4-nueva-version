@@ -1,0 +1,1619 @@
+################################################
+# Events designed by Generalisimo	       #
+# For the Platinean War (1942) Battle Scenario #
+################################################
+
+#########################################################################
+# German supplies arrives (by Generalisimo)
+#########################################################################
+event = { 
+	id = 1
+	random = no
+	country = ARG
+	persistent = yes
+        picture = "german_supplies"
+
+	trigger = {
+		control = { province = 667 } # #Buenos Aires
+		}
+		
+	name = "SAWAR_1_NAME"
+	desc = "SAWAR_1_DESC"
+	style = 0
+	
+	date = { day = 10 month = august year = 1942 }
+	offset = 90
+	deathdate = { day = 30 month = april year = 1945 }
+
+	action_a = {
+		name = "SAWAR_1_OPTIONA"
+		command = { type = supplies value = 1500 }
+	}
+}
+#########################################################################
+# USA supplies arrives (by Generalisimo)
+#########################################################################
+event = { 
+	id = 2
+	random = no
+	country = BRA
+	persistent = yes
+        picture = "american_supplies"
+
+	trigger = {
+		control = { province = 883 } # #Belo Horizonte
+		}
+		
+	name = "SAWAR_2_NAME"
+	desc = "SAWAR_2_DESC"
+	style = 0
+	
+	date = { day = 10 month = august year = 1942 }
+	offset = 90
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_2_OPTIONA"
+		command = { type = supplies value = 1500 }
+	}
+}
+#########################################################################
+# USA establish their presence in Recife (by Generalisimo)
+#########################################################################
+event = { 
+	id = 3
+	random = no
+	country = BRA
+         picture = "recife"
+
+	trigger = {
+		lost_national = { country = BRA value = 2 }
+		}
+		
+	name = "SAWAR_3_NAME"
+	desc = "SAWAR_3_DESC"
+	style = 0
+	
+	date = { day = 1 month = august year = 1942 }
+	offset = 30
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_3_OPTIONA"
+		command = { type = supplies value = 5000 }
+		command = { type = setflag which = Recife_base }
+		command = { type = construct which = air_base where = 881 value = 1 }
+		command = { type = construct which = naval_base where = 881 value = 1 }
+		# add USA units
+		command = { type = add_corps which = "USA Expeditionary Force 1º" value = land where = 881 }
+		command = { type = add_division which = "USA EF 1º Art" value = infantry when = 1 where = artillery } 
+		command = { type = add_division which = "USA EF 2º Eng" value = infantry when = 1 where = engineer } 
+		command = { type = add_division which = "USA EF 3º Armored" value = armor when = 1 } 
+		# reponse from other nations
+		command = { type = trigger which = 20 } # ARG
+		command = { type = trigger which = 21 } # PRU
+		command = { type = trigger which = 22 } # BOL
+		command = { type = trigger which = 23 } # ECU
+	}
+	action_b = {
+		name = "SAWAR_3_OPTIONB"
+		command = { }
+	}
+}
+#########################################################################
+# USA establish a base in Recife, Brazil (by Generalisimo)
+#########################################################################
+event = { 
+	id = 20
+	random = no
+	country = ARG
+         picture = "recife"
+
+	# triggered by BRA 3
+		
+	name = "SAWAR_20_NAME"
+	desc = "SAWAR_20_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_20_OPTIONA"
+		command = { type = domestic which = democratic value = -1 }
+		command = { type = domestic which = political_left value = -1 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = relation which = BRA value = -10 }
+	}
+}
+#########################################################################
+# USA establish a base in Recife, Brazil (by Generalisimo)
+#########################################################################
+event = { 
+	id = 21
+	random = no
+	country = PRU
+         picture = "recife"
+
+	# triggered by BRA 3
+		
+	name = "SAWAR_20_NAME"
+	desc = "SAWAR_20_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_20_OPTIONA"
+		command = { type = domestic which = democratic value = -1 }
+		command = { type = domestic which = political_left value = -1 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = relation which = BRA value = -5 }
+	}
+}
+#########################################################################
+# USA establish a base in Recife, Brazil (by Generalisimo)
+#########################################################################
+event = { 
+	id = 22
+	random = no
+	country = BOL
+         picture = "recife"
+
+	# triggered by BRA 3
+		
+	name = "SAWAR_20_NAME"
+	desc = "SAWAR_20_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_20_OPTIONA"
+		command = { type = domestic which = democratic value = -1 }
+		command = { type = domestic which = political_left value = -1 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = relation which = BRA value = -5 }
+	}
+}
+#########################################################################
+# USA establish a base in Recife, Brazil (by Generalisimo)
+#########################################################################
+event = { 
+	id = 23
+	random = no
+	country = ECU
+         picture = "recife"
+
+	# triggered by BRA 3
+		
+	name = "SAWAR_20_NAME"
+	desc = "SAWAR_20_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_20_OPTIONA"
+		command = { type = domestic which = democratic value = -1 }
+		command = { type = domestic which = political_left value = -1 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = relation which = BRA value = -5 }
+	}
+}
+#########################################################################
+# Germany supports our new paratroopers divisions (by Generalisimo)
+#########################################################################
+event = { 
+	id = 4
+	random = no
+	country = ARG
+        picture = "paratrooper"
+
+	trigger = {
+		random = 50
+		}
+		
+	name = "SAWAR_4_NAME"
+	desc = "SAWAR_4_DESC"
+	style = 0
+	
+	date = { day = 1 month = november year = 1943 }
+	offset = 30
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_4_OPTIONA"
+		command = { type = supplies value = -500 }
+		command = { type = add_division which = "1º Cuerpo de Paracaidistas" value = paratrooper when = 2 } 
+	}
+	action_b = {
+		name = "SAWAR_4_OPTIONB"
+		command = { type = add_division which = "1º Cuerpo de Paracaidistas" value = infantry when = 1 where = engineer } 
+	}
+}
+#########################################################################
+# Uruguay is invaded by USA (by Generalisimo)
+#########################################################################
+event = { 
+	id = 5
+	random = no
+	country = URU
+         picture = "uruguay"
+
+	trigger = {
+		alliance = { country = ARG country = URU } 
+		random = 30
+		# TODO: check for no garrison there!
+		}
+		
+	name = "SAWAR_5_NAME"
+	desc = "SAWAR_5_DESC"
+	style = 0
+	
+	date = { day = 1 month = august year = 1942 }
+	offset = 90
+	deathdate = { day = 30 month = december year = 1949 }
+	
+	action_a = {
+		name = "SAWAR_5_OPTIONA"
+		command = { type = trigger which = 6 } # ARG
+		command = { type = trigger which = 19 } # BRA
+	}
+}
+#########################################################################
+# Uruguay is invaded by USA (by Generalisimo)
+#########################################################################
+event = { 
+	id = 6
+	random = no
+	country = ARG
+         picture = "uruguay"
+
+	# triggered by URU 5
+		
+	name = "SAWAR_6_NAME"
+	desc = "SAWAR_6_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_6_OPTIONA"
+		command = { type = supplies value = -500 }
+		command = { type = addcore which = 849 } # Montevideo
+	}
+}
+#########################################################################
+# Uruguay is invaded by USA (by Generalisimo)
+#########################################################################
+event = { 
+	id = 19
+	random = no
+	country = BRA
+         picture = "uruguay"
+
+	# triggered by URU 5
+		
+	name = "SAWAR_6_NAME"
+	desc = "SAWAR_19_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_19_OPTIONA"
+		command = { type = inherit which = URU }
+	}
+}
+#########################################################################
+# Peru to join the axis? (by Generalisimo)
+#########################################################################
+event = { 
+	id = 7
+	random = no
+	country = ARG
+         picture = "peru"
+
+	trigger = {
+		OR = {
+			lost_national = { country = ARG value = 3 }
+			lost_national = { country = BRA value = 4 }
+			}
+		NOT = {
+			OR = {
+				alliance = { country = ARG country = PRU } 
+				alliance = { country = BRA country = PRU } 
+				atwar = PRU
+				}
+			}
+		}
+		
+	name = "SAWAR_7_NAME"
+	desc = "SAWAR_7_DESC"
+	style = 0
+	
+	date = { day = 1 month = august year = 1942 }
+	offset = 180
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_7_OPTIONA"
+		command = { type = trigger which = 8 } # PRU
+		command = { type = relation which = ECU value = -25 }
+	}
+	action_b = {
+		name = "SAWAR_7_OPTIONB"
+		command = { } 
+	}
+}
+#########################################################################
+# Peru to join the axis? (by Generalisimo)
+#########################################################################
+event = { 
+	id = 8
+	random = no
+	country = PRU
+         picture = "peru"
+
+	# triggered by ARG 7
+		
+	name = "SAWAR_8_NAME"
+	desc = "SAWAR_8_DESC"
+	style = 0
+	
+	#date = { day = 10 month = may year = 1940 }
+	#TODO
+	
+	action_a = {
+		name = "SAWAR_8_OPTIONA"
+		command = { type = alliance which = ARG }
+		command = { type = access which = ARG } 
+		# more fascist Peru
+		command = { type = domestic which = democratic value = -1 }
+		command = { type = domestic which = political_left value = -1 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = relation which = ARG value = 25 }
+		command = { type = relation which = BRA value = -25 }
+	}
+	action_b = {
+		name = "SAWAR_8_OPTIONB"
+		command = { type = relation which = ARG value = -25 }
+		command = { type = relation which = BRA value = -25 }
+		# BAD relations with both sides!
+	}
+	action_c = {
+		name = "SAWAR_8_OPTIONC"
+		command = { type = alliance which = BRA }
+		# more democratic Peru
+		command = { type = domestic which = democratic value = 1 }
+		command = { type = domestic which = political_left value = 1 }
+		command = { type = domestic which = freedom value = 1 }
+		command = { type = relation which = ARG value = -25 }
+		command = { type = relation which = BRA value = 25 }
+	}
+}
+#########################################################################
+# Bolivia to join the axis? (by Generalisimo)
+#########################################################################
+event = { 
+	id = 9
+	random = no
+	country = ARG
+         picture = "bolivia"
+
+	trigger = {
+		OR = {
+			lost_national = { country = ARG value = 3 }
+			lost_national = { country = BRA value = 4 }
+			}
+		NOT = {
+			OR = {
+				alliance = { country = ARG country = BOL } 
+				alliance = { country = BRA country = BOL } 
+				atwar = BOL
+				}
+			}
+		}
+		
+	name = "SAWAR_9_NAME"
+	desc = "SAWAR_9_DESC"
+	style = 0
+	
+	date = { day = 1 month = august year = 1942 }
+	offset = 60
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_9_OPTIONA"
+		command = { type = trigger which = 10 } # BOL
+		command = { type = relation which = PAR value = -25 }
+		command = { type = relation which = CHL value = -25 }
+	}
+	action_b = {
+		name = "SAWAR_9_OPTIONB"
+		command = { }
+	}
+}
+#########################################################################
+# Bolivia to join the axis? (by Generalisimo)
+#########################################################################
+event = { 
+	id = 10
+	random = no
+	country = BOL
+         picture = "bolivia"
+
+	# triggered by ARG 9
+		
+	name = "SAWAR_10_NAME"
+	desc = "SAWAR_10_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_10_OPTIONA"
+		command = { type = alliance which = ARG }
+		command = { type = access which = ARG }
+		# more fascist Bolivia
+		command = { type = domestic which = democratic value = -1 }
+		command = { type = domestic which = political_left value = -1 }
+		command = { type = domestic which = freedom value = -1 }
+		command = { type = relation which = ARG value = 25 }
+		command = { type = relation which = BRA value = -25 }
+	}
+	action_b = {
+		name = "SAWAR_10_OPTIONB"
+		command = { type = relation which = ARG value = -25 }
+		command = { type = relation which = BRA value = -25 }
+		# BAD relations with both sides!
+	}
+	action_c = {
+		name = "SAWAR_10_OPTIONC"
+		command = { type = alliance which = BRA }
+		# more democratic Bolivia
+		command = { type = domestic which = democratic value = 1 }
+		command = { type = domestic which = political_left value = 1 }
+		command = { type = domestic which = freedom value = 1 }
+		command = { type = relation which = ARG value = -25 }
+		command = { type = relation which = BRA value = 25 }
+	}
+}
+#########################################################################
+# Ecuador is worried about Perú entrance into the Axis (by Generalisimo)
+#########################################################################
+event = { 
+	id = 11
+	random = no
+	country = ECU
+         picture = "ecuador"
+
+	trigger = {
+		alliance = { country = ARG country = PRU }
+		atwar = no	
+		}
+		
+	name = "SAWAR_11_NAME"
+	desc = "SAWAR_11_DESC"
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 60
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_11_OPTIONA"
+		command = { type = trigger which = 12 } # BRA
+		command = { type = access which = BRA }
+		# more democratic Ecuador
+		command = { type = domestic which = democratic value = 1 }
+		command = { type = domestic which = political_left value = 1 }
+		command = { type = domestic which = freedom value = 1 }
+		command = { type = relation which = ARG value = -25 }
+		command = { type = relation which = BRA value = 25 }
+	}
+	action_b = {
+		name = "SAWAR_11_OPTIONB"
+		command = { }
+	}
+}
+#########################################################################
+# Ecuador asks for help (by Generalisimo)
+#########################################################################
+event = { 
+	id = 12
+	random = no
+	country = BRA
+         picture = "ecuador"
+
+	# triggered by ECU 11
+		
+	name = "SAWAR_12_NAME"
+	desc = "SAWAR_12_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_12_OPTIONA"
+		command = { type = alliance which = ECU }
+		command = { type = access which = ECU }
+	}
+}
+#########################################################################
+# Paraguay is worried about Bolivia entrance into the Axis (by Generalisimo)
+#########################################################################
+event = { 
+	id = 13
+	random = no
+	country = PAR
+         picture = "paraguay"
+
+	trigger = {
+		alliance = { country = ARG country = BOL }
+		atwar = no	
+		}
+		
+	name = "SAWAR_13_NAME"
+	desc = "SAWAR_13_DESC"
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 60
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_13_OPTIONA"
+		command = { type = trigger which = 14 } # BRA
+		command = { type = access which = BRA }
+		# more democratic Paraguay
+		command = { type = domestic which = democratic value = 1 }
+		command = { type = domestic which = political_left value = 1 }
+		command = { type = domestic which = freedom value = 1 }
+		command = { type = relation which = ARG value = -25 }
+		command = { type = relation which = BRA value = 25 }
+	}
+	action_b = {
+		name = "SAWAR_13_OPTIONB"
+		command = { }
+	}
+}
+#########################################################################
+# Paraguay asks for help (by Generalisimo)
+#########################################################################
+event = { 
+	id = 14
+	random = no
+	country = BRA
+         picture = "paraguay"
+
+	# triggered by PAR 13
+		
+	name = "SAWAR_14_NAME"
+	desc = "SAWAR_14_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_14_OPTIONA"
+		command = { type = alliance which = PAR }
+		command = { type = access which = PAR }
+	}
+}
+#########################################################################
+# Chile is worried about Bolivia entrance into the Axis (by Generalisimo)
+#########################################################################
+event = { 
+	id = 15
+	random = no
+	country = CHL
+         picture = "chile"
+
+	trigger = {
+		alliance = { country = ARG country = BOL }
+		atwar = no	
+		}
+		
+	name = "SAWAR_15_NAME"
+	desc = "SAWAR_15_DESC"
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 60
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_15_OPTIONA"
+		command = { type = trigger which = 16 } # BRA
+		command = { type = access which = BRA }
+		# more democratic Chile
+		command = { type = domestic which = democratic value = 1 }
+		command = { type = domestic which = political_left value = 1 }
+		command = { type = domestic which = freedom value = 1 }
+		command = { type = relation which = ARG value = -25 }
+		command = { type = relation which = BRA value = 25 }
+	}
+	action_b = {
+		name = "SAWAR_15_OPTIONB"
+		command = { }
+	}
+}
+#########################################################################
+# Chile asks for help (by Generalisimo)
+#########################################################################
+event = { 
+	id = 16
+	random = no
+	country = BRA
+         picture = "chile"
+
+	# triggered by CHL 15
+		
+	name = "SAWAR_16_NAME"
+	desc = "SAWAR_16_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_16_OPTIONA"
+		command = { type = alliance which = CHL }
+		command = { type = access which = CHL }
+	}
+}
+#########################################################################
+# Chile wants to help (by Generalisimo)
+#########################################################################
+event = { 
+	id = 17
+	random = no
+	country = CHL
+         picture = "chile"
+
+	trigger = {
+		OR = {
+			lost_national = { country = ARG value = 2 }
+			lost_national = { country = BRA value = 5 }
+			}
+		NOT = {
+			OR = {
+				alliance = { country = ARG country = CHL }
+				alliance = { country = BRA country = CHL }
+				}
+			}
+		atwar = no
+		# ARG into BRA territory?
+		lost_national = { country = BRA value = 5 }
+		}
+		
+	name = "SAWAR_17_NAME"
+	desc = "SAWAR_17_DESC"
+	style = 0
+
+	date = { day = 1 month = august year = 1942 }
+	offset = 60
+	deathdate = { day = 30 month = april year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_17_OPTIONA"
+		command = { type = trigger which = 18 } # BRA
+		command = { type = access which = BRA }
+		command = { type = sleepevent which = 15 } # CHL
+		# more democratic Chile
+		command = { type = domestic which = democratic value = 1 }
+		command = { type = domestic which = political_left value = 1 }
+		command = { type = domestic which = freedom value = 1 }
+		command = { type = relation which = ARG value = -25 }
+		command = { type = relation which = BRA value = 25 }
+	}
+	action_b = {
+		name = "SAWAR_17_OPTIONB"
+		command = { }
+	}
+}
+#########################################################################
+# Chile offers their help (by Generalisimo)
+#########################################################################
+event = { 
+	id = 18
+	random = no
+	country = BRA
+         picture = "chile"
+
+	# triggered by CHL 17
+		
+	name = "SAWAR_18_NAME"
+	desc = "SAWAR_18_DESC"
+	style = 0
+	
+	action_a = {
+		name = "SAWAR_18_OPTIONA"
+		command = { type = alliance which = CHL }
+		command = { type = access which = CHL }
+	}
+}
+
+#### USA help, only in case of the creation of the Recife base ####
+
+#########################################################################
+# USA reinforcements arrive (by Generalisimo)
+#########################################################################
+event = { 
+	id = 30
+	random = no
+	country = BRA
+         picture = "american_reinforcments2"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 881 } # #Recife
+		}
+		
+	name = "SAWAR_30_NAME"
+	desc = "SAWAR_30_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1942 }
+	offset = 60
+	deathdate = { day = 30 month = december year = 1942 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 2500 }
+		# activate EF land divisions
+		command = { type = add_corps which = "USA Expeditionary Force 2º" value = land where = 881 }
+		command = { type = add_division which = "USA EF 3º" value = infantry when = 1 } 
+		command = { type = add_division which = "USA EF 4º Eng" value = infantry when = 1 where = engineer } 
+	}
+}
+#########################################################################
+# USA reinforcements arrive (by Generalisimo)
+#########################################################################
+event = { 
+	id = 31
+	random = no
+	country = BRA
+         picture = "american_air_reinforcments"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 881 } # #Recife
+		event = 30
+		}
+		
+	name = "SAWAR_30_NAME"
+	desc = "SAWAR_30_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1943 }
+	offset = 60
+	deathdate = { day = 30 month = december year = 1943 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 2500 }
+		# activate EF land divisions
+		command = { type = add_corps which = "USA Expeditionary Force 3º" value = land where = 881 }
+		command = { type = add_division which = "USA EF 5º" value = infantry when = 1 } 
+		command = { type = add_division which = "USA EF 6º Eng" value = infantry when = 2 where = engineer } 
+	}
+}
+#########################################################################
+# USA reinforcements arrive (by Generalisimo)
+#########################################################################
+event = { 
+	id = 32
+	random = no
+	country = BRA
+         picture = "american_reinforcments2"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 881 } # #Recife
+		event = 31
+		}
+		
+	name = "SAWAR_30_NAME"
+	desc = "SAWAR_30_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1944 }
+	offset = 60
+	deathdate = { day = 30 month = december year = 1944 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 2500 }
+		# activate EF land divisions
+		command = { type = add_corps which = "USA Expeditionary Force 4º" value = land where = 881 }
+		command = { type = add_division which = "USA EF 7º" value = infantry when = 2 } 
+		command = { type = add_division which = "USA EF 8º Eng" value = infantry when = 2 where = engineer } 
+	}
+}
+#########################################################################
+# USA reinforcements arrive (by Generalisimo)
+#########################################################################
+event = { 
+	id = 33
+	random = no
+	country = BRA
+         picture = "american_reinforcments2"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 881 } # #Recife
+		event = 32
+		}
+		
+	name = "SAWAR_30_NAME"
+	desc = "SAWAR_30_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1945 }
+	offset = 60
+	deathdate = { day = 30 month = december year = 1945 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 2500 }
+		# activate EF land divisions
+		command = { type = add_corps which = "USA Expeditionary Force 5º" value = land where = 881 }
+		command = { type = add_division which = "USA EF 9º" value = infantry when = 2 } 
+		command = { type = add_division which = "USA EF 10º Eng" value = infantry when = 2 where = engineer } 
+	}
+}
+#########################################################################
+# USA sends navy forces to help into the conflict (by Generalisimo)
+#########################################################################
+event = { 
+	id = 35
+	random = no
+	country = BRA
+         picture = "american_reinforcments3"
+
+	trigger = {
+		flag = Recife_base
+		}
+		
+	name = "SAWAR_35_NAME"
+	desc = "SAWAR_35_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1942 }
+	offset = 90
+	deathdate = { day = 30 month = december year = 1943 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 1500 }
+		# activate EF navy divisions
+		command = { type = add_corps which = "USA Naval Force 1º" value = naval where = 881 }
+		command = { type = add_division which = "USA NEF 1º" value = heavy_cruiser when = 2 }
+		command = { type = add_division which = "USA NEF 2º" value = light_cruiser when = 1 }
+		command = { type = add_division which = "USA NEF 3º" value = destroyer when = 2 } 
+		command = { type = add_division which = "USA NEF 4º" value = destroyer when = 2 } 
+		command = { type = add_division which = "USA NEF 5º" value = destroyer when = 1 } 
+	}
+}
+#########################################################################
+# USA sends navy forces to help into the conflict (by Generalisimo)
+#########################################################################
+event = { 
+	id = 36
+	random = no
+	country = BRA
+         picture = "american_naval_reinforcments3"
+
+	trigger = {
+		flag = Recife_base
+		event = 35
+		}
+		
+	name = "SAWAR_35_NAME"
+	desc = "SAWAR_35_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1944 }
+	offset = 90
+	deathdate = { day = 30 month = december year = 1946 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 1500 }
+		# activate EF navy divisions
+		command = { type = add_corps which = "USA Naval Force 2º" value = naval where = 881 }
+		command = { type = add_division which = "USA NEF 6º" value = heavy_cruiser when = 2 }
+		command = { type = add_division which = "USA NEF 7º" value = light_cruiser when = 1 }
+		command = { type = add_division which = "USA NEF 8º" value = destroyer when = 2 } 
+		command = { type = add_division which = "USA NEF 9º" value = destroyer when = 2 } 
+		command = { type = add_division which = "USA NEF 10º" value = destroyer when = 1 } 
+	}
+}
+
+#### German help in response to USA activity in the area ####
+
+#########################################################################
+# German reinforcements arrive (by Generalisimo)
+#########################################################################
+event = { 
+	id = 40
+	random = no
+	country = ARG
+         picture = "german_reinforcment_3"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 667 } #Buenos Aires
+		}
+		
+	name = "SAWAR_40_NAME"
+	desc = "SAWAR_40_DESC"
+	style = 0
+	
+	date = { day = 1 month = august year = 1942 }
+	offset = 60
+	deathdate = { day = 30 month = december year = 1942 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 2000 }
+		# activate EF land divisions ?
+		command = { type = add_corps which = "German Expeditionary Force 1º" value = land where = 667 }
+		command = { type = add_division which = "GER EF 1º" value = infantry when = 1 } 
+		command = { type = add_division which = "GER EF 2º Art" value = infantry when = 1 where = artillery } 
+	}
+}
+#########################################################################
+# German reinforcements arrive (by Generalisimo)
+#########################################################################
+event = { 
+	id = 41
+	random = no
+	country = ARG
+         picture = "german_reinforcment_5"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 667 } #Buenos Aires
+		event = 40
+		}
+		
+	name = "SAWAR_40_NAME"
+	desc = "SAWAR_40_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1943 }
+	offset = 60
+	deathdate = { day = 30 month = december year = 1943 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 2000 }
+		# activate EF land divisions ?
+		command = { type = add_corps which = "German Expeditionary Force 2º" value = land where = 667 }
+		command = { type = add_division which = "GER EF 3º" value = infantry when = 1 } 
+		command = { type = add_division which = "GER EF 4º Art" value = infantry when = 1 where = artillery } 
+	}
+}
+#########################################################################
+# German reinforcements arrive (by Generalisimo)
+#########################################################################
+event = { 
+	id = 42
+	random = no
+	country = ARG
+         picture = "german_reinforcment_5"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 667 } #Buenos Aires
+		event = 41
+		}
+		
+	name = "SAWAR_40_NAME"
+	desc = "SAWAR_40_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1944 }
+	offset = 60
+	deathdate = { day = 30 month = june year = 1944 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 2000 }
+		# activate EF land divisions ?
+		command = { type = add_corps which = "German Expeditionary Force 3º" value = land where = 667 }
+		command = { type = add_division which = "GER EF 5º" value = infantry when = 2 } 
+		command = { type = add_division which = "GER EF 6º Art" value = infantry when = 2 where = artillery } 
+	}
+}
+#########################################################################
+# German U-boats helps in our theatry (by Generalisimo)
+#########################################################################
+event = { 
+	id = 43
+	random = no
+	country = ARG
+         picture = "u-boat"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 667 } #Buenos Aires
+		}
+		
+	name = "SAWAR_43_NAME"
+	desc = "SAWAR_43_DESC"
+	style = 0
+	
+	date = { day = 1 month = august year = 1942 }
+	offset = 60
+	deathdate = { day = 30 month = december year = 1943 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 1500 }
+		# activate EF naval divisions
+		command = { type = add_corps which = "German Naval Force 1º" value = naval where = 667 }
+		command = { type = add_division which = "GER NEF 1º" value = submarine when = 2 }
+		command = { type = add_division which = "GER NEF 2º" value = submarine when = 2 }
+		command = { type = add_division which = "GER NEF 3º" value = submarine when = 2 } 
+	}
+}
+#########################################################################
+# German U-boats helps in our theatry (by Generalisimo)
+#########################################################################
+event = { 
+	id = 44
+	random = no
+	country = ARG
+         picture = "u-boat"
+
+	trigger = {
+		flag = Recife_base
+		control = { province = 667 } #Buenos Aires
+		event = 43
+		}
+		
+	name = "SAWAR_43_NAME"
+	desc = "SAWAR_43_DESC"
+	style = 0
+	
+	date = { day = 1 month = january year = 1944 }
+	offset = 60
+	deathdate = { day = 30 month = december year = 1944 }
+	
+	action_a = {
+		name = "SAWAR_30_OPTIONA"
+		command = { type = supplies value = 1500 }
+		# activate EF naval divisions
+		command = { type = add_corps which = "German Naval Force 2º" value = naval where = 667 }
+		command = { type = add_division which = "GER NEF 4º" value = submarine when = 2 }
+		command = { type = add_division which = "GER NEF 5º" value = submarine when = 2 }
+		command = { type = add_division which = "GER NEF 6º" value = submarine when = 2 } 
+	}
+}
+
+### Germany loosing the war ###
+
+#########################################################################
+# Germany is being invaded (by Generalisimo)
+#########################################################################
+event = { 
+	id = 50
+	random = no
+	country = ARG
+         picture = "germany_invaded"
+
+	trigger = {
+		}
+		
+	name = "SAWAR_50_NAME"
+	desc = "SAWAR_50_DESC"
+	style = 0
+	
+	date = { day = 6 month = june year = 1944 }
+	
+	action_a = {
+		name = "SAWAR_50_OPTIONA"
+		command = {  }
+	}
+}
+#########################################################################
+# Germany has been defeated (by Generalisimo)
+#########################################################################
+event = { 
+	id = 51
+	random = no
+	country = ARG
+         picture = "berlin_in_ruins2"
+
+	trigger = {
+		random = 50
+		}
+		
+	name = "SAWAR_51_NAME"
+	desc = "SAWAR_51_DESC"
+	style = 0
+	
+	date = { day = 1 month = april year = 1945 }
+	offset = 30
+	deathdate = { day = 30 month = december year = 1949 }
+	
+	action_a = {
+		name = "SAWAR_51_OPTIONA"
+		command = {  }
+	}
+	action_b = {
+		name = "SAWAR_51_OPTIONB"
+		command = { type = trigger which = 52 } # BRA
+	}
+	action_c = {
+		name = "SAWAR_51_OPTIONC"
+		command = {  } # BRA - GAME OVER
+	}
+}
+#########################################################################
+# Argentina comes to sign a peace treaty (by Generalisimo)
+#########################################################################
+event = { 
+	id = 52
+	random = no
+	country = BRA
+         picture = "argentina"
+
+	# triggered by ARG 51
+		
+	name = "SAWAR_52_NAME"
+	desc = "SAWAR_52_DESC"
+	style = 0
+
+	action_a = {
+		name = "SAWAR_52_OPTIONB"
+		command = {  } # BRA, "Diplomatic" Victory!
+	}
+}
+#########################################################################
+# Argentina comes to sign a peace treaty (by Generalisimo)
+#########################################################################
+event = { 
+	id = 53
+	random = no
+	country = ARG
+         picture = "argentina"
+
+	trigger = {
+		event = 52
+		}
+		
+	name = "SAWAR_53_NAME"
+	desc = "SAWAR_53_DESC"
+	style = 0
+
+	action_a = {
+		name = "SAWAR_53_OPTIONA"
+		command = { type = endgame value = 5 } # GAME OVER, Looser! BRA Marginal Victory
+	}
+}
+#########################################################################
+# Argentina comes to sign a peace treaty (by Generalisimo)
+#########################################################################
+event = { 
+	id = 54
+	random = no
+	country = BRA
+         picture = "argentina"
+
+	trigger = {
+		event = 51
+		}
+		
+	name = "SAWAR_54_NAME"
+	desc = "SAWAR_54_DESC"
+	style = 0
+
+	action_a = {
+		name = "SAWAR_54_OPTIONA"
+		command = { type = endgame value = 6 } # GAME OVER, Victory! BRA Strategic Victory
+	}
+}
+
+### in case ARG does't want to stop the war, more support comes from USA for the final battle
+
+#########################################################################
+# USA new forces in the region '45 (by Generalisimo)
+#########################################################################
+event = { 
+	id = 60
+	random = no
+	country = BRA
+         picture = "american_reinforcments7"
+
+	trigger = {
+		flag = Recife_base
+		random = 75
+		}
+		
+	name = "SAWAR_60_NAME"
+	desc = "SAWAR_60_DESC"
+	style = 0
+
+	date = { day = 1 month = april year = 1945 }
+	offset = 90
+	deathdate = { day = 30 month = december year = 1946 }
+
+	action_a = {
+		name = "SAWAR_60_OPTIONA"
+		# more divs, a lot to turn the tie on BRA side
+		command = { type = add_corps which = "USA Expeditionary Force 6º" value = land where = 881 }
+		command = { type = add_division which = "USA EF 11º" value = bergsjaeger when = 2 } 
+		command = { type = add_division which = "USA EF 12º" value = bergsjaeger when = 2 } 
+		command = { type = add_division which = "USA EF 13º" value = marine when = 2 } 
+		command = { type = add_division which = "USA EF 14º" value = marine when = 2 } 
+		command = { type = add_division which = "USA EF 15º Eng" value = infantry when = 2 where = engineer } 
+	}
+}
+#########################################################################
+# USA new forces in the region '47 (by Generalisimo)
+#########################################################################
+event = { 
+	id = 61
+	random = no
+	country = BRA
+         picture = "american_reinforcments8"
+
+	trigger = {
+		flag = Recife_base
+		random = 70
+		}
+		
+	name = "SAWAR_61_NAME"
+	desc = "SAWAR_61_DESC"
+	style = 0
+
+	date = { day = 1 month = january year = 1947 }
+	offset = 90
+	deathdate = { day = 30 month = december year = 1949 }
+
+	action_a = {
+		name = "SAWAR_61_OPTIONA"
+		# more divs, a lot to turn the tie on BRA side
+		command = { type = add_corps which = "USA Expeditionary Force 7º" value = land where = 881 }
+		command = { type = add_division which = "USA EF 16º" value = armor when = 2 } 
+		command = { type = add_division which = "USA EF 17º" value = armor when = 2 } 
+		command = { type = add_division which = "USA EF 18º" value = marine when = 2 } 
+		command = { type = add_division which = "USA EF 19º" value = marine when = 2 } 
+		command = { type = add_division which = "USA EF 20º Eng" value = infantry when = 2 where = engineer } 
+	}
+}
+
+### if ARG didn't sign peace, they are doomed with those 2 events ;)
+
+### scenario welcome message:
+
+#########################################################################
+# Generic Startup description for the scenario (by Generalisimo)
+#########################################################################
+event = { 
+	id = 70
+	random = no
+	country = ARG
+         picture = "southamerica"
+
+	trigger = {
+		}
+		
+	name = "SAWAR_70_NAME"
+	desc = "SAWAR_70_DESC"
+	style = 0
+
+	date = { day = 29 month = august year = 1942 }
+
+	action_a = {
+		name = "SAWAR_70_OPTIONA"
+		command = {  }
+	}
+}
+#########################################################################
+# Generic Startup description for the scenario (by Generalisimo)
+#########################################################################
+event = { 
+	id = 71
+	random = no
+	country = BOL
+         picture = "southamerica"
+
+	trigger = {
+		}
+		
+	name = "SAWAR_70_NAME"
+	desc = "SAWAR_70_DESC"
+	style = 0
+
+	date = { day = 29 month = august year = 1942 }
+
+	action_a = {
+		name = "SAWAR_70_OPTIONA"
+		command = {  }
+	}
+}
+#########################################################################
+# Generic Startup description for the scenario (by Generalisimo)
+#########################################################################
+event = { 
+	id = 72
+	random = no
+	country = BRA
+         picture = "southamerica"
+
+	trigger = {
+		}
+		
+	name = "SAWAR_70_NAME"
+	desc = "SAWAR_70_DESC"
+	style = 0
+
+	date = { day = 29 month = august year = 1942 }
+
+	action_a = {
+		name = "SAWAR_70_OPTIONA"
+		command = {  }
+	}
+}
+#########################################################################
+# Generic Startup description for the scenario (by Generalisimo)
+#########################################################################
+event = { 
+	id = 73
+	random = no
+	country = CHL
+         picture = "southamerica"
+
+	trigger = {
+		}
+		
+	name = "SAWAR_70_NAME"
+	desc = "SAWAR_70_DESC"
+	style = 0
+
+	date = { day = 29 month = august year = 1942 }
+
+	action_a = {
+		name = "SAWAR_70_OPTIONA"
+		command = {  }
+	}
+}
+#########################################################################
+# Generic Startup description for the scenario (by Generalisimo)
+#########################################################################
+event = { 
+	id = 74
+	random = no
+	country = ECU
+         picture = "southamerica"
+
+	trigger = {
+		}
+		
+	name = "SAWAR_70_NAME"
+	desc = "SAWAR_70_DESC"
+	style = 0
+
+	date = { day = 29 month = august year = 1942 }
+
+	action_a = {
+		name = "SAWAR_70_OPTIONA"
+		command = {  }
+	}
+}
+#########################################################################
+# Generic Startup description for the scenario (by Generalisimo)
+#########################################################################
+event = { 
+	id = 75
+	random = no
+	country = PAR
+         picture = "southamerica"
+
+	trigger = {
+		}
+		
+	name = "SAWAR_70_NAME"
+	desc = "SAWAR_70_DESC"
+	style = 0
+
+	date = { day = 29 month = august year = 1942 }
+
+	action_a = {
+		name = "SAWAR_70_OPTIONA"
+		command = {  }
+	}
+}
+#########################################################################
+# Generic Startup description for the scenario (by Generalisimo)
+#########################################################################
+event = { 
+	id = 76
+	random = no
+	country = PRU
+         picture = "southamerica"
+
+	trigger = {
+		}
+		
+	name = "SAWAR_70_NAME"
+	desc = "SAWAR_70_DESC"
+	style = 0
+
+	date = { day = 29 month = august year = 1942 }
+
+	action_a = {
+		name = "SAWAR_70_OPTIONA"
+		command = {  }
+	}
+}
+
+#### Victory events ####
+
+### ARGENTINA ###
+
+#########################################################################
+# Argentina Strategic Victory
+#########################################################################
+event = {
+	id = 80
+	random = no
+	country = ARG
+
+	trigger = {
+ 		vp = 40
+		}
+
+	name = "SAWAR_80_NAME"
+	desc = "SAWAR_80_DESC"
+       picture = "medal1"
+	style = 0
+	
+	date = { day = 29 month = august year = 1942 }
+	offset = 3
+	deathdate = { day = 30 month = december year = 1949 }
+
+	action_a = {
+		name = "SAWAR_80_OPTIONA" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+# Argentina Marginal Victory
+#########################################################################
+event = {
+	id = 81
+	random = no
+	country = ARG
+
+	trigger = {
+		vp = 30
+		NOT = { vp = 40 }
+		}
+
+	name = "SAWAR_81_NAME"
+	desc = "SAWAR_81_DESC"
+       picture = "medal1"
+	style = 0
+
+	date = { hour = 23 day = 30 month = december year = 1949 }
+
+	action_a = {
+		name = "SAWAR_80_OPTIONA" #End Game
+		command = { type = endgame value = 3 } 
+	}
+}
+#########################################################################
+# Argentina Marginal Defeat
+#########################################################################
+#event = {
+#	id = 82
+#	random = no
+#	country = SOV
+#
+#	# triggered by BRA	
+#
+#	name = "SAWAR_82_NAME"
+#	desc = "SAWAR_82_DESC"
+#	style = 0
+#
+#	action_a = {
+#		name = "SAWAR_80_OPTIONA" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+# Argentina Strategic Defeat
+#########################################################################
+#event = {
+#	id = 83
+#	random = no
+#	country = ARG
+#
+#	# triggered by BRA
+#
+#	name = "SAWAR_83_NAME"
+#	desc = "SAWAR_83_DESC"
+#	style = 0
+#
+#	action_a = {
+#		name = "SAWAR_80_OPTIONA" #End Game
+#		command = {  }
+#	}
+#}
+#
+#
+#########################################################################
+# Brazil Strategic Victory
+#########################################################################
+event = {
+	id = 85
+	random = no
+	country = BRA
+
+	trigger = {
+ 		vp = 40
+		}
+
+	name = "SAWAR_85_NAME"
+	desc = "SAWAR_85_DESC"
+       picture = "medal2"
+	style = 0
+
+	date = { day = 29 month = august year = 1942 }
+	offset = 3
+	deathdate = { day = 30 month = december year = 1949 }
+
+	action_a = {
+		name = "SAWAR_80_OPTIONA" #End Game
+		command = { type = endgame value = 6 }
+	}
+}
+#########################################################################
+# Brazil Marginal Victory
+#########################################################################
+event = {
+	id = 86
+	random = no
+	country = BRA
+
+	trigger = {
+		vp = 30
+		NOT = { vp = 40 }
+		}
+
+	name = "SAWAR_86_NAME"
+	desc = "SAWAR_86_DESC"
+        picture = "medal2"
+	style = 0
+
+	date = { hour = 23 day = 30 month = december year = 1949 }
+
+	action_a = {
+		name = "SAWAR_80_OPTIONA" #End Game
+		command = { type = endgame value = 5 }
+	}
+}
+#########################################################################
+# Brazil Marginal Defeat
+#########################################################################
+#event = {
+#	id = 87
+#	random = no
+#	country = BRA
+#
+#	# triggered by ARG
+#
+#	name = "SAWAR_87_NAME"
+#	desc = "SAWAR_87_DESC"
+#	style = 0
+#
+#	action_a = {
+#		name = "SAWAR_80_OPTIONA" #End Game
+#		command = {  }
+#	}
+#}
+#########################################################################
+# Brazil Strategic Defeat
+#########################################################################
+#event = {
+#	id = 88
+#	random = no
+#	country = BRA
+#
+#	# triggered by ARG
+#
+#	name = "SAWAR_88_NAME"
+#	desc = "SAWAR_88_DESC"
+#	style = 0
+#
+#	action_a = {
+#		name = "SAWAR_80_OPTIONA" #End Game
+#		command = {  }
+#	}
+#}

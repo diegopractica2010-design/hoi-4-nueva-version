@@ -1,0 +1,875 @@
+#
+# List of events:
+# 1 - Directive no 2 (SOV)
+# 2 - Directive no 3 (SOV)
+# 3 - 2nd Eshelon activation - reinforcements (SOV)
+# 4 - Mobilization - 3rd Eshelon
+# 5 - Activation of OKW reserves
+# 6 - Weather events - autumn mud (GER)
+# 7 - Weather events - winter starts (GER)
+# 8 - Great Patriotic War (SOV)
+# 9 - Hungary joins the war (HUN)
+# 10 - Finland joins the war (FIN)
+# 11-18 - Victory events (GER/SOV)
+# 19-20 - Weather events (SOV)
+# 21-24 - AI events
+#
+# 100-> Operational Goals
+#
+#
+
+
+#########################################################################
+#  Operational Goals!
+#########################################################################
+event = {
+	id = 101
+	random = no
+	country = GER
+
+	name = "fb_event1_name"
+	desc = "fb_event1_desc"
+	picture = "barbarossa"
+	style = 0
+
+	date = { hour = 0 day = 1 month = june year = 1941 }
+	offset = 1
+	deathdate = { hour = 0 day = 20 month = june year = 1944 }
+
+	action_a = {
+		name = "OK"
+		command = {}
+	}
+}
+
+event = {
+	id = 102
+	random = no
+	country = SOV
+
+	name = "fb_event2_name"
+	desc = "fb_event2_desc"
+	picture = "barbarossa"
+	style = 0
+
+	date = { hour = 0 day = 1 month = june year = 1941 }
+	offset = 1
+	deathdate = { hour = 0 day = 20 month = june year = 1944 }
+
+	action_a = {
+		name = "OK"
+		command = {}
+	}
+}
+
+event = {
+	id = 103
+	random = no
+	country = FIN
+
+	name = "fb_event3_name"
+	desc = "fb_event3_desc"
+	picture = "barbarossa"
+	style = 0
+
+	date = { hour = 0 day = 1 month = june year = 1941 }
+	offset = 1
+	deathdate = { hour = 0 day = 20 month = june year = 1944 }
+
+	action_a = {
+		name = "OK"
+		command = {}
+	}
+}
+
+event = {
+	id = 104
+	random = no
+	country = HUN
+
+	name = "fb_event5_name"
+	desc = "fb_event5_desc"
+	picture = "barbarossa"
+	style = 0
+
+	date = { hour = 0 day = 1 month = june year = 1941 }
+	offset = 1
+	deathdate = { hour = 0 day = 20 month = june year = 1944 }
+
+	action_a = {
+		name = "OK"
+		command = {}
+	}
+}
+event = {
+	id = 105
+	random = no
+	country = ROM
+
+	name = "fb_event4_name"
+	desc = "fb_event4_desc"
+	picture = "barbarossa"
+	style = 0
+
+	date = { hour = 0 day = 1 month = june year = 1941 }
+	offset = 1
+	deathdate = { hour = 0 day = 20 month = june year = 1944 }
+
+	action_a = {
+		name = "OK"
+		command = {}
+	}
+}
+
+
+#########################################################################
+#  Directive no 2 (SOV)
+#########################################################################
+event = {
+	id = 1
+	random = no
+	country = SOV
+
+	name = "fbarb_event1_name"
+	desc = "fbarb_event1_desc"
+	picture = "barbarossa"
+	style = 0
+
+	date = { hour = 4 day = 22 month = june year = 1941 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = max_organization which = land when = now value = -20 }
+		command = { type = air_attack which = air when = now value = -2 }
+		command = { type = soft_attack which = air when = now value = -2 }
+		command = { type = hard_attack which = air when = now value = -1 }
+	}
+}
+#########################################################################
+#  Directive no 3 (SOV)
+#########################################################################
+event = {
+	id = 2
+	random = no
+	country = SOV
+
+	name = "fbarb_event2_name"
+	desc = "fbarb_event2_desc"
+
+	picture = "kv1"
+	style = 0
+
+	date = { day = 24 month = june year = 1941 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = max_organization which = land when = now value = 10 }
+		command = { type = air_attack which = air when = now value = 2 }
+		command = { type = soft_attack which = air when = now value = 2 }
+		command = { type = hard_attack which = air when = now value = 1 }
+	}
+}
+
+#########################################################################
+#  2nd Eshelon activation - reinforcements (SOV)
+#########################################################################
+event = {
+	id = 3
+	random = no
+	country = SOV
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "barbarossa"
+	style = 0
+
+	date = { day = 5 month = july year = 1941 }
+
+	action_a = {
+		name = "ge_actioname1A"
+		command = { type = activate_division which = 13000 value = 244 where = 238 }
+		command = { type = activate_division which = 13000 value = 245 where = 238 }
+		command = { type = activate_division which = 13000 value = 246 where = 248 }
+		command = { type = activate_division which = 13000 value = 247 where = 248 }
+		command = { type = activate_division which = 13000 value = 248 where = 248 }
+		command = { type = activate_division which = 13000 value = 249 where = 237 }
+		command = { type = activate_division which = 13000 value = 250 where = 237 }
+		command = { type = activate_division which = 13000 value = 251 where = 237 }
+		command = { type = activate_division which = 13000 value = 252 where = 237 }
+		command = { type = activate_division which = 13000 value = 253 where = 240 }
+		command = { type = activate_division which = 13000 value = 254 where = 240 }
+		command = { type = activate_division which = 13000 value = 255 where = 240 }
+		command = { type = activate_division which = 13000 value = 256 where = 236 }
+		command = { type = activate_division which = 13000 value = 257 where = 236 }
+		command = { type = activate_division which = 13000 value = 258 where = 236 }
+		command = { type = activate_division which = 13000 value = 259 where = 219 }
+		command = { type = activate_division which = 13000 value = 260 where = 219 }
+		command = { type = activate_division which = 13000 value = 261 where = 219 }
+		command = { type = activate_division which = 13000 value = 262 where = 219 }
+		command = { type = activate_division which = 13000 value = 263 where = 219 }
+		command = { type = activate_division which = 13000 value = 264 where = 219 }
+		command = { type = activate_division which = 13000 value = 265 where = 275 }
+		command = { type = activate_division which = 13000 value = 266 where = 275 }
+		command = { type = activate_division which = 13000 value = 267 where = 275 }
+		command = { type = activate_division which = 13000 value = 268 where = 275 }
+		command = { type = activate_division which = 13000 value = 269 where = 217 }
+		command = { type = activate_division which = 13000 value = 270 where = 217 }
+		command = { type = activate_division which = 13000 value = 271 where = 217 }
+		command = { type = activate_division which = 13000 value = 272 where = 217 }		
+		command = { type = activate_division which = 13000 value = 273 where = 217 }
+		command = { type = activate_division which = 13000 value = 274 where = 217 }
+		command = { type = activate_division which = 13000 value = 275 where = 219 }
+		command = { type = activate_division which = 13000 value = 276 where = 219 }
+		command = { type = activate_division which = 13000 value = 277 where = 219 }
+		command = { type = activate_division which = 13000 value = 278 where = 278 }
+		command = { type = activate_division which = 13000 value = 279 where = 278 }
+		command = { type = activate_division which = 13000 value = 280 where = 278 }
+		command = { type = activate_division which = 13000 value = 281 where = 278 }
+		command = { type = activate_division which = 13000 value = 282 where = 278 }
+		command = { type = activate_division which = 13000 value = 283 where = 278 }
+		command = { type = activate_division which = 13000 value = 284 where = 216 }
+		command = { type = activate_division which = 13000 value = 285 where = 216 }
+		command = { type = activate_division which = 13000 value = 286 where = 216 }
+		command = { type = activate_division which = 13000 value = 287 where = 216 }
+		command = { type = activate_division which = 13000 value = 288 where = 216 }
+		command = { type = activate_division which = 13000 value = 289 where = 216 }
+		command = { type = activate_division which = 13000 value = 349 where = 219 } # HQ
+
+	}
+}
+
+#########################################################################
+#  3rd Eshelon activation - reinforcements (SOV)
+#########################################################################
+event = {
+	id = 4
+	random = no
+	country = SOV
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "kv1"
+	style = 0
+
+	date = { day = 20 month = july year = 1941 }
+
+	action_a = {
+		name = "ge_actioname1A"
+
+
+
+		command = { type = activate_division which = 13000 value = 290 where = 194 }
+		command = { type = activate_division which = 13000 value = 291 where = 194 }
+		command = { type = activate_division which = 13000 value = 292 where = 194 }
+		command = { type = activate_division which = 13000 value = 293 where = 194 }
+		command = { type = activate_division which = 13000 value = 294 where = 238 }
+		command = { type = activate_division which = 13000 value = 295 where = 238 }
+		command = { type = activate_division which = 13000 value = 296 where = 238 }
+		command = { type = activate_division which = 13000 value = 297 where = 238 }
+		command = { type = activate_division which = 13000 value = 298 where = 238 }
+		command = { type = activate_division which = 13000 value = 299 where = 238 }
+		command = { type = activate_division which = 13000 value = 300 where = 238 }
+		command = { type = activate_division which = 13000 value = 301 where = 238 }
+		command = { type = activate_division which = 13000 value = 302 where = 238 }
+		command = { type = activate_division which = 13000 value = 303 where = 238 }
+		command = { type = activate_division which = 13000 value = 304 where = 253 }
+		command = { type = activate_division which = 13000 value = 305 where = 253 }
+		command = { type = activate_division which = 13000 value = 306 where = 253 }
+		command = { type = activate_division which = 13000 value = 307 where = 258 }
+		command = { type = activate_division which = 13000 value = 308 where = 258 }		
+		command = { type = activate_division which = 13000 value = 309 where = 258 }
+		command = { type = activate_division which = 13000 value = 310 where = 258 }
+		command = { type = activate_division which = 13000 value = 311 where = 248 }
+		command = { type = activate_division which = 13000 value = 312 where = 248 }
+		command = { type = activate_division which = 13000 value = 313 where = 248 }
+		command = { type = activate_division which = 13000 value = 314 where = 248 }
+		command = { type = activate_division which = 13000 value = 315 where = 248 }
+		command = { type = activate_division which = 13000 value = 316 where = 248 }
+		command = { type = activate_division which = 13000 value = 317 where = 175 }
+		command = { type = activate_division which = 13000 value = 318 where = 175 }
+		command = { type = activate_division which = 13000 value = 319 where = 175 }
+		command = { type = activate_division which = 13000 value = 320 where = 175 }
+		command = { type = activate_division which = 13000 value = 321 where = 175 }
+		command = { type = activate_division which = 13000 value = 322 where = 175 }
+		command = { type = activate_division which = 13000 value = 323 where = 175 }
+		command = { type = activate_division which = 13000 value = 324 where = 175 }
+		command = { type = activate_division which = 13000 value = 325 where = 175 }
+		command = { type = activate_division which = 13000 value = 326 where = 175 }
+		command = { type = activate_division which = 13000 value = 327 where = 175 }
+
+	}
+}
+
+#########################################################################
+#  OKW reserves activation - reinforcements (GER)
+#########################################################################
+event = {
+	id = 5
+	random = no
+	country = GER
+
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "german_reinforcment_2"
+	style = 0
+
+	date = { day = 22 month = july year = 1941 }
+
+	action_a = {
+		name = "ge_actioname1A"
+
+		command = { type = activate_division which = 10500 value = 770 where = 300 }
+		command = { type = activate_division which = 10500 value = 771 where = 300 }
+		command = { type = activate_division which = 10500 value = 772 where = 300 }
+		command = { type = activate_division which = 10500 value = 773 where = 300 }
+		command = { type = activate_division which = 10500 value = 774 where = 300 }
+		command = { type = activate_division which = 10500 value = 775 where = 300 }
+		command = { type = activate_division which = 10500 value = 776 where = 300 }
+		command = { type = activate_division which = 10500 value = 777 where = 300 }
+		command = { type = activate_division which = 10500 value = 778 where = 300 }
+		command = { type = activate_division which = 10500 value = 779 where = 300 }
+		command = { type = activate_division which = 10500 value = 780 where = 300 }
+		command = { type = activate_division which = 10500 value = 781 where = 300 }
+		command = { type = activate_division which = 10500 value = 782 where = 300 }
+		command = { type = activate_division which = 10500 value = 783 where = 300 }
+		command = { type = activate_division which = 10500 value = 784 where = 300 }
+		#command = { type = add_corps which = "Corpo Spedizione Italiane" value = land when = 6032 where = 479 }
+		command = { type = activate_division which = 10500 value = 785 where = 479 } # Italians
+		command = { type = activate_division which = 10500 value = 786 where = 479 }
+		command = { type = activate_division which = 10500 value = 787 where = 479 }
+
+	}
+}
+
+#########################################################################
+#  Weather events - mud (GER)
+#########################################################################
+event = {
+	id = 6
+	random = no
+	country = GER
+	
+	trigger = {
+
+	random = 20
+
+	}
+
+
+
+	name = "fbarb_event6_name"
+	desc = "fbarb_event6_desc"
+
+	picture = "german_mud"
+	style = 0
+
+	date = { day = 1 month = september year = 1941 }
+	offset = 5 # Check for trigger conditions every 5 days
+	deathdate = { day = 30 month = october year = 1941 }
+
+
+
+	action_a = {
+		name = "OK"
+		# Here will be weather pattern
+		command = { type = start_pattern which = 4712 value = 501 where = 219 when = raining } # Smolensk
+		command = { type = start_pattern which = 4712 value = 502 where = 238 when = raining } # Kiev
+		command = { type = start_pattern which = 4712 value = 503 where = 197 when = raining } # Riga
+		command = { type = start_pattern which = 4712 value = 504 where = 278 when = raining } # Tula
+		command = { type = start_pattern which = 4712 value = 505 where = 248 when = raining } # Kharkov
+		command = { type = start_pattern which = 4712 value = 506 where = 187 when = raining } # Piter
+		command = { type = trigger which = 19 } # Soviet Weather
+
+	}
+}
+#########################################################################
+#  Weather events - frozen (GER)
+#########################################################################
+event = {
+	id = 7
+	random = no
+	country = GER
+
+	trigger = {
+
+	random = 50
+
+	}
+
+	name = "fbarb_event7_name"
+	desc = "fbarb_event7_desc"
+
+	picture = "german_frozen"
+	style = 0
+
+	date = { day = 15 month = october year = 1941 }
+	offset = 10 # Check for trigger conditions every 10 days
+	deathdate = { day = 3 month = december year = 1941 }
+
+	action_a = {
+		name = "OK"
+		command = { type = start_pattern which = 4712 value = 513 where = 219 when = blizzard } # Smolensk
+		command = { type = start_pattern which = 4712 value = 514 where = 238 when = blizzard } # Kiev
+		command = { type = start_pattern which = 4712 value = 515 where = 197 when = blizzard } # Riga
+		command = { type = start_pattern which = 4712 value = 516 where = 278 when = blizzard } # Tula
+		command = { type = start_pattern which = 4712 value = 517 where = 248 when = blizzard } # Kharkov
+		command = { type = start_pattern which = 4712 value = 518 where = 187 when = blizzard } # Piter
+		command = { type = trigger which = 20 } # Soviet Weather
+	}
+}
+#########################################################################
+#  Great Patriotic War (SOV)
+#########################################################################
+event = {
+	id = 8
+	random = no
+	country = SOV
+
+	trigger = {
+
+	random = 25
+
+	}
+
+
+	name = "fbarb_event8_name"
+	desc = "fbarb_event8_desc"
+
+	picture = "great_patriotic_war"
+	style = 0
+
+	date = { day = 3 month = july year = 1941 } # Historical date
+	offset = 5 # Check for trigger conditions every 10 days
+	deathdate = { day = 3 month = september year = 1941 }
+
+	action_a = {
+		name = "OK"
+		command = { type = max_organization which = land when = now value = 15 }
+		command = { type = dissent value = -15 }
+	}
+}
+
+
+#########################################################################
+#  German Strategic Victory
+#########################################################################
+event = {
+	id = 11
+	random = no
+	country = GER
+
+	trigger = {
+ 			axis = 215
+	}
+
+	name = "ge_event5_name"
+	desc = "barb_text_1"
+	picture = "german_strategic_victory"
+	style = 0
+
+	date = { day = 21 month = june year = 1941 }
+	offset = 1
+	deathdate = { day = 5 month = december year = 1941 }
+
+
+	action_a = {
+		name = "ge_actioname5A" #End Game
+		command = { type = endgame value = 4 }
+	}
+}
+#########################################################################
+#  German Marginal Victory
+#########################################################################
+event = {
+	id = 12
+	random = no
+	country = GER
+
+	trigger = {
+		axis = 121
+	}
+
+	name = "ge_event7_name"
+	desc = "barb_text_2"
+	picture = "german_marginal_victory2"
+	style = 0
+
+	date = { hour = 23 day = 6 month = december year = 1941 }
+
+
+	action_a = {
+		name = "ge_actioname7A" #End Game
+		command = { type = endgame value = 3 }
+	}
+}
+
+#########################################################################
+#  USSR Strategic Victory
+#########################################################################
+event = {
+	id = 15
+	random = no
+	country = SOV
+
+	trigger = {
+		vp = 180
+ 				
+	}
+
+	name = "ge_event5_name"
+	desc = "barb_text_3"
+	picture = "ussr_strategic_victory"
+	style = 0
+
+	date = { day = 21 month = october year = 1941 }
+	offset = 3
+	deathdate = { day = 5 month = december year = 1942 }
+
+
+	action_a = {
+		name = "ge_actioname5A" #End Game
+		command = { type = endgame value = 8 }
+	}
+}
+
+event = {
+	id = 115
+	random = no
+	country = SOV
+
+	trigger = {
+		NOT = { exists = GER }
+ 				
+	}
+
+	name = "ge_event5_name"
+	desc = "barb_text_3"
+	picture = "ussr_strategic_victory"
+	style = 0
+
+	date = { day = 21 month = june year = 1941 }
+	offset = 3
+	deathdate = { day = 5 month = december year = 1941 }
+
+
+	action_a = {
+		name = "ge_actioname5A" #End Game
+		command = { type = endgame value = 8 }
+	}
+}
+#########################################################################
+#  USSR Marginal Victory
+#########################################################################
+event = {
+	id = 16
+	random = no
+	country = SOV
+
+	trigger = {
+ 			range = { min = 105 max = 179 }
+	}
+
+	name = "ge_event7_name"
+	desc = "barb_text_4"
+	picture = "ussr_marginal_victory"
+	style = 0
+	
+	
+	date = { day = 21 month = october year = 1941 }
+	offset = 3
+	deathdate = { hour = 23 day = 4 month = december year = 1941 }
+
+
+	action_a = {
+		name = "ge_actioname7A" #End Game
+		command = { type = endgame value = 7 }
+	}
+}
+
+#########################################################################
+#  Weather events - mud (SOV)
+#########################################################################
+event = {
+	id = 19
+	random = no
+	country = SOV
+	
+	# Triggered by German 6
+
+
+
+	name = "fbarb_event6_name"
+	desc = "fbarb_event6_desc"
+
+	picture = "soviet_mud"
+	style = 0
+
+	action_a = {
+		name = "OK"
+		# Here will be weather pattern
+		command = { type = start_pattern which = 4712 value = 507 where = 219 when = raining } # Smolensk
+		command = { type = start_pattern which = 4712 value = 508 where = 238 when = raining } # Kiev
+		command = { type = start_pattern which = 4712 value = 509 where = 197 when = raining } # Riga
+		command = { type = start_pattern which = 4712 value = 510 where = 278 when = raining } # Tula
+		command = { type = start_pattern which = 4712 value = 511 where = 248 when = raining } # Kharkov
+		command = { type = start_pattern which = 4712 value = 512 where = 187 when = raining } # Piter
+
+	}
+}
+#########################################################################
+#  Weather events - mud (SOV)
+#########################################################################
+event = {
+	id = 20
+	random = no
+	country = SOV
+	
+	# Triggered by German 7
+
+
+
+	name = "fbarb_event7_name"
+	desc = "fbarb_event7_desc"
+
+	picture = "soviet_mud"
+	style = 0
+
+	action_a = {
+		name = "OK"
+		# Here will be weather pattern
+		command = { type = start_pattern which = 4712 value = 519 where = 219 when = blizzard } # Smolensk
+		command = { type = start_pattern which = 4712 value = 520 where = 238 when = blizzard } # Kiev
+		command = { type = start_pattern which = 4712 value = 521 where = 197 when = blizzard } # Riga
+		command = { type = start_pattern which = 4712 value = 522 where = 175 when = blizzard } # Moscow
+		command = { type = start_pattern which = 4712 value = 523 where = 248 when = blizzard } # Kharkov
+		command = { type = start_pattern which = 4712 value = 524 where = 187 when = blizzard } # Piter
+
+	}
+}
+##############################################################################
+# German AI events - end of the border battle
+#
+##############################################################################
+
+event = {
+	id = 21
+	random = no
+	country = GER
+
+	trigger = {
+
+	ai = yes
+
+	control = { province = 197 data = GER } # Riga
+	control = { province = 218 data = GER } # Minsk
+	control = { province = 228 data = GER } # Vinnitsa
+
+	}
+
+
+	name = AI_EVENT
+	desc = "fbarb_event8_desc"
+
+	picture = "great_patriotic_war"
+	style = 0
+
+	date = { day = 24 month = june year = 1941 } # Historical date
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 30 month = august year = 1941 }
+
+	action_a = {
+		name = "OK"
+		command = { type = ai which = fallbarbarossa_GER_II.ai }
+	}
+}
+
+##############################################################################
+# German AI events - Typhoon-like attack
+#
+##############################################################################
+
+event = {
+	id = 22
+	random = no
+	country = GER
+
+	trigger = {
+
+	ai = yes
+
+	control = { province = 197 data = GER } # Riga
+	control = { province = 199 data = GER } # Estonia
+	control = { province = 218 data = GER } # Minsk
+	control = { province = 219 data = GER } # Smolensk
+	control = { province = 238 data = GER } # Kiev
+	control = { province = 234 data = GER } # near Crimea
+
+
+	}
+
+
+	name = AI_EVENT
+	desc = "fbarb_event8_desc"
+
+	picture = "great_patriotic_war"
+	style = 0
+
+	date = { day = 15 month = july year = 1941 } # Historical date
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 30 month = november year = 1941 }
+
+	action_a = {
+		name = "OK"
+		command = { type = ai which = fallbarbarossa_GER_III.ai }
+	}
+}
+
+##############################################################################
+# Soviet AI events - main defense line defense
+#
+##############################################################################
+
+event = {
+	id = 23
+	random = no
+	country = SOV
+
+	trigger = {
+
+	ai = yes
+
+	}
+
+
+	name = AI_EVENT
+	desc = "fbarb_event8_desc"
+
+	picture = "great_patriotic_war"
+	style = 0
+
+	date = { day = 7 month = july year = 1941 } # 2nd eshelon
+
+	action_a = {
+		name = "OK"
+		command = { type = ai which = fallbarbarossa_SOV_II.ai }
+	}
+}
+
+##############################################################################
+# Soviet AI events - Typhoon-like defense
+#
+##############################################################################
+
+event = {
+	id = 24
+	random = no
+	country = SOV
+
+	trigger = {
+
+	ai = yes
+
+	control = { province = 197 data = GER } # Riga
+	control = { province = 199 data = GER } # Estonia
+	control = { province = 218 data = GER } # Minsk
+	control = { province = 219 data = GER } # Smolensk
+	control = { province = 238 data = GER } # Kiev
+	control = { province = 234 data = GER } # near Crimea
+
+
+	}
+
+
+	name = AI_EVENT
+	desc = "fbarb_event8_desc"
+
+	picture = "great_patriotic_war"
+	style = 0
+
+
+	date = { day = 10 month = july year = 1941 }
+	offset = 1 # Check for trigger conditions every day
+	deathdate = { day = 4 month = december year = 1941 }
+
+	action_a = {
+		name = "OK"
+		command = { type = ai which = fallbarbarossa_SOV_III.ai }
+	}
+}
+
+
+#########################################################################
+# General Mobilization - last eshelon (SOV)
+#
+# 
+#########################################################################
+event = {
+	id = 25
+	random = no
+	country = SOV
+
+	name = "ge_event1_name"
+	desc = "ge_event1_desc"
+
+	picture = "kv1"
+	style = 0
+
+	date = { day = 15 month = august year = 1941 }
+
+	action_a = {
+	name = "ge_actioname1A"
+
+	command = { type = activate_division which = 13000 value = 350 where = 258 }
+	command = { type = activate_division which = 13000 value = 351 where = 258 }
+	command = { type = activate_division which = 13000 value = 352 where = 258 }
+	command = { type = activate_division which = 13000 value = 353 where = 258 }
+	command = { type = activate_division which = 13000 value = 354 where = 248 }
+	command = { type = activate_division which = 13000 value = 355 where = 248 }
+	command = { type = activate_division which = 13000 value = 356 where = 248 }
+	command = { type = activate_division which = 13000 value = 357 where = 248 }
+	command = { type = activate_division which = 13000 value = 358 where = 248 }
+	command = { type = activate_division which = 13000 value = 359 where = 248 }
+	command = { type = activate_division which = 13000 value = 360 where = 248 }
+	command = { type = activate_division which = 13000 value = 361 where = 248 }
+	command = { type = activate_division which = 13000 value = 362 where = 248 }
+	command = { type = activate_division which = 13000 value = 363 where = 248 }
+	command = { type = activate_division which = 13000 value = 364 where = 278 }
+	command = { type = activate_division which = 13000 value = 365 where = 278 }
+	command = { type = activate_division which = 13000 value = 366 where = 278 }
+	command = { type = activate_division which = 13000 value = 367 where = 278 }
+	command = { type = activate_division which = 13000 value = 368 where = 278 } 
+	command = { type = activate_division which = 13000 value = 369 where = 278 }
+	command = { type = activate_division which = 13000 value = 370 where = 278 }
+	command = { type = activate_division which = 13000 value = 371 where = 175 }
+	command = { type = activate_division which = 13000 value = 372 where = 175 }
+	command = { type = activate_division which = 13000 value = 373 where = 175 }
+	command = { type = activate_division which = 13000 value = 374 where = 175 }
+	command = { type = activate_division which = 13000 value = 375 where = 175 }
+	command = { type = activate_division which = 13000 value = 376 where = 175 }
+	command = { type = activate_division which = 13000 value = 377 where = 175 }
+	command = { type = activate_division which = 13000 value = 378 where = 175 }
+	command = { type = activate_division which = 13000 value = 379 where = 175 }
+	command = { type = activate_division which = 13000 value = 380 where = 175 }
+	command = { type = activate_division which = 13000 value = 381 where = 175 }
+	command = { type = activate_division which = 13000 value = 382 where = 288 }
+	command = { type = activate_division which = 13000 value = 383 where = 288 }
+	command = { type = activate_division which = 13000 value = 384 where = 288 }
+	command = { type = activate_division which = 13000 value = 385 where = 288 }
+	command = { type = activate_division which = 13000 value = 386 where = 288 }
+	command = { type = activate_division which = 13000 value = 387 where = 288 }
+	command = { type = activate_division which = 13000 value = 388 where = 289 } 
+	command = { type = activate_division which = 13000 value = 389 where = 289 }
+	command = { type = activate_division which = 13000 value = 390 where = 289 }
+	command = { type = activate_division which = 13000 value = 391 where = 289 }
+	command = { type = activate_division which = 13000 value = 392 where = 289 }
+	command = { type = activate_division which = 13000 value = 393 where = 289 }
+	command = { type = activate_division which = 13000 value = 394 where = 289 }
+	command = { type = activate_division which = 13000 value = 395 where = 289 }
+	command = { type = activate_division which = 13000 value = 396 where = 289 }
+	command = { type = activate_division which = 13000 value = 397 where = 289 }
+	}
+} 

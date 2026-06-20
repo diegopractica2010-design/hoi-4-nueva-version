@@ -1,0 +1,510 @@
+################
+# Japan Receives MP from North Korea
+#############################################
+event = {
+	id = 15200
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		NOT = { local_flag = JAPManpowerNorthKorea }
+		# North Korea
+		control = { province = 1200 data = JAP }
+		control = { province = 1201 data = JAP }
+		control = { province = 1393 data = JAP }
+		control = { province = 1391 data = JAP }
+		control = { province = 1392 data = JAP }
+		control = { province = 1376 data = JAP }
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_setflag which = JAPManpowerNorthKorea }
+		command = { type = free_manpower value = 0.16 }
+	}
+}
+event = {
+	id = 15201
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		# North Korea
+		local_flag = JAPManpowerNorthKorea
+		NOT = {
+			control = { province = 1200 data = JAP }
+			control = { province = 1201 data = JAP }
+			control = { province = 1393 data = JAP }
+			control = { province = 1391 data = JAP }
+			control = { province = 1392 data = JAP }
+			control = { province = 1376 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_clrflag which = JAPManpowerNorthKorea }
+		command = { type = free_manpower value = -0.16 }
+	}
+}
+################
+# Japan Receives MP from South Korea
+#############################################
+event = {
+	id = 15202
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		# South Korea
+		NOT = { local_flag = JAPManpowerSouthKorea }
+		control = { province = 1194 data = JAP }
+		control = { province = 1195 data = JAP }
+		control = { province = 1196 data = JAP }
+		control = { province = 1197 data = JAP }
+		control = { province = 1198 data = JAP }
+		control = { province = 1199 data = JAP }
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_setflag which = JAPManpowerSouthKorea }
+		command = { type = free_manpower value = 0.36 }
+	}
+}
+event = {
+	id = 15203
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		#  South Korea
+		local_flag = JAPManpowerSouthKorea
+		NOT = {
+			control = { province = 1194 data = JAP }
+			control = { province = 1195 data = JAP }
+			control = { province = 1196 data = JAP }
+			control = { province = 1197 data = JAP }
+			control = { province = 1198 data = JAP }
+			control = { province = 1199 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_clrflag which = JAPManpowerSouthKorea }
+		command = { type = free_manpower value = -0.36 }
+	}
+}
+################
+# Japan Receives MP from Hebei
+#############################################
+event = {
+	id = 15204
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		# Hebei
+		NOT = { local_flag = JAPManpowerHebei }
+		control = { province = 1203 data = JAP }
+		control = { province = 1204 data = JAP }
+		control = { province = 1205 data = JAP }
+		control = { province = 1206 data = JAP }
+		control = { province = 1210 data = JAP }
+		control = { province = 1211 data = JAP }
+		control = { province = 1212 data = JAP }
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_setflag which = JAPManpowerHebei }
+		command = { type = free_manpower value = 0.4 }
+	}
+}
+event = {
+	id = 15205
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		#  Hebei
+		local_flag = JAPManpowerHebei
+		NOT = {
+			control = { province = 1203 data = JAP }
+			control = { province = 1204 data = JAP }
+			control = { province = 1205 data = JAP }
+			control = { province = 1206 data = JAP }
+			control = { province = 1210 data = JAP }
+			control = { province = 1211 data = JAP }
+			control = { province = 1212 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_clrflag which = JAPManpowerHebei }
+		command = { type = free_manpower value = -0.4 }
+	}
+}
+################
+# Japan Receives MP from Shanxi
+#############################################
+event = {
+	id = 15206
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		# Shanxi
+		NOT = { local_flag = JAPManpowerShanxi }
+		control = { province = 1209 data = JAP }
+		control = { province = 1225 data = JAP }
+		control = { province = 1226 data = JAP }
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_setflag which = JAPManpowerShanxi }
+		command = { type = free_manpower value = 0.3 }
+	}
+}
+event = {
+	id = 15207
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		#  Shanxi
+		local_flag = JAPManpowerShanxi
+		NOT = {
+			control = { province = 1209 data = JAP }
+			control = { province = 1225 data = JAP }
+			control = { province = 1226 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_clrflag which = JAPManpowerShanxi }
+		command = { type = free_manpower value = -0.3 }
+	}
+}
+################
+# Japan Receives MP from Shandong
+#############################################
+event = {
+	id = 15208
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		# Shandong
+		NOT = { local_flag = JAPManpowerShandong }
+		control = { province = 1214 data = JAP }
+		control = { province = 1213 data = JAP }
+		control = { province = 1216 data = JAP }
+		control = { province = 1215 data = JAP }
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_setflag which = JAPManpowerShandong }
+		command = { type = free_manpower value = 0.5 }
+	}
+}
+event = {
+	id = 15209
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		#  Shandong
+		local_flag = JAPManpowerShandong
+		NOT = {
+			control = { province = 1214 data = JAP }
+			control = { province = 1213 data = JAP }
+			control = { province = 1216 data = JAP }
+			control = { province = 1215 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_clrflag which = JAPManpowerShandong }
+		command = { type = free_manpower value = -0.5 }
+	}
+}
+################
+# Japan Receives MP from Henan
+#############################################
+event = {
+	id = 15210
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		# Henan
+		NOT = { local_flag = JAPManpowerHenan }
+		control = { province = 1224 data = JAP }
+		control = { province = 1227 data = JAP }
+		control = { province = 1228 data = JAP }
+		control = { province = 1223 data = JAP }
+		control = { province = 1222 data = JAP }
+		control = { province = 1230 data = JAP }
+		control = { province = 1229 data = JAP }
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_setflag which = JAPManpowerHenan }
+		command = { type = free_manpower value = 0.4 }
+	}
+}
+event = {
+	id = 15211
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		#  Henan
+		local_flag = JAPManpowerHenan
+		NOT = {
+			control = { province = 1224 data = JAP }
+			control = { province = 1227 data = JAP }
+			control = { province = 1228 data = JAP }
+			control = { province = 1223 data = JAP }
+			control = { province = 1222 data = JAP }
+			control = { province = 1230 data = JAP }
+			control = { province = 1229 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_clrflag which = JAPManpowerHenan }
+		command = { type = free_manpower value = -0.4  }
+	}
+}
+################
+# Japan Receives MP from Jiangsu
+#############################################
+event = {
+	id = 15212
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		# Jiangsu
+		NOT = { local_flag = JAPManpowerJiangsu }
+		control = { province = 1219 data = JAP }
+		control = { province = 1217 data = JAP }
+		control = { province = 1220 data = JAP }
+		control = { province = 1235 data = JAP }
+		control = { province = 1236 data = JAP }
+		control = { province = 1237 data = JAP }
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_setflag which = JAPManpowerJiangsu }
+		command = { type = free_manpower value = 0.7 }
+	}
+}
+event = {
+	id = 15213
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		#  Jiangsu
+		local_flag = JAPManpowerJiangsu
+		NOT = {
+			control = { province = 1219 data = JAP }
+			control = { province = 1217 data = JAP }
+			control = { province = 1220 data = JAP }
+			control = { province = 1235 data = JAP }
+			control = { province = 1236 data = JAP }
+			control = { province = 1237 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_clrflag which = JAPManpowerJiangsu }
+		command = { type = free_manpower value = -0.7 }
+	}
+}
+################
+# Japan Receives MP from Anhui
+#############################################
+event = {
+	id = 15214
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		# Anhui
+		NOT = { local_flag = JAPManpowerAnhui }
+		control = { province = 1218 data = JAP }
+		control = { province = 1221 data = JAP }
+		control = { province = 1234 data = JAP }
+		control = { province = 1233 data = JAP }
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_setflag which = JAPManpowerAnhui }
+		command = { type = free_manpower value = 0.3 }
+	}
+}
+event = {
+	id = 15215
+	random = no 
+	country = JAP
+	persistent = yes
+
+	trigger = {
+		ai = yes
+		#  Jiangsu
+		local_flag = JAPManpowerAnhui
+		NOT = {
+			control = { province = 1218 data = JAP }
+			control = { province = 1221 data = JAP }
+			control = { province = 1234 data = JAP }
+			control = { province = 1233 data = JAP }
+		}
+	}
+
+	name = "AI_EVENT"
+	style = 0	
+	
+	date = { day = 1 month = january year = 1936 }
+	offset = 7
+	deathdate = { day = 29 month = december year = 1948 }
+
+	action_a = {
+		command = { type = local_clrflag which = JAPManpowerAnhui }
+		command = { type = free_manpower value = -0.3 }
+	}
+}

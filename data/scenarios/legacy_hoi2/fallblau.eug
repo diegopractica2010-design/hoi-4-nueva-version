@@ -1,0 +1,234 @@
+name = "fall_blau_name"
+panel = "scenarios/data/scenario_fallblau.bmp"
+
+header = {
+	name = "Grand Campaign"
+    startyear = 1942
+    endyear = 1942
+
+	free = no
+	combat = yes	#this is a battlescenario
+
+
+
+	GER = {
+			desc = "fall_blau_desc"
+			picture = "scenarios\data\blau.bmp"		
+			
+	}
+
+	SOV = {
+			desc = "fall_blau_desc"
+			bottom = yes
+			picture = "scenarios\data\blau.bmp"		
+	}
+
+}
+
+globaldata = {
+    startdate = {
+        year = 1942
+        month = june
+		day = 28
+	hour = 0
+        }
+    enddate = {
+        year = 1942
+        month = November
+        day = 19    ### Uranus offensive!
+        }
+
+	dormant_leaders = yes
+
+	rules = {
+		diplomacy = no
+		production = no
+		technology = no
+	}
+
+		comintern = {
+	        id = { type = 15000 id = 1 }
+			participant = { SOV }
+				}
+		axis = 	{
+	        id = { type = 15000 id = 2 }
+			participant = { GER ROM }
+		}
+
+	war = {
+	        id = { type = 9430 id = 1 }
+	        date = {
+	            year = 1942
+	            month = june
+	            day = 22
+	            hour = 1
+			}
+			enddate = {
+	            year = 1942
+	            month = december
+	            day = 5
+			}
+        	attackers = {
+        	    id = { type = 9430 id = 2 }
+        	    participant = { GER ROM }
+        	}
+	        defenders = {
+       			id = { type = 9430 id = 3 }
+			participant = { SOV }
+        	}
+	}
+
+    }
+
+
+map = {
+no = all
+
+#USSR
+yes = 266
+yes = 278
+yes = 282
+yes = 262
+yes = 261
+yes = 260
+yes = 258
+yes = 253
+yes = 255
+yes = 256
+yes = 257
+yes = 269
+yes = 259
+yes = 265
+yes = 263
+yes = 283
+yes = 281
+yes = 279
+yes = 280
+yes = 155
+yes = 156
+yes = 158
+yes = 1778
+yes = 1830
+yes = 1831
+yes = 1832
+yes = 284
+yes = 264
+yes = 157
+yes = 159
+yes = 160
+yes = 1777
+yes = 169
+yes = 168
+yes = 1780
+yes = 1781
+yes = 1827
+yes = 1570
+yes = 1577
+yes = 1578
+yes = 1569
+yes = 1838
+yes = 1568
+yes = 1828
+yes = 1839
+yes = 1829
+yes = 1835
+yes = 1836
+yes = 1834
+yes = 267
+yes = 268
+yes = 161
+yes = 162
+yes = 163
+yes = 164
+yes = 271
+yes = 270
+yes = 1842
+yes = 1833
+yes = 1837
+yes = 1847
+yes = 1846
+yes = 1843
+yes = 1844
+yes = 1845
+yes = 1848
+yes = 1850
+yes = 1849
+yes = 1857
+yes = 1907
+yes = 1858
+yes = 1856
+
+# Germany
+yes = 562
+yes = 502
+yes = 229
+yes = 226
+yes = 227
+yes = 238
+yes = 228
+yes = 231
+yes = 232
+yes = 233
+yes = 240
+yes = 237
+yes = 236
+yes = 234
+yes = 251
+yes = 235
+yes = 250
+yes = 252
+yes = 254
+yes = 246
+yes = 245
+yes = 239
+yes = 241
+yes = 273
+yes = 272
+yes = 225
+yes = 276
+yes = 277
+yes = 243
+yes = 247
+yes = 244
+yes = 242
+yes = 248
+yes = 249
+
+
+#Romania
+yes = 423
+yes = 424
+yes = 425
+yes = 431
+yes = 426
+yes = 495
+yes = 432
+yes = 436
+yes = 434
+yes = 435
+yes = 230
+yes = 433
+
+
+#Sea Zones - Black Sea
+yes = 2465
+yes = 2466
+yes = 2467
+yes = 2468
+#Sea Zones - Caspian Sea
+yes = 2469
+
+# Coordinates
+
+top = {	x = 16462 y = 1540 }
+bottom = { x = 19732 y = 4034 }
+
+}
+
+
+# Vp things
+include = "scenarios/fallblau/vp.inc"
+include = "scenarios/fallblau/germany.inc"
+include = "scenarios/fallblau/ussr.inc"
+include = "scenarios/fallblau/romania.inc"
+event = "scenarios/fallblau/fall_blau_events.txt"
