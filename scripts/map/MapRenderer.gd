@@ -132,6 +132,13 @@ var _agent_layer: AgentNetworkLayer = null
 
 
 func _ready():
+	var world_background := get_node_or_null("WorldBackground") as Sprite2D
+	if world_background != null:
+		world_background.visible = false
+	var province_map := get_node_or_null("ProvinceMap") as Sprite2D
+	if province_map != null:
+		province_map.visible = false
+
 	if btn_close == null:
 		btn_close = get_node_or_null("UI/InfoPanel/BtnClose") as Button
 
@@ -341,6 +348,8 @@ func _setup_hover_tooltip() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if MapViewInput.gui_blocks_map_input(get_viewport()):
+		return
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			_zoom_toward_mouse(1.0 + zoom_speed)
@@ -394,6 +403,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Middle mouse drag start
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
+			if MapViewInput.gui_blocks_map_input(get_viewport()):
+				_is_middle_dragging = false
+				return
 			if event.pressed:
 				_is_middle_dragging = true
 				_middle_drag_start = get_viewport().get_mouse_position()
@@ -426,6 +438,7 @@ func _handle_camera_input(delta: float) -> void:
 
 	var nav_delta := MapViewInput.motion_delta(delta)
 	var move_dir := Vector2.ZERO
+	var gui_blocks_map := MapViewInput.gui_blocks_map_input(get_viewport())
 
 	# WASD / Arrow keys (simulation pause must not freeze map navigation)
 	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):    move_dir.y -= 1
@@ -433,8 +446,8 @@ func _handle_camera_input(delta: float) -> void:
 	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):  move_dir.x -= 1
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT): move_dir.x += 1
 
-	# Edge scrolling (including top strip over TopInfoBar — only block modals/panels)
-	if not MapViewInput.edge_pan_blocked_by_gui(get_viewport()):
+	# Edge scrolling must stop over top bar and popups.
+	if not gui_blocks_map:
 		var mouse_pos := get_viewport().get_mouse_position()
 		var viewport_size := get_viewport().get_visible_rect().size
 
@@ -444,11 +457,13 @@ func _handle_camera_input(delta: float) -> void:
 		elif mouse_pos.y > viewport_size.y - edge_margin: move_dir.y += 1
 
 	# Middle mouse drag (pixel-based — works while paused)
-	if _is_middle_dragging:
+	if _is_middle_dragging and not gui_blocks_map:
 		var current_mouse := get_viewport().get_mouse_position()
 		var drag_delta := current_mouse - _last_mouse_pos
 		cam.global_position -= drag_delta * middle_mouse_pan_speed / cam.zoom.x
 		_last_mouse_pos = current_mouse
+	elif gui_blocks_map:
+		_is_middle_dragging = false
 
 	if move_dir != Vector2.ZERO:
 		move_dir = move_dir.normalized()
@@ -456,6 +471,8 @@ func _handle_camera_input(delta: float) -> void:
 
 
 func _zoom_toward_mouse(zoom_change: float) -> void:
+	if MapViewInput.gui_blocks_map_input(get_viewport()):
+		return
 	var cam := get_viewport().get_camera_2d()
 	if not cam:
 		return

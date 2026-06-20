@@ -321,7 +321,12 @@ func _on_technology_pressed() -> void:
 
 
 func _on_diplomacy_pressed() -> void:
-	print("Open Diplomacy Screen (TODO)")
+	_close_overlay_screens()
+	_show_phase0_panel(
+		"DiplomacyPhase0Panel",
+		"Diplomacia",
+		"Panel base activo.\n\nLa diplomacia completa se implementara en una fase posterior: tratado defensivo Peru-Bolivia, presion argentina, potencias externas y paz negociada.",
+	)
 
 
 func _on_agents_pressed() -> void:
@@ -341,6 +346,8 @@ func _on_agents_pressed() -> void:
 
 func _on_map_pressed() -> void:
 	_close_overlay_screens()
+	_close_screen("DiplomacyPhase0Panel")
+	_close_screen("HelpPhase0Panel")
 
 
 func _close_screen(screen_name: String) -> void:
@@ -366,6 +373,62 @@ func _toggle_screen(screen_name: String, scene_path: String, configure: Callable
 	configure.call(scene)
 	scene.name = screen_name
 	get_tree().root.add_child(scene)
+
+
+func _show_phase0_panel(screen_name: String, title: String, body: String) -> void:
+	var existing := get_tree().root.get_node_or_null(screen_name)
+	if existing != null:
+		existing.queue_free()
+		return
+	_close_screen("DiplomacyPhase0Panel")
+	_close_screen("HelpPhase0Panel")
+
+	var panel := PanelContainer.new()
+	panel.name = screen_name
+	panel.custom_minimum_size = Vector2(430, 220)
+	panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	panel.offset_left = -470
+	panel.offset_top = 86
+	panel.offset_right = -34
+	panel.offset_bottom = 306
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.10, 0.085, 0.06, 0.96)
+	style.border_color = Color(0.75, 0.58, 0.33, 0.95)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(6)
+	style.shadow_color = Color(0, 0, 0, 0.34)
+	style.shadow_size = 10
+	style.set_content_margin_all(14)
+	panel.add_theme_stylebox_override("panel", style)
+
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 10)
+	panel.add_child(box)
+
+	var header := HBoxContainer.new()
+	box.add_child(header)
+	var title_label := Label.new()
+	title_label.text = title
+	title_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_label.add_theme_font_size_override("font_size", 20)
+	title_label.add_theme_color_override("font_color", Color(0.98, 0.90, 0.70))
+	header.add_child(title_label)
+	var close := Button.new()
+	close.text = "x"
+	close.custom_minimum_size = Vector2(32, 28)
+	close.focus_mode = Control.FOCUS_NONE
+	close.pressed.connect(func() -> void: panel.queue_free())
+	header.add_child(close)
+
+	var text := Label.new()
+	text.text = body
+	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	text.add_theme_font_size_override("font_size", 13)
+	text.add_theme_color_override("font_color", Color(0.86, 0.80, 0.66))
+	box.add_child(text)
+
+	get_tree().root.add_child(panel)
 
 
 func _on_save_pressed() -> void:
@@ -409,7 +472,11 @@ func _on_settings_pressed() -> void:
 
 
 func _on_help_pressed() -> void:
-	print("Open Help (TODO)")
+	_show_phase0_panel(
+		"HelpPhase0Panel",
+		"Ayuda",
+		"Controles actuales:\n- Boton central o bordes: mover camara.\n- Rueda: zoom.\n- Barra superior: pausa, velocidad y paneles.\n\nLa camara no debe moverse mientras el mouse esta sobre la interfaz.",
+	)
 
 ## === Main Menu Architecture (priority 1) ===
 ## TopInfoBar is the trigger:

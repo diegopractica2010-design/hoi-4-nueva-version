@@ -17,6 +17,7 @@ extends Node2D
 
 var _target_zoom := 1.0
 var _is_panning := false
+var _disabled_by_map_camera := false
 
 # --- Táctil (tablet) ---
 # Un dedo arrastra el mapa; dos dedos hacen zoom con pellizco. La selección de
@@ -29,6 +30,12 @@ const _ZOOM_LERP_SPEED: float = 12.0
 
 
 func _ready() -> void:
+	if get_parent() != null and get_parent().get_node_or_null("MapCamera") is Camera2D:
+		_disabled_by_map_camera = true
+		set_process(false)
+		set_process_input(false)
+		set_process_unhandled_input(false)
+		return
 	if target == null:
 		target = self
 	_target_zoom = clampf(target.scale.x, min_zoom, max_zoom)
@@ -39,6 +46,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if _disabled_by_map_camera:
+		return
 	if target == null:
 		return
 
@@ -100,6 +109,8 @@ func _apply_edge_pan(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _disabled_by_map_camera:
+		return
 	if target == null:
 		return
 
@@ -117,6 +128,9 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_MIDDLE:
+			if MapViewInput.gui_blocks_map_input(get_viewport()):
+				_is_panning = false
+				return
 			_is_panning = mb.pressed
 
 	if _is_panning and event is InputEventMouseMotion:
@@ -183,6 +197,8 @@ func _apply_pinch() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _disabled_by_map_camera:
+		return
 	if target == null or not enable_zoom:
 		return
 

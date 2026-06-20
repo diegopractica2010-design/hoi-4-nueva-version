@@ -76,27 +76,27 @@ theme_override_constants/separation = 8
 
 [node name="ProductionButton" type="Button" parent="ContentRow/CenterContainer"]
 layout_mode = 2
-text = "Production"
+text = "Produccion"
 
 [node name="LeadersButton" type="Button" parent="ContentRow/CenterContainer"]
 layout_mode = 2
-text = "Leaders"
+text = "Lideres"
 
 [node name="TechnologyButton" type="Button" parent="ContentRow/CenterContainer"]
 layout_mode = 2
-text = "Technology"
+text = "Tecnologia"
 
 [node name="DiplomacyButton" type="Button" parent="ContentRow/CenterContainer"]
 layout_mode = 2
-text = "Diplomacy"
+text = "Diplomacia"
 
 [node name="AgentsButton" type="Button" parent="ContentRow/CenterContainer"]
 layout_mode = 2
-text = "Agents"
+text = "Agentes"
 
 [node name="MapButton" type="Button" parent="ContentRow/CenterContainer"]
 layout_mode = 2
-text = "Map"
+text = "Mapa"
 
 [node name="WarBar" type="HBoxContainer" parent="ContentRow"]
 layout_mode = 2
@@ -169,16 +169,16 @@ theme_override_constants/separation = 6
 
 [node name="SaveButton" type="Button" parent="ContentRow/RightContainer/MenuContainer"]
 layout_mode = 2
-text = "Save"
+text = "Guardar"
 
 [node name="LoadButton" type="Button" parent="ContentRow/RightContainer/MenuContainer"]
 layout_mode = 2
-text = "Load"
+text = "Cargar"
 
 [node name="SettingsButton" type="Button" parent="ContentRow/RightContainer/MenuContainer"]
 layout_mode = 2
-text = "Settings"
+text = "Ajustes"
 
 [node name="HelpButton" type="Button" parent="ContentRow/RightContainer/MenuContainer"]
 layout_mode = 2
-text = "Help"
+text = "Ayuda"

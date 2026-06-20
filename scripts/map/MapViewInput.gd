@@ -22,8 +22,13 @@ static func motion_delta(scaled_delta: float) -> float:
 	return maxf(dt, _PAUSE_DELTA_FALLBACK * 0.25)
 
 
-## True when the hovered GUI should block map edge-scroll (not TopInfoBar strip).
+## True when hovered UI should block map navigation. In the playable 1879 view
+## the top bar is dense and reaches the screen edge, so it must stop edge-pan too.
 static func edge_pan_blocked_by_gui(viewport: Viewport) -> bool:
+	return gui_blocks_map_input(viewport)
+
+
+static func gui_blocks_map_input(viewport: Viewport) -> bool:
 	if viewport == null:
 		return false
 	var hovered: Control = viewport.gui_get_hovered_control()
@@ -32,7 +37,7 @@ static func edge_pan_blocked_by_gui(viewport: Viewport) -> bool:
 	var node: Node = hovered
 	while node != null:
 		if node.name == "TopInfoBar":
-			return false
+			return true
 		if node is Window:
 			return true
 		if node is Panel:
@@ -45,4 +50,4 @@ static func edge_pan_blocked_by_gui(viewport: Viewport) -> bool:
 			]:
 				return true
 		node = node.get_parent()
-	return hovered.mouse_filter == Control.MOUSE_FILTER_STOP
+	return hovered.mouse_filter != Control.MOUSE_FILTER_IGNORE
