@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://diplomacyscreen001"]
+
+[ext_resource type="Script" path="res://scripts/ui/DiplomacyScreen.gd" id="1_diplomacy"]
+
+[node name="DiplomacyScreen" type="Control"]
+anchors_preset = 0
+offset_right = 800.0
+offset_bottom = 600.0
+script = ExtResource("1_diplomacy")
+
+[node name="NationList" type="ItemList" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 280.0
+offset_bottom = 400.0
+
+[node name="RelationLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 300.0
+offset_top = 30.0
+offset_right = 600.0
+offset_bottom = 60.0
+
+[node name="StatusLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 300.0
+offset_top = 70.0
+offset_right = 600.0
+offset_bottom = 100.0
+
+[node name="DeclareWarBtn" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 300.0
+offset_top = 130.0
+offset_right = 500.0
+offset_bottom = 170.0
+disabled = true
+text = "Declarar Guerra"
+
+[node name="FormAllianceBtn" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 300.0
+offset_top = 190.0
+offset_right = 500.0
+offset_bottom = 230.0
+disabled = true
+text = "Formar Alianza"
+
+[node name="GiveGuaranteeBtn" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 300.0
+offset_top = 250.0
+offset_right = 500.0
+offset_bottom = 290.0
+disabled = true
+text = "Garantizar"
+
+[node name="SignPeaceBtn" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 300.0
+offset_top = 310.0
+offset_right = 500.0
+offset_bottom = 350.0
+disabled = true
+text = "Firmar Paz"
+
+[node name="CloseBtn" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 700.0
+offset_top = 550.0
+offset_right = 780.0
+offset_bottom = 590.0
+text = "Cerrar"

@@ -1,40 +1,27 @@
-﻿# Godot 4 .gitignore
-
-# Godot-specific ignores
+﻿# Godot engine cache (build artifact, cold cache rebuild requires class_name fixes)
 .godot/
-*.uid
 
-# Importados automaticamente (se regeneran)
-.import/
-*.import
-export.cfg
-export_presets.cfg
-
-# Mono / C# (si aplica)
-.mono/
-data_*/
-mono_crash.*.json
-
-# Builds
-builds/
-*.apk
-*.aab
-*.ipa
-*.exe
-*.x86_64
-*.app
-
-# Logs (runtime — change every game run)
-*.log
-
-# Batch files (generated at runtime)
-*.bat
-
-# OS
-.DS_Store
+# OS artifacts
 Thumbs.db
-desktop.ini
+.DS_Store
 
-# Editor
+# IDE/editor
+.vscode/
 *.swp
+*.swo
 *~
+
+# Logs
+*.log
+logs/
+
+# Exports
+export/
+releases/
+
+# Godot imported assets
+*.import
+
+# Project-specific
+import/
+.translation_dirty

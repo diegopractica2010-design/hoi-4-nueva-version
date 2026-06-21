@@ -2,6 +2,8 @@
 class_name TopInfoBar
 extends Control
 
+const Logger = preload("res://scripts/core/Logger.gd")
+
 @export var player_country_tag: String = "USA"
 
 @onready var date_time_label: Label = $ContentRow/LeftContainer/DateTimeLabel
@@ -370,7 +372,7 @@ func _toggle_screen(screen_name: String, scene_path: String, configure: Callable
 
 	var packed: PackedScene = load(scene_path)
 	if packed == null:
-		push_warning("%s not found at %s" % [screen_name, scene_path])
+		Logger.warn("%s not found at %s" % [screen_name, scene_path])
 		return
 
 	var scene: Node = packed.instantiate()
@@ -500,7 +502,7 @@ func _show_main_menu_popup_fallback() -> void:
 	# Legacy code-driven popup (used as fallback until MainMenu.tscn is created/assigned).
 	# In a full implementation this would be removed in favor of the scene.
 	if typeof(SaveLoadManager) == TYPE_NIL:
-		print("SaveLoadManager not ready")
+		Logger.info("SaveLoadManager not ready", "TopInfoBar")
 		return
 
 	var existing := get_tree().root.get_node_or_null("MainMenuPopup")
@@ -549,7 +551,7 @@ func _show_main_menu_popup_fallback() -> void:
 		main_vbox.add_child(b)
 
 	get_tree().root.add_child(panel)
-	print("Fallback main menu opened (auto-paused)")
+	Logger.info("Fallback main menu opened (auto-paused)", "TopInfoBar")
 
 func _add_menu_button(parent: VBoxContainer, label: String, option: String) -> void:
 	var btn := Button.new()
@@ -572,7 +574,7 @@ func _add_menu_button(parent: VBoxContainer, label: String, option: String) -> v
 			"help":
 				_on_help_pressed()
 			_:
-				print("Menu option:", option)
+				Logger.info("Menu option: " + str(option), "TopInfoBar")
 		# Close the menu after action (except save manager which manages itself)
 		if option != "save":
 			if parent.get_parent() is Panel:
@@ -587,7 +589,7 @@ func _add_menu_button(parent: VBoxContainer, label: String, option: String) -> v
 ## This gives immediate usable UX without requiring a dedicated .tscn yet.
 func _show_save_manager_popup() -> void:
 	if typeof(SaveLoadManager) == TYPE_NIL:
-		print("SaveLoadManager not ready")
+		Logger.info("SaveLoadManager not ready", "TopInfoBar")
 		return
 
 	# Remove any previous instance
@@ -658,7 +660,7 @@ func _show_save_manager_popup() -> void:
 	vbox.add_child(close_btn)
 
 	get_tree().root.add_child(panel)
-	print("Save Manager popup opened (%d saves)" % saves.size())
+	Logger.info("Save Manager popup opened (%d saves)" % saves.size(), "TopInfoBar")
 
 
 ## Dev convenience keybinds (F5 = quicksave, F9 = quickload).
@@ -668,14 +670,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_F5:
 			if typeof(SaveLoadManager) != TYPE_NIL:
 				SaveLoadManager.quicksave()
-				print("F5 QuickSave triggered")
+				Logger.info("F5 QuickSave triggered", "TopInfoBar")
 			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_F9:
 			if typeof(SaveLoadManager) != TYPE_NIL:
 				SaveLoadManager.quickload()
 				_update_date_time()
 				_update_resources()
-				print("F9 QuickLoad triggered")
+				Logger.info("F9 QuickLoad triggered", "TopInfoBar")
 			get_viewport().set_input_as_handled()
 		elif event.keycode == KEY_F6:
 			_show_save_manager_popup()
@@ -736,7 +738,7 @@ func _populate_save_list(parent: VBoxContainer, owning_panel: Panel) -> void:
 		rename_btn.text = "Renombrar"
 		rename_btn.pressed.connect(func():
 			# Simple inline rename for foundation (in full UI this would be a nice dialog)
-			print("Rename requested for " + s.get("slot", "") + " (use SaveLoadManager.rename_save in console for now)")
+			Logger.info("Rename requested for " + s.get("slot", "") + " (use SaveLoadManager.rename_save in console for now)", "TopInfoBar")
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 				LeaderEventUI.show_toast("Rename: use console for now (API ready)", 2.0)
 			if owning_panel and is_instance_valid(owning_panel):

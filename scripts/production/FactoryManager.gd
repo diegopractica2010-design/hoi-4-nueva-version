@@ -2,6 +2,8 @@
 ## Registered as autoload "FactoryManager" — do not add class_name (conflicts with singleton).
 extends Node
 
+const Logger = preload("res://scripts/core/Logger.gd")
+
 signal factory_captured(factory_id: int, old_owner: String, new_owner: String)
 signal factory_repaired(factory_id: int)
 signal factory_damaged(factory_id: int, damage_amount: float)
@@ -38,7 +40,7 @@ func province_has_port(province_id: int) -> bool:
 func _load_rules() -> void:
 	rules = {}
 	if not ResourceLoader.exists(factory_rules_path):
-		push_warning("FactoryManager: rules file missing: ", factory_rules_path)
+		Logger.warn("FactoryManager: rules file missing: ", factory_rules_path)
 		return
 	var file := FileAccess.open(factory_rules_path, FileAccess.READ)
 	if file == null:
@@ -47,8 +49,28 @@ func _load_rules() -> void:
 	if parser.parse(file.get_as_text()) == OK and typeof(parser.data) == TYPE_DICTIONARY:
 		rules = parser.data
 	else:
-		push_warning("FactoryManager: invalid JSON at ", factory_rules_path)
+		Logger.warn("FactoryManager: invalid JSON at ", factory_rules_path)
 
+
+func get_provinces_for_factory_construction(owner_tag: String) -> Array[int]:
+	var result: Array[int] = []
+	for factory_id in factories:
+		var f: Factory = factories[factory_id]
+		if f.owner_tag.strip_edges().to_upper() == owner_tag.strip_edges().to_upper():
+			if result.has(f.province_id):
+				continue
+			var province_ids: Array = province_to_factories.get(f.province_id, [])
+			if province_ids.size() < Factory.MAX_SLOTS_PER_PROVINCE:
+				result.append(f.province_id)
+	return result
+
+func count_factories_for_owner(owner_tag: String) -> int:
+	var count := 0
+	for factory_id in factories:
+		var f: Factory = factories[factory_id]
+		if f.owner_tag.strip_edges().to_upper() == owner_tag.strip_edges().to_upper():
+			count += 1
+	return count
 
 func register_factory(factory: Factory) -> void:
 	if factory == null or factory.factory_id == 0:
@@ -178,7 +200,7 @@ func assign_production_line_to_factory(factory_id: int, line_id: String) -> bool
 	if f.has_assigned_line(line_id):
 		return true
 	if not f.can_add_more_lines():
-		push_warning(
+		Logger.warn(
 			"FactoryManager: factory %d at max production lines (%d)"
 			% [factory_id, f.max_production_lines],
 		)
@@ -205,7 +227,7 @@ func create_factory_for_province(
 	if fid == 0:
 		fid = _allocate_factory_id(province_id)
 	elif Factory.province_from_id(fid) != province_id:
-		push_warning(
+		Logger.warn(
 			"FactoryManager: factory_id %d does not match province_id %d; allocating new id"
 			% [fid, province_id],
 		)
@@ -229,7 +251,7 @@ func create_factory_for_province(
 
 func create_shipyard_for_province(province_id: int, owner_tag: String, levels: int = 4) -> Factory:
 	if not province_has_port(province_id):
-		push_warning(
+		Logger.warn(
 			"FactoryManager: cannot build shipyard in province %d (no port / coastal access)"
 			% province_id
 		)
@@ -244,13 +266,13 @@ func convert_factory_to_shipyard(factory_id: int, levels: int = 4) -> bool:
 		return false
 	if typeof(TechnologyManager) != TYPE_NIL:
 		if not TechnologyManager.can_convert_factory_to_shipyard(factory.owner_tag):
-			push_warning(
+			Logger.warn(
 				"FactoryManager: %s needs Port Shipyard Methods research to convert factory %d"
 				% [factory.owner_tag, factory_id]
 			)
 			return false
 	if not province_has_port(factory.province_id):
-		push_warning(
+		Logger.warn(
 			"FactoryManager: cannot convert factory %d to shipyard (province %d has no port)"
 			% [factory_id, factory.province_id]
 		)
@@ -262,9 +284,9 @@ func convert_factory_to_shipyard(factory_id: int, levels: int = 4) -> bool:
 		levels if levels > 0 else get_default_max_lines_for_type("shipyard")
 	)
 	_invalidate_production_cache_for_owner(factory.owner_tag)
-	print(
+	Logger.info(
 		"Factory %d converted to shipyard (max lines: %d)"
-		% [factory_id, factory.max_production_lines]
+		% [factory_id, factory.max_production_lines], "FactoryManager"
 	)
 	return true
 
@@ -297,7 +319,7 @@ func _allocate_factory_id(province_id: int) -> int:
 		var candidate := Factory.make_id(province_id, slot)
 		if not used.has(candidate) and not factories.has(candidate):
 			return candidate
-	push_warning("FactoryManager: no free factory slot in province %d" % province_id)
+	Logger.warn("FactoryManager: no free factory slot in province %d" % province_id)
 	return 0
 
 
@@ -369,4 +391,4 @@ func apply_save_data(data: Dictionary) -> void:
 	if data.has("province_to_factories"):
 		province_to_factories = (data["province_to_factories"] as Dictionary).duplicate(true)
 
-	print("FactoryManager: Restored %d factories" % factories.size())
+	Logger.info("FactoryManager: Restored %d factories" % factories.size(), "FactoryManager")

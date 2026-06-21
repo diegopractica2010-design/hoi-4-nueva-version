@@ -1,6 +1,8 @@
 class_name ScenarioLoader
 extends Node
 
+const Logger = preload("res://scripts/core/Logger.gd")
+
 var base_provinces: Dictionary = {}
 var provinces: Dictionary = {}
 ## Key = country tag (e.g. "GER"); value = Country resource or plain Dictionary with at least `color` (and usually `tag`, `name`).
@@ -36,29 +38,29 @@ func load_province_geometry():
 	var file_path = "res://data/provinces/provinces_geometry.json"
 	province_geometry.clear()
 	if not FileAccess.file_exists(file_path):
-		push_warning("Province geometry file missing: " + file_path)
+		Logger.warn("Province geometry file missing: " + file_path)
 		return
 
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if not file:
-		push_warning("Could not open province geometry file: " + file_path)
+		Logger.warn("Could not open province geometry file: " + file_path)
 		return
 
 	var json = JSON.new()
 	var parse_result = json.parse(file.get_as_text())
 	file.close()
 	if parse_result != OK:
-		push_warning("Failed to parse province geometry JSON")
+		Logger.warn("Failed to parse province geometry JSON")
 		return
 
 	var data = json.data
 	if typeof(data) != TYPE_DICTIONARY:
-		push_warning("Province geometry JSON root must be a dictionary")
+		Logger.warn("Province geometry JSON root must be a dictionary")
 		return
 
 	var entries = data.get("provinces", [])
 	if typeof(entries) != TYPE_ARRAY:
-		push_warning("Province geometry 'provinces' must be an array")
+		Logger.warn("Province geometry 'provinces' must be an array")
 		return
 
 	for entry in entries:
@@ -69,7 +71,7 @@ func load_province_geometry():
 			continue
 		province_geometry[province_id] = entry
 
-	print("[OK] Province geometry loaded: ", province_geometry.size())
+	Logger.info("[OK] Province geometry loaded: " + str(province_geometry.size()), "ScenarioLoader")
 
 func load_province_layers():
 	_load_adjacency_layer()
@@ -82,17 +84,17 @@ func load_province_layers():
 
 func _load_json_dict(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
-		push_warning("Missing layer file: " + path)
+		Logger.warn("Missing layer file: " + path)
 		return {}
 	var file = FileAccess.open(path, FileAccess.READ)
 	if not file:
-		push_warning("Could not open layer file: " + path)
+		Logger.warn("Could not open layer file: " + path)
 		return {}
 	var json = JSON.new()
 	var parse_result = json.parse(file.get_as_text())
 	file.close()
 	if parse_result != OK or typeof(json.data) != TYPE_DICTIONARY:
-		push_warning("Failed to parse layer file: " + path)
+		Logger.warn("Failed to parse layer file: " + path)
 		return {}
 	return json.data
 
@@ -178,17 +180,17 @@ func load_base_provinces():
 	var file_path = "res://data/provinces/provinces_base.json"
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if not file:
-		push_warning("Could not open base provinces file: " + file_path)
+		Logger.warn("Could not open base provinces file: " + file_path)
 		return
 	var json = JSON.new()
 	var parse_result = json.parse(file.get_as_text())
 	file.close()
 	if parse_result != OK or typeof(json.data) != TYPE_DICTIONARY:
-		push_warning("Failed to parse base provinces JSON: " + file_path)
+		Logger.warn("Failed to parse base provinces JSON: " + file_path)
 		return
 	var data = json.data
 	if not data.has("provinces") or typeof(data["provinces"]) != TYPE_ARRAY:
-		push_warning("Base provinces JSON missing 'provinces' array")
+		Logger.warn("Base provinces JSON missing 'provinces' array")
 		return
 	base_provinces.clear()
 	for p_data in data["provinces"]:
@@ -217,17 +219,17 @@ func load_base_provinces():
 		_apply_layer_data_to_province(p)
 		base_provinces[p.id] = p
 	_infer_port_access_for_all(base_provinces)
-	print("[OK] Base provinces loaded: ", base_provinces.size(), " provinces")
+	Logger.info("[OK] Base provinces loaded: " + str(base_provinces.size()) + " provinces", "ScenarioLoader")
 
 func load_scenario(scenario_name: String) -> bool:
 	var scenario_result := ScenarioDataResolver.load_scenario_data(scenario_name)
 	if not bool(scenario_result.get("success", false)):
-		push_warning(str(scenario_result.get("error", "Could not load scenario")))
+		Logger.warn(str(scenario_result.get("error", "Could not load scenario")))
 		return false
 	var data: Dictionary = scenario_result.get("data", {}) as Dictionary
 	var scenario_year := _parse_scenario_start_year(data)
 	if scenario_year < 0:
-		push_error("ScenarioLoader: aborting load due to invalid start_date.")
+		Logger.error("ScenarioLoader: aborting load due to invalid start_date.")
 		return false
 	var start_date_str := str(data.get("start_date", ""))
 	var country_result := ScenarioCountryRuntime.resolve_countries(data)
@@ -263,7 +265,7 @@ func load_scenario(scenario_name: String) -> bool:
 		production_mgr.clear_all_caches()
 	if typeof(AIManager) != TYPE_NIL and AIManager.has_method("configure_scenario_state"):
 		AIManager.configure_scenario_state(scenario_runtime_data)
-	print("[OK] Scenario loaded | Provinces: ", provinces.size(), " | Countries: ", countries.size())
+	Logger.info("[OK] Scenario loaded | Provinces: " + str(provinces.size()) + " | Countries: " + str(countries.size()), "ScenarioLoader")
 	scenario_loaded.emit()
 
 	# Centralize map data for the rest of the game (MapManager is the preferred access point)
@@ -316,7 +318,7 @@ func _deploy_starting_forces(data: Dictionary) -> void:
 			var f: Formation = arr.pop_back()
 			f.province_id = pid
 			deployed += 1
-	print("[OK] Starting forces deployed: %d formaciones colocadas en sus provincias" % deployed)
+	Logger.info("[OK] Starting forces deployed: %d formaciones colocadas en sus provincias" % deployed, "ScenarioLoader")
 
 
 func _spawn_scenario_factories(scenario_name: String, scenario_data: Dictionary) -> void:
@@ -350,14 +352,14 @@ func _load_scenario_leaders(scenario_name: String, start_year: int) -> void:
 	if typeof(LeaderManager) == TYPE_NIL:
 		return
 	var loaded := LeaderManager.load_leaders_for_scenario(scenario_name, start_year)
-	print(
+	Logger.info(
 		"[OK] Scenario leaders loaded (%s, %d): %d active, %d pooled"
 		% [
 			scenario_name,
 			start_year,
 			loaded,
 			LeaderManager.get_pool_leader_count(),
-		]
+		], "ScenarioLoader"
 	)
 
 
@@ -379,9 +381,9 @@ func _spawn_scenario_formations(scenario_name: String) -> void:
 		var count := int(count_by_tag.get(country_tag, 4))
 		formation_spawner.spawn_test_formations_for_country(country_tag, count)
 	LeaderManager.clear_all_leader_caches()
-	print(
+	Logger.info(
 		"Scenario loaded with formations for %d countries (leader assignment)."
-		% countries_to_spawn.size()
+		% countries_to_spawn.size(), "ScenarioLoader"
 	)
 
 

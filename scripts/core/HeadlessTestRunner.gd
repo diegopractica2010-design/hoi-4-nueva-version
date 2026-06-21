@@ -37,17 +37,23 @@ func _ready() -> void:
 		LeaderManager.set_player_country_tag("CHL")
 
 	var all_ok = true
-	var SaveLoadCycleTestScript = load("res://scripts/core/SaveLoadCycleTest.gd")
-	var ScenarioComprehensiveTestScript = load("res://scripts/core/ScenarioComprehensiveTest.gd")
-	var CombatComprehensiveTestScript = load("res://scripts/core/CombatComprehensiveTest.gd")
-	var LeaderTestScript = load("res://scripts/core/LeaderTest.gd")
-	var AgentTestScript = load("res://scripts/core/AgentTest.gd")
-	var VictoryTestScript = load("res://scripts/core/VictoryTest.gd")
-	var EconomyTestScript = load("res://scripts/core/EconomyTest.gd")
-	var LocalizationTestScript = load("res://scripts/core/LocalizationTest.gd")
-	var AITestScript = load("res://scripts/core/AITest.gd")
-	var EventTestScript = load("res://scripts/core/EventTest.gd")
-	var MapComprehensiveTestScript = load("res://scripts/core/MapComprehensiveTest.gd")
+	var SaveLoadCycleTestScript = load("res://tests/SaveLoadCycleTest.gd")
+	var ScenarioComprehensiveTestScript = load("res://tests/ScenarioComprehensiveTest.gd")
+	var CombatComprehensiveTestScript = load("res://tests/CombatComprehensiveTest.gd")
+	var LeaderTestScript = load("res://tests/LeaderTest.gd")
+	var AgentTestScript = load("res://tests/AgentTest.gd")
+	var VictoryTestScript = load("res://tests/VictoryTest.gd")
+	var EconomyTestScript = load("res://tests/EconomyTest.gd")
+	var LocalizationTestScript = load("res://tests/LocalizationTest.gd")
+	var AITestScript = load("res://tests/AITest.gd")
+	var EventTestScript = load("res://tests/EventTest.gd")
+	var MapComprehensiveTestScript = load("res://tests/MapComprehensiveTest.gd")
+	var UITestScript = load("res://tests/UITest.gd")
+	var DiplomacyTestScript = load("res://tests/DiplomacyTest.gd")
+	var AIEconomyTestScript = load("res://tests/AIEconomyTest.gd")
+	var TradeTestScript = load("res://tests/TradeTest.gd")
+	var CombatExpansionTestScript = load("res://tests/CombatExpansionTest.gd")
+	var AdvancedAITestScript = load("res://tests/AdvancedAITest.gd")
 
 	print("\n=== Save/Load Cycle Tests ===")
 	all_ok = SaveLoadCycleTestScript.run_all() and all_ok
@@ -79,6 +85,24 @@ func _ready() -> void:
 
 	print("\n=== Event Tests (Phase 4) ===")
 	all_ok = EventTestScript.run_all() and all_ok
+
+	print("\n=== Advanced AI Tests (Phase 10) ===")
+	all_ok = AdvancedAITestScript.run_all() and all_ok
+
+	print("\n=== Combat Expansion Tests (Phase 9) ===")
+	all_ok = CombatExpansionTestScript.run_all() and all_ok
+
+	print("\n=== Trade UI Tests (Phase 8) ===")
+	all_ok = TradeTestScript.run_all() and all_ok
+
+	print("\n=== AI Economy Tests (Phase 7) ===")
+	all_ok = AIEconomyTestScript.run_all() and all_ok
+
+	print("\n=== Diplomacy Tests (Phase 6) ===")
+	all_ok = DiplomacyTestScript.run_all() and all_ok
+
+	print("\n=== UI Tests (Phase 5.8) ===")
+	all_ok = UITestScript.run_all() and all_ok
 
 	print("\n=== Map Comprehensive Tests (Phase 4) ===")
 	var mm = get_node_or_null("/root/MapManager")

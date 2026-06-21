@@ -142,10 +142,10 @@ func _configure_top_info_bar(player_tag: String) -> void:
 
 func _run_comprehensive_tests(loader: ScenarioLoader, mm: Node) -> void:
 	var all_ok = true
-	var SaveLoadCycleTestScript = load("res://scripts/core/SaveLoadCycleTest.gd")
-	var ScenarioComprehensiveTestScript = load("res://scripts/core/ScenarioComprehensiveTest.gd")
-	var MapComprehensiveTestScript = load("res://scripts/core/MapComprehensiveTest.gd")
-	var CombatComprehensiveTestScript = load("res://scripts/core/CombatComprehensiveTest.gd")
+	var SaveLoadCycleTestScript = load("res://tests/SaveLoadCycleTest.gd")
+	var ScenarioComprehensiveTestScript = load("res://tests/ScenarioComprehensiveTest.gd")
+	var MapComprehensiveTestScript = load("res://tests/MapComprehensiveTest.gd")
+	var CombatComprehensiveTestScript = load("res://tests/CombatComprehensiveTest.gd")
 	print("\n=== Save/Load Cycle Tests ===")
 	all_ok = SaveLoadCycleTestScript.run_all() and all_ok
 	print("\n=== Scenario Comprehensive Tests ===")

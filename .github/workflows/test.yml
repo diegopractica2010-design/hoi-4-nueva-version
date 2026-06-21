@@ -1,0 +1,55 @@
+name: Headless Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.6
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache .godot directory
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: .godot
+          key: ${{ runner.os }}-godot-${{ hashFiles('**/*.gd', '**/*.tscn', 'project.godot') }}
+          restore-keys: |
+            ${{ runner.os }}-godot-
+
+      - name: Download Godot ${{ env.GODOT_VERSION }}
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
+          unzip -q Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
+          echo "GODOT_BIN=$PWD/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64" >> $GITHUB_ENV
+
+      - name: Warm Godot cache (cold cache workaround)
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          echo "Warming Godot class_name cache..."
+          timeout 120 $GODOT_BIN --headless --quit --path . 2>&1 || true
+          echo "Cache warmup complete"
+
+      - name: Run headless tests
+        run: |
+          $GODOT_BIN --headless --qa-smoke --path . res://scenes/HeadlessTestRunner.tscn 2>&1
+        shell: bash
+
+      - name: Check test results
+        run: |
+          if $GODOT_BIN --headless --qa-smoke --path . res://scenes/HeadlessTestRunner.tscn 2>&1 | grep -q "❌"; then
+            echo "::error::Tests failed"
+            exit 1
+          fi
+          echo "All tests passed"
+        shell: bash

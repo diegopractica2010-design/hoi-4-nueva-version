@@ -1,5 +1,7 @@
 extends Node
 
+const Logger = preload("res://scripts/core/Logger.gd")
+
 # NOTA: NO declaramos `class_name EventManager` a proposito.
 # Se registra como autoload "EventManager"; usar class_name homonimo provoca
 # "Class 'EventManager' hides an autoload singleton" y el autoload NO carga
@@ -25,7 +27,7 @@ func _load_all_events() -> void:
 
 	var dir := DirAccess.open("res://data/events/1879/")
 	if dir == null:
-		push_warning("EventManager: data/events/1879/ not found")
+		Logger.warn("EventManager: data/events/1879/ not found")
 		return
 
 	dir.list_dir_begin()
@@ -36,13 +38,13 @@ func _load_all_events() -> void:
 		fname = dir.get_next()
 	dir.list_dir_end()
 
-	print("[EventManager] Loaded %d events" % _events.size())
+	Logger.info("[EventManager] Loaded %d events" % _events.size(), "EventManager")
 
 
 func _load_event_file(path: String) -> void:
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		push_warning("EventManager: Could not open %s" % path)
+		Logger.warn("EventManager: Could not open %s" % path)
 		return
 
 	var json := JSON.new()
@@ -50,15 +52,21 @@ func _load_event_file(path: String) -> void:
 	file.close()
 
 	if result != OK:
-		push_warning("EventManager: Failed to parse %s: %s" % [path, json.get_error_message()])
+		Logger.warn("EventManager: Failed to parse %s: %s" % [path, json.get_error_message()])
 		return
 
 	var data: Variant = json.get_data()
-	if typeof(data) != TYPE_DICTIONARY:
-		push_warning("EventManager: Event file %s did not contain a Dictionary" % path)
+	if typeof(data) == TYPE_DICTIONARY:
+		_events.append(data as Dictionary)
+	elif typeof(data) == TYPE_ARRAY:
+		for entry in data as Array:
+			if typeof(entry) == TYPE_DICTIONARY:
+				_events.append(entry as Dictionary)
+			else:
+				Logger.warn("EventManager: Array entry in %s is not a Dictionary" % path)
+	else:
+		Logger.warn("EventManager: Event file %s did not contain a Dictionary or Array" % path)
 		return
-
-	_events.append(data as Dictionary)
 
 
 func _on_game_day_advanced(year: int, month: int, day: int) -> void:
@@ -131,7 +139,7 @@ func _fire_event(event: Dictionary) -> void:
 	if not bool(event.get("repeatable", false)) and not (event_id in _fired_events):
 		_fired_events.append(event_id)
 
-	print("[EventManager] Firing event: %s" % event_id)
+	Logger.info("[EventManager] Firing event: %s" % event_id, "EventManager")
 	event_triggered.emit(event)
 
 	var effects: Array = event.get("effects", []) as Array
@@ -150,7 +158,7 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 			if typeof(LeaderManager) != TYPE_NIL and LeaderManager.has_method("set_country_at_war"):
 				LeaderManager.set_country_at_war(attacker, true)
 				LeaderManager.set_country_at_war(defender, true)
-			print("[EventManager] War declared: %s vs %s" % [attacker, defender])
+			Logger.info("[EventManager] War declared: %s vs %s" % [attacker, defender], "EventManager")
 			event_effect_applied.emit(effect_type, attacker)
 			event_effect_applied.emit(effect_type, defender)
 
@@ -190,7 +198,7 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 				var formation := LeaderManager.get_formation(unit_id)
 				if formation != null and formation.country_tag == tag:
 					formation.apply_damage(damage)
-					print("[EventManager] Unit damaged: %s %s by %.0f%% (strength now %.2f)" % [tag, unit_id, damage * 100.0, formation.strength])
+					Logger.info("[EventManager] Unit damaged: %s %s by %.0f%% (strength now %.2f)" % [tag, unit_id, damage * 100.0, formation.strength], "EventManager")
 			event_effect_applied.emit(effect_type, tag)
 
 		"destroy_unit":
@@ -202,7 +210,7 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 					formation.strength = 0.0
 					if LeaderManager.formations.erase(unit_id):
 						pass
-					print("[EventManager] Unit destroyed: %s %s" % [tag, unit_id])
+					Logger.info("[EventManager] Unit destroyed: %s %s" % [tag, unit_id], "EventManager")
 			event_effect_applied.emit(effect_type, tag)
 
 		"force_peace":
@@ -211,16 +219,16 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 			if typeof(LeaderManager) != TYPE_NIL and LeaderManager.has_method("set_country_at_war"):
 				LeaderManager.set_country_at_war(attacker, false)
 				LeaderManager.set_country_at_war(defender, false)
-			print("[EventManager] Peace forced between %s and %s" % [attacker, defender])
+			Logger.info("[EventManager] Peace forced between %s and %s" % [attacker, defender], "EventManager")
 			event_effect_applied.emit(effect_type, attacker)
 			event_effect_applied.emit(effect_type, defender)
 
 		"news_event":
-			print("[EventManager] News: %s" % str(effect.get("text", "")))
+			Logger.info("[EventManager] News: %s" % str(effect.get("text", "")), "EventManager")
 			event_effect_applied.emit(effect_type, "")
 
 		_:
-			push_warning("[EventManager] Unknown effect type: " + effect_type)
+			Logger.warn("[EventManager] Unknown effect type: " + effect_type)
 
 
 func _modifiers_are_debuff(modifiers: Dictionary) -> bool:

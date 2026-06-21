@@ -39,6 +39,8 @@
 
 extends Node
 
+const Logger = preload("res://scripts/core/Logger.gd")
+
 # NOTE: We intentionally do NOT declare `class_name TimeManager`.
 # This script is registered as an autoload singleton named "TimeManager".
 # Using class_name on an autoload causes Godot's GDScript analyzer to emit
@@ -72,7 +74,7 @@ var game_seed: int = 0
 var _accumulated_game_days: float = 0.0
 
 func _ready() -> void:
-	print("TimeManager: Initialized (default 1936-01-01)")
+	Logger.info("TimeManager: Initialized (default 1936-01-01)", "TimeManager")
 
 ## Called by ScenarioLoader when a scenario is loaded.
 ## Parses "YYYY-MM-DD" (falls back gracefully to year-only).
@@ -105,7 +107,7 @@ func initialize_from_scenario_start_date(start_date_str: String) -> void:
 	game_seed = randi()
 	seed(game_seed)
 
-	print("TimeManager: Scenario start date set to %s (year %d), seed=%d" % [scenario_start_date, current_year, game_seed])
+	Logger.info("TimeManager: Scenario start date set to %s (year %d), seed=%d" % [scenario_start_date, current_year, game_seed], "TimeManager")
 
 func get_current_year() -> int:
 	return current_year
@@ -153,7 +155,7 @@ func is_paused() -> bool:
 func set_paused(p: bool) -> void:
 	if paused != p:
 		paused = p
-		print("TimeManager: Paused = %s" % paused)
+		Logger.info("TimeManager: Paused = %s" % paused, "TimeManager")
 
 func set_time_scale(scale: float) -> void:
 	time_scale = maxf(0.1, scale)   # Safety clamp
@@ -181,7 +183,7 @@ func advance_year() -> void:
 	else:
 		game_year_advanced.emit(current_year)
 
-	print("TimeManager: Year advanced to %d (via advance_year)" % current_year)
+	Logger.info("TimeManager: Year advanced to %d (via advance_year)" % current_year, "TimeManager")
 
 ## Convenience for systems that still want to drive the year tick themselves.
 ## (Used during the transition period.)
@@ -241,7 +243,7 @@ func advance_days(days: float) -> void:
 				# for year events per its own documentation. Dual listeners protected by guards.
 				game_year_advanced.emit(current_year)
 
-				print("TimeManager: Year boundary crossed → %d (driven by central clock)" % current_year)
+				Logger.info("TimeManager: Year boundary crossed → %d (driven by central clock)" % current_year, "TimeManager")
 
 ## Called by real-time timers (e.g. TopInfoBar) to advance simulation based on wall time.
 ## `real_seconds` is real elapsed time since last call.
