@@ -358,6 +358,8 @@ func advance_supply_day(days: float = 1.0) -> void:
 
 	# === Province Infrastructure & Development: Local Supply Generation ===
 	_generate_local_supply_from_development(days)
+	# === Formation Daily Supply Consumption ===
+	_consume_supply_for_formations(days)
 
 	var attrition := get_attrition_cargo_summary()
 	var attrition_tons := float(attrition.get("total_tons", 0.0)) * days
@@ -481,6 +483,35 @@ func _generate_local_supply_from_development(days: float) -> void:
 
 	# Note: stray menu-ranking code was previously inserted here by accident (removed in Phase 1 verify).
 	# _generate is fire-and-forget; depot menu uses its own ranking in get_depot_menu_lines.
+
+
+# Consume daily supply from depot stockpiles for each formation.
+# If a depot lacks enough supply, the formation takes an attrition penalty instead.
+func _consume_supply_for_formations(days: float) -> void:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return
+	for formation_id in LeaderManager.formations:
+		var formation: Formation = LeaderManager.formations[formation_id] as Formation
+		if formation == null or formation.province_id < 0:
+			continue
+		var consumed := calculate_daily_supply_consumption(formation_id) * days
+		var pid := formation.province_id
+		var depot: ProvinceDepotState = depot_states.get(pid)
+		if depot == null:
+			continue
+
+		var pulled := depot.pull_outflow(consumed)
+		if pulled >= consumed * 0.9:
+			if formation.has_method("reduce_supply_shortfall"):
+				formation.reduce_supply_shortfall(0.1 * days)
+		else:
+			# Not enough supply → apply an attrition modifier to the formation
+			var shortfall := (consumed - pulled) / consumed
+			if formation.has_method("apply_supply_shortfall"):
+				formation.apply_supply_shortfall(shortfall)
+
+	depot_stock_changed.emit(-1, 0.0)
+
 
 func toggle_overlay() -> void:
 	overlay_visible = not overlay_visible

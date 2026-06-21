@@ -428,24 +428,21 @@ func refresh_screen() -> void:
 		_era_filter_key,
 	)
 
-	title_label.text = "Technology — %s" % country_tag
-	slots_label.text = "Slots: %d/%d" % [
-		current_data.research_slots_used,
-		current_data.research_slots_max,
-	]
+	title_label.text = Localization.get_text("tech.screen.title", {"country": country_tag})
+	slots_label.text = Localization.get_text("tech.screen.slots", {"used": current_data.research_slots_used, "max": current_data.research_slots_max})
 	if current_data.in_progress_count > 0:
 		slots_label.text += " · %d researching" % current_data.in_progress_count
-	rp_label.text = "RP/day: %.1f" % current_data.daily_rp
+	rp_label.text = Localization.get_text("tech.screen.rp_per_day", {"amount": str(current_data.daily_rp)})
 	var rp_tip := current_data.daily_rp_tooltip
 	if typeof(TechnologyManager) != TYPE_NIL:
 		var support := MapTechnologyContext.build_support_radio_glance_bbcode(country_tag)
 		if not support.is_empty():
 			rp_tip = (rp_tip + "\n" + support) if not rp_tip.is_empty() else _strip_bbcode_tags(support)
 	rp_label.tooltip_text = rp_tip
-	year_label.text = "Year: %d" % current_data.current_year
-	available_label.text = "Available: %d" % current_data.available_count
-	completed_label.text = "Done: %d" % current_data.completed_count
-	compromised_label.text = "Compromised: %d" % current_data.compromised_count
+	year_label.text = Localization.get_text("tech.screen.year", {"year": current_data.current_year})
+	available_label.text = Localization.get_text("tech.screen.available", {"count": current_data.available_count})
+	completed_label.text = Localization.get_text("tech.screen.completed", {"count": current_data.completed_count})
+	compromised_label.text = Localization.get_text("tech.screen.compromised", {"count": current_data.compromised_count})
 	if current_data.compromised_count > 0:
 		compromised_label.modulate = RetrowaveTheme.WARNING
 	else:
@@ -520,10 +517,7 @@ func _populate_research_list() -> void:
 
 	if current_data.research_entries.is_empty():
 		var empty := Label.new()
-		empty.text = (
-			"No technologies match domain (%s) or era (%s). Try All domains or a wider era."
-			% [_domain_filter_id, _era_filter_key]
-		)
+		empty.text = Localization.get_text("tech.screen.empty_research", {"domain": _domain_filter_id, "era": _era_filter_key})
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		RetrowaveTheme.style_body_label(empty)
 		research_list.add_child(empty)

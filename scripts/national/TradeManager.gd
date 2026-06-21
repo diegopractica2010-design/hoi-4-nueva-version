@@ -333,11 +333,26 @@ var _offers_by_to: Dictionary = {}              # country_tag -> Array[offer_id]
 
 var _current_year: int = 1936
 
-# Simple value baselines (easy to move to a data file or rules json later)
+# Retorna un ID de diseño disponible para comerciar, o "" si no hay ninguno.
 func _get_placeholder_design_id() -> String:
-	# TODO: Replace with dynamic query of available unowned designs
-	# Returning empty string disables this offer slot until implemented
-	return ""
+	if typeof(DesignManager) == TYPE_NIL:
+		return ""
+	var catalog := DesignManager._catalog_design_ids("__trade__")
+	if catalog.is_empty():
+		catalog = DesignManager._catalog_design_ids("")
+	if catalog.is_empty():
+		return ""
+	return catalog[randi() % catalog.size()]
+
+# Retorna ID de provincia en disputa, o -1 si no hay ninguna.
+func _get_contested_province_id() -> int:
+	if typeof(MapManager) == TYPE_NIL:
+		return -1
+	var contested := MapManager.get_contested_provinces()
+	if contested.is_empty():
+		return -1
+	var keys := contested.keys()
+	return int(keys[randi() % keys.size()])
 
 const DESIGN_BASE_VALUE_MULTIPLIER := 1.0
 const RESOURCE_BASE_RATES := {
@@ -736,9 +751,8 @@ func generate_black_market_opportunity(country_tag: String, risk_level: float = 
 		requested.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 300.0})
 	else:
 		# High-risk province concession (extremely valuable but massive exposure)
-		var prov_id := ""
-		# TODO: Replace with real contested province ID from MapManager
-		if prov_id.is_empty():
+		var prov_id := _get_contested_province_id()
+		if prov_id < 0:
 			return ""
 		offered.append({
 			"type": TradeItemType.PROVINCE,
@@ -834,9 +848,8 @@ func generate_black_market_opportunity(country_tag: String, risk_level: float = 
 
 	# Ultra high-stakes PROVINCE + INTEL bundle (territorial concession + detailed enemy agent network intel)
 	if randf() < 0.04:
-		var prov_id := ""
-		# TODO: Replace with real contested province ID from MapManager
-		if prov_id.is_empty():
+		var prov_id := _get_contested_province_id()
+		if prov_id < 0:
 			return ""
 		offered.append({
 			"type": TradeItemType.PROVINCE,

@@ -116,12 +116,13 @@ func _setup_filters() -> void:
 	status_filter.add_item("idle")
 	status_filter.add_item("low_efficiency")
 
-	type_filter.clear()
 	type_filter.add_item("All")
 	type_filter.add_item("shipyard")
 	type_filter.add_item("tank_factory")
 	type_filter.add_item("aircraft_factory")
 	type_filter.add_item("general_factory")
+
+	title_label.text = Localization.get_text("production.screen.title", {"country": country_tag})
 
 
 func _on_day_advanced(_report: Dictionary) -> void:
@@ -142,13 +143,13 @@ func _update_summary_bar() -> void:
 	avg_efficiency_label.text = "Avg Efficiency: %.1f%%" % (current_data.average_efficiency * 100.0)
 	avg_efficiency_label.modulate = _efficiency_color(current_data.average_efficiency)
 
-	retooling_label.text = "Retooling: %d" % current_data.factories_in_retooling
+	retooling_label.text = Localization.get_text("production.screen.retooling", {"count": current_data.factories_in_retooling})
 	if current_data.has_many_retooling:
 		retooling_label.modulate = RetrowaveTheme.WARNING
 	else:
 		retooling_label.modulate = RetrowaveTheme.MAGENTA
 
-	daily_output_label.text = "Daily Output: %.1f" % current_data.estimated_daily_output
+	daily_output_label.text = Localization.get_text("production.screen.daily_output", {"amount": str(current_data.estimated_daily_output)})
 
 
 func _apply_filters() -> void:

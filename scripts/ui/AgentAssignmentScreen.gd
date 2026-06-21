@@ -142,7 +142,8 @@ func _apply_screen_theme() -> void:
 	RetrowaveTheme.style_production_screen(self)
 	RetrowaveTheme.style_title(title_label, RetrowaveTheme.MAGENTA)
 	RetrowaveTheme.style_secondary_button(close_button)
-	title_label.text = "Agents — %s" % country_tag
+	title_label.text = Localization.get_text("agent.screen.title", {"country": country_tag})
+	# Note: _apply_title_attention in refresh_screen overrides this with dynamic status text
 	RetrowaveTheme.style_summary_metric(total_agents_label)
 	RetrowaveTheme.style_summary_metric(available_agents_label, RetrowaveTheme.SUCCESS)
 	RetrowaveTheme.style_summary_metric(on_mission_label, RetrowaveTheme.CYAN)
@@ -193,11 +194,11 @@ func _setup_roster_filter() -> void:
 	if _roster_filters_initialized:
 		return
 	roster_filter.clear()
-	roster_filter.add_item("All Agents")
-	roster_filter.add_item("Available")
-	roster_filter.add_item("On Mission")
-	roster_filter.add_item("Compromised")
-	roster_filter.add_item("Lost / Inactive")
+	roster_filter.add_item(Localization.get_text("agent.screen.roster_all"))
+	roster_filter.add_item(Localization.get_text("agent.screen.roster_available"))
+	roster_filter.add_item(Localization.get_text("agent.screen.roster_on_mission"))
+	roster_filter.add_item(Localization.get_text("agent.screen.roster_compromised"))
+	roster_filter.add_item(Localization.get_text("agent.screen.roster_lost"))
 	_roster_filters_initialized = true
 
 
@@ -315,11 +316,11 @@ func _selected_mission_category_filter() -> String:
 func _update_summary_bar() -> void:
 	if current_data == null:
 		return
-	total_agents_label.text = "Total Agents: %d" % current_data.total_agents
-	available_agents_label.text = "Available: %d" % current_data.available_agents
-	on_mission_label.text = "On Mission: %d" % current_data.on_mission_agents
-	compromised_label.text = "Compromised: %d" % current_data.compromised_agents
-	inactive_label.text = "Lost: %d" % current_data.inactive_agents
+	total_agents_label.text = Localization.get_text("agent.screen.total_agents", {"count": current_data.total_agents})
+	available_agents_label.text = Localization.get_text("agent.screen.available", {"count": current_data.available_agents})
+	on_mission_label.text = Localization.get_text("agent.screen.on_mission", {"count": current_data.on_mission_agents})
+	compromised_label.text = Localization.get_text("agent.screen.compromised", {"count": current_data.compromised_agents})
+	inactive_label.text = Localization.get_text("agent.screen.lost", {"count": current_data.inactive_agents})
 
 	if current_data.compromised_agents > 0:
 		compromised_label.modulate = RetrowaveTheme.WARNING
@@ -361,16 +362,16 @@ func _update_feedback_hint() -> void:
 
 
 func _apply_title_attention() -> void:
-	var base := "Agents — %s" % country_tag
+	var base := Localization.get_text("agent.screen.title", {"country": country_tag})
 	if current_data == null:
 		title_label.text = base
 		title_label.modulate = Color.WHITE
 		return
 	if current_data.compromised_agents > 0:
-		title_label.text = "%s  •  %d agent(s) compromised" % [base, current_data.compromised_agents]
+		title_label.text = Localization.get_text("agent.screen.title_compromised", {"country": country_tag, "count": current_data.compromised_agents})
 		title_label.modulate = RetrowaveTheme.WARNING
 	elif current_data.on_mission_agents > 0:
-		title_label.text = "%s  •  %d operation(s) active" % [base, current_data.on_mission_agents]
+		title_label.text = Localization.get_text("agent.screen.title_on_mission", {"country": country_tag, "count": current_data.on_mission_agents})
 		title_label.modulate = RetrowaveTheme.CYAN
 	else:
 		title_label.text = base
@@ -573,13 +574,13 @@ func _update_intel_column_titles() -> void:
 	var ops_title := $MarginContainer/VBoxContainer/MainArea/IntelColumn/RecentOpsTitle as Label
 	if intel_title != null:
 		var n := current_data.intel_reports.size() if current_data else 0
-		intel_title.text = "Intel Reports (%d)" % n if n > 0 else "Intel Reports"
+		intel_title.text = Localization.get_text("agent.screen.intel_reports", {"count": n}) if n > 0 else Localization.get_text("agent.screen.intel_reports_empty")
 	if effects_title != null:
 		var e := current_data.national_effects.size() if current_data else 0
-		effects_title.text = "National Effects (%d)" % e if e > 0 else "National Effects"
+		effects_title.text = Localization.get_text("agent.screen.national_effects", {"count": e}) if e > 0 else Localization.get_text("agent.screen.national_effects_empty")
 	if ops_title != null:
 		var o := current_data.recent_operations.size() if current_data else 0
-		ops_title.text = "Recent Operations (%d)" % o if o > 0 else "Recent Operations"
+		ops_title.text = Localization.get_text("agent.screen.recent_ops", {"count": o}) if o > 0 else Localization.get_text("agent.screen.recent_ops_empty")
 
 
 func _populate_intel_reports() -> void:
@@ -865,14 +866,14 @@ func _update_detail_panel() -> void:
 
 	if _selected_agent_id.is_empty():
 		agent_state_banner.visible = false
-		detail_label.text = "Select an agent from the roster."
+		detail_label.text = Localization.get_text("agent.screen.select_agent")
 		assign_mission_button.disabled = true
 		return
 
 	var summary := AgentManager.get_agent_summary(_selected_agent_id)
 	if summary.is_empty():
 		agent_state_banner.visible = false
-		detail_label.text = "Agente no encontrado."
+		detail_label.text = Localization.get_text("agent.screen.agent_not_found")
 		assign_mission_button.disabled = true
 		return
 
@@ -908,7 +909,7 @@ func _update_detail_panel() -> void:
 	detail_label.text = "\n".join(lines)
 
 	if _selected_target_tag.is_empty():
-		detail_label.text += "\n\nSelect a target country to view missions."
+		detail_label.text += "\n\n" + Localization.get_text("agent.screen.select_target")
 		assign_mission_button.disabled = true
 		return
 
@@ -953,7 +954,7 @@ func _update_detail_panel() -> void:
 		missions_list.add_child(_create_mission_preview(mission_row as Dictionary))
 
 	assign_mission_button.disabled = false
-	assign_mission_button.text = "Assign Mission to %s..." % _selected_target_tag
+	assign_mission_button.text = Localization.get_text("agent.screen.assign_mission", {"target": _selected_target_tag})
 
 
 func _clear_detail_progress_bar() -> void:
@@ -1241,8 +1242,8 @@ func _on_recruit_pressed() -> void:
 	_selected_agent_id = agent.agent_id
 	if typeof(LeaderEventUI) != TYPE_NIL:
 		LeaderEventUI.post_news(
-			"Agent Recruited",
-			"%s has joined the %s intelligence service." % [agent.name, country_tag],
+			Localization.get_text("agent.recruit.news_title"),
+			Localization.get_text("agent.recruit.news_body", {"name": agent.name, "service": country_tag}),
 			"espionage",
 		)
 	refresh_screen()
@@ -1276,7 +1277,7 @@ func _on_assign_mission_pressed() -> void:
 			picker.agent_id = _selected_agent_id
 			picker.target_tag = _selected_target_tag
 			picker.category_filter = category_filter
-			picker.dialog_title = "Assign Mission — %s" % _selected_target_tag,
+			picker.dialog_title = Localization.get_text("agent.assign_mission_title", {"target": _selected_target_tag}),
 	)
 
 

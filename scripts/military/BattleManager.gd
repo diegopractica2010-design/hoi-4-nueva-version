@@ -15,6 +15,21 @@ signal province_captured(province_id: int, new_owner: String, old_owner: String)
 
 const HISTORY_MAX := 10
 
+# === Combat Width por terreno ===
+const CW_PLAINS := 80
+const CW_FOREST := 60
+const CW_HILLS := 50
+const CW_MOUNTAIN := 40
+const CW_URBAN := 50
+const CW_DESERT := 70
+const CW_MARSH := 30
+const CW_JUNGLE := 40
+const CW_DEFAULT := 80
+
+# Penalización de apilamiento: 1% por cada punto de ancho que exceda el límite.
+const STACKING_PENALTY_RATE := 0.01
+const MAX_STACKING_PENALTY := 0.7
+
 # Instancia propia de CombatResolver (no es autoload; se usa con .new()).
 var _resolver: CombatResolver = null
 
@@ -172,6 +187,23 @@ func get_battle_history() -> Array:
 
 # === Helpers =================================================================
 
+## Retorna el ancho de combate de una provincia según su terreno.
+func _get_combat_width(province: Province) -> int:
+	if province == null:
+		return CW_DEFAULT
+	var t := province.terrain.strip_edges().to_lower()
+	match t:
+		"plains", "grassland": return CW_PLAINS
+		"forest", "woods": return CW_FOREST
+		"hills": return CW_HILLS
+		"mountain", "mountains", "alpine": return CW_MOUNTAIN
+		"urban", "city", "town": return CW_URBAN
+		"desert", "arid": return CW_DESERT
+		"marsh", "swamp", "wetland": return CW_MARSH
+		"jungle": return CW_JUNGLE
+		_: return CW_DEFAULT
+
+
 ## Poder de combate escalar de una formación en una provincia.
 ## Intenta la API real de CombatResolver (que devuelve un Dictionary de stats); si la
 ## formación no tiene plantilla con stats registrados, usa una heurística por terreno.
@@ -224,14 +256,16 @@ func _combat_power(formation: Formation, province: Province, is_defender: bool) 
 	return power
 
 
-## Poder total de un bando en una provincia = suma de TODAS sus formaciones presentes.
-## Hace que concentrar el ejército sea una decisión decisiva (stacking).
+## Poder total de un bando en una provincia = suma de TODAS sus formaciones presentes,
+## limitado por ancho de combate (stacking penalty).
 func _side_power(province_id: int, tag: String, is_defender: bool) -> float:
 	if typeof(LeaderManager) == TYPE_NIL:
 		return 0.0
 	var province: Province = _get_province(province_id)
 	var clean := tag.strip_edges().to_upper()
 	var total := 0.0
+	var used_width := 0
+	var combat_width := _get_combat_width(province)
 	for fid in LeaderManager.formations:
 		var f: Formation = LeaderManager.formations[fid]
 		if f == null or f.province_id != province_id:
@@ -239,6 +273,12 @@ func _side_power(province_id: int, tag: String, is_defender: bool) -> float:
 		if f.country_tag.strip_edges().to_upper() != clean:
 			continue
 		total += _combat_power(f, province, is_defender)
+		used_width += maxi(f.combat_width, 1)
+	# Stacking penalty: si el ancho usado excede el del terreno, se reduce el poder total.
+	if used_width > combat_width:
+		var overflow := float(used_width - combat_width)
+		var penalty := minf(overflow * STACKING_PENALTY_RATE, MAX_STACKING_PENALTY)
+		total *= (1.0 - penalty)
 	# Dificultad: la IA pelea más fuerte/débil según el nivel elegido. Solo se
 	# aplica a los bandos controlados por la IA (no al del jugador); en batallas
 	# IA-vs-IA el factor afecta a ambos y se cancela.

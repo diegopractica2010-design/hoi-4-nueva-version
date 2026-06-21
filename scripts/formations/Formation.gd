@@ -37,6 +37,40 @@ const CATEGORY_SPACE := "space"
 
 var assigned_leader: Leader = null
 
+## 0.0 = full supply, 1.0 = sin suministro. Decae cuando la formación recibe suministro completo.
+@export var supply_shortfall: float = 0.0
+## Salud actual de la formación (0.0 = destruida, 1.0 = intacta).
+@export var strength: float = 1.0
+## Salud máxima (punto de referencia para daños).
+@export var max_strength: float = 1.0
+## Ancho de combate que ocupa esta formación en batalla (afecta penalización por apilamiento).
+@export var combat_width: int = 10
+
+
+## Aplica un faltante de suministro. Si el faltante es menor que el actual, el valor decae lentamente.
+func apply_supply_shortfall(shortfall: float) -> void:
+	supply_shortfall = clampf(supply_shortfall + shortfall * 0.1, 0.0, 1.0)
+
+
+## Reduce el shortfall cuando la formación recibe suministro completo (llamado desde SupplyManager).
+func reduce_supply_shortfall(amount: float) -> void:
+	supply_shortfall = maxf(0.0, supply_shortfall - amount)
+
+
+## Retorna el multiplicador de efectividad en combate por suministro (1.0 = óptimo, 0.3 = sin suministro).
+func get_supply_multiplier() -> float:
+	return 1.0 - supply_shortfall * 0.7
+
+
+## Reduce la salud en un porcentaje (0.0–1.0) de la salud máxima.
+func apply_damage(damage_percent: float) -> void:
+	strength = maxf(0.0, strength - max_strength * clampf(damage_percent, 0.0, 1.0))
+
+
+## Retorna true si la formación está destruida (sin salud).
+func is_destroyed() -> bool:
+	return strength <= 0.0
+
 
 func has_leader() -> bool:
 	return not leader_id.is_empty()

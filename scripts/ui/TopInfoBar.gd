@@ -41,6 +41,7 @@ var is_paused: bool = false
 
 
 func _ready() -> void:
+	player_country_tag = _get_player_tag()
 	_apply_theme()
 	_connect_buttons()
 	_sync_pause_from_time_manager()
@@ -163,6 +164,13 @@ func _on_game_day_advanced(_year: int, _month: int, day: int) -> void:
 		_update_war_status()
 
 
+## Obtiene el tag del jugador desde GameData con fallback a CHL.
+func _get_player_tag() -> String:
+	if typeof(GameData) != TYPE_NIL and not GameData.selected_nation_tag.is_empty():
+		return GameData.selected_nation_tag.strip_edges().to_upper()
+	return "CHL"
+
+
 func _sync_pause_from_time_manager() -> void:
 	if typeof(TimeManager) == TYPE_NIL:
 		return
@@ -260,9 +268,7 @@ func _update_war_status() -> void:
 
 	# Ingreso mensual
 	if typeof(NationalIncomeManager) != TYPE_NIL:
-		var player_tag := "CHL"
-		if typeof(SaveLoadManager) != TYPE_NIL and "current_player_tag" in SaveLoadManager:
-			player_tag = str(SaveLoadManager.current_player_tag)
+		var player_tag := _get_player_tag()
 		var income := NationalIncomeManager.get_nation_monthly_income(player_tag)
 		income_label.text = "Ingreso/mes: %.0f oro" % income
 

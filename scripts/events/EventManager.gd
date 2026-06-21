@@ -186,13 +186,23 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 			var tag := str(effect.get("tag", "")).strip_edges().to_upper()
 			var unit_id := str(effect.get("unit_id", ""))
 			var damage := float(effect.get("damage_percent", 0.3))
-			print("[EventManager] Unit damaged: %s %s by %.0f%%" % [tag, unit_id, damage * 100.0])
+			if typeof(LeaderManager) != TYPE_NIL:
+				var formation := LeaderManager.get_formation(unit_id)
+				if formation != null and formation.country_tag == tag:
+					formation.apply_damage(damage)
+					print("[EventManager] Unit damaged: %s %s by %.0f%% (strength now %.2f)" % [tag, unit_id, damage * 100.0, formation.strength])
 			event_effect_applied.emit(effect_type, tag)
 
 		"destroy_unit":
 			var tag := str(effect.get("tag", "")).strip_edges().to_upper()
 			var unit_id := str(effect.get("unit_id", ""))
-			print("[EventManager] Unit destroyed: %s %s" % [tag, unit_id])
+			if typeof(LeaderManager) != TYPE_NIL:
+				var formation := LeaderManager.get_formation(unit_id)
+				if formation != null and formation.country_tag == tag:
+					formation.strength = 0.0
+					if LeaderManager.formations.erase(unit_id):
+						pass
+					print("[EventManager] Unit destroyed: %s %s" % [tag, unit_id])
 			event_effect_applied.emit(effect_type, tag)
 
 		"force_peace":

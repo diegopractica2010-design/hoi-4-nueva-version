@@ -51,8 +51,9 @@ const MILITARY_VICTORY_MIN_DAY := 1
 # Días por mes (sin años bisiestos), coherente con TimeManager.
 const MONTH_DAYS: Array[int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-## Tag de la nación del jugador. Lo fija el sistema de carga de escenario.
-var player_tag: String = "CHL"
+## Tag de la nación del jugador. Se sincroniza desde GameData al cargar escenario.
+var player_tag: String = ""
+var _player_tag_synced: bool = false
 
 # Estado interno.
 var _scenario_loaded: bool = false
@@ -62,7 +63,7 @@ var _loader: Node = null
 
 
 func _ready() -> void:
-	# Escuchar el reloj central: comprobamos las condiciones cada día de juego.
+	_sync_player_tag()
 	if typeof(TimeManager) != TYPE_NIL and TimeManager.has_signal("game_day_advanced"):
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
@@ -71,7 +72,6 @@ func _ready() -> void:
 		if not BattleManager.province_captured.is_connected(_on_province_captured):
 			BattleManager.province_captured.connect(_on_province_captured)
 
-	# Intentar enlazar con ScenarioLoader si ya está en el árbol (puede no estarlo aún).
 	_try_connect_loader()
 
 
@@ -85,10 +85,24 @@ func _try_connect_loader() -> void:
 			_loader.scenario_loaded.connect(_on_scenario_loaded)
 
 
+## Sincroniza player_tag desde GameData.
+func _sync_player_tag() -> void:
+	if typeof(GameData) != TYPE_NIL and not GameData.selected_nation_tag.is_empty():
+		player_tag = GameData.selected_nation_tag.strip_edges().to_upper()
+		_player_tag_synced = true
+	elif typeof(SaveLoadManager) != TYPE_NIL and "current_player_tag" in SaveLoadManager:
+		var tag := str(SaveLoadManager.current_player_tag).strip_edges().to_upper()
+		if not tag.is_empty():
+			player_tag = tag
+			_player_tag_synced = true
+	if player_tag.is_empty():
+		player_tag = "CHL"
+
 ## Llamada cuando un escenario termina de cargar.
 func _on_scenario_loaded() -> void:
 	_scenario_loaded = true
 	_victory_triggered = false
+	_sync_player_tag()
 
 
 ## ¿Es el escenario activo el de 1879? Detección robusta vía la fecha de inicio del reloj.
