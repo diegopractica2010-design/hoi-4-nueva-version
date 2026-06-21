@@ -1,6 +1,6 @@
 extends Node
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 var _days_since_last_eval: int = 0
 var DIPLOMACY_EVAL_INTERVAL: int = 30
@@ -18,7 +18,7 @@ signal ai_spy_mission(tag: String, target: String, mission_type: String)
 signal ai_supply_crisis(tag: String, severity: float)
 
 func _ready() -> void:
-	Logger.info("AdvancedAIManager initialized", "AdvancedAIManager")
+	Log.info("AdvancedAIManager initialized", "AdvancedAIManager")
 	if typeof(TimeManager) != TYPE_NIL and TimeManager.has_signal("game_day_advanced"):
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
@@ -86,7 +86,7 @@ func _evaluate_alliances(tag: String, person: Dictionary) -> void:
 	if rel >= 50 and not DiplomacyManager.has_alliance(tag, best):
 		DiplomacyManager.form_alliance(tag, best)
 		ai_formed_alliance.emit(tag, best)
-		Logger.info("AI Diplomacy: " + tag + " formed alliance with " + best, "AdvancedAIManager")
+		Log.info("AI Diplomacy: " + tag + " formed alliance with " + best, "AdvancedAIManager")
 
 func _get_potential_alliance_partners(tag: String) -> Array[String]:
 	if typeof(DiplomacyManager) == TYPE_NIL or typeof(GameData) == TYPE_NIL or GameData.world == null:
@@ -118,7 +118,7 @@ func _evaluate_war_declarations(tag: String, person: Dictionary) -> void:
 	if rel < -50:
 		DiplomacyManager.declare_war(tag, target)
 		ai_declared_war.emit(tag, target, "low_relation")
-		Logger.info("AI Diplomacy: " + tag + " declared war on " + target, "AdvancedAIManager")
+		Log.info("AI Diplomacy: " + tag + " declared war on " + target, "AdvancedAIManager")
 
 func _get_potential_war_targets(tag: String) -> Array[String]:
 	if typeof(DiplomacyManager) == TYPE_NIL or typeof(GameData) == TYPE_NIL or GameData.world == null:
@@ -196,7 +196,7 @@ func _run_spy_mission(tag: String, target: String, mission_type: String) -> void
 		_spy_networks[tag][target] = 0.0
 	_spy_networks[tag][target] += 0.1
 	ai_spy_mission.emit(tag, target, mission_type)
-	Logger.info("AI Espionage: " + tag + " running " + mission_type + " on " + target, "AdvancedAIManager")
+	Log.info("AI Espionage: " + tag + " running " + mission_type + " on " + target, "AdvancedAIManager")
 
 func get_spy_network_level(tag: String, target: String) -> float:
 	return _spy_networks.get(tag, {}).get(target, 0.0)
@@ -214,13 +214,13 @@ func _evaluate_nation_supply(tag: String) -> void:
 		var status: Dictionary = SupplyManager.get_supply_status(tag)
 		if status.get("crisis", false):
 			ai_supply_crisis.emit(tag, status.get("severity", 0.5))
-			Logger.warn("AI Supply crisis for " + tag, "AdvancedAIManager")
+			Log.warn("AI Supply crisis for " + tag, "AdvancedAIManager")
 		_optimize_supply_routes(tag, status)
 
 func _optimize_supply_routes(tag: String, status: Dictionary) -> void:
 	if typeof(SupplyManager) == TYPE_NIL:
 		return
-	var defficits := status.get("deficits", [])
+	var defficits: Array = status.get("deficits", [])
 	if defficits.is_empty():
 		return
 	if SupplyManager.has_method("reroute_supply"):
@@ -244,7 +244,7 @@ func _evaluate_all_strategic() -> void:
 func _evaluate_nation_strategic(tag: String) -> void:
 	var goals := _determine_strategic_goals(tag)
 	_strategic_goals[tag] = goals
-	Logger.info("AI Strategic: " + tag + " goals: " + str(goals), "AdvancedAIManager")
+	Log.info("AI Strategic: " + tag + " goals: " + str(goals), "AdvancedAIManager")
 
 func _determine_strategic_goals(tag: String) -> Array[Dictionary]:
 	var goals: Array[Dictionary] = []

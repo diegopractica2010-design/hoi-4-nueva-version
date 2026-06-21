@@ -2,7 +2,7 @@
 class_name MapRenderer
 extends Node2D
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 #region Exports
 @export var container: Node2D
@@ -148,7 +148,7 @@ func _ready():
 		if not btn_close.pressed.is_connected(_on_close_pressed):
 			btn_close.pressed.connect(_on_close_pressed)
 	else:
-		Logger.warn("MapRenderer: Could not find BtnClose!")
+		Log.warn("MapRenderer: Could not find BtnClose!")
 
 	if container == null:
 		container = get_node_or_null("ProvinceContainers") as Node2D
@@ -156,9 +156,9 @@ func _ready():
 	var cam := get_node_or_null("MapCamera") as Camera2D
 	if cam:
 		cam.make_current()
-		Logger.info("✅ Camera2D activated", "MapRenderer")
+		Log.info("✅ Camera2D activated", "MapRenderer")
 	else:
-		Logger.warn("MapRenderer: MapCamera node missing!")
+		Log.warn("MapRenderer: MapCamera node missing!")
 
 	_setup_hover_tooltip()
 	_setup_inspector_extras()
@@ -168,7 +168,7 @@ func _ready():
 	_connect_battle_manager_signals()
 	_init_legend_calendar_tracking()
 	set_process(true)
-	Logger.info("MapRenderer _ready() completed", "MapRenderer")
+	Log.info("MapRenderer _ready() completed", "MapRenderer")
 
 
 func _init_legend_calendar_tracking() -> void:
@@ -214,7 +214,7 @@ func _on_battle_resolved(
 	_loser_tag: String,
 	result: Dictionary
 ) -> void:
-	Logger.info(
+	Log.info(
 		"[Battle] %s vs %s in province %d - Winner: %s"
 		% [result.attacker_tag, result.defender_tag, province_id, winner_tag], "MapRenderer"
 	)
@@ -537,7 +537,7 @@ func initialize(p_provinces: Dictionary, p_geometry: Dictionary, p_adjacency: Ad
 
 func render_provinces():
 	if container == null:
-		Logger.error("MapRenderer: container not assigned")
+		Log.error("MapRenderer: container not assigned")
 		return
 
 	_clear_selection()
@@ -547,7 +547,7 @@ func render_provinces():
 	province_centroids.clear()
 	_province_name_labels.clear()
 
-	Logger.info("Rendering map with %d provinces using Polygon2D..." % provinces.size(), "MapRenderer")
+	Log.info("Rendering map with %d provinces using Polygon2D..." % provinces.size(), "MapRenderer")
 
 	for id in provinces.keys():
 		var province: Province = provinces[id]
@@ -567,7 +567,7 @@ func render_provinces():
 	_update_compare_hint_label()
 	draw_unit_icons()  # CHANGE 4: iconos de unidad tras renderizar el mapa
 	_focus_camera_on_theater()  # Recorte de mapa al teatro: encuadrar la zona de guerra
-	Logger.info("✅ Map rendered with real polygons", "MapRenderer")
+	Log.info("✅ Map rendered with real polygons", "MapRenderer")
 
 	# Sync MapPickGrid (via MapManager) after rendering for best picking accuracy
 	if use_spatial_picking and typeof(MapManager) != TYPE_NIL and MapManager.has_method("rebuild_pick_grid"):
@@ -837,7 +837,7 @@ func _on_move_completed(_formation_id: String, _province_id: int) -> void:
 
 
 func _on_movement_invalid(reason: String) -> void:
-	Logger.info("[Movement] Invalid: " + str(reason), "MapRenderer")
+	Log.info("[Movement] Invalid: " + str(reason), "MapRenderer")
 
 
 ## CHANGE 2: resalta la provincia seleccionada con un contorno amarillo.

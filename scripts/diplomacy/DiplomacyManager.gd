@@ -1,5 +1,7 @@
 extends Node
 
+const Log = preload("res://scripts/core/Logger.gd")
+
 signal relation_changed(from_tag: String, to_tag: String, old_value: int, new_value: int)
 signal war_declared(attacker: String, defender: String)
 signal peace_signed(attacker: String, defender: String, winner: String)
@@ -19,7 +21,7 @@ var alliances: Dictionary = {}
 var guarantees: Dictionary = {}
 
 func _ready() -> void:
-	Logger.info("DiplomacyManager initialized", "DiplomacyManager")
+	Log.info("DiplomacyManager initialized", "DiplomacyManager")
 
 func set_relation(from: String, to: String, value: int) -> void:
 	var key = _key(from, to)
@@ -44,7 +46,7 @@ func declare_war(attacker: String, defender: String) -> bool:
 		"start_date": TimeManager.get_date_string(),
 		"score": {}
 	}
-	Logger.info(attacker + " declared war on " + defender, "DiplomacyManager")
+	Log.info(attacker + " declared war on " + defender, "DiplomacyManager")
 	war_declared.emit(attacker, defender)
 	if has_alliance(attacker, defender):
 		break_alliance(attacker, defender)
@@ -59,7 +61,7 @@ func sign_peace(attacker: String, defender: String, winner: String) -> bool:
 		wars.erase(alt_id)
 	else:
 		return false
-	Logger.info("Peace: " + winner + " wins " + attacker + " vs " + defender, "DiplomacyManager")
+	Log.info("Peace: " + winner + " wins " + attacker + " vs " + defender, "DiplomacyManager")
 	peace_signed.emit(attacker, defender, winner)
 	return true
 
@@ -81,7 +83,7 @@ func form_alliance(tag_a: String, tag_b: String) -> bool:
 		return false
 	var key = _alliance_key(tag_a, tag_b)
 	alliances[key] = [tag_a, tag_b]
-	Logger.info("Alliance formed: " + tag_a + " + " + tag_b, "DiplomacyManager")
+	Log.info("Alliance formed: " + tag_a + " + " + tag_b, "DiplomacyManager")
 	alliance_formed.emit(tag_a, tag_b)
 	modify_relation(tag_a, tag_b, 20)
 	return true
@@ -91,7 +93,7 @@ func break_alliance(tag_a: String, tag_b: String) -> bool:
 	if key not in alliances:
 		return false
 	alliances.erase(key)
-	Logger.info("Alliance broken: " + tag_a + " and " + tag_b, "DiplomacyManager")
+	Log.info("Alliance broken: " + tag_a + " and " + tag_b, "DiplomacyManager")
 	alliance_broken.emit(tag_a, tag_b)
 	modify_relation(tag_a, tag_b, -30)
 	return true
@@ -106,7 +108,7 @@ func give_guarantee(guarantor: String, protected: String) -> bool:
 	if key in guarantees:
 		return false
 	guarantees[key] = { "guarantor": guarantor, "protected": protected }
-	Logger.info(guarantor + " guarantees " + protected, "DiplomacyManager")
+	Log.info(guarantor + " guarantees " + protected, "DiplomacyManager")
 	guarantee_given.emit(guarantor, protected)
 	modify_relation(guarantor, protected, 10)
 	return true
@@ -116,7 +118,7 @@ func revoke_guarantee(guarantor: String, protected: String) -> bool:
 	if key not in guarantees:
 		return false
 	guarantees.erase(key)
-	Logger.info(guarantor + " revoked guarantee of " + protected, "DiplomacyManager")
+	Log.info(guarantor + " revoked guarantee of " + protected, "DiplomacyManager")
 	guarantee_revoked.emit(guarantor, protected)
 	modify_relation(guarantor, protected, -15)
 	return true

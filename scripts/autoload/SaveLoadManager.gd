@@ -134,7 +134,7 @@
 
 extends Node
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 const SAVE_DIR := "user://saves/"
 const SAVE_VERSION := 1
@@ -158,7 +158,7 @@ func set_player_tag(tag: String) -> void:
 
 func _ready() -> void:
 	_ensure_save_dir()
-	Logger.info("SaveLoadManager: Initialized (JSON format v%d, user://saves/)" % SAVE_VERSION, "SaveLoadManager")
+	Log.info("SaveLoadManager: Initialized (JSON format v%d, user://saves/)" % SAVE_VERSION, "SaveLoadManager")
 
 	# Simple autosave on year boundary (pragmatic for testing/play sessions)
 	if typeof(TimeManager) != TYPE_NIL:
@@ -170,9 +170,9 @@ func _on_year_advanced_for_autosave(_year: int) -> void:
 	# Silent on success (print only), non-spammy toast on failure.
 	var res := save_game_detailed("autosave")
 	if res.get("ok", false):
-		Logger.info("SaveLoadManager: Autosaved on year change -> autosave.json", "SaveLoadManager")
+		Log.info("SaveLoadManager: Autosaved on year change -> autosave.json", "SaveLoadManager")
 	else:
-		Logger.warn("SaveLoadManager: Autosave failed: %s" % res.get("error", "unknown"))
+		Log.warn("SaveLoadManager: Autosave failed: %s" % res.get("error", "unknown"))
 		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 			LeaderEventUI.show_toast("Autosave failed", 2.0, true)
 
@@ -184,9 +184,9 @@ func _notification(what: int) -> void:
 			set_meta("autosave_on_quit_done", true)
 			var res := save_game_detailed("autosave")
 			if res.get("ok", false):
-				Logger.info("SaveLoadManager: Autosaved on exit/quit -> autosave.json", "SaveLoadManager")
+				Log.info("SaveLoadManager: Autosaved on exit/quit -> autosave.json", "SaveLoadManager")
 			else:
-				Logger.warn("SaveLoadManager: Quit autosave failed: %s" % res.get("error", "unknown"))
+				Log.warn("SaveLoadManager: Quit autosave failed: %s" % res.get("error", "unknown"))
 				# No toast on shutdown to avoid UI issues
 		# Do not block exit
 
@@ -194,7 +194,7 @@ func _ensure_save_dir() -> void:
 	if not DirAccess.dir_exists_absolute(SAVE_DIR):
 		var err := DirAccess.make_dir_recursive_absolute(SAVE_DIR)
 		if err != OK:
-			Logger.error("SaveLoadManager: Failed to create saves dir: %s" % SAVE_DIR)
+			Log.error("SaveLoadManager: Failed to create saves dir: %s" % SAVE_DIR)
 
 func get_save_path(slot_name: String) -> String:
 	var safe := slot_name.strip_edges().to_lower()
@@ -255,7 +255,7 @@ func save_game(slot_name: String = DEFAULT_SLOT) -> bool:
 	var f := FileAccess.open(path, FileAccess.WRITE)
 	if f == null:
 		var err_msg = "Save failed: cannot write " + path
-		Logger.error("SaveLoadManager: " + err_msg)
+		Log.error("SaveLoadManager: " + err_msg)
 		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 			LeaderEventUI.show_toast(err_msg, 3.0, true)  # error style if supported
 		return false
@@ -263,7 +263,7 @@ func save_game(slot_name: String = DEFAULT_SLOT) -> bool:
 	f.close()
 
 	_last_save_path = path
-	Logger.info("SaveLoadManager: Game saved → %s (v%d, %d bytes)" % [path, SAVE_VERSION, json_text.length()], "SaveLoadManager")
+	Log.info("SaveLoadManager: Game saved → %s (v%d, %d bytes)" % [path, SAVE_VERSION, json_text.length()], "SaveLoadManager")
 
 	# Consistent non-intrusive feedback
 	if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
@@ -275,30 +275,30 @@ func load_game(slot_name: String = DEFAULT_SLOT) -> bool:
 	var path := get_save_path(slot_name)
 	if not FileAccess.file_exists(path):
 		var err_msg = "Load failed: file not found " + path
-		Logger.error("SaveLoadManager: " + err_msg)
+		Log.error("SaveLoadManager: " + err_msg)
 		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 			LeaderEventUI.show_toast(err_msg, 3.0, true)
 		return false
 
 	var f := FileAccess.open(path, FileAccess.READ)
 	if f == null:
-		Logger.error("SaveLoadManager: Cannot open %s for reading" % path)
+		Log.error("SaveLoadManager: Cannot open %s for reading" % path)
 		return false
 	var text := f.get_as_text()
 	f.close()
 
 	var parsed: Variant = JSON.parse_string(text)
 	if typeof(parsed) != TYPE_DICTIONARY:
-		Logger.error("SaveLoadManager: Corrupt save file (root not a Dictionary)")
+		Log.error("SaveLoadManager: Corrupt save file (root not a Dictionary)")
 		return false
 
 	var data: Dictionary = parsed
 	var file_version := int(data.get("save_version", 0))
 	if file_version > SAVE_VERSION:
-		Logger.warn("SaveLoadManager: Save is v%d (current v%d). Best-effort load may drop fields." % [file_version, SAVE_VERSION])
+		Log.warn("SaveLoadManager: Save is v%d (current v%d). Best-effort load may drop fields." % [file_version, SAVE_VERSION])
 
 	_apply_save_data(data)
-	Logger.info("SaveLoadManager: Game loaded ← %s (v%d)" % [path, file_version], "SaveLoadManager")
+	Log.info("SaveLoadManager: Game loaded ← %s (v%d)" % [path, file_version], "SaveLoadManager")
 
 	if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 		LeaderEventUI.show_toast("Game loaded (" + slot_name + ")", 2.5)
@@ -616,7 +616,7 @@ func _apply_agent_state(a: Dictionary) -> void:
 
 	# Note: We do not re-emit every signal here; UI that cares can refresh on demand
 	# or we can emit a single "agents_state_restored" if we add the signal later.
-	Logger.info("SaveLoad: Restored %d agent countries + %d networks" % [agents_by_country.size(), nets.size()], "SaveLoadManager")
+	Log.info("SaveLoad: Restored %d agent countries + %d networks" % [agents_by_country.size(), nets.size()], "SaveLoadManager")
 
 ## --- Map (provinces) ---
 
@@ -663,7 +663,7 @@ func _apply_map_state(m: Dictionary) -> void:
 		if e.has("infrastructure"):
 			MapManager.update_province_infrastructure(pid, int(e["infrastructure"]))
 
-	Logger.info("SaveLoad: Applied province state to %d provinces (signals emitted)" % list.size(), "SaveLoadManager")
+	Log.info("SaveLoad: Applied province state to %d provinces (signals emitted)" % list.size(), "SaveLoadManager")
 
 ## --- Supply depots ---
 
@@ -698,7 +698,7 @@ func _apply_supply_state(s: Dictionary) -> void:
 			if entry.has("sabotage_level"):
 				depot.sabotage_level = float(entry["sabotage_level"])
 			restored += 1
-	Logger.info("SaveLoad: Restored %d depot states (stock/sabotage/throughput)" % restored, "SaveLoadManager")
+	Log.info("SaveLoad: Restored %d depot states (stock/sabotage/throughput)" % restored, "SaveLoadManager")
 
 ## --- NationalModifierManager ---
 
@@ -707,7 +707,7 @@ func _apply_national_modifier_state(n: Dictionary) -> void:
 		return
 	# Replace wholesale — tick_modifiers will continue decaying on next monthly tick
 	NationalModifierManager.country_modifiers = (n.get("country_modifiers", {}) as Dictionary).duplicate(true)
-	Logger.info("SaveLoad: National modifier effects restored", "SaveLoadManager")
+	Log.info("SaveLoad: National modifier effects restored", "SaveLoadManager")
 
 ## --- Technology ---
 
@@ -728,7 +728,7 @@ func _apply_technology_state(t: Dictionary) -> void:
 		if TechnologyManager.has_signal("research_state_changed"):
 			TechnologyManager.research_state_changed.emit(str(tag))
 
-	Logger.info("SaveLoad: Technology country_state restored for %d countries" % TechnologyManager.country_state.size(), "SaveLoadManager")
+	Log.info("SaveLoad: Technology country_state restored for %d countries" % TechnologyManager.country_state.size(), "SaveLoadManager")
 
 ## Convenience / debug helpers
 
@@ -769,19 +769,19 @@ func _apply_leader_state(l: Dictionary) -> void:
 		LeaderManager.apply_save_data(l)
 		return
 	# Fallback direct (if no method yet)
-	Logger.info("SaveLoad: Leader state present but no apply_save_data on LeaderManager (direct apply limited)", "SaveLoadManager")
+	Log.info("SaveLoad: Leader state present but no apply_save_data on LeaderManager (direct apply limited)", "SaveLoadManager")
 
 func _apply_factory_state(f: Dictionary) -> void:
 	if typeof(FactoryManager) != TYPE_NIL and FactoryManager.has_method("apply_save_data"):
 		FactoryManager.apply_save_data(f)
 		return
-	Logger.info("SaveLoad: Factory state present but no apply on FactoryManager", "SaveLoadManager")
+	Log.info("SaveLoad: Factory state present but no apply on FactoryManager", "SaveLoadManager")
 
 func _apply_production_state(p: Dictionary) -> void:
 	if typeof(ProductionManager) != TYPE_NIL and ProductionManager.has_method("apply_save_data"):
 		ProductionManager.apply_save_data(p)
 		return
-	Logger.info("SaveLoad: Production state present but no apply on ProductionManager", "SaveLoadManager")
+	Log.info("SaveLoad: Production state present but no apply on ProductionManager", "SaveLoadManager")
 
 ## === Robustness: version migration stub + improved error handling ===
 
@@ -792,7 +792,7 @@ func _migrate_save_data(data: Dictionary) -> void:
 	var v := int(data.get("save_version", 0))
 	if v >= SAVE_VERSION:
 		return
-	Logger.info("SaveLoad: Migrating save from v%d to v%d" % [v, SAVE_VERSION], "SaveLoadManager")
+	Log.info("SaveLoad: Migrating save from v%d to v%d" % [v, SAVE_VERSION], "SaveLoadManager")
 
 	# Example future migration (uncomment and extend as needed):
 	# if v < 2:
@@ -814,7 +814,7 @@ func save_game_detailed(slot_name: String = DEFAULT_SLOT) -> Dictionary:
 	if f == null:
 		var err := FileAccess.get_open_error()
 		var msg := "Cannot write save (error %d)" % err
-		Logger.error("SaveLoadManager: %s -> %s" % [msg, path])
+		Log.error("SaveLoadManager: %s -> %s" % [msg, path])
 		if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 			LeaderEventUI.show_toast("Save failed: " + msg, 3.0, true)
 		return {"ok": false, "error": msg, "path": path, "code": err}
@@ -849,7 +849,7 @@ func load_game_detailed(slot_name: String = DEFAULT_SLOT) -> Dictionary:
 
 	var file_version := int(data.get("save_version", 0))
 	if file_version > SAVE_VERSION:
-		Logger.warn("SaveLoadManager: Save v%d > current v%d; best-effort only" % [file_version, SAVE_VERSION])
+		Log.warn("SaveLoadManager: Save v%d > current v%d; best-effort only" % [file_version, SAVE_VERSION])
 
 	_apply_save_data(data)
 	return {"ok": true, "path": path, "version": file_version}
@@ -862,9 +862,9 @@ func delete_save(slot_name: String) -> bool:
 		return false
 	var err := DirAccess.remove_absolute(path)
 	if err != OK:
-		Logger.error("SaveLoadManager: Failed to delete %s (err %d)" % [path, err])
+		Log.error("SaveLoadManager: Failed to delete %s (err %d)" % [path, err])
 		return false
-	Logger.info("SaveLoadManager: Deleted save %s" % slot_name, "SaveLoadManager")
+	Log.info("SaveLoadManager: Deleted save %s" % slot_name, "SaveLoadManager")
 	return true
 
 func rename_save(old_slot: String, new_slot: String) -> bool:
@@ -873,7 +873,7 @@ func rename_save(old_slot: String, new_slot: String) -> bool:
 	if not FileAccess.file_exists(old_path):
 		return false
 	if FileAccess.file_exists(new_path):
-		Logger.warn("SaveLoadManager: Target name already exists: %s" % new_slot)
+		Log.warn("SaveLoadManager: Target name already exists: %s" % new_slot)
 		return false
 
 	var content := FileAccess.get_file_as_string(old_path)
@@ -884,5 +884,5 @@ func rename_save(old_slot: String, new_slot: String) -> bool:
 	f.close()
 
 	DirAccess.remove_absolute(old_path)
-	Logger.info("SaveLoadManager: Renamed %s -> %s" % [old_slot, new_slot], "SaveLoadManager")
+	Log.info("SaveLoadManager: Renamed %s -> %s" % [old_slot, new_slot], "SaveLoadManager")
 	return true

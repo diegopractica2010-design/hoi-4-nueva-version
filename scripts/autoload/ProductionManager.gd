@@ -1,6 +1,6 @@
 extends Node
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 var _factory_manager_cache: Node = null
 
@@ -82,18 +82,18 @@ func _get_base_daily_points() -> float:
 func _load_retooling_rules() -> void:
 	retooling_rules = {}
 	if not ResourceLoader.exists(RETOOLING_RULES_PATH):
-		Logger.warn("retooling_similarity.json not found — using defaults")
+		Log.warn("retooling_similarity.json not found — using defaults")
 		return
 	var file := FileAccess.open(RETOOLING_RULES_PATH, FileAccess.READ)
 	if file == null:
-		Logger.warn("Failed to load retooling_similarity.json")
+		Log.warn("Failed to load retooling_similarity.json")
 		return
 	var text := file.get_as_text()
 	var parsed: Variant = JSON.parse_string(text)
 	if typeof(parsed) == TYPE_DICTIONARY:
 		retooling_rules = parsed
 	else:
-		Logger.warn("Invalid retooling_similarity.json")
+		Log.warn("Invalid retooling_similarity.json")
 
 
 func get_category_similarity(old_category: String, new_category: String) -> float:
@@ -151,10 +151,10 @@ func _retool_group_for_design(design_id: String, category_override: String = "")
 
 func create_line(line_id: String) -> ProductionLine:
 	if line_id.is_empty():
-		Logger.warn("ProductionManager.create_line requires a non-empty line_id")
+		Log.warn("ProductionManager.create_line requires a non-empty line_id")
 		return null
 	if _lines.has(line_id):
-		Logger.warn("Production line already exists: " + line_id)
+		Log.warn("Production line already exists: " + line_id)
 		return _lines[line_id] as ProductionLine
 
 	var line := ProductionLine.new(GameData.design_data, line_id)
@@ -255,7 +255,7 @@ func advance_days(days: float) -> Dictionary:
 
 func register_modifier(modifier: ProductionModifier) -> void:
 	if modifier == null or modifier.id.is_empty():
-		Logger.warn("ProductionManager.register_modifier: invalid modifier")
+		Log.warn("ProductionManager.register_modifier: invalid modifier")
 		return
 	_active_modifiers[modifier.id] = modifier
 	modifier_registered.emit(modifier.id, modifier.source)
@@ -281,7 +281,7 @@ func clear_modifiers_by_source(source_prefix: String) -> void:
 func set_production_stance(stance_id: String) -> bool:
 	var preset: Dictionary = _stance_presets.get(stance_id, {})
 	if preset.is_empty() and stance_id != "balanced":
-		Logger.warn("Unknown production stance: " + stance_id)
+		Log.warn("Unknown production stance: " + stance_id)
 		return false
 
 	_clear_modifiers_with_tag(STANCE_TAG)
@@ -298,7 +298,7 @@ func set_production_stance(stance_id: String) -> bool:
 func apply_doctrine(doctrine_id: String) -> bool:
 	var preset: Dictionary = _doctrine_presets.get(doctrine_id, {})
 	if preset.is_empty():
-		Logger.warn("Unknown doctrine modifier: " + doctrine_id)
+		Log.warn("Unknown doctrine modifier: " + doctrine_id)
 		return false
 	register_modifier(ProductionModifier.from_dict(preset))
 	return true
@@ -314,7 +314,7 @@ func revoke_doctrine(doctrine_id: String) -> void:
 func apply_focus(focus_id: String) -> bool:
 	var preset: Dictionary = _focus_presets.get(focus_id, {})
 	if preset.is_empty():
-		Logger.warn("Unknown focus modifier: " + focus_id)
+		Log.warn("Unknown focus modifier: " + focus_id)
 		return false
 	register_modifier(ProductionModifier.from_dict(preset))
 	return true
@@ -406,7 +406,7 @@ func get_national_equipment_stockpile() -> Dictionary:
 
 func _on_production_completed(_line_id: String, design_id: String, count: int) -> void:
 	add_to_national_stockpile(design_id, count)
-	Logger.info("Production complete: %s × %d added to national stockpile" % [design_id, count], "ProductionManager")
+	Log.info("Production complete: %s × %d added to national stockpile" % [design_id, count], "ProductionManager")
 
 
 # === Equipment shortages (formation readiness / organization) ===
@@ -511,7 +511,7 @@ func _is_sustainment_equipment_id(equipment_id: String) -> bool:
 func _is_infantry_equipment_id(equipment_id: String) -> bool:
 	if GameData.design_data == null:
 		return equipment_id.begins_with("infantry_")
-	var template := GameData.design_data.get_infantry_equipment(equipment_id)
+	var template: UnitTemplate = GameData.design_data.get_infantry_equipment(equipment_id)
 	return template != null
 
 
@@ -692,7 +692,7 @@ func get_line_resource_cost_for_days(line_id: String, days: float) -> Dictionary
 func get_design_resource_preview(design_id: String) -> Dictionary:
 	var daily_cost: Dictionary = {}
 	if GameData.design_data != null:
-		var template := GameData.design_data.get_template(design_id)
+		var template: UnitTemplate = GameData.design_data.get_template(design_id)
 		if template != null:
 			daily_cost = ProductionCostCalculator.resolve_daily_resource_cost(template)
 	return {
@@ -870,7 +870,7 @@ func start_line_refinement(line_id: String, project_id: String, pay_upfront: boo
 	if not bool(eligibility.get("can_start", false)):
 		return {"success": false, "reason": str(eligibility.get("reason", "blocked"))}
 
-	var def := GameData.design_data.get_refinement_def(project_id)
+	var def: Dictionary = GameData.design_data.get_refinement_def(project_id)
 	var cost: Dictionary = def.get("cost", {}) if typeof(def.get("cost", {})) == TYPE_DICTIONARY else {}
 	if pay_upfront and not cost.is_empty() and not pay_cost(cost):
 		return {"success": false, "reason": "cannot_afford", "cost": cost}
@@ -967,7 +967,7 @@ func _same_family_retool_discount(previous_template_id: String, new_template_id:
 
 
 func _template_design_family(template_id: String) -> String:
-	var template := GameData.design_data.get_template(template_id)
+	var template: UnitTemplate = GameData.design_data.get_template(template_id)
 	return template.design_family if template != null else ""
 
 
@@ -1016,10 +1016,10 @@ func _on_line_unit_completed(
 	_profile: ReliabilityProfile,
 	_line_id: String,
 ) -> void:
-	var template := GameData.design_data.get_template(template_id)
+	var template: UnitTemplate = GameData.design_data.get_template(template_id)
 	if template == null or template.design_family.is_empty():
 		return
-	var family_id := template.design_family
+	var family_id: String = template.design_family
 	var total := int(_family_units_produced.get(family_id, 0)) + 1
 	_family_units_produced[family_id] = total
 	family_experience_changed.emit(family_id, total)
@@ -1040,7 +1040,7 @@ func _preset_block(data: Dictionary, key: String) -> Dictionary:
 
 func _load_json_dict(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
-		Logger.warn("Missing JSON: " + path)
+		Log.warn("Missing JSON: " + path)
 		return {}
 	var file := FileAccess.open(path, FileAccess.READ)
 	if not file:
@@ -1120,12 +1120,12 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 
 	var factory: Factory = _get_factory_manager().get_factory(factory_id)
 	if factory == null:
-		Logger.warn("FactoryManager: Factory %d not found" % factory_id)
+		Log.warn("FactoryManager: Factory %d not found" % factory_id)
 		return false
 
 	var line := get_line(line_id)
 	if line == null:
-		Logger.warn("ProductionManager: line '%s' not found" % line_id)
+		Log.warn("ProductionManager: line '%s' not found" % line_id)
 		return false
 
 	if factory.has_assigned_line(line_id):
@@ -1133,7 +1133,7 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 		return true
 
 	if not factory.can_add_more_lines():
-		Logger.warn(
+		Log.warn(
 			"Factory %d is at maximum production lines (%d)"
 			% [factory_id, factory.max_production_lines],
 		)
@@ -1151,12 +1151,12 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 	if not line.design_id.is_empty() and not _naval_production_allowed(line, line.design_id):
 		line.factory_id = 0
 		factory.assigned_lines.erase(line_id)
-		Logger.warn("ProductionManager: naval design '%s' requires a port shipyard" % line.design_id)
+		Log.warn("ProductionManager: naval design '%s' requires a port shipyard" % line.design_id)
 		return false
 
 	line.refresh_required_progress()
 
-	Logger.info(
+	Log.info(
 		"Assigned line '%s' to factory %d (Province %d, Slot %d)"
 		% [line_id, factory_id, Factory.province_from_id(factory_id), Factory.slot_from_id(factory_id)], "ProductionManager"
 	)
@@ -1380,7 +1380,7 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 
 	var factory: Factory = _get_factory_manager().get_factory(factory_id)
 	if factory == null:
-		Logger.warn("Cannot reassign - factory %d not found" % factory_id)
+		Log.warn("Cannot reassign - factory %d not found" % factory_id)
 		return false
 
 	var old_design: String = factory.current_production_design
@@ -1396,7 +1396,7 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 		)
 		if not bool(gate.get("allowed", true)):
 			var detail: Dictionary = gate.get("detail", {}) as Dictionary
-			Logger.warn(
+			Log.warn(
 				"ProductionManager: factory %d blocked on '%s' — %s"
 				% [factory_id, new_design_id, detail.get("reason", gate.get("error", ""))]
 			)
@@ -1404,13 +1404,13 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 
 	if ProductionNavalRules.is_naval_design(new_design_id):
 		if not ProductionNavalRules.factory_can_build_naval(factory):
-			Logger.warn(
+			Log.warn(
 				"ProductionManager: factory %d cannot build naval design '%s' (requires shipyard at port)"
 				% [factory_id, new_design_id]
 			)
 			return false
 		if _get_factory_manager() != null and not _get_factory_manager().province_has_port(factory.province_id):
-			Logger.warn(
+			Log.warn(
 				"ProductionManager: factory %d is not in a port province"
 				% factory_id
 			)
@@ -1439,7 +1439,7 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 		float(params.get("retained_efficiency", 0.2)),
 	)
 
-	Logger.info(
+	Log.info(
 		"Retooling Factory %d: %s → %s | Retained: %.0f%% | Retool: %.0f days | Recovery: %.0f days"
 		% [
 			factory_id,
@@ -1472,7 +1472,7 @@ func get_effective_daily_output(design_id: String) -> float:
 
 func get_design_production_info(design_id: String) -> Dictionary:
 	var factories := get_factories_producing(design_id)
-	var template := GameData.design_data.get_template(design_id) if GameData.design_data else null
+	var template: UnitTemplate = GameData.design_data.get_template(design_id) if GameData.design_data else null
 	var breakdown: Dictionary = (
 		template.get_production_cost_breakdown(GameData.design_data)
 		if template != null
@@ -1570,7 +1570,7 @@ func apply_save_data(data: Dictionary) -> void:
 					line.factory_id = int(ld["factory_id"])
 
 	clear_all_caches()
-	Logger.info("ProductionManager: Save data applied (%d lines)" % (data.get("lines", {}).size() if data.has("lines") else 0), "ProductionManager")
+	Log.info("ProductionManager: Save data applied (%d lines)" % (data.get("lines", {}).size() if data.has("lines") else 0), "ProductionManager")
 
 
 ## Game loop entry point: one day of national production (supply hooks can chain here later).

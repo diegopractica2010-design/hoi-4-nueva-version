@@ -1,7 +1,7 @@
 # scripts/leaders/LeaderManager.gd
 extends Node
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 ## Registry for leaders, army assignments, and national command positions.
 
@@ -77,12 +77,12 @@ func _apply_national_position_cost(country_tag: String, cost: Dictionary) -> voi
 	if prestige_cost > 0.0:
 		var current := float(national_prestige.get(tag, 50.0))
 		national_prestige[tag] = maxf(current - prestige_cost, 0.0)
-		Logger.info("Applied %.1f prestige cost for national position change in %s" % [prestige_cost, tag], "LeaderManager")
+		Log.info("Applied %.1f prestige cost for national position change in %s" % [prestige_cost, tag], "LeaderManager")
 
 	var stability_cost := float(cost.get("stability", 0.0))
 	if stability_cost > 0.0:
 		# Stability system not fully wired yet — log for future integration
-		Logger.info("Would apply %.1f stability cost for national position change in %s (pending full resource system)" % [stability_cost, tag], "LeaderManager")
+		Log.info("Would apply %.1f stability cost for national position change in %s (pending full resource system)" % [stability_cost, tag], "LeaderManager")
 const NATIONAL_POSITIONS: Array[String] = [
 	POSITION_CHIEF_OF_ARMY,
 	POSITION_CHIEF_OF_NAVY,
@@ -202,7 +202,7 @@ func _ready() -> void:
 
 func register_leader(leader: Leader) -> void:
 	if leader == null or leader.leader_id.is_empty():
-		Logger.warn("LeaderManager: cannot register leader without leader_id")
+		Log.warn("LeaderManager: cannot register leader without leader_id")
 		return
 	leaders[leader.leader_id] = leader
 	invalidate_leader_cache(leader.country_tag)
@@ -250,7 +250,7 @@ func get_leader_for_army(army_id: String) -> Leader:
 
 func register_formation(formation: Formation) -> void:
 	if formation == null or formation.formation_id.is_empty():
-		Logger.warn("LeaderManager: cannot register formation without formation_id")
+		Log.warn("LeaderManager: cannot register formation without formation_id")
 		return
 	formations[formation.formation_id] = formation
 	invalidate_leader_cache(formation.country_tag)
@@ -277,7 +277,7 @@ func assign_leader_to_formation(leader_id: String, formation_id: String) -> bool
 		return false
 
 	if not _is_leader_valid_for_formation(leader, formation):
-		Logger.warn(
+		Log.warn(
 			"LeaderManager: leader type mismatch — %s cannot lead %s (%s)"
 			% [leader.leader_type, formation.name, formation.formation_type]
 		)
@@ -474,14 +474,14 @@ func set_country_position(
 		return set_officer_training_leader(country_tag, leader_id)
 
 	if not NATIONAL_POSITIONS.has(position):
-		Logger.warn("LeaderManager: invalid national position: " + position)
+		Log.warn("LeaderManager: invalid national position: " + position)
 		return false
 
 	var leader: Leader = leaders.get(leader_id) as Leader
 	if leader == null:
 		return false
 	if leader.country_tag != country_tag:
-		Logger.warn(
+		Log.warn(
 			"LeaderManager: leader %s (%s) does not match country %s"
 			% [leader_id, leader.country_tag, country_tag]
 		)
@@ -491,13 +491,13 @@ func set_country_position(
 		country_positions[country_tag] = {}
 
 	if apply_cost:
-		Logger.info(
+		Log.info(
 			"Changing %s position for %s. Cost will be applied (future system)."
 			% [position, country_tag], "LeaderManager"
 		)
 
 	(country_positions[country_tag] as Dictionary)[position] = leader_id
-	Logger.info(
+	Log.info(
 		"Set %s as %s for %s"
 		% [leader.name, position, country_tag], "LeaderManager"
 	)
@@ -782,7 +782,7 @@ func handle_formation_destroyed(formation_id: String) -> Dictionary:
 		)
 
 	leader.is_captured = true
-	Logger.info("%s has been captured after their command was destroyed!" % leader.name, "LeaderManager")
+	Log.info("%s has been captured after their command was destroyed!" % leader.name, "LeaderManager")
 	invalidate_leader_cache(leader.country_tag)
 	leader_captured.emit(leader_id, "formation_destroyed")
 	return {
@@ -876,7 +876,7 @@ func resolve_retirement(leader_id: String, let_retire: bool, ask_to_stay: bool =
 			agree_chance += 0.08
 		if randf() < agree_chance:
 			leader.stayed_past_retirement = true
-			Logger.info("%s agrees to serve one more year." % leader.name, "LeaderManager")
+			Log.info("%s agrees to serve one more year." % leader.name, "LeaderManager")
 			return true
 
 	apply_retirement_honors(leader.country_tag)
@@ -943,7 +943,7 @@ func introduce_eligible_leaders_for_year(year: int = -1) -> int:
 		leader_pool.erase(leader_id)
 		introduced += 1
 		leader_introduced.emit(leader_id)
-		Logger.info("%s has entered command (%d)." % [leader.name, target_year], "LeaderManager")
+		Log.info("%s has entered command (%d)." % [leader.name, target_year], "LeaderManager")
 	return introduced
 
 
@@ -959,10 +959,10 @@ func _remove_leader(leader_id: String, cause: String, is_death: bool) -> void:
 		# Special handling for Officer Training mentor death (per user direction)
 		_apply_officer_training_death_debuff(leader.country_tag)
 		leader.is_deceased = true
-		Logger.info("%s has died (%s)." % [leader.name, cause], "LeaderManager")
+		Log.info("%s has died (%s)." % [leader.name, cause], "LeaderManager")
 	else:
 		leader.is_retired = true
-		Logger.info("%s has retired." % leader.name, "LeaderManager")
+		Log.info("%s has retired." % leader.name, "LeaderManager")
 	leaders.erase(leader_id)
 	invalidate_leader_cache(leader.country_tag)
 
@@ -1388,7 +1388,7 @@ func _apply_officer_training_death_debuff(country_tag: String) -> void:
 		OFFICER_TRAINING_MENTOR_CHANGE_DEBUFF_MONTHS
 	)
 
-	Logger.info("Officer Training program for %s suffered a %.0f%% quality debuff due to mentor death." % [tag, OFFICER_TRAINING_DEATH_DEBUFF_PERCENT], "LeaderManager")
+	Log.info("Officer Training program for %s suffered a %.0f%% quality debuff due to mentor death." % [tag, OFFICER_TRAINING_DEATH_DEBUFF_PERCENT], "LeaderManager")
 
 
 func get_armies_without_leader(_country_tag: String) -> Array[String]:
@@ -1791,7 +1791,7 @@ func _level_trait_once(leader_id: String, trait_id: String) -> bool:
 		return false
 
 	var new_level := get_trait_level(leader_id, trait_id)
-	Logger.info("%s leveled %s to level %d" % [leader.name, trait_id, new_level], "LeaderManager")
+	Log.info("%s leveled %s to level %d" % [leader.name, trait_id, new_level], "LeaderManager")
 	emit_signal("trait_leveled", leader_id, trait_id, new_level)
 	return true
 
@@ -1893,7 +1893,7 @@ func switch_training_path(leader_id: String, new_path_id: String) -> bool:
 	if switch_cost <= 0:
 		return false
 	if leader.experience < switch_cost:
-		Logger.info("Not enough XP to switch training path. Cost: %d" % switch_cost, "LeaderManager")
+		Log.info("Not enough XP to switch training path. Cost: %d" % switch_cost, "LeaderManager")
 		return false
 	if not leader.spend_experience(switch_cost):
 		return false
@@ -1901,7 +1901,7 @@ func switch_training_path(leader_id: String, new_path_id: String) -> bool:
 	var old_path_id := leader.training_path_id
 	leader.set_training_path(new_path_id, 1)
 	invalidate_leader_cache(leader.country_tag)
-	Logger.info(
+	Log.info(
 		"%s switched to new training path: %s (Cost: %d XP)"
 		% [leader.name, new_path_id, switch_cost], "LeaderManager"
 	)
@@ -2198,24 +2198,24 @@ func _load_training_paths() -> Dictionary:
 
 	var json_path := TRAINING_PATHS_PATH
 	if not FileAccess.file_exists(json_path):
-		Logger.error("Doctrine training paths file not found: " + json_path)
+		Log.error("Doctrine training paths file not found: " + json_path)
 		return {}
 
 	var file := FileAccess.open(json_path, FileAccess.READ)
 	if file == null:
-		Logger.error("Could not open doctrine training paths file: " + json_path)
+		Log.error("Could not open doctrine training paths file: " + json_path)
 		return {}
 
 	var json := JSON.new()
 	var error := json.parse(file.get_as_text())
 	file.close()
 	if error != OK:
-		Logger.error("Failed to parse doctrine_training_paths.json: " + json.get_error_message())
+		Log.error("Failed to parse doctrine_training_paths.json: " + json.get_error_message())
 		return {}
 
 	var data: Variant = json.get_data()
 	if typeof(data) != TYPE_DICTIONARY:
-		Logger.error("doctrine_training_paths.json root must be a dictionary")
+		Log.error("doctrine_training_paths.json root must be a dictionary")
 		return {}
 
 	training_path_definitions = data as Dictionary
@@ -2535,12 +2535,12 @@ func _format_effect_value(effect_key: String, value: float) -> String:
 func _check_for_trait_gain(leader: Leader) -> void:
 	if leader.battles_fought >= 15 and not leader.has_trait("logistics_wizard"):
 		if randf() < 0.25 and try_add_trait_to_leader(leader, "logistics_wizard", 1):
-			Logger.info("%s has gained the trait: Logistics Wizard!" % leader.name, "LeaderManager")
+			Log.info("%s has gained the trait: Logistics Wizard!" % leader.name, "LeaderManager")
 
 	if leader.battles_fought >= 25 and randf() < 0.15:
 		if not leader.has_trait("desert_fox") and randf() < 0.3:
 			if try_add_trait_to_leader(leader, "desert_fox", 1):
-				Logger.info("%s has gained the trait: Desert Fox!" % leader.name, "LeaderManager")
+				Log.info("%s has gained the trait: Desert Fox!" % leader.name, "LeaderManager")
 
 
 func handle_injury_or_capture(leader_id: String) -> void:
@@ -2550,11 +2550,11 @@ func handle_injury_or_capture(leader_id: String) -> void:
 
 	if randf() < 0.04:
 		leader.is_injured = true
-		Logger.info("%s has been injured!" % leader.name, "LeaderManager")
+		Log.info("%s has been injured!" % leader.name, "LeaderManager")
 
 	if randf() < 0.015:
 		leader.is_captured = true
-		Logger.info("%s has been captured!" % leader.name, "LeaderManager")
+		Log.info("%s has been captured!" % leader.name, "LeaderManager")
 
 	invalidate_leader_cache(leader.country_tag)
 
@@ -2568,7 +2568,7 @@ func promote_leader(leader_id: String) -> bool:
 	leader.organization_skill = mini(leader.organization_skill + 1, MAX_SKILL)
 	leader.logistics_skill = mini(leader.logistics_skill + 1, MAX_SKILL)
 	leader.planning_skill = mini(leader.planning_skill + 1, MAX_SKILL)
-	Logger.info("%s has been promoted!" % leader.name, "LeaderManager")
+	Log.info("%s has been promoted!" % leader.name, "LeaderManager")
 	invalidate_leader_cache(leader.country_tag)
 	return true
 
@@ -2592,7 +2592,7 @@ func set_officer_training_leader(country_tag: String, leader_id: String, apply_c
 	if leader == null:
 		return false
 	if leader.country_tag != tag:
-		Logger.warn(
+		Log.warn(
 			"LeaderManager: leader %s does not match country %s for officer training"
 			% [leader_id, tag]
 		)
@@ -2789,7 +2789,7 @@ func apply_save_data(data: Dictionary) -> void:
 	if data.has("player_country_tag"):
 		player_country_tag = str(data["player_country_tag"])
 
-	Logger.info("LeaderManager: Restored %d leaders + positions" % leaders.size(), "LeaderManager")
+	Log.info("LeaderManager: Restored %d leaders + positions" % leaders.size(), "LeaderManager")
 
 
 ## Assigns a leader to Officer Training using their country tag.
@@ -2987,15 +2987,15 @@ func _check_training_quality_changes(
 
 	if current >= OFFICER_TRAINING_EXCELLENT_THRESHOLD and previous < OFFICER_TRAINING_EXCELLENT_THRESHOLD:
 		var msg := "%s officer training has reached Excellent quality." % country_tag
-		Logger.info(msg, "LeaderManager")
+		Log.info(msg, "LeaderManager")
 		officer_training_quality_notice.emit(country_tag, msg, "success")
 	elif current < OFFICER_TRAINING_WARNING_THRESHOLD and previous >= OFFICER_TRAINING_WARNING_THRESHOLD:
 		var msg := "%s officer training quality has dropped significantly." % country_tag
-		Logger.info(msg, "LeaderManager")
+		Log.info(msg, "LeaderManager")
 		officer_training_quality_notice.emit(country_tag, msg, "warning")
 	elif current < OFFICER_TRAINING_CRISIS_THRESHOLD and previous >= OFFICER_TRAINING_CRISIS_THRESHOLD:
 		var msg := "%s officer training program is in crisis." % country_tag
-		Logger.info(msg, "LeaderManager")
+		Log.info(msg, "LeaderManager")
 		officer_training_quality_notice.emit(country_tag, msg, "critical")
 
 
@@ -3277,7 +3277,7 @@ func generate_and_register_leader_from_training(
 	if prestige_cost > 0.0:
 		var current_prestige := float(national_prestige.get(tag, 50.0))
 		national_prestige[tag] = maxf(current_prestige - prestige_cost, 0.0)
-		Logger.info("Generated cadet for %s — applied %.1f Prestige cost (remaining: %.1f)" % [
+		Log.info("Generated cadet for %s — applied %.1f Prestige cost (remaining: %.1f)" % [
 			tag, prestige_cost, float(national_prestige.get(tag, 0.0))
 		], "LeaderManager")
 
@@ -3369,7 +3369,7 @@ func can_add_trait(leader: Leader, trait_id: String, level: int = 1) -> bool:
 	if leader == null or trait_id.is_empty():
 		return false
 	if get_trait_definition(trait_id).is_empty():
-		Logger.warn("LeaderManager: unknown trait '%s'" % trait_id)
+		Log.warn("LeaderManager: unknown trait '%s'" % trait_id)
 		return false
 	if traits_conflict(leader, trait_id):
 		return false
@@ -3430,7 +3430,7 @@ func get_leader_roster_paths_for_scenario(scenario_name: String) -> Array[String
 	var candidate := "res://data/leaders/historical_leaders_%s.json" % key
 	if ResourceLoader.exists(candidate):
 		return [candidate]
-	Logger.warn(
+	Log.warn(
 		"LeaderManager: no roster file for scenario '%s' (expected %s)"
 		% [scenario_name, candidate]
 	)
@@ -3471,13 +3471,13 @@ func reload_leaders_from_roster_paths(paths: Array[String], as_of_year: int = -1
 	var year := as_of_year if as_of_year > 0 else current_year
 	if paths.is_empty():
 		_historical_leaders_source_path = ""
-		Logger.info("LeaderManager: cleared roster (no leaders file for this scenario)", "LeaderManager")
+		Log.info("LeaderManager: cleared roster (no leaders file for this scenario)", "LeaderManager")
 		return 0
 
 	var merged_entries: Dictionary = {}
 	for path in paths:
 		if path.is_empty() or not FileAccess.file_exists(path):
-			Logger.warn("Leader roster file not found: %s" % path)
+			Log.warn("Leader roster file not found: %s" % path)
 			continue
 		for entry in _load_leader_entries_from_path(path):
 			if typeof(entry) != TYPE_DICTIONARY:
@@ -3491,7 +3491,7 @@ func reload_leaders_from_roster_paths(paths: Array[String], as_of_year: int = -1
 	if _roster_paths_are_modern_isolated(paths):
 		for leader_id in merged_entries.keys():
 			if not _leader_entry_valid_for_modern_roster(merged_entries[leader_id]):
-				Logger.warn(
+				Log.warn(
 					"LeaderManager: dropped non-modern entry '%s' from 2026 roster"
 					% leader_id
 				)
@@ -3512,7 +3512,7 @@ func reload_leaders_from_roster_paths(paths: Array[String], as_of_year: int = -1
 		register_leader(leader)
 		loaded += 1
 
-	Logger.info(
+	Log.info(
 		"Loaded %d leaders (%d in pool) from [%s] for year %d"
 		% [loaded, pooled, _historical_leaders_source_path, year], "LeaderManager"
 	)
@@ -3543,7 +3543,7 @@ func _load_leader_entries_from_path(path: String) -> Array:
 	file.close()
 	var json := JSON.new()
 	if json.parse(json_text) != OK:
-		Logger.warn(
+		Log.warn(
 			"Failed to parse leader roster JSON %s: %s" % [path, json.get_error_message()]
 		)
 		return []

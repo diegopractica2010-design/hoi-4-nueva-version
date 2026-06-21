@@ -1,7 +1,7 @@
 # scripts/agents/AgentManager.gd
 extends Node
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 ## Core manager for the espionage and agent system (MVP).
 
@@ -43,7 +43,7 @@ var _agent_screen_cache: Dictionary = {}       # country_tag -> AgentScreenData
 
 func _ready() -> void:
 	_load_mission_definitions()
-	Logger.info("AgentManager: Loaded %d mission definitions" % mission_definitions.size(), "AgentManager")
+	Log.info("AgentManager: Loaded %d mission definitions" % mission_definitions.size(), "AgentManager")
 
 	# Prefer central TimeManager when available (migration path).
 	if typeof(TimeManager) != TYPE_NIL:
@@ -80,7 +80,7 @@ func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
 
 func _load_mission_definitions() -> void:
 	if not FileAccess.file_exists(MISSIONS_PATH):
-		Logger.error("AgentManager: Could not find mission definitions at %s" % MISSIONS_PATH, "AgentManager")
+		Log.error("AgentManager: Could not find mission definitions at %s" % MISSIONS_PATH, "AgentManager")
 		return
 
 	var file := FileAccess.open(MISSIONS_PATH, FileAccess.READ)
@@ -91,7 +91,7 @@ func _load_mission_definitions() -> void:
 	if typeof(parsed) == TYPE_DICTIONARY:
 		mission_definitions = parsed
 	else:
-		Logger.error("AgentManager: Failed to parse mission_definitions.json", "AgentManager")
+		Log.error("AgentManager: Failed to parse mission_definitions.json", "AgentManager")
 
 
 # === Core API ===
@@ -125,7 +125,7 @@ func recruit_agent(country_tag: String) -> Agent:
 	(agents[tag] as Array).append(new_agent)
 	invalidate_agent_cache(tag)
 	agent_recruited.emit(new_agent.agent_id, tag)
-	Logger.info("AgentManager: Recruited %s for %s" % [new_agent.name, tag], "AgentManager")
+	Log.info("AgentManager: Recruited %s for %s" % [new_agent.name, tag], "AgentManager")
 	return new_agent
 
 
@@ -140,7 +140,7 @@ func assign_agent_to_mission(
 		return false
 
 	if not mission_definitions.has(mission_id):
-		Logger.warn("AgentManager: Unknown mission '%s'" % mission_id, "AgentManager")
+		Log.warn("AgentManager: Unknown mission '%s'" % mission_id, "AgentManager")
 		return false
 
 	var mission: Dictionary = mission_definitions[mission_id]
@@ -148,7 +148,7 @@ func assign_agent_to_mission(
 	var min_skill: int = int(mission.get("min_skill_level", 1))
 
 	if agent.get_skill(skill_req) < min_skill:
-		Logger.info("Agent %s does not meet the skill requirement for %s" % [agent.name, mission_id], "AgentManager")
+		Log.info("Agent %s does not meet the skill requirement for %s" % [agent.name, mission_id], "AgentManager")
 		return false
 
 	var target := target_tag.strip_edges().to_upper()
@@ -156,17 +156,17 @@ func assign_agent_to_mission(
 	if target.is_empty() and allow_home:
 		target = agent.country_tag
 	if target.is_empty() or (target == agent.country_tag and not allow_home):
-		Logger.warn("AgentManager: Invalid mission target '%s'" % target_tag, "AgentManager")
+		Log.warn("AgentManager: Invalid mission target '%s'" % target_tag, "AgentManager")
 		return false
 
 	var tech_target := target_tech_id.strip_edges()
 	if typeof(TechnologyManager) != TYPE_NIL:
 		if TechnologyManager.mission_requires_tech_target(mission_id) and tech_target.is_empty():
-			Logger.warn("AgentManager: Mission '%s' requires a technology target" % mission_id, "AgentManager")
+			Log.warn("AgentManager: Mission '%s' requires a technology target" % mission_id, "AgentManager")
 			return false
 	else:
 		if mission_id == "steal_research" and tech_target.is_empty():
-			Logger.warn("AgentManager: steal_research requires target_tech_id", "AgentManager")
+			Log.warn("AgentManager: steal_research requires target_tech_id", "AgentManager")
 			return false
 
 	agent.assigned_target_tag = target
@@ -180,7 +180,7 @@ func assign_agent_to_mission(
 	var tech_note := ""
 	if not tech_target.is_empty() and typeof(TechnologyManager) != TYPE_NIL:
 		tech_note = " → %s" % TechnologyManager.get_tech_display_name(tech_target)
-	Logger.info(
+	Log.info(
 		"Agent %s assigned to %s against %s%s"
 		% [agent.name, mission.get("name", mission_id), target, tech_note],
 		"AgentManager"
@@ -280,7 +280,7 @@ func _apply_mission_outcome(agent: Agent, mission: Dictionary, outcome: String, 
 		else:
 			# Legacy national_prestige tracking has been removed.
 			# NationalModifierManager is now the single source of truth for prestige/influence.
-			Logger.warn("AgentManager: Prestige gain skipped — legacy national_prestige fallback is no longer supported.", "AgentManager")
+			Log.warn("AgentManager: Prestige gain skipped — legacy national_prestige fallback is no longer supported.", "AgentManager")
 
 	# === Real Effect Application ===
 	var effect := str(result.get("effect", ""))
@@ -311,7 +311,7 @@ func _apply_mission_outcome(agent: Agent, mission: Dictionary, outcome: String, 
 	if intel_type != "":
 		_record_intelligence(country, intel_type, outcome)
 
-	Logger.info("Mission '%s' for %s resolved as %s (detected: %s)" % [mission_name, agent.name, outcome, detected], "AgentManager")
+	Log.info("Mission '%s' for %s resolved as %s (detected: %s)" % [mission_name, agent.name, outcome, detected], "AgentManager")
 
 
 func set_current_year(year: int) -> void:
@@ -355,7 +355,7 @@ func establish_network(lead_agent_id: String, province_id: int, focus: String = 
 		return false
 
 	if networks.has(province_id):
-		Logger.info("AgentManager: Network already exists in province %d" % province_id, "AgentManager")
+		Log.info("AgentManager: Network already exists in province %d" % province_id, "AgentManager")
 		return false
 
 	var net := AgentNetwork.new()
@@ -374,7 +374,7 @@ func establish_network(lead_agent_id: String, province_id: int, focus: String = 
 	agent.current_mission_id = "network_lead"
 	agent.assigned_province_id = province_id   # We may need to add this field to Agent later
 
-	Logger.info("AgentManager: %s established a %s network in province %d" % [agent.name, focus, province_id], "AgentManager")
+	Log.info("AgentManager: %s established a %s network in province %d" % [agent.name, focus, province_id], "AgentManager")
 	return true
 
 
@@ -457,13 +457,13 @@ func _process_network_action(net: AgentNetwork, months: int) -> void:
 			if randf() < 0.7 * months:
 				var intel := int(4 + effectiveness * 6)
 				net.total_intel_gathered += intel
-				Logger.info("Network in province %d gathered %d intel (effectiveness: %.2f)" % [net.province_id, intel, effectiveness], "AgentManager")
+				Log.info("Network in province %d gathered %d intel (effectiveness: %.2f)" % [net.province_id, intel, effectiveness], "AgentManager")
 
 		"supply_disruption":
 			var disruption := effectiveness * 0.08 * months
 			net.total_disruption_caused += disruption
 			# TODO: Apply actual province-level supply penalty here (reduce throughput, increase interdiction in this province)
-			Logger.info("Network in province %d disrupted supply by %.2f (effectiveness: %.2f)" % [net.province_id, disruption, effectiveness], "AgentManager")
+			Log.info("Network in province %d disrupted supply by %.2f (effectiveness: %.2f)" % [net.province_id, disruption, effectiveness], "AgentManager")
 
 		"infrastructure_sabotage":
 			var damage := effectiveness * 0.15 * months
@@ -475,7 +475,7 @@ func _process_network_action(net: AgentNetwork, months: int) -> void:
 					MapManager.update_province_infrastructure(net.province_id, new_infra)
 					MapManager.notify_province_changed(net.province_id, "infrastructure")
 					net.total_disruption_caused += damage
-					Logger.info("Agent sabotage: province %d infrastructure reduced by %d" \
+					Log.info("Agent sabotage: province %d infrastructure reduced by %d" \
 						% [net.province_id, int(damage)], "AgentManager")
 
 	# Detection roll
@@ -656,16 +656,16 @@ func _handle_network_detection(net: AgentNetwork) -> void:
 	var roll := randf()
 	if roll < 0.25:
 		lead.status = "captured"
-		Logger.info("Network in province %d was compromised — lead agent %s captured!" % [net.province_id, lead.name], "AgentManager")
+		Log.info("Network in province %d was compromised — lead agent %s captured!" % [net.province_id, lead.name], "AgentManager")
 	elif roll < 0.55:
 		net.strength *= 0.5
-		Logger.info("Network in province %d suffered major losses from detection." % net.province_id, "AgentManager")
+		Log.info("Network in province %d suffered major losses from detection." % net.province_id, "AgentManager")
 	else:
-		Logger.info("Network in province %d was detected but survived with reduced strength." % net.province_id, "AgentManager")
+		Log.info("Network in province %d was detected but survived with reduced strength." % net.province_id, "AgentManager")
 
 	if net.strength < 8.0:
 		networks.erase(net.province_id)
-		Logger.info("Network in province %d has been dismantled." % net.province_id, "AgentManager")
+		Log.info("Network in province %d has been dismantled." % net.province_id, "AgentManager")
 
 
 func get_target_countries_for(country_tag: String) -> Array[String]:
@@ -876,7 +876,7 @@ func _mission_row_for_agent(agent: Agent, mission_id: String, mission: Dictionar
 func clear_all_agents() -> void:
 	agents.clear()
 	invalidate_agent_cache()
-	Logger.info("AgentManager: All agents cleared.", "AgentManager")
+	Log.info("AgentManager: All agents cleared.", "AgentManager")
 
 
 func _reset_agent_after_mission(agent: Agent) -> void:
@@ -900,21 +900,21 @@ func _handle_post_mission_risk(agent: Agent, detected: bool, outcome: String) ->
 		# Even on success, high detection can compromise the agent
 		if roll < 0.35:
 			_set_agent_compromised(agent, 2)  # compromised for ~2 years
-			Logger.info("  -> %s was compromised after a successful but detected mission." % agent.name, "AgentManager")
+			Log.info("  -> %s was compromised after a successful but detected mission." % agent.name, "AgentManager")
 		return
 
 	# Failure or partial + detection
 	if roll < 0.25:
 		agent.status = "killed"
-		Logger.info("  -> %s was killed during the mission." % agent.name, "AgentManager")
+		Log.info("  -> %s was killed during the mission." % agent.name, "AgentManager")
 		agent_killed.emit(agent.agent_id, country)
 	elif roll < 0.55:
 		agent.status = "captured"
-		Logger.info("  -> %s was captured." % agent.name, "AgentManager")
+		Log.info("  -> %s was captured." % agent.name, "AgentManager")
 		agent_captured.emit(agent.agent_id, country)
 	else:
 		_set_agent_compromised(agent, 3)
-		Logger.info("  -> %s returned compromised." % agent.name, "AgentManager")
+		Log.info("  -> %s returned compromised." % agent.name, "AgentManager")
 
 
 func _set_agent_compromised(agent: Agent, years: int) -> void:
@@ -936,7 +936,7 @@ func _release_expired_compromised_agents() -> void:
 			agent.status = "available"
 			agent.compromised_until_year = 0
 			invalidate_agent_cache(agent.country_tag)
-			Logger.info("AgentManager: %s recovered from compromise." % agent.name, "AgentManager")
+			Log.info("AgentManager: %s recovered from compromise." % agent.name, "AgentManager")
 
 
 func get_recent_operations(country_tag: String, limit: int = RECENT_OPERATIONS_UI_LIMIT) -> Array[Dictionary]:
@@ -1150,7 +1150,7 @@ func _apply_production_delay(agent: Agent, mission: Dictionary, outcome: String,
 	var duration_months: int = sabotage_result[1]
 	var is_critical: bool = sabotage_result[2]
 
-	Logger.info("  [EFFECT] %s suffers sabotage-induced production disruption (magnitude: %.2f, duration: %d mo, critical: %s)" % [
+	Log.info("  [EFFECT] %s suffers sabotage-induced production disruption (magnitude: %.2f, duration: %d mo, critical: %s)" % [
 		target_country, final_magnitude, duration_months, is_critical
 	], "AgentManager")
 
@@ -1193,7 +1193,7 @@ func _apply_production_delay(agent: Agent, mission: Dictionary, outcome: String,
 		var msg := "    -> Damaged %d factories belonging to %s" % [damaged, target_country]
 		if is_critical:
 			msg += " (CRITICAL SABOTAGE)"
-		Logger.info(msg, "AgentManager")
+		Log.info(msg, "AgentManager")
 
 
 func _apply_supply_disruption(agent: Agent, mission: Dictionary, outcome: String, base_magnitude: float) -> void:
@@ -1205,7 +1205,7 @@ func _apply_supply_disruption(agent: Agent, mission: Dictionary, outcome: String
 	var duration_months: int = sabotage_result[1]
 	var is_critical: bool = sabotage_result[2]
 
-	Logger.info("  [EFFECT] %s supply lines disrupted by sabotage (magnitude: %.2f, duration: %d mo, critical: %s)" % [
+	Log.info("  [EFFECT] %s supply lines disrupted by sabotage (magnitude: %.2f, duration: %d mo, critical: %s)" % [
 		target_country, final_magnitude, duration_months, is_critical
 	], "AgentManager")
 
@@ -1261,7 +1261,7 @@ func _calculate_sabotage_effect(base_magnitude: float, sabotage_skill: int, outc
 
 func _apply_sabotage_production_debuff(target_country: String, magnitude: float, duration_months: int, is_critical: bool = false) -> void:
 	if typeof(NationalModifierManager) == TYPE_NIL:
-		Logger.info("    -> (No NationalModifierManager) Sabotage would have applied production debuff", "AgentManager")
+		Log.info("    -> (No NationalModifierManager) Sabotage would have applied production debuff", "AgentManager")
 		return
 
 	var penalty := clampf(magnitude, 0.05, 0.38)  # up to ~38% on crit
@@ -1287,12 +1287,12 @@ func _apply_sabotage_production_debuff(target_country: String, magnitude: float,
 	var msg := "    -> Applied temporary production debuff to %s (%.0f%% for %d months)" % [target_country, penalty * 100, duration_months]
 	if is_critical:
 		msg += " [CRITICAL]"
-	Logger.info(msg, "AgentManager")
+	Log.info(msg, "AgentManager")
 
 
 func _apply_sabotage_supply_debuff(target_country: String, magnitude: float, duration_months: int, is_critical: bool = false) -> void:
 	if typeof(NationalModifierManager) == TYPE_NIL:
-		Logger.info("    -> (No NationalModifierManager) Sabotage would have applied supply debuff", "AgentManager")
+		Log.info("    -> (No NationalModifierManager) Sabotage would have applied supply debuff", "AgentManager")
 		return
 
 	var penalty := clampf(magnitude * 0.9, 0.04, 0.28)
@@ -1317,7 +1317,7 @@ func _apply_sabotage_supply_debuff(target_country: String, magnitude: float, dur
 	var msg := "    -> Applied temporary supply consumption debuff to %s (+%.0f%% for %d months)" % [target_country, penalty * 100, duration_months]
 	if is_critical:
 		msg += " [CRITICAL]"
-	Logger.info(msg, "AgentManager")
+	Log.info(msg, "AgentManager")
 
 
 func _apply_stability_damage(target_country: String, magnitude: float) -> void:
@@ -1331,7 +1331,7 @@ func _apply_stability_damage(target_country: String, magnitude: float) -> void:
 			"Influence operation"   # source_detail
 		)
 	else:
-		Logger.info("  [EFFECT] %s internal stability damaged by %.1f (Influence) — NationalModifierManager not available" % [target_country, magnitude], "AgentManager")
+		Log.info("  [EFFECT] %s internal stability damaged by %.1f (Influence) — NationalModifierManager not available" % [target_country, magnitude], "AgentManager")
 
 
 func _apply_research_theft(
@@ -1342,7 +1342,7 @@ func _apply_research_theft(
 	detected: bool,
 ) -> void:
 	if typeof(TechnologyManager) == TYPE_NIL:
-		Logger.info(
+		Log.info(
 			"  [EFFECT] %s stole %.0f research progress (TechnologyManager unavailable)"
 			% [agent.country_tag, magnitude],
 			"AgentManager"
@@ -1359,7 +1359,7 @@ func _apply_research_theft(
 		detected,
 		str(mission.get("name", "")),
 	)
-	Logger.info(
+	Log.info(
 		"  [EFFECT] %s stole %.0f days on '%s' from %s (victim lost %.0f, compromised: %s)"
 		% [
 			agent.country_tag,
@@ -1383,7 +1383,7 @@ func _establish_long_term_tech_intel(agent: Agent, mission: Dictionary, outcome:
 			bonus,
 			str(mission.get("name", "")),
 		)
-	Logger.info(
+	Log.info(
 		"  [EFFECT] %s established long-term technology intel (+%.0f RP/day)"
 		% [agent.country_tag, bonus],
 		"AgentManager"
@@ -1391,7 +1391,7 @@ func _establish_long_term_tech_intel(agent: Agent, mission: Dictionary, outcome:
 
 
 func _apply_intel_bonus(actor_country: String, magnitude: float) -> void:
-	Logger.info("  [EFFECT] %s gained temporary intelligence bonus (+%.0f)" % [actor_country, magnitude], "AgentManager")
+	Log.info("  [EFFECT] %s gained temporary intelligence bonus (+%.0f)" % [actor_country, magnitude], "AgentManager")
 
 
 # Simple intelligence cache for future systems (Supply, Combat, Diplomacy)
@@ -1405,7 +1405,7 @@ func _record_intelligence(country: String, intel_type: String, outcome: String) 
 	var value := 10 if outcome == "success" else 4
 	cache[intel_type] = int(cache.get(intel_type, 0)) + value
 
-	Logger.info("  [INTEL] %s gained %d %s intelligence (total: %d)" % [
+	Log.info("  [INTEL] %s gained %d %s intelligence (total: %d)" % [
 		country, value, intel_type, int(cache.get(intel_type, 0))
 	], "AgentManager")
 
@@ -1496,14 +1496,14 @@ func _apply_enemy_agent_disruption(target_country: String, magnitude: float) -> 
 
 		disrupted += 1
 
-	Logger.info("  [COUNTER-INTEL] %s sweep: disrupted %d enemy networks, cleared effects in %d provinces (mag %.1f)" % [tag, disrupted, cleared_effects, magnitude], "AgentManager")
+	Log.info("  [COUNTER-INTEL] %s sweep: disrupted %d enemy networks, cleared effects in %d provinces (mag %.1f)" % [tag, disrupted, cleared_effects, magnitude], "AgentManager")
 
 
 func _degrade_enemy_intel(actor_country: String, magnitude: float) -> void:
 	# This is an offensive counter-intel success — degrade the *enemy's* intel on us
 	var enemies = []  # In a real game we'd have a list of relevant opponents
 	# For MVP, just log a strong effect
-	Logger.info("  [COUNTER-INTEL] %s successfully degraded enemy intelligence by %d" % [actor_country, int(magnitude)], "AgentManager")
+	Log.info("  [COUNTER-INTEL] %s successfully degraded enemy intelligence by %d" % [actor_country, int(magnitude)], "AgentManager")
 
 
 func _apply_tech_protection(agent: Agent, mission: Dictionary, magnitude: float) -> void:
@@ -1514,7 +1514,7 @@ func _apply_tech_protection(agent: Agent, mission: Dictionary, magnitude: float)
 			years,
 			str(mission.get("name", "")),
 		)
-	Logger.info(
+	Log.info(
 		"  [COUNTER-INTEL] %s research protected until %d"
 		% [agent.country_tag, _current_year + years],
 		"AgentManager"

@@ -1,6 +1,6 @@
 extends Node
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 const FACTORY_PRIORITY_MILITARY: float = 1.5
 const FACTORY_PRIORITY_CIVILIAN: float = 1.0
@@ -12,7 +12,7 @@ var EVAL_INTERVAL_DAYS: int = 14
 var _ai_config: Dictionary = {}
 
 func _ready() -> void:
-	Logger.info("AIEconomyManager initialized", "AIEconomyManager")
+	Log.info("AIEconomyManager initialized", "AIEconomyManager")
 	if typeof(TimeManager) != TYPE_NIL and TimeManager.has_signal("game_day_advanced"):
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
@@ -51,7 +51,7 @@ func get_ai_config(tag: String) -> Dictionary:
 	return defaults
 
 func _evaluate_nation_economy(tag: String) -> void:
-	Logger.info("AIEconomy: evaluating " + tag, "AIEconomyManager")
+	Log.info("AIEconomy: evaluating " + tag, "AIEconomyManager")
 	_evaluate_factory_construction(tag)
 	_evaluate_production(tag)
 	_evaluate_technology_research(tag)
@@ -70,7 +70,7 @@ func _evaluate_factory_construction(tag: String) -> void:
 	if total < 3:
 		_build_factory(tag, "civilian")
 	elif config.get("prefer_military", false) or _is_nation_at_war(tag):
-		var mil_pct := float(mil_factories) / max(total, 1)
+		var mil_pct: float = float(mil_factories) / float(max(total, 1))
 		if mil_pct < 0.4:
 			_build_factory(tag, "military")
 		else:
@@ -91,7 +91,7 @@ func _build_factory(tag: String, factory_type: String) -> void:
 	var province_id: int = provinces[0]
 	if FactoryManager.has_method("create_factory_for_province"):
 		FactoryManager.create_factory_for_province(province_id, tag, 0, factory_type)
-		Logger.info("AIEconomy: " + tag + " building " + factory_type + " factory in province " + str(province_id), "AIEconomyManager")
+		Log.info("AIEconomy: " + tag + " building " + factory_type + " factory in province " + str(province_id), "AIEconomyManager")
 
 func _evaluate_production(tag: String) -> void:
 	if typeof(ProductionManager) == TYPE_NIL:
@@ -108,19 +108,19 @@ func _evaluate_production(tag: String) -> void:
 		if designs.is_empty():
 			return
 		if config.get("production_focus", "balanced") == "air" and _has_air_design(designs):
-			var air_design := _pick_design_of_type(designs, "air")
+			var air_design: Variant = _pick_design_of_type(designs, "air")
 			if air_design != null:
 				_start_production_line(tag, air_design)
 		elif config.get("production_focus", "balanced") == "naval" and _has_naval_design(designs):
-			var naval_design := _pick_design_of_type(designs, "naval")
+			var naval_design: Variant = _pick_design_of_type(designs, "naval")
 			if naval_design != null:
 				_start_production_line(tag, naval_design)
 		elif config.get("production_focus", "balanced") != "balanced":
-			var land_design := _pick_design_of_type(designs, "land")
+			var land_design: Variant = _pick_design_of_type(designs, "land")
 			if land_design != null:
 				_start_production_line(tag, land_design)
 		else:
-			var design := designs[0] if designs.size() > 0 else null
+			var design: Variant = designs[0] if designs.size() > 0 else null
 			if design != null:
 				_start_production_line(tag, design)
 
@@ -167,8 +167,11 @@ func _start_production_line(tag: String, design: Variant) -> void:
 	if design_id.is_empty():
 		return
 	if ProductionManager.has_method("create_line"):
-		ProductionManager.create_line(tag, design_id)
-		Logger.info("AIEconomy: " + tag + " started production line for " + design_id, "AIEconomyManager")
+		var line_id: String = "%s_%s" % [tag, design_id]
+		var line: ProductionLine = ProductionManager.create_line(line_id)
+		if line != null and ProductionManager.has_method("set_line_template"):
+			ProductionManager.set_line_template(line_id, design_id)
+			Log.info("AIEconomy: " + tag + " started production line for " + design_id, "AIEconomyManager")
 
 func _evaluate_technology_research(tag: String) -> void:
 	if typeof(TechnologyManager) == TYPE_NIL:
@@ -188,7 +191,7 @@ func _evaluate_technology_research(tag: String) -> void:
 			tech_id = chosen
 		if not tech_id.is_empty():
 			TechnologyManager.start_research(tag, tech_id)
-			Logger.info("AIEconomy: " + tag + " started researching " + tech_id, "AIEconomyManager")
+			Log.info("AIEconomy: " + tag + " started researching " + tech_id, "AIEconomyManager")
 
 func _choose_tech(tag: String, available_techs: Array, focus: String) -> Variant:
 	if available_techs.is_empty():
@@ -204,7 +207,7 @@ func _choose_tech(tag: String, available_techs: Array, focus: String) -> Variant
 	else:
 		var priority := ["industry", "weapons", "armor", "infrastructure", "economy", "air", "naval"]
 		for cat in priority:
-			var result := _filter_tech_by_category(available_techs, [cat])
+			var result: Variant = _filter_tech_by_category(available_techs, [cat])
 			if result != null:
 				return result
 		return available_techs[0]
@@ -240,7 +243,7 @@ func get_economy_status(tag: String) -> String:
 	var status := "=== AI ECONOMY STATUS (" + tag + ") ===\n"
 	status += "Config: " + str(get_ai_config(tag)) + "\n"
 	if typeof(ProductionManager) != TYPE_NIL and ProductionManager.has_method("get_production_lines_for_nation"):
-		var lines := ProductionManager.get_production_lines_for_nation(tag)
+		var lines: Array = ProductionManager.get_production_lines_for_nation(tag)
 		status += "Production lines: " + str(lines.size()) + "\n"
 	if typeof(TechnologyManager) != TYPE_NIL:
 		status += "Researching: " + str(_get_current_research(tag)) + "\n"

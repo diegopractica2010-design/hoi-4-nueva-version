@@ -82,7 +82,7 @@ static func is_naval_template(template: UnitTemplate) -> bool:
 static func is_naval_design(design_id: String) -> bool:
 	if design_id.is_empty() or GameData.design_data == null:
 		return false
-	var template := GameData.design_data.get_template(design_id)
+	var template: UnitTemplate = GameData.design_data.get_template(design_id)
 	return is_naval_template(template)
 
 

@@ -1,7 +1,7 @@
 # scripts/technology/TechnologyManager.gd
 extends Node
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 ## Research trees, per-country progress, RP pool, and unlock application (Phase A).
 
@@ -84,7 +84,7 @@ func _ready() -> void:
 		if not LeaderManager.game_year_advanced.is_connected(_on_game_year_advanced):
 			LeaderManager.game_year_advanced.connect(_on_game_year_advanced)
 
-	Logger.info("TechnologyManager: Loaded %d technology nodes" % technology_nodes.size(), "TechnologyManager")
+	Log.info("TechnologyManager: Loaded %d technology nodes" % technology_nodes.size(), "TechnologyManager")
 
 
 func _on_game_year_advanced(year: int) -> void:
@@ -109,7 +109,7 @@ func _load_all_trees() -> void:
 	technology_nodes.clear()
 	var dir := DirAccess.open(TREES_DIR)
 	if dir == null:
-		Logger.warn("TechnologyManager: Cannot open %s" % TREES_DIR)
+		Log.warn("TechnologyManager: Cannot open %s" % TREES_DIR)
 		return
 	dir.list_dir_begin()
 	var file_name := dir.get_next()
@@ -131,7 +131,7 @@ func _merge_tree_file(path: String) -> void:
 	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	file.close()
 	if typeof(parsed) != TYPE_DICTIONARY:
-		Logger.warn("TechnologyManager: Invalid tree JSON at %s" % path)
+		Log.warn("TechnologyManager: Invalid tree JSON at %s" % path)
 		return
 	for key in (parsed as Dictionary).keys():
 		if str(key).begins_with("_"):
@@ -1378,7 +1378,7 @@ func apply_scenario_starting_tech(
 		per_country = pack.get("countries", {}) as Dictionary
 	else:
 		defaults = {"completed": ["basic_machine_tools"], "research_slots": DEFAULT_RESEARCH_SLOTS}
-		Logger.warn(
+		Log.warn(
 			"TechnologyManager: No starting tech file for scenario '%s', using minimal defaults"
 			% scenario_name
 		)
@@ -1392,7 +1392,7 @@ func apply_scenario_starting_tech(
 		var entry := _merge_starting_entry(defaults, override)
 		_apply_country_starting_entry(tag, entry)
 		applied += 1
-	Logger.info(
+	Log.info(
 		"TechnologyManager: Applied starting tech for scenario '%s' (%d countries, year %d)"
 		% [scenario_name, applied, start_year], "TechnologyManager"
 	)
@@ -1408,7 +1408,7 @@ func _load_starting_pack(scenario_name: String) -> Dictionary:
 	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	file.close()
 	if typeof(parsed) != TYPE_DICTIONARY:
-		Logger.warn("TechnologyManager: Invalid starting tech JSON at %s" % path)
+		Log.warn("TechnologyManager: Invalid starting tech JSON at %s" % path)
 		return {}
 	return parsed as Dictionary
 
@@ -1486,7 +1486,7 @@ func _apply_completed_techs_in_order(country_tag: String, tech_ids: Array[String
 		var progressed := false
 		for tech_id in pending.duplicate():
 			if not technology_nodes.has(tech_id):
-				Logger.warn(
+				Log.warn(
 					"TechnologyManager: Unknown starting tech '%s' for %s"
 					% [tech_id, country_tag]
 				)
@@ -1503,7 +1503,7 @@ func _apply_completed_techs_in_order(country_tag: String, tech_ids: Array[String
 			progressed = true
 		if not progressed:
 			for tech_id in pending:
-				Logger.warn(
+				Log.warn(
 					"TechnologyManager: Could not grant starting tech '%s' for %s (missing prerequisites)"
 					% [tech_id, country_tag]
 				)

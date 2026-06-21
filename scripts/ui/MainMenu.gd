@@ -37,7 +37,7 @@
 class_name MainMenu
 extends Window
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 const MENU_WIDTH := 640
 const MENU_HEIGHT := 480
@@ -73,7 +73,7 @@ func _ready() -> void:
 	# Auto-pause on open (priority 1)
 	_pause_game(true)
 
-	Logger.info("MainMenu opened (auto-paused)", "MainMenu")
+	Log.info("MainMenu opened (auto-paused)", "MainMenu")
 
 func _clamp_to_viewport() -> void:
 	var vp := get_viewport().get_visible_rect().size
@@ -186,7 +186,7 @@ func _populate_save_list(parent: VBoxContainer) -> void:
 		rename_btn.text = "Renombrar"
 		rename_btn.pressed.connect(func():
 			# Lightweight foundation - real UI would use a LineEdit dialog
-			Logger.info("Rename requested for " + slot + " (use SaveLoadManager.rename_save via console/API for now)", "MainMenu")
+			Log.info("Rename requested for " + slot + " (use SaveLoadManager.rename_save via console/API for now)", "MainMenu")
 			if typeof(LeaderEventUI) != TYPE_NIL and LeaderEventUI.has_method("show_toast"):
 				LeaderEventUI.show_toast("Rename ready via API (see SaveLoadManager)", 2.0)
 		)
@@ -215,7 +215,7 @@ func _handle_menu_option(option: String) -> void:
 			pass
 		"save_as":
 			# Future: open a name dialog then call save_game with custom slot
-			Logger.info("Save As requested (API ready via SaveLoadManager)", "MainMenu")
+			Log.info("Save As requested (API ready via SaveLoadManager)", "MainMenu")
 		"return_to_main":
 			# Reiniciar partida: cerrar el menú y volver a la selección de nación.
 			_on_close_requested()
@@ -225,9 +225,9 @@ func _handle_menu_option(option: String) -> void:
 		"exit":
 			get_tree().quit()
 		"help":
-			Logger.info("Help/About requested", "MainMenu")
+			Log.info("Help/About requested", "MainMenu")
 		_:
-			Logger.info("MainMenu option: " + str(option), "MainMenu")
+			Log.info("MainMenu option: " + str(option), "MainMenu")
 
 func _on_close_requested() -> void:
 	_pause_game(false)

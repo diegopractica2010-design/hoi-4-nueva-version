@@ -1,6 +1,6 @@
 extends Node
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 signal weather_changed(region: String, weather: String)
 signal entrenchment_changed(formation_id: String, new_level: int)
@@ -47,7 +47,7 @@ const MAX_ENTRENCHMENT_LEVEL: int = 5
 const ENTRENCHMENT_DAYS_PER_LEVEL: int = 7
 
 func _ready() -> void:
-	Logger.info("CombatExpansionManager initialized", "CombatExpansionManager")
+	Log.info("CombatExpansionManager initialized", "CombatExpansionManager")
 	if typeof(TimeManager) != TYPE_NIL and TimeManager.has_signal("game_day_advanced"):
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
@@ -63,7 +63,7 @@ func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
 
 func get_terrain_modifier(terrain_type: String, is_defender: bool) -> float:
 	var clean := terrain_type.strip_edges().to_lower()
-	var mods := TERRAIN_MODIFIERS.get(clean, { "attack": 1.0, "defense": 1.0 })
+	var mods: Dictionary = TERRAIN_MODIFIERS.get(clean, { "attack": 1.0, "defense": 1.0 })
 	if is_defender:
 		return mods.get("defense", 1.0)
 	return mods.get("attack", 1.0)
@@ -79,7 +79,7 @@ func set_weather(region: String, weather: String) -> void:
 
 func get_weather_modifier(region: String, is_defender: bool) -> float:
 	var w := get_weather(region)
-	var mods := WEATHER_MODIFIERS.get(w, { "attack": 1.0, "defense": 1.0 })
+	var mods: Dictionary = WEATHER_MODIFIERS.get(w, { "attack": 1.0, "defense": 1.0 })
 	if is_defender:
 		return mods.get("defense", 1.0)
 	return mods.get("attack", 1.0)
@@ -127,7 +127,7 @@ func _advance_entrenchment() -> void:
 			if f != null:
 				_entrenchment_state.erase(f.formation_id)
 			continue
-		var current := _entrenchment_state.get(f.formation_id, 0)
+		var current: int = int(_entrenchment_state.get(f.formation_id, 0))
 		if current < MAX_ENTRENCHMENT_LEVEL:
 			_entrenchment_state[f.formation_id] = current + 1
 			entrenchment_changed.emit(f.formation_id, current + 1)
@@ -170,7 +170,7 @@ func _apply_reinforcement(formation_id: String, amount: float) -> void:
 		return
 	if UnitMovementSystem.has_method("reinforce_formation"):
 		UnitMovementSystem.reinforce_formation(formation_id, amount)
-	Logger.info("Reinforcement applied to " + formation_id + ": +" + str(amount), "CombatExpansionManager")
+	Log.info("Reinforcement applied to " + formation_id + ": +" + str(amount), "CombatExpansionManager")
 
 func get_reinforcement_queue_size(formation_id: String) -> int:
 	return _reinforcement_queue.get(formation_id, []).size()

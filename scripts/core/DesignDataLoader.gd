@@ -1,7 +1,7 @@
 class_name DesignDataLoader
 extends RefCounted
 
-const Logger = preload("res://scripts/core/Logger.gd")
+const Log = preload("res://scripts/core/Logger.gd")
 
 const MODULES_DIR := "res://data/modules/"
 const TEMPLATES_DIR := "res://data/unit_templates/"
@@ -23,20 +23,20 @@ func load_all() -> void:
 
 func load_modules() -> void:
 	modules = _load_json_objects_from_dir(MODULES_DIR, EquipmentModule.from_dict)
-	Logger.info("✅ Equipment modules loaded: " + str(modules.size()), "DesignDataLoader")
+	Log.info("✅ Equipment modules loaded: " + str(modules.size()), "DesignDataLoader")
 
 
 func load_templates() -> void:
 	templates = _load_json_objects_from_dir(TEMPLATES_DIR, UnitTemplate.from_dict)
-	Logger.info("✅ Unit templates loaded: " + str(templates.size()), "DesignDataLoader")
+	Log.info("✅ Unit templates loaded: " + str(templates.size()), "DesignDataLoader")
 
 
 func load_production_rules() -> void:
 	production_rules = _load_json_dict(RULES_PATH)
 	if production_rules.is_empty():
-		Logger.warn("Production line rules missing or invalid: " + RULES_PATH)
+		Log.warn("Production line rules missing or invalid: " + RULES_PATH)
 	else:
-		Logger.info("✅ Production line rules loaded", "DesignDataLoader")
+		Log.info("✅ Production line rules loaded", "DesignDataLoader")
 
 
 func get_module(module_id: String) -> EquipmentModule:
@@ -60,7 +60,7 @@ func load_sustainment_equipment() -> void:
 	sustainment_templates.clear()
 	var dir := DirAccess.open(SUSTAINMENT_DIR)
 	if dir == null:
-		Logger.warn("DesignDataLoader: sustainment equipment folder missing: ", SUSTAINMENT_DIR)
+		Log.warn("DesignDataLoader: sustainment equipment folder missing: ", SUSTAINMENT_DIR)
 		return
 	dir.list_dir_begin()
 	var file_name := dir.get_next()
@@ -72,7 +72,7 @@ func load_sustainment_equipment() -> void:
 				sustainment_templates[template_id] = data
 		file_name = dir.get_next()
 	dir.list_dir_end()
-	Logger.info("✅ Sustainment equipment loaded: " + str(sustainment_templates.size()), "DesignDataLoader")
+	Log.info("✅ Sustainment equipment loaded: " + str(sustainment_templates.size()), "DesignDataLoader")
 
 
 func get_sustainment_equipment(template_id: String) -> Dictionary:
@@ -116,7 +116,7 @@ func _load_json_objects_from_dir_recursive(
 ) -> void:
 	var dir := DirAccess.open(dir_path)
 	if dir == null:
-		Logger.warn("Could not open directory: " + dir_path)
+		Log.warn("Could not open directory: " + dir_path)
 		return
 	dir.list_dir_begin()
 	var file_name := dir.get_next()
@@ -147,16 +147,16 @@ func _load_json_objects_from_dir_recursive(
 
 func _load_json_dict(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
-		Logger.warn("Missing JSON file: " + path)
+		Log.warn("Missing JSON file: " + path)
 		return {}
 	var file := FileAccess.open(path, FileAccess.READ)
 	if not file:
-		Logger.warn("Could not open JSON file: " + path)
+		Log.warn("Could not open JSON file: " + path)
 		return {}
 	var json := JSON.new()
 	var parse_result := json.parse(file.get_as_text())
 	file.close()
 	if parse_result != OK or typeof(json.data) != TYPE_DICTIONARY:
-		Logger.warn("Failed to parse JSON: " + path)
+		Log.warn("Failed to parse JSON: " + path)
 		return {}
 	return json.data
