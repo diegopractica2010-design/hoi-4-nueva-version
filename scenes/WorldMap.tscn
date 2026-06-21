@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b32rba8qvhmi6"]
 
-[ext_resource type="Script" uid="uid://c6uhgynax25qv" path="res://scripts/map/MapRenderer.gd" id="1_ej7nn"]
+[ext_resource type="Script" uid="uid://bdxd72wlugb4b" path="res://scripts/map/MapRenderer.gd" id="1_ej7nn"]
 [ext_resource type="Texture2D" uid="uid://dupp3ypvp7dn3" path="res://assets/maps/world_map.png" id="2_qgb45"]
 [ext_resource type="Script" uid="uid://bq7xcm8p2nhk4" path="res://scripts/map/CameraController.gd" id="3_camctrl"]
 

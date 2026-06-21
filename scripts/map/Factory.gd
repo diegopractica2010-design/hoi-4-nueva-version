@@ -119,7 +119,9 @@ func get_current_efficiency() -> float:
 	if retooling_recovery_required <= 0.0:
 		return 1.0
 
-	var recovery_percent := retooling_recovery_progress / retooling_recovery_required
+	var recovery_percent := 0.0
+	if retooling_recovery_required > 0.0:
+		recovery_percent = retooling_recovery_progress / retooling_recovery_required
 	return lerpf(base_retained_efficiency, 1.0, clampf(recovery_percent, 0.0, 1.0))
 
 

@@ -334,6 +334,11 @@ var _offers_by_to: Dictionary = {}              # country_tag -> Array[offer_id]
 var _current_year: int = 1936
 
 # Simple value baselines (easy to move to a data file or rules json later)
+func _get_placeholder_design_id() -> String:
+	# TODO: Replace with dynamic query of available unowned designs
+	# Returning empty string disables this offer slot until implemented
+	return ""
+
 const DESIGN_BASE_VALUE_MULTIPLIER := 1.0
 const RESOURCE_BASE_RATES := {
 	"steel": 1.0,
@@ -430,8 +435,11 @@ func evaluate_fairness(offer_id: String, for_country: String) -> Dictionary:
 	var my_incoming := requested_value if is_from else offered_value
 
 	var score := 1.0
-	if my_outgoing > 0.0:
-		score = my_incoming / my_outgoing
+	if my_outgoing < 0.0001:
+		# Offerer gives nothing — treat as invalid offer, not zero-score
+		return _build_fairness_result(score, -1.0, my_outgoing, my_incoming,
+			"invalid", "Offer has no outgoing value", {}, offer.visibility, is_from)
+	score = my_incoming / my_outgoing
 
 	var reason := "Fair deal"
 	var recommendation := "Fair"
@@ -479,15 +487,29 @@ func evaluate_fairness(offer_id: String, for_country: String) -> Dictionary:
 				breakdown["intel_type"] = item.get("metadata", {}).get("type", "general")
 				break
 
+	return _build_fairness_result(score, score, my_outgoing, my_incoming,
+		reason, recommendation, breakdown, offer.get("visibility"), is_from)
+
+func _build_fairness_result(
+	_score: float,
+	_value_ratio: float,
+	_my_outgoing: float,
+	_my_incoming: float,
+	_reason: String,
+	_recommendation: String,
+	_breakdown: Dictionary = {},
+	_visibility = null,
+	_is_from: bool = false
+) -> Dictionary:
 	return {
-		"score": score,
-		"value_offered": my_outgoing,
-		"value_requested": my_incoming,
-		"reason": reason,
-		"recommendation": recommendation,
-		"breakdown": breakdown,
-		"visibility": offer.visibility,
-		"is_from": is_from
+		"score": _score,
+		"value_offered": _my_outgoing,
+		"value_requested": _my_incoming,
+		"reason": _reason,
+		"recommendation": _recommendation,
+		"breakdown": _breakdown,
+		"visibility": _visibility,
+		"is_from": _is_from
 	}
 
 ## Accepts the offer after validating that the offering country actually possesses
@@ -688,10 +710,12 @@ func generate_black_market_opportunity(country_tag: String, risk_level: float = 
 	# Dynamic risky/rewarding offers — higher reward (good terms for buyer) but with exposure risk
 	var rng := randf()
 	if rng < 0.3:
-		# Risky high-value design (recently captured or restricted tech)
+		var design_id := _get_placeholder_design_id()
+		if design_id.is_empty():
+			return ""
 		offered.append({
 			"type": TradeItemType.DESIGN,
-			"id": "pzkpfw_iv_ausf_h",  # placeholder; future: query interesting unowned/restricted designs
+			"id": design_id,
 			"quantity": 1,
 			"quality_modifier": 1.05,  # premium but "hot"
 			"metadata": {"kind": "purchased", "notes": "captured prototype - high risk of exposure"}
@@ -712,9 +736,13 @@ func generate_black_market_opportunity(country_tag: String, risk_level: float = 
 		requested.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 300.0})
 	else:
 		# High-risk province concession (extremely valuable but massive exposure)
+		var prov_id := ""
+		# TODO: Replace with real contested province ID from MapManager
+		if prov_id.is_empty():
+			return ""
 		offered.append({
 			"type": TradeItemType.PROVINCE,
-			"id": "strategic_border_province",  # placeholder; future: real contested or valuable province ids
+			"id": prov_id,
 			"quantity": 1,
 			"metadata": {"notes": "covert territorial concession - extreme exposure risk if discovered"}
 		})
@@ -806,9 +834,13 @@ func generate_black_market_opportunity(country_tag: String, risk_level: float = 
 
 	# Ultra high-stakes PROVINCE + INTEL bundle (territorial concession + detailed enemy agent network intel)
 	if randf() < 0.04:
+		var prov_id := ""
+		# TODO: Replace with real contested province ID from MapManager
+		if prov_id.is_empty():
+			return ""
 		offered.append({
 			"type": TradeItemType.PROVINCE,
-			"id": "strategic_border_province",
+			"id": prov_id,
 			"quantity": 1,
 			"metadata": {"notes": "covert territorial concession in exchange for intelligence - catastrophic exposure risk if discovered"}
 		})
@@ -889,10 +921,12 @@ func generate_public_market_offers(country_tag: String, count: int = 2) -> Array
 			offered.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 1500.0})
 			requested.append({"type": TradeItemType.RESOURCE, "id": "rubber", "quantity": 600.0})
 		elif rng < 0.65:
-			# Design they are willing to license/export (non-core or older model)
+			var design_id := _get_placeholder_design_id()
+			if design_id.is_empty():
+				continue
 			offered.append({
 				"type": TradeItemType.DESIGN,
-				"id": "pzkpfw_iv_ausf_d",  # placeholder older variant
+				"id": design_id,
 				"quantity": 1,
 				"quality_modifier": 0.88,
 				"metadata": {"kind": "licensed", "notes": "export license - older production model"}

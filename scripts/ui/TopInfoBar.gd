@@ -526,7 +526,12 @@ func _show_main_menu_popup_fallback() -> void:
 	main_vbox.add_child(title)
 
 	# Minimal options for fallback
-	var options := ["Guardar partida", "Cargar partida", "Volver al menú principal", "Salir al escritorio"]
+	var options := [
+		Localization.get_text("menu.main.save_game"),
+		Localization.get_text("menu.main.load_game"),
+		Localization.get_text("menu.main.quit"),
+		Localization.get_text("menu.main.quit"),
+	]
 	for opt in options:
 		var b := Button.new()
 		b.text = opt
@@ -553,7 +558,9 @@ func _add_menu_button(parent: VBoxContainer, label: String, option: String) -> v
 			"load":
 				_on_load_pressed()
 			"return_to_main":
-				print("TODO: Return to Main Menu (emit signal for scene change)")
+				if typeof(SaveLoadManager) != TYPE_NIL:
+					SaveLoadManager.pending_load_slot = ""
+				get_tree().change_scene_to_file("res://scenes/ui/StartMenu.tscn")
 			"exit":
 				get_tree().quit()
 			"help":

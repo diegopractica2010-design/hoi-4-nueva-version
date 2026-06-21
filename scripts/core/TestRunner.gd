@@ -13,13 +13,13 @@ func _ready() -> void:
 
 	# Flujo de nueva partida: el jugador debe elegir nación antes de cargar el escenario.
 	# Si todavía no hay selección, mostramos la pantalla de selección de nación y volvemos.
-	if NationSelectScreen.selected_tag.strip_edges().is_empty():
+	if typeof(GameData) != TYPE_NIL and GameData.selected_nation_tag.strip_edges().is_empty():
 		print("No hay nación seleccionada — abriendo pantalla de selección.")
 		call_deferred("_go_to_nation_select")
 		return
 
-	# Nación elegida en NationSelectScreen (por defecto "CHL" si llegara vacía).
-	player_tag = NationSelectScreen.selected_tag.strip_edges()
+	# Nación elegida en GameData (por defecto "CHL" si llegara vacía).
+	player_tag = GameData.selected_nation_tag.strip_edges() if typeof(GameData) != TYPE_NIL else ""
 	if player_tag.is_empty():
 		player_tag = "CHL"
 
@@ -65,10 +65,8 @@ func _ready() -> void:
 
 	if map_renderer and loader:
 		map_renderer.build_supply_network(loader.get_city_layer(), player_tag)
-		var sm := get_node_or_null("/root/SupplyManager")
-		if sm:
-			sm.record_attrition("us_infantry_div_ww2", 120, {"m4_sherman_medium": 2.0})
-			sm.advance_supply_day(1.0)
+		# Supply advances automatically via TimeManager.game_day_advanced signal.
+		# Manual advance_supply_day() calls here cause double-tick on boot.
 		print("Supply network ready (toggle overlay with L)")
 
 	if mm != null and mm.has_method("has_province_data") and mm.has_province_data():

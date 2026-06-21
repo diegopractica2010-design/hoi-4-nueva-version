@@ -3,6 +3,7 @@
   "name": "1879 - Guerra del Pacifico",
   "start_date": "1879-02-14",
   "description": "Fundacion historica para la conversion de la Guerra del Pacifico. Chile, Peru y Bolivia son paises jugables; Argentina, Brasil, Estados Unidos, Reino Unido, Francia y Alemania operan como actores diplomaticos de IA.",
+  "_audit_note": "provinces list contains only override states. Base state for all 847 provinces comes from data/provinces/provinces_base.json. GER/FRA/ENG/USA entries are placeholder data from initial scaffolding and should be replaced with historically accurate 1879 province ownership in a future data pass.",
   "country_refs": [
     "chile",
     "peru",

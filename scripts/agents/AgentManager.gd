@@ -56,10 +56,8 @@ func _ready() -> void:
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
 
-	# Backward-compat during transition
-	if typeof(LeaderManager) != TYPE_NIL:
-		if not LeaderManager.game_year_advanced.is_connected(_on_game_year_advanced):
-			LeaderManager.game_year_advanced.connect(_on_game_year_advanced)
+	# Connected to TimeManager only. LeaderManager.game_year_advanced was a
+	# backward-compat duplicate that risked double-firing advance_missions(12).
 
 
 func _on_game_year_advanced(year: int) -> void:
@@ -465,8 +463,17 @@ func _process_network_action(net: AgentNetwork, months: int) -> void:
 			print("Network in province %d disrupted supply by %.2f (effectiveness: %.2f)" % [net.province_id, disruption, effectiveness])
 
 		"infrastructure_sabotage":
-			# Future: damage infrastructure or increase movement cost in province
-			pass
+			var damage := effectiveness * 0.15 * months
+			damage = clampf(damage, 0.0, 5.0)
+			if typeof(MapManager) != TYPE_NIL and MapManager.has_method("get_province"):
+				var province = MapManager.get_province(net.province_id)
+				if province != null:
+					var new_infra: int = max(0, province.infrastructure - int(damage))
+					MapManager.update_province_infrastructure(net.province_id, new_infra)
+					MapManager.notify_province_changed(net.province_id, "infrastructure")
+					net.total_disruption_caused += damage
+					print("Agent sabotage: province %d infrastructure reduced by %d" \
+						% [net.province_id, int(damage)])
 
 	# Detection roll
 	if randf() < detection_chance * months:

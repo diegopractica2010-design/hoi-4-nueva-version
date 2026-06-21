@@ -3,7 +3,7 @@ extends Control
 
 signal nation_selected(tag: String)
 
-static var selected_tag: String = ""
+# selected_nation_tag moved to GameData.selected_nation_tag for safe cross-scene access
 
 const GAME_SCENE_PATH := "res://scenes/TestScenario.tscn"
 
@@ -189,11 +189,11 @@ func _small_style(bg: Color) -> StyleBoxFlat:
 
 
 func _on_nation_pressed(tag: String) -> void:
-	selected_tag = tag
+	GameData.selected_nation_tag = tag
 	nation_selected.emit(tag)
 	get_tree().change_scene_to_file(GAME_SCENE_PATH)
 
 
 func _on_back_pressed() -> void:
-	selected_tag = ""
+	GameData.selected_nation_tag = ""
 	get_tree().change_scene_to_file("res://scenes/ui/StartMenu.tscn")

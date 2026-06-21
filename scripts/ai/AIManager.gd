@@ -6,7 +6,6 @@ extends Node
 # (patron DT-02). Sigue accesible globalmente como `AIManager`.
 
 const ADJACENCY_PATH := "res://data/provinces/province_adjacency.json"
-const SCENARIO_1879_PATH := "res://data/scenarios/1879/scenario.json"
 const SCENARIO_1879_TAG_ORDER: Array[String] = [
 	"CHL", "PER", "BOL", "ARG", "BRA", "ENG", "GER", "FRA", "USA",
 ]
@@ -327,19 +326,11 @@ func _load_adjacency() -> void:
 func _load_1879_scenario_state() -> void:
 	_scenario_data.clear()
 	_war_state.clear()
-	if not FileAccess.file_exists(SCENARIO_1879_PATH):
-		push_warning("AIManager: 1879 scenario file not found: %s" % SCENARIO_1879_PATH)
-		return
-	var file := FileAccess.open(SCENARIO_1879_PATH, FileAccess.READ)
-	if file == null:
-		return
-	var parsed: Variant = JSON.parse_string(file.get_as_text())
-	file.close()
-	if typeof(parsed) != TYPE_DICTIONARY:
-		push_warning("AIManager: invalid scenario JSON: %s" % SCENARIO_1879_PATH)
-		return
-	_scenario_data = (parsed as Dictionary).duplicate(true)
-	_parse_war_state(_scenario_data.get("initial_war_state", {}))
+	var loader := get_node_or_null("/root/ScenarioLoader") as ScenarioLoader
+	if loader != null:
+		_parse_war_state(loader.get_war_state())
+	else:
+		push_warning("AIManager: ScenarioLoader not ready, war state unavailable")
 
 
 func _parse_war_state(initial_war_state: Variant) -> void:

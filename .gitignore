@@ -23,6 +23,12 @@ builds/
 *.x86_64
 *.app
 
+# Logs (runtime — change every game run)
+*.log
+
+# Batch files (generated at runtime)
+*.bat
+
 # OS
 .DS_Store
 Thumbs.db

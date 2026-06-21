@@ -3,6 +3,7 @@ extends Node
 ## Global design/production data. Loaded once at startup.
 
 var design_data: DesignDataLoader = DesignDataLoader.new()
+var selected_nation_tag: String = ""
 
 
 func _ready() -> void:

@@ -105,8 +105,11 @@ func _resolve_battle(province_id: int, attacker_id: String, defender_id: String)
 			"winner_tag": winner_tag,
 			"intensity": intensity,
 		}
+		# attacker.province_id = province the attacker moved FROM (origin terrain)
+		# province_id = the combat province (defender's terrain)
 		aftermath = _resolver.resolve_battle_aftermath(
-			attacker_id, defender_id, battle_result, intensity, province_id, province_id,
+			attacker_id, defender_id, battle_result, intensity,
+			attacker.province_id, province_id,
 		)
 
 	var attacker_casualties := _sum_casualties(aftermath.get("attacker_casualty", {}))

@@ -79,12 +79,12 @@ func _clamp_to_viewport() -> void:
 	position = (Vector2i(vp) - size) / 2
 
 func _build_menu_options() -> void:
-	options_vbox.add_child(_make_menu_button("Nueva Partida", "new_game"))
-	options_vbox.add_child(_make_menu_button("Guardar partida", "save"))
-	options_vbox.add_child(_make_menu_button("Cargar partida", "load"))
-	options_vbox.add_child(_make_menu_button("Guardar como...", "save_as"))
-	options_vbox.add_child(_make_menu_button("Volver al menú principal", "return_to_main"))
-	options_vbox.add_child(_make_menu_button("Salir al escritorio", "exit"))
+	options_vbox.add_child(_make_menu_button(Localization.get_text("menu.main.new_game"), "new_game"))
+	options_vbox.add_child(_make_menu_button(Localization.get_text("menu.main.save_game"), "save"))
+	options_vbox.add_child(_make_menu_button(Localization.get_text("menu.main.load_game"), "load"))
+	options_vbox.add_child(_make_menu_button(Localization.get_text("menu.main.save_game"), "save_as"))
+	options_vbox.add_child(_make_menu_button(Localization.get_text("menu.main.quit"), "return_to_main"))
+	options_vbox.add_child(_make_menu_button(Localization.get_text("menu.main.quit"), "exit"))
 	options_vbox.add_child(_make_menu_button("Ayuda / Acerca de", "help"))
 
 	var spacer := Control.new()

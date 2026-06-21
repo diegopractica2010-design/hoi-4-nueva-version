@@ -30,8 +30,9 @@ func _build_apk() -> void:
 	preset.set("package/unique_name", "com.estudiopaulina.guerradelpacifico")
 	preset.set("package/name", "Guerra del Pacifico 1879")
 
-	var proj_dir: String = ProjectSettings.globalize_path("res://")
-	var out: String = proj_dir.path_join("../../_builds/android/GuerraDelPacifico.apk").simplify_path()
+	# Ruta relativa al directorio raíz del proyecto
+	var out: String = ProjectSettings.globalize_path("res://") \
+	    .path_join("builds/android/GuerraDelPacifico.apk")
 	DirAccess.make_dir_recursive_absolute(out.get_base_dir())
 
 	plat.clear_messages()

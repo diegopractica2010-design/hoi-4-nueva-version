@@ -57,6 +57,7 @@ var player_tag: String = "CHL"
 # Estado interno.
 var _scenario_loaded: bool = false
 var _victory_triggered: bool = false
+var _days_evaluated: int = 0
 var _loader: Node = null
 
 
@@ -117,6 +118,7 @@ func _on_game_day_advanced(_year: int, _month: int, _day: int) -> void:
 	if typeof(MapManager) == TYPE_NIL or not MapManager.has_province_data():
 		return
 
+	_days_evaluated += 1
 	_evaluate_victory_conditions()
 
 
@@ -125,15 +127,19 @@ func _on_province_captured(_province_id: int, _new_owner: String, _old_owner: St
 
 
 func _check_victory_conditions() -> void:
-	if _victory_triggered:
-		return
 	if not _scenario_loaded:
-		_try_connect_loader()
-		if _is_1879_scenario():
-			_scenario_loaded = true
-	if not _scenario_loaded or not _is_1879_scenario():
 		return
 	if typeof(MapManager) == TYPE_NIL or not MapManager.has_province_data():
+		return
+	if typeof(TimeManager) == TYPE_NIL:
+		return
+	# Only evaluate after at least 1 full game day has advanced
+	if _days_evaluated == 0:
+		_days_evaluated += 1
+		return
+	if _victory_triggered:
+		return
+	if not _is_1879_scenario():
 		return
 	_evaluate_victory_conditions()
 

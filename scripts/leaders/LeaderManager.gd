@@ -109,6 +109,7 @@ const SCENARIO_LEADER_PATHS: Dictionary = {
 }
 ## Earlier-era rosters merged forward; later files override same leader_id. 2026 is isolated.
 const SCENARIO_LEADER_ROSTER_CHAIN: Dictionary = {
+	"1879": [HISTORICAL_LEADERS_1918_PATH],
 	"1918": [HISTORICAL_LEADERS_1918_PATH],
 	"1936": [HISTORICAL_LEADERS_1918_PATH, HISTORICAL_LEADERS_1936_PATH],
 	"2026": [HISTORICAL_LEADERS_2026_PATH],
@@ -191,8 +192,8 @@ func _ready() -> void:
 		player_country_tag = SupplyManager.player_tag
 	_load_trait_definitions()
 	_load_training_path_definitions()
-	set_current_year(1936)
-	load_historical_leaders(HISTORICAL_LEADERS_1936_PATH, 1936)
+	# Year and leader set are initialized by ScenarioLoader.load_scenario()
+	# via load_leaders_for_scenario(). Do not pre-load any year here.
 	# Retirement popups + news toasts: LeaderEventUI autoload listens to
 	# leader_retirement_offered and related signals.
 

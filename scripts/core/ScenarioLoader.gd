@@ -20,6 +20,7 @@ var adjacency_system: AdjacencySystem
 
 ## Current/last loaded scenario name (for SaveLoadManager metadata and validation).
 var current_scenario_name: String = ""
+var _last_scenario_data: Dictionary = {}
 
 signal scenario_loaded()
 
@@ -230,6 +231,7 @@ func load_scenario(scenario_name: String) -> bool:
 	scenario_runtime_data["countries"] = resolved_country_entries
 
 	current_scenario_name = scenario_name
+	_last_scenario_data = data
 	
 	provinces.clear()
 	countries.clear()
@@ -244,7 +246,10 @@ func load_scenario(scenario_name: String) -> bool:
 	_infer_port_access_for_all(provinces)
 	_spawn_scenario_factories(scenario_name, scenario_runtime_data)
 	var scenario_year := _parse_scenario_start_year(data)
-	var start_date_str := str(data.get("start_date", "1936-01-01"))
+	if scenario_year < 0:
+		push_error("ScenarioLoader: aborting load due to invalid start year.")
+		return false
+	var start_date_str := str(data.get("start_date", ""))
 	# New central clock (non-breaking: we still pass year to legacy systems for now)
 	if typeof(TimeManager) != TYPE_NIL:
 		TimeManager.initialize_from_scenario_start_date(start_date_str)
@@ -266,6 +271,10 @@ func load_scenario(scenario_name: String) -> bool:
 		mm.call("initialize_from_map_data", map_data)
 
 	return true
+
+
+func get_war_state() -> Dictionary:
+	return _last_scenario_data.get("initial_war_state", {})
 
 
 ## Despliega las fuerzas iniciales del escenario (starting_forces) colocando las
@@ -313,11 +322,12 @@ func _spawn_scenario_factories(scenario_name: String, scenario_data: Dictionary)
 
 
 func _parse_scenario_start_year(data: Dictionary) -> int:
-	var start_date := str(data.get("start_date", "1936-01-01"))
+	var start_date := str(data.get("start_date", ""))
 	var parts := start_date.split("-")
 	if parts.size() >= 1 and parts[0].is_valid_int():
 		return int(parts[0])
-	return 1936
+	push_error("ScenarioLoader: start_date missing or invalid in scenario JSON. Scenario cannot load safely.")
+	return -1
 
 
 func _load_scenario_leaders(scenario_name: String, start_year: int) -> void:

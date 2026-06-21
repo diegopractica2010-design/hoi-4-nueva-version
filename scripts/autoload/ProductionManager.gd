@@ -1,6 +1,10 @@
 extends Node
 
-@onready var factory_manager: Node = get_node_or_null("/root/FactoryManager")
+var __get_factory_manager()_cache: Node = null
+func _get__get_factory_manager()() -> Node:
+	if __get_factory_manager()_cache == null:
+		__get_factory_manager()_cache = get_node_or_null("/root/FactoryManager")
+	return __get_factory_manager()_cache
 
 ## National production coordinator: multiple lines, design families, focus/doctrine modifiers.
 
@@ -187,8 +191,8 @@ func set_line_template(line_id: String, template_id: String) -> Dictionary:
 
 	var owner_tag := ""
 	var fac_for_gate: Factory = null
-	if factory_manager != null and line.factory_id > 0:
-		fac_for_gate = factory_manager.get_factory(line.factory_id)
+	if _get_factory_manager() != null and line.factory_id > 0:
+		fac_for_gate = _get_factory_manager().get_factory(line.factory_id)
 		if fac_for_gate != null:
 			owner_tag = fac_for_gate.owner_tag
 	if typeof(TechnologyManager) != TYPE_NIL and not owner_tag.is_empty():
@@ -1046,14 +1050,14 @@ func _naval_production_allowed(line: ProductionLine, design_id: String) -> bool:
 		return true
 	if line.factory_id == 0:
 		return true
-	if factory_manager == null:
+	if _get_factory_manager() == null:
 		return false
-	var factory: Factory = factory_manager.get_factory(line.factory_id)
+	var factory: Factory = _get_factory_manager().get_factory(line.factory_id)
 	if factory == null:
 		return false
 	if not ProductionNavalRules.factory_can_build_naval(factory):
 		return false
-	return factory_manager.province_has_port(factory.province_id)
+	return _get_factory_manager().province_has_port(factory.province_id)
 
 
 func _clear_modifiers_with_tag(tag: String) -> void:
@@ -1074,9 +1078,9 @@ func get_line_efficiency(line_id: String) -> float:
 
 
 func get_lines_on_design_in_factory(factory_id: int, design_id: String) -> int:
-	if factory_manager == null or design_id.is_empty():
+	if _get_factory_manager() == null or design_id.is_empty():
 		return 0
-	var factory: Factory = factory_manager.get_factory(factory_id)
+	var factory: Factory = _get_factory_manager().get_factory(factory_id)
 	if factory == null:
 		return 0
 
@@ -1094,8 +1098,8 @@ func get_concentrated_production_multiplier(factory_id: int, design_id: String) 
 		return 1.0
 
 	var slot_rules: Dictionary = {}
-	if factory_manager != null:
-		slot_rules = factory_manager.rules.get("slot_concentration", {})
+	if _get_factory_manager() != null:
+		slot_rules = _get_factory_manager().rules.get("slot_concentration", {})
 	var per_line := float(slot_rules.get("bonus_per_extra_line", 0.12))
 	var cap := float(slot_rules.get("max_multiplier", 1.6))
 	var bonus := 1.0 + float(lines_on_design - 1) * per_line
@@ -1103,10 +1107,10 @@ func get_concentrated_production_multiplier(factory_id: int, design_id: String) 
 
 
 func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
-	if factory_manager == null:
+	if _get_factory_manager() == null:
 		return false
 
-	var factory: Factory = factory_manager.get_factory(factory_id)
+	var factory: Factory = _get_factory_manager().get_factory(factory_id)
 	if factory == null:
 		push_warning("FactoryManager: Factory %d not found" % factory_id)
 		return false
@@ -1133,7 +1137,7 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 	elif not line.current_template_id.is_empty():
 		factory.sync_production_design(line.current_template_id)
 
-	if not factory_manager.assign_production_line_to_factory(factory_id, line_id):
+	if not _get_factory_manager().assign_production_line_to_factory(factory_id, line_id):
 		return false
 
 	if not line.design_id.is_empty() and not _naval_production_allowed(line, line.design_id):
@@ -1153,17 +1157,17 @@ func assign_line_to_factory(line_id: String, factory_id: int) -> bool:
 
 
 func get_factory_efficiency(factory_id: int) -> float:
-	if factory_manager:
-		return factory_manager.get_factory_efficiency(factory_id)
+	if _get_factory_manager():
+		return _get_factory_manager().get_factory_efficiency(factory_id)
 	return 1.0
 
 
 func get_factories_producing(design_id: String) -> Array[Factory]:
 	var result: Array[Factory] = []
-	if factory_manager == null or design_id.is_empty():
+	if _get_factory_manager() == null or design_id.is_empty():
 		return result
-	for fid in factory_manager.factories:
-		var f: Factory = factory_manager.factories[fid]
+	for fid in _get_factory_manager().factories:
+		var f: Factory = _get_factory_manager().factories[fid]
 		if f != null and f.current_production_design == design_id:
 			result.append(f)
 	return result
@@ -1181,19 +1185,19 @@ func get_total_output_for_design(design_id: String) -> float:
 
 func get_all_factories_for_country(country_tag: String) -> Array[Factory]:
 	var result: Array[Factory] = []
-	if factory_manager == null or country_tag.is_empty():
+	if _get_factory_manager() == null or country_tag.is_empty():
 		return result
-	for fid in factory_manager.factories:
-		var f: Factory = factory_manager.factories[fid] as Factory
+	for fid in _get_factory_manager().factories:
+		var f: Factory = _get_factory_manager().factories[fid] as Factory
 		if f != null and f.owner_tag == country_tag:
 			result.append(f)
 	return result
 
 
 func get_factory_summary(factory_id: int) -> Dictionary:
-	if factory_manager == null:
+	if _get_factory_manager() == null:
 		return {}
-	var f: Factory = factory_manager.get_factory(factory_id)
+	var f: Factory = _get_factory_manager().get_factory(factory_id)
 	if f == null:
 		return {}
 
@@ -1363,10 +1367,10 @@ func _append_to_group(group_dict: Dictionary, key: String, value: Variant) -> vo
 
 
 func reassign_factory(factory_id: int, new_design_id: String, new_category: String = "") -> bool:
-	if factory_manager == null:
+	if _get_factory_manager() == null:
 		return false
 
-	var factory: Factory = factory_manager.get_factory(factory_id)
+	var factory: Factory = _get_factory_manager().get_factory(factory_id)
 	if factory == null:
 		push_warning("Cannot reassign - factory %d not found" % factory_id)
 		return false
@@ -1397,7 +1401,7 @@ func reassign_factory(factory_id: int, new_design_id: String, new_category: Stri
 				% [factory_id, new_design_id]
 			)
 			return false
-		if factory_manager != null and not factory_manager.province_has_port(factory.province_id):
+		if _get_factory_manager() != null and not _get_factory_manager().province_has_port(factory.province_id):
 			push_warning(
 				"ProductionManager: factory %d is not in a port province"
 				% factory_id
@@ -1581,9 +1585,9 @@ func advance_production(days: float) -> void:
 		if line.factory_id == 0 or line.design_id.is_empty():
 			continue
 
-		if factory_manager == null:
+		if _get_factory_manager() == null:
 			continue
-		var factory: Factory = factory_manager.get_factory(line.factory_id)
+		var factory: Factory = _get_factory_manager().get_factory(line.factory_id)
 		if factory == null:
 			continue
 
@@ -1634,7 +1638,7 @@ func get_line_progress_info(line_id: String) -> Dictionary:
 		if template != null
 		else {}
 	)
-	var factory: Factory = factory_manager.get_factory(line.factory_id) if factory_manager else null
+	var factory: Factory = _get_factory_manager().get_factory(line.factory_id) if _get_factory_manager() else null
 	return {
 		"line_id": line_id,
 		"design_id": line.design_id,

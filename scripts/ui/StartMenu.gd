@@ -87,13 +87,13 @@ func _build_ui() -> void:
 	vbox.add_theme_constant_override("separation", 12)
 	menu_margin.add_child(vbox)
 
-	vbox.add_child(_make_button("Nueva partida", _on_new_game, true))
+	vbox.add_child(_make_button(Localization.get_text("menu.main.new_game"), _on_new_game, true))
 	var has_saves := typeof(SaveLoadManager) != TYPE_NIL and not SaveLoadManager.list_saves().is_empty()
-	var load_btn := _make_button("Cargar partida", _on_load_game)
+	var load_btn := _make_button(Localization.get_text("menu.main.load_game"), _on_load_game)
 	load_btn.disabled = not has_saves
 	vbox.add_child(load_btn)
-	vbox.add_child(_make_button("Ajustes", _on_settings))
-	vbox.add_child(_make_button("Salir", _on_quit))
+	vbox.add_child(_make_button(Localization.get_text("menu.main.settings"), _on_settings))
+	vbox.add_child(_make_button(Localization.get_text("menu.main.quit"), _on_quit))
 
 	var spacer_bottom := Control.new()
 	spacer_bottom.size_flags_vertical = Control.SIZE_EXPAND_FILL
