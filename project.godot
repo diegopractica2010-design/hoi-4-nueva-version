@@ -43,14 +43,14 @@ LanguageManager="*res://scripts/localization/LanguageManager.gd"
 TranslationProvider="*res://scripts/localization/TranslationProvider.gd"
 Localization="*res://scripts/localization/Localization.gd"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/exportador/plugin.cfg")
-
 [display]
 
 window/size/viewport_width=1680
 window/size/viewport_height=960
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/exportador/plugin.cfg")
 
 [input]
 
@@ -83,15 +83,9 @@ move_down={
 
 3d/physics_engine="Jolt Physics"
 
-[input_devices]
-
-pointing/emulate_mouse_from_touch=true
-pointing/emulate_touch_from_mouse=false
-
 [rendering]
 
+rendering_device/driver.windows="d3d12"
+gl_compatibility/fallback_to_angle=false
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-rendering_device/driver.windows="d3d12"
-gl_compatibility/driver.windows="opengl3"
-gl_compatibility/fallback_to_angle=false

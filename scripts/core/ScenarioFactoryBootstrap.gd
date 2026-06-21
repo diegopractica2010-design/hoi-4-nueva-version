@@ -145,4 +145,4 @@ static func _factory_manager() -> Node:
 	var tree := Engine.get_main_loop()
 	if tree == null:
 		return null
-	return tree.root.get_node_or_null("/root/FactoryManager")
+	return tree.root.get_node_or_null("FactoryManager")

@@ -11,7 +11,9 @@ var _is_headless: bool = false
 
 
 func _ready() -> void:
-	_qa_smoke_mode = "--qa-smoke" in OS.get_cmdline_user_args()
+	_qa_smoke_mode = ("--qa-smoke" in OS.get_cmdline_user_args()
+		or "--qa-smoke" in OS.get_cmdline_args()
+		or "++qa-smoke" in OS.get_cmdline_args())
 	_is_headless = DisplayServer.get_name() == "headless"
 	print("=== Epochs of Ascendancy Test Starting ===")
 
@@ -90,12 +92,12 @@ func _ready() -> void:
 
 	if not _is_headless and map_renderer and loader:
 		map_renderer.build_supply_network(loader.get_city_layer(), player_tag)
-		# Supply advances automatically via TimeManager.game_day_advanced signal.
-		# Manual advance_supply_day() calls here cause double-tick on boot.
 		print("Supply network ready (toggle overlay with L)")
 
 	if mm != null and mm.has_method("has_province_data") and mm.has_province_data():
-		print("✅ MapManager ready with %d provinces (ProvinceEffects now centralized)" % mm.get_province_count())
+		print("✅ MapManager ready with %d provinces" % mm.get_province_count())
+
+	_run_comprehensive_tests(loader, mm)
 
 	if not _is_headless:
 		_configure_top_info_bar(player_tag)
@@ -137,6 +139,28 @@ func _configure_top_info_bar(player_tag: String) -> void:
 	if top_bar != null:
 		top_bar.player_country_tag = player_tag
 
+
+func _run_comprehensive_tests(loader: ScenarioLoader, mm: Node) -> void:
+	var all_ok = true
+	var SaveLoadCycleTestScript = load("res://scripts/core/SaveLoadCycleTest.gd")
+	var ScenarioComprehensiveTestScript = load("res://scripts/core/ScenarioComprehensiveTest.gd")
+	var MapComprehensiveTestScript = load("res://scripts/core/MapComprehensiveTest.gd")
+	var CombatComprehensiveTestScript = load("res://scripts/core/CombatComprehensiveTest.gd")
+	print("\n=== Save/Load Cycle Tests ===")
+	all_ok = SaveLoadCycleTestScript.run_all() and all_ok
+	print("\n=== Scenario Comprehensive Tests ===")
+	all_ok = ScenarioComprehensiveTestScript.run_all(loader) and all_ok
+	print("\n=== Map Comprehensive Tests ===")
+	all_ok = MapComprehensiveTestScript.run_all(mm, loader) and all_ok
+	print("\n=== Combat Comprehensive Tests ===")
+	var bm = get_node_or_null("/root/BattleManager")
+	all_ok = CombatComprehensiveTestScript.run_all(bm) and all_ok
+	if all_ok:
+		print("\n✅ All comprehensive tests passed")
+	else:
+		push_error("\n❌ Some comprehensive tests failed")
+		if _qa_smoke_mode:
+			get_tree().quit(1)
 
 func _wire_factory_province_lookup() -> void:
 	var fm := get_node_or_null("/root/FactoryManager")

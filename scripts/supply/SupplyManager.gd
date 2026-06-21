@@ -281,7 +281,7 @@ func _get_base_supply_consumption(formation_id: String) -> float:
 	if template == null:
 		return 1.0
 	var design_data: DesignDataLoader = null
-	var gd := get_node_or_null("/root/GameData")
+	var gd := GameData
 	if gd != null and "design_data" in gd:
 		design_data = gd.design_data
 	var stats := template.get_final_combat_stats({}, design_data)
@@ -338,7 +338,7 @@ func _apply_national_supply_modifiers(formation_id: String, base_consumption: fl
 
 func get_attrition_cargo_summary(_leader_id: String = "") -> Dictionary:
 	var design_data: DesignDataLoader = null
-	var gd := get_node_or_null("/root/GameData")
+	var gd := GameData
 	if gd != null and "design_data" in gd:
 		design_data = gd.design_data
 	return attrition_ledger.compute_replenishment_cargo(

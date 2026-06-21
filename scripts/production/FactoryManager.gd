@@ -304,7 +304,7 @@ func _allocate_factory_id(province_id: int) -> int:
 func _invalidate_production_cache_for_owner(owner_tag: String) -> void:
 	if owner_tag.is_empty():
 		return
-	var production_mgr := get_node_or_null("/root/ProductionManager")
+	var production_mgr := ProductionManager
 	if production_mgr != null and production_mgr.has_method("invalidate_production_cache"):
 		production_mgr.invalidate_production_cache(owner_tag)
 

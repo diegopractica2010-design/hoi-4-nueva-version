@@ -5,7 +5,7 @@ var _factory_manager_cache: Node = null
 
 func _get_factory_manager() -> Node:
 	if _factory_manager_cache == null:
-		_factory_manager_cache = get_node_or_null("/root/FactoryManager")
+		_factory_manager_cache = FactoryManager
 	return _factory_manager_cache
 
 ## National production coordinator: multiple lines, design families, focus/doctrine modifiers.
@@ -428,7 +428,7 @@ func clear_unit_equipment_stock(unit_id: String) -> void:
 
 
 func get_division_required_equipment(division_template_id: String) -> Dictionary:
-	var supply := get_node_or_null("/root/SupplyManager")
+	var supply := SupplyManager
 	if supply == null:
 		return {}
 	var loader: DivisionTemplateLoader = supply.division_templates
@@ -529,7 +529,7 @@ func apply_equipment_shortage_modifiers(
 func get_division_sustainment_readiness_multiplier(division_template_id: String) -> float:
 	if division_template_id.is_empty() or GameData.design_data == null:
 		return 1.0
-	var supply := get_node_or_null("/root/SupplyManager")
+	var supply := SupplyManager
 	if supply == null:
 		return 1.0
 	var div: DivisionTemplate = supply.division_templates.get_division(division_template_id)
@@ -541,7 +541,7 @@ func get_division_sustainment_readiness_multiplier(division_template_id: String)
 func get_division_infantry_stats(division_template_id: String) -> Dictionary:
 	if division_template_id.is_empty() or GameData.design_data == null:
 		return {}
-	var supply := get_node_or_null("/root/SupplyManager")
+	var supply := SupplyManager
 	if supply == null:
 		return {}
 	var template: DivisionTemplate = supply.division_templates.get_division(division_template_id)
@@ -561,7 +561,7 @@ func get_division_infantry_combat_multiplier(division_template_id: String) -> fl
 func get_division_combat_modifiers(division_template_id: String) -> Dictionary:
 	if division_template_id.is_empty() or GameData.design_data == null:
 		return {}
-	var supply := get_node_or_null("/root/SupplyManager")
+	var supply := SupplyManager
 	if supply == null:
 		return {}
 	var template: DivisionTemplate = supply.division_templates.get_division(division_template_id)
@@ -573,7 +573,7 @@ func get_division_combat_modifiers(division_template_id: String) -> Dictionary:
 func get_division_final_combat_stats(division_template_id: String, unit_id: String = "") -> Dictionary:
 	if division_template_id.is_empty() or GameData.design_data == null:
 		return {}
-	var supply := get_node_or_null("/root/SupplyManager")
+	var supply := SupplyManager
 	if supply == null:
 		return {}
 	var template: DivisionTemplate = supply.division_templates.get_division(division_template_id)
@@ -1266,7 +1266,7 @@ func clear_all_production_caches() -> void:
 ## Clears production and leader screen caches (testing, save load, major resets).
 func clear_all_caches() -> void:
 	clear_all_production_caches()
-	var leader_mgr := get_node_or_null("/root/LeaderManager")
+	var leader_mgr := LeaderManager
 	if leader_mgr != null and leader_mgr.has_method("clear_all_leader_caches"):
 		leader_mgr.clear_all_leader_caches()
 

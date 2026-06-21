@@ -258,7 +258,7 @@ func load_scenario(scenario_name: String) -> bool:
 	_apply_scenario_starting_technology(scenario_name, scenario_year)
 	_spawn_scenario_formations(scenario_name)
 	_deploy_starting_forces(data)
-	var production_mgr := get_node_or_null("/root/ProductionManager")
+	var production_mgr := ProductionManager
 	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
 		production_mgr.clear_all_caches()
 	if typeof(AIManager) != TYPE_NIL and AIManager.has_method("configure_scenario_state"):
@@ -267,7 +267,7 @@ func load_scenario(scenario_name: String) -> bool:
 	scenario_loaded.emit()
 
 	# Centralize map data for the rest of the game (MapManager is the preferred access point)
-	var mm := get_node_or_null("/root/MapManager")
+	var mm := MapManager
 	if mm != null and mm.has_method("initialize_from_map_data"):
 		var map_data := get_map_data()
 		mm.call("initialize_from_map_data", map_data)

@@ -57,4 +57,4 @@ func capture_all_factories(new_owner: String, is_annexed: bool = false) -> void:
 
 
 func _factory_manager() -> Node:
-	return get_node_or_null("/root/FactoryManager")
+	return FactoryManager
