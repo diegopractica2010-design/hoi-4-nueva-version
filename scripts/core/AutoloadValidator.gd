@@ -6,12 +6,14 @@ static func validate_all() -> bool:
 	var all_ok := true
 	var names := [
 		"GameData", "FactoryManager", "ProductionManager", "SupplyManager",
-		"LeaderManager", "TimeManager", "DesignManager", "LeaderEventUI",
-		"AgentManager", "NationalModifierManager", "NationalSpiritManager",
-		"NationalIncomeManager", "TradeManager", "MapManager",
-		"TechnologyManager", "SaveLoadManager", "VictoryConditions",
-		"EventManager", "UnitMovementSystem", "BattleManager", "AIManager",
-		"LocalizationSettings", "LanguageManager", "TranslationProvider", "Localization",
+		"LeaderManager", "TimeManager", "DesignManager", "DiplomacyManager",
+		"LeaderEventUI", "AgentManager", "NationalModifierManager",
+		"NationalSpiritManager", "NationalIncomeManager", "TradeManager",
+		"MapManager", "TechnologyManager", "SaveLoadManager",
+		"VictoryConditions", "EventManager", "CombatExpansionManager",
+		"UnitMovementSystem", "BattleManager", "AIManager",
+		"AIEconomyManager", "AdvancedAIManager", "LocalizationSettings",
+		"LanguageManager", "TranslationProvider", "Localization",
 	]
 	for n in names:
 		var node := _get_autoload(n)
