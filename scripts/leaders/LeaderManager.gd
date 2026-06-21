@@ -949,8 +949,8 @@ func _remove_leader(leader_id: String, cause: String, is_death: bool) -> void:
 	var leader: Leader = leaders.get(leader_id) as Leader
 	if leader == null:
 		return
-	_enqueue_leader_replacement_requests(leader, cause)
 	_unassign_leader_from_current_formation(leader)
+	_enqueue_leader_replacement_requests(leader, cause)
 	_clear_leader_from_national_positions(leader_id)
 
 	if is_death:
@@ -1107,6 +1107,8 @@ func resolve_leader_replacement(
 	match context:
 		REPLACEMENT_CONTEXT_FORMATION:
 			applied = assign_leader_to_formation(new_leader_id, target_id)
+			if not applied and not get_formation(target_id):
+				applied = assign_leader_to_army(new_leader_id, target_id)
 		REPLACEMENT_CONTEXT_NATIONAL_POSITION:
 			if target_id == POSITION_OFFICER_TRAINING:
 				applied = set_officer_training_leader(country, new_leader_id)
@@ -1193,7 +1195,7 @@ func _enqueue_formation_command_vacancy(
 	cause: String,
 ) -> void:
 	var formation := get_formation(formation_id)
-	if formation == null or formation.has_leader():
+	if formation != null and formation.has_leader():
 		return
 
 	var formation_label := formation_id
@@ -1226,7 +1228,8 @@ func _push_leader_replacement_request(request: Dictionary) -> void:
 	if is_player_country(str(request.get("country_tag", ""))):
 		if try_instant_player_replacement(request):
 			return
-		leader_replacement_needed.emit(request.duplicate())
+		if DisplayServer.get_name() != "headless":
+			leader_replacement_needed.emit(request.duplicate())
 	else:
 		_auto_resolve_replacement_for_ai(str(request.get("request_id", "")))
 
@@ -1240,7 +1243,7 @@ func _is_replacement_request_still_valid(request: Dictionary) -> bool:
 		REPLACEMENT_CONTEXT_FORMATION:
 			var formation := get_formation(target_id)
 			if formation == null:
-				return false
+				return true
 			return not formation.has_leader()
 		REPLACEMENT_CONTEXT_NATIONAL_POSITION:
 			if not country_positions.has(country_tag):

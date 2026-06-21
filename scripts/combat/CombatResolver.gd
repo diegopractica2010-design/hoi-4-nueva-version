@@ -95,8 +95,12 @@ func get_effective_combat_power(
 		attrition_mod = province_for_effects.get_attrition_modifier()
 	else:
 		# Fallback: scale from raw dev/infra (matches Province.gd formulas lightly)
-		org_mod = 0.6 + (float(prov_infra) * 0.025) + (float(prov_dev) * 0.015)
-		attrition_mod = maxf(0.6, 1.0 - (float(prov_dev) * 0.015))
+		if province_id < 0 and prov_dev == 0 and prov_infra == 0:
+			org_mod = 1.0
+			attrition_mod = 1.0
+		else:
+			org_mod = 0.6 + (float(prov_infra) * 0.025) + (float(prov_dev) * 0.015)
+			attrition_mod = maxf(0.6, 1.0 - (float(prov_dev) * 0.015))
 
 	# Apply: higher org_mod = better recovery/readiness; lower attrition_mod = less org/readiness loss
 	final_org += (org_mod - 1.0) * 6.0
