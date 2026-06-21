@@ -6,29 +6,40 @@ extends Node
 @onready var camera_controller: CameraController = $WorldMap/CameraInput
 
 var player_tag: String = "CHL"
+var _qa_smoke_mode: bool = false
 
 
 func _ready() -> void:
+	_qa_smoke_mode = "--qa-smoke" in OS.get_cmdline_user_args()
 	print("=== Epochs of Ascendancy Test Starting ===")
 
 	# Flujo de nueva partida: el jugador debe elegir nación antes de cargar el escenario.
 	# Si todavía no hay selección, mostramos la pantalla de selección de nación y volvemos.
 	if typeof(GameData) != TYPE_NIL and GameData.selected_nation_tag.strip_edges().is_empty():
-		print("No hay nación seleccionada — abriendo pantalla de selección.")
-		call_deferred("_go_to_nation_select")
-		return
+		if _qa_smoke_mode:
+			GameData.selected_nation_tag = "CHL"
+		else:
+			print("No hay nación seleccionada — abriendo pantalla de selección.")
+			call_deferred("_go_to_nation_select")
+			return
 
 	# Nación elegida en GameData (por defecto "CHL" si llegara vacía).
 	player_tag = GameData.selected_nation_tag.strip_edges() if typeof(GameData) != TYPE_NIL else ""
 	if player_tag.is_empty():
 		player_tag = "CHL"
 
-	_run_production_line_tests()
+	var production_tests_passed := _run_production_line_tests()
+	if _qa_smoke_mode and not production_tests_passed:
+		push_error("QA_SMOKE: production characterization failed")
+		get_tree().quit(1)
+		return
 
 	var success := loader.load_scenario("1879")
 
 	if not success:
 		print("Failed to load scenario.")
+		if _qa_smoke_mode:
+			get_tree().quit(1)
 		return
 
 	_wire_factory_province_lookup()
@@ -84,6 +95,10 @@ func _ready() -> void:
 		var ok := SaveLoadManager.load_game(slot)
 		print("TestRunner: carga pendiente '%s' aplicada=%s" % [slot, ok])
 
+	if _qa_smoke_mode:
+		print("QA_SMOKE: PASS scenario=1879 player=%s provinces=%d" % [player_tag, loader.provinces.size()])
+		get_tree().quit(0)
+
 
 ## Cambia a la pantalla de selección de nación (flujo de nueva partida).
 func _go_to_nation_select() -> void:
@@ -117,7 +132,8 @@ func _wire_factory_province_lookup() -> void:
 	)
 
 
-func _run_production_line_tests() -> void:
+func _run_production_line_tests() -> bool:
 	print("=== Production Line Tests ===")
 	var passed := ProductionLineTest.run_all(GameData.design_data)
 	print("✅ Production line tests passed" if passed else "❌ Production line tests failed")
+	return passed

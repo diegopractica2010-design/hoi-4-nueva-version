@@ -199,7 +199,8 @@ func _handle_menu_option(option: String) -> void:
 		"new_game":
 			# Reinicia el flujo de nueva partida: limpia la selección previa y va a
 			# la pantalla de selección de nación.
-			NationSelectScreen.selected_tag = ""
+			if typeof(GameData) != TYPE_NIL:
+				GameData.selected_nation_tag = ""
 			_on_close_requested()  # cierra el popup y reanuda el estado de pausa
 			get_tree().change_scene_to_file("res://scenes/ui/NationSelectScreen.tscn")
 		"save":
@@ -216,7 +217,8 @@ func _handle_menu_option(option: String) -> void:
 		"return_to_main":
 			# Reiniciar partida: cerrar el menú y volver a la selección de nación.
 			_on_close_requested()
-			NationSelectScreen.selected_tag = ""
+			if typeof(GameData) != TYPE_NIL:
+				GameData.selected_nation_tag = ""
 			get_tree().change_scene_to_file("res://scenes/ui/NationSelectScreen.tscn")
 		"exit":
 			get_tree().quit()

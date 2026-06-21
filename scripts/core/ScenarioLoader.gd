@@ -225,6 +225,11 @@ func load_scenario(scenario_name: String) -> bool:
 		push_warning(str(scenario_result.get("error", "Could not load scenario")))
 		return false
 	var data: Dictionary = scenario_result.get("data", {}) as Dictionary
+	var scenario_year := _parse_scenario_start_year(data)
+	if scenario_year < 0:
+		push_error("ScenarioLoader: aborting load due to invalid start_date.")
+		return false
+	var start_date_str := str(data.get("start_date", ""))
 	var country_result := ScenarioCountryRuntime.resolve_countries(data)
 	var resolved_country_entries: Array = country_result.get("entries", []) as Array
 	var scenario_runtime_data := data.duplicate(true)
@@ -245,11 +250,6 @@ func load_scenario(scenario_name: String) -> bool:
 	_rebuild_adjacency_system()
 	_infer_port_access_for_all(provinces)
 	_spawn_scenario_factories(scenario_name, scenario_runtime_data)
-	var scenario_year := _parse_scenario_start_year(data)
-	if scenario_year < 0:
-		push_error("ScenarioLoader: aborting load due to invalid start year.")
-		return false
-	var start_date_str := str(data.get("start_date", ""))
 	# New central clock (non-breaking: we still pass year to legacy systems for now)
 	if typeof(TimeManager) != TYPE_NIL:
 		TimeManager.initialize_from_scenario_start_date(start_date_str)
@@ -261,6 +261,8 @@ func load_scenario(scenario_name: String) -> bool:
 	var production_mgr := get_node_or_null("/root/ProductionManager")
 	if production_mgr != null and production_mgr.has_method("clear_all_caches"):
 		production_mgr.clear_all_caches()
+	if typeof(AIManager) != TYPE_NIL and AIManager.has_method("configure_scenario_state"):
+		AIManager.configure_scenario_state(scenario_runtime_data)
 	print("[OK] Scenario loaded | Provinces: ", provinces.size(), " | Countries: ", countries.size())
 	scenario_loaded.emit()
 
@@ -324,9 +326,23 @@ func _spawn_scenario_factories(scenario_name: String, scenario_data: Dictionary)
 func _parse_scenario_start_year(data: Dictionary) -> int:
 	var start_date := str(data.get("start_date", ""))
 	var parts := start_date.split("-")
-	if parts.size() >= 1 and parts[0].is_valid_int():
-		return int(parts[0])
-	push_error("ScenarioLoader: start_date missing or invalid in scenario JSON. Scenario cannot load safely.")
+	if parts.size() != 3:
+		return -1
+	for part in parts:
+		if not part.is_valid_int():
+			return -1
+	var year := int(parts[0])
+	var month := int(parts[1])
+	var day := int(parts[2])
+	if year < 1 or month < 1 or month > 12:
+		return -1
+	var days_per_month: Array[int] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	if (year % 400 == 0) or (year % 4 == 0 and year % 100 != 0):
+		days_per_month[1] = 29
+	if day < 1 or day > days_per_month[month - 1]:
+		return -1
+	if year >= 1:
+		return year
 	return -1
 
 

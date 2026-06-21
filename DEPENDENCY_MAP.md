@@ -1,66 +1,68 @@
-# DEPENDENCY MAP — Phase 0
+# Mapa de dependencias — Fase 0
 
-## Autoload Initialization Order (from project.godot)
-```
- 1. GameData
- 2. FactoryManager
- 3. ProductionManager        ← depends on FactoryManager (lazy accessor)
- 4. SupplyManager
- 5. LeaderManager            ← depends on SupplyManager
- 6. TimeManager
- 7. DesignManager
- 8. LeaderEventUI
- 9. AgentManager             ← depends on TimeManager, LeaderManager
+## Orden de autoload
+
+1. GameData
+2. FactoryManager
+3. ProductionManager
+4. SupplyManager
+5. LeaderManager
+6. TimeManager
+7. DesignManager
+8. LeaderEventUI
+9. AgentManager
 10. NationalModifierManager
 11. NationalSpiritManager
 12. NationalIncomeManager
-13. TradeManager             ← depends on TimeManager, DesignManager, ProductionManager
+13. TradeManager
 14. MapManager
 15. TechnologyManager
 16. SaveLoadManager
-17. VictoryConditions        ← depends on TimeManager, BattleManager, MapManager
+17. VictoryConditions
 18. EventManager
 19. UnitMovementSystem
-20. BattleManager            ← depends on LeaderManager
-21. AIManager                ← depends on ScenarioLoader
+20. BattleManager
+21. AIManager
 22. LocalizationSettings
 23. LanguageManager
 24. TranslationProvider
-25. Localization             ← depends on LanguageManager, TranslationProvider
+25. Localization
+
+Todas las rutas declaradas existen. Los autoloads omiten `class_name` cuando el nombre de clase ocultaría el singleton.
+
+## Flujos críticos
+
+```text
+StartMenu -> NationSelectScreen -> TestScenario
+TestScenario -> ScenarioLoader -> ScenarioDataResolver
+ScenarioLoader -> ScenarioProvinceApplier + ScenarioCountryRuntime
+ScenarioLoader -> Time/Leader/Technology/Factory/Map managers
 ```
 
-## Critical Dependency Chains
-
-### Scenario Loading Chain
-```
-ScenarioLoader.load_scenario()
-  → ScenarioDataResolver.load_scenario_data()
-  → ScenarioProvinceApplier.apply_overrides()
-  → ScenarioCountryRuntime.resolve_countries()
-  → TimeManager.initialize_from_scenario_start_date()
-  → LeaderManager.load_leaders_for_scenario()
-  → TechnologyManager (apply starting tech)
-  → MapManager.initialize_from_map_data()
-```
-
-### Game Tick Chain
-```
+```text
 TimeManager.game_day_advanced
-  → SupplyManager (auto-advance supply)
-  → VictoryConditions._on_game_day_advanced()
-  → AgentManager (daily network advancement)
-  → TradeManager (expire offers)
+  -> SupplyManager
+  -> ProductionManager
+  -> AgentManager
+  -> VictoryConditions
+  -> TradeManager
 ```
 
-### Combat Chain
-```
-UnitMovementSystem.move_formation()
-  → BattleManager._resolve_battle()
-  → CombatResolver.resolve_battle_aftermath()
-  → LeaderManager (leader XP)
-  → MapManager (province ownership changes)
+```text
+UnitMovementSystem -> BattleManager -> CombatResolver
+  -> LeaderManager + MapManager + VictoryConditions
 ```
 
-## Cross-autoload Access Pattern
-All autoloads use `typeof(X) != TYPE_NIL` defensive pattern before accessing.
-7 autoloads omit `class_name` to avoid Godot 4 singleton hiding error (see DT-02).
+```text
+SaveLoadManager
+  -> GameData + Time + Scenario metadata
+  -> FactoryManager + ProductionManager
+  -> LeaderManager + map/combat/AI state
+```
+
+## Riesgos de contrato
+
+- `AIManager` intenta resolver `/root/ScenarioLoader`, pero `ScenarioLoader` es un nodo de escena, no un autoload.
+- Las dependencias entre autoloads se resuelven mediante nombres globales y `get_node_or_null`, sin verificación central.
+- `TestRunner` mezcla navegación de UI, carga de escenario y smoke tests; no es un runner aislado.
+- Los tres monolitos críticos mezclan presentación, reglas y acceso global, elevando el radio de regresión.

@@ -1,39 +1,32 @@
-# AUTOLOAD AUDIT — Phase 0
+# Auditoría de autoloads — Fase 0
 
-## Registered Singletons (25 total)
+## Resultado
 
-| # | Name | Script | class_name | Risk |
-|---|------|--------|-----------|------|
-| 1 | GameData | autoload/GameData.gd | No | LOW |
-| 2 | FactoryManager | production/FactoryManager.gd | - | LOW |
-| 3 | ProductionManager | autoload/ProductionManager.gd | - | LOW |
-| 4 | SupplyManager | supply/SupplyManager.gd | - | LOW |
-| 5 | LeaderManager | leaders/LeaderManager.gd | - | HIGH (3589 lines) |
-| 6 | TimeManager | autoload/TimeManager.gd | No | MEDIUM |
-| 7 | DesignManager | production/DesignManager.gd | - | LOW |
-| 8 | LeaderEventUI | ui/LeaderEventUI.gd | - | LOW |
-| 9 | AgentManager | agents/AgentManager.gd | No | MEDIUM |
-| 10 | NationalModifierManager | national/NationalModifierManager.gd | - | LOW |
-| 11 | NationalSpiritManager | national/NationalSpiritManager.gd | - | LOW |
-| 12 | NationalIncomeManager | national/NationalIncomeManager.gd | - | LOW |
-| 13 | TradeManager | national/TradeManager.gd | - | LOW |
-| 14 | MapManager | map/MapManager.gd | No | MEDIUM |
-| 15 | TechnologyManager | technology/TechnologyManager.gd | - | LOW |
-| 16 | SaveLoadManager | autoload/SaveLoadManager.gd | - | LOW |
-| 17 | VictoryConditions | core/VictoryConditions.gd | No | MEDIUM |
-| 18 | EventManager | events/EventManager.gd | No | LOW |
-| 19 | UnitMovementSystem | military/UnitMovementSystem.gd | No | LOW |
-| 20 | BattleManager | military/BattleManager.gd | No | MEDIUM |
-| 21 | AIManager | ai/AIManager.gd | No | MEDIUM |
-| 22 | LocalizationSettings | localization/LocalizationSettings.gd | - | LOW |
-| 23 | LanguageManager | localization/LanguageManager.gd | - | LOW |
-| 24 | TranslationProvider | localization/TranslationProvider.gd | - | LOW |
-| 25 | Localization | localization/Localization.gd | No (intentional) | LOW |
+- Declarados: 25.
+- Scripts ausentes: 0.
+- Colisiones `class_name` confirmadas: 0.
+- Dependencias formalmente declaradas: 0; el orden vive únicamente en `project.godot`.
 
-## DT-02 Affected Autoloads (no class_name)
-AIManager, VictoryConditions, UnitMovementSystem, EventManager, TimeManager, MapManager, BattleManager
+## Grupos
 
-## Issues Found
-- **HIGH:** Initialization order not documented in code — adding autoloads in wrong position causes silent failures
-- **MEDIUM:** 7 autoloads must be accessed by singleton name only (Godot 4 restriction)
-- **LOW:** No autoload has a formal `get_save_data()` / `apply_save_data()` contract documented
+| Grupo | Autoloads |
+|---|---|
+| Estado y tiempo | GameData, TimeManager, SaveLoadManager |
+| Producción | FactoryManager, ProductionManager, DesignManager |
+| Mapa y suministro | MapManager, SupplyManager |
+| Personajes | LeaderManager, LeaderEventUI, AgentManager |
+| Nación | NationalModifierManager, NationalSpiritManager, NationalIncomeManager, TradeManager |
+| Guerra | UnitMovementSystem, BattleManager, AIManager, VictoryConditions |
+| Contenido | TechnologyManager, EventManager |
+| Localización | LocalizationSettings, LanguageManager, TranslationProvider, Localization |
+
+## Riesgos
+
+- Alto: una falla de parser en cualquier autoload contamina todo arranque y toda prueba.
+- Alto: el orden de inicialización es un contrato público no validado automáticamente.
+- Alto: no todos los autoloads ofrecen un contrato homogéneo `get_save_data/apply_save_data`.
+- Medio: varios consumidores almacenan referencias o usan acceso lazy sin prueba de reinicio de escena.
+
+## Puerta requerida
+
+Añadir una validación que instancie el árbol con el orden real, compruebe presencia, API mínima y ausencia de errores. Debe ejecutarse tres veces antes de certificar.

@@ -1,6 +1,6 @@
 # scripts/production/EquipmentShortageTracker.gd
 class_name EquipmentShortageTracker
-extends Node
+extends RefCounted
 
 
 # Returns how much of each equipment type is missing for a unit.

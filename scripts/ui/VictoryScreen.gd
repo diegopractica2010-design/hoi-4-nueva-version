@@ -55,5 +55,6 @@ func _on_main_menu_pressed() -> void:
 	if typeof(TimeManager) != TYPE_NIL:
 		TimeManager.set_paused(false)
 	# Reiniciar: volver a la pantalla de selección de nación (nueva partida).
-	NationSelectScreen.selected_tag = ""
+	if typeof(GameData) != TYPE_NIL:
+		GameData.selected_nation_tag = ""
 	get_tree().change_scene_to_file("res://scenes/ui/NationSelectScreen.tscn")

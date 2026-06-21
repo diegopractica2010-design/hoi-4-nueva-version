@@ -124,7 +124,7 @@ func get_average_generation() -> int:
 			count += weight
 	if count == 0:
 		return 1
-	return int(round(float(total) / float(count)))
+	return int(ceil(float(total) / float(count)))
 
 
 func get_resolved_subunits() -> Array[Dictionary]:

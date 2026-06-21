@@ -200,7 +200,8 @@ func _panel_style(bg: Color, border: Color) -> StyleBoxFlat:
 
 
 func _on_new_game() -> void:
-	NationSelectScreen.selected_tag = ""
+	if typeof(GameData) != TYPE_NIL:
+		GameData.selected_nation_tag = ""
 	get_tree().change_scene_to_file(NATION_SELECT_SCENE)
 
 
@@ -215,7 +216,8 @@ func _on_load_game() -> void:
 	var tag := str(meta.get("player_tag", "CHL")).strip_edges().to_upper()
 	if tag.is_empty():
 		tag = "CHL"
-	NationSelectScreen.selected_tag = tag
+	if typeof(GameData) != TYPE_NIL:
+		GameData.selected_nation_tag = tag
 	SaveLoadManager.pending_load_slot = slot
 	get_tree().change_scene_to_file(GAME_SCENE)
 

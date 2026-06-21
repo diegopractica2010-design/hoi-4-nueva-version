@@ -33,21 +33,13 @@ var _triggered_events: Array = []
 func _ready() -> void:
 	_load_difficulty()
 	_load_adjacency()
-	_load_1879_scenario_state()
 	_sync_player_tag()
 
 	if typeof(TimeManager) != TYPE_NIL and TimeManager.has_signal("game_day_advanced"):
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
 
-	var loader := get_node_or_null("/root/ScenarioLoader") as ScenarioLoader
-	if loader != null and loader.has_signal("scenario_loaded"):
-		if not loader.scenario_loaded.is_connected(_on_scenario_loaded):
-			loader.scenario_loaded.connect(_on_scenario_loaded)
-		if not str(loader.get("current_scenario_name")).is_empty():
-			_initialize_ai_tags()
-	else:
-		_initialize_ai_tags()
+	_initialize_ai_tags()
 
 
 func _initialize_ai_tags() -> void:
@@ -285,7 +277,6 @@ func _is_at_war_with(tag_a: String, tag_b: String) -> bool:
 
 
 func _on_scenario_loaded() -> void:
-	_load_1879_scenario_state()
 	_sync_player_tag()
 	_initialize_ai_tags()
 
@@ -323,14 +314,12 @@ func _load_adjacency() -> void:
 		_adjacency[pid] = neighbors
 
 
-func _load_1879_scenario_state() -> void:
-	_scenario_data.clear()
+func configure_scenario_state(scenario_data: Dictionary) -> void:
+	_scenario_data = scenario_data.duplicate(true)
 	_war_state.clear()
-	var loader := get_node_or_null("/root/ScenarioLoader") as ScenarioLoader
-	if loader != null:
-		_parse_war_state(loader.get_war_state())
-	else:
-		push_warning("AIManager: ScenarioLoader not ready, war state unavailable")
+	_parse_war_state(_scenario_data.get("initial_war_state", {}))
+	_sync_player_tag()
+	_initialize_ai_tags()
 
 
 func _parse_war_state(initial_war_state: Variant) -> void:
@@ -366,10 +355,14 @@ func _add_war_pair(tag_a: String, tag_b: String) -> void:
 
 func _scenario_country_tags() -> Array[String]:
 	var tags: Array[String] = []
-	var loader := get_node_or_null("/root/ScenarioLoader") as ScenarioLoader
-	if loader != null:
-		for tag in loader.countries.keys():
-			tags.append(str(tag).strip_edges().to_upper())
+	var countries: Variant = _scenario_data.get("countries", [])
+	if typeof(countries) == TYPE_ARRAY:
+		for entry in countries as Array:
+			if typeof(entry) != TYPE_DICTIONARY:
+				continue
+			var tag := str((entry as Dictionary).get("tag", "")).strip_edges().to_upper()
+			if not tag.is_empty() and not tags.has(tag):
+				tags.append(tag)
 	if tags.is_empty():
 		for key in ["country_colors", "national_stockpiles"]:
 			var data: Variant = _scenario_data.get(key, {})

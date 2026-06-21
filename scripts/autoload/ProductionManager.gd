@@ -1,10 +1,12 @@
 extends Node
 
-var __get_factory_manager()_cache: Node = null
-func _get__get_factory_manager()() -> Node:
-	if __get_factory_manager()_cache == null:
-		__get_factory_manager()_cache = get_node_or_null("/root/FactoryManager")
-	return __get_factory_manager()_cache
+var _factory_manager_cache: Node = null
+
+
+func _get_factory_manager() -> Node:
+	if _factory_manager_cache == null:
+		_factory_manager_cache = get_node_or_null("/root/FactoryManager")
+	return _factory_manager_cache
 
 ## National production coordinator: multiple lines, design families, focus/doctrine modifiers.
 
@@ -612,8 +614,8 @@ func is_unit_priority_reinforced(unit_id: String) -> bool:
 
 
 func auto_reinforce_unit_from_stockpile(unit_id: String, required_equipment: Dictionary) -> Dictionary:
-	var shortages := get_unit_shortages(unit_id, required_equipment)
 	var fulfilled: Dictionary = {}
+	var current_stock := get_unit_equipment_stock(unit_id)
 
 	var leader_id := ""
 	if typeof(LeaderManager) != TYPE_NIL:
@@ -623,15 +625,19 @@ func auto_reinforce_unit_from_stockpile(unit_id: String, required_equipment: Dic
 	if not leader_id.is_empty() and typeof(LeaderManager) != TYPE_NIL:
 		reinforcement_mult = LeaderManager.get_training_path_reinforcement_multiplier(leader_id)
 
-	for equipment_id in shortages:
-		var needed := int(shortages[equipment_id])
+	for equipment_id in required_equipment:
+		var required := maxi(0, int(required_equipment[equipment_id]))
+		var equipped := maxi(0, int(current_stock.get(equipment_id, 0)))
+		var needed := maxi(0, required - equipped)
+		if needed == 0:
+			continue
 		var got := request_equipment_for_unit(unit_id, str(equipment_id), needed)
 		if got < needed and reinforcement_mult > 1.0:
 			var bonus := int(ceil(float(needed - got) * (reinforcement_mult - 1.0)))
 			if bonus > 0:
 				got += request_equipment_for_unit(unit_id, str(equipment_id), bonus)
 		if got > 0:
-			fulfilled[equipment_id] = got
+			fulfilled[equipment_id] = mini(required, equipped + got)
 
 	if not fulfilled.is_empty():
 		unit_reinforced.emit(unit_id, fulfilled.duplicate(true))

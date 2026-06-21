@@ -1,47 +1,32 @@
-# PERFORMANCE RISK REPORT — Phase 0
+# Informe de riesgos de rendimiento — Fase 0
 
-## Large File Risk
-8 files exceed 800-line soft limit, 3 exceed 2000 lines:
-| File | Lines | Risk |
-|------|-------|------|
-| ProvinceInsight.gd | 3,813 | CRITICAL — single-file monolith |
-| LeaderManager.gd | 3,589 | CRITICAL — single-file monolith |
-| MapRenderer.gd | 2,432 | CRITICAL — single-file monolith |
-| ProductionManager.gd | 1,664 | HIGH |
-| TechnologyManager.gd | 1,530 | HIGH |
-| AgentManager.gd | 1,514 | HIGH |
-| TradeManager.gd | 1,278 | HIGH |
-| DesignManager.gd | 1,002 | HIGH |
+## Monolitos
 
-## Autoload Initialization Cost
-25 autoloads loaded at startup. Estimated parse + _ready() cost: significant.
-Each autoload's `_ready()` performs defensive `typeof()` checks against all dependencies.
+| Archivo | Líneas aproximadas | Riesgo |
+|---|---:|---|
+| scripts/map/ProvinceInsight.gd | 3.480 | Crítico |
+| scripts/leaders/LeaderManager.gd | 2.944 | Crítico |
+| scripts/map/MapRenderer.gd | 2.110 | Crítico |
+| scripts/core/ProductionLineTest.gd | 1.325 | Alto, solo pruebas |
+| scripts/autoload/ProductionManager.gd | 1.313 | Alto |
+| scripts/technology/TechnologyManager.gd | 1.299 | Alto |
+| scripts/agents/AgentManager.gd | 1.236 | Alto |
+| scripts/national/TradeManager.gd | 1.158 | Alto |
 
-## Supply System Complexity
-36 files in `scripts/supply/` — the largest subsystem. Risk of:
-- O(N²) pathfinding in SupplyPathfinder
-- Per-province depot state updates every tick
-- Memory growth from route plan caching
+## Hot paths
 
-## Map Rendering
-MapRenderer.gd (2,432 lines) renders 847 provinces. Risk of:
-- Per-frame province color updates
-- Texture atlas management
-- UI overlay compositing
+- `MapRenderer._process`: cámara, hover, pulsos y overlays por frame.
+- `AgentNetworkLayer._process` y `BattleResultPopup._process`: actualización visual continua.
+- Tick diario: suministro, producción, agentes, victoria y comercio.
+- Pathfinder de suministro sobre hasta 847 provincias.
+- Serialización completa del estado en el hilo principal.
 
-## Save System
-SaveLoadManager.gd (886 lines) serializes full game state. Risk:
-- Large save files due to verbose Dictionary serialization
-- No incremental/background save support
+## Presupuestos bloqueantes
 
-## Known Memory Concerns
-- LeaderManager caches full leader roster in memory (all scenarios loaded)
-- TradeManager holds all active offers in Dictionary
-- ProvinceInsight caches per-province computed data
-- AgentManager tracks network states per province
+- Startup Windows ≤10 s; Android ≤20 s.
+- Save y load ≤3 s por operación.
+- Tick diario, IA y suministro p95 ≤50 ms.
+- Resolución de combate p95 ≤100 ms.
+- Crecimiento neto de memoria entre turnos 10 y 1000 ≤10% tras calentamiento.
 
-## Recommendations
-1. Refactor ProvinceInsight.gd, LeaderManager.gd, MapRenderer.gd (critical)
-2. Profile save/load with 100-turn game state
-3. Monitor SupplyPathfinder for O(N²) behavior on large maps
-4. Add frame timing instrumentation to all _process() and _physics_process() calls
+No se estimarán resultados: cada cifra deberá proceder del runner instrumentado y repetirse tres veces.

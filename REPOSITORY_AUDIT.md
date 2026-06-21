@@ -1,51 +1,32 @@
-# REPOSITORY AUDIT — Phase 0
+# Auditoría del repositorio — Fase 0
 
-## Overview
-- **Engine:** Godot 4.6
-- **Language:** GDScript
-- **Main scene:** `scenes/ui/StartMenu.tscn`
-- **Test scene:** `scenes/TestScenario.tscn`
-- **Total .gd files:** ~275
-- **Total .tscn files:** 28
-- **Total data files:** 3,679
-- **Autoload singletons:** 25
+Fecha: 2026-06-20  
+Línea base: `68f36ef47bf4b605ed9ddb3bc2539c705986cd69` más los cambios preparados y modificados existentes.  
+Política: no se restauró, descartó ni reescribió ningún cambio previo.
 
-## Directory Structure (scripts/)
-| Directory    | Files | Purpose |
-|-------------|-------|---------|
-| agents/     | 10    | Agent system, networks, missions |
-| ai/         | 2     | AI manager + war state |
-| autoload/   | 8     | Core singletons (GameData, Production, Save, Time) |
-| combat/     | 4     | Combat resolver, width calculator |
-| core/       | 26    | Scenario loading, tests, victory conditions |
-| data/       | 12    | Data models (Province, Country, UnitTemplate, etc.) |
-| events/     | 2     | EventManager |
-| formations/ | 4     | Formation, FormationSpawner |
-| leaders/    | 6     | Leader, LeaderManager, LeaderGenerator |
-| localization/ | 8   | Localization system (4 singletons) |
-| map/        | 34    | Map rendering, province visuals, factories |
-| military/   | 4     | BattleManager, UnitMovementSystem |
-| national/   | 10    | Modifiers, spirits, income, trade |
-| production/ | 30    | Lines, factories, designs, calculators |
-| scenarios/  | 2     | Scenario factory spawner |
-| supply/     | 36    | Supply network, routes, depots, attrition |
-| technology/ | 4     | Tech tree, unlocks |
-| ui/         | 63    | All UI screens, popups, HUD |
-| ui_data/    | 10    | Screen data models |
+## Inventario verificable
 
-## Large Files (>800 lines — refactor targets)
-1. **ProvinceInsight.gd** — 3813 lines (map/)
-2. **LeaderManager.gd** — 3589 lines (leaders/)
-3. **MapRenderer.gd** — 2432 lines (map/)
-4. **ProductionManager.gd** — 1664 lines (autoload/)
-5. **TechnologyManager.gd** — 1530 lines (technology/)
-6. **AgentManager.gd** — 1514 lines (agents/)
-7. **TradeManager.gd** — 1278 lines (national/)
-8. **DesignManager.gd** — 1002 lines (production/)
+- Motor: Godot 4.6, GDScript, renderer `gl_compatibility`.
+- Escena principal: `res://scenes/ui/StartMenu.tscn`.
+- Archivos del repositorio, excluyendo `.godot`: 4.004.
+- Scripts `.gd`: 138.
+- Escenas `.tscn`: 28.
+- Archivos bajo `data/`: 3.679.
+- JSON bajo `data/`: 2.177; errores de parseo: 0.
+- Autoloads: 25; las 25 rutas existen.
+- Pruebas automatizadas existentes: tres entrypoints headless y dos colecciones estáticas, sin runner seleccionable por suite.
 
-## Identified Risks
-- **HIGH:** 8 files exceed 800-line limit (architecture debt)
-- **HIGH:** 25 autoloads with implicit initialization order dependency
-- **MEDIUM:** 7 autoloads without `class_name` (access must use singleton name)
-- **MEDIUM:** 3,679 data files may contain orphaned/legacy data
-- **LOW:** Localization keys partially applied (SettingsPopup still hardcoded)
+## Estado de la limpieza anterior
+
+El commit base eliminó 585 archivos: 549 perfiles AI heredados de HOI2 y 36 logs. No se encontraron referencias vivas a `data/ai/legacy_hoi2` ni a archivos `.ai`. Esta eliminación forma parte de la línea base autorizada.
+
+## Hallazgos de entrada
+
+- Crítico: el estado modificado aún no ha superado parser/importación/startup.
+- Crítico: no existe un arnés capaz de ejecutar las pruebas nominales, producir JSON o terminar campañas headless.
+- Crítico arquitectónico: `ProvinceInsight.gd`, `LeaderManager.gd` y `MapRenderer.gd` superan 2.000 líneas.
+- Alto: 25 autoloads forman una cadena de inicialización implícita.
+- Alto: guardado, IA y simulación no tienen pruebas deterministas ni de corrupción.
+- Medio: solo 36 claves localizadas por idioma frente a numerosas cadenas UI directas.
+
+Los 25 ítems congelados y su criterio de cierre están en `CRITICAL_FIX_LEDGER.md`.

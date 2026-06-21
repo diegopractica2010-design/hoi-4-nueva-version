@@ -1,32 +1,24 @@
-# LOCALIZATION AUDIT — Phase 0
+# Auditoría de localización — Fase 0
 
-## System Architecture
-- **4 autoload singletons:** Localization, LocalizationSettings, LanguageManager, TranslationProvider
-- **2 JSON files:** `data/localization/en.json`, `data/localization/es.json`
-- **API:** `Localization.get_text(key: String, params: Dictionary = {})`
+## Arquitectura
 
-## Key Coverage (en.json / es.json)
-Found 43 keys total, covering:
-- `language.name.*` — Language display names
-- `menu.main.*` — Main menu (new_game, load_game, save_game, settings, quit, continue, credits)
-- `menu.settings.*` — Settings screen (title, language, audio, graphics, back, apply)
-- `common.*` — Common UI (yes, no, ok, cancel, confirm, close, loading, error)
-- `hud.*` — HUD labels (date, pause, speed, political_power, manpower, factories)
-- `tooltip.province.*` — Province tooltips (population, owner, factory output)
-- `message.*` — Game messages (leader_retired, game_saved, game_loaded, trade_completed)
+- Idiomas de alcance: inglés y español.
+- Fuentes: `data/localization/en.json` y `data/localization/es.json`.
+- Claves hoja por idioma: 36.
+- Fachada pública: `Localization.get_text(key, params)`.
+- Autoloads relacionados: LocalizationSettings, LanguageManager, TranslationProvider y Localization.
 
-## Applied in code (per FIX #13)
-- StartMenu.gd — All buttons use Localization.get_text()
-- MainMenu.gd — All menu options use Localization.get_text()
-- TopInfoBar.gd — Fallback menu uses Localization.get_text()
+## Cobertura
 
-## Remaining Hardcoded Strings
-- SettingsPopup.gd:39 — `title.text = "Ajustes"` (not in scope of FIX #13)
+La pantalla inicial, menú principal y partes del HUD ya consumen la fachada. Persisten cadenas directas en pantallas de líderes, agentes, tecnología, eventos, espíritus nacionales y mensajes de estado.
 
-## Missing Keys (gaps detected)
-- No key for `"Volver al menú principal"` (currently mapped to `menu.main.quit`)
-- No key for `"Guardar como..."` (currently mapped to `menu.main.save_game`)
-- No key for `"Ayuda / Acerca de"`
-- No key for Settings popup title
-- No province info panel labels localized
-- No battle/military UI strings localized
+## Riesgos
+
+- Alto: no existe prueba automática de paridad de claves entre idiomas.
+- Alto: no existe prueba del fallback cuando falta una clave o un idioma.
+- Medio: cadenas inglesas y españolas aparecen directamente en scripts UI.
+- Medio: textos generados desde datos no tienen política explícita de localización.
+
+## Criterio de cierre
+
+Las pruebas nominales deben verificar paridad ES/EN, cambio de idioma, interpolación y fallback. La certificación no exige traducir contenido histórico fuera del runtime 1879, pero sí evitar claves rotas visibles.
