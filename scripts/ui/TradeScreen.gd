@@ -56,10 +56,11 @@ func refresh_offers() -> void:
 		return
 	var raw_offers = TradeManager.get_offers_for_country(current_nation)
 	for o in raw_offers:
-		if o.get("status") != TradeStatus.PROPOSED:
+		var offer: Dictionary = o as Dictionary
+		if offer.get("status") != TradeManager.TradeStatus.PROPOSED:
 			continue
-		cached_offers.append(o)
-		var label := _format_offer_summary(o)
+		cached_offers.append(offer)
+		var label: String = _format_offer_summary(offer)
 		offers_list.add_item(label)
 	if cached_offers.is_empty():
 		offer_detail_label.text = "No hay ofertas activas"
@@ -69,13 +70,13 @@ func _format_offer_summary(offer: Dictionary) -> String:
 	var to := str(offer.get("to_tag", "?"))
 	var offered_count := (offer.get("offered", []) as Array).size()
 	var requested_count := (offer.get("requested", []) as Array).size()
-	var vis := offer.get("visibility", "PUBLIC")
+	var vis: Variant = offer.get("visibility", "PUBLIC")
 	return from + " → " + to + " | Da: " + str(offered_count) + " · Pide: " + str(requested_count) + " [" + str(vis) + "]"
 
 func _on_offer_selected(index: int) -> void:
 	if index < 0 or index >= cached_offers.size():
 		return
-	var offer = cached_offers[index]
+	var offer: Dictionary = cached_offers[index] as Dictionary
 	selected_offer_id = str(offer.get("id", ""))
 	var detail := "Oferta: " + str(offer.get("id", "")) + "\n"
 	detail += "De: " + str(offer.get("from_tag", "")) + " → Para: " + str(offer.get("to_tag", "")) + "\n"
@@ -95,9 +96,9 @@ func _on_offer_selected(index: int) -> void:
 	reject_btn.disabled = false
 
 func _format_item(item: Dictionary) -> String:
-	var type := item.get("type", "?")
-	var id := item.get("id", "?")
-	var qty := item.get("quantity", 1)
+	var type: Variant = item.get("type", "?")
+	var id: Variant = item.get("id", "?")
+	var qty: Variant = item.get("quantity", 1)
 	return str(type) + " " + str(id) + " x" + str(qty)
 
 func _on_accept_pressed() -> void:
@@ -125,16 +126,17 @@ func _on_create_offer_pressed() -> void:
 	var target_idx := target_nation_option.selected
 	if target_idx < 0:
 		return
-	var target_tag := target_nation_option.get_item_text(target_idx).split(" - ")[0]
-	var resource_names := ["steel", "rubber", "oil", "aluminum", "fuel"]
+	var target_parts: PackedStringArray = target_nation_option.get_item_text(target_idx).split(" - ")
+	var target_tag: String = target_parts[0]
+	var resource_names: PackedStringArray = ["steel", "rubber", "oil", "aluminum", "fuel"]
 	var resource_idx := resource_type_option.selected
 	if resource_idx < 0:
 		return
-	var resource_id := resource_names[resource_idx]
-	var quantity := resource_quantity_spin.value
-	var offered := [{"type": TradeItemType.RESOURCE, "id": resource_id, "quantity": quantity}]
-	var requested := [{"type": TradeItemType.RESOURCE, "id": "steel", "quantity": quantity * 0.8}]
-	TradeManager.create_offer(current_nation, target_tag, offered, requested, TradeVisibility.PUBLIC)
+	var resource_id: String = resource_names[resource_idx]
+	var quantity: float = resource_quantity_spin.value
+	var offered: Array = [{"type": TradeManager.TradeItemType.RESOURCE, "id": resource_id, "quantity": quantity}]
+	var requested: Array = [{"type": TradeManager.TradeItemType.RESOURCE, "id": "steel", "quantity": quantity * 0.8}]
+	TradeManager.create_offer(current_nation, target_tag, offered, requested, TradeManager.TradeVisibility.PUBLIC)
 	create_panel.hide()
 	refresh_offers()
 

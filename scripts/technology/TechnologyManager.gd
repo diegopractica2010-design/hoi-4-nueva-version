@@ -544,7 +544,7 @@ func get_node_status(country_tag: String, tech_id: String) -> String:
 			return "in_progress"
 	if _is_research_blocked(tag, tech_id, state):
 		return "locked"
-	if can_research(tag, tech_id):
+	if get_active_research_count(tag) < get_research_slots_max(tag):
 		return "available"
 	return "locked"
 
@@ -566,8 +566,15 @@ func can_research(country_tag: String, tech_id: String) -> bool:
 	var tag := country_tag.strip_edges().to_upper()
 	if not technology_nodes.has(tech_id):
 		return false
-	var status := get_node_status(tag, tech_id)
-	if status != "available":
+	var state := _ensure_country(tag)
+	if is_tech_compromised(tag, tech_id):
+		return false
+	if bool((state["completed"] as Dictionary).get(tech_id, false)):
+		return false
+	for slot in state["active"] as Array:
+		if typeof(slot) == TYPE_DICTIONARY and str((slot as Dictionary).get("tech_id", "")) == tech_id:
+			return false
+	if _is_research_blocked(tag, tech_id, state):
 		return false
 	return get_active_research_count(tag) < get_research_slots_max(tag)
 

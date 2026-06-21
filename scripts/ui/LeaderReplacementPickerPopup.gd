@@ -22,15 +22,6 @@ var _selected_leader_id: String = ""
 
 
 func _ready() -> void:
-	if request_id.is_empty():
-		queue_free()
-		return
-
-	_request = LeaderManager.get_leader_replacement_request(request_id)
-	if _request.is_empty():
-		queue_free()
-		return
-
 	visible = false
 	close_requested.connect(_on_later_pressed)
 	RetrowaveTheme.style_popup_root(self)
@@ -52,6 +43,15 @@ func _ready() -> void:
 	later_button.pressed.connect(_on_later_pressed)
 	leader_list.item_selected.connect(_on_leader_selected)
 	search_edit.text_changed.connect(_on_search_changed)
+
+	if request_id.is_empty():
+		_show_placeholder_state("No replacement request selected.")
+		return
+
+	_request = LeaderManager.get_leader_replacement_request(request_id)
+	if _request.is_empty():
+		_show_placeholder_state("Replacement request not found: %s" % request_id)
+		return
 
 	_build_header()
 	_load_candidates()
@@ -199,3 +199,17 @@ func _refresh_leader_screen() -> void:
 	var main_screen: Node = get_tree().get_first_node_in_group("leader_screen")
 	if main_screen != null and main_screen.has_method("refresh_screen"):
 		main_screen.call("refresh_screen")
+
+
+func _show_placeholder_state(message: String) -> void:
+	title_label.text = "Elegir reemplazo"
+	title = "Elegir reemplazo"
+	context_label.text = message
+	recommended_label.text = ""
+	search_edit.editable = false
+	search_edit.placeholder_text = ""
+	auto_button.disabled = true
+	confirm_button.disabled = true
+	vacant_button.disabled = true
+	leader_list.clear()
+	leader_list.add_item("No eligible replacements.")

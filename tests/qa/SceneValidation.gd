@@ -35,7 +35,8 @@ func _run() -> void:
 		return
 
 	for target in scene_paths:
-		if not _validate_scene(target):
+		print("SCENE_VALIDATION: checking %s" % target)
+		if not await _validate_scene(target):
 			call_deferred("_finish", 1)
 			return
 	print("SCENE_VALIDATION: PASS count=%d" % scene_paths.size())
@@ -53,9 +54,23 @@ func _validate_scene(scene_path: String) -> bool:
 		return false
 
 	var instance := (resource as PackedScene).instantiate()
-	if instance == null:
+	if instance == null or not instance is Node:
 		push_error("SCENE_VALIDATION: cannot instantiate %s" % scene_path)
 		return false
 
-	instance.free()
+	var node := instance as Node
+	if node is Window:
+		node.queue_free()
+		return true
+
+	root.add_child(node)
+	await process_frame
+	await process_frame
+	if not is_instance_valid(node) or node.get_tree() == null:
+		push_error("SCENE_VALIDATION: scene exited tree during startup %s" % scene_path)
+		return false
+	if node.get_parent() == root:
+		root.remove_child(node)
+		node.queue_free()
+		await process_frame
 	return true

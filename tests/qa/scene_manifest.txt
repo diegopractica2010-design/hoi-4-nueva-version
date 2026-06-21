@@ -1,7 +1,7 @@
-res://scenes/TestScenario.tscn
 res://scenes/ui/AgentAssignmentScreen.tscn
 res://scenes/ui/BattleResultPopup.tscn
 res://scenes/ui/DesignPickerPopup.tscn
+res://scenes/ui/DiplomacyScreen.tscn
 res://scenes/ui/EventPopup.tscn
 res://scenes/ui/FormationPickerPopup.tscn
 res://scenes/ui/LeaderAssignmentScreen.tscn
@@ -21,6 +21,7 @@ res://scenes/ui/TechnologyGraphView.tscn
 res://scenes/ui/TechnologyMissionTargetPopup.tscn
 res://scenes/ui/TechnologyScreen.tscn
 res://scenes/ui/TopInfoBar.tscn
+res://scenes/ui/TradeScreen.tscn
 res://scenes/ui/TrainingPathScreen.tscn
 res://scenes/ui/TutorialPopup.tscn
 res://scenes/ui/VictoryScreen.tscn

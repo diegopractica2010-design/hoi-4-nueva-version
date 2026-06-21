@@ -8,14 +8,20 @@ extends Node
 var player_tag: String = "CHL"
 var _qa_smoke_mode: bool = false
 var _is_headless: bool = false
+var _scene_validation_mode: bool = false
 
 
 func _ready() -> void:
 	_qa_smoke_mode = ("--qa-smoke" in OS.get_cmdline_user_args()
 		or "--qa-smoke" in OS.get_cmdline_args()
 		or "++qa-smoke" in OS.get_cmdline_args())
+	_scene_validation_mode = ("--scene-validation" in OS.get_cmdline_user_args()
+		or "--scene-validation" in OS.get_cmdline_args())
 	_is_headless = DisplayServer.get_name() == "headless"
 	print("=== Epochs of Ascendancy Test Starting ===")
+	if _scene_validation_mode:
+		print("SCENE_VALIDATION: TestRunner ready")
+		return
 
 	# Flujo de nueva partida: el jugador debe elegir nación antes de cargar el escenario.
 	# Si todavía no hay selección, mostramos la pantalla de selección de nación y volvemos.

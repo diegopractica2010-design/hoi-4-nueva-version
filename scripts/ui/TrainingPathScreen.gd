@@ -50,23 +50,21 @@ static func open(parent: Node, id: String) -> TrainingPathScreen:
 func _ready() -> void:
 	drag_handle = $ContentPanel/MarginContainer/VBoxContainer/Header
 	super._ready()
-
-	if leader_id.is_empty():
-		push_error("TrainingPathScreen opened without a leader_id")
-		queue_free()
-		return
-
-	current_leader = LeaderManager.get_leader(leader_id)
-	if current_leader == null:
-		push_error("Leader not found: %s" % leader_id)
-		queue_free()
-		return
-
 	_apply_theme()
 	if close_button:
 		close_button.mouse_filter = Control.MOUSE_FILTER_STOP
 		close_button.pressed.connect(_on_close_pressed)
 		RetrowaveTheme.style_secondary_button(close_button)
+
+	if leader_id.is_empty():
+		_show_placeholder_state("No leader selected")
+		return
+
+	current_leader = LeaderManager.get_leader(leader_id)
+	if current_leader == null:
+		_show_placeholder_state("Leader not found: %s" % leader_id)
+		return
+
 	if not LeaderManager.training_path_invested.is_connected(_on_training_path_invested):
 		LeaderManager.training_path_invested.connect(_on_training_path_invested)
 	if not LeaderManager.training_path_switched.is_connected(_on_training_path_switched):
@@ -91,6 +89,15 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_close_pressed() -> void:
 	queue_free()
+
+
+func _show_placeholder_state(message: String) -> void:
+	screen_title_label.text = "Caminos de doctrina"
+	leader_name_label.text = message
+	current_path_label.text = ""
+	current_xp_label.text = ""
+	if close_button:
+		close_button.disabled = false
 
 
 func _on_training_path_invested(changed_leader_id: String, _path_id: String, _new_level: int) -> void:

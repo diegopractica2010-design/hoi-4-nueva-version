@@ -10,7 +10,9 @@ const SEEN_MARKER := "user://tutorial_seen.flag"
 func _ready() -> void:
 	# Solo la primera vez (a menos que se borre el marcador).
 	if FileAccess.file_exists(SEEN_MARKER):
-		queue_free()
+		visible = false
+		set_process(false)
+		set_physics_process(false)
 		return
 	_build_ui()
 

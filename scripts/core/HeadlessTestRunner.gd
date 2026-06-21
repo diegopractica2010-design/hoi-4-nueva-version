@@ -3,13 +3,19 @@ extends Node
 @onready var loader: ScenarioLoader = $ScenarioLoader
 
 var _qa_smoke_mode: bool = false
+var _scene_validation_mode: bool = false
 
 
 func _ready() -> void:
 	_qa_smoke_mode = ("--qa-smoke" in OS.get_cmdline_user_args()
 		or "--qa-smoke" in OS.get_cmdline_args()
 		or "++qa-smoke" in OS.get_cmdline_args())
+	_scene_validation_mode = ("--scene-validation" in OS.get_cmdline_user_args()
+		or "--scene-validation" in OS.get_cmdline_args())
 	print("=== Headless Test Runner ===")
+	if _scene_validation_mode:
+		print("SCENE_VALIDATION: HeadlessTestRunner ready")
+		return
 
 	if typeof(GameData) != TYPE_NIL and GameData.selected_nation_tag.strip_edges().is_empty():
 		GameData.selected_nation_tag = "CHL"

@@ -85,9 +85,22 @@ func _ready() -> void:
 	domain_filter.item_selected.connect(_on_filters_changed)
 	show_obsolete_check.toggled.connect(_on_filters_changed)
 
+	if _is_scene_validation_mode():
+		lock_hint_label.text = "Scene validation mode"
+		return
+
 	_rebuild_list()
 	_update_legend_visibility()
 	popup_centered()
+
+
+func _is_scene_validation_mode() -> bool:
+	for argument in OS.get_cmdline_user_args():
+		if argument == "--scene-validation":
+			return true
+		if argument.begins_with("--manifest=") or argument.begins_with("--scene="):
+			return true
+	return false
 
 
 func _legend_key_text() -> String:

@@ -19,15 +19,6 @@ var leader: Leader
 
 
 func _ready() -> void:
-	if leader_id.is_empty():
-		queue_free()
-		return
-
-	leader = LeaderManager.get_leader(leader_id)
-	if leader == null:
-		queue_free()
-		return
-
 	visible = false
 	close_requested.connect(_on_close_blocked)
 	RetrowaveTheme.style_popup_root(self)
@@ -37,6 +28,15 @@ func _ready() -> void:
 	RetrowaveTheme.style_body_label(note_label)
 	RetrowaveTheme.style_secondary_button(retire_button)
 	RetrowaveTheme.style_primary_button(stay_button)
+
+	if leader_id.is_empty():
+		_show_placeholder_state("No leader selected.")
+		return
+
+	leader = LeaderManager.get_leader(leader_id)
+	if leader == null:
+		_show_placeholder_state("Leader not found: %s" % leader_id)
+		return
 
 	_setup_ui()
 	retire_button.pressed.connect(_on_retire_pressed)
@@ -114,3 +114,13 @@ static func open_for_leader(target_leader_id: String) -> RetirementOfferPopup:
 		return null
 	tree.root.add_child(retirement_popup)
 	return retirement_popup
+
+
+func _show_placeholder_state(message: String) -> void:
+	title = "Leadership Transition"
+	title_label.text = "Leadership Transition"
+	leader_info_label.text = message
+	description_label.text = ""
+	note_label.text = ""
+	retire_button.disabled = true
+	stay_button.disabled = true

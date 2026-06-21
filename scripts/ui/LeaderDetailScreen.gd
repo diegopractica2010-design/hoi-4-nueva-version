@@ -57,24 +57,22 @@ static func open(parent: Node, id: String) -> LeaderDetailScreen:
 func _ready() -> void:
 	drag_handle = $MarginContainer/VBoxContainer/Header
 	super._ready()
-
-	if leader_id.is_empty():
-		push_error("LeaderDetailScreen opened without a leader_id")
-		queue_free()
-		return
-
-	current_leader = LeaderManager.get_leader(leader_id)
-	if current_leader == null:
-		push_error("Leader not found: %s" % leader_id)
-		queue_free()
-		return
-
 	_apply_theme()
 	if training_paths_btn:
 		training_paths_btn.custom_minimum_size = Vector2(170, 26)
 		training_paths_btn.text = "Caminos de doctrina"
 		training_paths_btn.pressed.connect(_on_training_paths_pressed)
 	close_button.pressed.connect(_on_close_pressed)
+
+	if leader_id.is_empty():
+		_show_placeholder_state("No leader selected")
+		return
+
+	current_leader = LeaderManager.get_leader(leader_id)
+	if current_leader == null:
+		_show_placeholder_state("Leader not found: %s" % leader_id)
+		return
+
 	if not LeaderManager.trait_leveled.is_connected(_on_trait_leveled):
 		LeaderManager.trait_leveled.connect(_on_trait_leveled)
 	if not LeaderManager.training_path_invested.is_connected(_on_training_path_invested):
@@ -116,6 +114,17 @@ func _on_training_path_switched(changed_leader_id: String, _old_path_id: String,
 
 func _on_training_paths_pressed() -> void:
 	TrainingPathScreen.open(self, leader_id)
+
+
+func _show_placeholder_state(message: String) -> void:
+	name_label.text = message
+	age_assignment_label.text = ""
+	skills_label.text = ""
+	xp_label.text = ""
+	training_path_label.text = ""
+	level_up_section.hide()
+	if training_paths_btn:
+		training_paths_btn.disabled = true
 
 
 func refresh_screen() -> void:

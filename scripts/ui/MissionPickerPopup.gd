@@ -27,10 +27,6 @@ var selected_mission_id: String = ""
 
 
 func _ready() -> void:
-	if agent_id.is_empty() or target_tag.is_empty():
-		queue_free()
-		return
-
 	visible = false
 	close_requested.connect(_on_cancel_pressed)
 	RetrowaveTheme.style_popup_root(self)
@@ -50,6 +46,10 @@ func _ready() -> void:
 	search_edit.text_changed.connect(_on_search_changed)
 	mission_list.item_selected.connect(_on_mission_selected)
 	category_filter_option.item_selected.connect(_on_category_filter_changed)
+
+	if agent_id.is_empty() or target_tag.is_empty():
+		_show_placeholder_state("Mission context is incomplete.")
+		return
 
 	_setup_category_filter()
 	_update_title()
@@ -75,6 +75,19 @@ func _present_popup() -> void:
 		return
 	popup_centered()
 	visible = true
+
+
+func _show_placeholder_state(message: String) -> void:
+	title_label.text = dialog_title
+	title = dialog_title
+	context_label.text = message
+	search_edit.editable = false
+	search_edit.placeholder_text = ""
+	category_filter_option.disabled = true
+	mission_list.clear()
+	mission_list.add_item("No eligible missions for this agent.")
+	detail_label.text = "Selecciona una misión para ver detalles."
+	confirm_button.disabled = true
 
 
 static func open_picker(configure: Callable) -> MissionPickerPopup:
