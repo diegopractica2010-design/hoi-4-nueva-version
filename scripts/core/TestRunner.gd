@@ -7,16 +7,19 @@ extends Node
 
 var player_tag: String = "CHL"
 var _qa_smoke_mode: bool = false
+var _is_headless: bool = false
 
 
 func _ready() -> void:
 	_qa_smoke_mode = "--qa-smoke" in OS.get_cmdline_user_args()
+	_is_headless = DisplayServer.get_name() == "headless"
 	print("=== Epochs of Ascendancy Test Starting ===")
 
 	# Flujo de nueva partida: el jugador debe elegir nación antes de cargar el escenario.
 	# Si todavía no hay selección, mostramos la pantalla de selección de nación y volvemos.
+	# En headless sin --qa-smoke también se auto-asigna CHL para evitar UI inexistente.
 	if typeof(GameData) != TYPE_NIL and GameData.selected_nation_tag.strip_edges().is_empty():
-		if _qa_smoke_mode:
+		if _qa_smoke_mode or _is_headless:
 			GameData.selected_nation_tag = "CHL"
 		else:
 			print("No hay nación seleccionada — abriendo pantalla de selección.")
@@ -46,12 +49,15 @@ func _ready() -> void:
 
 	print("Scenario loaded. Initializing map renderer...")
 	var map_data := loader.get_map_data()
-	map_renderer.initialize(
-		map_data.provinces,
-		map_data.geometry,
-		map_data.adjacency_system,
-		map_data.countries,
-	)
+	if _is_headless:
+		print("Headless mode: skipping visual map renderer")
+	else:
+		map_renderer.initialize(
+			map_data.provinces,
+			map_data.geometry,
+			map_data.adjacency_system,
+			map_data.countries,
+		)
 
 	# Also feed MapManager so it is authoritative even in test runner flows
 	var mm := get_node_or_null("/root/MapManager")
@@ -60,7 +66,7 @@ func _ready() -> void:
 	elif mm != null and mm.has_method("force_initialize"):
 		mm.force_initialize(map_data.provinces, map_data.geometry, map_data.adjacency_system, map_data.countries)
 
-	if camera_controller and map_renderer.container:
+	if not _is_headless and camera_controller and map_renderer.container:
 		camera_controller.target = map_renderer.container
 
 	player_tag = _resolve_player_tag()
@@ -74,7 +80,7 @@ func _ready() -> void:
 	if typeof(UnitMovementSystem) != TYPE_NIL and UnitMovementSystem.has_method("set_player_tag"):
 		UnitMovementSystem.set_player_tag(player_tag)
 
-	if map_renderer and loader:
+	if not _is_headless and map_renderer and loader:
 		map_renderer.build_supply_network(loader.get_city_layer(), player_tag)
 		# Supply advances automatically via TimeManager.game_day_advanced signal.
 		# Manual advance_supply_day() calls here cause double-tick on boot.
@@ -83,7 +89,8 @@ func _ready() -> void:
 	if mm != null and mm.has_method("has_province_data") and mm.has_province_data():
 		print("✅ MapManager ready with %d provinces (ProvinceEffects now centralized)" % mm.get_province_count())
 
-	_configure_top_info_bar(player_tag)
+	if not _is_headless:
+		_configure_top_info_bar(player_tag)
 	if typeof(LeaderManager) != TYPE_NIL:
 		LeaderManager.set_player_country_tag(player_tag)
 
