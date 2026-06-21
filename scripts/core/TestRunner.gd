@@ -37,6 +37,14 @@ func _ready() -> void:
 		get_tree().quit(1)
 		return
 
+	var AutoloadValidatorClass = load("res://scripts/core/AutoloadValidator.gd")
+	var autoloads_ok = AutoloadValidatorClass.validate_all()
+	if not autoloads_ok:
+		push_error("QA_SMOKE: autoload validation failed")
+		if _qa_smoke_mode:
+			get_tree().quit(1)
+			return
+
 	var success := loader.load_scenario("1879")
 
 	if not success:
