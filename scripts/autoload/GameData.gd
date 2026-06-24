@@ -2,6 +2,7 @@ extends Node
 
 ## Global design/production data. Loaded once at startup.
 
+var world = null
 var design_data = null
 var selected_nation_tag: String = ""
 
