@@ -86,7 +86,7 @@ static func test_production_evaluation() -> bool:
 		{ "id": "fighter_1", "type": "air" },
 		{ "id": "destroyer_1", "type": "naval" },
 	]
-	var picked := em._pick_design_of_type(mock_designs, "air")
+	var picked = em._pick_design_of_type(mock_designs, "air")
 	if picked != null and picked.get("id", "") == "fighter_1":
 		print("  ✓ _pick_design_of_type picks correct type")
 	else:
@@ -110,7 +110,7 @@ static func test_tech_choice() -> bool:
 		{ "id": "basic_armor", "category": "armor" },
 		{ "id": "basic_naval", "category": "naval" },
 	]
-	var chosen := em._choose_tech("CHL", mock_techs, "military")
+	var chosen = em._choose_tech("CHL", mock_techs, "military")
 	if chosen != null and str(chosen.get("id", "")).find("weapons") >= 0 or str(chosen.get("id", "")).find("armor") >= 0:
 		print("  ✓ _choose_tech military focus picks weapons/armor")
 	else:

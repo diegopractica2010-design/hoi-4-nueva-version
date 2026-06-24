@@ -47,6 +47,15 @@ func _get_player_tag() -> String:
 # ===== DIPLOMACY AI =====
 
 func set_ai_personality(tag: String, personality: Dictionary) -> void:
+	var defaults := {
+		"aggressiveness": 0.5,
+		"alliance_tendency": 0.5,
+		"trust_bias": 0.0,
+		"opportunism": 0.5,
+	}
+	for key in defaults:
+		if not personality.has(key):
+			personality[key] = defaults[key]
 	_ai_personalities[tag] = personality
 
 func get_ai_personality(tag: String) -> Dictionary:

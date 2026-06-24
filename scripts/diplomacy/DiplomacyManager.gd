@@ -40,10 +40,12 @@ func declare_war(attacker: String, defender: String) -> bool:
 	if is_at_war(attacker, defender):
 		return false
 	var war_id = attacker + "_vs_" + defender
+	var d := TimeManager.get_current_date()
+	var date_str := "%04d-%02d-%02d" % [d.get("year", 0), d.get("month", 1), d.get("day", 1)]
 	wars[war_id] = {
 		"attacker": attacker,
 		"defender": defender,
-		"start_date": TimeManager.get_date_string(),
+		"start_date": date_str,
 		"score": {}
 	}
 	Log.info(attacker + " declared war on " + defender, "DiplomacyManager")

@@ -118,18 +118,19 @@ func _ready() -> void:
 	var RiskValidatorClass = load("res://scripts/qa/RiskValidator.gd")
 	var risks_ok = RiskValidatorClass.validate_all()
 
-	if all_ok:
-		print("\n✅ All headless tests passed")
-	else:
+	if not all_ok:
 		push_error("\n❌ Some headless tests failed")
 		if _qa_smoke_mode:
 			get_tree().quit(1)
+			return
+		else:
+			print("\n⚠️  Headless tests have failures (non-blocking mode)")
 
 	if risks_ok:
 		print("✅ Risk validation passed")
 	else:
 		push_warning("⚠️  Risk validation flagged issues (non-blocking)")
 
-	if _qa_smoke_mode:
+	if _qa_smoke_mode and all_ok:
 		print("✅ QA_SMOKE: all tests passed")
 		get_tree().quit(0)
