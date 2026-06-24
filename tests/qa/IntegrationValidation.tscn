@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=4 uid="uid://c1q5m2onqpv5u"]
+
+[ext_resource type="Script" path="res://tests/qa/IntegrationValidation.gd" id="1_xcbl1"]
+
+[node name="IntegrationValidation" type="Node"]
+script = ExtResource("1_xcbl1")

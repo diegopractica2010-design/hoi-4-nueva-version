@@ -88,9 +88,10 @@ func _on_offer_selected(index: int) -> void:
 	detail += "\n--- Solicita ---\n"
 	for item in offer.get("requested", []):
 		detail += "  " + _format_item(item) + "\n"
-	var fairness := TradeManager.evaluate_fairness(selected_offer_id, current_nation)
-	detail += "\nJusticia: " + str(fairness.get("score", 0.0))
-	detail += "\n" + str(fairness.get("reason", ""))
+	if typeof(TradeManager) != TYPE_NIL:
+		var fairness := TradeManager.evaluate_fairness(selected_offer_id, current_nation)
+		detail += "\nJusticia: " + str(fairness.get("score", 0.0))
+		detail += "\n" + str(fairness.get("reason", ""))
 	offer_detail_label.text = detail
 	accept_btn.disabled = false
 	reject_btn.disabled = false

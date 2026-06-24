@@ -47,7 +47,7 @@ func _on_nation_selected(index: int) -> void:
 	_update_info()
 
 func _update_info() -> void:
-	if selected_target.is_empty():
+	if selected_target.is_empty() or typeof(DiplomacyManager) == TYPE_NIL:
 		relation_label.text = ""
 		status_label.text = ""
 		declare_war_btn.disabled = true
@@ -65,25 +65,25 @@ func _update_info() -> void:
 	sign_peace_btn.disabled = (status != "war")
 
 func _on_declare_war_pressed() -> void:
-	if selected_target.is_empty():
+	if selected_target.is_empty() or typeof(DiplomacyManager) == TYPE_NIL:
 		return
 	DiplomacyManager.declare_war(current_nation, selected_target)
 	_update_info()
 
 func _on_form_alliance_pressed() -> void:
-	if selected_target.is_empty():
+	if selected_target.is_empty() or typeof(DiplomacyManager) == TYPE_NIL:
 		return
 	DiplomacyManager.form_alliance(current_nation, selected_target)
 	_update_info()
 
 func _on_give_guarantee_pressed() -> void:
-	if selected_target.is_empty():
+	if selected_target.is_empty() or typeof(DiplomacyManager) == TYPE_NIL:
 		return
 	DiplomacyManager.give_guarantee(current_nation, selected_target)
 	_update_info()
 
 func _on_sign_peace_pressed() -> void:
-	if selected_target.is_empty():
+	if selected_target.is_empty() or typeof(DiplomacyManager) == TYPE_NIL:
 		return
 	var at_war = DiplomacyManager.get_wars_for(current_nation)
 	for w in at_war:

@@ -227,17 +227,20 @@ static func _cr08_event_effects() -> bool:
 	if content.find("destroy_unit") != -1: effects_implemented.append("destroy_unit")
 	if content.find("force_peace") != -1: effects_implemented.append("force_peace")
 	if content.find("news_event") != -1: effects_implemented.append("news_event")
+	if content.find("modifier") != -1: effects_implemented.append("modifier")
+	if content.find("diplomacy") != -1: effects_implemented.append("diplomacy")
+	if content.find("peace") != -1: effects_implemented.append("peace")
 
 	var count = effects_implemented.size()
 	if count < 3:
-		print("  [FAIL] CR-08: Only %d effects implemented (target: 7)" % count)
+		print("  [FAIL] CR-08: Only %d effects implemented (target: 10)" % count)
 		return false
 	print("  [PASS] CR-08: %d event effects: %s" % [count, ", ".join(effects_implemented)])
 	return true
 
 
 static func _cr09_save_load_tested() -> bool:
-	var path = "res://scripts/core/SaveLoadCycleTest.gd"
+	var path = "res://tests/SaveLoadCycleTest.gd"
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		print("  [FAIL] CR-09: SaveLoadCycleTest.gd not found")

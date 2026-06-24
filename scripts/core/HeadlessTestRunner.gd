@@ -114,6 +114,10 @@ func _ready() -> void:
 	var mm = get_node_or_null("/root/MapManager")
 	all_ok = MapComprehensiveTestScript.run_all(mm, loader) and all_ok
 
+	print("\n=== Integration Validation (Phase 7) ===")
+	var IntegrationValidation = load("res://tests/qa/IntegrationValidation.gd")
+	all_ok = IntegrationValidation.run_all() and all_ok
+
 	print("\n=== Risk Validation (Phase 2) ===")
 	var RiskValidatorClass = load("res://scripts/qa/RiskValidator.gd")
 	var risks_ok = RiskValidatorClass.validate_all()
