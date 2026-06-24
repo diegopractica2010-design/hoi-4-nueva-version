@@ -84,8 +84,37 @@ func _evaluate_all_events(year: int, month: int, day: int) -> void:
 			continue
 
 		var trigger_variant: Variant = event.get("trigger", {})
-		if typeof(trigger_variant) == TYPE_DICTIONARY and _check_trigger(trigger_variant as Dictionary, year, month, day):
-			_fire_event(event)
+		if typeof(trigger_variant) != TYPE_DICTIONARY:
+			continue
+		if not _check_trigger(trigger_variant as Dictionary, year, month, day):
+			continue
+		if not _check_conditions(event.get("conditions", {}), year, month, day):
+			continue
+		_fire_event(event)
+
+
+func _check_conditions(conditions: Dictionary, year: int, month: int, day: int) -> bool:
+	if conditions.is_empty():
+		return true
+	if conditions.has("war_exists"):
+		var pair: Array = conditions["war_exists"] as Array
+		if pair.size() >= 2 and typeof(DiplomacyManager) != TYPE_NIL:
+			if not DiplomacyManager.is_at_war(str(pair[0]), str(pair[1])):
+				return false
+	if conditions.has("owner"):
+		var pair: Array = conditions["owner"] as Array
+		if pair.size() >= 2 and typeof(MapManager) != TYPE_NIL:
+			var tag := str(pair[0])
+			var pid := int(pair[1])
+			if MapManager.has_method("get_province_owner"):
+				if MapManager.get_province_owner(pid) != tag:
+					return false
+	if conditions.has("peace"):
+		var tag := str(conditions["peace"])
+		if typeof(DiplomacyManager) != TYPE_NIL:
+			if DiplomacyManager.is_nation_at_war(tag):
+				return false
+	return true
 
 
 func _check_trigger(trigger: Dictionary, year: int, month: int, day: int) -> bool:
@@ -113,6 +142,23 @@ func _check_trigger(trigger: Dictionary, year: int, month: int, day: int) -> boo
 				}, year, month, day)
 				return date_ok and cond_ok
 			return date_ok
+
+		"relation":
+			if typeof(DiplomacyManager) == TYPE_NIL:
+				return false
+			var from := str(trigger.get("from", "")).strip_edges().to_upper()
+			var to := str(trigger.get("to", "")).strip_edges().to_upper()
+			var comparison := str(trigger.get("comparison", ">="))
+			var value := float(trigger.get("value", 0))
+			var rel := float(DiplomacyManager.get_relation(from, to))
+			match comparison:
+				">=": return rel >= value
+				"<=": return rel <= value
+				">": return rel > value
+				"<": return rel < value
+				"==": return rel == value
+				"!=": return rel != value
+			return false
 
 		_:
 			return false
@@ -155,6 +201,8 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 		"declare_war":
 			var attacker := str(effect.get("attacker", "")).strip_edges().to_upper()
 			var defender := str(effect.get("defender", "")).strip_edges().to_upper()
+			if typeof(DiplomacyManager) != TYPE_NIL:
+				DiplomacyManager.declare_war(attacker, defender)
 			if typeof(LeaderManager) != TYPE_NIL and LeaderManager.has_method("set_country_at_war"):
 				LeaderManager.set_country_at_war(attacker, true)
 				LeaderManager.set_country_at_war(defender, true)
@@ -216,6 +264,8 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 		"force_peace":
 			var attacker := str(effect.get("attacker", "")).strip_edges().to_upper()
 			var defender := str(effect.get("defender", "")).strip_edges().to_upper()
+			if typeof(DiplomacyManager) != TYPE_NIL:
+				DiplomacyManager.sign_peace(attacker, defender, attacker)
 			if typeof(LeaderManager) != TYPE_NIL and LeaderManager.has_method("set_country_at_war"):
 				LeaderManager.set_country_at_war(attacker, false)
 				LeaderManager.set_country_at_war(defender, false)
@@ -226,6 +276,56 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 		"news_event":
 			Log.info("[EventManager] News: %s" % str(effect.get("text", "")), "EventManager")
 			event_effect_applied.emit(effect_type, "")
+
+		"modifier":
+			var target := str(effect.get("target", "")).strip_edges().to_upper()
+			var key := str(effect.get("key", ""))
+			var value := float(effect.get("value", 0.0))
+			var duration := int(effect.get("duration_days", 180))
+			if typeof(NationalModifierManager) != TYPE_NIL:
+				NationalModifierManager.apply_national_effect(target, {
+					"effect_id": "event_mod_%s_%s" % [event.get("id", ""), key],
+					"source": "event",
+					"source_detail": str(event.get("id", "")),
+					"key": key,
+					"value": value,
+					"duration_days": duration,
+					"modifiers": {key: value}
+				})
+				Log.info("[EventManager] Modifier applied: %s %s%+.1f for %dd" % [target, key, value, duration], "EventManager")
+			event_effect_applied.emit(effect_type, target)
+
+		"diplomacy":
+			var action := str(effect.get("action", ""))
+			var from := str(effect.get("from", "")).strip_edges().to_upper()
+			var to := str(effect.get("to", "")).strip_edges().to_upper()
+			if typeof(DiplomacyManager) != TYPE_NIL:
+				match action:
+					"form_alliance":
+						DiplomacyManager.form_alliance(from, to)
+						Log.info("[EventManager] Alliance formed: %s + %s" % [from, to], "EventManager")
+					"declare_war":
+						DiplomacyManager.declare_war(from, to)
+						Log.info("[EventManager] War declared (diplomacy effect): %s vs %s" % [from, to], "EventManager")
+					"sign_peace":
+						DiplomacyManager.sign_peace(from, to, from)
+						Log.info("[EventManager] Peace signed (diplomacy effect): %s + %s" % [from, to], "EventManager")
+					_:
+						Log.warn("[EventManager] Unknown diplomacy action: " + action)
+			event_effect_applied.emit(effect_type, from)
+
+		"peace":
+			var from := str(effect.get("from", "")).strip_edges().to_upper()
+			var to := str(effect.get("to", "")).strip_edges().to_upper()
+			var winner := str(effect.get("winner", from)).strip_edges().to_upper()
+			if typeof(DiplomacyManager) != TYPE_NIL:
+				DiplomacyManager.sign_peace(from, to, winner)
+				Log.info("[EventManager] Peace: %s defeats %s" % [winner, to if winner == from else from], "EventManager")
+			if typeof(LeaderManager) != TYPE_NIL:
+				for tag in [from, to]:
+					if LeaderManager.has_method("set_country_at_war"):
+						LeaderManager.set_country_at_war(tag, false)
+			event_effect_applied.emit(effect_type, winner)
 
 		_:
 			Log.warn("[EventManager] Unknown effect type: " + effect_type)

@@ -61,7 +61,7 @@ static func _test_save_data() -> bool:
 static func _test_effect_types() -> bool:
 	if typeof(EventManager) == TYPE_NIL:
 		return false
-	var expected = ["declare_war", "province_transfer", "add_national_spirit", "damage_unit", "destroy_unit", "force_peace", "news_event"]
+	var expected = ["declare_war", "province_transfer", "add_national_spirit", "damage_unit", "destroy_unit", "force_peace", "news_event", "modifier", "diplomacy", "peace"]
 	var file = FileAccess.open("res://scripts/events/EventManager.gd", FileAccess.READ)
 	if file == null:
 		print("  [WARN] cannot read EventManager.gd")

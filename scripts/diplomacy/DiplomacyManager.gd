@@ -72,6 +72,13 @@ func is_at_war(tag_a: String, tag_b: String) -> bool:
 	var reverse = tag_b + "_vs_" + tag_a
 	return direct in wars or reverse in wars
 
+func is_nation_at_war(tag: String) -> bool:
+	for war_id in wars:
+		var w = wars[war_id]
+		if w.attacker == tag or w.defender == tag:
+			return true
+	return false
+
 func get_wars_for(tag: String) -> Array:
 	var result = []
 	for war_id in wars:
