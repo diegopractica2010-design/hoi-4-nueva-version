@@ -767,25 +767,40 @@ func _calculate_centroid(points: PackedVector2Array) -> Vector2:
 
 
 func _get_province_color(province: Province) -> Color:
-	var fallback := Color(0.35, 0.35, 0.4, 0.85)
+	var fallback := Color(0.06, 0.12, 0.20, 0.90)
+	if province.is_sea:
+		return Color(0.04, 0.10, 0.18, 0.88)
 	if province.owner_tag.is_empty() or not countries.has(province.owner_tag):
 		return fallback
 	var nation: Variant = countries[province.owner_tag]
 	if nation is Country:
 		var c := nation as Country
-		var col := c.color
-		col.a = 0.85
+		var col := _saturate_color(c.color, 1.15)
+		col.a = 0.88
 		return col
 	if typeof(nation) == TYPE_DICTIONARY:
 		var d: Dictionary = nation
 		if d.has("color"):
 			var co: Variant = d["color"]
 			if typeof(co) == TYPE_COLOR:
-				var cc := co as Color
-				cc.a = 0.85
+				var cc: Color = co as Color
+				cc = _saturate_color(cc, 1.15)
+				cc.a = 0.88
 				return cc
 			return Color(String(co))
 	return fallback
+
+
+## Aumenta la saturación de un color sin usar métodos no disponibles en Godot 4.6.
+func _saturate_color(c: Color, factor: float) -> Color:
+	var h: float
+	var s: float
+	var v: float
+	h = c.h
+	s = c.s
+	v = c.v
+	s = clampf(s * factor, 0.0, 1.0)
+	return Color.from_hsv(h, s, v, c.a)
 
 
 # ============== UNIT MOVEMENT INTEGRATION (UnitMovementSystem) ==============

@@ -6,7 +6,7 @@ func _init() -> void:
 
 
 func _run() -> void:
-	var tests_script := load("res://scripts/core/ProductionLineTest.gd") as Script
+	var tests_script := load("res://tests/ProductionLineTest.gd") as Script
 	if tests_script == null:
 		push_error("PRODUCTION_REINFORCEMENT_VALIDATION: cannot load tests")
 		quit(1)

@@ -356,12 +356,13 @@ func _get_contested_province_id() -> int:
 
 const DESIGN_BASE_VALUE_MULTIPLIER := 1.0
 const RESOURCE_BASE_RATES := {
-	"steel": 1.0,
-	"fuel": 1.8,
-	"rubber": 2.2,
-	"aluminum": 1.5,
-	"oil": 2.5,
-	# ... extend as needed
+	"nitrates": 3.5,
+	"guano": 2.0,
+	"silver": 8.0,
+	"copper": 2.5,
+	"coal": 1.2,
+	"gold": 15.0,
+	"tin": 4.0,
 }
 
 func _ready() -> void:
@@ -929,135 +930,68 @@ func generate_public_market_offers(country_tag: String, count: int = 2) -> Array
 		var requested := []
 
 		var rng := randf()
-		if rng < 0.4:
-			# Surplus resource offer (e.g. steel-rich country offering steel for rubber/oil)
-			offered.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 1500.0})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "rubber", "quantity": 600.0})
-		elif rng < 0.65:
-			var design_id := _get_placeholder_design_id()
-			if design_id.is_empty():
-				continue
+		if rng < 0.35:
+			# Oferta de salitre (recurso clave de la guerra)
+			offered.append({"type": TradeItemType.RESOURCE, "id": "nitrates", "quantity": 800.0})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "coal", "quantity": 400.0})
+		elif rng < 0.55:
+			# Venta de armas: fusiles y cañones desde Europa
 			offered.append({
 				"type": TradeItemType.DESIGN,
-				"id": design_id,
+				"id": "comblain_rifle",
 				"quantity": 1,
-				"quality_modifier": 0.88,
-				"metadata": {"kind": "licensed", "notes": "export license - older production model"}
+				"quality_modifier": 0.95,
+				"metadata": {"kind": "purchased", "notes": "Fusil Comblain modelo 1879 - pedido militar"}
 			})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "oil", "quantity": 450.0})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "nitrates", "quantity": 300.0})
+		elif rng < 0.70:
+			# Cobre chileno por armamento naval
+			offered.append({"type": TradeItemType.RESOURCE, "id": "copper", "quantity": 600.0})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "silver", "quantity": 200.0})
 		elif rng < 0.85:
-			# Temporary docking rights (strategic for naval access)
+			# Derechos de puerto (estratégico para acceso naval)
 			offered.append({
 				"type": TradeItemType.DOCKING_RIGHTS,
 				"id": "port_access_" + tag,
 				"quantity": 1,
-				"metadata": {"duration_months": 18, "modifiers": {"supply_throughput": 0.15, "port_access": 1.0}, "notes": "temporary naval basing rights"}
+				"metadata": {"duration_months": 12, "modifiers": {"supply_throughput": 0.12, "port_access": 1.0}, "notes": "derechos de atraque para buques mercantes"}
 			})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "fuel", "quantity": 300.0})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "coal", "quantity": 500.0})
 		else:
-			# Mixed surplus offer (resources + small design license) for recurring variety
-			offered.append({"type": TradeItemType.RESOURCE, "id": "aluminum", "quantity": 800.0})
-			offered.append({
-				"type": TradeItemType.DESIGN,
-				"id": "older_fighter_variant",
-				"quantity": 1,
-				"quality_modifier": 0.82,
-				"metadata": {"kind": "licensed", "notes": "surplus export model"}
-			})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "rubber", "quantity": 400.0})
+			# Guano peruano por oro (contrato Dreyfus histórico)
+			offered.append({"type": TradeItemType.RESOURCE, "id": "guano", "quantity": 400.0})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "gold", "quantity": 50.0})
 
-		# Additional recurring case for docking + resource mix (naval strategy flavor)
-		if randf() < 0.2:
-			offered.append({
-				"type": TradeItemType.DOCKING_RIGHTS,
-				"id": "temporary_port_" + tag,
-				"quantity": 1,
-				"metadata": {"duration_months": 12, "modifiers": {"supply_throughput": 0.1}, "notes": "short-term naval access deal"}
-			})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 250.0})
-
-		# Occasional diplomatic package (TECH_SHARE + small resource) for variety
+		# Ocasional: venta de blindados británicos (Armstrong)
 		if randf() < 0.15:
 			offered.append({
-				"type": TradeItemType.TECH_SHARE,
-				"id": "basic_industry_tech",
-				"quantity": 1,
-				"metadata": {"notes": "diplomatic tech exchange package"}
-			})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "rubber", "quantity": 200.0})
-
-		# Occasional SUPPLY credit offer for strategic depth (abstract supply support)
-		if randf() < 0.1:
-			offered.append({
-				"type": TradeItemType.SUPPLY,
-				"id": "supply_credit_bundle",
-				"quantity": 1000.0,
-				"metadata": {"notes": "emergency supply support package"}
-			})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "aluminum", "quantity": 300.0})
-
-		# Occasional mixed SUPPLY + small DESIGN for diplomatic package flavor
-		if randf() < 0.08:
-			offered.append({
-				"type": TradeItemType.SUPPLY,
-				"id": "logistics_support_package",
-				"quantity": 800.0,
-				"metadata": {"notes": "combined supply and design support"}
-			})
-			offered.append({
 				"type": TradeItemType.DESIGN,
-				"id": "logistics_vehicle_variant",
+				"id": "armstrong_cannon",
 				"quantity": 1,
-				"quality_modifier": 0.9,
-				"metadata": {"kind": "licensed", "notes": "support vehicle export"}
+				"quality_modifier": 1.0,
+				"metadata": {"kind": "purchased", "notes": "Cañón Armstrong de 12 libras - artillería naval"}
 			})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 200.0})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "nitrates", "quantity": 200.0})
 
-		# Occasional new resource pair for variety (e.g. oil for rubber in different regions)
-		if randf() < 0.1:
-			offered.append({"type": TradeItemType.RESOURCE, "id": "oil", "quantity": 700.0})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "rubber", "quantity": 500.0})
-
-		# Occasional civilian / industrial surplus trade for everyday diplomatic flavor
-		if randf() < 0.07:
-			offered.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 2200.0})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "rubber", "quantity": 850.0})
-
-		# Occasional mixed docking + small TECH_SHARE for recurring naval/diplomatic activity
-		if randf() < 0.06:
-			offered.append({
-				"type": TradeItemType.DOCKING_RIGHTS,
-				"id": "naval_cooperation_" + tag,
-				"quantity": 1,
-				"metadata": {"duration_months": 15, "modifiers": {"supply_throughput": 0.12, "port_access": 0.8}, "notes": "joint naval access agreement"}
-			})
+		# Ocasional: intercambio tecnológico (técnicas de refinación de salitre)
+		if randf() < 0.12:
 			offered.append({
 				"type": TradeItemType.TECH_SHARE,
-				"id": "naval_logistics_tech",
+				"id": "saltpeter_refining",
 				"quantity": 1,
-				"metadata": {"notes": "limited naval doctrine exchange"}
+				"metadata": {"notes": "técnicas europeas de refinación de salitre"}
 			})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "fuel", "quantity": 420.0})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "copper", "quantity": 300.0})
 
-		# Occasional agricultural / construction surplus trade (everyday minor-power diplomatic flavor)
+		# Ocasional: créditos de suministro (apoyo logístico británico)
 		if randf() < 0.08:
-			offered.append({"type": TradeItemType.RESOURCE, "id": "steel", "quantity": 1800.0})
-			requested.append({"type": TradeItemType.RESOURCE, "id": "aluminum", "quantity": 720.0})
-
-		# Occasional joint training / equipment package for allied cooperation feel
-		if randf() < 0.05:
 			offered.append({
-				"type": TradeItemType.EQUIPMENT,
-				"id": "training_vehicles",
-				"quantity": 25,
-				"metadata": {"notes": "surplus training and support vehicles for joint exercises"}
+				"type": TradeItemType.SUPPLY,
+				"id": "british_logistics_aid",
+				"quantity": 600.0,
+				"metadata": {"notes": "apoyo logístico de la marina mercante británica"}
 			})
-			offered.append({
-				"type": TradeItemType.TECH_SHARE,
-				"id": "logistics_doctrine",
-				"quantity": 1,
-				"metadata": {"notes": "limited logistics and maintenance doctrine exchange"}
-			})
+			requested.append({"type": TradeItemType.RESOURCE, "id": "guano", "quantity": 200.0})
 			requested.append({"type": TradeItemType.RESOURCE, "id": "rubber", "quantity": 380.0})
 
 		var other_party := "WORLD_MARKET" if randf() < 0.5 else "TRADE_PARTNER_" + str(randi() % 5)

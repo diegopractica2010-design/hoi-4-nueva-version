@@ -16,77 +16,7 @@
     "germany"
   ],
   "provinces": [
-    {
-      "id": 2,
-      "owner_tag": "GER",
-      "controller_tag": "GER",
-      "factories": 10,
-      "development_level": 5,
-      "infrastructure": 5,
-      "population": 1200000,
-      "victory_points": 8,
-      "core_for_tags": [
-        "GER"
-      ],
-      "special_features": [
-        "capital"
-      ],
-      "special_levels": {}
-    },
-    {
-      "id": 4,
-      "owner_tag": "FRA",
-      "controller_tag": "FRA",
-      "factories": 11,
-      "development_level": 5,
-      "infrastructure": 5,
-      "population": 1600000,
-      "victory_points": 9,
-      "core_for_tags": [
-        "FRA"
-      ],
-      "special_features": [
-        "capital"
-      ],
-      "special_levels": {}
-    },
-    {
-      "id": 5,
-      "owner_tag": "ENG",
-      "controller_tag": "ENG",
-      "factories": 14,
-      "development_level": 6,
-      "infrastructure": 6,
-      "population": 1800000,
-      "victory_points": 10,
-      "core_for_tags": [
-        "ENG"
-      ],
-      "special_features": [
-        "capital",
-        "port"
-      ],
-      "special_levels": {
-        "port": 5
-      }
-    },
-    {
-      "id": 6,
-      "owner_tag": "USA",
-      "controller_tag": "USA",
-      "factories": 12,
-      "development_level": 5,
-      "infrastructure": 5,
-      "population": 1200000,
-      "victory_points": 8,
-      "core_for_tags": [
-        "USA"
-      ],
-      "special_features": [
-        "capital"
-      ],
-      "special_levels": {}
-    },
+
     {
       "id": 28,
       "owner_tag": "ARG",
@@ -212,7 +142,7 @@
     {
       "id": 841,
       "owner_tag": "BOL",
-      "controller_tag": "CHL",
+      "controller_tag": "BOL",
       "factories": 1,
       "development_level": 2.0,
       "infrastructure": 2,
@@ -411,6 +341,12 @@
     },
     {
       "country": "CHL",
+      "template": "chl_cavalry_1879",
+      "province": 90,
+      "count": 1
+    },
+    {
+      "country": "CHL",
       "template": "chl_artillery_1879",
       "province": 90,
       "count": 1
@@ -466,50 +402,49 @@
   ],
   "national_stockpiles": {
     "CHL": {
-      "steel": 120,
+      "nitrates": 65,
+      "guano": 20,
+      "silver": 30,
+      "copper": 55,
       "coal": 80,
-      "gold": 200,
-      "nitrates": 0
+      "gold": 200
     },
     "PER": {
-      "steel": 80,
+      "nitrates": 80,
+      "guano": 60,
+      "silver": 25,
+      "copper": 40,
       "coal": 40,
-      "gold": 150,
-      "guano": 60
+      "gold": 150
     },
     "BOL": {
-      "steel": 40,
+      "silver": 50,
+      "copper": 20,
       "coal": 20,
-      "gold": 80,
-      "silver": 50
+      "gold": 80
     },
     "ARG": {
-      "steel": 60,
+      "silver": 10,
       "coal": 30,
       "gold": 120
     },
     "BRA": {
-      "steel": 70,
       "coal": 35,
       "gold": 130
     },
     "ENG": {
-      "steel": 500,
       "coal": 400,
       "gold": 800
     },
     "GER": {
-      "steel": 450,
       "coal": 380,
       "gold": 600
     },
     "FRA": {
-      "steel": 300,
       "coal": 250,
       "gold": 500
     },
     "USA": {
-      "steel": 350,
       "coal": 300,
       "gold": 600
     }

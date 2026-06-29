@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Epochs-of-Ascendancy"
+config/name="Guerra del Pacifico 1879"
 run/main_scene="res://scenes/ui/StartMenu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
@@ -89,7 +89,7 @@ move_down={
 
 [rendering]
 
-rendering_device/driver.windows="d3d12"
+rendering_device/driver.windows="opengl3"
 gl_compatibility/fallback_to_angle=false
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

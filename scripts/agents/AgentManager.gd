@@ -16,10 +16,34 @@ const MAX_MISSION_HISTORY_PER_AGENT := 12
 const MISSION_HISTORY_UI_LIMIT := 6
 const RECENT_OPERATIONS_UI_LIMIT := 10
 
-## MVP target list until diplomacy exposes valid operation theaters.
+## Países objetivo del teatro Pacífico 1879.
 const DEFAULT_TARGET_COUNTRY_TAGS: Array[String] = [
-	"USA", "GER", "ENG", "FRA", "SOV", "JAP", "ITA", "CHI",
+	"CHL", "PER", "BOL", "ARG", "BRA", "ENG", "FRA", "USA",
 ]
+
+## Espías históricos de la Guerra del Pacífico por país.
+const HISTORICAL_SPIES: Dictionary = {
+	"CHL": [
+		"Francisco J. Lynch",
+		"José F. Vergara",
+		"Ambrosio Letelier",
+		"Cornelio Saavedra",
+	],
+	"PER": [
+		"Manuel Candamo",
+		"Juan Buendía",
+		"Lizardo Montero",
+		"Mariano I. Prado",
+	],
+	"BOL": [
+		"Severo F. Alonso",
+		"Ladislao Cabrera",
+		"Manuel M. Rojas",
+	],
+	"ENG": ["Charles W. Mansfield", "Thomas A. Brassey"],
+	"FRA": ["Aimé A. Dreyfus"],
+	"USA": ["John H. Robinson"],
+}
 
 ## Daily network sabotage tuning (light but strategic pressure).
 ## BASE/MAX control the scale of national debuffs + depot sabotage_level accumulation.
@@ -57,6 +81,10 @@ func _ready() -> void:
 			TimeManager.game_year_advanced.connect(_on_game_year_advanced)
 		if not TimeManager.game_day_advanced.is_connected(_on_game_day_advanced):
 			TimeManager.game_day_advanced.connect(_on_game_day_advanced)
+
+	# Spawn historical spies for the 1879 scenario
+	if _current_year >= 1870 and _current_year <= 1890:
+		call_deferred("spawn_historical_spies")
 
 	# Connected to TimeManager only. LeaderManager.game_year_advanced was a
 	# backward-compat duplicate that risked double-firing advance_missions(12).
@@ -112,6 +140,30 @@ func get_agent(agent_id: String) -> Agent:
 		for agent in country_agents as Array[Agent]:
 			if agent.agent_id == agent_id:
 				return agent
+	return null
+
+
+func spawn_historical_spies() -> void:
+	for tag in HISTORICAL_SPIES:
+		var names: Array = HISTORICAL_SPIES[tag]
+		for spy_name in names:
+			if not agents.has(tag):
+				agents[tag] = []
+			var existing := _find_agent_by_name(tag, str(spy_name))
+			if existing != null:
+				continue
+			var agent := AgentGenerator.generate_named_agent(tag, str(spy_name), _current_year)
+			agents[tag].append(agent)
+			Log.info("AgentManager: Spawned historical spy %s for %s" % [agent.name, tag], "AgentManager")
+
+
+func _find_agent_by_name(country_tag: String, name: String) -> Agent:
+	if not agents.has(country_tag):
+		return null
+	for a in agents[country_tag]:
+		var agent := a as Agent
+		if agent != null and agent.name == name:
+			return agent
 	return null
 
 
@@ -462,7 +514,8 @@ func _process_network_action(net: AgentNetwork, months: int) -> void:
 		"supply_disruption":
 			var disruption := effectiveness * 0.08 * months
 			net.total_disruption_caused += disruption
-			# TODO: Apply actual province-level supply penalty here (reduce throughput, increase interdiction in this province)
+			if typeof(SupplyManager) != TYPE_NIL and SupplyManager.has_method("apply_supply_disruption"):
+				SupplyManager.apply_supply_disruption(net.province_id, disruption)
 			Log.info("Network in province %d disrupted supply by %.2f (effectiveness: %.2f)" % [net.province_id, disruption, effectiveness], "AgentManager")
 
 		"infrastructure_sabotage":
@@ -512,11 +565,12 @@ func _process_network_action_daily(net: AgentNetwork) -> String:
 				action_note = "intel"
 
 		"supply_disruption":
-			var disruption := effectiveness * 0.003   # very small daily
+			var disruption := effectiveness * 0.003
 			net.total_disruption_caused += disruption
 			if disruption > 0.0001:
 				action_note = "disrupt"
-			# TODO: Apply actual small daily province supply impact here
+				if typeof(SupplyManager) != TYPE_NIL and SupplyManager.has_method("apply_supply_disruption"):
+					SupplyManager.apply_supply_disruption(net.province_id, disruption * 0.1)
 
 		"infrastructure_sabotage":
 			if randf() < 0.04:

@@ -281,9 +281,12 @@ func get_war_state() -> Dictionary:
 	return _last_scenario_data.get("initial_war_state", {})
 
 
-## Despliega las fuerzas iniciales del escenario (starting_forces) colocando las
-## formaciones de cada nacion en sus provincias historicas (Santiago, Antofagasta,
-## Lima, Arica, Sucre, La Paz...). Antes las formaciones nacian sin posicion (province_id=-1).
+const UNIT_TEMPLATES_DIR := "res://data/unit_templates/1879/"
+
+## Despliega las fuerzas iniciales del escenario (starting_forces) creando
+## formaciones a partir de las plantillas históricas (ataque, defensa,
+## organización). Cada formación recibe el nombre y la ID de su plantilla
+## para que los eventos navales (Iquique, Angamos) puedan encontrarla.
 func _deploy_starting_forces(data: Dictionary) -> void:
 	if typeof(LeaderManager) == TYPE_NIL:
 		return
@@ -291,34 +294,72 @@ func _deploy_starting_forces(data: Dictionary) -> void:
 	if typeof(forces) != TYPE_ARRAY:
 		return
 
-	# Agrupar formaciones existentes (sin desplegar) por nacion.
-	var pool: Dictionary = {}  # tag -> Array[Formation]
-	for fid in LeaderManager.formations:
-		var f: Formation = LeaderManager.formations[fid]
-		if f == null:
-			continue
-		var tag := f.country_tag.strip_edges().to_upper()
-		if not pool.has(tag):
-			pool[tag] = []
-		(pool[tag] as Array).append(f)
-
 	var deployed := 0
 	for entry in forces as Array:
 		if typeof(entry) != TYPE_DICTIONARY:
 			continue
 		var tag := str((entry as Dictionary).get("country", "")).strip_edges().to_upper()
+		var template_id := str((entry as Dictionary).get("template", ""))
 		var pid := int((entry as Dictionary).get("province", -1))
 		var count := int((entry as Dictionary).get("count", 1))
-		if pid < 0 or not pool.has(tag):
+		if pid < 0 or template_id.is_empty():
 			continue
-		var arr: Array = pool[tag]
+
+		var template := _load_unit_template(template_id)
 		for _i in count:
-			if arr.is_empty():
-				break
-			var f: Formation = arr.pop_back()
-			f.province_id = pid
-			deployed += 1
-	Log.info("[OK] Starting forces deployed: %d formaciones colocadas en sus provincias" % deployed, "ScenarioLoader")
+			var f := _formation_from_template(template_id, template, tag, pid)
+			if f != null:
+				LeaderManager.register_formation(f)
+				deployed += 1
+
+	Log.info("[OK] Starting forces deployed: %d formaciones creadas desde plantillas históricas" % deployed, "ScenarioLoader")
+
+
+## Carga un archivo de plantilla JSON de data/unit_templates/1879/.
+func _load_unit_template(template_id: String) -> Dictionary:
+	var path := UNIT_TEMPLATES_DIR + template_id + ".json"
+	if not FileAccess.file_exists(path):
+		Log.warn("Unit template not found: " + path, "ScenarioLoader")
+		return {}
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return {}
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	file.close()
+	return parsed if typeof(parsed) == TYPE_DICTIONARY else {}
+
+
+## Crea una Formation desde una plantilla JSON. Usa el template_id como
+## formation_id para que los eventos puedan referenciarla por nombre.
+func _formation_from_template(template_id: String, template: Dictionary, country_tag: String, province_id: int) -> Formation:
+	if template.is_empty():
+		return null
+
+	var f := Formation.new()
+	f.formation_id = template_id
+	f.name = str(template.get("name", template_id))
+	f.country_tag = country_tag
+	f.province_id = province_id
+	f.strength = 1.0
+	f.max_strength = 1.0
+
+	var base_type := str(template.get("base_type", "Land"))
+	match base_type:
+		"Naval":
+			f.formation_type = Formation.TYPE_FLEET
+		"Air":
+			f.formation_type = Formation.TYPE_AIR_WING
+		_:
+			f.formation_type = Formation.TYPE_DIVISION
+
+	# Aplicar stats base de la plantilla a la formación
+	var base_stats: Dictionary = template.get("base_stats", {})
+	if base_stats.has("supply_need"):
+		f.combat_width = int(base_stats["supply_need"])
+	# ponytail: Formation no tiene campos específicos de ataque/defensa;
+	# si en el futuro se añaden, se mapean aquí desde base_stats
+
+	return f
 
 
 func _spawn_scenario_factories(scenario_name: String, scenario_data: Dictionary) -> void:

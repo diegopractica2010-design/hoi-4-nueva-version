@@ -60,7 +60,7 @@ func _build_ui() -> void:
 	header.add_child(subtitle)
 
 	var context := Label.new()
-	context.text = "Salitre, puertos, desierto y decision politica"
+	context.text = "Salitre, puertos, desierto y decisión política"
 	context.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	context.add_theme_font_size_override("font_size", 13)
 	context.add_theme_color_override("font_color", Color(0.70, 0.62, 0.47))
@@ -102,7 +102,7 @@ func _build_ui() -> void:
 	layout.add_child(spacer_bottom)
 
 	var footer := Label.new()
-	footer.text = "MVP 1879 - teatro del Pacifico sur"
+	footer.text = "MVP 1879 - teatro del Pacífico sur"
 	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	footer.add_theme_font_size_override("font_size", 12)
 	footer.add_theme_color_override("font_color", Color(0.62, 0.55, 0.43))

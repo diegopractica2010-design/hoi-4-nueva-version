@@ -18,7 +18,7 @@ func _ready() -> void:
 	_scene_validation_mode = ("--scene-validation" in OS.get_cmdline_user_args()
 		or "--scene-validation" in OS.get_cmdline_args())
 	_is_headless = DisplayServer.get_name() == "headless"
-	print("=== Epochs of Ascendancy Test Starting ===")
+	print("=== Guerra del Pacifico 1879 ===")
 	if _scene_validation_mode:
 		print("SCENE_VALIDATION: TestRunner ready")
 		return

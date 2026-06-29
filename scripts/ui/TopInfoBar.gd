@@ -21,10 +21,11 @@ const Log = preload("res://scripts/core/Logger.gd")
 @onready var agents_button: Button = $ContentRow/CenterContainer/AgentsButton
 @onready var map_button: Button = $ContentRow/CenterContainer/MapButton
 
-@onready var steel_label: Label = $ContentRow/RightContainer/ResourcesContainer/SteelLabel
-@onready var aluminum_label: Label = $ContentRow/RightContainer/ResourcesContainer/AluminumLabel
-@onready var oil_label: Label = $ContentRow/RightContainer/ResourcesContainer/OilLabel
-@onready var rubber_label: Label = $ContentRow/RightContainer/ResourcesContainer/RubberLabel
+@onready var saltpeter_label_res: Label = $ContentRow/RightContainer/ResourcesContainer/SaltpeterLabel
+@onready var guano_label: Label = $ContentRow/RightContainer/ResourcesContainer/GuanoLabel
+@onready var silver_label: Label = $ContentRow/RightContainer/ResourcesContainer/SilverLabel
+@onready var copper_label: Label = $ContentRow/RightContainer/ResourcesContainer/CopperLabel
+@onready var coal_label: Label = $ContentRow/RightContainer/ResourcesContainer/CoalLabel
 
 @onready var save_button: Button = $ContentRow/RightContainer/MenuContainer/SaveButton
 @onready var load_button: Button = $ContentRow/RightContainer/MenuContainer/LoadButton
@@ -78,7 +79,7 @@ func _ready() -> void:
 func _apply_theme() -> void:
 	RetrowaveTheme.style_top_info_bar(self)
 	RetrowaveTheme.style_info_bar_label(date_time_label, RetrowaveTheme.CYAN)
-	for label in [steel_label, aluminum_label, oil_label, rubber_label]:
+	for label in [saltpeter_label_res, guano_label, silver_label, copper_label, coal_label]:
 		RetrowaveTheme.style_info_bar_label(label, RetrowaveTheme.TEXT_DIM)
 	for btn in [
 		production_button,
@@ -234,10 +235,11 @@ func _update_date_time() -> void:
 
 func _update_resources() -> void:
 	var stockpile: Dictionary = ProductionManager.national_stockpile
-	steel_label.text = "Steel: %.0f" % float(stockpile.get("steel", 0.0))
-	aluminum_label.text = "Aluminum: %.0f" % float(stockpile.get("aluminum", 0.0))
-	oil_label.text = "Oil: %.0f" % float(stockpile.get("oil", 0.0))
-	rubber_label.text = "Rubber: %.0f" % float(stockpile.get("rubber", 0.0))
+	saltpeter_label_res.text = "Salitre: %.0f" % float(stockpile.get("nitrates", 0.0))
+	guano_label.text = "Guano: %.0f" % float(stockpile.get("guano", 0.0))
+	silver_label.text = "Plata: %.0f" % float(stockpile.get("silver", 0.0))
+	copper_label.text = "Cobre: %.0f" % float(stockpile.get("copper", 0.0))
+	coal_label.text = "Carbón: %.0f" % float(stockpile.get("coal", 0.0))
 
 
 func _on_victory_achieved(_winner_tag: String, _condition_name: String, _description: String) -> void:
@@ -333,7 +335,7 @@ func _on_diplomacy_pressed() -> void:
 	_show_phase0_panel(
 		"DiplomacyPhase0Panel",
 		"Diplomacia",
-		"Panel base activo.\n\nLa diplomacia completa se implementara en una fase posterior: tratado defensivo Peru-Bolivia, presion argentina, potencias externas y paz negociada.",
+		"Panel base activo.\n\nLa diplomacia completa se implementará en una fase posterior: tratado defensivo Perú-Bolivia, presión argentina, potencias externas y paz negociada.",
 	)
 
 

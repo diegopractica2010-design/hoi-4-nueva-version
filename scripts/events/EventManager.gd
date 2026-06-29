@@ -243,8 +243,8 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 			var unit_id := str(effect.get("unit_id", ""))
 			var damage := float(effect.get("damage_percent", 0.3))
 			if typeof(LeaderManager) != TYPE_NIL:
-				var formation := LeaderManager.get_formation(unit_id)
-				if formation != null and formation.country_tag == tag:
+				var formation := _find_formation(unit_id, tag, "fleet")
+				if formation != null:
 					formation.apply_damage(damage)
 					Log.info("[EventManager] Unit damaged: %s %s by %.0f%% (strength now %.2f)" % [tag, unit_id, damage * 100.0, formation.strength], "EventManager")
 			event_effect_applied.emit(effect_type, tag)
@@ -253,11 +253,10 @@ func _apply_effect(effect: Dictionary, event: Dictionary) -> void:
 			var tag := str(effect.get("tag", "")).strip_edges().to_upper()
 			var unit_id := str(effect.get("unit_id", ""))
 			if typeof(LeaderManager) != TYPE_NIL:
-				var formation := LeaderManager.get_formation(unit_id)
-				if formation != null and formation.country_tag == tag:
+				var formation := _find_formation(unit_id, tag, "fleet")
+				if formation != null:
 					formation.strength = 0.0
-					if LeaderManager.formations.erase(unit_id):
-						pass
+					LeaderManager.formations.erase(formation.formation_id)
 					Log.info("[EventManager] Unit destroyed: %s %s" % [tag, unit_id], "EventManager")
 			event_effect_applied.emit(effect_type, tag)
 
@@ -336,6 +335,19 @@ func _modifiers_are_debuff(modifiers: Dictionary) -> bool:
 		if float(modifiers[key]) < 0.0:
 			return true
 	return false
+
+
+## Busca una formación por ID exacto; si no la encuentra, busca por país y categoría.
+func _find_formation(unit_id: String, country_tag: String, category: String) -> Formation:
+	if typeof(LeaderManager) == TYPE_NIL:
+		return null
+	var formation := LeaderManager.get_formation(unit_id)
+	if formation != null and formation.country_tag == country_tag:
+		return formation
+	for f in LeaderManager.get_formations_for_country(country_tag):
+		if f.get_category() == category:
+			return f
+	return null
 
 
 func get_save_data() -> Dictionary:

@@ -147,21 +147,25 @@ theme_override_constants/separation = 12
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="SteelLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+[node name="SaltpeterLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
 layout_mode = 2
-text = "Steel: 0"
+text = "Salitre: 0"
 
-[node name="AluminumLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+[node name="GuanoLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
 layout_mode = 2
-text = "Aluminum: 0"
+text = "Guano: 0"
 
-[node name="OilLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+[node name="SilverLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
 layout_mode = 2
-text = "Oil: 0"
+text = "Plata: 0"
 
-[node name="RubberLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+[node name="CopperLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
 layout_mode = 2
-text = "Rubber: 0"
+text = "Cobre: 0"
+
+[node name="CoalLabel" type="Label" parent="ContentRow/RightContainer/ResourcesContainer"]
+layout_mode = 2
+text = "Carbón: 0"
 
 [node name="MenuContainer" type="HBoxContainer" parent="ContentRow/RightContainer"]
 layout_mode = 2

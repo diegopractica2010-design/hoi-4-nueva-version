@@ -13,6 +13,36 @@ const POSSIBLE_LAST_NAMES: Array[String] = [
 ]
 
 
+## Crea un agente con nombre histórico específico (Guerra del Pacífico 1879).
+static func generate_named_agent(country_tag: String, full_name: String, year: int = 1879) -> Agent:
+	var agent := Agent.new()
+	agent.agent_id = "%s_agent_%s" % [country_tag.to_lower(), full_name.to_lower().replace(" ", "_").replace(".", "")]
+	agent.country_tag = country_tag
+	agent.name = full_name
+	agent.birth_year = year - randi_range(25, 50)
+	agent.start_year = year
+	agent.level = randi_range(2, 5)
+	agent.experience = randi_range(200, 600) * agent.level
+
+	agent.intelligence = randi_range(5, 10)
+	agent.sabotage = randi_range(3, 8)
+	agent.influence = randi_range(4, 9)
+	agent.technology = randi_range(2, 7)
+	agent.counter_intelligence = randi_range(3, 8)
+
+	var specialty := randi() % 4
+	match specialty:
+		0: agent.intelligence = min(10, agent.intelligence + 2)
+		1: agent.sabotage = min(10, agent.sabotage + 2)
+		2: agent.influence = min(10, agent.influence + 2)
+		3: agent.technology = min(10, agent.technology + 2)
+
+	agent.status = "available"
+	agent.current_mission_id = ""
+	agent.mission_progress = 0.0
+	return agent
+
+
 static func generate_agent(country_tag: String, year: int = 1936) -> Agent:
 	var agent := Agent.new()
 

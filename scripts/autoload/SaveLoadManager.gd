@@ -783,26 +783,33 @@ func _apply_production_state(p: Dictionary) -> void:
 		return
 	Log.info("SaveLoad: Production state present but no apply on ProductionManager", "SaveLoadManager")
 
-## === Robustness: version migration stub + improved error handling ===
+## === Robustness: version migration + improved error handling ===
 
-## Called for old save versions to upgrade data in-place before _apply.
-## Add cases here as SAVE_VERSION increases (e.g. key renames, default sections, data shape fixes).
-## This is the central place for forward/backward compat.
+## Central migration for forward/backward compat.
+## Each version bump adds one case block below.
 func _migrate_save_data(data: Dictionary) -> void:
 	var v := int(data.get("save_version", 0))
 	if v >= SAVE_VERSION:
 		return
 	Log.info("SaveLoad: Migrating save from v%d to v%d" % [v, SAVE_VERSION], "SaveLoadManager")
 
-	# Example future migration (uncomment and extend as needed):
-	# if v < 2:
-	#     if not data.has("production"):
-	#         data["production"] = {}
-	#     if data.has("old_key_name"):
-	#         data["new_key_name"] = data.pop("old_key_name")
-	#     # Provide defaults for new sections, fix shapes, etc.
+	if v < 1:
+		if data.has("production"):
+			if not data.has("stockpiles") and data["production"] is Dictionary:
+				data["stockpiles"] = data["production"].get("national_stockpile", {})
+		if not data.has("technology"):
+			data["technology"] = {}
+	if v < 2:
+		if data.has("resources"):
+			var res_map: Dictionary = {"steel": "coal", "aluminum": "copper", "rubber": "nitrates", "oil": "guano"}
+			var old_res: Variant = data.get("resources", {})
+			var new_res: Dictionary = {}
+			for k in old_res:
+				var new_k: Variant = res_map.get(k, k)
+				new_res[new_k] = old_res[k]
+			data["resources"] = new_res
 
-	data["save_version"] = SAVE_VERSION  # mark as upgraded
+	data["save_version"] = SAVE_VERSION
 
 ## Enhanced save with better error object (for future UI).
 func save_game_detailed(slot_name: String = DEFAULT_SLOT) -> Dictionary:

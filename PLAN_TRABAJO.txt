@@ -1,0 +1,632 @@
+================================================================================
+ PLAN DE TRABAJO: GUERRA DEL PACIFICO 1879 → HOI4-LIKE
+================================================================================
+ Hardware: AMD FX-6350 | 16 GB RAM | Radeon R7 360 (2 GB) | OpenGL
+ Motor: Godot 4.6 | Proyecto: "Guerra del Pacifico 1879"
+================================================================================
+
+INDICE
+  Fase 0:  Limpieza y correccion de errores activos
+  Fase 1:  Mapa y camara (HOI4-like)
+  Fase 2:  UI (HOI4-like)
+  Fase 3:  Economia y produccion (HOI4-like)
+  Fase 4:  Politica y focos (HOI4-like)
+  Fase 5:  Diplomacia y guerra (HOI4-like)
+  Fase 6:  Combate / Militar (HOI4-like)
+  Fase 7:  Tecnologia (HOI4-like)
+  Fase 8:  Espionaje (HOI4-like)
+  Fase 9:  Resistencia / Ocupacion (HOI4-like)
+  Fase 10: IA (HOI4-like)
+  Fase 11: Extras / Post-MVP
+  Fase 12: Manual completo del juego
+  Fase 13: Depuracion total por el agente
+  Fase 14: Auditoria total
+
+================================================================================
+ FASE 0 — LIMPIEZA Y CORRECCION DE ERRORES ACTIVOS
+================================================================================
+ Objetivo: Dejar el proyecto jugable sin bugs, con mapa limpio y camara
+ funcional. Son 7 errores activos marcados como ⚠️ en COMPARATIVA_HOI4.md.
+
+----------------------------------------------------------------------
+ 0.1  Limpiar provincias WWII (geometria europea)
+----------------------------------------------------------------------
+ - Revisar data/provinces/provinces_geometry.json
+ - Las ~107 provincias con geometria estan en Europa (coordenadas 4096x2048)
+ - Eliminar TODAS las provincias con geometria europea del JSON
+ - Dejar solo las 847 entradas en scenario.json sin geometria → no se renderizan
+ - Crear backup del archivo original como provinces_geometry_wwii.json
+ - Crear provinces_geometry_1879.json vacio (para Sudamerica cuando se agregue
+   en Fase 1)
+ - EFECTO: Los poligonos flotantes desaparecen. El mapa muestra solo la
+   textura satelital del mundo real
+
+----------------------------------------------------------------------
+ 0.2  Arreglar camara dual (⚠️ activo #1)
+----------------------------------------------------------------------
+ - Diagnostico: CameraController.gd + MapRenderer._handle_camera_input()
+   responden a los mismos inputs y mueven diferentes nodos
+ - Solucion: Eliminar CameraController.gd del arbol de escenas. Desactivarlo
+   permanentemente. Todo el control pasa a MapRenderer._handle_camera_input()
+ - Archivos: scripts/map/CameraController.gd, scenes/WorldMap.tscn (nodo
+   CameraInput)
+ - EFECTO: La camara deja de moverse "como loca". Un solo sistema responde
+   a WASD + edge pan + zoom
+
+----------------------------------------------------------------------
+ 0.3  Agregar limites de camara (⚠️ activo #7)
+----------------------------------------------------------------------
+ - Diagnostico: La camara puede salir al vacio gris (no hay limite)
+ - Solucion: En _handle_camera_input(), calcular bounding box total de las
+   provincias renderizadas. Clampear cam.global_position a ese rectangulo.
+   Si no hay provincias, usar el tamano de la textura satelital (4096x2048)
+ - EFECTO: Nunca mas se ve el vacio gris fuera del mapa
+
+----------------------------------------------------------------------
+ 0.4  Mostrar textura satelital del mundo (⚠️ activo #3)
+----------------------------------------------------------------------
+ - Diagnostico: MapRenderer._ready() pone world_background.visible = false
+ - Solucion: Cambiar a visible = true. Asegurar que WorldBackground (Sprite2D)
+   tenga la textura world_map.png correcta
+ - Archivo: scripts/map/MapRenderer.gd linea ~137
+ - EFECTO: Aparece el mapa del mundo real como fondo (oceanos, continentes,
+   todo visible)
+
+----------------------------------------------------------------------
+ 0.5  Hacer provincias semi-transparentes (⚠️ activo #3)
+----------------------------------------------------------------------
+ - Diagnostico: _get_province_color() usa alpha fijo 0.88 (casi opaco)
+ - Solucion: Cambiar alpha de provincias a ~0.30-0.40 para que se vea la
+   textura satelital debajo
+ - Archivo: scripts/map/MapRenderer.gd funcion _get_province_color()
+ - EFECTO: Las provincias se ven como superposicion de color politico sobre
+   el mapa real, exactamente como HOI4
+
+----------------------------------------------------------------------
+ 0.6  Arreglar NationSelectScreen (⚠️ activo #5, #6)
+----------------------------------------------------------------------
+ - Barras vacias (#5): En _add_stat_bars(), el fill tiene
+   size_flags_stretch_ratio = val pero dentro de un ColorRect padre sin
+   SIZE_EXPAND_FILL. Cambiar: usar custom_minimum_size.x = total_width * val
+ - Espacio vacio (#6): El spacer con SIZE_EXPAND_FILL es muy grande.
+   Reemplazar con margen fijo pequeno (MarginContainer con margin_bottom = 8)
+ - Archivo: scripts/ui/NationSelectScreen.gd
+
+----------------------------------------------------------------------
+ 0.7  Arreglar paneles fuera de pantalla (⚠️ activo #2)
+----------------------------------------------------------------------
+ - Diagnostico: Los paneles (agentes, etc.) se posicionan usando coordenadas
+   del mapa en vez de coordenadas de pantalla
+ - Solucion: Asegurar que toda ventana/popup herede de CanvasLayer o use
+   coordenadas del viewport. Centralizar todos los popups en un script base
+   que los ancle al centro de la pantalla
+ - EFECTO: Ventanas de agente, diplomacia, etc. aparecen siempre en el centro
+   de tu monitor
+
+
+================================================================================
+ FASE 1 — MAPA Y CAMARA (HOI4-like)
+================================================================================
+ Objetivo: Mapa con textura satelital + provincias sudamericanas 1879 +
+ camara perfecta.
+
+----------------------------------------------------------------------
+ 1.1  Crear geometria de provincias sudamericanas
+----------------------------------------------------------------------
+ - Investigar datos geograficos de provincias de Chile, Peru y Bolivia en
+   1879 (Antofagasta, Tarapaca, Tacna, Arica, Lima, Callao, Iquique, La Paz,
+   Sucre, etc.)
+ - Asignar IDs a las nuevas provincias sudamericanas (ej: 901-950 para Chile,
+   951-990 para Peru, 991-1030 para Bolivia)
+ - Generar poligonos (puntos x,y) para cada provincia en coordenadas
+   4096x2048 que correspondan a Sudamerica en la textura satelital
+ - Escribir provinces_geometry_1879.json con solo las provincias sudamericanas
+ - EFECTO: El mapa deja de tener poligonos en Europa y muestra Chile, Peru
+   y Bolivia como regiones coloreadas
+
+----------------------------------------------------------------------
+ 1.2  Ajustar textura satelital para Sudamerica
+----------------------------------------------------------------------
+ - La textura world_map.png (4096x2048) ya es un mapa mundial completo
+ - Opcional: si se quiere mas detalle, reemplazar con textura centrada en
+   Sudamerica (mismo tamano, recortada y escalada)
+ - EFECTO: Sudamerica se ve mas grande y detallada al cargar la partida
+
+----------------------------------------------------------------------
+ 1.3  Enfocar camara en Sudamerica
+----------------------------------------------------------------------
+ - Modificar _focus_camera_on_theater(): cambiar el array "theater" de IDs
+   europeos a IDs sudamericanos
+ - Ajustar zoom inicial para que muestre todo Chile-Peru-Bolivia con margen
+ - Archivo: scripts/map/MapRenderer.gd funcion _focus_camera_on_theater()
+ - EFECTO: Al cargar la partida, la camara apunta directo al teatro de guerra
+
+----------------------------------------------------------------------
+ 1.4  Modos de mapa (basico)
+----------------------------------------------------------------------
+ - Politico: color por pais (ya existe)
+ - Terreno: mostrar colores de terreno desde provinces_terrain_layer.json
+ - Recursos: mostrar iconos de recursos en cada provincia
+ - Boton o tecla para cambiar modo
+
+
+================================================================================
+ FASE 2 — UI (HOI4-like)
+================================================================================
+ Objetivo: Interfaz con sidebar, bottom bar, tooltips como HOI4.
+
+----------------------------------------------------------------------
+ 2.1  Sidebar izquierda (iconos + tooltips)
+----------------------------------------------------------------------
+ - Construccion: abre panel de edificios
+ - Investigacion: abre arbol de tecnologia
+ - Diplomacia: abre ventana de diplomacia
+ - Focos: abre arbol de focos nacionales
+ - Decisiones: abre decisiones politicas
+ - Logistica: abre mapa de suministro
+ - Cada icono muestra tooltip al pasar el mouse
+
+----------------------------------------------------------------------
+ 2.2  Bottom bar (Status de guerra)
+----------------------------------------------------------------------
+ - Tierra: numero de formaciones, perdidas totales
+ - Mar: flotas activas, perdidas navales
+ - Aire: (si se implementa) alas aereas
+ - Intel: resumen de espiobaje
+
+----------------------------------------------------------------------
+ 2.3  Top bar mejorada
+----------------------------------------------------------------------
+ - Anadir indicador de Poder Politico (PP)
+ - Barra de estabilidad nacional
+ - Barra de apoyo a la guerra
+ - Mostrar ingresos por dia (ej: "+12.5 salitre/dia")
+
+----------------------------------------------------------------------
+ 2.4  Tooltips tipo HOI4
+----------------------------------------------------------------------
+ - Formato BBCode: RichTextLabel con colores, iconos, negritas
+ - Tooltip de provincia: terreno, recursos, edificios, modificadores
+ - Tooltip de unidad: stats, lider, moral, suministro
+
+
+================================================================================
+ FASE 3 — ECONOMIA Y PRODUCCION (HOI4-like)
+================================================================================
+ Objetivo: Construccion de fabricas, comercio, lineas de produccion completas.
+
+----------------------------------------------------------------------
+ 3.1  Sistema de construccion
+----------------------------------------------------------------------
+ - UI de cola de construccion (que edificio, cuanto falta, prioridad)
+ - Edificios: civiles (construyen), militares (fabrican), astilleros (barcos)
+ - Costos: definir tiempo y recursos necesarios por edificio
+
+----------------------------------------------------------------------
+ 3.2  Comercio internacional
+----------------------------------------------------------------------
+ - Comprar/vender recursos entre paises con rutas terrestres/maritimas
+ - Cada recurso tiene precio base que fluctua por demanda
+ - (opcional) Rutas de comercio maritimo con escoltas
+
+----------------------------------------------------------------------
+ 3.3  Produccion militar
+----------------------------------------------------------------------
+ - Asignar fabricas a produccion de equipo (rifles, canones, buques)
+ - Eficiencia sube con tiempo de produccion continuo
+ - Retooling: cambiar de equipo cuesta tiempo y eficiencia
+
+
+================================================================================
+ FASE 4 — POLITICA Y FOCOS (HOI4-like)
+================================================================================
+ Objetivo: Poder Politico, focos historicos 1879, decisiones, espiritus
+ nacionales.
+
+----------------------------------------------------------------------
+ 4.1  Poder Politico (PP)
+----------------------------------------------------------------------
+ - Ganancia: +1-2 PP/dia segun pais
+ - Gasto: PP para decisiones, focos, contratar consultores, relaciones
+
+----------------------------------------------------------------------
+ 4.2  Arbol de Focos 1879
+----------------------------------------------------------------------
+ - CHILE: Rama militar (Reorganizar Ejercito → Comprar Blindados Armstrong
+   → Modernizar Marina), Rama salitrera (Asegurar Antofagasta → Explotar
+   Salitreras → Monopolio del Salitre), Rama diplomatica (Buscar apoyo
+   Britanico → Aislar a Peru → Mediacion Argentina)
+ - PERU: Rama aliada (Alianza con Bolivia → Comprar Huascar → Defensa Lima)
+ - BOLIVIA: Rama defensiva (Defensa Litoral → Resistencia Andina → Nuevos
+   Puertos Fluviales)
+ - Implementacion: cada foco tiene coste PP, requisitos, efectos, duracion
+ - UI tipo arbol (vertical/horizontal)
+
+----------------------------------------------------------------------
+ 4.3  Decisiones politicas
+----------------------------------------------------------------------
+ - Movilizacion: reclutas +10, estabilidad -5
+ - Embargo: relaciones -50, PP +10
+ - Propaganda: apoyo belico +5, PP -15
+
+
+================================================================================
+ FASE 5 — DIPLOMACIA Y GUERRA (HOI4-like)
+================================================================================
+ Objetivo: Alianzas, facciones, paz territorial, casus belli.
+
+----------------------------------------------------------------------
+ 5.1  Sistema de alianzas
+----------------------------------------------------------------------
+ - Facciones: PER+BOL = "Alianza Defensiva del Pacifico"
+ - Garantias: un pais garantiza independencia de otro
+ - No-ataque: pacto de no agresion
+
+----------------------------------------------------------------------
+ 5.2  Paz territorial
+----------------------------------------------------------------------
+ - Ventana de paz donde el ganador elige que provincias anexar
+ - Puntos de victoria segun % de guerra ganado
+
+----------------------------------------------------------------------
+ 5.3  Relaciones dinamicas
+----------------------------------------------------------------------
+ - Eventos modifican relaciones (comercio, embajadas, insultos)
+ - Notificaciones de cambios de relacion
+
+
+================================================================================
+ FASE 6 — COMBATE / MILITAR (HOI4-like)
+================================================================================
+ Objetivo: Combate con fases, planning, refuerzo, apoyo, retirada.
+
+----------------------------------------------------------------------
+ 6.1  Fases de combate
+----------------------------------------------------------------------
+ - Planeamiento: bonus por estar quieto en frontera
+ - Dia/Noche: stats reducidos en combate nocturno
+ - Apoyo: artilleria y caballeria dan bonificaciones
+ - Retirada: cuando moral llega a 0, unidad se retira
+
+----------------------------------------------------------------------
+ 6.2  Sistema naval completo
+----------------------------------------------------------------------
+ - Flotas con almirante
+ - Misiones: Patrulla, Strike Force, Bloqueo
+ - Doctrinas: "Guerra de Corsarios" (PER/BOL), "Poder Naval" (CHL)
+ - Buques 1879: blindados Armstrong, canoneras, monitores, transportes
+
+----------------------------------------------------------------------
+ 6.3  Nuevas formaciones 1879
+----------------------------------------------------------------------
+ - Chile: Corbeta Esmeralda, Blindado Blanco Encalada, Vapor Rimac
+ - Peru: Monitor Huascar, Independencia (blindado), Corbeta Union
+ - Bolivia: Lanchas canoneras en Lago Titicaca
+ - Tierra: infanteria con Comblain, artilleria de montana Armstrong
+
+
+================================================================================
+ FASE 7 — TECNOLOGIA (HOI4-like)
+================================================================================
+ Objetivo: Arbol de investigacion 1879 con doctrinas terrestres y navales.
+
+----------------------------------------------------------------------
+ 7.1  Ramas de investigacion
+----------------------------------------------------------------------
+ - Infanteria: Comblain → Gras → Mauser 71. Gatling → Maxim
+ - Artilleria: Montana → Campana Krupp → Obus Armstrong
+ - Naval: Madera → Hierro → Blindaje compuesto. Avancarga → Retrocarga
+ - Industria: Ferrocarril salitrero → Puerto minero → Refineria
+ - Doctrina tierra: Lineas → Montana → Desgaste
+ - Doctrina naval: Corso → Poder centralizado → Bloqueo
+
+----------------------------------------------------------------------
+ 7.2  Doctrinas por pais
+----------------------------------------------------------------------
+ - CHILE: Guerra modernizada (ofensiva rapida) + Poder naval
+ - PERU: Guerra defensiva (fortificaciones) + Guerra de corsarios
+ - BOLIVIA: Guerra de montana (terreno propio) + Fluvial
+
+
+================================================================================
+ FASE 8 — ESPIONAJE (HOI4-like)
+================================================================================
+ Objetivo: Mas misiones, redes pasivas, contrainteligencia.
+
+----------------------------------------------------------------------
+ 8.1  Nuevas misiones de agente
+----------------------------------------------------------------------
+ - Diplomatica: mejorar/danar relaciones entre paises
+ - Reconocimiento: revelar stats militares de un pais enemigo
+ - Contrainteligencia: reducir efectividad de espias enemigos
+ - Apoyo a rebeldes: sublevacion en provincias enemigas
+
+----------------------------------------------------------------------
+ 8.2  Red pasiva de inteligencia
+----------------------------------------------------------------------
+ - Sin agente: info basica de otros paises (tamano ejercito, recursos)
+ - Con agente: revela formaciones enemigas, tecnologias, nivel suministro
+
+
+================================================================================
+ FASE 9 — RESISTENCIA / OCUPACION (HOI4-like)
+================================================================================
+ Objetivo: Controlar provincias ocupadas, resistencia local.
+
+----------------------------------------------------------------------
+ 9.1  Sistema basico de ocupacion
+----------------------------------------------------------------------
+ - Cuando CHL captura Antofagasta (Bolivia), se genera resistencia local
+ - Resistencia alta: -produccion, posibilidad de sublevacion
+ - Guarniciones: asignar formaciones reduce resistencia
+ - Politicas: "mano dura" (menos resistencia, mas descontento futuro) o
+   "blando" (mas resistencia, mejor compliance eventual)
+
+
+================================================================================
+ FASE 10 — IA (HOI4-like)
+================================================================================
+ Objetivo: IA que comercia, investiga, construye y mueve tropas.
+
+----------------------------------------------------------------------
+ 10.1  Prioridades por pais
+----------------------------------------------------------------------
+ - CHL: agresiva, construye marina + ejercito, guerra temprana
+ - PER: reactiva, fortifica costa, busca alianzas, construye defensas
+ - BOL: defensiva, se atrinchera en montana, busca apoyo diplomatico
+ - ENG/FRA/USA: neutral, comercia, observa, interviene solo si tocan
+   sus intereses
+ - ARG/BRA: neutral distante, comercia con todos
+
+----------------------------------------------------------------------
+ 10.2  Decisiones de IA
+----------------------------------------------------------------------
+ - Investigacion: segun estrategia (CHL→naval, PER→defensiva, BOL→infanteria)
+ - Construccion: CHL astilleros, PER fortificaciones, BOL infraestructura
+ - Comercio: CHL vende salitre, PER vende guano, BOL comercia poco
+ - Militar: CHL ataca temprano, PER defiende, BOL se repliega a los Andes
+
+
+================================================================================
+ FASE 11 — EXTRAS / POST-MVP
+================================================================================
+ Objetivo: Cosas que no estan en HOI4 pero mejorarian el juego.
+
+ - Musica de epoca (tonadas chilenas, marchas peruanas, huaynos bolivianos)
+ - Efectos de sonido (batalla, canonazos, ambiente portuario)
+ - Pantalla de carga con ilustracion historica + barra de progreso
+ - Logros: "Corsario del Pacifico" (capturar Huascar como CHL)
+ - Diplomacia visual: enviar delegaciones con animacion
+
+
+================================================================================
+ FASE 12 — MANUAL COMPLETO DEL JUEGO
+================================================================================
+ Objetivo: Crear un manual que documente TODO el juego desde la perspectiva
+ del jugador. Explicar cada configuracion, cada pais, cada funcionalidad,
+ cada heroe, cada agente, cada evento, cada mecanica.
+
+----------------------------------------------------------------------
+ 12.1  Analisis previo: mapear todo lo que debe incluir el manual
+----------------------------------------------------------------------
+ - Antes de escribir UNA linea del manual, hacer un inventario completo de
+   todo el contenido del juego:
+   * Configuraciones: project.godot, autoloads, escenarios, saves
+   * Paises: CHL, PER, BOL, ARG, BRA, ENG, FRA, USA (sus stats, recursos,
+     ejercito inicial, lideres, espiritus nacionales)
+   * Unidades/Formaciones: todas las plantillas 1879, stats, roles
+   * Heroes/Lideres: los 16 lideres historicos + biografia
+   * Agentes: los 12 espias historicos + misiones disponibles
+   * Eventos: los 26 eventos historicos con condiciones y efectos
+   * Mecanicas: combate, economia, diplomacia, comercio, suministro,
+     tecnologia, espiobaje, construccion, focos, decision
+   * UI: cada pantalla, cada boton, cada tooltip
+   * Mapas: provincias, terreno, recursos, modo politico
+ - Archivo de salida del analisis: docs/manual/MANUAL_INVENTARIO.md
+
+----------------------------------------------------------------------
+ 12.2  Escribir el manual completo
+----------------------------------------------------------------------
+ - Formato: Markdown, estructurado como libro
+ - Secciones del manual:
+   1. INTRODUCCION: que es Guerra del Pacifico 1879, contexto historico
+   2. INSTALACION Y CONFIGURACION: requisitos, controles, opciones
+   3. INTERFAZ: menu principal, selector de pais, top bar, sidebar,
+      bottom bar, tooltips
+   4. PAISES: CHL (estrellas 3, stats, historia), PER (2 estrellas), BOL
+      (1 estrella), otros paises (ARG, BRA, ENG, FRA, USA)
+   5. MAPA: provincias, terreno, recursos, modos de mapa, niebla de guerra
+   6. ECONOMIA: recursos, fabricas, comercio, construccion, produccion
+   7. MILITAR: formaciones, plantillas, combate, suministro, movimiento
+   8. MARINA: flotas, buques, doctrinas, misiones navales
+   9. TECNOLOGIA: arbol de investigacion, doctrinas, variantes
+   10. POLITICA: poder politico, focos nacionales, decisiones, espiritus
+   11. DIPLOMACIA: relaciones, alianzas, guerra, paz, facciones
+   12. ESPIONAJE: agentes, misiones, redes de inteligencia
+   13. OCUPACION: resistencia, guarniciones, politicas
+   14. EVENTOS: lista completa de eventos historicos
+   15. LIDERES Y HEROES: biografias, stats, roles
+   16. IA: como se comporta cada pais
+   17. ESTRATEGIA: guias por pais (CHL ofensivo, PER defensivo, BOL
+       resistencia)
+   18. TIPS Y TRUCOS
+   19. CREDITOS
+ - Archivo de salida: docs/manual/MANUAL_GUERRA_DEL_PACIFICO.md
+
+----------------------------------------------------------------------
+ 12.3  Regla del proyecto: actualizar manual con cada cambio
+----------------------------------------------------------------------
+ - Todo cambio en el proyecto debe GATILLAR una revision de si el manual
+   debe actualizarse
+ - Pregunta obligatoria despues de cada modificacion:
+   "?Esto cambia algo que el jugador DEBE SABER?"
+ - Si la respuesta es SI: actualizar la seccion correspondiente del manual
+   en el mismo commit/push que el cambio
+ - Si la respuesta es NO: agregar nota en el commit de que no requiere
+   actualizacion del manual
+ - El manual VIVE en docs/manual/MANUAL_GUERRA_DEL_PACIFICO.md
+
+
+================================================================================
+ FASE 13 — DEPURACION TOTAL POR EL AGENTE
+================================================================================
+ Objetivo: El agente (yo, la IA) ejecuta una depuracion total del proyecto
+ completo. No es una auditoria pasiva - es una busqueda activa de errores,
+ deuda tecnica, code smells, fallos logicos y problemas de rendimiento.
+
+----------------------------------------------------------------------
+ 13.1  Depuracion archivo por archivo
+----------------------------------------------------------------------
+ - Revisar CADA script .gd en el proyecto (uno por uno):
+   * Errores de sintaxis que el compilador no atrapo
+   * Variables sin usar o mal tipadas
+   * Funciones muertas (nunca llamadas)
+   * Logica incorrecta (comparaciones, condiciones, loops)
+   * Posibles null pointer exceptions
+   * Conexiones de seniales rotas
+   * Recursos que no se liberan (memory leaks)
+ - Checklist por archivo:
+   [ ] Compila sin warnings
+   [ ] No tiene codigo comentado (a menos que sea intencional)
+   [ ] No tiene print() de debug olvidados
+   [ ] No tiene TODO/FIXME/HACK (a menos que sea deuda aceptada)
+   [ ] Todas las variables tienen tipo explicito
+   [ ] Todas las funciones tienen tipo de retorno
+   [ ] No hay cadenas magicas (usar constantes)
+   [ ] Maneja casos null/empty
+
+----------------------------------------------------------------------
+ 13.2  Depuracion capa a capa
+----------------------------------------------------------------------
+ - Por cada una de las 25 capas identificadas en COMPARATIVA_HOI4.md:
+   * Revisar la implementacion completa de la capa
+   * Verificar que las conexiones entre capas funcionan
+   * Comprobar que los datos de entrada/salida son correctos
+   * Identificar dependencias circulares
+   * Buscar cuellos de botella de rendimiento
+   * Verificar que los signals/slots estan conectados y no generan
+     duplicados
+
+----------------------------------------------------------------------
+ 13.3  Depuracion de datos
+----------------------------------------------------------------------
+ - Revisar todos los archivos JSON en data/:
+   * Integridad: no faltan IDs referenciados
+   * Consistencia: tipos correctos, rangos validos
+   * Duenos: no hay registros huerfanos
+   * Referencias cruzadas: scenario.json references provincias que existen
+   * Eventos: condiciones que referencian IDs de formaciones/paises que
+     existen
+
+----------------------------------------------------------------------
+ 13.4  Depuracion de rendimiento
+----------------------------------------------------------------------
+ - Identificar:
+   * Loops que se ejecutan cada frame sin necesidad
+   * Funciones _process() pesadas en nodos que deberian usar seniales
+   * Diccionarios/arrays que crecen sin limite
+   * Instanciacion repetitiva de nodos (deberia ser object pool)
+   * Parsing de JSON en cada _ready() (deberia ser preload)
+   * Conexiones de senial duplicadas
+
+----------------------------------------------------------------------
+ 13.5  Depuracion de flujo del juego
+----------------------------------------------------------------------
+ - Seguir el flujo completo: StartMenu → NationSelect → TestScenario
+   * Verificar que no hay pantallas en negro/colgadas entre transiciones
+   * Verificar que los autoloads se inicializan en orden correcto
+   * Verificar que el estado del juego es consistente en cada paso
+   * Verificar que guardar y cargar partida funciona sin perdida de datos
+ - Seguir ciclos completos de juego: dia → mes → ano
+   * Verificar que los eventos se disparan en el momento correcto
+   * Verificar que los modificadores expiran correctamente
+   * Verificar que la economia produce/consume correctamente
+
+
+================================================================================
+ FASE 14 — AUDITORIA TOTAL
+================================================================================
+ Objetivo: Auditoria completa dividida en 3 partes independientes. Cada una
+ produce un informe escrito en docs/auditoria/.
+
+----------------------------------------------------------------------
+ 14.1  Auditoria archivo por archivo, linea a linea
+----------------------------------------------------------------------
+ - Revisar CADA archivo del proyecto (scripts, escenas, datos, assets)
+ - NO es depuracion (ya se hizo en Fase 13), es AUDITORIA:
+   * ?Sigue las convenciones del proyecto? (estilo, nombres, estructura)
+   * ?Hay redundancia? (codigo duplicado que podria unificarse)
+   * ?Hay sobreingenieria? (abstracciones innecesarias)
+   * ?Hay subingenieria? (logica que debria estar modularizada y no lo esta)
+   * ?Las constantes estan en el lugar correcto?
+   * ?Los nombres de variables/funciones son claros?
+   * ?La documentacion (comentarios) es precisa y util?
+ - Salida: docs/auditoria/auditoria_archivos.md
+
+----------------------------------------------------------------------
+ 14.2  Auditoria capa a capa
+----------------------------------------------------------------------
+ - Por cada una de las 25 capas del juego:
+   * ?Que tan lejos esta de HOI4? (escala: 0-100%)
+   * ?Que falta para cerrar la brecha? (lista concreta de tareas)
+   * ?La implementacion actual es mantenible?
+   * ?Hay dependencias ocultas entre capas?
+   * ?La capa tiene pruebas? (headless, unitarias)
+   * ?El rendimiento de la capa es aceptable en este hardware?
+ - Salida: docs/auditoria/auditoria_capas.md
+
+----------------------------------------------------------------------
+ 14.3  Auditoria al juego completo
+----------------------------------------------------------------------
+ - Vista sistemica: el juego como un TODO
+   * ?El juego es DIVERTIDO? (game design review)
+   * ?El juego es COMPRENDIBLE? (curva de aprendizaje, UI intuitiva)
+   * ?El juego es ESTABLE? (crasees, hangs, bugs)
+   * ?El juego es COMPLETO? (no faltan features core)
+   * ?El juego es FIEL a la historia? (precision historica 1879)
+   * ?El flujo del juego tiene sentido? (no hay acciones sin proposito)
+   * ?El balance es justo? (CHL no es imbatible, BOL no es imposible)
+ - Lista de TODOS los puntos de mejora identificados en las 3 auditorias
+ - Priorizacion: Alta / Media / Baja para cada punto
+ - Salida: docs/auditoria/auditoria_juego_completo.md
+
+
+================================================================================
+ CRONOGRAMA ESTIMADO
+================================================================================
+ Fase 0:  Limpieza + errores activos         ~2-3 sesiones
+ Fase 1:  Mapa + Camara                       ~3-4 sesiones
+ Fase 2:  UI (sidebar, bottom bar)            ~2-3 sesiones
+ Fase 3:  Economia / Produccion               ~3-4 sesiones
+ Fase 4:  Politica / Focos                    ~3-4 sesiones
+ Fase 5:  Diplomacia / Guerra                 ~2-3 sesiones
+ Fase 6:  Combate / Militar                   ~4-5 sesiones
+ Fase 7:  Tecnologia                          ~2-3 sesiones
+ Fase 8:  Espionaje                           ~1-2 sesiones
+ Fase 9:  Resistencia                         ~1-2 sesiones
+ Fase 10: IA                                  ~3-4 sesiones
+ Fase 11: Extras                              ~2-3 sesiones
+ Fase 12: Manual completo del juego           ~3-4 sesiones
+ Fase 13: Depuracion total por el agente      ~4-5 sesiones
+ Fase 14: Auditoria total                     ~3-4 sesiones
+------------------------------------------------
+ TOTAL:                                       ~38-50 sesiones
+
+
+================================================================================
+ NOTAS
+================================================================================
+ - Cada fase puede ejecutarse en cualquier orden, pero se recomienda seguir
+   la numeracion (Fase 0 primero, luego 1, etc.)
+ - Fase 12 (Manual) puede comenzarse en paralelo con otras fases ya que es
+   documentacion
+ - Fase 13 (Depuracion) puede ejecutarse en cualquier momento y de hecho se
+   recomienda hacer pasadas de depuracion periodicas
+ - Fase 14 (Auditoria) debe ser la ULTIMA fase, cuando todo lo demas este
+   implementado y depurado
+ - Toda modificacion del proyecto debe considerar si afecta el manual
+   (Fase 12.3)
+
+================================================================================
+ FIN DEL PLAN DE TRABAJO
+================================================================================
