@@ -7,7 +7,7 @@
 - Juego: Epochs of Ascendancy
 - Motor: Godot 4.6 / GDScript
 - Datos: JSON en carpeta /data/
-- Escenario activo: 1860 Guerra del Pacífico (Chile, Perú, Bolivia, Argentina)
+- Escenario activo: 1879 Guerra del Pacífico (Chile, Perú, Bolivia, Argentina)
 - Sin multijugador por ahora
 - Sin programar desde cero — solo modificar lo que ya existe
 

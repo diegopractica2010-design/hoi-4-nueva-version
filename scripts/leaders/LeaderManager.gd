@@ -101,6 +101,11 @@ const LEGACY_TRAITS_PATH := "res://data/leaders/leader_traits.json"
 const TRAINING_PATHS_PATH := "res://data/leaders/doctrine_training_paths.json"
 const TRAINING_PATH_SWITCH_COST_BASE := 400
 const TRAINING_PATH_SWITCH_COST_PER_LEVEL := 150
+# Roster real de la Guerra del Pacifico (Prat, Grau, Baquedano, Caceres, Daza...).
+const HISTORICAL_LEADERS_1879_PATH := "res://data/leaders/historical_leaders_1879.json"
+# Contenido del proyecto viejo (2GM/moderno). Los archivos fueron movidos a
+# expansion_wwii/ y estos escenarios estan DESCONECTADos del MVP 1879. Las rutas
+# se conservan solo para una futura expansion; el juego actual no las carga.
 const HISTORICAL_LEADERS_1936_PATH := "res://data/leaders/historical_leaders_1936.json"
 const HISTORICAL_LEADERS_1918_PATH := "res://data/leaders/historical_leaders_1918.json"
 const HISTORICAL_LEADERS_2026_PATH := "res://data/leaders/historical_leaders_2026.json"
@@ -111,7 +116,7 @@ const SCENARIO_LEADER_PATHS: Dictionary = {
 }
 ## Earlier-era rosters merged forward; later files override same leader_id. 2026 is isolated.
 const SCENARIO_LEADER_ROSTER_CHAIN: Dictionary = {
-	"1879": [HISTORICAL_LEADERS_1918_PATH],
+	"1879": [HISTORICAL_LEADERS_1879_PATH],
 	"1918": [HISTORICAL_LEADERS_1918_PATH],
 	"1936": [HISTORICAL_LEADERS_1918_PATH, HISTORICAL_LEADERS_1936_PATH],
 	"2026": [HISTORICAL_LEADERS_2026_PATH],

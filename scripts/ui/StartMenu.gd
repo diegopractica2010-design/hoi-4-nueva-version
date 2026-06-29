@@ -6,6 +6,7 @@ extends Control
 
 const GAME_SCENE := "res://scenes/TestScenario.tscn"
 const NATION_SELECT_SCENE := "res://scenes/ui/NationSelectScreen.tscn"
+const BACKDROP_PATH := "res://assets/ui/menu_background.svg"
 
 const INK := Color(0.08, 0.07, 0.055)
 const PAPER := Color(0.78, 0.68, 0.48)
@@ -25,7 +26,8 @@ func _build_ui() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 
-	_add_historical_backdrop()
+	if not _add_image_backdrop():
+		_add_historical_backdrop()
 
 	var safe := MarginContainer.new()
 	safe.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -105,6 +107,24 @@ func _build_ui() -> void:
 	footer.add_theme_font_size_override("font_size", 12)
 	footer.add_theme_color_override("font_color", Color(0.62, 0.55, 0.43))
 	layout.add_child(footer)
+
+
+## Coloca la portada ilustrada (escena belica al atardecer) como fondo del menu.
+## Devuelve false si el asset no esta disponible, para usar el fondo de respaldo.
+func _add_image_backdrop() -> bool:
+	if not ResourceLoader.exists(BACKDROP_PATH):
+		return false
+	var tex := load(BACKDROP_PATH) as Texture2D
+	if tex == null:
+		return false
+	var img := TextureRect.new()
+	img.texture = tex
+	img.set_anchors_preset(Control.PRESET_FULL_RECT)
+	img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	img.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(img)
+	return true
 
 
 func _add_historical_backdrop() -> void:

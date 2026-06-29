@@ -1,0 +1,1276 @@
+technology = {
+id = 4
+category = aircraft
+name = TECH_AIRCRAFT_NAME #Localized name
+desc = TECH_AIRCRAFT_DESC #Localized description
+
+label = { tag = TECH_CAT_bombers 	position = { x = 24 y = 10 }}
+label = { tag = TECH_CAT_tactbombers 	position = { x = 288 y = 10 }}
+label = { tag = TECH_CAT_stratbombers 	position = { x = 424 y = 10 }}
+label = { tag = TECH_CAT_cas		position = { x = 152 y = 122 }}
+label = { tag = TECH_CAT_navbombers	position = { x = 288 y = 122 }}
+label = { tag = TECH_CAT_airtransp 	position = { x = 424 y = 122 }}
+label = { tag = TECH_CAT_fighters 	position = { x = 24 y = 250 }}
+label = { tag = TECH_CAT_interceptors 	position = { x = 152 y = 250 }}
+label = { tag = TECH_CAT_escfighters 	position = { x = 288 y = 250 }}
+label = { tag = TECH_CAT_multifighters 	position = { x = 424 y = 250 }}
+
+application = { # Interwar Fighter
+ id = 4010
+ name = TECH_APP_AIRCRAFT_1_NAME
+ desc = TECH_APP_AIRCRAFT_1_DESC
+
+ position = { x = 24 y = 272 }
+         year = 1936
+
+ component = { # Interwar Short Range Engine
+  id = 4011
+  name = TECH_CMP_AIRCRAFT_1_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Interwar Fighter Airframe
+  id = 4012
+  name = TECH_CMP_AIRCRAFT_1_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 6.5mm MGs
+  id = 4013
+  name = TECH_CMP_AIRCRAFT_1_3_NAME
+  type = artillery
+  difficulty = 6
+ }
+ component = { # Optical Signaling
+  id = 4014
+  name = TECH_CMP_AIRCRAFT_1_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Interwar Fighter Prototype Tests
+  id = 4015
+  name = TECH_CMP_AIRCRAFT_1_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = {  }
+ effects = {
+  command = { type = activate_unit_type which = interceptor }
+  command = { type = new_model which = interceptor value = 0 }
+ }
+}
+application = { # Early Fighter
+ id = 4020
+ name = TECH_APP_AIRCRAFT_2_NAME
+ desc = TECH_APP_AIRCRAFT_2_DESC
+
+ position = { x = 24 y = 296 }
+         year = 1936
+
+ component = { # Early Short Range Engine
+  id = 4021
+  name = TECH_CMP_AIRCRAFT_2_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Early Fighter Airframe
+  id = 4022
+  name = TECH_CMP_AIRCRAFT_2_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 6.5mm MGs
+  id = 4023
+  name = TECH_CMP_AIRCRAFT_2_3_NAME
+  type = artillery
+  difficulty = 6
+ }
+ component = { # Optical Signaling
+  id = 4024
+  name = TECH_CMP_AIRCRAFT_2_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Early Fighter Prototype Tests
+  id = 4025
+  name = TECH_CMP_AIRCRAFT_2_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4010 }
+ effects = {
+  command = { type = new_model which = interceptor value = 1 }
+ }
+}
+application = { # Basic Interceptor
+ id = 4030
+ name = TECH_APP_AIRCRAFT_3_NAME
+ desc = TECH_APP_AIRCRAFT_3_DESC
+
+ position = { x = 152 y = 272 }
+         year = 1937
+
+ component = { # Basic Short Range Engine
+  id = 4031
+  name = TECH_CMP_AIRCRAFT_3_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Basic Interceptor Airframe
+  id = 4032
+  name = TECH_CMP_AIRCRAFT_3_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 7.62mm MGs
+  id = 4033
+  name = TECH_CMP_AIRCRAFT_3_3_NAME
+  type = artillery
+  difficulty = 6
+ }
+ component = { # Basic Decimetric Airborne Interceptor Radar
+  id = 4034
+  name = TECH_CMP_AIRCRAFT_3_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Basic Interceptor Prototype Tests
+  id = 4035
+  name = TECH_CMP_AIRCRAFT_3_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4020 }
+ effects = {
+  command = { type = new_model which = interceptor value = 2 }
+  command = { type = scrap_model which = interceptor value = 0 } 
+ }
+}
+application = { # Basic Multirole Fighter
+ id = 4040
+ name = TECH_APP_AIRCRAFT_4_NAME
+ desc = TECH_APP_AIRCRAFT_4_DESC
+
+
+ position = { x = 424 y = 272 }
+         year = 1938
+
+ component = { # Basic Medium Range Engine
+  id = 4041
+  name = TECH_CMP_AIRCRAFT_4_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Basic Multirole Fighter Airframe
+  id = 4042
+  name = TECH_CMP_AIRCRAFT_4_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 7.62mm MGs
+  id = 4043
+  name = TECH_CMP_AIRCRAFT_4_3_NAME
+  type = artillery
+  difficulty = 6
+ }
+ component = { # Basic Decimetric Airborne Interceptor Radar
+  id = 4044
+  name = TECH_CMP_AIRCRAFT_4_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Basic Multirole Fighter Prototype Tests
+  id = 4045
+  name = TECH_CMP_AIRCRAFT_4_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4020 }
+ effects = {
+  command = { type = activate_unit_type which = multi_role }
+  command = { type = new_model which = multi_role value = 0 }
+ }
+}
+application = { # Basic Escort Fighter
+ id = 4050
+ name = TECH_APP_AIRCRAFT_5_NAME
+ desc = TECH_APP_AIRCRAFT_5_DESC
+
+
+ position = { x = 288 y = 272 }
+         year = 1937
+
+ component = { # Basic Long Range Engine
+  id = 4051
+  name = TECH_CMP_AIRCRAFT_5_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Basic Escort Fighter Airframe
+  id = 4052
+  name = TECH_CMP_AIRCRAFT_5_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 7.62mm MGs
+  id = 4053
+  name = TECH_CMP_AIRCRAFT_5_3_NAME
+  type = artillery
+  difficulty = 6
+ }
+ component = { # Basic Decimetric Airborne Interceptor Radar
+  id = 4054
+  name = TECH_CMP_AIRCRAFT_5_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Basic Escort Fighter Prototype Tests
+  id = 4055
+  name = TECH_CMP_AIRCRAFT_5_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4020 }
+ effects = {
+  command = { type = activate_unit_type which = escort }
+  command = { type = new_model which = escort value = 0 }
+ }
+}
+application = { # Improved Interceptor
+ id = 4060
+ name = TECH_APP_AIRCRAFT_6_NAME
+ desc = TECH_APP_AIRCRAFT_6_DESC
+
+
+ position = { x = 152 y = 296 }
+         year = 1940
+
+ component = { # Improved Short Range Engine
+  id = 4061
+  name = TECH_CMP_AIRCRAFT_6_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Improved Interceptor Airframe
+  id = 4062
+  name = TECH_CMP_AIRCRAFT_6_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 12.7mm MGs
+  id = 4063
+  name = TECH_CMP_AIRCRAFT_6_3_NAME
+  type = artillery
+  difficulty = 7
+ }
+ component = { # Improved Decimetric Airborne Interceptor Radar
+  id = 4064
+  name = TECH_CMP_AIRCRAFT_6_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Improved Interceptor Prototype Tests
+  id = 4065
+  name = TECH_CMP_AIRCRAFT_6_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4030 }
+ effects = {
+  	command = { type = new_model which = interceptor value = 3 }
+	command = { type = scrap_model which = interceptor value = 1 }
+ }
+}
+application = { # Improved Multirole Fighter
+ id = 4070
+ name = TECH_APP_AIRCRAFT_7_NAME
+ desc = TECH_APP_AIRCRAFT_7_DESC
+
+ position = { x = 424 y = 296 }
+         year = 1940
+
+ component = { # Improved Medium Range Engine
+  id = 4071
+  name = TECH_CMP_AIRCRAFT_7_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Improved Multirole Fighter Airframe
+  id = 4072
+  name = TECH_CMP_AIRCRAFT_7_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 12.7mm MGs
+  id = 4073
+  name = TECH_CMP_AIRCRAFT_7_3_NAME
+  type = artillery
+  difficulty = 7
+ }
+ component = { # Improved Decimetric Airborne Interceptor Radar
+  id = 4074
+  name = TECH_CMP_AIRCRAFT_7_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Improved Multirole Fighter Prototype Tests
+  id = 4075
+  name = TECH_CMP_AIRCRAFT_7_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4040 }
+ effects = {
+  command = { type = new_model which = multi_role value = 1 }
+ }
+}
+application = { # Improved Escort Fighter
+ id = 4080
+ name = TECH_APP_AIRCRAFT_8_NAME
+ desc = TECH_APP_AIRCRAFT_8_DESC
+
+ position = { x = 288 y = 296 }
+         year = 1940
+
+ component = { # Improved Long Range Engine
+  id = 4081
+  name = TECH_CMP_AIRCRAFT_8_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Improved Escort Fighter Airframe
+  id = 4082
+  name = TECH_CMP_AIRCRAFT_8_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 12.7mm MGs
+  id = 4083
+  name = TECH_CMP_AIRCRAFT_8_3_NAME
+  type = artillery
+  difficulty = 7
+ }
+ component = { # Improved Decimetric Airborne Interceptor Radar
+  id = 4084
+  name = TECH_CMP_AIRCRAFT_8_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Improved Escort Fighter Prototype Tests
+  id = 4085
+  name = TECH_CMP_AIRCRAFT_8_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4050 }
+ effects = {
+  command = { type = new_model which = escort value = 1 }
+ }
+}
+application = { # Advanced Interceptor
+ id = 4090
+ name = TECH_APP_AIRCRAFT_9_NAME
+ desc = TECH_APP_AIRCRAFT_9_DESC
+
+ position = { x = 152 y = 320 }
+         year = 1943
+
+ component = { # Advanced Short Range Engine
+  id = 4091
+  name = TECH_CMP_AIRCRAFT_9_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Advanced Interceptor Airframe
+  id = 4092
+  name = TECH_CMP_AIRCRAFT_9_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 20mm Cannons
+  id = 4093
+  name = TECH_CMP_AIRCRAFT_9_3_NAME
+  type = artillery
+  difficulty = 8
+ }
+ component = { # Basic Centimetric Airborne Interceptor Radar
+  id = 4094
+  name = TECH_CMP_AIRCRAFT_9_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Advanced Interceptor Prototype Tests
+  id = 4095
+  name = TECH_CMP_AIRCRAFT_9_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4060 }
+ effects = {
+  	command = { type = new_model which = interceptor value = 4 }
+	command = { type = scrap_model which = interceptor value = 2 }
+ }
+}
+application = { # Advanced Multirole Fighter
+ id = 4100
+ name = TECH_APP_AIRCRAFT_10_NAME
+ desc = TECH_APP_AIRCRAFT_10_DESC
+
+ position = { x = 424 y = 320 }
+         year = 1943
+
+ component = { # Advanced Medium Range Engine
+  id = 4101
+  name = TECH_CMP_AIRCRAFT_10_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Advanced Multirole Fighter Airframe
+  id = 4102
+  name = TECH_CMP_AIRCRAFT_10_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 20mm Cannons
+  id = 4103
+  name = TECH_CMP_AIRCRAFT_10_3_NAME
+  type = artillery
+  difficulty = 8
+ }
+ component = { # Basic Centimetric Airborne Interceptor Radar
+  id = 4104
+  name = TECH_CMP_AIRCRAFT_10_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Advanced Multirole Fighter Prototype Tests
+  id = 4105
+  name = TECH_CMP_AIRCRAFT_10_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4070 }
+ effects = {
+  command = { type = new_model which = multi_role value = 2 }
+  command = { type = scrap_model which = multi_role value = 0 } 
+ }
+}
+application = { # Advanced Escort Fighter
+ id = 4110
+ name = TECH_APP_AIRCRAFT_11_NAME
+ desc = TECH_APP_AIRCRAFT_11_DESC
+
+ position = { x = 288 y = 320 }
+         year = 1943
+
+ component = { # Advanced Long Range Engine
+  id = 4111
+  name = TECH_CMP_AIRCRAFT_11_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Advanced Escort Fighter Airframe
+  id = 4112
+  name = TECH_CMP_AIRCRAFT_11_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 20mm Cannons
+  id = 4113
+  name = TECH_CMP_AIRCRAFT_11_3_NAME
+  type = artillery
+  difficulty = 8
+ }
+ component = { # Basic Centimetric Airborne Interceptor Radar
+  id = 4114
+  name = TECH_CMP_AIRCRAFT_11_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Advanced Escort Fighter Prototype Tests
+  id = 4115
+  name = TECH_CMP_AIRCRAFT_11_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4080 }
+ effects = {
+  command = { type = new_model which = escort value = 2 }
+ command = { type = scrap_model which = escort value = 0 } 
+
+ }
+}
+application = { # Interwar Bomber
+ id = 4120
+ name = TECH_APP_AIRCRAFT_12_NAME
+ desc = TECH_APP_AIRCRAFT_12_DESC
+
+ position = { x = 24 y = 40 }
+         year = 1936
+
+ component = { # Interwar Short-Range Bomber Engine
+  id = 4121
+  name = TECH_CMP_AIRCRAFT_12_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Interwar Medium Bomber Airframe
+  id = 4122
+  name = TECH_CMP_AIRCRAFT_12_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # External Bomb Loads
+  id = 4123
+  name = TECH_CMP_AIRCRAFT_12_3_NAME
+  type = mechanics
+  difficulty = 8
+ }
+ component = { # Basic Radio Navigation
+  id = 4124
+  name = TECH_CMP_AIRCRAFT_12_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Interwar Bomber Prototype Tests
+  id = 4125
+  name = TECH_CMP_AIRCRAFT_12_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = {  }
+ effects = {
+  command = { type = activate_unit_type which = tactical_bomber }
+ command = { type = new_model which = tactical_bomber value = 0 }
+ }
+}
+application = { # Early Bomber
+ id = 4130
+ name = TECH_APP_AIRCRAFT_13_NAME
+ desc = TECH_APP_AIRCRAFT_13_DESC
+
+ position = { x = 24 y = 64 }
+         year = 1936
+
+ component = { # Early Short-Range Bomber Engine
+  id = 4131
+  name = TECH_CMP_AIRCRAFT_13_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Early Bomber Airframe
+  id = 4132
+  name = TECH_CMP_AIRCRAFT_13_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Internal Bomb Loads
+  id = 4133
+  name = TECH_CMP_AIRCRAFT_13_3_NAME
+  type = mechanics
+  difficulty = 8
+ }
+ component = { # Improved Radio Navigation
+  id = 4134
+  name = TECH_CMP_AIRCRAFT_13_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Early Bomber Prototype Tests
+  id = 4135
+  name = TECH_CMP_AIRCRAFT_13_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4120 }
+ effects = {
+  command = { type = new_model which = tactical_bomber value = 1 }
+ }
+}
+application = { # Basic Tactical Bomber
+ id = 4140
+ name = TECH_APP_AIRCRAFT_14_NAME
+ desc = TECH_APP_AIRCRAFT_14_DESC
+
+ position = { x = 288 y = 40 }
+         year = 1938
+
+ component = { # Basic Medium-Range Bomber Engine
+  id = 4141
+  name = TECH_CMP_AIRCRAFT_14_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Basic Medium Bomber Airframe
+  id = 4142
+  name = TECH_CMP_AIRCRAFT_14_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 1 ton Freefall Bombs
+  id = 4143
+  name = TECH_CMP_AIRCRAFT_14_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Advanced Radio Navigation
+  id = 4144
+  name = TECH_CMP_AIRCRAFT_14_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Basic Medium-Range Bomber Prototype Tests
+  id = 4145
+  name = TECH_CMP_AIRCRAFT_14_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4130 }
+ effects = {
+  command = { type = new_model which = tactical_bomber value = 2 }
+ command = { type = scrap_model which = tactical_bomber value = 0 } 
+ }
+}
+application = { # Improved Tactical Bomber
+ id = 4150
+ name = TECH_APP_AIRCRAFT_15_NAME
+ desc = TECH_APP_AIRCRAFT_15_DESC
+
+ position = { x = 288 y = 64 }
+         year = 1940
+
+ component = { # Improved Medium-Range Bomber Engine
+  id = 4151
+  name = TECH_CMP_AIRCRAFT_15_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Improved Medium Bomber Airframe
+  id = 4152
+  name = TECH_CMP_AIRCRAFT_15_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 2 ton Freefall Bombs
+  id = 4153
+  name = TECH_CMP_AIRCRAFT_15_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Basic Centimetric Airborne Radar Navigation
+  id = 4154
+  name = TECH_CMP_AIRCRAFT_15_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Improved Medium-Range Bomber Prototype Tests
+  id = 4155
+  name = TECH_CMP_AIRCRAFT_15_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4140 }
+ effects = {
+  	command = { type = new_model which = tactical_bomber value = 3 }
+	command = { type = scrap_model which = tactical_bomber value = 1 }
+ }
+}
+application = { # Advanced Tactical Bomber
+ id = 4160
+ name = TECH_APP_AIRCRAFT_16_NAME
+ desc = TECH_APP_AIRCRAFT_16_DESC
+
+ position = { x = 288 y = 88 }
+         year = 1943
+
+ component = { # Advanced Medium-Range Bomber Engine
+  id = 4161
+  name = TECH_CMP_AIRCRAFT_16_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Advanced Medium Bomber Airframe
+  id = 4162
+  name = TECH_CMP_AIRCRAFT_16_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # 5 ton Freefall Bombs
+  id = 4163
+  name = TECH_CMP_AIRCRAFT_16_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Improved Centimetric Airborne Radar Navigation
+  id = 4164
+  name = TECH_CMP_AIRCRAFT_16_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Advanced Medium-Range Bomber Prototype Tests
+  id = 4165
+  name = TECH_CMP_AIRCRAFT_16_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4150 }
+ effects = {
+  	command = { type = new_model which = tactical_bomber value = 4 }
+	command = { type = scrap_model which = tactical_bomber value = 2 }
+ }
+}
+application = { # Basic Close Air Support Aircraft
+ id = 4170
+ name = TECH_APP_AIRCRAFT_17_NAME
+ desc = TECH_APP_AIRCRAFT_17_DESC
+
+ position = { x = 152 y = 144 }
+         year = 1937
+
+ component = { # Basic Short-Range Bomber Engine
+  id = 4171
+  name = TECH_CMP_AIRCRAFT_17_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Basic Light Bomber Airframe
+  id = 4172
+  name = TECH_CMP_AIRCRAFT_17_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Dive-Drop Bomb Shells
+  id = 4173
+  name = TECH_CMP_AIRCRAFT_17_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Advanced Radio Navigation
+  id = 4174
+  name = TECH_CMP_AIRCRAFT_17_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Basic Light Bomber Prototype Tests
+  id = 4175
+  name = TECH_CMP_AIRCRAFT_17_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4130 }
+ effects = {
+  command = { type = activate_unit_type which = cas }
+  command = { type = new_model which = cas value = 0 }
+ }
+}
+application = { # Improved Close Air Support Aircraft
+ id = 4280
+ name = TECH_APP_AIRCRAFT_18_NAME
+ desc = TECH_APP_AIRCRAFT_18_DESC
+
+ position = { x = 152 y = 168 }
+         year = 1940
+
+ component = { # Improved Short-Range Bomber Engine
+  id = 4281
+  name = TECH_CMP_AIRCRAFT_18_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Improved Light Bomber Airframe
+  id = 4282
+  name = TECH_CMP_AIRCRAFT_18_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Dive-Drop AP Bomb Shells
+  id = 4283
+  name = TECH_CMP_AIRCRAFT_18_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Basic Centimetric Airborne Radar Navigation
+  id = 4284
+  name = TECH_CMP_AIRCRAFT_18_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Improved Light Bomber Prototype Tests
+  id = 4285
+  name = TECH_CMP_AIRCRAFT_18_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4170 }
+ effects = {
+  command = { type = new_model which = cas value = 1 }
+ }
+}
+application = { # Advanced Close Air Support Aircraft
+ id = 4180
+ name = TECH_APP_AIRCRAFT_19_NAME
+ desc = TECH_APP_AIRCRAFT_19_DESC
+
+ position = { x = 152 y = 192 }
+         year = 1943
+
+ component = { # Advanced Short-Range Bomber Engine
+  id = 4181
+  name = TECH_CMP_AIRCRAFT_19_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Advanced Light Bomber Airframe
+  id = 4182
+  name = TECH_CMP_AIRCRAFT_19_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Napalm Bombs
+  id = 4183
+  name = TECH_CMP_AIRCRAFT_19_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Improved Centimetric Airborne Radar Navigation
+  id = 4184
+  name = TECH_CMP_AIRCRAFT_19_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Advanced Light Bomber Prototype Tests
+  id = 4185
+  name = TECH_CMP_AIRCRAFT_19_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4280 }
+ effects = {
+  	command = { type = new_model which = cas value = 2 }
+	command = { type = scrap_model which = cas value = 0 }
+ }
+}
+application = { # Basic Naval Bomber
+ id = 4190
+ name = TECH_APP_AIRCRAFT_20_NAME
+ desc = TECH_APP_AIRCRAFT_20_DESC
+
+ position = { x = 288 y = 144 }
+         year = 1938
+
+ component = { # Basic Medium-Range Bomber Engine
+  id = 4191
+  name = TECH_CMP_AIRCRAFT_20_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Basic Medium Bomber Airframe
+  id = 4192
+  name = TECH_CMP_AIRCRAFT_20_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Naval Bomb Shells
+  id = 4193
+  name = TECH_CMP_AIRCRAFT_20_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Advanced Radio Navigation
+  id = 4194
+  name = TECH_CMP_AIRCRAFT_20_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Basic Medium-Range Bomber Prototype Tests
+  id = 4195
+  name = TECH_CMP_AIRCRAFT_20_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4130 }
+ effects = {
+  command = { type = activate_unit_type which = naval_bomber }
+  command = { type = new_model which = naval_bomber value = 0 }
+ }
+}
+application = { # Improved Naval Bomber
+ id = 4200
+ name = TECH_APP_AIRCRAFT_21_NAME
+ desc = TECH_APP_AIRCRAFT_21_DESC
+
+ position = { x = 288 y = 168 }
+         year = 1941
+
+ component = { # Improved Medium-Range Bomber Engine
+  id = 4201
+  name = TECH_CMP_AIRCRAFT_21_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Improved Medium Bomber Airframe
+  id = 4202
+  name = TECH_CMP_AIRCRAFT_21_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Airborne Torpedos
+  id = 4203
+  name = TECH_CMP_AIRCRAFT_21_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Basic Centimetric Airborne Radar Navigation
+  id = 4204
+  name = TECH_CMP_AIRCRAFT_21_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Improved Medium-Range Bomber Prototype Tests
+  id = 4205
+  name = TECH_CMP_AIRCRAFT_21_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4190 }
+ effects = {
+  command = { type = new_model which = naval_bomber value = 1 }
+ }
+}
+application = { # Advanced Naval Bomber
+ id = 4210
+ name = TECH_APP_AIRCRAFT_22_NAME
+ desc = TECH_APP_AIRCRAFT_22_DESC
+
+ position = { x = 288 y = 192 }
+         year = 1943
+
+ component = { # Advanced Medium-Range Bomber Engine
+  id = 4211
+  name = TECH_CMP_AIRCRAFT_22_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Advanced Medium Bomber Airframe
+  id = 4212
+  name = TECH_CMP_AIRCRAFT_22_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Airborne Homing Torpedos
+  id = 4213
+  name = TECH_CMP_AIRCRAFT_22_3_NAME
+  type = chemistry
+  difficulty = 8
+ }
+ component = { # Improved Centimetric Airborne Radar Navigation
+  id = 4214
+  name = TECH_CMP_AIRCRAFT_22_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Advanced Medium-Range Bomber Prototype Tests
+  id = 4215
+  name = TECH_CMP_AIRCRAFT_22_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4200 }
+ effects = {
+  	command = { type = new_model which = naval_bomber value = 2 }
+	command = { type = scrap_model which = naval_bomber value = 0 }
+ }
+}
+application = { # Basic Strategic Bomber
+ id = 4220
+ name = TECH_APP_AIRCRAFT_23_NAME
+ desc = TECH_APP_AIRCRAFT_23_DESC
+
+ position = { x = 424 y = 40 }
+         year = 1937
+
+ component = { # Basic Long-Range Bomber Engine
+  id = 4221
+  name = TECH_CMP_AIRCRAFT_23_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Basic Heavy Bomber Airframe
+  id = 4222
+  name = TECH_CMP_AIRCRAFT_23_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Gyrostabilized Bombing Sights
+  id = 4223
+  name = TECH_CMP_AIRCRAFT_23_3_NAME
+  type = artillery
+  difficulty = 8
+ }
+ component = { # Advanced Radio Navigation
+  id = 4224
+  name = TECH_CMP_AIRCRAFT_23_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Basic Heavy Bomber Prototype Tests
+  id = 4225
+  name = TECH_CMP_AIRCRAFT_23_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4130 }
+ effects = {
+  command = { type = activate_unit_type which = strategic_bomber }
+  command = { type = new_model which = strategic_bomber value = 0 }
+ }
+}
+application = { # Improved Strategic Bomber
+ id = 4230
+ name = TECH_APP_AIRCRAFT_24_NAME
+ desc = TECH_APP_AIRCRAFT_24_DESC
+
+ position = { x = 424 y = 64 }
+         year = 1940
+
+ component = { # Improved Long-Range Bomber Engine
+  id = 4231
+  name = TECH_CMP_AIRCRAFT_24_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Improved Heavy Bomber Airframe
+  id = 4232
+  name = TECH_CMP_AIRCRAFT_24_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Multiple Gun Towers
+  id = 4233
+  name = TECH_CMP_AIRCRAFT_24_3_NAME
+  type = artillery
+  difficulty = 8
+ }
+ component = { # Basic Centimetric Airborne Radar Navigation
+  id = 4234
+  name = TECH_CMP_AIRCRAFT_24_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Improved Heavy Bomber Prototype Tests
+  id = 4235
+  name = TECH_CMP_AIRCRAFT_24_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4220 }
+ effects = {
+  command = { type = new_model which = strategic_bomber value = 1 }
+ }
+}
+application = { # Advanced Strategic Bomber
+ id = 4240
+ name = TECH_APP_AIRCRAFT_25_NAME
+ desc = TECH_APP_AIRCRAFT_25_DESC
+
+ position = { x = 424 y = 88 }
+         year = 1943
+
+ component = { # Advanced Long-Range Bomber Engine
+  id = 4241
+  name = TECH_CMP_AIRCRAFT_25_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Advanced Heavy Bomber Airframe
+  id = 4242
+  name = TECH_CMP_AIRCRAFT_25_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Payload Drop Computers
+  id = 4243
+  name = TECH_CMP_AIRCRAFT_25_3_NAME
+  type = artillery
+  difficulty = 8
+ }
+ component = { # Improved Centimetric Airborne Radar Navigation
+  id = 4244
+  name = TECH_CMP_AIRCRAFT_25_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Advanced Heavy Bomber Prototype Tests
+  id = 4245
+  name = TECH_CMP_AIRCRAFT_25_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4230 }
+ effects = {
+  	command = { type = new_model which = strategic_bomber value = 2 }
+	command = { type = scrap_model which = strategic_bomber value = 0 }
+ }
+}
+application = { # Basic Air Transport
+ id = 4250
+ name = TECH_APP_AIRCRAFT_26_NAME
+ desc = TECH_APP_AIRCRAFT_26_DESC
+
+ position = { x = 424 y = 144 }
+         year = 1936
+
+ component = { # Basic Long-Range Bomber Engine
+  id = 4251
+  name = TECH_CMP_AIRCRAFT_26_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Basic Heavy Bomber Airframe
+  id = 4252
+  name = TECH_CMP_AIRCRAFT_26_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Small Cargo Capacity
+  id = 4253
+  name = TECH_CMP_AIRCRAFT_26_3_NAME
+  type = aeronautics
+  difficulty = 6
+ }
+ component = { # Advanced Radio Navigation
+  id = 4254
+  name = TECH_CMP_AIRCRAFT_26_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Basic Heavy Bomber Prototype Tests
+  id = 4255
+  name = TECH_CMP_AIRCRAFT_26_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4130 }
+ effects = {
+  command = { type = activate_unit_type which = transport_plane }
+  command = { type = new_model which = transport_plane value = 0 }
+ }
+}
+application = { # Improved Air Transport
+ id = 4260
+ name = TECH_APP_AIRCRAFT_27_NAME
+ desc = TECH_APP_AIRCRAFT_27_DESC
+
+ position = { x = 424 y = 168 }
+         year = 1940
+
+ component = { # Improved Long-Range Bomber Engine
+  id = 4261
+  name = TECH_CMP_AIRCRAFT_27_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Improved Heavy Bomber Airframe
+  id = 4262
+  name = TECH_CMP_AIRCRAFT_27_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Medium Cargo Capacity
+  id = 4263
+  name = TECH_CMP_AIRCRAFT_27_3_NAME
+  type = aeronautics
+  difficulty = 6
+ }
+ component = { # Basic Centimetric Airborne Radar Navigation
+  id = 4264
+  name = TECH_CMP_AIRCRAFT_27_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Improved Heavy Bomber Prototype Tests
+  id = 4265
+  name = TECH_CMP_AIRCRAFT_27_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4250 }
+ effects = {
+  command = { type = new_model which = transport_plane value = 1 }
+  command = { type = enable_task which = air_supply }
+ }
+}
+application = { # Advanced Air Transport
+ id = 4270
+ name = TECH_APP_AIRCRAFT_28_NAME
+ desc = TECH_APP_AIRCRAFT_28_DESC
+
+ position = { x = 424 y = 192 }
+         year = 1942
+
+ component = { # Advanced Long-Range Bomber Engine
+  id = 4271
+  name = TECH_CMP_AIRCRAFT_28_1_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Advanced Heavy Bomber Airframe
+  id = 4272
+  name = TECH_CMP_AIRCRAFT_28_2_NAME
+  type = aeronautics
+  difficulty = 8
+ }
+ component = { # Large Cargo Capacity
+  id = 4273
+  name = TECH_CMP_AIRCRAFT_28_3_NAME
+  type = aeronautics
+  difficulty = 6
+ }
+ component = { # Improved Centimetric Airborne Radar Navigation
+  id = 4274
+  name = TECH_CMP_AIRCRAFT_28_4_NAME
+  type = electronics
+  difficulty = 8
+ }
+ component = { # Advanced Heavy Bomber Prototype Tests
+  id = 4275
+  name = TECH_CMP_AIRCRAFT_28_5_NAME
+  type = technical_efficiency
+  difficulty = 8
+  double_time = yes
+ }
+ required = { 4260 }
+ effects = {
+  	command = { type = new_model which = transport_plane value = 2 }
+	command = { type = scrap_model which = transport_plane value = 0 }
+	command = { type = task_efficiency which = air_supply value = 0.5 }
+ }  
+}
+}

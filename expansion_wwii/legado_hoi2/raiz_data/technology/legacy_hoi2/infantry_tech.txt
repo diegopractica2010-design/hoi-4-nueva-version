@@ -1,0 +1,1928 @@
+technology = {
+
+	id = 1
+
+	category = infantry
+
+	name = TECH_INFANTRY_NAME #Localized name
+
+	desc = TECH_INFANTRY_DESC #Localized description
+
+	label = { tag = TECH_CAT_INFANTRY 	position = { x = 24 y = 10 }}
+	label = { tag = TECH_CAT_AIRBORNE  	position = { x = 168 y = 10 }}
+	label = { tag = TECH_CAT_MARINES   	position = { x = 296 y = 10 }}
+	label = { tag = TECH_CAT_MOUNTAIN  	position = { x = 424 y = 10 }}
+	label = { tag = TECH_CAT_CAVALRY   	position = { x = 24 y = 178 }}
+	label = { tag = TECH_CAT_SUPPLY    	position = { x = 288 y = 162 }}
+	label = { tag = TECH_CAT_MOTORIZED 	position = { x = 24 y = 274 }}
+	label = { tag = TECH_CAT_MECHANIZED	position = { x = 176 y = 274	 }}
+
+	application = { # Great War Infantry Division
+	 id = 1010
+	 name = TECH_APP_INFANTRY_1_NAME
+	 desc = TECH_APP_INFANTRY_1_DESC
+
+	position = { x = 24 y = 24 }	
+	year = 1918
+
+	 component = { # Elder Service Rifle
+	  id = 1011
+	  name = TECH_CMP_INFANTRY_1_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 37mm
+	  id = 1012
+	  name = TECH_CMP_INFANTRY_1_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Signal Command System
+	  id = 1013
+	  name = TECH_CMP_INFANTRY_1_3_NAME
+	  type = electronics
+	  difficulty = 5
+	 }
+
+	 component = { # Grenades and Mines
+	  id = 1014
+	  name = TECH_CMP_INFANTRY_1_4_NAME
+	  type = chemistry
+	  difficulty = 5
+	 }
+
+	 component = { # Mass Assault Training
+	  id = 1015
+	  name = TECH_CMP_INFANTRY_1_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = {  }
+	 effects = {
+
+	 	command = { type = activate_unit_type which = infantry }
+	 	command = { type = new_model which = infantry value = 0 }
+	 	command = { type = activate_unit_type which = garrison }
+	 	command = { type = new_model which = garrison value = 0 }
+	 	command = { type = enable_task which = amphibious_assault  }
+	 }
+	}
+
+	application = { # Early Infantry Division
+	 id = 1020
+	 name = TECH_APP_INFANTRY_2_NAME
+	 desc = TECH_APP_INFANTRY_2_DESC
+
+	position = { x = 24 y = 48 }	
+	year = 1936
+
+	
+
+	 component = { # Service Rifle
+	  id = 1021
+	  name = TECH_CMP_INFANTRY_2_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 50mm
+	  id = 1022
+	  name = TECH_CMP_INFANTRY_2_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Long-Range Recon Battalion
+	  id = 1023
+	  name = TECH_CMP_INFANTRY_2_3_NAME
+	  type = electronics
+	  difficulty = 5
+	 }
+
+	 component = { # Light Mortar 50mm
+	  id = 1024
+	  name = TECH_CMP_INFANTRY_2_4_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Small Combat Unit Training
+	  id = 1025
+	  name = TECH_CMP_INFANTRY_2_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1010 }
+	 effects = {
+
+	  command = { type = new_model which = infantry value = 1 }
+      command = { type = scrap_model which = infantry value = 0 }
+      command = { type = activate_unit_type which = police }
+	 }
+	}
+
+	application = { # Basic Infantry Division
+	 id = 1030
+	 name = TECH_APP_INFANTRY_3_NAME
+	 desc = TECH_APP_INFANTRY_3_DESC
+
+	position = { x = 24 y = 72 }	
+	year = 1939
+
+	 component = { # Basic Submachinegun
+	  id = 1031
+	  name = TECH_CMP_INFANTRY_3_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 75mm
+	  id = 1032
+	  name = TECH_CMP_INFANTRY_3_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Signal Interception and Jamming
+	  id = 1033
+	  name = TECH_CMP_INFANTRY_3_3_NAME
+	  type = electronics
+	  difficulty = 5
+	 }
+
+	 component = { # Medium Mortar 81mm
+	  id = 1034
+	  name = TECH_CMP_INFANTRY_3_4_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Specialist Support Training
+	  id = 1035
+	  name = TECH_CMP_INFANTRY_3_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1020 }
+	 effects = {
+
+	  command = { type = new_model which = infantry value = 2 }
+      command = { type = scrap_model which = infantry value = 1 }
+	  command = { type = new_model which = garrison value = 1 }
+      command = { type = scrap_model which = garrison value = 0 }
+	 }
+	}
+
+	application = { # Improved Infantry Division
+	 id = 1040
+	 name = TECH_APP_INFANTRY_4_NAME
+	 desc = TECH_APP_INFANTRY_4_DESC
+
+	position = { x = 24 y = 96 }	
+	year = 1941
+
+
+
+	 component = { # Improved Submachinegun
+	  id = 1041
+	  name = TECH_CMP_INFANTRY_4_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 105mm
+	  id = 1042
+	  name = TECH_CMP_INFANTRY_4_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Improved Signal Command System
+	  id = 1043
+	  name = TECH_CMP_INFANTRY_4_3_NAME
+	  type = electronics
+	  difficulty = 5
+	 }
+
+	 component = { # Heavy Mortar 120mm
+	  id = 1044
+	  name = TECH_CMP_INFANTRY_4_4_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Combined Arms Initiative Training
+	  id = 1045
+	  name = TECH_CMP_INFANTRY_4_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1030 }
+	 effects = {
+
+	  command = { type = new_model which = infantry value = 3 }
+      command = { type = scrap_model which = infantry value = 2 }
+	 }
+	}
+
+	application = { # Advanced Infantry Division
+	 id = 1050
+	 name = TECH_APP_INFANTRY_5_NAME
+	 desc = TECH_APP_INFANTRY_5_DESC
+
+	position = { x = 24 y = 120 }	
+	year = 1943
+
+	 component = { # Basic Assault Rifle
+	  id = 1051
+	  name = TECH_CMP_INFANTRY_5_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 150mm
+	  id = 1052
+	  name = TECH_CMP_INFANTRY_5_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Improved Long-Range Recon Battalion
+	  id = 1053
+	  name = TECH_CMP_INFANTRY_5_3_NAME
+	  type = electronics
+	  difficulty = 5
+	 }
+
+	 component = { # Tube-launched Rocket
+	  id = 1054
+	  name = TECH_CMP_INFANTRY_5_4_NAME
+	  type = rocketry
+	  difficulty = 5
+	 }
+
+	 component = { # Task Force Training
+	  id = 1055
+	  name = TECH_CMP_INFANTRY_5_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1040 }
+	 effects = {
+
+	  	command = { type = new_model which = infantry value = 4 }
+        command = { type = scrap_model which = infantry value = 3 }
+	  	command = { type = new_model which = garrison value = 2 }
+        command = { type = scrap_model which = garrison value = 1 }
+		command = { type = new_model which = militia value = 1 }
+		command = { type = scrap_model which = militia value = 0 }
+	 }
+	}
+
+	application = { # Semimodern Infantry Division
+	 id = 1060
+	 name = TECH_APP_INFANTRY_6_NAME
+	 desc = TECH_APP_INFANTRY_6_DESC
+
+	position = { x = 24 y = 144 }	
+	year = 1945
+
+	 component = { # Improved Assault Rifle
+	  id = 1061
+	  name = TECH_CMP_INFANTRY_6_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 120mm Quick-Fire
+	  id = 1062
+	  name = TECH_CMP_INFANTRY_6_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Improved Signal Interception and Jamming
+	  id = 1063
+	  name = TECH_CMP_INFANTRY_6_3_NAME
+	  type = electronics
+	  difficulty = 5
+	 }
+
+	 component = { # AT Recoilless Rocket Launcher
+	  id = 1064
+	  name = TECH_CMP_INFANTRY_6_4_NAME
+	  type = rocketry
+	  difficulty = 5
+	 }
+
+	 component = { # Integrated Combined Arms Training
+	  id = 1065
+	  name = TECH_CMP_INFANTRY_6_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1050 }
+	 effects = {
+
+	  	command = { type = new_model which = infantry value = 5 }
+		command = { type = scrap_model which = infantry value = 4 }
+	 }
+	}
+
+	application = { # Early Airborne Division
+	 id = 1070
+	 name = TECH_APP_INFANTRY_7_NAME
+	 desc = TECH_APP_INFANTRY_7_DESC
+
+	position = { x  = 168 y = 48 }	
+	year = 1939
+
+	
+
+	 component = { # Basic Submachinegun
+	  id = 1071
+	  name = TECH_CMP_INFANTRY_7_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Light Mortar 50mm
+	  id = 1072
+	  name = TECH_CMP_INFANTRY_7_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Jump Boots
+	  id = 1073
+	  name = TECH_CMP_INFANTRY_7_3_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Airborne Six-wheeled Truck
+	  id = 1074
+	  name = TECH_CMP_INFANTRY_7_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Airborne Transport Training
+	  id = 1075
+	  name = TECH_CMP_INFANTRY_7_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1030 }
+	 effects = {
+
+	 	command = { type = activate_unit_type which = paratrooper }
+	  	command = { type = new_model which = paratrooper value = 0 }
+	 }
+	}
+
+	application = { # Basic Paratrooper Division
+	 id = 1080
+	 name = TECH_APP_INFANTRY_8_NAME
+	 desc = TECH_APP_INFANTRY_8_DESC
+
+	position = { x  = 168 y = 72 }	
+	year = 1940
+
+	 component = { # Improved Submachinegun
+	  id = 1081
+	  name = TECH_CMP_INFANTRY_8_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Medium Mortar 81mm
+	  id = 1082
+	  name = TECH_CMP_INFANTRY_8_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Gliders
+	  id = 1083
+	  name = TECH_CMP_INFANTRY_8_3_NAME
+	  type = aeronautics
+	  difficulty = 5
+	 }
+
+	 component = { # Paratrooper Halftrack
+	  id = 1084
+	  name = TECH_CMP_INFANTRY_8_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Paratrooper Drop Training
+	  id = 1085
+	  name = TECH_CMP_INFANTRY_8_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1070 }
+	 effects = {
+
+	  command = { type = new_model which = paratrooper value = 1 }
+      command = { type = scrap_model which = paratrooper value = 0 }
+	 }
+	}
+
+	application = { # Improved Paratrooper Division
+	 id = 1090
+	 name = TECH_APP_INFANTRY_9_NAME
+	 desc = TECH_APP_INFANTRY_9_DESC
+
+	position = { x  = 168 y = 96 }	
+	year = 1942
+
+	 component = { # Basic Assault Rifle
+	  id = 1091
+	  name = TECH_CMP_INFANTRY_9_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Mountain Gun 75mm
+	  id = 1092
+	  name = TECH_CMP_INFANTRY_9_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Paratrooper Small Unit Drop Pods
+	  id = 1093
+	  name = TECH_CMP_INFANTRY_9_3_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Paratrooper Light Tank
+	  id = 1094
+	  name = TECH_CMP_INFANTRY_9_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Paratrooper Glider Training
+	  id = 1095
+	  name = TECH_CMP_INFANTRY_9_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1080 }
+	 effects = {
+
+	  command = { type = new_model which = paratrooper value = 2 }
+      command = { type = scrap_model which = paratrooper value = 1 }
+	 }
+	}
+
+	application = { # Advanced Paratrooper Division
+	 id = 1100
+	 name = TECH_APP_INFANTRY_10_NAME
+	 desc = TECH_APP_INFANTRY_10_DESC
+
+	position = { x  = 168 y = 120 }	
+	year = 1944
+
+	 component = { # Improved Assault Rifle
+	  id = 1101
+	  name = TECH_CMP_INFANTRY_10_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Mountain Gun 105mm
+	  id = 1102
+	  name = TECH_CMP_INFANTRY_10_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Paratrooper Large Unit Drop Pods
+	  id = 1103
+	  name = TECH_CMP_INFANTRY_10_3_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Paratrooper Medium Tank
+	  id = 1104
+	  name = TECH_CMP_INFANTRY_10_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Paratrooper Assault Training
+	  id = 1105
+	  name = TECH_CMP_INFANTRY_10_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1090 }
+	 effects = {
+
+	  	command = { type = new_model which = paratrooper value = 3 }
+        command = { type = scrap_model which = paratrooper value = 2 }
+	 }
+	}
+
+	application = { # Early Mountain Division
+	 id = 1110
+	 name = TECH_APP_INFANTRY_11_NAME
+	 desc = TECH_APP_INFANTRY_11_DESC
+
+	position = { x = 424 y = 48 }	
+	year = 1937
+
+	 component = { # Service Rifle
+	  id = 1111
+	  name = TECH_CMP_INFANTRY_11_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Great War Mountain Gun 75mm
+	  id = 1112
+	  name = TECH_CMP_INFANTRY_11_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Personal Climbing Equipment
+	  id = 1113
+	  name = TECH_CMP_INFANTRY_11_3_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Trained Beasts of Burden
+	  id = 1114
+	  name = TECH_CMP_INFANTRY_11_4_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Climber Training
+	  id = 1115
+	  name = TECH_CMP_INFANTRY_11_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1010 }
+	 effects = {
+
+	 	command = { type = activate_unit_type which = bergsjaeger }
+	  	command = { type = new_model which = bergsjaeger value = 0 }
+	 }
+	}
+
+	application = { # Basic Mountain Division
+	 id = 1120
+	 name = TECH_APP_INFANTRY_12_NAME
+	 desc = TECH_APP_INFANTRY_12_DESC
+
+	position = { x = 424 y = 72 }	
+	year = 1939
+
+	 component = { # Basic Submachinegun
+	  id = 1121
+	  name = TECH_CMP_INFANTRY_12_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Medium Mortar 81mm
+	  id = 1122
+	  name = TECH_CMP_INFANTRY_12_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Arctic Climate Clothing
+	  id = 1123
+	  name = TECH_CMP_INFANTRY_12_3_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Tractors
+	  id = 1124
+	  name = TECH_CMP_INFANTRY_12_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # High Altitude Training
+	  id = 1125
+	  name = TECH_CMP_INFANTRY_12_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1110 }
+	 effects = {
+
+	  command = { type = new_model which = bergsjaeger value = 1 }
+      command = { type = scrap_model which = bergsjaeger value = 0 }
+      command = { type = hill_attack which = bergsjaeger value = 5 }	 
+	  command = { type = hill_defense which = bergsjaeger value = 10 }
+	  command = { type = hill_move which = bergsjaeger value = 5 }	 
+	  command = { type = mountain_attack which = bergsjaeger value = 5 }	 
+	  command = { type = mountain_defense which = bergsjaeger value = 10 }
+	  command = { type = mountain_move which = bergsjaeger value = 5 }
+	 }
+	}
+
+	application = { # Improved Mountain Division
+	 id = 1130
+	 name = TECH_APP_INFANTRY_13_NAME
+	 desc = TECH_APP_INFANTRY_13_DESC
+
+	year = 1941
+	position = { x = 424 y = 96 }	
+
+	 component = { # Improved Submachinegun
+	  id = 1131
+	  name = TECH_CMP_INFANTRY_13_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Mountain Gun 75mm
+	  id = 1132
+	  name = TECH_CMP_INFANTRY_13_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Wilderness Survival Kite
+	  id = 1133
+	  name = TECH_CMP_INFANTRY_13_3_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Six-wheeled Truck
+	  id = 1134
+	  name = TECH_CMP_INFANTRY_13_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Alpine Survival Training
+	  id = 1135
+	  name = TECH_CMP_INFANTRY_13_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1120 }
+	 effects = {
+
+	  command = { type = new_model which = bergsjaeger value = 2 }
+      command = { type = scrap_model which = bergsjaeger value = 1 }
+      command = { type = hill_attack which = bergsjaeger value = 5 }	 
+	  command = { type = hill_defense which = bergsjaeger value = 10 }
+	  command = { type = hill_move which = bergsjaeger value = 5 }	 
+	  command = { type = mountain_attack which = bergsjaeger value = 5 }	 
+	  command = { type = mountain_defense which = bergsjaeger value = 10 }
+	  command = { type = mountain_move which = bergsjaeger value = 5 }
+	 }
+	}
+
+	application = { # Advanced Mountain Division
+	 id = 1140
+	 name = TECH_APP_INFANTRY_14_NAME
+	 desc = TECH_APP_INFANTRY_14_DESC
+
+	position = { x = 424 y = 120 }	
+	year = 1943
+
+	 component = { # Basic Assault Rifle
+	  id = 1141
+	  name = TECH_CMP_INFANTRY_14_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Mountain Gun 105mm
+	  id = 1142
+	  name = TECH_CMP_INFANTRY_14_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Alpine Combat Equipement
+	  id = 1143
+	  name = TECH_CMP_INFANTRY_14_3_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # HiPower Halftrack
+	  id = 1144
+	  name = TECH_CMP_INFANTRY_14_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Mountain Tactical Training
+	  id = 1145
+	  name = TECH_CMP_INFANTRY_14_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1130 }
+	 
+	 effects = {
+	  	command = { type = new_model which = bergsjaeger value = 3 }
+        command = { type = scrap_model which = bergsjaeger value = 2 }
+	    command = { type = hill_attack which = bergsjaeger value = 5 }	 
+	 	command = { type = hill_defense which = bergsjaeger value = 10 }
+	 	command = { type = hill_move which = bergsjaeger value = 5 }	 
+		command = { type = mountain_attack which = bergsjaeger value = 5 }	 
+		command = { type = mountain_defense which = bergsjaeger value = 10 }
+		command = { type = mountain_move which = bergsjaeger value = 5 }
+	 }
+	}
+
+	application = { # Early Marine Division
+	 id = 1150
+	 name = TECH_APP_INFANTRY_15_NAME
+	 desc = TECH_APP_INFANTRY_15_DESC
+
+	year = 1937
+	position = { x = 296 y = 48 }	
+
+	 component = { # Service Rifle
+	  id = 1151
+	  name = TECH_CMP_INFANTRY_15_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Naval Gunfire
+	  id = 1152
+	  name = TECH_CMP_INFANTRY_15_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Early Amphibious Assault Vehicle
+	  id = 1153
+	  name = TECH_CMP_INFANTRY_15_3_NAME
+	  type = naval_engineering
+	  difficulty = 5
+	 }
+
+	 component = { # Early Amphibious Tank
+	  id = 1154
+	  name = TECH_CMP_INFANTRY_15_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Naval Infantry Training
+	  id = 1155
+	  name = TECH_CMP_INFANTRY_15_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1010 }
+
+	 effects = {
+	 	command = { type = activate_unit_type which = marine }
+	  	command = { type = new_model which = marine value = 0 }
+        command = { type = task_efficiency which = amphibious_assault value = 0.10  }
+	          }
+	}
+
+	application = { # Basic Marine Division
+	 id = 1160
+	 name = TECH_APP_INFANTRY_16_NAME
+	 desc = TECH_APP_INFANTRY_16_DESC
+	 
+	position = { x = 296 y = 72 }	
+	year = 1939
+
+	 component = { # Forward Observers
+	  id = 1161
+	  name = TECH_CMP_INFANTRY_16_1_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Wading Equipment
+	  id = 1162
+	  name = TECH_CMP_INFANTRY_16_2_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Amphibious Assault Vehicle
+	  id = 1163
+	  name = TECH_CMP_INFANTRY_16_3_NAME
+	  type = naval_engineering
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Amphibious Tank
+	  id = 1164
+	  name = TECH_CMP_INFANTRY_16_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Marine Tactical Training
+	  id = 1165
+	  name = TECH_CMP_INFANTRY_16_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1150 }
+
+	 effects = {
+	  command = { type = new_model which = marine value = 1 }
+      command = { type = scrap_model which = marine value = 0 }
+	  command = { type = swamp_attack which = marine value = 10 }
+	  command = { type = swamp_defense which = marine value = 10 }
+	  command = { type = river_attack which = marine value = 5 }
+	  command = { type = shore_attack which = marine value = 10 }
+	  command = { type = swamp_move which = marine value = 5 }
+	  command = { type = task_efficiency which = amphibious_assault value = 0.10  }
+	 }
+	}
+
+	application = { # Improved Marine Division
+	 id = 1170
+	 name = TECH_APP_INFANTRY_17_NAME
+	 desc = TECH_APP_INFANTRY_17_DESC
+
+	position = { x = 296 y = 96 }	
+	year = 1941
+
+	 component = { # Air-Naval Gunfire Liasion Teams
+	  id = 1171
+	  name = TECH_CMP_INFANTRY_17_1_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Improved Wading Equipment
+	  id = 1172
+	  name = TECH_CMP_INFANTRY_17_2_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Improved Amphibious Assault Vehicle
+	  id = 1173
+	  name = TECH_CMP_INFANTRY_17_3_NAME
+	  type = naval_engineering
+	  difficulty = 5
+	 }
+
+	 component = { # Improved Amphibious Tank
+	  id = 1174
+	  name = TECH_CMP_INFANTRY_17_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Amphibious Assault Training
+	  id = 1175
+	  name = TECH_CMP_INFANTRY_17_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1160 }
+
+	 effects = {
+	  command = { type = new_model which = marine value = 2 }
+      command = { type = scrap_model which = marine value = 1 }
+	  command = { type = swamp_attack which = marine value = 10 }
+	  command = { type = swamp_defense which = marine value = 10 }
+	  command = { type = river_attack which = marine value = 5 }
+	  command = { type = shore_attack which = marine value = 10 }
+	  command = { type = swamp_move which = marine value = 5 }
+	  command = { type = task_efficiency which = amphibious_assault value = 0.15  }
+	 }
+	}
+
+	application = { # Advanced Marine Division
+	 id = 1180
+	 name = TECH_APP_INFANTRY_18_NAME
+	 desc = TECH_APP_INFANTRY_18_DESC
+
+	position = { x = 296 y = 120 }	
+	year = 1944
+
+	 component = { # Basic Assault Rifle
+	  id = 1181
+	  name = TECH_CMP_INFANTRY_18_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Advanced Wading Equipment
+	  id = 1182
+	  name = TECH_CMP_INFANTRY_18_2_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Advanced Amphibious Assault Vehicle
+	  id = 1183
+	  name = TECH_CMP_INFANTRY_18_3_NAME
+	  type = naval_engineering
+	  difficulty = 5
+	 }
+
+	 component = { # Advanced Amphibious Tank
+	  id = 1184
+	  name = TECH_CMP_INFANTRY_18_4_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Beachhead Expansion Training
+	  id = 1185
+	  name = TECH_CMP_INFANTRY_18_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1170 }
+
+	 effects = {
+	  	command = { type = new_model which = marine value = 3 }
+		command = { type = scrap_model which = marine value = 2 }
+		command = { type = swamp_attack which = marine value = 10 }
+	    command = { type = swamp_defense which = marine value = 10 }
+	    command = { type = river_attack which = marine value = 5 }
+	    command = { type = shore_attack which = marine value = 10 }
+	    command = { type = swamp_move which = marine value = 5 }
+	    command = { type = task_efficiency which = amphibious_assault value = 0.15  }
+	 }
+	}
+
+	application = { # Great War Cavalry Division
+	 id = 1190
+	 name = TECH_APP_INFANTRY_19_NAME
+	 desc = TECH_APP_INFANTRY_19_DESC
+
+	position = { x = 24 y = 192 }	
+	year = 1918
+
+	 component = { # Lance and Carbine
+	  id = 1191
+	  name = TECH_CMP_INFANTRY_19_1_NAME
+	  type = general_equipment
+	  difficulty = 3
+	 }
+
+	 component = { # Horse Artillery Gun 75mm
+	  id = 1192
+	  name = TECH_CMP_INFANTRY_19_2_NAME
+	  type = artillery
+	  difficulty = 3
+	 }
+
+	 component = { # Basic Signal Command System
+	  id = 1193
+	  name = TECH_CMP_INFANTRY_19_3_NAME
+	  type = electronics
+	  difficulty = 4
+	 }
+
+	 component = { # Grenades and Mines
+	  id = 1194
+	  name = TECH_CMP_INFANTRY_19_4_NAME
+	  type = chemistry
+	  difficulty = 3
+	 }
+
+	 component = { # Cavalry Charge Training
+	  id = 1195
+	  name = TECH_CMP_INFANTRY_19_5_NAME
+	  type = training
+	  difficulty = 4
+	 }
+
+	 required = {  }
+
+	 effects = {
+	 	command = { type = activate_unit_type which = cavalry }
+	  	command = { type = new_model which = cavalry value = 0 }
+	 }
+	}
+
+	application = { # Early Cavalry Division
+	 id = 1200
+	 name = TECH_APP_INFANTRY_20_NAME
+	 desc = TECH_APP_INFANTRY_20_DESC
+
+	year = 1936
+	position = { x = 24 y = 216 }	
+
+	 component = { # Service Rifle
+	  id = 1201
+	  name = TECH_CMP_INFANTRY_20_1_NAME
+	  type = general_equipment
+	  difficulty = 3
+	 }
+
+	 component = { # Horse Artillery Gun 105mm
+	  id = 1202
+	  name = TECH_CMP_INFANTRY_20_2_NAME
+	  type = artillery
+	  difficulty = 3
+	 }
+
+	 component = { # Basic Long-Range Recon Battalion
+	  id = 1203
+	  name = TECH_CMP_INFANTRY_20_3_NAME
+	  type = electronics
+	  difficulty = 4
+	 }
+
+	 component = { # Light Mortar 50mm
+	  id = 1204
+	  name = TECH_CMP_INFANTRY_20_4_NAME
+	  type = artillery
+	  difficulty = 4
+	 }
+
+	 component = { # Marksman Tactical Training
+	  id = 1205
+	  name = TECH_CMP_INFANTRY_20_5_NAME
+	  type = training
+	  difficulty = 4
+	 }
+
+	 required = { 1190 }
+
+	 effects = {
+	  command = { type = new_model which = cavalry value = 1 }
+      command = { type = scrap_model which = cavalry value = 0 }
+	 }
+	}
+
+	application = { # Basic Cavalry Division
+	 id = 1210
+	 name = TECH_APP_INFANTRY_21_NAME
+	 desc = TECH_APP_INFANTRY_21_DESC
+
+	position = { x = 24 y = 240 }	
+	year = 1937
+
+	 component = { # Basic Machine Gun
+	  id = 1211
+	  name = TECH_CMP_INFANTRY_21_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Horse Artillery Gun 120mm
+	  id = 1212
+	  name = TECH_CMP_INFANTRY_21_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Signal Interception and Jamming
+	  id = 1213
+	  name = TECH_CMP_INFANTRY_21_3_NAME
+	  type = electronics
+	  difficulty = 5
+	 }
+
+	 component = { # Medium Mortar 81mm
+	  id = 1214
+	  name = TECH_CMP_INFANTRY_21_4_NAME
+	  type = artillery
+	  difficulty = 4
+	 }
+
+	 component = { # Infantry Tactical Training
+	  id = 1215
+	  name = TECH_CMP_INFANTRY_21_5_NAME
+	  type = training
+	  difficulty = 4
+	 }
+
+	 required = { 1200 }
+
+	 effects = {
+	  	command = { type = new_model which = cavalry value = 2 }
+		command = { type = scrap_model which = cavalry value = 1 }
+	 }
+	}
+
+	application = { # Semi-Motorized Cavalry Division
+	 id = 1220
+	 name = TECH_APP_INFANTRY_22_NAME
+	 desc = TECH_APP_INFANTRY_22_DESC
+
+	position = { x = 136 y = 240 }	
+	year = 1938
+
+	 component = { # Basic Machine Gun
+	  id = 1221
+	  name = TECH_CMP_INFANTRY_22_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Field Artillery Gun 105mm
+	  id = 1222
+	  name = TECH_CMP_INFANTRY_22_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Small Trucks
+	  id = 1223
+	  name = TECH_CMP_INFANTRY_22_3_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Heavy Mortar 120mm
+	  id = 1224
+	  name = TECH_CMP_INFANTRY_22_4_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Tactical Mobility Training
+	  id = 1225
+	  name = TECH_CMP_INFANTRY_22_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1200 }
+
+	 effects = {
+	  	command = { type = new_model which = cavalry value = 3 }
+		command = { type = scrap_model which = cavalry value = 2 }
+	 }
+	}
+
+	application = { # Basic Motorized Division
+	 id = 1230
+	 name = TECH_APP_INFANTRY_23_NAME
+	 desc = TECH_APP_INFANTRY_23_DESC
+
+	position = { x = 24 y = 288 }	
+	year = 1942
+
+	 component = { # Basic Submachinegun
+	  id = 1231
+	  name = TECH_CMP_INFANTRY_23_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 75mm
+	  id = 1232
+	  name = TECH_CMP_INFANTRY_23_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # 1 ton Trucks
+	  id = 1233
+	  name = TECH_CMP_INFANTRY_23_3_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Heavy Mortar 120mm
+	  id = 1234
+	  name = TECH_CMP_INFANTRY_23_4_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Combined Arms Initiative Training
+	  id = 1235
+	  name = TECH_CMP_INFANTRY_23_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1020 1210 1220 }
+
+	 effects = {
+	 	command = { type = activate_unit_type which = motorized }
+	  	command = { type = new_model which = motorized value = 0 }
+	 }
+	}
+
+	application = { # Improved Motorized Division
+	 id = 1240
+	 name = TECH_APP_INFANTRY_24_NAME
+	 desc = TECH_APP_INFANTRY_24_DESC
+
+	year = 1941
+	position = { x = 24 y = 312 }	
+
+	 component = { # Improved Submachinegun
+	  id = 1241
+	  name = TECH_CMP_INFANTRY_24_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 105mm
+	  id = 1242
+	  name = TECH_CMP_INFANTRY_24_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # 2 1/2 ton Trucks
+	  id = 1243
+	  name = TECH_CMP_INFANTRY_24_3_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Tube-launched Rocket
+	  id = 1244
+	  name = TECH_CMP_INFANTRY_24_4_NAME
+	  type = rocketry
+	  difficulty = 5
+	 }
+
+	 component = { # Task Force Training
+	  id = 1245
+	  name = TECH_CMP_INFANTRY_24_5_NAME
+	  type = training
+	  difficulty = 5
+	 }
+
+	 required = { 1230 }
+
+	 effects = {
+	  	 command = { type = new_model which = motorized value = 1 }
+         command = { type = scrap_model which = motorized value = 0 }
+	 }
+	}
+
+	application = { # Advanced Motorized Division
+	 id = 1250
+	 name = TECH_APP_INFANTRY_25_NAME
+	 desc = TECH_APP_INFANTRY_25_DESC
+
+	year = 1944
+	position = { x = 24 y = 336 }	
+
+	 component = { # Basic Assault Rifle
+	  id = 1251
+	  name = TECH_CMP_INFANTRY_25_1_NAME
+	  type = general_equipment
+	  difficulty = 6
+	 }
+
+	 component = { # Infantry Gun 150mm
+	  id = 1252
+	  name = TECH_CMP_INFANTRY_25_2_NAME
+	  type = artillery
+	  difficulty = 6
+	 }
+
+	 component = { # 4 ton Trucks
+	  id = 1253
+	  name = TECH_CMP_INFANTRY_25_3_NAME
+	  type = mechanics
+	  difficulty = 6
+	 }
+
+	 component = { # AT Recoilless Rocket Launcher
+	  id = 1254
+	  name = TECH_CMP_INFANTRY_25_4_NAME
+	  type = rocketry
+	  difficulty = 6
+	 }
+
+	 component = { # Mobile Reaction Training
+	  id = 1255
+	  name = TECH_CMP_INFANTRY_25_5_NAME
+	  type = training
+	  difficulty = 6
+	 }
+
+	 required = { 1240 }
+
+	 effects = {
+	  	command = { type = new_model which = motorized value = 2 }
+        command = { type = scrap_model which = motorized value = 1 }
+	 }
+	}
+
+	application = { # Basic Mechanized Division
+	 id = 1260
+	 name = TECH_APP_INFANTRY_26_NAME
+	 desc = TECH_APP_INFANTRY_26_DESC
+
+	position = { x = 176 y = 288 }	
+	year = 1941
+
+	 component = { # Improved Submachinegun
+	  id = 1261
+	  name = TECH_CMP_INFANTRY_26_1_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Infantry Gun 105mm
+	  id = 1262
+	  name = TECH_CMP_INFANTRY_26_2_NAME
+	  type = artillery
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Halftrack Troop Carrier
+	  id = 1263
+	  name = TECH_CMP_INFANTRY_26_3_NAME
+	  type = mechanics
+	  difficulty = 6
+	 }
+
+	 component = { # Tube-launched Rocket
+	  id = 1264
+	  name = TECH_CMP_INFANTRY_26_4_NAME
+	  type = rocketry
+	  difficulty = 5
+	 }
+
+	 component = { # Task Force Training
+	  id = 1265
+	  name = TECH_CMP_INFANTRY_26_5_NAME
+	  type = training
+	  difficulty = 6
+	 }
+
+	 required = { 1240 }
+
+	 effects = {
+	 	command = { type = activate_unit_type which = mechanized }
+	  	command = { type = new_model which = mechanized value = 0 }
+	 }
+	}
+
+	application = { # Improved Mechanized Division
+	 id = 1270
+	 name = TECH_APP_INFANTRY_27_NAME
+	 desc = TECH_APP_INFANTRY_27_DESC
+
+	position = { x = 176 y = 312 }	
+	year = 1942
+
+	 component = { # Basic Assault Rifle
+	  id = 1271
+	  name = TECH_CMP_INFANTRY_27_1_NAME
+	  type = general_equipment
+	  difficulty = 6
+	 }
+
+	 component = { # Infantry Gun 150mm
+	  id = 1272
+	  name = TECH_CMP_INFANTRY_27_2_NAME
+	  type = artillery
+	  difficulty = 6
+	 }
+
+	 component = { # Improved Halftrack Troop Carrier
+	  id = 1273
+	  name = TECH_CMP_INFANTRY_27_3_NAME
+	  type = mechanics
+	  difficulty = 6
+	 }
+
+	 component = { # AT Recoilless Rocket Launcher
+	  id = 1274
+	  name = TECH_CMP_INFANTRY_27_4_NAME
+	  type = rocketry
+	  difficulty = 6
+	 }
+
+	 component = { # Mobile Reaction Training
+	  id = 1275
+	  name = TECH_CMP_INFANTRY_27_5_NAME
+	  type = training
+	  difficulty = 6
+	 }
+
+	 required = { 1260 }
+
+	 effects = {
+	  	command = { type = new_model which = mechanized value = 1 }
+        command = { type = scrap_model which = mechanized value = 0 }
+	 }
+	}
+
+	application = { # Advanced Mechanized Division
+	 id = 1280
+	 name = TECH_APP_INFANTRY_28_NAME
+	 desc = TECH_APP_INFANTRY_28_DESC
+
+	position = { x = 176 y = 336	 }	
+	year = 1944
+
+	 component = { # Improved Assault Rifle
+	  id = 1281
+	  name = TECH_CMP_INFANTRY_28_1_NAME
+	  type = general_equipment
+	  difficulty = 6
+	 }
+
+	 component = { # Infantry Gun 120mm Quick-Fire
+	  id = 1282
+	  name = TECH_CMP_INFANTRY_28_2_NAME
+	  type = artillery
+	  difficulty = 7
+	 }
+
+	 component = { # Advanced Halftrack Troop Carrier
+	  id = 1283
+	  name = TECH_CMP_INFANTRY_28_3_NAME
+	  type = mechanics
+	  difficulty = 6
+	 }
+
+	 component = { # Integrated Mobile AT Guns
+	  id = 1284
+	  name = TECH_CMP_INFANTRY_28_4_NAME
+	  type = artillery
+	  difficulty = 7
+	 }
+
+	 component = { # Marsch Echelon Assault Training
+	  id = 1285
+	  name = TECH_CMP_INFANTRY_28_5_NAME
+	  type = training
+	  difficulty = 7
+	 }
+
+	 required = { 1270 }
+
+	 effects = {
+	  	command = { type = new_model which = mechanized value = 2 }
+        command = { type = scrap_model which = mechanized value = 1 }
+	 }
+	}
+
+	application = { # Semimodern Mechanized Division
+	 id = 1290
+	 name = TECH_APP_INFANTRY_29_NAME
+	 desc = TECH_APP_INFANTRY_29_DESC
+
+	year = 1945
+	position = { x = 312 y = 312 }	
+
+	 component = { # Improved Assault Rifle
+	  id = 1291
+	  name = TECH_CMP_INFANTRY_29_1_NAME
+	  type = general_equipment
+	  difficulty = 6
+	 }
+
+	 component = { # Infantry Gun 120mm Quick-Fire
+	  id = 1292
+	  name = TECH_CMP_INFANTRY_29_2_NAME
+	  type = artillery
+	  difficulty = 7
+	 }
+
+	 component = { # Armored Personnel Carriers
+	  id = 1293
+	  name = TECH_CMP_INFANTRY_29_3_NAME
+	  type = mechanics
+	  difficulty = 8
+	 }
+
+	 component = { # Integrated Mobile AT Rocket Launchers
+	  id = 1294
+	  name = TECH_CMP_INFANTRY_29_4_NAME
+	  type = rocketry
+	  difficulty = 8
+	 }
+
+	 component = { # Flexible Air Support Training
+	  id = 1295
+	  name = TECH_CMP_INFANTRY_29_5_NAME
+	  type = training
+	  difficulty = 8
+	 }
+
+	 required = { 1280 }
+
+	 effects = {
+	  	command = { type = new_model which = mechanized value = 3 }
+        command = { type = scrap_model which = mechanized value = 2 }
+	 }
+	}
+
+	application = { # Armored Cavalry Division
+	 id = 1300
+	 name = TECH_APP_INFANTRY_30_NAME
+	 desc = TECH_APP_INFANTRY_30_DESC
+
+	year = 1945
+	position = { x = 312 y = 336 }	
+
+	 component = { # Improved Assault Rifle
+	  id = 1301
+	  name = TECH_CMP_INFANTRY_30_1_NAME
+	  type = general_equipment
+	  difficulty = 6
+	 }
+
+	 component = { # Infantry Gun 120mm Quick-Fire
+	  id = 1302
+	  name = TECH_CMP_INFANTRY_30_2_NAME
+	  type = artillery
+	  difficulty = 7
+	 }
+
+	 component = { # Armored Personnel Carriers
+	  id = 1303
+	  name = TECH_CMP_INFANTRY_30_3_NAME
+	  type = mechanics
+	  difficulty = 7
+	 }
+
+	 component = { # Advanced Heavy Armored Car
+	  id = 1304
+	  name = TECH_CMP_INFANTRY_30_4_NAME
+	  type = mechanics
+	  difficulty = 7
+	 }
+
+	 component = { # Forced Recon Training
+	  id = 1305
+	  name = TECH_CMP_INFANTRY_30_5_NAME
+	  type = training
+	  difficulty = 7
+	 }
+
+	 required = { 1280 }
+
+	 effects = {
+	  	command = { type = new_model which = cavalry value = 4 }
+		command = { type = scrap_model which = cavalry value = 3 }
+		command = { type = info_may_cause which = 7240 }
+	 }
+	}
+
+
+
+	##################################################################
+
+	application = { # Rear Area Supply Dumps
+	 id = 1310
+	 name = TECH_APP_INFANTRY_31_NAME
+	 desc = TECH_APP_INFANTRY_31_DESC
+	 
+	year = 1936
+	position = { x = 408 y = 176 }	
+
+	 component = { # Static Area Supply System
+	  id = 1311
+	  name = TECH_CMP_INFANTRY_31_1_NAME
+	  type = centralized_execution
+	  difficulty = 5
+	 }
+
+	 component = { # Requisition Order System
+	  id = 1312
+	  name = TECH_CMP_INFANTRY_31_2_NAME
+	  type = management
+	  difficulty = 5
+	 }
+
+	 component = { # Land Convoy System
+	  id = 1313
+	  name = TECH_CMP_INFANTRY_31_3_NAME
+	  type = management
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Stock and Storage
+	  id = 1314
+	  name = TECH_CMP_INFANTRY_31_4_NAME
+	  type = general_equipment
+	  difficulty = 5
+	 }
+
+	 component = { # Strategic refuel and replenishment
+	  id = 1315
+	  name = TECH_CMP_INFANTRY_31_5_NAME
+	  type = large_unit_tactics
+	  difficulty = 5
+	 }
+
+	 required = {  }
+
+	 effects = {
+	  	command = { type = tc_mod value = 10 }
+	  	command = { type = tc_occupied_mod value = 20 }
+	  	command = { type = attrition_mod value = 15 }
+	  	command = { type = supply_dist_mod value = 10 }
+	  	command = { type = enable_task which = strat_redeploy }
+        command = { type = task_efficiency which = strat_redeploy value = 0.5  }
+	  	command = { type = activate_unit_type which = engineer }
+	 }
+	}
+
+	application = { # Deep Logistic Organization
+	 id = 1320
+	 name = TECH_APP_INFANTRY_32_NAME
+	 desc = TECH_APP_INFANTRY_32_DESC
+
+	position = { x = 408 y = 200 }	
+	year = 1940
+
+	 component = { # Dynamic Priority Supply System
+	  id = 1321
+	  name = TECH_CMP_INFANTRY_32_1_NAME
+	  type = centralized_execution
+	  difficulty = 6
+	 }
+
+	 component = { # Mean Consumption Statistics
+	  id = 1322
+	  name = TECH_CMP_INFANTRY_32_2_NAME
+	  type = mathematics
+	  difficulty = 6
+	 }
+
+	 component = { # Flexible Dumpspot System 
+	  id = 1323
+	  name = TECH_CMP_INFANTRY_32_3_NAME
+	  type = management
+	  difficulty = 6
+	 }
+
+	 component = { # Improved Stock and Storage
+	  id = 1324
+	  name = TECH_CMP_INFANTRY_32_4_NAME
+	  type = general_equipment
+	  difficulty = 6
+	 }
+
+	 component = { # Operational refuel and replenishment
+	  id = 1325
+	  name = TECH_CMP_INFANTRY_32_5_NAME
+	  type = large_unit_tactics
+	  difficulty = 6
+	 }
+
+	 required = { 1310 }
+
+	 effects = {
+		command = { type = tc_mod value = 10 }
+		command = { type = tc_occupied_mod value = 20 }
+		command = { type = attrition_mod value = 15 }
+		command = { type = supply_dist_mod value = 10 }
+	 }
+	}
+
+	application = { # Frontline Supply Service
+	 id = 1330
+	 name = TECH_APP_INFANTRY_33_NAME
+	 desc = TECH_APP_INFANTRY_33_DESC
+
+	position = { x = 408 y = 224 }	
+	 year = 1942
+
+	 component = { # Low Echelon Supply System
+	  id = 1331
+	  name = TECH_CMP_INFANTRY_33_1_NAME
+	  type = decentralized_execution
+	  difficulty = 7
+	 }
+
+	 component = { # Dynamic Supply Reports
+	  id = 1332
+	  name = TECH_CMP_INFANTRY_33_2_NAME
+	  type = management
+	  difficulty = 7
+	 }
+
+	 component = { # Circular Transport System
+	  id = 1333
+	  name = TECH_CMP_INFANTRY_33_3_NAME
+	  type = management
+	  difficulty = 7
+	 }
+
+	 component = { # Advanced Stock and Storage
+	  id = 1334
+	  name = TECH_CMP_INFANTRY_33_4_NAME
+	  type = general_equipment
+	  difficulty = 7
+	 }
+
+	 component = { # Tactical refuel and replenishment
+	  id = 1335
+	  name = TECH_CMP_INFANTRY_33_5_NAME
+	  type = small_unit_tactics
+	  difficulty = 7
+	 }
+
+	 required = { 1320 }
+
+	 effects = {
+		command = { type = tc_mod value = 10 }
+	  	command = { type = tc_occupied_mod value = 20 }
+	  	command = { type = attrition_mod value = 15 }
+	  	command = { type = supply_dist_mod value = 10 }
+	 }
+	}
+
+	application = { # Rear Area Vehicle Repair Shop
+	 id = 1340
+	 name = TECH_APP_INFANTRY_34_NAME
+	 desc = TECH_APP_INFANTRY_34_DESC
+
+	year = 1937
+	position = { x = 288 y = 176 }	
+
+	 component = { # Bulky Tools
+	  id = 1341
+	  name = TECH_CMP_INFANTRY_34_1_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Standardized Repair Capacity
+	  id = 1342
+	  name = TECH_CMP_INFANTRY_34_2_NAME
+	  type = mechanics
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Vehicle Repair
+	  id = 1343
+	  name = TECH_CMP_INFANTRY_34_3_NAME
+	  type = technical_efficiency
+	  difficulty = 5
+	 }
+
+	 component = { # Basic Gun Repair
+	  id = 1344
+	  name = TECH_CMP_INFANTRY_34_4_NAME
+	  type = technical_efficiency
+	  difficulty = 5
+	 }
+
+	 component = { # Worktask Requisition System 
+	  id = 1345
+	  name = TECH_CMP_INFANTRY_34_5_NAME
+	  type = management
+	  difficulty = 5
+	 }
+
+	 required = { 1310 }
+
+	 effects = {
+	  	command = { type = repair_mod value = 20 }
+		command = { type = building_prod_mod which = air_base value = 50 }
+	 }
+	}
+
+	application = { # Deep Vehicle Repair Organization
+	 id = 1350
+	 name = TECH_APP_INFANTRY_35_NAME
+	 desc = TECH_APP_INFANTRY_35_DESC
+
+	position = { x = 288 y = 200 }	
+	year = 1941
+
+	 component = { # Movable Tools
+	  id = 1351
+	  name = TECH_CMP_INFANTRY_35_1_NAME
+	  type = mechanics
+	  difficulty = 6
+	 }
+
+	 component = { # Unit-specific Repair Capacity
+	  id = 1352
+	  name = TECH_CMP_INFANTRY_35_2_NAME
+	  type = mechanics
+	  difficulty = 6
+	 }
+
+	 component = { # Improved Vehicle Repair
+	  id = 1353
+	  name = TECH_CMP_INFANTRY_35_3_NAME
+	  type = technical_efficiency
+	  difficulty = 6
+	 }
+
+	 component = { # Improved Gun Repair
+	  id = 1354
+	  name = TECH_CMP_INFANTRY_35_4_NAME
+	  type = technical_efficiency
+	  difficulty = 6
+	 }
+
+	 component = { # Worktask Prioritation System
+	  id = 1355
+	  name = TECH_CMP_INFANTRY_35_5_NAME
+	  type = management
+	  difficulty = 6
+	 }
+
+	 required = { 1320 1340 }
+
+	 effects = {
+		command = { type = repair_mod value = 20 }
+		command = { type = building_prod_mod which = air_base value = 50 }
+	 }
+	}
+
+	application = { # Frontline Vehicle Repair Shop
+	 id = 1360
+	 name = TECH_APP_INFANTRY_36_NAME
+	 desc = TECH_APP_INFANTRY_36_DESC
+
+	 year = 1943
+	position = { x = 288 y = 224 }	
+
+	 component = { # Flexible Tools
+	  id = 1361
+	  name = TECH_CMP_INFANTRY_36_1_NAME
+	  type = mechanics
+	  difficulty = 7
+	 }
+
+	 component = { # Multitask Repair Capacity
+	  id = 1362
+	  name = TECH_CMP_INFANTRY_36_2_NAME
+	  type = mechanics
+	  difficulty = 7
+	 }
+
+	 component = { # Advanced Vehicle Repair
+	  id = 1363
+	  name = TECH_CMP_INFANTRY_36_3_NAME
+	  type = technical_efficiency
+	  difficulty = 7
+	 }
+
+	 component = { # Advanced Gun Repair
+	  id = 1364
+	  name = TECH_CMP_INFANTRY_36_4_NAME
+	  type = technical_efficiency
+	  difficulty = 7
+	 }
+
+	 component = { # Dynamic Damage Classification
+	  id = 1365
+	  name = TECH_CMP_INFANTRY_36_5_NAME
+	  type = management
+	  difficulty = 7
+	 }
+
+	 required = { 1330 1350 }
+
+	 effects = {
+		command = { type = repair_mod value = 20 }
+		command = { type = building_prod_mod which = air_base value = 50 }
+	 }
+	}
+
+}
+
+
+
+
+

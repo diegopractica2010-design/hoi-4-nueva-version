@@ -39,17 +39,21 @@ func _ready() -> void:
 	if player_tag.is_empty():
 		player_tag = "CHL"
 
-	var production_tests_passed := _run_production_line_tests()
-	if _qa_smoke_mode and not production_tests_passed:
-		push_error("QA_SMOKE: production characterization failed")
-		get_tree().quit(1)
-		return
+	# Las baterias de prueba (produccion, validacion de autoloads, integrales) solo
+	# corren en modo QA/CI, nunca en una partida real del jugador. Antes corrian
+	# siempre al entrar y congelaban el arranque (una de ellas dispara una
+	# simulacion pesada de carreras de lideres). Ver ERRORES.md E1 y E5.
+	if _qa_smoke_mode:
+		var production_tests_passed := _run_production_line_tests()
+		if not production_tests_passed:
+			push_error("QA_SMOKE: production characterization failed")
+			get_tree().quit(1)
+			return
 
-	var AutoloadValidatorClass = load("res://scripts/core/AutoloadValidator.gd")
-	var autoloads_ok = AutoloadValidatorClass.validate_all()
-	if not autoloads_ok:
-		push_error("QA_SMOKE: autoload validation failed")
-		if _qa_smoke_mode:
+		var AutoloadValidatorClass = load("res://scripts/core/AutoloadValidator.gd")
+		var autoloads_ok = AutoloadValidatorClass.validate_all()
+		if not autoloads_ok:
+			push_error("QA_SMOKE: autoload validation failed")
 			get_tree().quit(1)
 			return
 
@@ -103,7 +107,10 @@ func _ready() -> void:
 	if mm != null and mm.has_method("has_province_data") and mm.has_province_data():
 		print("✅ MapManager ready with %d provinces" % mm.get_province_count())
 
-	_run_comprehensive_tests(loader, mm)
+	# Solo en QA/CI: estas pruebas integrales (save/load, escenario, mapa, combate)
+	# disparan la simulacion pesada que congelaba la partida real. Ver ERRORES.md E1/E5.
+	if _qa_smoke_mode:
+		_run_comprehensive_tests(loader, mm)
 
 	if not _is_headless:
 		_configure_top_info_bar(player_tag)
