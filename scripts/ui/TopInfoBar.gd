@@ -360,14 +360,24 @@ func _on_map_pressed() -> void:
 	_close_screen("HelpPhase0Panel")
 
 
+## Contenedor de UI anclado a la PANTALLA (CanvasLayer). Antes los paneles se
+## agregaban a la raiz fuera de un CanvasLayer, y la camara del mapa los arrastraba
+## fuera de vista al moverse. Ahora todos cuelgan del UILayer. (ERRORES E25)
+func _ui_host() -> Node:
+	var p := get_parent()
+	if p is CanvasLayer:
+		return p
+	return get_tree().root
+
+
 func _close_screen(screen_name: String) -> void:
-	var existing := get_tree().root.get_node_or_null(screen_name)
+	var existing := _ui_host().get_node_or_null(screen_name)
 	if existing != null:
 		existing.queue_free()
 
 
 func _toggle_screen(screen_name: String, scene_path: String, configure: Callable) -> void:
-	var existing := get_tree().root.get_node_or_null(screen_name)
+	var existing := _ui_host().get_node_or_null(screen_name)
 	if existing != null:
 		existing.queue_free()
 		return
@@ -382,11 +392,11 @@ func _toggle_screen(screen_name: String, scene_path: String, configure: Callable
 		return
 	configure.call(scene)
 	scene.name = screen_name
-	get_tree().root.add_child(scene)
+	_ui_host().add_child(scene)
 
 
 func _show_phase0_panel(screen_name: String, title: String, body: String) -> void:
-	var existing := get_tree().root.get_node_or_null(screen_name)
+	var existing := _ui_host().get_node_or_null(screen_name)
 	if existing != null:
 		existing.queue_free()
 		return
@@ -438,7 +448,7 @@ func _show_phase0_panel(screen_name: String, title: String, body: String) -> voi
 	text.add_theme_color_override("font_color", Color(0.86, 0.80, 0.66))
 	box.add_child(text)
 
-	get_tree().root.add_child(panel)
+	_ui_host().add_child(panel)
 
 
 func _on_save_pressed() -> void:
@@ -452,7 +462,7 @@ func _on_load_pressed() -> void:
 func _on_menu_pressed() -> void:
 	# Clean architecture: instance the dedicated MainMenu scene (priority 1).
 	# The scene handles its own auto-pause, Save Manager, and emits/responds to signals.
-	var existing := get_tree().root.get_node_or_null("MainMenu")
+	var existing := _ui_host().get_node_or_null("MainMenu")
 	if existing != null:
 		if existing.has_method("_on_close_requested"):
 			existing._on_close_requested()
@@ -474,7 +484,7 @@ func _on_menu_pressed() -> void:
 			_sync_pause_from_time_manager()
 			_update_speed_buttons()
 		)
-	get_tree().root.add_child(menu)
+	_ui_host().add_child(menu)
 
 
 func _on_settings_pressed() -> void:
@@ -507,7 +517,7 @@ func _show_main_menu_popup_fallback() -> void:
 		Log.info("SaveLoadManager not ready", "TopInfoBar")
 		return
 
-	var existing := get_tree().root.get_node_or_null("MainMenuPopup")
+	var existing := _ui_host().get_node_or_null("MainMenuPopup")
 	if existing != null:
 		existing.queue_free()
 
@@ -552,7 +562,7 @@ func _show_main_menu_popup_fallback() -> void:
 		)
 		main_vbox.add_child(b)
 
-	get_tree().root.add_child(panel)
+	_ui_host().add_child(panel)
 	Log.info("Fallback main menu opened (auto-paused)", "TopInfoBar")
 
 func _add_menu_button(parent: VBoxContainer, label: String, option: String) -> void:
@@ -595,7 +605,7 @@ func _show_save_manager_popup() -> void:
 		return
 
 	# Remove any previous instance
-	var existing := get_tree().root.get_node_or_null("SaveManagerPopup")
+	var existing := _ui_host().get_node_or_null("SaveManagerPopup")
 	if existing != null:
 		existing.queue_free()
 
@@ -661,7 +671,7 @@ func _show_save_manager_popup() -> void:
 	close_btn.pressed.connect(func(): panel.queue_free())
 	vbox.add_child(close_btn)
 
-	get_tree().root.add_child(panel)
+	_ui_host().add_child(panel)
 	Log.info("Save Manager popup opened (%d saves)" % saves.size(), "TopInfoBar")
 
 
