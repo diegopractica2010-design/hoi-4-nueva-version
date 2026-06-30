@@ -3,6 +3,8 @@
 > Lista viva. Se va sumando lo que aparezca en la prueba en vivo.
 > Estado de cada error: ⬜ pendiente · 🔧 arreglado · ✅ verificado en vivo
 
+> **FASE 0 del plan v2 CERRADA Y VERIFICADA EN VIVO** (2026): cámara controlable (no se mueve con el mouse), con límites, y paneles de la barra superior fijos y centrados (E24, E24b, E25). Próximo: Fase 1 (mapa de Sudamérica).
+
 ## ✔️ Lo que SÍ funciona (verificado en ejecución con Godot 4.6)
 - El proyecto **compila sin un solo error** (148 scripts).
 - Los tests de **producción y combate pasan**.
