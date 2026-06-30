@@ -11,7 +11,7 @@ extends Node2D
 @export var enable_pan: bool = true
 @export var enable_wasd: bool = true
 @export var wasd_speed: float = 600.0
-@export var enable_edge_pan: bool = true
+@export var enable_edge_pan: bool = false
 @export var edge_pan_margin: float = 36.0
 @export var edge_pan_speed: float = 720.0
 

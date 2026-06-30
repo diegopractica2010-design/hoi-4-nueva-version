@@ -48,6 +48,10 @@ const Log = preload("res://scripts/core/Logger.gd")
 @export var pan_speed: float = 900.0
 @export var edge_scroll_speed: float = 1100.0
 @export var edge_margin: float = 50.0
+## Desactivado por defecto: el "edge scroll" hacia que la camara se moviera sola al
+## acercar el mouse a los bordes (incluyendo la barra superior), haciendo el juego
+## injugable. Mover la camara ahora es WASD + arrastrar con boton central. (ERRORES E24)
+@export var enable_edge_scroll: bool = false
 @export var zoom_speed: float = 0.1
 @export var min_zoom: float = 0.15
 @export var max_zoom: float = 8.0
@@ -448,8 +452,8 @@ func _handle_camera_input(delta: float) -> void:
 	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):  move_dir.x -= 1
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT): move_dir.x += 1
 
-	# Edge scrolling must stop over top bar and popups.
-	if not gui_blocks_map:
+	# Edge scrolling (opcional, apagado por defecto). Stop over top bar and popups.
+	if enable_edge_scroll and not gui_blocks_map:
 		var mouse_pos := get_viewport().get_mouse_position()
 		var viewport_size := get_viewport().get_visible_rect().size
 
@@ -470,6 +474,21 @@ func _handle_camera_input(delta: float) -> void:
 	if move_dir != Vector2.ZERO:
 		move_dir = move_dir.normalized()
 		cam.global_position += move_dir * pan_speed * nav_delta / cam.zoom.x
+
+	_clamp_camera_to_bounds(cam)
+
+
+## Mantiene la camara dentro del rectangulo del mapa (mas un margen) para que el
+## jugador nunca se pierda en el vacio gris fuera del teatro. (ERRORES E24 / plan 0.2)
+func _clamp_camera_to_bounds(cam: Camera2D) -> void:
+	if typeof(MapManager) == TYPE_NIL or not MapManager.has_method("get_world_bounds"):
+		return
+	var b: Rect2 = MapManager.get_world_bounds()
+	if b.size.x <= 0.0 or b.size.y <= 0.0:
+		return
+	var margin := 300.0
+	cam.global_position.x = clampf(cam.global_position.x, b.position.x - margin, b.position.x + b.size.x + margin)
+	cam.global_position.y = clampf(cam.global_position.y, b.position.y - margin, b.position.y + b.size.y + margin)
 
 
 func _zoom_toward_mouse(zoom_change: float) -> void:

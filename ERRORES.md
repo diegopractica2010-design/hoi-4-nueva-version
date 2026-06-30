@@ -46,7 +46,10 @@
 - **✅ E1 reparado confirmado EN VIVO:** el juego entra a la partida. Se dispara el evento inicial "Chile ocupa Antofagasta", declara guerras (CHL vs BOL/PER), transfiere prov. 841, y muestra mapa + barra superior + panel de suministro.
 - **E21 (contenido) — Recursos anacrónicos en la barra superior.** 🔧 ARREGLADO. Ahora muestra Salitre, Guano, Plata, Cobre, Carbón. Stockpiles de países actualizados con recursos de 1879.
 - **E22 (UX) — Panel de provincia demasiado técnico (parece debug).** Muestra "supply ×0.58", "reinf ×0.48", "interdiction resist ×1.04", "Depot 65% strained"… abruma al jugador; falta lenguaje sencillo.
-- **E23 (diseño) — El mapa se ve oscuro y plano.** 🔧 ARREGLADO. Color de océano cambiado a azul marino profundo, colores de país más saturados (×1.15) para mejor contraste.
+- **E23 (diseño) — El mapa se ve oscuro y plano.** 🔧 PARCIAL. Color de océano cambiado a azul marino profundo, colores de país más saturados (×1.15). ⏳ Pendiente real: que se vea Sudamérica con provincias-de-verdad (no hexágonos) — es la Fase 1 del plan v2 (mapa pintado en PNG).
+- **E24 (control) — La cámara se movía sola al mover el mouse.** 🔧 ARREGLADO (Fase 0.1 plan v2). Causa real: el "edge-scroll" de `MapRenderer` (no CameraController, que se autodesactiva al existir MapCamera). Desactivado por defecto (`enable_edge_scroll=false`); también `CameraController.enable_edge_pan=false`. Mover la cámara ahora es WASD + arrastrar con botón central. Verificado headless: exit 0, 0 errores.
+- **E24b (cámara) — Límites de cámara.** 🔧 ARREGLADO (Fase 0.2). `MapRenderer` ahora limita la cámara al rectángulo del mapa (`MapManager.get_world_bounds()` + margen) para no salir al vacío gris.
+- **E25 (UI) — Paneles de la barra superior no se veían.** ⏳ PROBABLEMENTE resuelto por E24 (el edge-scroll movía el mapa al subir el mouse). Los paneles se agregan en espacio de pantalla. Pendiente de confirmación visual; si alguno sigue fuera de vista, arreglo puntual.
 
 - **Configuración: ✅ funciona.** Idioma (English/Español), Dificultad de la IA (Fácil/Normal/Difícil), botón Cerrar. Nota: muestra "Audio y gráficos: pendientes (no hay assets aún)" → el juego no tiene imágenes/sonido todavía.
 - **Pantalla "Elige tu país": ✅ funciona.** Salen Chile/Perú/Bolivia con dificultad, objetivo y descripción, bordes de color por país y botón "Volver al menú".
